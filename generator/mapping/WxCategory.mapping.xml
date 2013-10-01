@@ -1,0 +1,25 @@
+
+<mapping>
+    <entity name="WxCategory" package="com.glaf.wechat" moduleName="wx" table="WX_CATEGORY" title="WxCategory" englishTitle="WxCategory">
+        <id name="id" column="ID_" type="Long" title="Id" englishTitle="Id" length="255"/>
+        <property name="parentId" column="PARENT_" type="Long" title="ParentId" englishTitle="ParentId" length="255" editable="true" displayType="0"/>
+        <property name="treeId" column="TREEID_" type="String" title="TreeId" englishTitle="TreeId" length="500" editable="true" displayType="0"/>
+        <property name="sort" column="SORT_" type="Integer" title="Sort" englishTitle="Sort" length="255" editable="true" displayType="0"/>
+        <property name="icon" column="ICON_" type="String" title="Icon" englishTitle="Icon" length="150" editable="true" displayType="0"/>
+        <property name="iconCls" column="ICONCLS_" type="String" title="IconCls" englishTitle="IconCls" length="50" editable="true" displayType="0"/>
+        <property name="indexIcon" column="INDEXICON_" type="String" title="IndexIcon" englishTitle="IndexIcon" length="150" editable="true" displayType="0"/>
+        <property name="indexShow" column="INDEXSHOW_" type="Integer" title="IndexShow" englishTitle="IndexShow" length="255" editable="true" displayType="0"/>
+        <property name="locked" column="LOCKED_" type="Integer" title="Locked" englishTitle="Locked" length="255" editable="true" displayType="0"/>
+        <property name="name" column="NAME_" type="String" title="Name" englishTitle="Name" length="100" editable="true" displayType="0"/>
+        <property name="code" column="CODE_" type="String" title="Code" englishTitle="Code" length="50" editable="true" displayType="0"/>
+        <property name="desc" column="DESC_" type="String" title="Desc" englishTitle="Desc" length="500" editable="true" displayType="0"/>
+        <property name="eventType" column="EVENTTYPE_" type="String" title="EventType" englishTitle="EventType" length="50" editable="true" displayType="0"/>
+        <property name="url" column="URL_" type="String" title="Url" englishTitle="Url" length="500" editable="true" displayType="0"/>
+        <property name="uuid" column="UUID_" type="String" title="Uuid" englishTitle="Uuid" length="50" editable="true" displayType="0"/>
+        <property name="createBy" column="CREATEBY_" type="String" title="CreateBy" englishTitle="CreateBy" length="50" editable="true" displayType="0"/>
+        <property name="createDate" column="CREATEDATE_" type="Date" title="CreateDate" englishTitle="CreateDate" length="255" editable="true" displayType="0"/>
+		<property name="lastUpdateDate" column="LASTUPDATEDATE_" title="最后修改日期"
+			englishTitle="Last Update Date" type="Date" displayType="4" nullable="false"/>
+		<property name="lastUpdateBy" column="LASTUPDATEBY_" type="String" title="最后修改人" englishTitle="LastUpdateBy" length="50" editable="true" displayType="0"/>
+    </entity>
+</mapping>

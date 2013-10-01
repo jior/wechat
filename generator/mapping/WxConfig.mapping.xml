@@ -1,0 +1,15 @@
+
+<mapping>
+    <entity name="WxConfig" package="com.glaf.wechat" moduleName="wx" table="WX_CONFIG" title="WxConfig" englishTitle="WxConfig">
+        <id name="id" column="ID_" type="Long" title="Id" englishTitle="Id" length="255"/>
+        <property name="callBackUrl" column="CALLBACKURL_" type="String" title="CallBackUrl" englishTitle="CallBackUrl" length="500" editable="true" displayType="0"/>
+        <property name="token" column="TOKEN_" type="String" title="Token" englishTitle="Token" length="100" editable="true" displayType="0"/>
+        <property name="appId" column="APPID_" type="String" title="AppId" englishTitle="AppId" length="100" editable="true" displayType="0"/>
+        <property name="appSecret" column="APPSECRET_" type="String" title="AppSecret" englishTitle="AppSecret" length="100" editable="true" displayType="0"/>
+        <property name="apiStatus" column="APISTATUS_" type="String" title="ApiStatus" englishTitle="ApiStatus" length="20" editable="true" displayType="0"/>
+        <property name="defaultReply" column="DEFAULTREPLY_" type="String" title="DefaultReply" englishTitle="DefaultReply" length="2000" editable="true" displayType="0"/>
+        <property name="uuid" column="UUID_" type="String" title="Uuid" englishTitle="Uuid" length="50" editable="true" displayType="0"/>
+        <property name="createBy" column="CREATEBY_" type="String" title="CreateBy" englishTitle="CreateBy" length="50" editable="true" displayType="0"/>
+        <property name="createDate" column="CREATEDATE_" type="Date" title="CreateDate" englishTitle="CreateDate" length="255" editable="true" displayType="0"/>
+    </entity>
+</mapping>

@@ -1,0 +1,13 @@
+
+<mapping>
+    <entity name="WxFile" package="com.glaf.wechat" moduleName="wx" table="WX_FILE" title="WxFile" englishTitle="WxFile">
+        <id name="id" column="ID_" type="Long" title="Id" englishTitle="Id" length="255"/>
+        <property name="categoryId" column="CATEGORYID_" type="Long" title="CategoryId" englishTitle="CategoryId" length="255" editable="true" displayType="0"/>
+        <property name="title" column="TITLE_" type="String" title="Title" englishTitle="Title" length="200" editable="true" displayType="0"/>
+        <property name="filename" column="FILENAME_" type="String" title="Filename" englishTitle="Filename" length="200" editable="true" displayType="0"/>
+        <property name="path" column="PATH_" type="String" title="Path" englishTitle="Path" length="500" editable="true" displayType="0"/>
+        <property name="uuid" column="UUID_" type="String" title="Uuid" englishTitle="Uuid" length="50" editable="true" displayType="0"/>
+        <property name="createBy" column="CREATEBY_" type="String" title="CreateBy" englishTitle="CreateBy" length="50" editable="true" displayType="0"/>
+        <property name="createDate" column="CREATEDATE_" type="Date" title="CreateDate" englishTitle="CreateDate" length="255" editable="true" displayType="0"/>
+    </entity>
+</mapping>

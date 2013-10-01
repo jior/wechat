@@ -1,0 +1,15 @@
+
+<mapping>
+    <entity name="WxMenu" package="com.glaf.wechat" moduleName="wx" table="WX_MENU" title="WxMenu" englishTitle="WxMenu">
+        <id name="id" column="ID_" type="Long" title="Id" englishTitle="Id" length="255"/>
+        <property name="parentId" column="PARENT_" type="Long" title="ParentId" englishTitle="ParentId" length="255" editable="true" displayType="0"/>
+        <property name="name" column="NAME_" type="String" title="Name" englishTitle="Name" length="100" editable="true" displayType="0"/>
+        <property name="type" column="TYPE_" type="String" title="Type" englishTitle="Type" length="50" editable="true" displayType="0"/>
+        <property name="key" column="KEY_" type="String" title="Key" englishTitle="Key" length="50" editable="true" displayType="0"/>
+        <property name="url" column="URL_" type="String" title="Url" englishTitle="Url" length="500" editable="true" displayType="0"/>
+        <property name="sort" column="SORT_" type="Integer" title="Sort" englishTitle="Sort" length="255" editable="true" displayType="0"/>
+        <property name="uuid" column="UUID_" type="String" title="Uuid" englishTitle="Uuid" length="50" editable="true" displayType="0"/>
+        <property name="createBy" column="CREATEBY_" type="String" title="CreateBy" englishTitle="CreateBy" length="50" editable="true" displayType="0"/>
+        <property name="createDate" column="CREATEDATE_" type="Date" title="CreateDate" englishTitle="CreateDate" length="255" editable="true" displayType="0"/>
+    </entity>
+</mapping>

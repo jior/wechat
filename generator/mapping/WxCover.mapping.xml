@@ -1,0 +1,11 @@
+
+<mapping>
+    <entity name="WxCover" package="com.glaf.wechat" moduleName="wx" table="WX_COVER" title="WxCover" englishTitle="WxCover">
+        <id name="id" column="ID_" type="Long" title="Id" englishTitle="Id" length="255"/>
+        <property name="bigIcon" column="BIGICON_" type="String" title="BigIcon" englishTitle="BigIcon" length="150" editable="true" displayType="0"/>
+        <property name="smallIcon" column="SMALLICON_" type="String" title="SmallIcon" englishTitle="SmallIcon" length="150" editable="true" displayType="0"/>
+        <property name="uuid" column="UUID_" type="String" title="Uuid" englishTitle="Uuid" length="50" editable="true" displayType="0"/>
+        <property name="createBy" column="CREATEBY_" type="String" title="CreateBy" englishTitle="CreateBy" length="50" editable="true" displayType="0"/>
+        <property name="createDate" column="CREATEDATE_" type="Date" title="CreateDate" englishTitle="CreateDate" length="255" editable="true" displayType="0"/>
+    </entity>
+</mapping>

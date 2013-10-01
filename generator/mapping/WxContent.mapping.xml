@@ -1,0 +1,22 @@
+
+<mapping>
+    <entity name="WxContent" package="com.glaf.wechat" moduleName="wx" table="WX_CONTENT" title="WxContent" englishTitle="WxContent">
+        <id name="id" column="ID_" type="Long" title="Id" englishTitle="Id" length="255"/>
+        <property name="categoryId" column="CATEGORYID_" type="Long" title="CategoryId" englishTitle="CategoryId" length="255" editable="true" displayType="0"/>
+        <property name="title" column="TITLE_" type="String" title="Title" englishTitle="Title" length="200" editable="true" displayType="0"/>
+        <property name="content" column="CONTENT_" type="String" title="Content" englishTitle="Content" length="2048" editable="true" displayType="0"/>
+        <property name="status" column="STATUS_" type="Integer" title="Status" englishTitle="Status" length="255" editable="true" displayType="0"/>
+        <property name="priority" column="PRIORTY_" type="Integer" title="Priority" englishTitle="Priority" length="255" editable="true" displayType="0"/>
+        <property name="type" column="TYPE_" type="String" title="Type" englishTitle="Type" length="20" editable="true" displayType="0"/>
+        <property name="uuid" column="UUID_" type="String" title="Uuid" englishTitle="Uuid" length="50" editable="true" displayType="0"/>
+        <property name="keywords" column="KEYWORDS_" type="String" title="Keywords" englishTitle="Keywords" length="250" editable="true" displayType="0"/>
+        <property name="keywordsCount" column="KEYWORDSCOUNT_" type="Integer" title="KeywordsCount" englishTitle="KeywordsCount" length="255" editable="true" displayType="0"/>
+        <property name="summary" column="SUMMARY_" type="String" title="Summary" englishTitle="Summary" length="250" editable="true" displayType="0"/>
+        <property name="icon" column="ICON_" type="String" title="Icon" englishTitle="Icon" length="150" editable="true" displayType="0"/>
+        <property name="bigIcon" column="BIGICON_" type="String" title="BigIcon" englishTitle="BigIcon" length="150" editable="true" displayType="0"/>
+        <property name="smallIcon" column="SMALLICON_" type="String" title="SmallIcon" englishTitle="SmallIcon" length="150" editable="true" displayType="0"/>
+        <property name="url" column="URL_" type="String" title="Url" englishTitle="Url" length="500" editable="true" displayType="0"/>
+        <property name="createBy" column="CREATEBY_" type="String" title="CreateBy" englishTitle="CreateBy" length="50" editable="true" displayType="0"/>
+        <property name="createDate" column="CREATEDATE_" type="Date" title="CreateDate" englishTitle="CreateDate" length="255" editable="true" displayType="0"/>
+    </entity>
+</mapping>

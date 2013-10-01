@@ -1,0 +1,17 @@
+
+<mapping>
+    <entity name="WxSiteInfo" package="com.glaf.wechat" moduleName="wx" table="WX_SITE_INFO" title="WxSiteInfo" englishTitle="WxSiteInfo">
+        <id name="id" column="ID_" type="Long" title="Id" englishTitle="Id" length="255"/>
+        <property name="linkman" column="LINKMAN_" type="String" title="Linkman" englishTitle="Linkman" length="50" editable="true" displayType="0"/>
+        <property name="telephone" column="TELEPHONE_" type="String" title="Telephone" englishTitle="Telephone" length="50" editable="true" displayType="0"/>
+        <property name="mobile" column="MOBILE_" type="String" title="Mobile" englishTitle="Mobile" length="50" editable="true" displayType="0"/>
+        <property name="mail" column="MAIL_" type="String" title="Mail" englishTitle="Mail" length="50" editable="true" displayType="0"/>
+        <property name="qq" column="qq_" type="String" title="Qq" englishTitle="Qq" length="50" editable="true" displayType="0"/>
+        <property name="address" column="ADDRESS_" type="String" title="Address" englishTitle="Address" length="50" editable="true" displayType="0"/>
+        <property name="siteUrl" column="SITEURL_" type="String" title="SiteUrl" englishTitle="SiteUrl" length="250" editable="true" displayType="0"/>
+        <property name="remark" column="REMARK_" type="String" title="Remark" englishTitle="Remark" length="2000" editable="true" displayType="0"/>
+        <property name="uuid" column="UUID_" type="String" title="Uuid" englishTitle="Uuid" length="50" editable="true" displayType="0"/>
+        <property name="createBy" column="CREATEBY_" type="String" title="CreateBy" englishTitle="CreateBy" length="50" editable="true" displayType="0"/>
+        <property name="createDate" column="CREATEDATE_" type="Date" title="CreateDate" englishTitle="CreateDate" length="255" editable="true" displayType="0"/>
+    </entity>
+</mapping>

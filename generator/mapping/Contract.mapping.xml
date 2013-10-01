@@ -1,0 +1,23 @@
+
+<mapping>
+    <entity name="Contract" package="com.glaf.apps.contract" table="CONTRACT" title="合同" englishTitle="Contract" 
+	        moduleName="oa">
+        <id name="id" column="ID" type="Integer" title="合同标识" englishTitle="id"/>
+        <property name="contactName" column="CONTACTNAME" type="String" title="合同名称" englishTitle="contactName" length="200" updatable="false" editable="true" displayType="4"/>
+        <property name="projrctName" column="PROJRCTNAME" type="String" title="项目名称" englishTitle="projrctName" length="200" updatable="false" editable="true" displayType="4"/>
+        <property name="companyName" column="COMPANYNAME" type="String" title="我方签约单位" englishTitle="companyName" length="100" updatable="false" editable="true" displayType="4"/>
+        <property name="suppliserName" column="SUPPLISERNAME" type="String" title="对方签约单位" englishTitle="suppliserName" length="100" updatable="false" editable="true" displayType="4"/>
+        <property name="currency" column="CURRENCY" type="Integer" title="结算币种" englishTitle="currency" updatable="false" editable="true" displayType="4"/>
+        <property name="contractSum" column="CONTRACTSUM" type="String" title="合同金额" englishTitle="contractSum" updatable="false" editable="true" displayType="4"/>
+        <property name="payType" column="PAYTYPE" type="Integer" title="付款方式" englishTitle="payType" updatable="false" editable="true" displayType="4"/>
+        <property name="remarks" column="REMARKS" type="String" title="备注" englishTitle="remarks" length="1000" updatable="false" editable="true" displayType="4"/>
+        <property name="attachment" column="ATTACHMENT" type="String" title="附件" englishTitle="attachment" updatable="false" editable="true" displayType="4"/>
+        <property name="status" column="STATUS" type="Integer" title="状态" englishTitle="status" updatable="false" editable="true" displayType="4"/>
+        <property name="appUser" column="APPUSER" type="String" title="申请人" englishTitle="appUser" length="50" updatable="false" editable="true" displayType="4"/>
+        <property name="appDate" column="APPDATE" type="Date" title="申请时间" englishTitle="appDate" updatable="false" editable="true" displayType="4"/>
+        <property name="upUser" column="UPUSER" type="String" title="修改人" englishTitle="upUser" length="50" updatable="false" editable="true" displayType="4"/>
+        <property name="upDates" column="UPDATES" type="Date" title="修改时间" englishTitle="upDates" updatable="false" editable="true" displayType="4"/>
+        <property name="deleteFlag" column="DELETEFLAG" type="Integer" title="删除标识" englishTitle="deleteFlag" updatable="false" editable="true" displayType="4"/>
+        <property name="createBy" column="CREATEBY" type="String" title="创建人" englishTitle="createBy" length="50" updatable="false" editable="true" displayType="4"/>
+    </entity>
+</mapping>

@@ -1,0 +1,14 @@
+
+<mapping>
+    <entity name="WxTemplate" package="com.glaf.wechat" moduleName="wx" table="WX_TEMPLATE" title="WxTemplate" englishTitle="WxTemplate">
+        <id name="id" column="ID_" type="Long" title="Id" englishTitle="Id" length="255"/>
+        <property name="skinId" column="SKINID_" type="String" title="SkinId" englishTitle="SkinId" length="50" editable="true" displayType="0"/>
+        <property name="skinImage" column="SKINIMAGE_" type="String" title="SkinImage" englishTitle="SkinImage" length="500" editable="true" displayType="0"/>
+        <property name="type" column="TYPE_" type="String" title="Type" englishTitle="Type" length="50" editable="true" displayType="0"/>
+        <property name="url" column="URL_" type="String" title="Url" englishTitle="Url" length="500" editable="true" displayType="0"/>
+        <property name="defaultFlag" column="DEFAULTFLAG_" type="Integer" title="DefaultFlag" englishTitle="DefaultFlag" length="255" editable="true" displayType="0"/>
+        <property name="uuid" column="UUID_" type="String" title="Uuid" englishTitle="Uuid" length="50" editable="true" displayType="0"/>
+        <property name="createBy" column="CREATEBY_" type="String" title="CreateBy" englishTitle="CreateBy" length="50" editable="true" displayType="0"/>
+        <property name="createDate" column="CREATEDATE_" type="Date" title="CreateDate" englishTitle="CreateDate" length="255" editable="true" displayType="0"/>
+    </entity>
+</mapping>
