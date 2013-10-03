@@ -26,7 +26,7 @@ public class WxCategoryTest extends AbstractTest {
 			wxCategory.setSort(1);
 			wxCategory.setIcon("Icon");
 			wxCategory.setIconCls("IconCls");
-			wxCategory.setIndexIcon("IndexIcon");
+			wxCategory.setCoverIcon("CoverIcon");
 			wxCategory.setIndexShow(1);
 			wxCategory.setLocked(1);
 			wxCategory.setName("Name");

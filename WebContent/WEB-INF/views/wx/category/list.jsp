@@ -104,7 +104,7 @@ limitations under the License.
 				idField:'id',
 				columns:[[
 	                {title:'序号',field:'startIndex',width:80,sortable:false},
-					{title:'图片', field:'icon', width:80, formatter:formatterCover},
+					{title:'封面图片', field:'coverIcon', width:80, formatter:formatterCover},
 					{title:'名称',field:'name', width:120},
 					{title:'描述',field:'desc', width:180},
 					{title:'顺序',field:'sort', width:90},
@@ -130,8 +130,8 @@ limitations under the License.
 
 
     function formatterCover(val, row){
-		if(row.icon != null && row.icon != ''){
-           return "<img src='${contextPath}"+row.icon+"' width='18' height='18' border='0'>";
+		if(row.coverIcon != null && row.coverIcon != ''){
+           return "<img src='${contextPath}"+row.coverIcon+"' width='18' height='18' border='0'>";
 		}
 		return "";
 	}

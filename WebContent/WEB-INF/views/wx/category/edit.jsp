@@ -66,7 +66,6 @@ limitations under the License.
 
 	function saveAsData(){
 		document.getElementById("id").value="";
-		document.getElementById("id").value="";
 		var params = jQuery("#iForm").formSerialize();
 		jQuery.ajax({
 				   type: "POST",
@@ -96,6 +95,18 @@ limitations under the License.
 		}
 		openWindow(link,self,x, y, 745, 480);
 	}
+
+	function chooseImage2(){
+		var link = '<%=request.getContextPath()%>/mx/wx/wxFile/chooseFile?elementId=coverIcon&elementName=coverIcon';
+		var x=100;
+		var y=100;
+		if(is_ie) {
+			x=document.body.scrollLeft+event.clientX-event.offsetX-200;
+			y=document.body.scrollTop+event.clientY-event.offsetY-200;
+		}
+		openWindow(link,self,x, y, 745, 480);
+	}
+
 
 </script>
 </head>
@@ -129,19 +140,6 @@ limitations under the License.
 		</td>
 	</tr>
 	<tr>
-		<td width="15%" align="left">图片</td>
-		<td align="left">
-			 <input id="icon" name="icon" type="text" 
-			       class="easyui-validatebox x-text" size="50"
-			       data-options="required:true"
-				   value="${wxContent.icon}" onclick="javascript:chooseImage();"/>
-			&nbsp; <img src="<%=request.getContextPath()%>/images/icon.gif" border="0"  onclick="javascript:chooseImage();"/>
-		    <c:if test="${not empty wxCategory.icon }">
-			   <br> <img src="<%=request.getContextPath()%>/${wxCategory.icon}" border="0"/>
-			</c:if>
-		</td>
-	</tr>
-	<tr>
 		<td width="20%" align="left">代码</td>
 		<td align="left">
             <input id="code" name="code" type="text"  size="50"
@@ -159,27 +157,44 @@ limitations under the License.
 		</td>
 	</tr>
 	<tr>
-		<td width="20%" align="left">顺序</td>
+		<td width="15%" align="left" valign="middle">分类封面</td>
+		<td align="left" valign="top">
+		     <c:if test="${not empty wxCategory.coverIcon }">
+			     <img src="<%=request.getContextPath()%>/${wxCategory.coverIcon}" width="60" height="60" border="0"/>&nbsp;
+			</c:if>
+			 <input id="coverIcon" name="coverIcon" type="text" 
+			       class="easyui-validatebox x-text" size="38"
+			       data-options="required:false"
+				   value="${wxCategory.coverIcon}" onclick="javascript:chooseImage2();"/>
+			&nbsp; <img src="<%=request.getContextPath()%>/images/icon.gif" border="0"  onclick="javascript:chooseImage2();"/>
+		</td>
+	</tr>
+	<tr>
+		<td width="15%" align="left" valign="middle">图标</td>
+		<td align="left" valign="top">
+		     <c:if test="${not empty wxCategory.icon }">
+			     <img src="<%=request.getContextPath()%>/${wxCategory.icon}" width="60" height="60" border="0"/>&nbsp;
+			</c:if>
+			<input id="icon" name="icon" type="text" 
+			       class="easyui-validatebox x-text" size="38"
+			       data-options="required:false"
+				   value="${wxCategory.icon}" onclick="javascript:chooseImage();"/>
+			&nbsp; <img src="<%=request.getContextPath()%>/images/icon.gif" border="0"  onclick="javascript:chooseImage();"/>
+           <br>用于二级页面菜单
+		</td>
+	</tr>
+	<tr>
+		<td width="20%" align="left">显示顺序</td>
 		<td align="left">
 			<input id="sort" name="sort" type="text"  size="5"
 			       class="easyui-numberspinner"  
 				   increment="1"  
-				   value="${wxCategory.sort}"/>(同级栏目顺序越大越靠前)
+				   value="${wxCategory.sort}"/>&nbsp;(同级栏目顺序越大越靠前)
 		</td>
 	</tr>
 	 
 	<tr>
-		<td width="20%" align="left">链接地址</td>
-		<td align="left">
-            <input id="url" name="url" type="text" 
-			       class="easyui-validatebox x-text"  
-			       size="50"
-				   value="${wxCategory.url}"/>
-		</td>
-	</tr>
-	 
-	<tr>
-		<td width="20%" align="left">前台显示</td>
+		<td width="20%" align="left">是否官网显示</td>
 		<td align="left">
 		    <select  id="indexShow" name="indexShow">
 				<option value="1" selected>显示

@@ -57,8 +57,8 @@ public class WxCategoryJsonFactory {
 		if (jsonObject.containsKey("iconCls")) {
 			model.setIconCls(jsonObject.getString("iconCls"));
 		}
-		if (jsonObject.containsKey("indexIcon")) {
-			model.setIndexIcon(jsonObject.getString("indexIcon"));
+		if (jsonObject.containsKey("coverIcon")) {
+			model.setCoverIcon(jsonObject.getString("coverIcon"));
 		}
 		if (jsonObject.containsKey("indexShow")) {
 			model.setIndexShow(jsonObject.getInteger("indexShow"));
@@ -121,8 +121,8 @@ public class WxCategoryJsonFactory {
 		if (model.getIconCls() != null) {
 			jsonObject.put("iconCls", model.getIconCls());
 		}
-		if (model.getIndexIcon() != null) {
-			jsonObject.put("indexIcon", model.getIndexIcon());
+		if (model.getCoverIcon() != null) {
+			jsonObject.put("coverIcon", model.getCoverIcon());
 		}
 		jsonObject.put("indexShow", model.getIndexShow());
 		jsonObject.put("locked", model.getLocked());
@@ -186,8 +186,8 @@ public class WxCategoryJsonFactory {
 		if (model.getIconCls() != null) {
 			jsonObject.put("iconCls", model.getIconCls());
 		}
-		if (model.getIndexIcon() != null) {
-			jsonObject.put("indexIcon", model.getIndexIcon());
+		if (model.getCoverIcon() != null) {
+			jsonObject.put("coverIcon", model.getCoverIcon());
 		}
 		jsonObject.put("indexShow", model.getIndexShow());
 		jsonObject.put("locked", model.getLocked());

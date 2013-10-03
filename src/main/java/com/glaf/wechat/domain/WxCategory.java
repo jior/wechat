@@ -86,10 +86,10 @@ public class WxCategory implements java.io.Serializable, JSONable {
 	protected String iconCls;
 
 	/**
-	 * 首页图标
+	 * 封面图标
 	 */
-	@Column(name = "INDEXICON_", length = 150)
-	protected String indexIcon;
+	@Column(name = "COVERICON_", length = 150)
+	protected String coverIcon;
 
 	/**
 	 * 是否首页显示
@@ -221,9 +221,7 @@ public class WxCategory implements java.io.Serializable, JSONable {
 		return id;
 	}
 
-	public String getIndexIcon() {
-		return indexIcon;
-	}
+	 
 
 	public int getIndexShow() {
 		return indexShow;
@@ -309,8 +307,14 @@ public class WxCategory implements java.io.Serializable, JSONable {
 		this.id = id;
 	}
 
-	public void setIndexIcon(String indexIcon) {
-		this.indexIcon = indexIcon;
+	 
+
+	public String getCoverIcon() {
+		return coverIcon;
+	}
+
+	public void setCoverIcon(String coverIcon) {
+		this.coverIcon = coverIcon;
 	}
 
 	public void setIndexShow(int indexShow) {

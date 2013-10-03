@@ -174,7 +174,7 @@ public class WxCategoryResourceRest {
 			wxCategory.setSort(RequestUtils.getInt(request, "sort"));
 			wxCategory.setIcon(request.getParameter("icon"));
 			wxCategory.setIconCls(request.getParameter("iconCls"));
-			wxCategory.setIndexIcon(request.getParameter("indexIcon"));
+			wxCategory.setCoverIcon(request.getParameter("coverIcon"));
 			wxCategory.setIndexShow(RequestUtils.getInt(request, "indexShow"));
 			wxCategory.setLocked(RequestUtils.getInt(request, "locked"));
 			wxCategory.setName(request.getParameter("name"));

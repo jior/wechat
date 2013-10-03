@@ -11,7 +11,7 @@
 		<result property="sort" column="SORT_" jdbcType="INTEGER" />
 		<result property="icon" column="ICON_" jdbcType="VARCHAR" />
 		<result property="iconCls" column="ICONCLS_" jdbcType="VARCHAR" />
-		<result property="indexIcon" column="INDEXICON_" jdbcType="VARCHAR" />
+		<result property="coverIcon" column="COVERICON_" jdbcType="VARCHAR" />
 		<result property="indexShow" column="INDEXSHOW_" jdbcType="INTEGER" />
 		<result property="locked" column="LOCKED_" jdbcType="INTEGER" />
 		<result property="name" column="NAME_" jdbcType="VARCHAR" />
@@ -49,8 +49,8 @@
 			<if test="iconCls != null">
 				,ICONCLS_
 			</if>
-			<if test="indexIcon != null">
-				,INDEXICON_
+			<if test="coverIcon != null">
+				,COVERICON_
 			</if>
 			<if test="indexShow != null">
 				,INDEXSHOW_
@@ -105,8 +105,8 @@
 			<if test="iconCls != null">
 				,#{iconCls, jdbcType=VARCHAR}
 			</if>
-			<if test="indexIcon != null">
-				,#{indexIcon, jdbcType=VARCHAR}
+			<if test="coverIcon != null">
+				,#{coverIcon, jdbcType=VARCHAR}
 			</if>
 			<if test="indexShow != null">
 				,#{indexShow, jdbcType=INTEGER}
@@ -161,8 +161,8 @@
 			<if test="iconCls != null">
 				ICONCLS_ = #{iconCls, jdbcType=VARCHAR},
 			</if>
-			<if test="indexIcon != null">
-				INDEXICON_ = #{indexIcon, jdbcType=VARCHAR},
+			<if test="coverIcon != null">
+				COVERICON_ = #{coverIcon, jdbcType=VARCHAR},
 			</if>
 			<if test="indexShow != null">
 				INDEXSHOW_ = #{indexShow, jdbcType=INTEGER},
@@ -355,7 +355,7 @@
 			<if test="descLike != null and descLike != '' ">
 				and E.DESC_ like #{descLike}
 			</if>
-			
+
 			<if test="type != null and type != '' ">
 				and E.TYPE_ = #{type}
 			</if>
