@@ -119,6 +119,12 @@ public class WxContent implements java.io.Serializable, JSONable {
 	protected int keywordsCount;
 
 	/**
+	 * 关键字匹配类型
+	 */
+	@Column(name = "KEYWORDSMATCHTYPE_")
+	protected String keywordsMatchType;
+
+	/**
 	 * 摘要
 	 */
 	@Column(name = "SUMMARY_", length = 250)
@@ -218,6 +224,10 @@ public class WxContent implements java.io.Serializable, JSONable {
 		return keywordsCount;
 	}
 
+	public String getKeywordsMatchType() {
+		return keywordsMatchType;
+	}
+
 	public String getLastUpdateBy() {
 		return lastUpdateBy;
 	}
@@ -304,6 +314,10 @@ public class WxContent implements java.io.Serializable, JSONable {
 
 	public void setKeywordsCount(int keywordsCount) {
 		this.keywordsCount = keywordsCount;
+	}
+
+	public void setKeywordsMatchType(String keywordsMatchType) {
+		this.keywordsMatchType = keywordsMatchType;
 	}
 
 	public void setLastUpdateBy(String lastUpdateBy) {

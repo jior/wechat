@@ -17,6 +17,7 @@
 		<result property="keywords" column="KEYWORDS_" jdbcType="VARCHAR" />
 		<result property="keywordsCount" column="KEYWORDSCOUNT_"
 			jdbcType="INTEGER" />
+		<result property="keywordsMatchType" column="KEYWORDSMATCHTYPE_" jdbcType="VARCHAR" />
 		<result property="summary" column="SUMMARY_" jdbcType="VARCHAR" />
 		<result property="icon" column="ICON_" jdbcType="VARCHAR" />
 		<result property="bigIcon" column="BIGICON_" jdbcType="VARCHAR" />
@@ -65,6 +66,9 @@
 			</if>
 			<if test="keywordsCount != null">
 				,KEYWORDSCOUNT_
+			</if>
+			<if test="keywordsMatchType != null">
+				,KEYWORDSMATCHTYPE_
 			</if>
 			<if test="summary != null">
 				,SUMMARY_
@@ -125,6 +129,9 @@
 			<if test="keywordsCount != null">
 				,#{keywordsCount, jdbcType=INTEGER}
 			</if>
+			<if test="keywordsMatchType != null">
+				,#{keywordsMatchType, jdbcType=VARCHAR}
+			</if>
 			<if test="summary != null">
 				,#{summary, jdbcType=VARCHAR}
 			</if>
@@ -183,6 +190,9 @@
 			</if>
 			<if test="keywordsCount != null">
 				KEYWORDSCOUNT_ = #{keywordsCount, jdbcType=INTEGER},
+			</if>
+			<if test="keywordsMatchType != null">
+				KEYWORDSMATCHTYPE_ = #{keywordsMatchType, jdbcType=VARCHAR},
 			</if>
 			<if test="summary != null">
 				SUMMARY_ = #{summary, jdbcType=VARCHAR},

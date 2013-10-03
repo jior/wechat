@@ -182,6 +182,19 @@ limitations under the License.
 		<br/>(多个关键字之间用空格隔开)
 		</td>
 	</tr>
+
+	<tr>
+		<td width="15%" align="left">关键字匹配类型</td>
+		<td align="left">
+             <select id="keywordsMatchType" name="keywordsMatchType">
+				<option value="1">完全匹配</option>
+				<option value="0">包含匹配</option>
+             </select>
+			 <script type="text/javascript">
+			     jQuery("#keywordsMatchType").val("${wxContent.keywordsMatchType}");
+			 </script>
+		</td>
+	</tr>
 	 
 	<tr>
 		<td width="15%" align="left">摘要</td>

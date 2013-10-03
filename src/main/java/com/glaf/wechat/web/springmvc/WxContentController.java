@@ -348,6 +348,8 @@ public class WxContentController {
 		wxContent.setPriority(RequestUtils.getInt(request, "priority"));
 		wxContent.setType(request.getParameter("type"));
 		wxContent.setKeywords(request.getParameter("keywords"));
+		wxContent.setKeywordsMatchType(request
+				.getParameter("keywordsMatchType"));
 		wxContent.setSort(RequestUtils.getInt(request, "sort"));
 		wxContent.setSummary(request.getParameter("summary"));
 		wxContent.setIcon(request.getParameter("icon"));
@@ -379,6 +381,8 @@ public class WxContentController {
 			wxContent.setPriority(RequestUtils.getInt(request, "priority"));
 			wxContent.setType(request.getParameter("type"));
 			wxContent.setKeywords(request.getParameter("keywords"));
+			wxContent.setKeywordsMatchType(request
+					.getParameter("keywordsMatchType"));
 			wxContent.setSort(RequestUtils.getInt(request, "sort"));
 			wxContent.setSummary(request.getParameter("summary"));
 			wxContent.setIcon(request.getParameter("icon"));
@@ -423,6 +427,8 @@ public class WxContentController {
 			wxContent.setPriority(RequestUtils.getInt(request, "priority"));
 			wxContent.setType(request.getParameter("type"));
 			wxContent.setKeywords(request.getParameter("keywords"));
+			wxContent.setKeywordsMatchType(request
+					.getParameter("keywordsMatchType"));
 			wxContent.setSort(RequestUtils.getInt(request, "sort"));
 			wxContent.setSummary(request.getParameter("summary"));
 			wxContent.setIcon(request.getParameter("icon"));

@@ -53,6 +53,8 @@ public class WxContentServiceImpl implements WxContentService {
 
 	protected WxContentMapper wxContentMapper;
 
+	protected WxKeywordsService wxKeywordsService;
+
 	public WxContentServiceImpl() {
 
 	}
@@ -120,6 +122,7 @@ public class WxContentServiceImpl implements WxContentService {
 			wxContent.setLastUpdateDate(new Date());
 			wxContentMapper.updateWxContent(wxContent);
 		}
+		wxKeywordsService.saveAll(wxContent.getCategoryId(), wxContent);
 	}
 
 	@Resource(name = "myBatisEntityDAO")
@@ -140,6 +143,11 @@ public class WxContentServiceImpl implements WxContentService {
 	@Resource
 	public void setWxContentMapper(WxContentMapper wxContentMapper) {
 		this.wxContentMapper = wxContentMapper;
+	}
+
+	@Resource
+	public void setWxKeywordsService(WxKeywordsService wxKeywordsService) {
+		this.wxKeywordsService = wxKeywordsService;
 	}
 
 }

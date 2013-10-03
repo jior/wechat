@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.wechat.mapper.WxKeywordsMapper">
+
+	<resultMap id="wxKeywordsResultMap" type="com.glaf.wechat.domain.WxKeywords">
+		<id property="id" column="ID_" jdbcType="BIGINT" />
+		<result property="categoryId" column="CATEGORYID_" jdbcType="BIGINT" />
+		<result property="contentId" column="CONTENTID_" jdbcType="BIGINT" />
+		<result property="keywords" column="KEYWORDS_" jdbcType="VARCHAR" />
+		<result property="keywordsMatchType" column="KEYWORDSMATCHTYPE_"
+			jdbcType="VARCHAR" />
+		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
+		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+
+	<insert id="insertWxKeywords" parameterType="com.glaf.wechat.domain.WxKeywords">
+		insert into WX_KEYWORDS
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ID_
+			<if test="categoryId != null">
+				,CATEGORYID_
+			</if>
+			<if test="contentId != null">
+				,CONTENTID_
+			</if>
+			<if test="keywords != null">
+				,KEYWORDS_
+			</if>
+			<if test="keywordsMatchType != null">
+				,KEYWORDSMATCHTYPE_
+			</if>
+			<if test="createBy != null">
+				,CREATEBY_
+			</if>
+			<if test="createDate != null">
+				,CREATEDATE_
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			#{id, jdbcType=BIGINT}
+
+			<if test="categoryId != null">
+				,#{categoryId, jdbcType=BIGINT}
+			</if>
+			<if test="contentId != null">
+				,#{contentId, jdbcType=BIGINT}
+			</if>
+			<if test="keywords != null">
+				,#{keywords, jdbcType=VARCHAR}
+			</if>
+			<if test="keywordsMatchType != null">
+				,#{keywordsMatchType, jdbcType=VARCHAR}
+			</if>
+			<if test="createBy != null">
+				,#{createBy, jdbcType=VARCHAR}
+			</if>
+			<if test="createDate != null">
+				,#{createDate, jdbcType=TIMESTAMP}
+			</if>
+		</trim>
+	</insert>
+
+
+	<update id="updateWxKeywords" parameterType="com.glaf.wechat.domain.WxKeywords">
+		update WX_KEYWORDS
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">
+			<if test="categoryId != null">
+				CATEGORYID_ = #{categoryId, jdbcType=BIGINT},
+			</if>
+			<if test="contentId != null">
+				CONTENTID_ = #{contentId, jdbcType=BIGINT},
+			</if>
+			<if test="keywords != null">
+				KEYWORDS_ = #{keywords, jdbcType=VARCHAR},
+			</if>
+			<if test="keywordsMatchType != null">
+				KEYWORDSMATCHTYPE_ = #{keywordsMatchType,
+				jdbcType=VARCHAR},
+			</if>
+			<if test="createBy != null">
+				CREATEBY_ = #{createBy, jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				CREATEDATE_ = #{createDate, jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+		where
+		ID_ = #{id, jdbcType=BIGINT}
+
+	</update>
+
+
+	<delete id="deleteWxKeywordsById" parameterType="long">
+		delete from
+		WX_KEYWORDS
+		where ID_ = #{id}
+	</delete>
+
+
+	<delete id="deleteWxKeywordss" parameterType="com.glaf.wechat.query.WxKeywordsQuery">
+		delete from WX_KEYWORDS
+		where (
+		ID_ IN
+		<foreach item="x_id" index="index" collection="ids" open="("
+			separator="," close=")">
+			#{x_id}
+		</foreach>
+		)
+	</delete>
+
+
+	<select id="getWxKeywordsById" parameterType="long"
+		resultMap="wxKeywordsResultMap">
+		select * from WX_KEYWORDS where ID_ = #{id}
+	</select>
+
+
+	<select id="getWxKeywordss" parameterType="com.glaf.wechat.query.WxKeywordsQuery"
+		resultMap="wxKeywordsResultMap">
+		select distinct E.*
+		<include refid="selectWxKeywordssSql" />
+		<choose>
+			<when test="orderBy != null">
+				order by ${orderBy}
+			</when>
+			<otherwise>
+				order by E.ID_ desc
+			</otherwise>
+		</choose>
+	</select>
+
+
+	<select id="getWxKeywordsCount" parameterType="com.glaf.wechat.query.WxKeywordsQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectWxKeywordssSql" />
+	</select>
+
+
+	<sql id="selectWxKeywordssSql">
+
+		from WX_KEYWORDS E
+
+		<where>
+			1 = 1
+
+			<if test="categoryId != null">
+				and E.CATEGORYID_ = #{categoryId}
+			</if>
+
+			<if test="categoryIds != null and categoryIds.size() &gt; 0">
+				and E.CATEGORYID_ IN
+				<foreach item="x_categoryId" index="index" collection="categoryIds"
+					open="(" separator="," close=")">
+					#{x_categoryId}
+				</foreach>
+			</if>
+
+			<if test="contentId != null and contentId != '' ">
+				and E.CONTENTID_ = #{contentId}
+			</if>
+
+			<if test="contentIds != null and contentIds.size() &gt; 0">
+				and E.CONTENTID_ IN
+				<foreach item="x_contentId" index="index" collection="contentIds"
+					open="(" separator="," close=")">
+					#{x_contentId}
+				</foreach>
+			</if>
+
+			<if test="keywords != null and keywords != '' ">
+				and E.KEYWORDS_ = #{keywords}
+			</if>
+
+			<if test="keywordsLike != null and keywordsLike != '' ">
+				and E.KEYWORDS_ like #{keywordsLike}
+			</if>
+
+			<if test="keywordsMatchType != null and keywordsMatchType != '' ">
+				and E.KEYWORDSMATCHTYPE_ = #{keywordsMatchType}
+			</if>
+
+			<if test="createBy != null and createBy != '' ">
+				and E.CREATEBY_ = #{createBy}
+			</if>
+
+			<if test="createBys != null and createBys.size() &gt; 0">
+				and E.CREATEBY_ IN
+				<foreach item="x_createBy" index="index" collection="createBys"
+					open="(" separator="," close=")">
+					#{x_createBy}
+				</foreach>
+			</if>
+
+			<if test="createDateGreaterThanOrEqual != null">
+				and E.CREATEDATE_ &gt;= #{createDateGreaterThanOrEqual}
+			</if>
+
+			<if test="createDateLessThanOrEqual != null">
+				and E.CREATEDATE_ &lt;= #{createDateLessThanOrEqual}
+			</if>
+
+		</where>
+	</sql>
+
+</mapper>

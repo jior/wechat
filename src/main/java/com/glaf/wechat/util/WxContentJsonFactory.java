@@ -72,6 +72,10 @@ public class WxContentJsonFactory {
 		if (jsonObject.containsKey("keywordsCount")) {
 			model.setKeywordsCount(jsonObject.getInteger("keywordsCount"));
 		}
+		if (jsonObject.containsKey("keywordsMatchType")) {
+			model.setKeywordsMatchType(jsonObject
+					.getString("keywordsMatchType"));
+		}
 		if (jsonObject.containsKey("summary")) {
 			model.setSummary(jsonObject.getString("summary"));
 		}
@@ -137,6 +141,9 @@ public class WxContentJsonFactory {
 			jsonObject.put("keywords", model.getKeywords());
 		}
 		jsonObject.put("keywordsCount", model.getKeywordsCount());
+		if (model.getKeywordsMatchType() != null) {
+			jsonObject.put("keywordsMatchType", model.getKeywordsMatchType());
+		}
 		if (model.getSummary() != null) {
 			jsonObject.put("summary", model.getSummary());
 		}
@@ -209,6 +216,9 @@ public class WxContentJsonFactory {
 			jsonObject.put("keywords", model.getKeywords());
 		}
 		jsonObject.put("keywordsCount", model.getKeywordsCount());
+		if (model.getKeywordsMatchType() != null) {
+			jsonObject.put("keywordsMatchType", model.getKeywordsMatchType());
+		}
 		if (model.getSummary() != null) {
 			jsonObject.put("summary", model.getSummary());
 		}

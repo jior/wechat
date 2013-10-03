@@ -53,15 +53,16 @@ limitations under the License.
 				singleSelect: true,
 				idField: 'id',
 				columns:[[
-				    {title:'序号', field:'startIndex', width:80, sortable:false},
-					{title:'封面', field:'cover', width:80, formatter:formatterCover},
-					{title:'标题', field:'title', width:380, formatter:formatterTitle},
-					{title:'链接地址', field:'url', width:180, formatter:formatterLink},
-					{title:'关键词', field:'keywordsCount', width:80},
-					{title:'优先级', field:'priority', width:80},
-					{title:'创建日期', field:'createDate', width:120},
-					{title:'状态', field:'status', width:90, formatter:formatterStatus},
-					{title:'功能键', field:'functionKey', width:90, formatter:formatterKeys}
+				    {title:'序号', field:'startIndex', align:'center', width:60, sortable:false},
+					{title:'封面', field:'cover', align:'center', width:80, formatter:formatterCover},
+					{title:'标题', field:'title', align:'left', width:380, formatter:formatterTitle},
+					{title:'链接地址', field:'url', align:'left', width:180, formatter:formatterLink},
+					{title:'关键词数', field:'keywordsCount', align:'right', width:80},
+					{title:'关键词匹配', field:'keywordsMatchType', align:'center', width:120, formatter:formatterMatchType},
+					{title:'优先级', field:'priority', align:'right', width:80},
+					{title:'时间', field:'createDate', align:'center', width:90},
+					{title:'状态', field:'status', width:90, align:'center', formatter:formatterStatus},
+					{title:'功能键', field:'functionKey', align:'center', width:90, formatter:formatterKeys}
 				]],
 				rownumbers: false,
 				pagination: true,
@@ -77,6 +78,15 @@ limitations under the License.
 				}
 		    });
 	});
+
+
+	function formatterMatchType(val, row){
+        if(val == "1"){
+			return '<span style="background:green; color:white; font: bold 13px 宋体;">完全</span>';
+	   } else  {
+			return '<span style="background:green; color:white; font: bold 13px 宋体;">包含</span>';
+	   }  
+	}
 
 
     function formatterCover(val, row){
