@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.wechat.mapper.WxConfigMapper">
+
+	<resultMap id="wxConfigResultMap" type="com.glaf.wechat.domain.WxConfig">
+		<id property="id" column="ID_" jdbcType="BIGINT" />
+		<result property="callBackUrl" column="CALLBACKURL_" jdbcType="VARCHAR" />
+		<result property="token" column="TOKEN_" jdbcType="VARCHAR" />
+		<result property="appId" column="APPID_" jdbcType="VARCHAR" />
+		<result property="appSecret" column="APPSECRET_" jdbcType="VARCHAR" />
+		<result property="apiStatus" column="APISTATUS_" jdbcType="VARCHAR" />
+		<result property="defaultReply" column="DEFAULTREPLY_"
+			jdbcType="VARCHAR" />
+		<result property="lbsPosition" column="LBSPOSITION_" jdbcType="INTEGER" />
+		<result property="uuid" column="UUID_" jdbcType="VARCHAR" />
+		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
+		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP" />
+		<result property="lastUpdateDate" column="LASTUPDATEDATE_"
+			jdbcType="TIMESTAMP" />
+		<result property="lastUpdateBy" column="LASTUPDATEBY_"
+			jdbcType="VARCHAR" />
+	</resultMap>
+
+
+	<insert id="insertWxConfig" parameterType="com.glaf.wechat.domain.WxConfig">
+		insert into WX_CONFIG
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ID_
+			<if test="callBackUrl != null">
+				,CALLBACKURL_
+			</if>
+			<if test="token != null">
+				,TOKEN_
+			</if>
+			<if test="appId != null">
+				,APPID_
+			</if>
+			<if test="appSecret != null">
+				,APPSECRET_
+			</if>
+			<if test="apiStatus != null">
+				,APISTATUS_
+			</if>
+			<if test="defaultReply != null">
+				,DEFAULTREPLY_
+			</if>
+			<if test="lbsPosition != null">
+				,LBSPOSITION_
+			</if>
+			<if test="uuid != null">
+				,UUID_
+			</if>
+			<if test="createBy != null">
+				,CREATEBY_
+			</if>
+			<if test="createDate != null">
+				,CREATEDATE_
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			#{id, jdbcType=BIGINT}
+
+			<if test="callBackUrl != null">
+				,#{callBackUrl, jdbcType=VARCHAR}
+			</if>
+			<if test="token != null">
+				,#{token, jdbcType=VARCHAR}
+			</if>
+			<if test="appId != null">
+				,#{appId, jdbcType=VARCHAR}
+			</if>
+			<if test="appSecret != null">
+				,#{appSecret, jdbcType=VARCHAR}
+			</if>
+			<if test="apiStatus != null">
+				,#{apiStatus, jdbcType=VARCHAR}
+			</if>
+			<if test="defaultReply != null">
+				,#{defaultReply, jdbcType=VARCHAR}
+			</if>
+			<if test="lbsPosition != null">
+				,#{lbsPosition, jdbcType=INTEGER}
+			</if>
+			<if test="uuid != null">
+				,#{uuid, jdbcType=VARCHAR}
+			</if>
+			<if test="createBy != null">
+				,#{createBy, jdbcType=VARCHAR}
+			</if>
+			<if test="createDate != null">
+				,#{createDate, jdbcType=TIMESTAMP}
+			</if>
+		</trim>
+	</insert>
+
+
+	<update id="updateWxConfig" parameterType="com.glaf.wechat.domain.WxConfig">
+		update WX_CONFIG
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">
+			<if test="callBackUrl != null">
+				CALLBACKURL_ = #{callBackUrl, jdbcType=VARCHAR},
+			</if>
+			<if test="token != null">
+				TOKEN_ = #{token, jdbcType=VARCHAR},
+			</if>
+			<if test="appId != null">
+				APPID_ = #{appId, jdbcType=VARCHAR},
+			</if>
+			<if test="appSecret != null">
+				APPSECRET_ = #{appSecret, jdbcType=VARCHAR},
+			</if>
+			<if test="apiStatus != null">
+				APISTATUS_ = #{apiStatus, jdbcType=VARCHAR},
+			</if>
+			<if test="defaultReply != null">
+				DEFAULTREPLY_ = #{defaultReply, jdbcType=VARCHAR},
+			</if>
+			<if test="lbsPosition != null">
+				LBSPOSITION_ = #{lbsPosition, jdbcType=INTEGER},
+			</if>
+			<if test="lastUpdateDate != null">
+				LASTUPDATEDATE_ = #{lastUpdateDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastUpdateBy != null">
+				LASTUPDATEBY_ = #{lastUpdateBy, jdbcType=VARCHAR},
+			</if>
+		</trim>
+		where
+		ID_ = #{id, jdbcType=BIGINT}
+
+	</update>
+
+
+	<delete id="deleteWxConfigById" parameterType="long">
+		delete from
+		WX_CONFIG
+		where ID_ = #{id}
+	</delete>
+
+
+	<delete id="deleteWxConfigs" parameterType="com.glaf.wechat.query.WxConfigQuery">
+		delete from WX_CONFIG
+		where (
+		ID_ IN
+		<foreach item="x_id" index="index" collection="ids" open="("
+			separator="," close=")">
+			#{x_id}
+		</foreach>
+		)
+	</delete>
+
+
+	<select id="getWxConfigById" parameterType="long" resultMap="wxConfigResultMap">
+		select * from WX_CONFIG where ID_ = #{id}
+	</select>
+
+
+	<select id="getWxConfigs" parameterType="com.glaf.wechat.query.WxConfigQuery"
+		resultMap="wxConfigResultMap">
+		select distinct E.*
+		<include refid="selectWxConfigsSql" />
+		<choose>
+			<when test="orderBy != null">
+				order by ${orderBy}
+			</when>
+			<otherwise>
+				order by E.ID_ desc
+			</otherwise>
+		</choose>
+	</select>
+
+
+	<select id="getWxConfigCount" parameterType="com.glaf.wechat.query.WxConfigQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectWxConfigsSql" />
+	</select>
+
+
+	<sql id="selectWxConfigsSql">
+
+		from WX_CONFIG E
+
+		<where>
+			1 = 1
+
+			<if test="callBackUrlLike != null and callBackUrlLike != '' ">
+				and E.CALLBACKURL_ like #{callBackUrlLike}
+			</if>
+
+			<if test="token != null and token != '' ">
+				and E.TOKEN_ = #{token}
+			</if>
+
+			<if test="appId != null and appId != '' ">
+				and E.APPID_ = #{appId}
+			</if>
+
+			<if test="apiStatus != null and apiStatus != '' ">
+				and E.APISTATUS_ = #{apiStatus}
+			</if>
+
+			<if test="defaultReplyLike != null and defaultReplyLike != '' ">
+				and E.DEFAULTREPLY_ like #{defaultReplyLike}
+			</if>
+
+			<if test="uuid != null and uuid != '' ">
+				and E.UUID_ = #{uuid}
+			</if>
+
+			<if test="uuids != null and uuids.size() &gt; 0">
+				and E.UUID_ IN
+				<foreach item="x_uuid" index="index" collection="uuids"
+					open="(" separator="," close=")">
+					#{x_uuid}
+				</foreach>
+			</if>
+
+			<if test="createBy != null and createBy != '' ">
+				and E.CREATEBY_ = #{createBy}
+			</if>
+
+			<if test="createDateGreaterThanOrEqual != null">
+				and E.CREATEDATE_ &gt;= #{createDateGreaterThanOrEqual}
+			</if>
+
+			<if test="createDateLessThanOrEqual != null">
+				and E.CREATEDATE_ &lt;= #{createDateLessThanOrEqual}
+			</if>
+
+		</where>
+	</sql>
+
+</mapper>

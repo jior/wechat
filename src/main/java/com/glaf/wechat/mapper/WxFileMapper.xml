@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.wechat.mapper.WxFileMapper">
+
+	<resultMap id="wxFileResultMap" type="com.glaf.wechat.domain.WxFile">
+		<id property="id" column="ID_" jdbcType="BIGINT" />
+		<result property="categoryId" column="CATEGORYID_" jdbcType="BIGINT" />
+		<result property="title" column="TITLE_" jdbcType="VARCHAR" />
+		<result property="desc" column="DESC_" jdbcType="VARCHAR" />
+		<result property="content" column="CONTENT_" jdbcType="VARCHAR" />
+		<result property="filename" column="FILENAME_" jdbcType="VARCHAR" />
+		<result property="originalFilename" column="ORIGINALFILENAME_"
+			jdbcType="VARCHAR" />
+		<result property="type" column="TYPE_" jdbcType="VARCHAR" />
+		<result property="size" column="SIZE_" jdbcType="BIGINT" />
+		<result property="path" column="PATH_" jdbcType="VARCHAR" />
+		<result property="locked" column="LOCKED_" jdbcType="INTEGER" />
+		<result property="uuid" column="UUID_" jdbcType="VARCHAR" />
+		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
+		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP" />
+		<result property="lastUpdateDate" column="LASTUPDATEDATE_"
+			jdbcType="TIMESTAMP" />
+		<result property="lastUpdateBy" column="LASTUPDATEBY_"
+			jdbcType="VARCHAR" />
+	</resultMap>
+
+
+	<insert id="insertWxFile" parameterType="com.glaf.wechat.domain.WxFile">
+		insert into WX_FILE
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ID_
+			<if test="categoryId != null">
+				,CATEGORYID_
+			</if>
+			<if test="title != null">
+				,TITLE_
+			</if>
+			<if test="desc != null">
+				,DESC_
+			</if>
+			<if test="content != null">
+				,CONTENT_
+			</if>
+			<if test="filename != null">
+				,FILENAME_
+			</if>
+			<if test="originalFilename != null">
+				,ORIGINALFILENAME_
+			</if>
+			<if test="type != null">
+				,TYPE_
+			</if>
+			<if test="size != null">
+				,SIZE_
+			</if>
+			<if test="path != null">
+				,PATH_
+			</if>
+			<if test="locked != null">
+				,LOCKED_
+			</if>
+			<if test="uuid != null">
+				,UUID_
+			</if>
+			<if test="createBy != null">
+				,CREATEBY_
+			</if>
+			<if test="createDate != null">
+				,CREATEDATE_
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			#{id, jdbcType=BIGINT}
+
+			<if test="categoryId != null">
+				,#{categoryId, jdbcType=BIGINT}
+			</if>
+			<if test="title != null">
+				,#{title, jdbcType=VARCHAR}
+			</if>
+			<if test="desc != null">
+				,#{desc, jdbcType=VARCHAR}
+			</if>
+			<if test="content != null">
+				,#{content, jdbcType=VARCHAR}
+			</if>
+			<if test="filename != null">
+				,#{filename, jdbcType=VARCHAR}
+			</if>
+			<if test="originalFilename != null">
+				,#{originalFilename, jdbcType=VARCHAR}
+			</if>
+			<if test="type != null">
+				,#{type, jdbcType=VARCHAR}
+			</if>
+			<if test="size != null">
+				,#{size, jdbcType=BIGINT}
+			</if>
+			<if test="path != null">
+				,#{path, jdbcType=VARCHAR}
+			</if>
+			<if test="locked != null">
+				,#{locked, jdbcType=INTEGER}
+			</if>
+			<if test="uuid != null">
+				,#{uuid, jdbcType=VARCHAR}
+			</if>
+			<if test="createBy != null">
+				,#{createBy, jdbcType=VARCHAR}
+			</if>
+			<if test="createDate != null">
+				,#{createDate, jdbcType=TIMESTAMP}
+			</if>
+		</trim>
+	</insert>
+
+
+	<update id="updateWxFile" parameterType="com.glaf.wechat.domain.WxFile">
+		update WX_FILE
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">
+			<if test="categoryId != null">
+				CATEGORYID_ = #{categoryId, jdbcType=BIGINT},
+			</if>
+			<if test="title != null">
+				TITLE_ = #{title, jdbcType=VARCHAR},
+			</if>
+			<if test="desc != null">
+				DESC_ = #{desc, jdbcType=VARCHAR},
+			</if>
+			<if test="content != null">
+				CONTENT_ = #{content, jdbcType=VARCHAR},
+			</if>
+			<if test="filename != null">
+				FILENAME_ = #{filename, jdbcType=VARCHAR},
+			</if>
+			<if test="path != null">
+				PATH_ = #{path, jdbcType=VARCHAR},
+			</if>
+			<if test="locked != null">
+				LOCKED_ = #{locked, jdbcType=INTEGER},
+			</if>
+			<if test="lastUpdateDate != null">
+				LASTUPDATEDATE_ = #{lastUpdateDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastUpdateBy != null">
+				LASTUPDATEBY_ = #{lastUpdateBy, jdbcType=VARCHAR},
+			</if>
+		</trim>
+		where
+		ID_ = #{id, jdbcType=BIGINT}
+
+	</update>
+
+
+	<delete id="deleteWxFileById" parameterType="long">
+		delete from WX_FILE
+		where ID_ = #{id}
+	</delete>
+
+
+	<delete id="deleteWxFiles" parameterType="com.glaf.wechat.query.WxFileQuery">
+		delete from WX_FILE
+		where (
+		ID_ IN
+		<foreach item="x_id" index="index" collection="ids" open="("
+			separator="," close=")">
+			#{x_id}
+		</foreach>
+		)
+	</delete>
+
+
+	<select id="getWxFileById" parameterType="long" resultMap="wxFileResultMap">
+		select * from WX_FILE where ID_ = #{id}
+	</select>
+
+
+	<select id="getWxFiles" parameterType="com.glaf.wechat.query.WxFileQuery"
+		resultMap="wxFileResultMap">
+		select distinct E.*
+		<include refid="selectWxFilesSql" />
+		<choose>
+			<when test="orderBy != null">
+				order by ${orderBy}
+			</when>
+			<otherwise>
+				order by E.CREATEDATE_ desc
+			</otherwise>
+		</choose>
+	</select>
+
+
+	<select id="getWxFileCount" parameterType="com.glaf.wechat.query.WxFileQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectWxFilesSql" />
+	</select>
+
+
+	<sql id="selectWxFilesSql">
+
+		from WX_FILE E
+
+		<where>
+			1 = 1
+
+			<if test="categoryId != null">
+				and E.CATEGORYID_ = #{categoryId}
+			</if>
+
+			<if test="categoryIds != null and categoryIds.size() &gt; 0">
+				and E.CATEGORYID_ IN
+				<foreach item="x_categoryId" index="index" collection="categoryIds"
+					open="(" separator="," close=")">
+					#{x_categoryId}
+				</foreach>
+			</if>
+
+			<if test="titleLike != null and titleLike != '' ">
+				and E.TITLE_ like #{titleLike}
+			</if>
+
+			<if test="filenameLike != null and filenameLike != '' ">
+				and E.FILENAME_ like #{filenameLike}
+			</if>
+
+			<if test="pathLike != null and pathLike != '' ">
+				and E.PATH_ like #{pathLike}
+			</if>
+
+			<if test="locked != null">
+				and E.LOCKED_ = #{locked}
+			</if>
+
+			<if test="uuid != null and uuid != '' ">
+				and E.UUID_ = #{uuid}
+			</if>
+
+			<if test="uuids != null and uuids.size() &gt; 0">
+				and E.UUID_ IN
+				<foreach item="x_uuid" index="index" collection="uuids"
+					open="(" separator="," close=")">
+					#{x_uuid}
+				</foreach>
+			</if>
+
+			<if test="createBy != null and createBy != '' ">
+				and E.CREATEBY_ = #{createBy}
+			</if>
+
+			<if test="createDateGreaterThanOrEqual != null">
+				and E.CREATEDATE_ &gt;= #{createDateGreaterThanOrEqual}
+			</if>
+
+			<if test="createDateLessThanOrEqual != null">
+				and E.CREATEDATE_ &lt;= #{createDateLessThanOrEqual}
+			</if>
+
+		</where>
+	</sql>
+
+</mapper>

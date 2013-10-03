@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.wechat.mapper.WxMenuMapper">
+
+	<resultMap id="wxMenuResultMap" type="com.glaf.wechat.domain.WxMenu">
+		<id property="id" column="ID_" jdbcType="BIGINT" />
+		<result property="parentId" column="PARENT_" jdbcType="BIGINT" />
+		<result property="name" column="NAME_" jdbcType="VARCHAR" />
+		<result property="type" column="TYPE_" jdbcType="VARCHAR" />
+		<result property="key" column="KEY_" jdbcType="VARCHAR" />
+		<result property="url" column="URL_" jdbcType="VARCHAR" />
+		<result property="sort" column="SORT_" jdbcType="INTEGER" />
+		<result property="locked" column="LOCKED_" jdbcType="INTEGER" />
+		<result property="uuid" column="UUID_" jdbcType="VARCHAR" />
+		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
+		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP" />
+		<result property="lastUpdateDate" column="LASTUPDATEDATE_" jdbcType="TIMESTAMP"/>
+        <result property="lastUpdateBy" column="LASTUPDATEBY_" jdbcType="VARCHAR"/>
+	</resultMap>
+
+
+	<insert id="insertWxMenu" parameterType="com.glaf.wechat.domain.WxMenu">
+		insert into WX_MENU
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ID_
+			<if test="parentId != null">
+				,PARENT_
+			</if>
+			<if test="name != null">
+				,NAME_
+			</if>
+			<if test="type != null">
+				,TYPE_
+			</if>
+			<if test="key != null">
+				,KEY_
+			</if>
+			<if test="url != null">
+				,URL_
+			</if>
+			<if test="sort != null">
+				,SORT_
+			</if>
+			<if test="locked != null">
+				,LOCKED_
+			</if>
+			<if test="uuid != null">
+				,UUID_
+			</if>
+			<if test="createBy != null">
+				,CREATEBY_
+			</if>
+			<if test="createDate != null">
+				,CREATEDATE_
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			#{id, jdbcType=BIGINT}
+
+			<if test="parentId != null">
+				,#{parentId, jdbcType=BIGINT}
+			</if>
+			<if test="name != null">
+				,#{name, jdbcType=VARCHAR}
+			</if>
+			<if test="type != null">
+				,#{type, jdbcType=VARCHAR}
+			</if>
+			<if test="key != null">
+				,#{key, jdbcType=VARCHAR}
+			</if>
+			<if test="url != null">
+				,#{url, jdbcType=VARCHAR}
+			</if>
+			<if test="sort != null">
+				,#{sort, jdbcType=INTEGER}
+			</if>
+			<if test="locked != null">
+				,#{locked, jdbcType=INTEGER}
+			</if>
+			<if test="uuid != null">
+				,#{uuid, jdbcType=VARCHAR}
+			</if>
+			<if test="createBy != null">
+				,#{createBy, jdbcType=VARCHAR}
+			</if>
+			<if test="createDate != null">
+				,#{createDate, jdbcType=TIMESTAMP}
+			</if>
+		</trim>
+	</insert>
+
+
+	<update id="updateWxMenu" parameterType="com.glaf.wechat.domain.WxMenu">
+		update WX_MENU
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">
+			<if test="parentId != null">
+				PARENT_ = #{parentId, jdbcType=BIGINT},
+			</if>
+			<if test="name != null">
+				NAME_ = #{name, jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				TYPE_ = #{type, jdbcType=VARCHAR},
+			</if>
+			<if test="key != null">
+				KEY_ = #{key, jdbcType=VARCHAR},
+			</if>
+			<if test="url != null">
+				URL_ = #{url, jdbcType=VARCHAR},
+			</if>
+			<if test="sort != null">
+				SORT_ = #{sort, jdbcType=INTEGER},
+			</if>
+			<if test="locked != null">
+				LOCKED_ = #{locked, jdbcType=INTEGER},
+			</if>
+			<if test="lastUpdateDate != null">
+				LASTUPDATEDATE_ = #{lastUpdateDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastUpdateBy != null">
+				LASTUPDATEBY_ = #{lastUpdateBy, jdbcType=VARCHAR},
+			</if>
+		</trim>
+		where
+		ID_ = #{id, jdbcType=BIGINT}
+
+	</update>
+
+
+	<delete id="deleteWxMenuById" parameterType="long">
+		delete from WX_MENU
+		where ID_ = #{id}
+	</delete>
+
+
+	<delete id="deleteWxMenus" parameterType="com.glaf.wechat.query.WxMenuQuery">
+		delete from WX_MENU
+		where (
+		ID_ IN
+		<foreach item="x_id" index="index" collection="ids" open="("
+			separator="," close=")">
+			#{x_id}
+		</foreach>
+		)
+	</delete>
+
+
+	<select id="getWxMenuById" parameterType="long" resultMap="wxMenuResultMap">
+		select * from WX_MENU where ID_ = #{id}
+	</select>
+
+
+	<select id="getWxMenus" parameterType="com.glaf.wechat.query.WxMenuQuery"
+		resultMap="wxMenuResultMap">
+		select distinct E.*
+		<include refid="selectWxMenusSql" />
+		<choose>
+			<when test="orderBy != null">
+				order by ${orderBy}
+			</when>
+			<otherwise>
+				order by E.SORT_ desc
+			</otherwise>
+		</choose>
+	</select>
+
+
+	<select id="getWxMenuCount" parameterType="com.glaf.wechat.query.WxMenuQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectWxMenusSql" />
+	</select>
+
+
+	<sql id="selectWxMenusSql">
+
+		from WX_MENU E
+
+		<where>
+			1 = 1
+
+			<if test="parentId != null">
+				and E.PARENT_ = #{parentId}
+			</if>
+
+			<if test="parentIds != null and parentIds.size() &gt; 0">
+				and E.PARENT_ IN
+				<foreach item="x_parentId" index="index" collection="parentIds"
+					open="(" separator="," close=")">
+					#{x_parentId}
+				</foreach>
+			</if>
+
+			<if test="name != null and name != '' ">
+				and E.NAME_ = #{name}
+			</if>
+
+			<if test="nameLike != null and nameLike != '' ">
+				and E.NAME_ like #{nameLike}
+			</if>
+
+			<if test="names != null and names.size() &gt; 0">
+				and E.NAME_ IN
+				<foreach item="x_name" index="index" collection="names"
+					open="(" separator="," close=")">
+					#{x_name}
+				</foreach>
+			</if>
+
+			<if test="type != null and type != '' ">
+				and E.TYPE_ = #{type}
+			</if>
+
+			<if test="types != null and types.size() &gt; 0">
+				and E.TYPE_ IN
+				<foreach item="x_type" index="index" collection="types"
+					open="(" separator="," close=")">
+					#{x_type}
+				</foreach>
+			</if>
+
+			<if test="key != null and key != '' ">
+				and E.KEY_ = #{key}
+			</if>
+
+			<if test="keyLike != null and keyLike != '' ">
+				and E.KEY_ like #{keyLike}
+			</if>
+
+			<if test="keys != null and keys.size() &gt; 0">
+				and E.KEY_ IN
+				<foreach item="x_key" index="index" collection="keys" open="("
+					separator="," close=")">
+					#{x_key}
+				</foreach>
+			</if>
+
+			<if test="urlLike != null and urlLike != '' ">
+				and E.URL_ like #{urlLike}
+			</if>
+
+			<if test="sortGreaterThanOrEqual != null">
+				and E.SORT_ &gt;= #{sortGreaterThanOrEqual}
+			</if>
+
+			<if test="sortLessThanOrEqual != null">
+				and E.SORT_ &lt;= #{sortLessThanOrEqual}
+			</if>
+
+			<if test="locked != null">
+				and E.LOCKED_ = #{locked}
+			</if>
+
+			<if test="uuid != null and uuid != '' ">
+				and E.UUID_ = #{uuid}
+			</if>
+
+			<if test="uuids != null and uuids.size() &gt; 0">
+				and E.UUID_ IN
+				<foreach item="x_uuid" index="index" collection="uuids"
+					open="(" separator="," close=")">
+					#{x_uuid}
+				</foreach>
+			</if>
+
+			<if test="createBy != null and createBy != '' ">
+				and E.CREATEBY_ = #{createBy}
+			</if>
+
+			<if test="createDateGreaterThanOrEqual != null">
+				and E.CREATEDATE_ &gt;= #{createDateGreaterThanOrEqual}
+			</if>
+
+			<if test="createDateLessThanOrEqual != null">
+				and E.CREATEDATE_ &lt;= #{createDateLessThanOrEqual}
+			</if>
+
+		</where>
+	</sql>
+
+</mapper>

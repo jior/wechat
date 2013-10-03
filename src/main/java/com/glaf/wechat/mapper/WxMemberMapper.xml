@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.wechat.mapper.WxMemberMapper">
+
+	<resultMap id="wxMemberResultMap" type="com.glaf.wechat.domain.WxMember">
+		<id property="id" column="ID_" jdbcType="BIGINT" />
+		<result property="cardNo" column="CARDNO_" jdbcType="VARCHAR" />
+		<result property="name" column="NAME_" jdbcType="VARCHAR" />
+		<result property="telephone" column="TELEPHONE_" jdbcType="VARCHAR" />
+		<result property="mobile" column="MOBILE_" jdbcType="VARCHAR" />
+		<result property="mail" column="MAIL_" jdbcType="VARCHAR" />
+		<result property="qq" column="qq_" jdbcType="VARCHAR" />
+		<result property="address" column="ADDRESS_" jdbcType="VARCHAR" />
+		<result property="status" column="STATUS_" jdbcType="INTEGER" />
+		<result property="uuid" column="UUID_" jdbcType="VARCHAR" />
+		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
+		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP" />
+		<result property="lastUpdateDate" column="LASTUPDATEDATE_" jdbcType="TIMESTAMP"/>
+        <result property="lastUpdateBy" column="LASTUPDATEBY_" jdbcType="VARCHAR"/>
+	</resultMap>
+
+
+	<insert id="insertWxMember" parameterType="com.glaf.wechat.domain.WxMember">
+		insert into WX_MEMBER
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ID_
+			<if test="cardNo != null">
+				,CARDNO_
+			</if>
+			<if test="name != null">
+				,NAME_
+			</if>
+			<if test="telephone != null">
+				,TELEPHONE_
+			</if>
+			<if test="mobile != null">
+				,MOBILE_
+			</if>
+			<if test="mail != null">
+				,MAIL_
+			</if>
+			<if test="qq != null">
+				,qq_
+			</if>
+			<if test="address != null">
+				,ADDRESS_
+			</if>
+			<if test="status != null">
+				,STATUS_
+			</if>
+			<if test="uuid != null">
+				,UUID_
+			</if>
+			<if test="createBy != null">
+				,CREATEBY_
+			</if>
+			<if test="createDate != null">
+				,CREATEDATE_
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			#{id, jdbcType=BIGINT}
+
+			<if test="cardNo != null">
+				,#{cardNo, jdbcType=VARCHAR}
+			</if>
+			<if test="name != null">
+				,#{name, jdbcType=VARCHAR}
+			</if>
+			<if test="telephone != null">
+				,#{telephone, jdbcType=VARCHAR}
+			</if>
+			<if test="mobile != null">
+				,#{mobile, jdbcType=VARCHAR}
+			</if>
+			<if test="mail != null">
+				,#{mail, jdbcType=VARCHAR}
+			</if>
+			<if test="qq != null">
+				,#{qq, jdbcType=VARCHAR}
+			</if>
+			<if test="address != null">
+				,#{address, jdbcType=VARCHAR}
+			</if>
+			<if test="status != null">
+				,#{status, jdbcType=INTEGER}
+			</if>
+			<if test="uuid != null">
+				,#{uuid, jdbcType=VARCHAR}
+			</if>
+			<if test="createBy != null">
+				,#{createBy, jdbcType=VARCHAR}
+			</if>
+			<if test="createDate != null">
+				,#{createDate, jdbcType=TIMESTAMP}
+			</if>
+		</trim>
+	</insert>
+
+
+	<update id="updateWxMember" parameterType="com.glaf.wechat.domain.WxMember">
+		update WX_MEMBER
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">
+			<if test="cardNo != null">
+				CARDNO_ = #{cardNo, jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				NAME_ = #{name, jdbcType=VARCHAR},
+			</if>
+			<if test="telephone != null">
+				TELEPHONE_ = #{telephone, jdbcType=VARCHAR},
+			</if>
+			<if test="mobile != null">
+				MOBILE_ = #{mobile, jdbcType=VARCHAR},
+			</if>
+			<if test="mail != null">
+				MAIL_ = #{mail, jdbcType=VARCHAR},
+			</if>
+			<if test="qq != null">
+				qq_ = #{qq, jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				ADDRESS_ = #{address, jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				STATUS_ = #{status, jdbcType=INTEGER},
+			</if>
+			<if test="lastUpdateDate != null">
+				LASTUPDATEDATE_ = #{lastUpdateDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastUpdateBy != null">
+				LASTUPDATEBY_ = #{lastUpdateBy, jdbcType=VARCHAR},
+			</if>
+		</trim>
+		where
+		ID_ = #{id, jdbcType=BIGINT}
+
+	</update>
+
+
+	<delete id="deleteWxMemberById" parameterType="long">
+		delete from
+		WX_MEMBER
+		where ID_ = #{id}
+	</delete>
+
+
+	<delete id="deleteWxMembers" parameterType="com.glaf.wechat.query.WxMemberQuery">
+		delete from WX_MEMBER
+		where (
+		ID_ IN
+		<foreach item="x_id" index="index" collection="ids" open="("
+			separator="," close=")">
+			#{x_id}
+		</foreach>
+		)
+	</delete>
+
+
+	<select id="getWxMemberById" parameterType="long" resultMap="wxMemberResultMap">
+		select * from WX_MEMBER where ID_ = #{id}
+	</select>
+
+
+	<select id="getWxMembers" parameterType="com.glaf.wechat.query.WxMemberQuery"
+		resultMap="wxMemberResultMap">
+		select distinct E.*
+		<include refid="selectWxMembersSql" />
+		<choose>
+			<when test="orderBy != null">
+				order by ${orderBy}
+			</when>
+			<otherwise>
+				order by E.CREATEDATE_ desc
+			</otherwise>
+		</choose>
+	</select>
+
+
+	<select id="getWxMemberCount" parameterType="com.glaf.wechat.query.WxMemberQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectWxMembersSql" />
+	</select>
+
+
+	<sql id="selectWxMembersSql">
+
+		from WX_MEMBER E
+
+		<where>
+			1 = 1
+
+			<if test="cardNo != null and cardNo != '' ">
+				and E.CARDNO_ = #{cardNo}
+			</if>
+
+			<if test="cardNoLike != null and cardNoLike != '' ">
+				and E.CARDNO_ like #{cardNoLike}
+			</if>
+
+			<if test="cardNos != null and cardNos.size() &gt; 0">
+				and E.CARDNO_ IN
+				<foreach item="x_cardNo" index="index" collection="cardNos"
+					open="(" separator="," close=")">
+					#{x_cardNo}
+				</foreach>
+			</if>
+
+			<if test="name != null and name != '' ">
+				and E.NAME_ = #{name}
+			</if>
+
+			<if test="nameLike != null and nameLike != '' ">
+				and E.NAME_ like #{nameLike}
+			</if>
+
+			<if test="names != null and names.size() &gt; 0">
+				and E.NAME_ IN
+				<foreach item="x_name" index="index" collection="names"
+					open="(" separator="," close=")">
+					#{x_name}
+				</foreach>
+			</if>
+
+			<if test="telephoneLike != null and telephoneLike != '' ">
+				and E.TELEPHONE_ like #{telephoneLike}
+			</if>
+
+			<if test="mobileLike != null and mobileLike != '' ">
+				and E.MOBILE_ like #{mobileLike}
+			</if>
+
+			<if test="mailLike != null and mailLike != '' ">
+				and E.MAIL_ like #{mailLike}
+			</if>
+
+			<if test="qqLike != null and qqLike != '' ">
+				and E.qq_ like #{qqLike}
+			</if>
+
+			<if test="addressLike != null and addressLike != '' ">
+				and E.ADDRESS_ like #{addressLike}
+			</if>
+
+			<if test="status != null">
+				and E.STATUS_ = #{status}
+			</if>
+
+			<if test="uuid != null and uuid != '' ">
+				and E.UUID_ = #{uuid}
+			</if>
+
+			<if test="uuids != null and uuids.size() &gt; 0">
+				and E.UUID_ IN
+				<foreach item="x_uuid" index="index" collection="uuids"
+					open="(" separator="," close=")">
+					#{x_uuid}
+				</foreach>
+			</if>
+
+			<if test="createBy != null and createBy != '' ">
+				and E.CREATEBY_ = #{createBy}
+			</if>
+
+			<if test="createDateGreaterThanOrEqual != null">
+				and E.CREATEDATE_ &gt;= #{createDateGreaterThanOrEqual}
+			</if>
+
+			<if test="createDateLessThanOrEqual != null">
+				and E.CREATEDATE_ &lt;= #{createDateLessThanOrEqual}
+			</if>
+
+		</where>
+	</sql>
+
+</mapper>

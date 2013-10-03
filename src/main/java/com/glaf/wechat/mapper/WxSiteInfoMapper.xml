@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.wechat.mapper.WxSiteInfoMapper">
+
+	<resultMap id="wxSiteInfoResultMap" type="com.glaf.wechat.domain.WxSiteInfo">
+		<id property="id" column="ID_" jdbcType="BIGINT" />
+		<result property="linkman" column="LINKMAN_" jdbcType="VARCHAR" />
+		<result property="telephone" column="TELEPHONE_" jdbcType="VARCHAR" />
+		<result property="mobile" column="MOBILE_" jdbcType="VARCHAR" />
+		<result property="mail" column="MAIL_" jdbcType="VARCHAR" />
+		<result property="qq" column="qq_" jdbcType="VARCHAR" />
+		<result property="address" column="ADDRESS_" jdbcType="VARCHAR" />
+		<result property="siteUrl" column="SITEURL_" jdbcType="VARCHAR" />
+		<result property="remark" column="REMARK_" jdbcType="VARCHAR" />
+		<result property="uuid" column="UUID_" jdbcType="VARCHAR" />
+		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
+		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP" />
+		<result property="lastUpdateDate" column="LASTUPDATEDATE_" jdbcType="TIMESTAMP"/>
+        <result property="lastUpdateBy" column="LASTUPDATEBY_" jdbcType="VARCHAR"/>
+	</resultMap>
+
+
+	<insert id="insertWxSiteInfo" parameterType="com.glaf.wechat.domain.WxSiteInfo">
+		insert into WX_SITE_INFO
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ID_
+			<if test="linkman != null">
+				,LINKMAN_
+			</if>
+			<if test="telephone != null">
+				,TELEPHONE_
+			</if>
+			<if test="mobile != null">
+				,MOBILE_
+			</if>
+			<if test="mail != null">
+				,MAIL_
+			</if>
+			<if test="qq != null">
+				,qq_
+			</if>
+			<if test="address != null">
+				,ADDRESS_
+			</if>
+			<if test="siteUrl != null">
+				,SITEURL_
+			</if>
+			<if test="remark != null">
+				,REMARK_
+			</if>
+			<if test="uuid != null">
+				,UUID_
+			</if>
+			<if test="createBy != null">
+				,CREATEBY_
+			</if>
+			<if test="createDate != null">
+				,CREATEDATE_
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			#{id, jdbcType=BIGINT}
+
+			<if test="linkman != null">
+				,#{linkman, jdbcType=VARCHAR}
+			</if>
+			<if test="telephone != null">
+				,#{telephone, jdbcType=VARCHAR}
+			</if>
+			<if test="mobile != null">
+				,#{mobile, jdbcType=VARCHAR}
+			</if>
+			<if test="mail != null">
+				,#{mail, jdbcType=VARCHAR}
+			</if>
+			<if test="qq != null">
+				,#{qq, jdbcType=VARCHAR}
+			</if>
+			<if test="address != null">
+				,#{address, jdbcType=VARCHAR}
+			</if>
+			<if test="siteUrl != null">
+				,#{siteUrl, jdbcType=VARCHAR}
+			</if>
+			<if test="remark != null">
+				,#{remark, jdbcType=VARCHAR}
+			</if>
+			<if test="uuid != null">
+				,#{uuid, jdbcType=VARCHAR}
+			</if>
+			<if test="createBy != null">
+				,#{createBy, jdbcType=VARCHAR}
+			</if>
+			<if test="createDate != null">
+				,#{createDate, jdbcType=TIMESTAMP}
+			</if>
+		</trim>
+	</insert>
+
+
+	<update id="updateWxSiteInfo" parameterType="com.glaf.wechat.domain.WxSiteInfo">
+		update WX_SITE_INFO
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">
+			<if test="linkman != null">
+				LINKMAN_ = #{linkman, jdbcType=VARCHAR},
+			</if>
+			<if test="telephone != null">
+				TELEPHONE_ = #{telephone, jdbcType=VARCHAR},
+			</if>
+			<if test="mobile != null">
+				MOBILE_ = #{mobile, jdbcType=VARCHAR},
+			</if>
+			<if test="mail != null">
+				MAIL_ = #{mail, jdbcType=VARCHAR},
+			</if>
+			<if test="qq != null">
+				qq_ = #{qq, jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				ADDRESS_ = #{address, jdbcType=VARCHAR},
+			</if>
+			<if test="siteUrl != null">
+				SITEURL_ = #{siteUrl, jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				REMARK_ = #{remark, jdbcType=VARCHAR},
+			</if>
+			<if test="lastUpdateDate != null">
+				LASTUPDATEDATE_ = #{lastUpdateDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastUpdateBy != null">
+				LASTUPDATEBY_ = #{lastUpdateBy, jdbcType=VARCHAR},
+			</if>
+		</trim>
+		where
+		ID_ = #{id, jdbcType=BIGINT}
+
+	</update>
+
+
+	<delete id="deleteWxSiteInfoById" parameterType="long">
+		delete from
+		WX_SITE_INFO
+		where ID_ = #{id}
+	</delete>
+
+
+	<delete id="deleteWxSiteInfos" parameterType="com.glaf.wechat.query.WxSiteInfoQuery">
+		delete from WX_SITE_INFO
+		where (
+		ID_ IN
+		<foreach item="x_id" index="index" collection="ids" open="("
+			separator="," close=")">
+			#{x_id}
+		</foreach>
+		)
+	</delete>
+
+
+	<select id="getWxSiteInfoById" parameterType="long"
+		resultMap="wxSiteInfoResultMap">
+		select * from WX_SITE_INFO where ID_ = #{id}
+	</select>
+
+
+	<select id="getWxSiteInfos" parameterType="com.glaf.wechat.query.WxSiteInfoQuery"
+		resultMap="wxSiteInfoResultMap">
+		select distinct E.*
+		<include refid="selectWxSiteInfosSql" />
+		<choose>
+			<when test="orderBy != null">
+				order by ${orderBy}
+			</when>
+			<otherwise>
+				order by E.CREATEDATE_ desc
+			</otherwise>
+		</choose>
+	</select>
+
+
+	<select id="getWxSiteInfoCount" parameterType="com.glaf.wechat.query.WxSiteInfoQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectWxSiteInfosSql" />
+	</select>
+
+
+	<sql id="selectWxSiteInfosSql">
+
+		from WX_SITE_INFO E
+
+		<where>
+			1 = 1
+
+			<if test="linkman != null and linkman != '' ">
+				and E.LINKMAN_ = #{linkman}
+			</if>
+
+			<if test="linkmanLike != null and linkmanLike != '' ">
+				and E.LINKMAN_ like #{linkmanLike}
+			</if>
+
+			<if test="telephoneLike != null and telephoneLike != '' ">
+				and E.TELEPHONE_ like #{telephoneLike}
+			</if>
+
+
+			<if test="mobile != null and mobile != '' ">
+				and E.MOBILE_ = #{mobile}
+			</if>
+
+			<if test="mobileLike != null and mobileLike != '' ">
+				and E.MOBILE_ like #{mobileLike}
+			</if>
+
+			<if test="mail != null and mail != '' ">
+				and E.MAIL_ = #{mail}
+			</if>
+
+			<if test="mailLike != null and mailLike != '' ">
+				and E.MAIL_ like #{mailLike}
+			</if>
+
+			<if test="qq != null and qq != '' ">
+				and E.qq_ = #{qq}
+			</if>
+
+			<if test="qqLike != null and qqLike != '' ">
+				and E.qq_ like #{qqLike}
+			</if>
+
+			<if test="addressLike != null and addressLike != '' ">
+				and E.ADDRESS_ like #{addressLike}
+			</if>
+
+			<if test="siteUrlLike != null and siteUrlLike != '' ">
+				and E.SITEURL_ like #{siteUrlLike}
+			</if>
+
+			<if test="remarkLike != null and remarkLike != '' ">
+				and E.REMARK_ like #{remarkLike}
+			</if>
+
+			<if test="uuid != null and uuid != '' ">
+				and E.UUID_ = #{uuid}
+			</if>
+
+			<if test="uuids != null and uuids.size() &gt; 0">
+				and E.UUID_ IN
+				<foreach item="x_uuid" index="index" collection="uuids"
+					open="(" separator="," close=")">
+					#{x_uuid}
+				</foreach>
+			</if>
+
+			<if test="createBy != null and createBy != '' ">
+				and E.CREATEBY_ = #{createBy}
+			</if>
+
+			<if test="createDateGreaterThanOrEqual != null">
+				and E.CREATEDATE_ &gt;= #{createDateGreaterThanOrEqual}
+			</if>
+
+			<if test="createDateLessThanOrEqual != null">
+				and E.CREATEDATE_ &lt;= #{createDateLessThanOrEqual}
+			</if>
+
+		</where>
+	</sql>
+
+</mapper>

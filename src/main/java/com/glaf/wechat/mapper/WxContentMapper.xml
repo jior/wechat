@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.wechat.mapper.WxContentMapper">
+
+	<resultMap id="wxContentResultMap" type="com.glaf.wechat.domain.WxContent">
+		<id property="id" column="ID_" jdbcType="BIGINT" />
+		<result property="categoryId" column="CATEGORYID_" jdbcType="BIGINT" />
+		<result property="title" column="TITLE_" jdbcType="VARCHAR" />
+		<result property="content" column="CONTENT_" jdbcType="VARCHAR" />
+		<result property="author" column="AUTHOR_" jdbcType="VARCHAR" />
+		<result property="status" column="STATUS_" jdbcType="INTEGER" />
+		<result property="priority" column="PRIORTY_" jdbcType="INTEGER" />
+		<result property="type" column="TYPE_" jdbcType="VARCHAR" />
+		<result property="uuid" column="UUID_" jdbcType="VARCHAR" />
+		<result property="keywords" column="KEYWORDS_" jdbcType="VARCHAR" />
+		<result property="keywordsCount" column="KEYWORDSCOUNT_"
+			jdbcType="INTEGER" />
+		<result property="summary" column="SUMMARY_" jdbcType="VARCHAR" />
+		<result property="icon" column="ICON_" jdbcType="VARCHAR" />
+		<result property="bigIcon" column="BIGICON_" jdbcType="VARCHAR" />
+		<result property="smallIcon" column="SMALLICON_" jdbcType="VARCHAR" />
+		<result property="url" column="URL_" jdbcType="VARCHAR" />
+		<result property="sort" column="SORT_" jdbcType="INTEGER" />
+		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
+		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP" />
+		<result property="lastUpdateDate" column="LASTUPDATEDATE_"
+			jdbcType="TIMESTAMP" />
+		<result property="lastUpdateBy" column="LASTUPDATEBY_"
+			jdbcType="VARCHAR" />
+	</resultMap>
+
+
+	<insert id="insertWxContent" parameterType="com.glaf.wechat.domain.WxContent">
+		insert into WX_CONTENT
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ID_
+			<if test="categoryId != null">
+				,CATEGORYID_
+			</if>
+			<if test="title != null">
+				,TITLE_
+			</if>
+			<if test="content != null">
+				,CONTENT_
+			</if>
+			<if test="author != null">
+				,AUTHOR_
+			</if>
+			<if test="status != null">
+				,STATUS_
+			</if>
+			<if test="priority != null">
+				,PRIORTY_
+			</if>
+			<if test="type != null">
+				,TYPE_
+			</if>
+			<if test="uuid != null">
+				,UUID_
+			</if>
+			<if test="keywords != null">
+				,KEYWORDS_
+			</if>
+			<if test="keywordsCount != null">
+				,KEYWORDSCOUNT_
+			</if>
+			<if test="summary != null">
+				,SUMMARY_
+			</if>
+			<if test="icon != null">
+				,ICON_
+			</if>
+			<if test="bigIcon != null">
+				,BIGICON_
+			</if>
+			<if test="smallIcon != null">
+				,SMALLICON_
+			</if>
+			<if test="sort != null">
+				,SORT_
+			</if>
+			<if test="url != null">
+				,URL_
+			</if>
+			<if test="createBy != null">
+				,CREATEBY_
+			</if>
+			<if test="createDate != null">
+				,CREATEDATE_
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			#{id, jdbcType=BIGINT}
+
+			<if test="categoryId != null">
+				,#{categoryId, jdbcType=BIGINT}
+			</if>
+			<if test="title != null">
+				,#{title, jdbcType=VARCHAR}
+			</if>
+			<if test="content != null">
+				,#{content, jdbcType=VARCHAR}
+			</if>
+			<if test="author != null">
+				,#{author, jdbcType=VARCHAR}
+			</if>
+			<if test="status != null">
+				,#{status, jdbcType=INTEGER}
+			</if>
+			<if test="priority != null">
+				,#{priority, jdbcType=INTEGER}
+			</if>
+			<if test="type != null">
+				,#{type, jdbcType=VARCHAR}
+			</if>
+			<if test="uuid != null">
+				,#{uuid, jdbcType=VARCHAR}
+			</if>
+			<if test="keywords != null">
+				,#{keywords, jdbcType=VARCHAR}
+			</if>
+			<if test="keywordsCount != null">
+				,#{keywordsCount, jdbcType=INTEGER}
+			</if>
+			<if test="summary != null">
+				,#{summary, jdbcType=VARCHAR}
+			</if>
+			<if test="icon != null">
+				,#{icon, jdbcType=VARCHAR}
+			</if>
+			<if test="bigIcon != null">
+				,#{bigIcon, jdbcType=VARCHAR}
+			</if>
+			<if test="smallIcon != null">
+				,#{smallIcon, jdbcType=VARCHAR}
+			</if>
+			<if test="sort != null">
+				,#{sort, jdbcType=INTEGER}
+			</if>
+			<if test="url != null">
+				,#{url, jdbcType=VARCHAR}
+			</if>
+			<if test="createBy != null">
+				,#{createBy, jdbcType=VARCHAR}
+			</if>
+			<if test="createDate != null">
+				,#{createDate, jdbcType=TIMESTAMP}
+			</if>
+		</trim>
+	</insert>
+
+
+	<update id="updateWxContent" parameterType="com.glaf.wechat.domain.WxContent">
+		update WX_CONTENT
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">
+			<if test="categoryId != null">
+				CATEGORYID_ = #{categoryId, jdbcType=BIGINT},
+			</if>
+			<if test="title != null">
+				TITLE_ = #{title, jdbcType=VARCHAR},
+			</if>
+			<if test="content != null">
+				CONTENT_ = #{content, jdbcType=VARCHAR},
+			</if>
+			<if test="author != null">
+				AUTHOR_ = #{author, jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				STATUS_ = #{status, jdbcType=INTEGER},
+			</if>
+			<if test="priority != null">
+				PRIORTY_ = #{priority, jdbcType=INTEGER},
+			</if>
+			<if test="type != null">
+				TYPE_ = #{type, jdbcType=VARCHAR},
+			</if>
+			<if test="keywords != null">
+				KEYWORDS_ = #{keywords, jdbcType=VARCHAR},
+			</if>
+			<if test="keywordsCount != null">
+				KEYWORDSCOUNT_ = #{keywordsCount, jdbcType=INTEGER},
+			</if>
+			<if test="summary != null">
+				SUMMARY_ = #{summary, jdbcType=VARCHAR},
+			</if>
+			<if test="icon != null">
+				ICON_ = #{icon, jdbcType=VARCHAR},
+			</if>
+			<if test="bigIcon != null">
+				BIGICON_ = #{bigIcon, jdbcType=VARCHAR},
+			</if>
+			<if test="smallIcon != null">
+				SMALLICON_ = #{smallIcon, jdbcType=VARCHAR},
+			</if>
+			<if test="sort != null">
+				SORT_ = #{sort, jdbcType=INTEGER},
+			</if>
+			<if test="url != null">
+				URL_ = #{url, jdbcType=VARCHAR},
+			</if>
+			<if test="lastUpdateDate != null">
+				LASTUPDATEDATE_ = #{lastUpdateDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastUpdateBy != null">
+				LASTUPDATEBY_ = #{lastUpdateBy, jdbcType=VARCHAR},
+			</if>
+		</trim>
+		where
+		ID_ = #{id, jdbcType=BIGINT}
+
+	</update>
+
+
+	<delete id="deleteWxContentById" parameterType="long">
+		delete from
+		WX_CONTENT
+		where ID_ = #{id}
+	</delete>
+
+
+	<delete id="deleteWxContents" parameterType="com.glaf.wechat.query.WxContentQuery">
+		delete from WX_CONTENT
+		where (
+		ID_ IN
+		<foreach item="x_id" index="index" collection="ids" open="("
+			separator="," close=")">
+			#{x_id}
+		</foreach>
+		)
+	</delete>
+
+
+	<select id="getWxContentById" parameterType="long" resultMap="wxContentResultMap">
+		select * from WX_CONTENT where ID_ = #{id}
+	</select>
+
+
+	<select id="getWxContents" parameterType="com.glaf.wechat.query.WxContentQuery"
+		resultMap="wxContentResultMap">
+		select distinct E.*
+		<include refid="selectWxContentsSql" />
+		<choose>
+			<when test="orderBy != null">
+				order by ${orderBy}
+			</when>
+			<otherwise>
+				order by E.SORT_ desc, E.CREATEDATE_ desc
+			</otherwise>
+		</choose>
+	</select>
+
+
+	<select id="getWxContentCount" parameterType="com.glaf.wechat.query.WxContentQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectWxContentsSql" />
+	</select>
+
+
+	<sql id="selectWxContentsSql">
+
+		from WX_CONTENT E
+
+		<where>
+			1 = 1
+
+			<if test="categoryId != null">
+				and E.CATEGORYID_ = #{categoryId}
+			</if>
+
+			<if test="categoryIds != null and categoryIds.size() &gt; 0">
+				and E.CATEGORYID_ IN
+				<foreach item="x_categoryId" index="index" collection="categoryIds"
+					open="(" separator="," close=")">
+					#{x_categoryId}
+				</foreach>
+			</if>
+
+			<if test="titleLike != null and titleLike != '' ">
+				and E.TITLE_ like #{titleLike}
+			</if>
+
+			<if test="contentLike != null and contentLike != '' ">
+				and E.CONTENT_ like #{contentLike}
+			</if>
+
+			<if test="status != null">
+				and E.STATUS_ = #{status}
+			</if>
+
+			<if test="priority != null">
+				and E.PRIORTY_ = #{priority}
+			</if>
+
+			<if test="priorityGreaterThanOrEqual != null">
+				and E.PRIORTY_ &gt;= #{priorityGreaterThanOrEqual}
+			</if>
+
+			<if test="priorityLessThanOrEqual != null">
+				and E.PRIORTY_ &lt;= #{priorityLessThanOrEqual}
+			</if>
+
+			<if test="type != null and type != '' ">
+				and E.TYPE_ = #{type}
+			</if>
+
+			<if test="types != null and types.size() &gt; 0">
+				and E.TYPE_ IN
+				<foreach item="x_type" index="index" collection="types"
+					open="(" separator="," close=")">
+					#{x_type}
+				</foreach>
+			</if>
+
+			<if test="uuid != null and uuid != '' ">
+				and E.UUID_ = #{uuid}
+			</if>
+
+			<if test="uuids != null and uuids.size() &gt; 0">
+				and E.UUID_ IN
+				<foreach item="x_uuid" index="index" collection="uuids"
+					open="(" separator="," close=")">
+					#{x_uuid}
+				</foreach>
+			</if>
+
+			<if test="keywordsLike != null and keywordsLike != '' ">
+				and E.KEYWORDS_ like #{keywordsLike}
+			</if>
+
+			<if test="summaryLike != null and summaryLike != '' ">
+				and E.SUMMARY_ like #{summaryLike}
+			</if>
+
+			<if test="urlLike != null and urlLike != '' ">
+				and E.URL_ like #{urlLike}
+			</if>
+
+			<if test="createBy != null and createBy != '' ">
+				and E.CREATEBY_ = #{createBy}
+			</if>
+
+			<if test="createDateGreaterThanOrEqual != null">
+				and E.CREATEDATE_ &gt;= #{createDateGreaterThanOrEqual}
+			</if>
+
+			<if test="createDateLessThanOrEqual != null">
+				and E.CREATEDATE_ &lt;= #{createDateLessThanOrEqual}
+			</if>
+
+		</where>
+	</sql>
+
+</mapper>

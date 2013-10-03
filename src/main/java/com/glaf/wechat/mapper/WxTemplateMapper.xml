@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.wechat.mapper.WxTemplateMapper">
+
+	<resultMap id="wxTemplateResultMap" type="com.glaf.wechat.domain.WxTemplate">
+		<id property="id" column="ID_" jdbcType="BIGINT" />
+		<result property="categoryId" column="CATEGORYID_" jdbcType="BIGINT" />
+		<result property="skinId" column="SKINID_" jdbcType="VARCHAR" />
+		<result property="skinImage" column="SKINIMAGE_" jdbcType="VARCHAR" />
+		<result property="name" column="NAME_" jdbcType="VARCHAR" />
+		<result property="desc" column="DESC_" jdbcType="VARCHAR" />
+		<result property="content" column="CONTENT_" jdbcType="VARCHAR" />
+		<result property="type" column="TYPE_" jdbcType="VARCHAR" />
+		<result property="url" column="URL_" jdbcType="VARCHAR" />
+		<result property="defaultFlag" column="DEFAULTFLAG_" jdbcType="INTEGER" />
+		<result property="locked" column="LOCKED_" jdbcType="INTEGER" />
+		<result property="uuid" column="UUID_" jdbcType="VARCHAR" />
+		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
+		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP" />
+		<result property="lastUpdateDate" column="LASTUPDATEDATE_"
+			jdbcType="TIMESTAMP" />
+		<result property="lastUpdateBy" column="LASTUPDATEBY_"
+			jdbcType="VARCHAR" />
+	</resultMap>
+
+
+	<insert id="insertWxTemplate" parameterType="com.glaf.wechat.domain.WxTemplate">
+		insert into WX_TEMPLATE
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ID_
+			<if test="categoryId != null">
+				,CATEGORYID_
+			</if>
+			<if test="skinId != null">
+				,SKINID_
+			</if>
+			<if test="skinImage != null">
+				,SKINIMAGE_
+			</if>
+			<if test="name != null">
+				,NAME_
+			</if>
+			<if test="desc != null">
+				,DESC_
+			</if>
+			<if test="content != null">
+				,CONTENT_
+			</if>
+			<if test="type != null">
+				,TYPE_
+			</if>
+			<if test="url != null">
+				,URL_
+			</if>
+			<if test="defaultFlag != null">
+				,DEFAULTFLAG_
+			</if>
+			<if test="locked != null">
+				,LOCKED_
+			</if>
+			<if test="uuid != null">
+				,UUID_
+			</if>
+			<if test="createBy != null">
+				,CREATEBY_
+			</if>
+			<if test="createDate != null">
+				,CREATEDATE_
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			#{id, jdbcType=BIGINT}
+
+			<if test="categoryId != null">
+				,#{categoryId, jdbcType=BIGINT}
+			</if>
+			<if test="skinId != null">
+				,#{skinId, jdbcType=VARCHAR}
+			</if>
+			<if test="skinImage != null">
+				,#{skinImage, jdbcType=VARCHAR}
+			</if>
+			<if test="name != null">
+				,#{name, jdbcType=VARCHAR}
+			</if>
+			<if test="desc != null">
+				,#{desc, jdbcType=VARCHAR}
+			</if>
+			<if test="content != null">
+				,#{content, jdbcType=VARCHAR}
+			</if>
+			<if test="type != null">
+				,#{type, jdbcType=VARCHAR}
+			</if>
+			<if test="url != null">
+				,#{url, jdbcType=VARCHAR}
+			</if>
+			<if test="defaultFlag != null">
+				,#{defaultFlag, jdbcType=INTEGER}
+			</if>
+			<if test="locked != null">
+				,#{locked, jdbcType=INTEGER}
+			</if>
+			<if test="uuid != null">
+				,#{uuid, jdbcType=VARCHAR}
+			</if>
+			<if test="createBy != null">
+				,#{createBy, jdbcType=VARCHAR}
+			</if>
+			<if test="createDate != null">
+				,#{createDate, jdbcType=TIMESTAMP}
+			</if>
+		</trim>
+	</insert>
+
+
+	<update id="updateWxTemplate" parameterType="com.glaf.wechat.domain.WxTemplate">
+		update WX_TEMPLATE
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">
+			<if test="categoryId != null">
+				CATEGORYID_ = #{categoryId, jdbcType=BIGINT},
+			</if>
+			<if test="skinId != null">
+				SKINID_ = #{skinId, jdbcType=VARCHAR},
+			</if>
+			<if test="skinImage != null">
+				SKINIMAGE_ = #{skinImage, jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				NAME_ = #{name, jdbcType=VARCHAR},
+			</if>
+			<if test="desc != null">
+				DESC_ = #{desc, jdbcType=VARCHAR},
+			</if>
+			<if test="content != null">
+				CONTENT_ = #{content, jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				TYPE_ = #{type, jdbcType=VARCHAR},
+			</if>
+			<if test="url != null">
+				URL_ = #{url, jdbcType=VARCHAR},
+			</if>
+			<if test="defaultFlag != null">
+				DEFAULTFLAG_ = #{defaultFlag, jdbcType=INTEGER},
+			</if>
+			<if test="locked != null">
+				LOCKED_ = #{locked, jdbcType=INTEGER},
+			</if>
+			<if test="lastUpdateDate != null">
+				LASTUPDATEDATE_ = #{lastUpdateDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastUpdateBy != null">
+				LASTUPDATEBY_ = #{lastUpdateBy, jdbcType=VARCHAR},
+			</if>
+		</trim>
+		where
+		ID_ = #{id, jdbcType=BIGINT}
+
+	</update>
+
+
+	<delete id="deleteWxTemplateById" parameterType="long">
+		delete from
+		WX_TEMPLATE
+		where ID_ = #{id}
+	</delete>
+
+
+	<delete id="deleteWxTemplates" parameterType="com.glaf.wechat.query.WxTemplateQuery">
+		delete from WX_TEMPLATE
+		where (
+		ID_ IN
+		<foreach item="x_id" index="index" collection="ids" open="("
+			separator="," close=")">
+			#{x_id}
+		</foreach>
+		)
+	</delete>
+
+
+	<select id="getWxTemplateById" parameterType="long"
+		resultMap="wxTemplateResultMap">
+		select * from WX_TEMPLATE where ID_ = #{id}
+	</select>
+
+
+	<select id="getWxTemplates" parameterType="com.glaf.wechat.query.WxTemplateQuery"
+		resultMap="wxTemplateResultMap">
+		select distinct E.*
+		<include refid="selectWxTemplatesSql" />
+		<choose>
+			<when test="orderBy != null">
+				order by ${orderBy}
+			</when>
+			<otherwise>
+				order by E.CREATEDATE_ desc
+			</otherwise>
+		</choose>
+	</select>
+
+
+	<select id="getWxTemplateCount" parameterType="com.glaf.wechat.query.WxTemplateQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectWxTemplatesSql" />
+	</select>
+
+
+	<sql id="selectWxTemplatesSql">
+
+		from WX_TEMPLATE E
+
+		<where>
+			1 = 1
+
+			<if test="categoryId != null">
+				and E.CATEGORYID_ = #{categoryId}
+			</if>
+
+			<if test="categoryIds != null and categoryIds.size() &gt; 0">
+				and E.CATEGORYID_ IN
+				<foreach item="x_categoryId" index="index" collection="categoryIds"
+					open="(" separator="," close=")">
+					#{x_categoryId}
+				</foreach>
+			</if>
+
+			<if test="skinId != null and skinId != '' ">
+				and E.SKINID_ = #{skinId}
+			</if>
+
+			<if test="skinIdLike != null and skinIdLike != '' ">
+				and E.SKINID_ like #{skinIdLike}
+			</if>
+
+			<if test="skinIds != null and skinIds.size() &gt; 0">
+				and E.SKINID_ IN
+				<foreach item="x_skinId" index="index" collection="skinIds"
+					open="(" separator="," close=")">
+					#{x_skinId}
+				</foreach>
+			</if>
+
+			<if test="skinImageLike != null and skinImageLike != '' ">
+				and E.SKINIMAGE_ like #{skinImageLike}
+			</if>
+
+			<if test="type != null and type != '' ">
+				and E.TYPE_ = #{type}
+			</if>
+
+			<if test="types != null and types.size() &gt; 0">
+				and E.TYPE_ IN
+				<foreach item="x_type" index="index" collection="types"
+					open="(" separator="," close=")">
+					#{x_type}
+				</foreach>
+			</if>
+
+			<if test="urlLike != null and urlLike != '' ">
+				and E.URL_ like #{urlLike}
+			</if>
+
+			<if test="defaultFlag != null">
+				and E.DEFAULTFLAG_ = #{defaultFlag}
+			</if>
+
+			<if test="locked != null">
+				and E.LOCKED_ = #{locked}
+			</if>
+
+			<if test="uuid != null and uuid != '' ">
+				and E.UUID_ = #{uuid}
+			</if>
+
+			<if test="uuids != null and uuids.size() &gt; 0">
+				and E.UUID_ IN
+				<foreach item="x_uuid" index="index" collection="uuids"
+					open="(" separator="," close=")">
+					#{x_uuid}
+				</foreach>
+			</if>
+
+			<if test="createBy != null and createBy != '' ">
+				and E.CREATEBY_ = #{createBy}
+			</if>
+
+			<if test="createDateGreaterThanOrEqual != null">
+				and E.CREATEDATE_ &gt;= #{createDateGreaterThanOrEqual}
+			</if>
+
+			<if test="createDateLessThanOrEqual != null">
+				and E.CREATEDATE_ &lt;= #{createDateLessThanOrEqual}
+			</if>
+
+		</where>
+	</sql>
+
+</mapper>
