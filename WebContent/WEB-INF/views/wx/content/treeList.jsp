@@ -107,7 +107,10 @@ limitations under the License.
 					{title:'封面', field:'cover', width:80, formatter:formatterCover},
 					{title:'标题',field:'title', width:180},
 					{title:'链接',field:'url', width:320},
-					{title:'状态',field:'status', width:90, formatter:formatterStatus},
+					{title:'关键词数', field:'keywordsCount', align:'right', width:80},
+					{title:'关键词匹配', field:'keywordsMatchType', align:'center', width:120, formatter:formatterMatchType},
+					{title:'顺序', field:'sort', align:'right', width:60},
+					{title:'时间', field:'createDate', align:'center', width:90},
 					{title:'功能键', field:'functionKey', width:90, formatter:formatterKeys}
 				]],
 				rownumbers:false,
@@ -141,6 +144,13 @@ limitations under the License.
 		return "<a href='javascript:editRow("+row.id+");'>修改</a>&nbsp;<a href='javascript:deleteRow("+row.id+");'>删除</a>";
 	}
 
+	function formatterMatchType(val, row){
+        if(val == "1"){
+			return '<span style="background:green; color:white; font: bold 13px 宋体;">完全</span>';
+	   } else  {
+			return '<span style="background:green; color:white; font: bold 13px 宋体;">包含</span>';
+	   }  
+	}
 
 	function editRow(rowId){
 	    var link = '<%=request.getContextPath()%>/mx/wx/wxContent/edit?type=${type}&id='+rowId;

@@ -351,6 +351,7 @@ public class WxContentController {
 		wxContent.setKeywordsMatchType(request
 				.getParameter("keywordsMatchType"));
 		wxContent.setSort(RequestUtils.getInt(request, "sort"));
+		wxContent.setRelationIds(request.getParameter("relationIds"));
 		wxContent.setSummary(request.getParameter("summary"));
 		wxContent.setIcon(request.getParameter("icon"));
 		wxContent.setBigIcon(request.getParameter("bigIcon"));
@@ -384,6 +385,7 @@ public class WxContentController {
 			wxContent.setKeywordsMatchType(request
 					.getParameter("keywordsMatchType"));
 			wxContent.setSort(RequestUtils.getInt(request, "sort"));
+			wxContent.setRelationIds(request.getParameter("relationIds"));
 			wxContent.setSummary(request.getParameter("summary"));
 			wxContent.setIcon(request.getParameter("icon"));
 			wxContent.setBigIcon(request.getParameter("bigIcon"));
@@ -430,6 +432,7 @@ public class WxContentController {
 			wxContent.setKeywordsMatchType(request
 					.getParameter("keywordsMatchType"));
 			wxContent.setSort(RequestUtils.getInt(request, "sort"));
+			wxContent.setRelationIds(request.getParameter("relationIds"));
 			wxContent.setSummary(request.getParameter("summary"));
 			wxContent.setIcon(request.getParameter("icon"));
 			wxContent.setBigIcon(request.getParameter("bigIcon"));

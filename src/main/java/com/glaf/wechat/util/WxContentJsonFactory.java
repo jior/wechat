@@ -21,6 +21,7 @@ package com.glaf.wechat.util;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.core.util.DateUtils;
 import com.glaf.wechat.domain.WxContent;
@@ -78,6 +79,9 @@ public class WxContentJsonFactory {
 		}
 		if (jsonObject.containsKey("summary")) {
 			model.setSummary(jsonObject.getString("summary"));
+		}
+		if (jsonObject.containsKey("relationIds")) {
+			model.setRelationIds(jsonObject.getString("relationIds"));
 		}
 		if (jsonObject.containsKey("icon")) {
 			model.setIcon(jsonObject.getString("icon"));
@@ -147,6 +151,9 @@ public class WxContentJsonFactory {
 		if (model.getSummary() != null) {
 			jsonObject.put("summary", model.getSummary());
 		}
+		if (model.getRelationIds() != null) {
+			jsonObject.put("relationIds", model.getRelationIds());
+		}
 		if (model.getIcon() != null) {
 			jsonObject.put("icon", model.getIcon());
 		}
@@ -184,6 +191,16 @@ public class WxContentJsonFactory {
 		if (model.getLastUpdateBy() != null) {
 			jsonObject.put("lastUpdateBy", model.getLastUpdateBy());
 		}
+
+		if (model.getRelations() != null && !model.getRelations().isEmpty()) {
+			JSONArray arrayObject = new JSONArray();
+			for (WxContent content : model.getRelations()) {
+				JSONObject json = toJsonObject(content);
+				arrayObject.add(json);
+			}
+			jsonObject.put("relations", arrayObject);
+		}
+
 		return jsonObject;
 	}
 
@@ -222,6 +239,9 @@ public class WxContentJsonFactory {
 		if (model.getSummary() != null) {
 			jsonObject.put("summary", model.getSummary());
 		}
+		if (model.getRelationIds() != null) {
+			jsonObject.put("relationIds", model.getRelationIds());
+		}
 		if (model.getIcon() != null) {
 			jsonObject.put("icon", model.getIcon());
 		}
@@ -255,6 +275,15 @@ public class WxContentJsonFactory {
 		}
 		if (model.getLastUpdateBy() != null) {
 			jsonObject.put("lastUpdateBy", model.getLastUpdateBy());
+		}
+
+		if (model.getRelations() != null && !model.getRelations().isEmpty()) {
+			ArrayNode arrayObject = new ObjectMapper().createArrayNode();
+			for (WxContent content : model.getRelations()) {
+				ObjectNode json = toObjectNode(content);
+				arrayObject.add(json);
+			}
+			jsonObject.put("relations", arrayObject);
 		}
 		return jsonObject;
 	}

@@ -106,7 +106,7 @@ limitations under the License.
 		<td width="20%" align="left">微信接口URL</td>
 		<td align="left">
             <input id="callBackUrl" name="callBackUrl" type="text" 
-			       class="easyui-validatebox x-text"  size="50"
+			       class="easyui-validatebox x-text"  size="80"
 				   value="${wxConfig.callBackUrl}"
 				   data-options="required:true"/>
 		</td>
@@ -115,7 +115,7 @@ limitations under the License.
 		<td width="20%" align="left">微信接口Token</td>
 		<td align="left">
             <input id="token" name="token" type="text" 
-			       class="easyui-validatebox x-text"   size="50"
+			       class="easyui-validatebox x-text"   size="80"
 				   value="${wxConfig.token}"
 				   data-options="required:true"/>
 		</td>
@@ -124,7 +124,7 @@ limitations under the License.
 		<td width="20%" align="left">应用编号AppId</td>
 		<td align="left">
             <input id="appId" name="appId" type="text" 
-			       class="easyui-validatebox x-text"  size="50" 
+			       class="easyui-validatebox x-text"  size="80" 
 				   value="${wxConfig.appId}"
 				   data-options="required:true"/>
 		</td>
@@ -133,7 +133,7 @@ limitations under the License.
 		<td width="20%" align="left">应用密码AppSecret</td>
 		<td align="left">
             <input id="appSecret" name="appSecret" type="text" 
-			       class="easyui-validatebox x-text"  size="50" 
+			       class="easyui-validatebox x-text"  size="80" 
 				   value="${wxConfig.appSecret}"
 				   data-options="required:true"/>
 		</td>
@@ -144,7 +144,7 @@ limitations under the License.
             <input id="lbsPosition" name="lbsPosition" type="text" 
 			       class="easyui-validatebox x-text"  size="5" 
 				   value="${wxConfig.lbsPosition}"
-				   data-options="required:true"/>（千米）
+				   data-options="required:true"/>（米）
 		</td>
 	</tr>
 	<tr>

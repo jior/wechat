@@ -129,7 +129,7 @@ limitations under the License.
 		<tr>
 			<td width="18%" align="left">描述</td>
 			<td align="left">
-			    <textarea  id="desc" name="desc" class="x-textarea"  rows="5" cols="38" style="width:284px;height:90px;">${wxFile.desc}</textarea> 
+			    <textarea  id="desc" name="desc" class="x-textarea"  rows="5" cols="38" style="width:264px;height:90px;">${wxFile.desc}</textarea> 
 			</td>
 		</tr>
 
@@ -149,13 +149,13 @@ limitations under the License.
 		</tr>
 
 		<tr>
-			<td align="left" width="18%" height="32">启用/锁定</td>
+			<td align="left" width="18%" height="32">启用/禁用</td>
 			<td align="left" width="82%" height="27">
 			<input type="hidden" id="locked" name="locked" value="${wxFile.locked}">
 			启用 <input type="radio" id="lockedx" name="lockedx" value="0"
 				<c:if test="${wxFile.locked == 0}">checked</c:if>
 				onclick='javascript:document.getElementById("locked").value="0";'>
-			锁定 <input type="radio" id="lockedx" name="lockedx" value="1"
+			禁用 <input type="radio" id="lockedx" name="lockedx" value="1"
 				<c:if test="${wxFile.locked == 1}">checked</c:if>
 				onclick='javascript:document.getElementById("locked").value="1";'>
 			</td>

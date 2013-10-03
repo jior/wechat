@@ -145,32 +145,30 @@ limitations under the License.
 		</td>
 	</tr>
     <tr>
-		<td width="15%" align="left">封面</td>
-		<td align="left">
-			 <input id="icon" name="icon" type="text" 
-			       class="easyui-validatebox x-text"  size="80"
-			       data-options="required:true"
-				   value="${wxContent.icon}" onclick="javascript:chooseImage();"/>
-			&nbsp; <img src="<%=request.getContextPath()%>/images/icon.gif" border="0"  onclick="javascript:chooseImage();"/>
-		    <c:if test="${not empty wxContent.icon }">
-			   <br> <img src="<%=request.getContextPath()%>/${wxContent.icon}" border="0"/>
-			</c:if>
-		</td>
-	</tr>
-	<tr>
-		<td width="15%" align="left" valign="middle">内容</td>
+		<td width="15%" align="left" valign="middle">图文封面</td>
 		<td align="left" valign="middle">
-			<textarea  id="content" name="content" class="x-textarea"  rows="5" cols="38" style="width:545px;height:380px;">${wxContent.content}</textarea> 
+		    <c:if test="${not empty wxContent.icon }">
+			<img src="<%=request.getContextPath()%>/${wxContent.icon}" width="60" height="60" border="0"/>&nbsp; 
+			</c:if>
+			<br>建议图片大小720*400像素（即宽度720，高度400）
+			<br>
+			<input id="icon" name="icon" type="text" 
+			       class="easyui-validatebox x-text"  
+				   size="80"
+			       data-options="required:false"
+				   value="${wxContent.icon}" onclick="javascript:chooseImage();"/>
+			&nbsp; <img src="<%=request.getContextPath()%>/images/icon.gif" border="0" onclick="javascript:chooseImage();"/>
+			
 		</td>
 	</tr>
-	 
+
 	<tr>
-		<td width="15%" align="left">优先级</td>
+		<td width="15%" align="left">顺序号</td>
 		<td align="left">
-			<input id="priority" name="priority" type="text" 
+			<input id="sort" name="sort" type="text" 
 			       class="easyui-numberspinner"  size="5"
 				   increment="1"  
-				   value="${wxContent.priority}"/>
+				   value="${wxContent.sort}"/>&nbsp;(同级栏目顺序越大越靠前)
 		</td>
 	</tr>
 	<tr>
@@ -197,7 +195,7 @@ limitations under the License.
 	</tr>
 	 
 	<tr>
-		<td width="15%" align="left">摘要</td>
+		<td width="15%" align="left">简介</td>
 		<td align="left">
 			<textarea  id="summary" name="summary" class="x-textarea"  rows="5" cols="38" style="width:545px;height:60px;">${wxContent.summary}</textarea> 
 		</td>
@@ -206,13 +204,20 @@ limitations under the License.
 	<tr>
 		<td width="20%" align="left">是否发布</td>
 		<td align="left">
-			 <select  id="status" name="status">
+			 <select id="status" name="status">
 				<option value="0" >未发布
 				<option value="1" selected>发布
 		    </select>
 			 <script type="text/javascript">
 			    jQuery("#status").val("${wxContent.status}");
 			 </script>
+		</td>
+	</tr>
+
+	<tr>
+		<td width="15%" align="left" valign="middle">内容</td>
+		<td align="left" valign="middle">
+			<textarea  id="content" name="content" class="x-textarea"  rows="5" cols="38" style="width:545px;height:380px;">${wxContent.content}</textarea> 
 		</td>
 	</tr>
 	 

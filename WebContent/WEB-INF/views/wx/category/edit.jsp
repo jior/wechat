@@ -180,7 +180,7 @@ limitations under the License.
 			       data-options="required:false"
 				   value="${wxCategory.icon}" onclick="javascript:chooseImage();"/>
 			&nbsp; <img src="<%=request.getContextPath()%>/images/icon.gif" border="0"  onclick="javascript:chooseImage();"/>
-           <br>用于二级页面菜单
+           <br>用于二级页面菜单及其他栏目信息时的小图标
 		</td>
 	</tr>
 	<tr>

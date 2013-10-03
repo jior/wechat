@@ -50,6 +50,8 @@ public interface WxContentService {
 	 * @return
 	 */
 	WxContent getWxContent(Long id);
+	
+	WxContent getWxContentWithRelations(Long id);
 
 	/**
 	 * 根据查询参数获取记录总数

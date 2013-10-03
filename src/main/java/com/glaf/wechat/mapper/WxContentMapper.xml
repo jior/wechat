@@ -17,7 +17,9 @@
 		<result property="keywords" column="KEYWORDS_" jdbcType="VARCHAR" />
 		<result property="keywordsCount" column="KEYWORDSCOUNT_"
 			jdbcType="INTEGER" />
-		<result property="keywordsMatchType" column="KEYWORDSMATCHTYPE_" jdbcType="VARCHAR" />
+		<result property="keywordsMatchType" column="KEYWORDSMATCHTYPE_"
+			jdbcType="VARCHAR" />
+		<result property="relationIds" column="RELATIONIDS_" jdbcType="VARCHAR" />
 		<result property="summary" column="SUMMARY_" jdbcType="VARCHAR" />
 		<result property="icon" column="ICON_" jdbcType="VARCHAR" />
 		<result property="bigIcon" column="BIGICON_" jdbcType="VARCHAR" />
@@ -69,6 +71,9 @@
 			</if>
 			<if test="keywordsMatchType != null">
 				,KEYWORDSMATCHTYPE_
+			</if>
+			<if test="relationIds != null">
+				,RELATIONIDS_
 			</if>
 			<if test="summary != null">
 				,SUMMARY_
@@ -132,6 +137,9 @@
 			<if test="keywordsMatchType != null">
 				,#{keywordsMatchType, jdbcType=VARCHAR}
 			</if>
+			<if test="relationIds != null">
+				,#{relationIds, jdbcType=VARCHAR}
+			</if>
 			<if test="summary != null">
 				,#{summary, jdbcType=VARCHAR}
 			</if>
@@ -192,7 +200,11 @@
 				KEYWORDSCOUNT_ = #{keywordsCount, jdbcType=INTEGER},
 			</if>
 			<if test="keywordsMatchType != null">
-				KEYWORDSMATCHTYPE_ = #{keywordsMatchType, jdbcType=VARCHAR},
+				KEYWORDSMATCHTYPE_ = #{keywordsMatchType,
+				jdbcType=VARCHAR},
+			</if>
+			<if test="relationIds != null">
+				RELATIONIDS_ = #{relationIds, jdbcType=VARCHAR},
 			</if>
 			<if test="summary != null">
 				SUMMARY_ = #{summary, jdbcType=VARCHAR},
@@ -287,6 +299,14 @@
 				<foreach item="x_categoryId" index="index" collection="categoryIds"
 					open="(" separator="," close=")">
 					#{x_categoryId}
+				</foreach>
+			</if>
+
+			<if test="relationIds != null and relationIds &gt; 0">
+				and E.ID_ IN
+				<foreach item="x_relationId" index="index" collection="relationIds"
+					open="(" separator="," close=")">
+					#{x_relationId}
 				</foreach>
 			</if>
 

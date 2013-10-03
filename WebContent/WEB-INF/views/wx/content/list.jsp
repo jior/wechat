@@ -59,9 +59,9 @@ limitations under the License.
 					{title:'链接地址', field:'url', align:'left', width:180, formatter:formatterLink},
 					{title:'关键词数', field:'keywordsCount', align:'right', width:80},
 					{title:'关键词匹配', field:'keywordsMatchType', align:'center', width:120, formatter:formatterMatchType},
-					{title:'优先级', field:'priority', align:'right', width:80},
+					{title:'顺序', field:'sort', align:'right', width:60},
 					{title:'时间', field:'createDate', align:'center', width:90},
-					{title:'状态', field:'status', width:90, align:'center', formatter:formatterStatus},
+					{title:'状态', field:'status', align:'center', width:90, formatter:formatterStatus},
 					{title:'功能键', field:'functionKey', align:'center', width:90, formatter:formatterKeys}
 				]],
 				rownumbers: false,

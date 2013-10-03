@@ -41,6 +41,7 @@ public class WxContentQuery extends DataQuery {
 	protected String urlLike;
 	protected Date createDateGreaterThanOrEqual;
 	protected Date createDateLessThanOrEqual;
+	protected List<String> relationIds;
 
 	public WxContentQuery() {
 
@@ -114,6 +115,10 @@ public class WxContentQuery extends DataQuery {
 
 	public Date getCreateDateLessThanOrEqual() {
 		return createDateLessThanOrEqual;
+	}
+
+	public List<Long> getIds() {
+		return ids;
 	}
 
 	public String getKeywordsLike() {
@@ -217,6 +222,10 @@ public class WxContentQuery extends DataQuery {
 
 	public Integer getPriorityLessThanOrEqual() {
 		return priorityLessThanOrEqual;
+	}
+
+	public List<String> getRelationIds() {
+		return relationIds;
 	}
 
 	public Integer getStatus() {
@@ -347,6 +356,14 @@ public class WxContentQuery extends DataQuery {
 		return this;
 	}
 
+	public WxContentQuery relationIds(List<String> relationIds) {
+		if (relationIds == null) {
+			throw new RuntimeException("relationIds is empty ");
+		}
+		this.relationIds = relationIds;
+		return this;
+	}
+
 	public void setCategoryId(Long categoryId) {
 		this.categoryId = categoryId;
 	}
@@ -368,6 +385,10 @@ public class WxContentQuery extends DataQuery {
 		this.createDateLessThanOrEqual = createDateLessThanOrEqual;
 	}
 
+	public void setIds(List<Long> ids) {
+		this.ids = ids;
+	}
+
 	public void setKeywordsLike(String keywordsLike) {
 		this.keywordsLike = keywordsLike;
 	}
@@ -386,6 +407,10 @@ public class WxContentQuery extends DataQuery {
 
 	public void setPriorityLessThanOrEqual(Integer priorityLessThanOrEqual) {
 		this.priorityLessThanOrEqual = priorityLessThanOrEqual;
+	}
+
+	public void setRelationIds(List<String> relationIds) {
+		this.relationIds = relationIds;
 	}
 
 	public void setSummaryLike(String summaryLike) {

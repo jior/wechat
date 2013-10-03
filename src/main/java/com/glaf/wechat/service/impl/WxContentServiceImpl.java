@@ -34,6 +34,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.core.dao.EntityDAO;
 import com.glaf.core.id.IdGenerator;
+import com.glaf.core.util.StringTools;
 import com.glaf.core.util.UUID32;
 import com.glaf.wechat.domain.WxContent;
 import com.glaf.wechat.mapper.WxContentMapper;
@@ -60,7 +61,6 @@ public class WxContentServiceImpl implements WxContentService {
 	}
 
 	public int count(WxContentQuery query) {
-		query.ensureInitialized();
 		return wxContentMapper.getWxContentCount(query);
 	}
 
@@ -100,8 +100,24 @@ public class WxContentServiceImpl implements WxContentService {
 		return rows;
 	}
 
+	public WxContent getWxContentWithRelations(Long id) {
+		if (id == null) {
+			return null;
+		}
+		WxContent wxContent = wxContentMapper.getWxContentById(id);
+		if (wxContent != null
+				&& StringUtils.isNotEmpty(wxContent.getRelationIds())) {
+			List<String> relationIds = StringTools.split(wxContent
+					.getRelationIds());
+			WxContentQuery query = new WxContentQuery();
+			query.relationIds(relationIds);
+			List<WxContent> relations = wxContentMapper.getWxContents(query);
+			wxContent.setRelations(relations);
+		}
+		return wxContent;
+	}
+
 	public List<WxContent> list(WxContentQuery query) {
-		query.ensureInitialized();
 		List<WxContent> list = wxContentMapper.getWxContents(query);
 		return list;
 	}

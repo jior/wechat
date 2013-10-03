@@ -87,7 +87,7 @@ public class WxConfig implements java.io.Serializable, JSONable {
 	protected String defaultReply;
 
 	/**
-	 * LBS信息距离
+	 * LBS信息距离(单位：米)
 	 */
 	@Column(name = "LBSPOSITION_")
 	protected Integer lbsPosition;

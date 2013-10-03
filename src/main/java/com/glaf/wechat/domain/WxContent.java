@@ -18,7 +18,9 @@
 
 package com.glaf.wechat.domain;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -121,8 +123,14 @@ public class WxContent implements java.io.Serializable, JSONable {
 	/**
 	 * 关键字匹配类型
 	 */
-	@Column(name = "KEYWORDSMATCHTYPE_")
+	@Column(name = "KEYWORDSMATCHTYPE_", length = 10)
 	protected String keywordsMatchType;
+
+	/**
+	 * 关联的内容编号，多个之间用逗号隔开
+	 */
+	@Column(name = "RELATIONIDS_", length = 100)
+	protected String relationIds;
 
 	/**
 	 * 摘要
@@ -179,6 +187,9 @@ public class WxContent implements java.io.Serializable, JSONable {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "LASTUPDATEDATE_")
 	protected Date lastUpdateDate;
+
+	@javax.persistence.Transient
+	protected List<WxContent> relations = new ArrayList<WxContent>();
 
 	public WxContent() {
 
@@ -238,6 +249,14 @@ public class WxContent implements java.io.Serializable, JSONable {
 
 	public int getPriority() {
 		return priority;
+	}
+
+	public String getRelationIds() {
+		return relationIds;
+	}
+
+	public List<WxContent> getRelations() {
+		return relations;
 	}
 
 	public String getSmallIcon() {
@@ -330,6 +349,14 @@ public class WxContent implements java.io.Serializable, JSONable {
 
 	public void setPriority(int priority) {
 		this.priority = priority;
+	}
+
+	public void setRelationIds(String relationIds) {
+		this.relationIds = relationIds;
+	}
+
+	public void setRelations(List<WxContent> relations) {
+		this.relations = relations;
 	}
 
 	public void setSmallIcon(String smallIcon) {
