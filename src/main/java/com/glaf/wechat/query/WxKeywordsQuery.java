@@ -14,7 +14,6 @@ public class WxKeywordsQuery extends DataQuery {
 	protected String keywords;
 	protected String keywordsLike;
 	protected String keywordsMatchType;
-	protected String createBy;
 	protected List<String> createBys;
 	protected Date createDateGreaterThanOrEqual;
 	protected Date createDateLessThanOrEqual;
@@ -52,14 +51,6 @@ public class WxKeywordsQuery extends DataQuery {
 			throw new RuntimeException("contentIds is empty ");
 		}
 		this.contentIds = contentIds;
-		return this;
-	}
-
-	public WxKeywordsQuery createBy(String createBy) {
-		if (createBy == null) {
-			throw new RuntimeException("createBy is null");
-		}
-		this.createBy = createBy;
 		return this;
 	}
 
@@ -111,10 +102,6 @@ public class WxKeywordsQuery extends DataQuery {
 
 	public List<Long> getContentIds() {
 		return contentIds;
-	}
-
-	public String getCreateBy() {
-		return createBy;
 	}
 
 	public List<String> getCreateBys() {
@@ -242,10 +229,6 @@ public class WxKeywordsQuery extends DataQuery {
 
 	public void setContentIds(List<Long> contentIds) {
 		this.contentIds = contentIds;
-	}
-
-	public void setCreateBy(String createBy) {
-		this.createBy = createBy;
 	}
 
 	public void setCreateBys(List<String> createBys) {

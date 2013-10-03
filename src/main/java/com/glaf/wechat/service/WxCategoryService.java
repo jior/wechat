@@ -50,6 +50,14 @@ public interface WxCategoryService {
 	 * @return
 	 */
 	WxCategory getWxCategory(Long id);
+	
+	
+	/**
+	 * 根据uuid获取一条记录
+	 * 
+	 * @return
+	 */
+	WxCategory getWxCategoryByUUID(String uuid);
 
 	/**
 	 * 根据查询参数获取记录总数

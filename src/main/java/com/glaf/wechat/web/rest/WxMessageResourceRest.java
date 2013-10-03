@@ -42,46 +42,19 @@ import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.util.PageResult;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
-import com.glaf.core.util.ResponseUtils;
-import com.glaf.core.util.StringTools;
 import com.glaf.core.util.Tools;
+
 import com.glaf.wechat.domain.WxMessage;
 import com.glaf.wechat.query.WxMessageQuery;
 import com.glaf.wechat.service.WxMessageService;
 
 @Controller
-@Path("/rs/wx/wxMessage")
+@Path("/rs/wx/message")
 public class WxMessageResourceRest {
 	protected static final Log logger = LogFactory
 			.getLog(WxMessageResourceRest.class);
 
 	protected WxMessageService wxMessageService;
-
-	@POST
-	@Path("/deleteAll")
-	@ResponseBody
-	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
-	public byte[] deleteAll(@Context HttpServletRequest request)
-			throws IOException {
-		String rowIds = request.getParameter("ids");
-		if (rowIds != null) {
-			List<Long> ids = StringTools.splitToLong(rowIds);
-			if (ids != null && !ids.isEmpty()) {
-				wxMessageService.deleteByIds(ids);
-			}
-		}
-		return ResponseUtils.responseJsonResult(true);
-	}
-
-	@POST
-	@Path("/delete")
-	@ResponseBody
-	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
-	public byte[] deleteById(@Context HttpServletRequest request)
-			throws IOException {
-		wxMessageService.deleteById(RequestUtils.getLong(request, "id"));
-		return ResponseUtils.responseJsonResult(true);
-	}
 
 	@GET
 	@POST
@@ -145,7 +118,7 @@ public class WxMessageResourceRest {
 				for (WxMessage wxMessage : list) {
 					JSONObject rowJSON = wxMessage.toJsonObject();
 					rowJSON.put("id", wxMessage.getId());
-					rowJSON.put("wxMessageId", wxMessage.getId());
+					rowJSON.put("messageId", wxMessage.getId());
 					rowJSON.put("startIndex", ++start);
 					rowsJSON.add(rowJSON);
 				}
@@ -157,34 +130,6 @@ public class WxMessageResourceRest {
 			result.put("total", total);
 		}
 		return result.toJSONString().getBytes("UTF-8");
-	}
-
-	@POST
-	@Path("/saveWxMessage")
-	@ResponseBody
-	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
-	public byte[] saveWxMessage(@Context HttpServletRequest request) {
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		WxMessage wxMessage = new WxMessage();
-		try {
-			Tools.populate(wxMessage, params);
-
-			wxMessage.setName(request.getParameter("name"));
-			wxMessage.setMobile(request.getParameter("mobile"));
-			wxMessage.setTitle(request.getParameter("title"));
-			wxMessage.setContent(request.getParameter("content"));
-			wxMessage.setUuid(request.getParameter("uuid"));
-			wxMessage.setCreateBy(request.getParameter("createBy"));
-			wxMessage
-					.setCreateDate(RequestUtils.getDate(request, "createDate"));
-
-			this.wxMessageService.save(wxMessage);
-
-			return ResponseUtils.responseJsonResult(true);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-		return ResponseUtils.responseJsonResult(false);
 	}
 
 	@javax.annotation.Resource
@@ -208,7 +153,7 @@ public class WxMessageResourceRest {
 			result = wxMessage.toJsonObject();
 
 			result.put("id", wxMessage.getId());
-			result.put("wxMessageId", wxMessage.getId());
+			result.put("messageId", wxMessage.getId());
 		}
 		return result.toJSONString().getBytes("UTF-8");
 	}

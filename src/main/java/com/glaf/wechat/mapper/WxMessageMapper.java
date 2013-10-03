@@ -31,6 +31,8 @@ public interface WxMessageMapper {
 	void deleteWxMessageById(Long id);
 
 	WxMessage getWxMessageById(Long id);
+	
+	WxMessage getWxMessageByUUID(String uuid);
 
 	int getWxMessageCount(WxMessageQuery query);
 

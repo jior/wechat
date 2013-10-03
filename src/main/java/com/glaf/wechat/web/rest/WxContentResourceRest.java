@@ -42,46 +42,18 @@ import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.util.PageResult;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
-import com.glaf.core.util.ResponseUtils;
-import com.glaf.core.util.StringTools;
 import com.glaf.core.util.Tools;
 import com.glaf.wechat.domain.WxContent;
 import com.glaf.wechat.query.WxContentQuery;
 import com.glaf.wechat.service.WxContentService;
 
 @Controller
-@Path("/rs/wx/wxContent")
+@Path("/rs/wx/content")
 public class WxContentResourceRest {
 	protected static final Log logger = LogFactory
 			.getLog(WxContentResourceRest.class);
 
 	protected WxContentService wxContentService;
-
-	@POST
-	@Path("/deleteAll")
-	@ResponseBody
-	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
-	public byte[] deleteAll(@Context HttpServletRequest request)
-			throws IOException {
-		String rowIds = request.getParameter("ids");
-		if (rowIds != null) {
-			List<Long> ids = StringTools.splitToLong(rowIds);
-			if (ids != null && !ids.isEmpty()) {
-				wxContentService.deleteByIds(ids);
-			}
-		}
-		return ResponseUtils.responseJsonResult(true);
-	}
-
-	@POST
-	@Path("/delete")
-	@ResponseBody
-	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
-	public byte[] deleteById(@Context HttpServletRequest request)
-			throws IOException {
-		wxContentService.deleteById(RequestUtils.getLong(request, "id"));
-		return ResponseUtils.responseJsonResult(true);
-	}
 
 	@GET
 	@POST
@@ -145,7 +117,7 @@ public class WxContentResourceRest {
 				for (WxContent wxContent : list) {
 					JSONObject rowJSON = wxContent.toJsonObject();
 					rowJSON.put("id", wxContent.getId());
-					rowJSON.put("wxContentId", wxContent.getId());
+					rowJSON.put("contentId", wxContent.getId());
 					rowJSON.put("startIndex", ++start);
 					rowsJSON.add(rowJSON);
 				}
@@ -157,45 +129,6 @@ public class WxContentResourceRest {
 			result.put("total", total);
 		}
 		return result.toJSONString().getBytes("UTF-8");
-	}
-
-	@POST
-	@Path("/saveWxContent")
-	@ResponseBody
-	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
-	public byte[] saveWxContent(@Context HttpServletRequest request) {
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		WxContent wxContent = new WxContent();
-		try {
-			Tools.populate(wxContent, params);
-
-			wxContent
-					.setCategoryId(RequestUtils.getLong(request, "categoryId"));
-			wxContent.setTitle(request.getParameter("title"));
-			wxContent.setContent(request.getParameter("content"));
-			wxContent.setStatus(RequestUtils.getInt(request, "status"));
-			wxContent.setPriority(RequestUtils.getInt(request, "priority"));
-			wxContent.setType(request.getParameter("type"));
-			wxContent.setUuid(request.getParameter("uuid"));
-			wxContent.setKeywords(request.getParameter("keywords"));
-			wxContent.setKeywordsCount(RequestUtils.getInt(request,
-					"keywordsCount"));
-			wxContent.setSummary(request.getParameter("summary"));
-			wxContent.setIcon(request.getParameter("icon"));
-			wxContent.setBigIcon(request.getParameter("bigIcon"));
-			wxContent.setSmallIcon(request.getParameter("smallIcon"));
-			wxContent.setUrl(request.getParameter("url"));
-			wxContent.setCreateBy(request.getParameter("createBy"));
-			wxContent
-					.setCreateDate(RequestUtils.getDate(request, "createDate"));
-
-			this.wxContentService.save(wxContent);
-
-			return ResponseUtils.responseJsonResult(true);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-		return ResponseUtils.responseJsonResult(false);
 	}
 
 	@javax.annotation.Resource
@@ -217,9 +150,8 @@ public class WxContentResourceRest {
 		JSONObject result = new JSONObject();
 		if (wxContent != null) {
 			result = wxContent.toJsonObject();
-
 			result.put("id", wxContent.getId());
-			result.put("wxContentId", wxContent.getId());
+			result.put("contentId", wxContent.getId());
 		}
 		return result.toJSONString().getBytes("UTF-8");
 	}

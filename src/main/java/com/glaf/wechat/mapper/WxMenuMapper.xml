@@ -16,8 +16,10 @@
 		<result property="uuid" column="UUID_" jdbcType="VARCHAR" />
 		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
 		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP" />
-		<result property="lastUpdateDate" column="LASTUPDATEDATE_" jdbcType="TIMESTAMP"/>
-        <result property="lastUpdateBy" column="LASTUPDATEBY_" jdbcType="VARCHAR"/>
+		<result property="lastUpdateDate" column="LASTUPDATEDATE_"
+			jdbcType="TIMESTAMP" />
+		<result property="lastUpdateBy" column="LASTUPDATEBY_"
+			jdbcType="VARCHAR" />
 	</resultMap>
 
 
@@ -152,6 +154,11 @@
 
 	<select id="getWxMenuById" parameterType="long" resultMap="wxMenuResultMap">
 		select * from WX_MENU where ID_ = #{id}
+	</select>
+
+
+	<select id="getWxMenuByUUID" parameterType="string" resultMap="wxMenuResultMap">
+		select * from WX_MENU where UUID_ = #{uuid}
 	</select>
 
 

@@ -42,46 +42,19 @@ import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.util.PageResult;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
-import com.glaf.core.util.ResponseUtils;
-import com.glaf.core.util.StringTools;
 import com.glaf.core.util.Tools;
+
 import com.glaf.wechat.domain.WxCategory;
 import com.glaf.wechat.query.WxCategoryQuery;
 import com.glaf.wechat.service.WxCategoryService;
 
 @Controller
-@Path("/rs/wx/wxCategory")
+@Path("/rs/wx/category")
 public class WxCategoryResourceRest {
 	protected static final Log logger = LogFactory
 			.getLog(WxCategoryResourceRest.class);
 
 	protected WxCategoryService wxCategoryService;
-
-	@POST
-	@Path("/deleteAll")
-	@ResponseBody
-	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
-	public byte[] deleteAll(@Context HttpServletRequest request)
-			throws IOException {
-		String rowIds = request.getParameter("ids");
-		if (rowIds != null) {
-			List<Long> ids = StringTools.splitToLong(rowIds);
-			if (ids != null && !ids.isEmpty()) {
-				wxCategoryService.deleteByIds(ids);
-			}
-		}
-		return ResponseUtils.responseJsonResult(true);
-	}
-
-	@POST
-	@Path("/delete")
-	@ResponseBody
-	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
-	public byte[] deleteById(@Context HttpServletRequest request)
-			throws IOException {
-		wxCategoryService.deleteById(RequestUtils.getLong(request, "id"));
-		return ResponseUtils.responseJsonResult(true);
-	}
 
 	@GET
 	@POST
@@ -145,7 +118,7 @@ public class WxCategoryResourceRest {
 				for (WxCategory wxCategory : list) {
 					JSONObject rowJSON = wxCategory.toJsonObject();
 					rowJSON.put("id", wxCategory.getId());
-					rowJSON.put("wxCategoryId", wxCategory.getId());
+					rowJSON.put("categoryId", wxCategory.getId());
 					rowJSON.put("startIndex", ++start);
 					rowsJSON.add(rowJSON);
 				}
@@ -157,43 +130,6 @@ public class WxCategoryResourceRest {
 			result.put("total", total);
 		}
 		return result.toJSONString().getBytes("UTF-8");
-	}
-
-	@POST
-	@Path("/saveWxCategory")
-	@ResponseBody
-	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
-	public byte[] saveWxCategory(@Context HttpServletRequest request) {
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		WxCategory wxCategory = new WxCategory();
-		try {
-			Tools.populate(wxCategory, params);
-
-			wxCategory.setParentId(RequestUtils.getLong(request, "parentId"));
-			wxCategory.setTreeId(request.getParameter("treeId"));
-			wxCategory.setSort(RequestUtils.getInt(request, "sort"));
-			wxCategory.setIcon(request.getParameter("icon"));
-			wxCategory.setIconCls(request.getParameter("iconCls"));
-			wxCategory.setCoverIcon(request.getParameter("coverIcon"));
-			wxCategory.setIndexShow(RequestUtils.getInt(request, "indexShow"));
-			wxCategory.setLocked(RequestUtils.getInt(request, "locked"));
-			wxCategory.setName(request.getParameter("name"));
-			wxCategory.setCode(request.getParameter("code"));
-			wxCategory.setDesc(request.getParameter("desc"));
-			wxCategory.setEventType(request.getParameter("eventType"));
-			wxCategory.setUrl(request.getParameter("url"));
-			wxCategory.setUuid(request.getParameter("uuid"));
-			wxCategory.setCreateBy(request.getParameter("createBy"));
-			wxCategory.setCreateDate(RequestUtils
-					.getDate(request, "createDate"));
-
-			this.wxCategoryService.save(wxCategory);
-
-			return ResponseUtils.responseJsonResult(true);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-		return ResponseUtils.responseJsonResult(false);
 	}
 
 	@javax.annotation.Resource
@@ -216,7 +152,7 @@ public class WxCategoryResourceRest {
 		if (wxCategory != null) {
 			result = wxCategory.toJsonObject();
 			result.put("id", wxCategory.getId());
-			result.put("wxCategoryId", wxCategory.getId());
+			result.put("categoryId", wxCategory.getId());
 		}
 		return result.toJSONString().getBytes("UTF-8");
 	}

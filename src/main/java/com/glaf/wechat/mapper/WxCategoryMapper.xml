@@ -221,6 +221,12 @@
 		resultMap="wxCategoryResultMap">
 		select * from WX_CATEGORY where ID_ = #{id}
 	</select>
+	
+	
+	<select id="getWxCategoryByUUID" parameterType="string"
+		resultMap="wxCategoryResultMap">
+		select * from WX_CATEGORY where UUID_ = #{id}
+	</select>
 
 
 	<select id="getWxCategories" parameterType="com.glaf.wechat.query.WxCategoryQuery"

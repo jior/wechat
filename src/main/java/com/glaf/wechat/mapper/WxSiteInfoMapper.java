@@ -31,6 +31,9 @@ public interface WxSiteInfoMapper {
 	void deleteWxSiteInfoById(Long id);
 
 	WxSiteInfo getWxSiteInfoById(Long id);
+	
+	WxSiteInfo getWxSiteInfoByUUID(String uuid);
+
 
 	int getWxSiteInfoCount(WxSiteInfoQuery query);
 

@@ -4,42 +4,44 @@
 
 <mapper namespace="com.glaf.wechat.mapper.WxCoverMapper">
 
- 	<resultMap id="wxCoverResultMap"	type="com.glaf.wechat.domain.WxCover">
-        <id property="id" column="ID_" jdbcType="BIGINT" />
-        <result property="bigIcon" column="BIGICON_" jdbcType="VARCHAR"/>
-        <result property="smallIcon" column="SMALLICON_" jdbcType="VARCHAR"/>
-        <result property="uuid" column="UUID_" jdbcType="VARCHAR"/>
-        <result property="createBy" column="CREATEBY_" jdbcType="VARCHAR"/>
-        <result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP"/>
-		<result property="lastUpdateDate" column="LASTUPDATEDATE_" jdbcType="TIMESTAMP"/>
-        <result property="lastUpdateBy" column="LASTUPDATEBY_" jdbcType="VARCHAR"/>
+	<resultMap id="wxCoverResultMap" type="com.glaf.wechat.domain.WxCover">
+		<id property="id" column="ID_" jdbcType="BIGINT" />
+		<result property="bigIcon" column="BIGICON_" jdbcType="VARCHAR" />
+		<result property="smallIcon" column="SMALLICON_" jdbcType="VARCHAR" />
+		<result property="uuid" column="UUID_" jdbcType="VARCHAR" />
+		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
+		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP" />
+		<result property="lastUpdateDate" column="LASTUPDATEDATE_"
+			jdbcType="TIMESTAMP" />
+		<result property="lastUpdateBy" column="LASTUPDATEBY_"
+			jdbcType="VARCHAR" />
 	</resultMap>
 
- 
+
 	<insert id="insertWxCover" parameterType="com.glaf.wechat.domain.WxCover">
-		insert into WX_COVER 
+		insert into WX_COVER
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-		    ID_
+			ID_
 			<if test="bigIcon != null">
-				,BIGICON_ 
+				,BIGICON_
 			</if>
 			<if test="smallIcon != null">
-				,SMALLICON_ 
+				,SMALLICON_
 			</if>
 			<if test="uuid != null">
-				,UUID_ 
+				,UUID_
 			</if>
 			<if test="createBy != null">
-				,CREATEBY_ 
+				,CREATEBY_
 			</if>
 			<if test="createDate != null">
-				,CREATEDATE_ 
+				,CREATEDATE_
 			</if>
-        </trim>
+		</trim>
 
 		<trim prefix=" values (" suffix=")" suffixOverrides=",">
-			  #{id, jdbcType=BIGINT}
-	     
+			#{id, jdbcType=BIGINT}
+
 			<if test="bigIcon != null">
 				,#{bigIcon, jdbcType=VARCHAR}
 			</if>
@@ -55,14 +57,14 @@
 			<if test="createDate != null">
 				,#{createDate, jdbcType=TIMESTAMP}
 			</if>
-	    </trim>
-    </insert>
+		</trim>
+	</insert>
 
-	 
+
 	<update id="updateWxCover" parameterType="com.glaf.wechat.domain.WxCover">
 		update WX_COVER
 		set
-        <trim prefix="" suffix="" suffixOverrides=",">		
+		<trim prefix="" suffix="" suffixOverrides=",">
 			<if test="bigIcon != null">
 				BIGICON_ = #{bigIcon, jdbcType=VARCHAR},
 			</if>
@@ -75,27 +77,27 @@
 			<if test="lastUpdateBy != null">
 				LASTUPDATEBY_ = #{lastUpdateBy, jdbcType=VARCHAR},
 			</if>
-        </trim>
+		</trim>
 		where
-          ID_ = #{id, jdbcType=BIGINT}
-		
-    </update>
+		ID_ = #{id, jdbcType=BIGINT}
 
- 
-	<delete id="deleteWxCoverById" parameterType="long"> 
-        delete from WX_COVER
-        where ID_ =	#{id}
+	</update>
+
+
+	<delete id="deleteWxCoverById" parameterType="long">
+		delete from WX_COVER
+		where ID_ = #{id}
 	</delete>
 
-	
+
 	<delete id="deleteWxCovers" parameterType="com.glaf.wechat.query.WxCoverQuery">
 		delete from WX_COVER
-		where ( 
- 			  ID_ IN
-              <foreach item="x_id" index="index" collection="ids" 
-                     open="(" separator="," close=")">
-                  #{x_id}
-              </foreach>
+		where (
+		ID_ IN
+		<foreach item="x_id" index="index" collection="ids" open="("
+			separator="," close=")">
+			#{x_id}
+		</foreach>
 		)
 	</delete>
 
@@ -105,24 +107,27 @@
 	</select>
 
 
-	<select id="getWxCovers" 
-	    parameterType="com.glaf.wechat.query.WxCoverQuery"
+	<select id="getWxCoverByUUID" parameterType="string" resultMap="wxCoverResultMap">
+		select * from WX_COVER where UUID_ = #{uuid}
+	</select>
+
+
+	<select id="getWxCovers" parameterType="com.glaf.wechat.query.WxCoverQuery"
 		resultMap="wxCoverResultMap">
 		select distinct E.*
 		<include refid="selectWxCoversSql" />
 		<choose>
-		  <when test="orderBy != null">
-		     order by ${orderBy}
-          </when>
-		  <otherwise>
-		      order by E.ID_ desc
-		  </otherwise>
-        </choose>
+			<when test="orderBy != null">
+				order by ${orderBy}
+			</when>
+			<otherwise>
+				order by E.ID_ desc
+			</otherwise>
+		</choose>
 	</select>
 
 
-	<select id="getWxCoverCount" 
-	    parameterType="com.glaf.wechat.query.WxCoverQuery"
+	<select id="getWxCoverCount" parameterType="com.glaf.wechat.query.WxCoverQuery"
 		resultType="int">
 		select count(*)
 		<include refid="selectWxCoversSql" />
@@ -132,33 +137,33 @@
 	<sql id="selectWxCoversSql">
 
 		from WX_COVER E
-		
+
 		<where>
-		       1 = 1  
+			1 = 1
 
 			<if test="uuid != null and uuid != '' ">
 				and E.UUID_ = #{uuid}
-            </if>
+			</if>
 
 			<if test="uuids != null and uuids.size() &gt; 0">
-			    and E.UUID_ IN
-                <foreach item="x_uuid" index="index" collection="uuids" 
-                     open="(" separator="," close=")">
-                  #{x_uuid}
-                </foreach>
+				and E.UUID_ IN
+				<foreach item="x_uuid" index="index" collection="uuids"
+					open="(" separator="," close=")">
+					#{x_uuid}
+				</foreach>
 			</if>
-	        
+
 			<if test="createBy != null and createBy != '' ">
 				and E.CREATEBY_ = #{createBy}
-            </if>
+			</if>
 
 			<if test="createDateGreaterThanOrEqual != null">
 				and E.CREATEDATE_ &gt;= #{createDateGreaterThanOrEqual}
-            </if>
+			</if>
 
 			<if test="createDateLessThanOrEqual != null">
 				and E.CREATEDATE_ &lt;= #{createDateLessThanOrEqual}
-            </if>
+			</if>
 
 		</where>
 	</sql>

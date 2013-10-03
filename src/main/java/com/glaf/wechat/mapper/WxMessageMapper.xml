@@ -13,8 +13,10 @@
 		<result property="uuid" column="UUID_" jdbcType="VARCHAR" />
 		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
 		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP" />
-		<result property="lastUpdateDate" column="LASTUPDATEDATE_" jdbcType="TIMESTAMP"/>
-        <result property="lastUpdateBy" column="LASTUPDATEBY_" jdbcType="VARCHAR"/>
+		<result property="lastUpdateDate" column="LASTUPDATEDATE_"
+			jdbcType="TIMESTAMP" />
+		<result property="lastUpdateBy" column="LASTUPDATEBY_"
+			jdbcType="VARCHAR" />
 	</resultMap>
 
 
@@ -123,6 +125,12 @@
 
 	<select id="getWxMessageById" parameterType="long" resultMap="wxMessageResultMap">
 		select * from WX_MESSAGE where ID_ = #{id}
+	</select>
+
+
+	<select id="getWxMessageByUUID" parameterType="string"
+		resultMap="wxMessageResultMap">
+		select * from WX_MESSAGE where UUID_ = #{uuid}
 	</select>
 
 

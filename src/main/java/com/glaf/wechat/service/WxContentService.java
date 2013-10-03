@@ -51,6 +51,13 @@ public interface WxContentService {
 	 */
 	WxContent getWxContent(Long id);
 	
+	/**
+	 * 根据uuid获取一条记录
+	 * 
+	 * @return
+	 */
+	WxContent getWxContentByUUID(String uuid);
+	
 	WxContent getWxContentWithRelations(Long id);
 
 	/**

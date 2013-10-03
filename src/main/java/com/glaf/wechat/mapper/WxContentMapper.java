@@ -31,6 +31,8 @@ public interface WxContentMapper {
 	void deleteWxContentById(Long id);
 
 	WxContent getWxContentById(Long id);
+	
+	WxContent getWxContentByUUID(String uuid);
 
 	int getWxContentCount(WxContentQuery query);
 

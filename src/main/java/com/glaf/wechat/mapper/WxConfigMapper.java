@@ -31,6 +31,8 @@ public interface WxConfigMapper {
 	void deleteWxConfigById(Long id);
 
 	WxConfig getWxConfigById(Long id);
+	
+	WxConfig getWxConfigByUUID(String uuid);
 
 	int getWxConfigCount(WxConfigQuery query);
 

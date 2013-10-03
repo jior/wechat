@@ -31,6 +31,8 @@ public interface WxFileMapper {
 	void deleteWxFileById(Long id);
 
 	WxFile getWxFileById(Long id);
+	
+	WxFile getWxFileByUUID(String uuid);
 
 	int getWxFileCount(WxFileQuery query);
 

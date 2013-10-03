@@ -31,6 +31,8 @@ public interface WxMemberMapper {
 	void deleteWxMemberById(Long id);
 
 	WxMember getWxMemberById(Long id);
+	
+	WxMember getWxMemberByUUID(String uuid);
 
 	int getWxMemberCount(WxMemberQuery query);
 

@@ -42,46 +42,19 @@ import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.util.PageResult;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
-import com.glaf.core.util.ResponseUtils;
-import com.glaf.core.util.StringTools;
 import com.glaf.core.util.Tools;
+
 import com.glaf.wechat.domain.WxSiteInfo;
 import com.glaf.wechat.query.WxSiteInfoQuery;
 import com.glaf.wechat.service.WxSiteInfoService;
 
 @Controller
-@Path("/rs/wx/wxSiteInfo")
+@Path("/rs/wx/siteInfo")
 public class WxSiteInfoResourceRest {
 	protected static final Log logger = LogFactory
 			.getLog(WxSiteInfoResourceRest.class);
 
 	protected WxSiteInfoService wxSiteInfoService;
-
-	@POST
-	@Path("/deleteAll")
-	@ResponseBody
-	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
-	public byte[] deleteAll(@Context HttpServletRequest request)
-			throws IOException {
-		String rowIds = request.getParameter("ids");
-		if (rowIds != null) {
-			List<Long> ids = StringTools.splitToLong(rowIds);
-			if (ids != null && !ids.isEmpty()) {
-				wxSiteInfoService.deleteByIds(ids);
-			}
-		}
-		return ResponseUtils.responseJsonResult(true);
-	}
-
-	@POST
-	@Path("/delete")
-	@ResponseBody
-	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
-	public byte[] deleteById(@Context HttpServletRequest request)
-			throws IOException {
-		wxSiteInfoService.deleteById(RequestUtils.getLong(request, "id"));
-		return ResponseUtils.responseJsonResult(true);
-	}
 
 	@GET
 	@POST
@@ -145,7 +118,7 @@ public class WxSiteInfoResourceRest {
 				for (WxSiteInfo wxSiteInfo : list) {
 					JSONObject rowJSON = wxSiteInfo.toJsonObject();
 					rowJSON.put("id", wxSiteInfo.getId());
-					rowJSON.put("wxSiteInfoId", wxSiteInfo.getId());
+					rowJSON.put("siteInfoId", wxSiteInfo.getId());
 					rowJSON.put("startIndex", ++start);
 					rowsJSON.add(rowJSON);
 				}
@@ -157,38 +130,6 @@ public class WxSiteInfoResourceRest {
 			result.put("total", total);
 		}
 		return result.toJSONString().getBytes("UTF-8");
-	}
-
-	@POST
-	@Path("/saveWxSiteInfo")
-	@ResponseBody
-	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
-	public byte[] saveWxSiteInfo(@Context HttpServletRequest request) {
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		WxSiteInfo wxSiteInfo = new WxSiteInfo();
-		try {
-			Tools.populate(wxSiteInfo, params);
-
-			wxSiteInfo.setLinkman(request.getParameter("linkman"));
-			wxSiteInfo.setTelephone(request.getParameter("telephone"));
-			wxSiteInfo.setMobile(request.getParameter("mobile"));
-			wxSiteInfo.setMail(request.getParameter("mail"));
-			wxSiteInfo.setQq(request.getParameter("qq"));
-			wxSiteInfo.setAddress(request.getParameter("address"));
-			wxSiteInfo.setSiteUrl(request.getParameter("siteUrl"));
-			wxSiteInfo.setRemark(request.getParameter("remark"));
-			wxSiteInfo.setUuid(request.getParameter("uuid"));
-			wxSiteInfo.setCreateBy(request.getParameter("createBy"));
-			wxSiteInfo.setCreateDate(RequestUtils
-					.getDate(request, "createDate"));
-
-			this.wxSiteInfoService.save(wxSiteInfo);
-
-			return ResponseUtils.responseJsonResult(true);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-		return ResponseUtils.responseJsonResult(false);
 	}
 
 	@javax.annotation.Resource
@@ -212,7 +153,7 @@ public class WxSiteInfoResourceRest {
 			result = wxSiteInfo.toJsonObject();
 
 			result.put("id", wxSiteInfo.getId());
-			result.put("wxSiteInfoId", wxSiteInfo.getId());
+			result.put("siteInfoId", wxSiteInfo.getId());
 		}
 		return result.toJSONString().getBytes("UTF-8");
 	}

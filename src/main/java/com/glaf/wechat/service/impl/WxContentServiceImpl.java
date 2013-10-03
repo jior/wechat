@@ -79,13 +79,17 @@ public class WxContentServiceImpl implements WxContentService {
 			}
 		}
 	}
-
+	
 	public WxContent getWxContent(Long id) {
 		if (id == null) {
 			return null;
 		}
 		WxContent wxContent = wxContentMapper.getWxContentById(id);
 		return wxContent;
+	}
+
+	public WxContent getWxContentByUUID(String uuid){
+		return wxContentMapper.getWxContentByUUID(uuid);
 	}
 
 	public int getWxContentCountByQueryCriteria(WxContentQuery query) {

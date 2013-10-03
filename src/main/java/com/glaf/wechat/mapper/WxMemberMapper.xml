@@ -17,8 +17,10 @@
 		<result property="uuid" column="UUID_" jdbcType="VARCHAR" />
 		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
 		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP" />
-		<result property="lastUpdateDate" column="LASTUPDATEDATE_" jdbcType="TIMESTAMP"/>
-        <result property="lastUpdateBy" column="LASTUPDATEBY_" jdbcType="VARCHAR"/>
+		<result property="lastUpdateDate" column="LASTUPDATEDATE_"
+			jdbcType="TIMESTAMP" />
+		<result property="lastUpdateBy" column="LASTUPDATEBY_"
+			jdbcType="VARCHAR" />
 	</resultMap>
 
 
@@ -165,6 +167,10 @@
 		select * from WX_MEMBER where ID_ = #{id}
 	</select>
 
+
+	<select id="getWxMemberByUUID" parameterType="string" resultMap="wxMemberResultMap">
+		select * from WX_MEMBER where UUID_ = #{uuid}
+	</select>
 
 	<select id="getWxMembers" parameterType="com.glaf.wechat.query.WxMemberQuery"
 		resultMap="wxMemberResultMap">

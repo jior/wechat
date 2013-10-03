@@ -42,46 +42,19 @@ import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.util.PageResult;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
-import com.glaf.core.util.ResponseUtils;
-import com.glaf.core.util.StringTools;
 import com.glaf.core.util.Tools;
+
 import com.glaf.wechat.domain.WxMenu;
 import com.glaf.wechat.query.WxMenuQuery;
 import com.glaf.wechat.service.WxMenuService;
 
 @Controller
-@Path("/rs/wx/wxMenu")
+@Path("/rs/wx/menu")
 public class WxMenuResourceRest {
 	protected static final Log logger = LogFactory
 			.getLog(WxMenuResourceRest.class);
 
 	protected WxMenuService wxMenuService;
-
-	@POST
-	@Path("/deleteAll")
-	@ResponseBody
-	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
-	public byte[] deleteAll(@Context HttpServletRequest request)
-			throws IOException {
-		String rowIds = request.getParameter("ids");
-		if (rowIds != null) {
-			List<Long> ids = StringTools.splitToLong(rowIds);
-			if (ids != null && !ids.isEmpty()) {
-				wxMenuService.deleteByIds(ids);
-			}
-		}
-		return ResponseUtils.responseJsonResult(true);
-	}
-
-	@POST
-	@Path("/delete")
-	@ResponseBody
-	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
-	public byte[] deleteById(@Context HttpServletRequest request)
-			throws IOException {
-		wxMenuService.deleteById(RequestUtils.getLong(request, "id"));
-		return ResponseUtils.responseJsonResult(true);
-	}
 
 	@GET
 	@POST
@@ -145,7 +118,7 @@ public class WxMenuResourceRest {
 				for (WxMenu wxMenu : list) {
 					JSONObject rowJSON = wxMenu.toJsonObject();
 					rowJSON.put("id", wxMenu.getId());
-					rowJSON.put("wxMenuId", wxMenu.getId());
+					rowJSON.put("menuId", wxMenu.getId());
 					rowJSON.put("startIndex", ++start);
 					rowsJSON.add(rowJSON);
 				}
@@ -157,35 +130,6 @@ public class WxMenuResourceRest {
 			result.put("total", total);
 		}
 		return result.toJSONString().getBytes("UTF-8");
-	}
-
-	@POST
-	@Path("/saveWxMenu")
-	@ResponseBody
-	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
-	public byte[] saveWxMenu(@Context HttpServletRequest request) {
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		WxMenu wxMenu = new WxMenu();
-		try {
-			Tools.populate(wxMenu, params);
-
-			wxMenu.setParentId(RequestUtils.getLong(request, "parentId"));
-			wxMenu.setName(request.getParameter("name"));
-			wxMenu.setType(request.getParameter("type"));
-			wxMenu.setKey(request.getParameter("key"));
-			wxMenu.setUrl(request.getParameter("url"));
-			wxMenu.setSort(RequestUtils.getInt(request, "sort"));
-			wxMenu.setUuid(request.getParameter("uuid"));
-			wxMenu.setCreateBy(request.getParameter("createBy"));
-			wxMenu.setCreateDate(RequestUtils.getDate(request, "createDate"));
-
-			this.wxMenuService.save(wxMenu);
-
-			return ResponseUtils.responseJsonResult(true);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-		return ResponseUtils.responseJsonResult(false);
 	}
 
 	@javax.annotation.Resource
@@ -209,7 +153,7 @@ public class WxMenuResourceRest {
 			result = wxMenu.toJsonObject();
 
 			result.put("id", wxMenu.getId());
-			result.put("wxMenuId", wxMenu.getId());
+			result.put("menuId", wxMenu.getId());
 		}
 		return result.toJSONString().getBytes("UTF-8");
 	}

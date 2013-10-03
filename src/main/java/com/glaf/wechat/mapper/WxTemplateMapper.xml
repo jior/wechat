@@ -189,6 +189,12 @@
 	</select>
 
 
+	<select id="getWxTemplateByUUID" parameterType="string"
+		resultMap="wxTemplateResultMap">
+		select * from WX_TEMPLATE where UUID_ = #{uuid}
+	</select>
+
+
 	<select id="getWxTemplates" parameterType="com.glaf.wechat.query.WxTemplateQuery"
 		resultMap="wxTemplateResultMap">
 		select distinct E.*

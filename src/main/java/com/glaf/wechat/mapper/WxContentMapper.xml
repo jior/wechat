@@ -259,6 +259,11 @@
 	<select id="getWxContentById" parameterType="long" resultMap="wxContentResultMap">
 		select * from WX_CONTENT where ID_ = #{id}
 	</select>
+	
+	
+	<select id="getWxContentByUUID" parameterType="string" resultMap="wxContentResultMap">
+		select * from WX_CONTENT where UUID_ = #{uuid}
+	</select>
 
 
 	<select id="getWxContents" parameterType="com.glaf.wechat.query.WxContentQuery"

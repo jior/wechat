@@ -179,6 +179,11 @@
 	</select>
 
 
+	<select id="getWxFileByUUID" parameterType="string" resultMap="wxFileResultMap">
+		select * from WX_FILE where UUID_ = #{uuid}
+	</select>
+
+
 	<select id="getWxFiles" parameterType="com.glaf.wechat.query.WxFileQuery"
 		resultMap="wxFileResultMap">
 		select distinct E.*

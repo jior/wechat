@@ -31,6 +31,8 @@ public interface WxCategoryMapper {
 	void deleteWxCategoryById(Long id);
 
 	WxCategory getWxCategoryById(Long id);
+	
+	WxCategory getWxCategoryByUUID(String uuid);
 
 	int getWxCategoryCount(WxCategoryQuery query);
 

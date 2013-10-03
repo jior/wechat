@@ -157,6 +157,11 @@
 	<select id="getWxConfigById" parameterType="long" resultMap="wxConfigResultMap">
 		select * from WX_CONFIG where ID_ = #{id}
 	</select>
+	
+	
+	<select id="getWxConfigByUUID" parameterType="string" resultMap="wxConfigResultMap">
+		select * from WX_CONFIG where UUID_ = #{uuid}
+	</select>
 
 
 	<select id="getWxConfigs" parameterType="com.glaf.wechat.query.WxConfigQuery"

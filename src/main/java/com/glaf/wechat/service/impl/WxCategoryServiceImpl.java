@@ -76,7 +76,7 @@ public class WxCategoryServiceImpl implements WxCategoryService {
 			}
 		}
 	}
-
+	
 	/**
 	 * 获取某个分类的直接子节点列表
 	 * 
@@ -117,8 +117,7 @@ public class WxCategoryServiceImpl implements WxCategoryService {
 		List<WxCategory> list = wxCategoryMapper.getWxCategories(query);
 		return list;
 	}
-	
-	
+
 	/**
 	 * 获取某个用户创建的某类型的子分类列表
 	 * 
@@ -133,7 +132,8 @@ public class WxCategoryServiceImpl implements WxCategoryService {
 		List<WxCategory> list = wxCategoryMapper.getWxCategories(query);
 		return list;
 	}
-
+	
+	
 	protected String getTreeId(Map<Long, WxCategory> dataMap, WxCategory tree) {
 		long parentId = tree.getParentId();
 		long id = tree.getId();
@@ -156,6 +156,10 @@ public class WxCategoryServiceImpl implements WxCategoryService {
 		}
 		WxCategory wxCategory = wxCategoryMapper.getWxCategoryById(id);
 		return wxCategory;
+	}
+
+	public 	WxCategory getWxCategoryByUUID(String uuid){
+		return wxCategoryMapper.getWxCategoryByUUID(uuid);
 	}
 
 	public int getWxCategoryCountByQueryCriteria(WxCategoryQuery query) {
