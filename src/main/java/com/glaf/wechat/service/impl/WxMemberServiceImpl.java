@@ -84,6 +84,11 @@ public class WxMemberServiceImpl implements WxMemberService {
 		return wxMember;
 	}
 
+	public WxMember getWxMemberByUUID(String uuid){
+		return wxMemberMapper.getWxMemberByUUID(uuid);
+	}
+	
+	
 	public int getWxMemberCountByQueryCriteria(WxMemberQuery query) {
 		return wxMemberMapper.getWxMemberCount(query);
 	}

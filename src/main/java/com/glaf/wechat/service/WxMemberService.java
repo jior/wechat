@@ -50,6 +50,8 @@ public interface WxMemberService {
 	 * @return
 	 */
 	WxMember getWxMember(Long id);
+	
+	WxMember getWxMemberByUUID(String uuid);
 
 	/**
 	 * 根据查询参数获取记录总数

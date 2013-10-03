@@ -83,6 +83,10 @@ public class WxMessageServiceImpl implements WxMessageService {
 		WxMessage wxMessage = wxMessageMapper.getWxMessageById(id);
 		return wxMessage;
 	}
+	
+	public WxMessage getWxMessageByUUID(String uuid){
+		return wxMessageMapper.getWxMessageByUUID(uuid);
+	}
 
 	public int getWxMessageCountByQueryCriteria(WxMessageQuery query) {
 		return wxMessageMapper.getWxMessageCount(query);

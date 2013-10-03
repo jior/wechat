@@ -75,13 +75,17 @@ public class WxTemplateServiceImpl implements WxTemplateService {
 			}
 		}
 	}
-
+	
 	public WxTemplate getWxTemplate(Long id) {
 		if (id == null) {
 			return null;
 		}
 		WxTemplate wxTemplate = wxTemplateMapper.getWxTemplateById(id);
 		return wxTemplate;
+	}
+
+	public WxTemplate getWxTemplateByUUID(String uuid){
+		return wxTemplateMapper.getWxTemplateByUUID(uuid);
 	}
 
 	public int getWxTemplateCountByQueryCriteria(WxTemplateQuery query) {

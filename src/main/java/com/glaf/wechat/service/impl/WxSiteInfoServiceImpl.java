@@ -84,6 +84,14 @@ public class WxSiteInfoServiceImpl implements WxSiteInfoService {
 		return wxSiteInfo;
 	}
 	
+	public WxSiteInfo getWxSiteInfoByUUID(String uuid) {
+		if (uuid == null) {
+			return null;
+		}
+		WxSiteInfo wxSiteInfo = wxSiteInfoMapper.getWxSiteInfoByUUID(uuid);
+		return wxSiteInfo;
+	}
+	
 	/**
 	 * 根据创建人获取一条记录
 	 * 
