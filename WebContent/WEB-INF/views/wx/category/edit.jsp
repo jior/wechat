@@ -139,7 +139,7 @@ limitations under the License.
 				   value="${wxCategory.name}"/>
 		</td>
 	</tr>
-	<tr>
+	<!-- <tr>
 		<td width="20%" align="left">代码</td>
 		<td align="left">
             <input id="code" name="code" type="text"  size="50"
@@ -147,7 +147,7 @@ limitations under the License.
 			       data-options="required:false"
 				   value="${wxCategory.code}"/>
 		</td>
-	</tr>
+	</tr> -->
 	<tr>
 		<td width="20%" align="left">描述</td>
 		<td align="left">
@@ -226,7 +226,8 @@ limitations under the License.
 	</tr>
     </tbody>
   </table>
-  </form>
+ </form>
+<p>&nbsp;</p>
 </div>
 </div>
 </body>

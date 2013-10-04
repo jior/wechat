@@ -101,7 +101,7 @@ limitations under the License.
 			x=document.body.scrollLeft+event.clientX-event.offsetX-200;
 			y=document.body.scrollTop+event.clientY-event.offsetY-200;
 		}
-		openWindow(link,self,x, y, 745, 480);
+		openWindow(link,self,x, y, 745, 580);
 	}
 
 	function editRelations(){
@@ -248,6 +248,7 @@ limitations under the License.
 			 </script>
 		</td>
 	</tr>
+
 	<tr>
 		<td width="15%" align="left" valign="middle">图文详细页内容</td>
 		<td align="left" valign="middle">
@@ -283,11 +284,7 @@ limitations under the License.
   </table>
   </form>
   <p>&nbsp;</p>
-  <p>&nbsp;</p>
-  <p>&nbsp;</p>
 </div>
 </div>
- 
-
 </body>
 </html>

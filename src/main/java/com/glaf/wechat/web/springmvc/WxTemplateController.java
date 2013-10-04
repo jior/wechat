@@ -18,25 +18,32 @@
 
 package com.glaf.wechat.web.springmvc;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
+import java.util.Map.Entry;
+import java.util.zip.ZipInputStream;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import com.alibaba.fastjson.*;
 
+import com.alibaba.fastjson.*;
+import com.glaf.core.config.SystemProperties;
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.identity.*;
 import com.glaf.core.security.*;
 import com.glaf.core.util.*;
-
 import com.glaf.wechat.domain.*;
 import com.glaf.wechat.query.*;
 import com.glaf.wechat.service.*;
@@ -66,29 +73,22 @@ public class WxTemplateController {
 				if (StringUtils.isNotEmpty(x)) {
 					WxTemplate wxTemplate = wxTemplateService
 							.getWxTemplate(Long.valueOf(x));
-					/**
-					 * 此处业务逻辑需自行调整
-					 */
-
 					if (wxTemplate != null
 							&& (StringUtils.equals(wxTemplate.getCreateBy(),
 									loginContext.getActorId()) || loginContext
 									.isSystemAdministrator())) {
-						wxTemplateService.save(wxTemplate);
+						wxTemplateService.deleteById(wxTemplate.getId());
 					}
 				}
 			}
 		} else if (id != null) {
 			WxTemplate wxTemplate = wxTemplateService.getWxTemplate(Long
 					.valueOf(id));
-			/**
-			 * 此处业务逻辑需自行调整
-			 */
 			if (wxTemplate != null
 					&& (StringUtils.equals(wxTemplate.getCreateBy(),
 							loginContext.getActorId()) || loginContext
 							.isSystemAdministrator())) {
-				wxTemplateService.save(wxTemplate);
+				wxTemplateService.deleteById(wxTemplate.getId());
 			}
 		}
 	}
@@ -313,6 +313,23 @@ public class WxTemplateController {
 		this.wxTemplateService = wxTemplateService;
 	}
 
+	@RequestMapping("/showUpload")
+	public ModelAndView showUpload(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view, modelMap);
+		}
+
+		String x_view = ViewProperties.getString("wxTemplate.showUpload");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
+		return new ModelAndView("/wx/template/showUpload", modelMap);
+	}
+
 	@RequestMapping("/update")
 	public ModelAndView update(HttpServletRequest request, ModelMap modelMap) {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
@@ -336,6 +353,101 @@ public class WxTemplateController {
 			wxTemplateService.save(wxTemplate);
 		}
 
+		return this.list(request, modelMap);
+	}
+
+	@RequestMapping("/upload")
+	public ModelAndView upload(HttpServletRequest request, ModelMap modelMap) {
+		LoginContext loginContext = RequestUtils.getLoginContext(request);
+		String actorId = loginContext.getActorId();
+		MultipartHttpServletRequest req = (MultipartHttpServletRequest) request;
+		Map<String, MultipartFile> fileMap = req.getFileMap();
+		Long categoryId = RequestUtils.getLong(req, "categoryId");
+		if (categoryId == null) {
+			categoryId = 0L;
+		}
+
+		Set<Entry<String, MultipartFile>> entrySet = fileMap.entrySet();
+		for (Entry<String, MultipartFile> entry : entrySet) {
+			MultipartFile mFile = entry.getValue();
+			if (mFile.getOriginalFilename().endsWith(".zip")
+					&& mFile.getSize() > 0) {
+				String rand = Math.abs(HashUtils.FNVHash1(actorId) % 1024)
+						+ "/" + DigestUtils.md5Hex(loginContext.getActorId());
+				String path = "/templates/users/" + rand + "/" + categoryId;
+				try {
+					FileUtils.mkdirs(SystemProperties.getAppPath() + path);
+				} catch (IOException ex) {
+					ex.printStackTrace();
+				}
+				List<String> excludes = new ArrayList<String>();
+				excludes.add("java");
+				excludes.add("jsp");
+				excludes.add("php");
+				excludes.add("asp");
+				excludes.add("aspx");
+				excludes.add("exe");
+				excludes.add("bat");
+				excludes.add("cmd");
+				excludes.add("dll");
+				excludes.add("ocx");
+				excludes.add("sh");
+				excludes.add("shx");
+				excludes.add("db");
+				InputStream inputStream = null;
+				ZipInputStream zipInputStream = null;
+				List<String> includes = new ArrayList<String>();
+				includes.add("html");
+				try {
+					ZipUtils.unzip(mFile.getInputStream(),
+							SystemProperties.getAppPath() + path, excludes);
+					inputStream = new ByteArrayInputStream(mFile.getBytes());
+					zipInputStream = new ZipInputStream(inputStream);
+					Map<String, byte[]> zipMap = ZipUtils
+							.getZipBytesMap(zipInputStream);
+					Set<Entry<String, byte[]>> entrySet2 = zipMap.entrySet();
+					for (Entry<String, byte[]> entry2 : entrySet2) {
+						String name = entry2.getKey();
+						byte[] bytes = entry2.getValue();
+						if (name != null && bytes != null) {
+							WxTemplate wxTemplate = new WxTemplate();
+							wxTemplate.setCategoryId(categoryId);
+							wxTemplate.setCreateBy(actorId);
+							wxTemplate.setUrl(path + "/" + categoryId + "/"
+									+ name);
+
+							if (StringUtils
+									.equalsIgnoreCase("index.html", name)) {
+								String content = new String(bytes, "UTF-8");
+								wxTemplate.setContent(content);
+								wxTemplate.setName("首页模版");
+								wxTemplate.setType("0");
+								wxTemplateService.save(wxTemplate);
+							} else if (StringUtils.equalsIgnoreCase(
+									"list.html", name)) {
+								String content = new String(bytes, "UTF-8");
+								wxTemplate.setContent(content);
+								wxTemplate.setName("列表页模版");
+								wxTemplate.setType("1");
+								wxTemplateService.save(wxTemplate);
+							} else if (StringUtils.equalsIgnoreCase(
+									"detail.html", name)) {
+								String content = new String(bytes, "UTF-8");
+								wxTemplate.setContent(content);
+								wxTemplate.setName("详细页模版");
+								wxTemplate.setType("2");
+								wxTemplateService.save(wxTemplate);
+							}
+						}
+					}
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				} finally {
+					IOUtils.closeStream(zipInputStream);
+					IOUtils.closeStream(zipInputStream);
+				}
+			}
+		}
 		return this.list(request, modelMap);
 	}
 

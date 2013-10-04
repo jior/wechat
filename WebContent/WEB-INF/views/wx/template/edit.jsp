@@ -38,7 +38,10 @@ limitations under the License.
 <script type="text/javascript">
     var contextPath="<%=request.getContextPath()%>";
 
-	KE.show({  id : 'content' });
+	KE.show({  id : 'content'
+	           ,allowFileManager : true
+	           ,imageUploadJson : '<%=request.getContextPath()%>/mx/wx/uploadJson'
+			   ,fileManagerJson : '<%=request.getContextPath()%>/mx/wx/fileManagerJson' });
 
 	function saveData(){
 		var params = jQuery("#iForm").formSerialize();
@@ -154,7 +157,7 @@ limitations under the License.
 	 <tr>
 		<td width="15%" align="left">内容</td>
 		<td align="left" colspan="3">
-			<textarea  id="content" name="content" class="x-textarea"  rows="5" cols="38" style="width:535px;height:380px;">${wxConfig.content}</textarea> 
+			<textarea  id="content" name="content" class="x-textarea"  rows="5" cols="38" style="width:535px;height:380px;"><c:out value="${wxTemplate.content}" escapeXml="false"/></textarea> 
 		</td>
 	</tr>
 	 

@@ -105,7 +105,7 @@ limitations under the License.
 				columns:[[
 	                {title:'序号',field:'startIndex',width:80,sortable:false},
 					{title:'名称',field:'title',width:220,sortable:false},
-					{title:'图片',field:'filename',width:280,sortable:false, formatter:formatterUrl},
+					{title:'图片',field:'filename', align:'center', valign:'middle', width:380,sortable:false, formatter:formatterUrl},
 					{title:'路径',field:'path',width:180,sortable:false}
 				]],
 				rownumbers:false

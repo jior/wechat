@@ -138,6 +138,7 @@ limitations under the License.
 		    <c:if test="${not empty wxContent.icon }">
 			   <br> <img src="<%=request.getContextPath()%>/${wxContent.icon}" border="0"/>
 			</c:if>
+			<br>建议图片大小：720*400像素
 		</td>
 	</tr>
 	 
@@ -180,8 +181,6 @@ limitations under the License.
     </tbody>
   </table>
   </form>
-  <p>&nbsp;</p>
-  <p>&nbsp;</p>
   <p>&nbsp;</p>
 </div>
 </div>

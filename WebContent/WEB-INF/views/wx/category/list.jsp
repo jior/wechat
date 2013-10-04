@@ -104,7 +104,7 @@ limitations under the License.
 				idField:'id',
 				columns:[[
 	                {title:'序号',field:'startIndex',width:80,sortable:false},
-					{title:'封面图片', field:'coverIcon', width:80, formatter:formatterCover},
+					{title:'封面图片', field:'coverIcon',align:'center', valign:'middle', width:80, formatter:formatterCover},
 					{title:'名称',field:'name', width:120},
 					{title:'描述',field:'desc', width:180},
 					{title:'顺序',field:'sort', width:90},
