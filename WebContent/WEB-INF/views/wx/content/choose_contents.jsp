@@ -45,6 +45,11 @@
 		var zTree = $.fn.zTree.getZTreeObj("myTree");
         var selectedNodes  = zTree.getCheckedNodes(true);
 
+		if(selectedNodes.length>9){
+			alert("最多可以选择9项，请重新选择！");
+			return;
+		}
+
         var sx = '';
 		var sx_name = '';
 		var code='';
