@@ -22,21 +22,23 @@ import java.io.IOException;
 import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import com.alibaba.fastjson.*;
 
+import com.alibaba.fastjson.*;
+import com.glaf.core.base.BaseTree;
+import com.glaf.core.base.TreeModel;
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.identity.*;
 import com.glaf.core.security.*;
+import com.glaf.core.tree.helper.TreeHelper;
 import com.glaf.core.util.*;
-
 import com.glaf.wechat.domain.*;
 import com.glaf.wechat.query.*;
 import com.glaf.wechat.service.*;
@@ -47,10 +49,29 @@ public class WxContentController {
 	protected static final Log logger = LogFactory
 			.getLog(WxContentController.class);
 
+	protected WxCategoryService wxCategoryService;
+
 	protected WxContentService wxContentService;
 
 	public WxContentController() {
 
+	}
+
+	@RequestMapping("/choose")
+	public ModelAndView choose(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view, modelMap);
+		}
+
+		String x_view = ViewProperties.getString("wxContent.choose");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
+		return new ModelAndView("/wx/content/choose_contents", modelMap);
 	}
 
 	@ResponseBody
@@ -167,6 +188,27 @@ public class WxContentController {
 		return new ModelAndView("/wx/content/editPPT", modelMap);
 	}
 
+	@RequestMapping("/indexPPT")
+	public ModelAndView indexPPT(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		String x_query = request.getParameter("x_query");
+		if (StringUtils.equals(x_query, "true")) {
+			Map<String, Object> paramMap = RequestUtils
+					.getParameterMap(request);
+			String x_complex_query = JsonUtils.encode(paramMap);
+			x_complex_query = RequestUtils.encodeString(x_complex_query);
+			request.setAttribute("x_complex_query", x_complex_query);
+		} else {
+			request.setAttribute("x_complex_query", "");
+		}
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view, modelMap);
+		}
+
+		return new ModelAndView("/wx/content/indexPPT", modelMap);
+	}
+
 	@RequestMapping("/json")
 	@ResponseBody
 	public byte[] json(HttpServletRequest request, ModelMap modelMap)
@@ -273,48 +315,6 @@ public class WxContentController {
 		return new ModelAndView("/wx/content/list", modelMap);
 	}
 
-	@RequestMapping("/indexPPT")
-	public ModelAndView indexPPT(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		String x_query = request.getParameter("x_query");
-		if (StringUtils.equals(x_query, "true")) {
-			Map<String, Object> paramMap = RequestUtils
-					.getParameterMap(request);
-			String x_complex_query = JsonUtils.encode(paramMap);
-			x_complex_query = RequestUtils.encodeString(x_complex_query);
-			request.setAttribute("x_complex_query", x_complex_query);
-		} else {
-			request.setAttribute("x_complex_query", "");
-		}
-		String view = request.getParameter("view");
-		if (StringUtils.isNotEmpty(view)) {
-			return new ModelAndView(view, modelMap);
-		}
-
-		return new ModelAndView("/wx/content/indexPPT", modelMap);
-	}
-
-	@RequestMapping("/treeList")
-	public ModelAndView treeList(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		String x_query = request.getParameter("x_query");
-		if (StringUtils.equals(x_query, "true")) {
-			Map<String, Object> paramMap = RequestUtils
-					.getParameterMap(request);
-			String x_complex_query = JsonUtils.encode(paramMap);
-			x_complex_query = RequestUtils.encodeString(x_complex_query);
-			request.setAttribute("x_complex_query", x_complex_query);
-		} else {
-			request.setAttribute("x_complex_query", "");
-		}
-		String view = request.getParameter("view");
-		if (StringUtils.isNotEmpty(view)) {
-			return new ModelAndView(view, modelMap);
-		}
-
-		return new ModelAndView("/wx/content/treeList", modelMap);
-	}
-
 	@RequestMapping("/query")
 	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
@@ -352,6 +352,8 @@ public class WxContentController {
 				.getParameter("keywordsMatchType"));
 		wxContent.setSort(RequestUtils.getInt(request, "sort"));
 		wxContent.setRelationIds(request.getParameter("relationIds"));
+		wxContent.setRecommendationIds(request
+				.getParameter("recommendationIds"));
 		wxContent.setSummary(request.getParameter("summary"));
 		wxContent.setIcon(request.getParameter("icon"));
 		wxContent.setBigIcon(request.getParameter("bigIcon"));
@@ -386,6 +388,8 @@ public class WxContentController {
 					.getParameter("keywordsMatchType"));
 			wxContent.setSort(RequestUtils.getInt(request, "sort"));
 			wxContent.setRelationIds(request.getParameter("relationIds"));
+			wxContent.setRecommendationIds(request
+					.getParameter("recommendationIds"));
 			wxContent.setSummary(request.getParameter("summary"));
 			wxContent.setIcon(request.getParameter("icon"));
 			wxContent.setBigIcon(request.getParameter("bigIcon"));
@@ -403,8 +407,98 @@ public class WxContentController {
 	}
 
 	@javax.annotation.Resource
+	public void setWxCategoryService(WxCategoryService wxCategoryService) {
+		this.wxCategoryService = wxCategoryService;
+	}
+
+	@javax.annotation.Resource
 	public void setWxContentService(WxContentService wxContentService) {
 		this.wxContentService = wxContentService;
+	}
+
+	@ResponseBody
+	@RequestMapping("/treeJson")
+	public byte[] treeJson(HttpServletRequest request) throws IOException {
+		LoginContext loginContext = RequestUtils.getLoginContext(request);
+		String selecteds = request.getParameter("selecteds");
+		List<String> checkIds = new ArrayList<String>();
+		if (StringUtils.isNotEmpty(selecteds)) {
+			checkIds = StringTools.split(selecteds);
+		}
+
+		String type = request.getParameter("type");
+		JSONObject result = new JSONObject();
+		List<WxCategory> categories = wxCategoryService.getCategoryList(
+				loginContext.getActorId(), type);
+		if (categories != null && !categories.isEmpty()) {
+			Map<Long, TreeModel> treeMap = new HashMap<Long, TreeModel>();
+			List<TreeModel> treeModels = new ArrayList<TreeModel>();
+			List<Long> categoryIds = new ArrayList<Long>();
+			for (WxCategory category : categories) {
+				TreeModel tree = new BaseTree();
+				tree.setId(category.getId());
+				tree.setParentId(category.getParentId());
+				tree.setCode(category.getCode());
+				tree.setName(category.getName());
+				tree.setSortNo(category.getSort());
+				tree.setDescription(category.getDesc());
+				tree.setCreateBy(category.getCreateBy());
+				tree.setIconCls("tree_folder");
+				tree.setTreeId(category.getTreeId());
+				tree.setUrl(category.getUrl());
+				treeModels.add(tree);
+				categoryIds.add(category.getId());
+				treeMap.put(category.getId(), tree);
+			}
+			WxContentQuery query = new WxContentQuery();
+			query.categoryIds(categoryIds);
+			query.createBy(loginContext.getActorId());
+			List<WxContent> contents = wxContentService.list(query);
+			if (contents != null && !contents.isEmpty()) {
+				for (WxContent content : contents) {
+					TreeModel parent = treeMap.get(content.getCategoryId());
+					TreeModel tree = new BaseTree();
+					tree.setId(content.getId());
+					tree.setParentId(parent.getId());
+					tree.setName(content.getTitle());
+					tree.setSortNo(content.getSort());
+					tree.setCreateBy(content.getCreateBy());
+					tree.setIconCls("tree_leaf");
+					tree.setUrl(content.getUrl());
+					if (checkIds.contains(String.valueOf(content.getId()))) {
+						tree.setChecked(true);
+					}
+					treeModels.add(tree);
+				}
+			}
+			logger.debug("treeModels:" + treeModels.size());
+			TreeHelper treeHelper = new TreeHelper();
+			JSONArray jsonArray = treeHelper.getTreeJSONArray(treeModels);
+			logger.debug(jsonArray.toJSONString());
+			return jsonArray.toJSONString().getBytes("UTF-8");
+		}
+		return result.toJSONString().getBytes("UTF-8");
+	}
+
+	@RequestMapping("/treeList")
+	public ModelAndView treeList(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		String x_query = request.getParameter("x_query");
+		if (StringUtils.equals(x_query, "true")) {
+			Map<String, Object> paramMap = RequestUtils
+					.getParameterMap(request);
+			String x_complex_query = JsonUtils.encode(paramMap);
+			x_complex_query = RequestUtils.encodeString(x_complex_query);
+			request.setAttribute("x_complex_query", x_complex_query);
+		} else {
+			request.setAttribute("x_complex_query", "");
+		}
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view, modelMap);
+		}
+
+		return new ModelAndView("/wx/content/treeList", modelMap);
 	}
 
 	@RequestMapping("/update")
@@ -433,6 +527,8 @@ public class WxContentController {
 					.getParameter("keywordsMatchType"));
 			wxContent.setSort(RequestUtils.getInt(request, "sort"));
 			wxContent.setRelationIds(request.getParameter("relationIds"));
+			wxContent.setRecommendationIds(request
+					.getParameter("recommendationIds"));
 			wxContent.setSummary(request.getParameter("summary"));
 			wxContent.setIcon(request.getParameter("icon"));
 			wxContent.setBigIcon(request.getParameter("bigIcon"));

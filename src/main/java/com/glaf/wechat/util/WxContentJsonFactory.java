@@ -83,6 +83,10 @@ public class WxContentJsonFactory {
 		if (jsonObject.containsKey("relationIds")) {
 			model.setRelationIds(jsonObject.getString("relationIds"));
 		}
+		if (jsonObject.containsKey("recommendationIds")) {
+			model.setRecommendationIds(jsonObject
+					.getString("recommendationIds"));
+		}
 		if (jsonObject.containsKey("icon")) {
 			model.setIcon(jsonObject.getString("icon"));
 		}
@@ -154,6 +158,9 @@ public class WxContentJsonFactory {
 		if (model.getRelationIds() != null) {
 			jsonObject.put("relationIds", model.getRelationIds());
 		}
+		if (model.getRecommendationIds() != null) {
+			jsonObject.put("recommendationIds", model.getRecommendationIds());
+		}
 		if (model.getIcon() != null) {
 			jsonObject.put("icon", model.getIcon());
 		}
@@ -201,6 +208,16 @@ public class WxContentJsonFactory {
 			jsonObject.put("relations", arrayObject);
 		}
 
+		if (model.getRecommendations() != null
+				&& !model.getRecommendations().isEmpty()) {
+			JSONArray arrayObject = new JSONArray();
+			for (WxContent content : model.getRecommendations()) {
+				JSONObject json = toJsonObject(content);
+				arrayObject.add(json);
+			}
+			jsonObject.put("recommendations", arrayObject);
+		}
+
 		return jsonObject;
 	}
 
@@ -241,6 +258,9 @@ public class WxContentJsonFactory {
 		}
 		if (model.getRelationIds() != null) {
 			jsonObject.put("relationIds", model.getRelationIds());
+		}
+		if (model.getRecommendationIds() != null) {
+			jsonObject.put("recommendationIds", model.getRecommendationIds());
 		}
 		if (model.getIcon() != null) {
 			jsonObject.put("icon", model.getIcon());
@@ -285,6 +305,17 @@ public class WxContentJsonFactory {
 			}
 			jsonObject.put("relations", arrayObject);
 		}
+
+		if (model.getRecommendations() != null
+				&& !model.getRecommendations().isEmpty()) {
+			ArrayNode arrayObject = new ObjectMapper().createArrayNode();
+			for (WxContent content : model.getRecommendations()) {
+				ObjectNode json = toObjectNode(content);
+				arrayObject.add(json);
+			}
+			jsonObject.put("recommendations", arrayObject);
+		}
+
 		return jsonObject;
 	}
 

@@ -79,7 +79,7 @@ public class WxContentServiceImpl implements WxContentService {
 			}
 		}
 	}
-	
+
 	public WxContent getWxContent(Long id) {
 		if (id == null) {
 			return null;
@@ -88,7 +88,7 @@ public class WxContentServiceImpl implements WxContentService {
 		return wxContent;
 	}
 
-	public WxContent getWxContentByUUID(String uuid){
+	public WxContent getWxContentByUUID(String uuid) {
 		return wxContentMapper.getWxContentByUUID(uuid);
 	}
 
@@ -104,7 +104,7 @@ public class WxContentServiceImpl implements WxContentService {
 		return rows;
 	}
 
-	public WxContent getWxContentWithRelations(Long id) {
+	public WxContent getWxContentWithRefs(Long id) {
 		if (id == null) {
 			return null;
 		}
@@ -117,6 +117,16 @@ public class WxContentServiceImpl implements WxContentService {
 			query.relationIds(relationIds);
 			List<WxContent> relations = wxContentMapper.getWxContents(query);
 			wxContent.setRelations(relations);
+		}
+		if (wxContent != null
+				&& StringUtils.isNotEmpty(wxContent.getRecommendationIds())) {
+			List<String> recommendationIds = StringTools.split(wxContent
+					.getRecommendationIds());
+			WxContentQuery query = new WxContentQuery();
+			query.recommendationIds(recommendationIds);
+			List<WxContent> recommendations = wxContentMapper
+					.getWxContents(query);
+			wxContent.setRecommendations(recommendations);
 		}
 		return wxContent;
 	}

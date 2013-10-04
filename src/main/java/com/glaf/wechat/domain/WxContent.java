@@ -127,6 +127,12 @@ public class WxContent implements java.io.Serializable, JSONable {
 	protected String keywordsMatchType;
 
 	/**
+	 * 推荐阅读的内容编号，多个之间用逗号隔开
+	 */
+	@Column(name = "RECOMMENDATIONIDS_", length = 100)
+	protected String recommendationIds;
+
+	/**
 	 * 关联的内容编号，多个之间用逗号隔开
 	 */
 	@Column(name = "RELATIONIDS_", length = 100)
@@ -191,6 +197,9 @@ public class WxContent implements java.io.Serializable, JSONable {
 	@javax.persistence.Transient
 	protected List<WxContent> relations = new ArrayList<WxContent>();
 
+	@javax.persistence.Transient
+	protected List<WxContent> recommendations = new ArrayList<WxContent>();
+
 	public WxContent() {
 
 	}
@@ -249,6 +258,14 @@ public class WxContent implements java.io.Serializable, JSONable {
 
 	public int getPriority() {
 		return priority;
+	}
+
+	public String getRecommendationIds() {
+		return recommendationIds;
+	}
+
+	public List<WxContent> getRecommendations() {
+		return recommendations;
 	}
 
 	public String getRelationIds() {
@@ -349,6 +366,14 @@ public class WxContent implements java.io.Serializable, JSONable {
 
 	public void setPriority(int priority) {
 		this.priority = priority;
+	}
+
+	public void setRecommendationIds(String recommendationIds) {
+		this.recommendationIds = recommendationIds;
+	}
+
+	public void setRecommendations(List<WxContent> recommendations) {
+		this.recommendations = recommendations;
 	}
 
 	public void setRelationIds(String relationIds) {

@@ -104,6 +104,28 @@ limitations under the License.
 		openWindow(link,self,x, y, 745, 480);
 	}
 
+	function editRelations(){
+		var link = '<%=request.getContextPath()%>/mx/wx/wxContent/choose?elementId=relationIds&elementName=relations&type=category&selecteds=${wxContent.relationIds}';
+		var x=100;
+		var y=100;
+		if(is_ie) {
+			x=document.body.scrollLeft+event.clientX-event.offsetX-200;
+			y=document.body.scrollTop+event.clientY-event.offsetY-200;
+		}
+		openWindow(link,self,x, y, 745, 480);
+	}
+
+	function editRecommendations(){
+		var link = '<%=request.getContextPath()%>/mx/wx/wxContent/choose?elementId=recommendationIds&elementName=recommendations&type=category&selecteds=${wxContent.recommendationIds}';
+		var x=100;
+		var y=100;
+		if(is_ie) {
+			x=document.body.scrollLeft+event.clientX-event.offsetX-200;
+			y=document.body.scrollTop+event.clientY-event.offsetY-200;
+		}
+		openWindow(link,self,x, y, 745, 480);
+	}
+
 </script>
 </head>
 
@@ -218,6 +240,24 @@ limitations under the License.
 		<td width="15%" align="left" valign="middle">内容</td>
 		<td align="left" valign="middle">
 			<textarea  id="content" name="content" class="x-textarea"  rows="5" cols="38" style="width:545px;height:380px;">${wxContent.content}</textarea> 
+		</td>
+	</tr>
+
+	<tr>
+		<td width="15%" align="left" valign="middle">多图文</td>
+		<td align="left" valign="middle">
+			 <input type="hidden" id="relationIds" name="relationIds" value="${wxContent.relationIds}"> 
+			 <input type="hidden" id="relations" name="relations"> 
+			 <input type="button" value=" 添加 " onclick="javascript:editRelations();" class="btnGreen">
+		</td>
+	</tr>
+
+	<tr>
+		<td width="15%" align="left" valign="middle">推荐阅读</td>
+		<td align="left" valign="middle">
+			<input type="hidden" id="recommendationIds" name="recommendationIds" value="${wxContent.recommendationIds}"> 
+			<input type="hidden" id="recommendations" name="recommendations">
+			<input type="button" value=" 添加 " onclick="javascript:editRecommendations();" class="btnGreen">
 		</td>
 	</tr>
 	 

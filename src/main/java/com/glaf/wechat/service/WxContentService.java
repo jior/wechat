@@ -50,15 +50,21 @@ public interface WxContentService {
 	 * @return
 	 */
 	WxContent getWxContent(Long id);
-	
+
 	/**
 	 * 根据uuid获取一条记录
 	 * 
 	 * @return
 	 */
 	WxContent getWxContentByUUID(String uuid);
-	
-	WxContent getWxContentWithRelations(Long id);
+
+	/**
+	 * 获取内容及关联信息
+	 * 
+	 * @param id
+	 * @return
+	 */
+	WxContent getWxContentWithRefs(Long id);
 
 	/**
 	 * 根据查询参数获取记录总数
