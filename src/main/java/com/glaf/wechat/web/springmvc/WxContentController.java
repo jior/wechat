@@ -343,6 +343,7 @@ public class WxContentController {
 		wxContent.setCategoryId(RequestUtils.getLong(request, "categoryId"));
 		wxContent.setTitle(request.getParameter("title"));
 		wxContent.setContent(request.getParameter("content"));
+		wxContent.setDetailShowCover(request.getParameter("detailShowCover"));
 		wxContent.setAuthor(request.getParameter("author"));
 		wxContent.setStatus(RequestUtils.getInt(request, "status"));
 		wxContent.setPriority(RequestUtils.getInt(request, "priority"));
@@ -379,6 +380,8 @@ public class WxContentController {
 					.setCategoryId(RequestUtils.getLong(request, "categoryId"));
 			wxContent.setTitle(request.getParameter("title"));
 			wxContent.setContent(request.getParameter("content"));
+			wxContent.setDetailShowCover(request
+					.getParameter("detailShowCover"));
 			wxContent.setAuthor(request.getParameter("author"));
 			wxContent.setStatus(RequestUtils.getInt(request, "status"));
 			wxContent.setPriority(RequestUtils.getInt(request, "priority"));
@@ -518,6 +521,8 @@ public class WxContentController {
 					.setCategoryId(RequestUtils.getLong(request, "categoryId"));
 			wxContent.setTitle(request.getParameter("title"));
 			wxContent.setContent(request.getParameter("content"));
+			wxContent.setDetailShowCover(request
+					.getParameter("detailShowCover"));
 			wxContent.setAuthor(request.getParameter("author"));
 			wxContent.setStatus(RequestUtils.getInt(request, "status"));
 			wxContent.setPriority(RequestUtils.getInt(request, "priority"));

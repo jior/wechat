@@ -9,6 +9,8 @@
 		<result property="categoryId" column="CATEGORYID_" jdbcType="BIGINT" />
 		<result property="title" column="TITLE_" jdbcType="VARCHAR" />
 		<result property="content" column="CONTENT_" jdbcType="VARCHAR" />
+		<result property="detailShowCover" column="DETAILSHOWCOVER_"
+			jdbcType="VARCHAR" />
 		<result property="author" column="AUTHOR_" jdbcType="VARCHAR" />
 		<result property="status" column="STATUS_" jdbcType="INTEGER" />
 		<result property="priority" column="PRIORTY_" jdbcType="INTEGER" />
@@ -49,6 +51,9 @@
 			</if>
 			<if test="content != null">
 				,CONTENT_
+			</if>
+			<if test="detailShowCover != null">
+				,DETAILSHOWCOVER_
 			</if>
 			<if test="author != null">
 				,AUTHOR_
@@ -118,6 +123,9 @@
 			<if test="content != null">
 				,#{content, jdbcType=VARCHAR}
 			</if>
+			<if test="detailShowCover != null">
+				,#{detailShowCover, jdbcType=VARCHAR}
+			</if>
 			<if test="author != null">
 				,#{author, jdbcType=VARCHAR}
 			</if>
@@ -185,6 +193,9 @@
 			</if>
 			<if test="content != null">
 				CONTENT_ = #{content, jdbcType=VARCHAR},
+			</if>
+			<if test="detailShowCover != null">
+				DETAILSHOWCOVER_ = #{detailShowCover, jdbcType=VARCHAR},
 			</if>
 			<if test="author != null">
 				AUTHOR_ = #{author, jdbcType=VARCHAR},

@@ -237,7 +237,19 @@ limitations under the License.
 	</tr>
 
 	<tr>
-		<td width="15%" align="left" valign="middle">内容</td>
+		<td width="20%" align="left">详细页显示图文封面</td>
+		<td align="left">
+			 <select id="detailShowCover" name="detailShowCover">
+				<option value="0" >否
+				<option value="1" selected>是
+		    </select>
+			 <script type="text/javascript">
+			    jQuery("#detailShowCover").val("${wxContent.detailShowCover}");
+			 </script>
+		</td>
+	</tr>
+	<tr>
+		<td width="15%" align="left" valign="middle">图文详细页内容</td>
 		<td align="left" valign="middle">
 			<textarea  id="content" name="content" class="x-textarea"  rows="5" cols="38" style="width:545px;height:380px;">${wxContent.content}</textarea> 
 		</td>

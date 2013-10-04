@@ -72,6 +72,9 @@ public class WxContent implements java.io.Serializable, JSONable {
 	@Column(name = "CONTENT_", length = 2048)
 	protected String content;
 
+	@Column(name = "DETAILSHOWCOVER_", length = 10)
+	protected String detailShowCover;
+
 	/**
 	 * зїеп
 	 */
@@ -228,6 +231,10 @@ public class WxContent implements java.io.Serializable, JSONable {
 		return createDate;
 	}
 
+	public String getDetailShowCover() {
+		return detailShowCover;
+	}
+
 	public String getIcon() {
 		return icon;
 	}
@@ -334,6 +341,10 @@ public class WxContent implements java.io.Serializable, JSONable {
 
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
+	}
+
+	public void setDetailShowCover(String detailShowCover) {
+		this.detailShowCover = detailShowCover;
 	}
 
 	public void setIcon(String icon) {

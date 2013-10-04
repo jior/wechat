@@ -52,6 +52,9 @@ public class WxContentJsonFactory {
 		if (jsonObject.containsKey("content")) {
 			model.setContent(jsonObject.getString("content"));
 		}
+		if (jsonObject.containsKey("detailShowCover")) {
+			model.setDetailShowCover(jsonObject.getString("detailShowCover"));
+		}
 		if (jsonObject.containsKey("author")) {
 			model.setAuthor(jsonObject.getString("author"));
 		}
@@ -133,6 +136,9 @@ public class WxContentJsonFactory {
 		}
 		if (model.getContent() != null) {
 			jsonObject.put("content", model.getContent());
+		}
+		if (model.getDetailShowCover() != null) {
+			jsonObject.put("detailShowCover", model.getDetailShowCover());
 		}
 		if (model.getAuthor() != null) {
 			jsonObject.put("author", model.getAuthor());
@@ -234,6 +240,9 @@ public class WxContentJsonFactory {
 		}
 		if (model.getContent() != null) {
 			jsonObject.put("content", model.getContent());
+		}
+		if (model.getDetailShowCover() != null) {
+			jsonObject.put("detailShowCover", model.getDetailShowCover());
 		}
 		if (model.getAuthor() != null) {
 			jsonObject.put("author", model.getAuthor());
