@@ -142,6 +142,16 @@
 		<url-pattern>/fileUploadService</url-pattern>
     </servlet-mapping>
 
+	<servlet>
+		<servlet-name>WechatCoreServlet</servlet-name>
+		<servlet-class>com.glaf.wechat.servlet.WechatCoreServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>WechatCoreServlet</servlet-name>
+		<url-pattern>/weixin/*</url-pattern>
+	</servlet-mapping>
+
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>

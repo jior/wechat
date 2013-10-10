@@ -46,8 +46,16 @@ public class BaseMessage implements java.io.Serializable {
 	// 位0x0001被标志时，代表刚收到的消息
 	private int funcFlag;
 
+	private String type;
+
+	private String content;
+
 	public BaseMessage() {
 
+	}
+
+	public String getContent() {
+		return content;
 	}
 
 	public long getCreateTime() {
@@ -74,6 +82,14 @@ public class BaseMessage implements java.io.Serializable {
 		return toUserName;
 	}
 
+	public String getType() {
+		return type;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
 	public void setCreateTime(long createTime) {
 		this.createTime = createTime;
 	}
@@ -98,12 +114,17 @@ public class BaseMessage implements java.io.Serializable {
 		this.toUserName = toUserName;
 	}
 
+	public void setType(String type) {
+		this.type = type;
+	}
+
 	public Document toDocument() {
 		Document doc = DocumentHelper.createDocument();
 		Element root = doc.addElement("xml");
 		root.addElement("ToUserName").setText(toUserName);
 		root.addElement("FromUserName").setText(fromUserName);
 		root.addElement("CreateTime").setText(String.valueOf(createTime));
+		root.addElement("Content").setText(content);
 		root.addElement("MsgType").setText(msgType);
 		root.addElement("MsgId").setText(String.valueOf(msgId));
 		root.addElement("FuncFlag").setText(String.valueOf(funcFlag));
