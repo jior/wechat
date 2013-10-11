@@ -21,7 +21,6 @@ public class WxTemplateTest extends AbstractTest {
 	public void insertWxTemplate() {
 		for (int i = 0; i < 10; i++) {
 			WxTemplate wxTemplate = new WxTemplate();
-			wxTemplate.setSkinId("SkinId");
 			wxTemplate.setSkinImage("SkinImage");
 			wxTemplate.setType("Type");
 			wxTemplate.setUrl("Url");

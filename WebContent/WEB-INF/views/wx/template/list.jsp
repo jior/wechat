@@ -300,7 +300,7 @@ limitations under the License.
 	function showUpload(){
 		var nodeId = jQuery("#nodeId").val();
 		var link = "<%=request.getContextPath()%>/mx/wx/wxTemplate/showUpload?type=category&categoryId="+nodeId;
-	    art.dialog.open(link, { height: 420, width: 680, title: "上传模版", lock: true, scrollbars:"yes" }, false);
+	    art.dialog.open(link, { height: 420, width: 680, title: "上传模板", lock: true, scrollbars:"yes" }, false);
 	}
 		 
 </script>
@@ -326,7 +326,7 @@ limitations under the License.
 			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-add'" 
 			   onclick="javascript:addNew();">新增</a>  
 			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-add'" 
-			   onclick="javascript:showUpload();">上传模版</a>  
+			   onclick="javascript:showUpload();">上传模板</a>  
 			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-edit'"
 			   onclick="javascript:editSelected();">修改</a>  
 			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-remove'"

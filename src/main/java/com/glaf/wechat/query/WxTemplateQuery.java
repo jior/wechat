@@ -27,10 +27,6 @@ public class WxTemplateQuery extends DataQuery {
 	protected List<Long> ids;
 	protected Long categoryId;
 	protected List<Long> categoryIds;
-	protected String skinId;
-	protected String skinIdLike;
-	protected List<String> skinIds;
-	protected String skinImageLike;
 	protected String type;
 	protected List<String> types;
 	protected String urlLike;
@@ -117,10 +113,6 @@ public class WxTemplateQuery extends DataQuery {
 				orderBy = "E.CATEGORYID_" + a_x;
 			}
 
-			if ("skinId".equals(sortColumn)) {
-				orderBy = "E.SKINID_" + a_x;
-			}
-
 			if ("skinImage".equals(sortColumn)) {
 				orderBy = "E.SKINIMAGE_" + a_x;
 			}
@@ -151,38 +143,6 @@ public class WxTemplateQuery extends DataQuery {
 
 		}
 		return orderBy;
-	}
-
-	public String getSkinId() {
-		return skinId;
-	}
-
-	public String getSkinIdLike() {
-		if (skinIdLike != null && skinIdLike.trim().length() > 0) {
-			if (!skinIdLike.startsWith("%")) {
-				skinIdLike = "%" + skinIdLike;
-			}
-			if (!skinIdLike.endsWith("%")) {
-				skinIdLike = skinIdLike + "%";
-			}
-		}
-		return skinIdLike;
-	}
-
-	public List<String> getSkinIds() {
-		return skinIds;
-	}
-
-	public String getSkinImageLike() {
-		if (skinImageLike != null && skinImageLike.trim().length() > 0) {
-			if (!skinImageLike.startsWith("%")) {
-				skinImageLike = "%" + skinImageLike;
-			}
-			if (!skinImageLike.endsWith("%")) {
-				skinImageLike = skinImageLike + "%";
-			}
-		}
-		return skinImageLike;
 	}
 
 	public String getType() {
@@ -218,7 +178,6 @@ public class WxTemplateQuery extends DataQuery {
 		super.initQueryColumns();
 		addColumn("id", "ID_");
 		addColumn("categoryId", "CATEGORYID_");
-		addColumn("skinId", "SKINID_");
 		addColumn("skinImage", "SKINIMAGE_");
 		addColumn("type", "TYPE_");
 		addColumn("url", "URL_");
@@ -249,22 +208,6 @@ public class WxTemplateQuery extends DataQuery {
 		this.defaultFlag = defaultFlag;
 	}
 
-	public void setSkinId(String skinId) {
-		this.skinId = skinId;
-	}
-
-	public void setSkinIdLike(String skinIdLike) {
-		this.skinIdLike = skinIdLike;
-	}
-
-	public void setSkinIds(List<String> skinIds) {
-		this.skinIds = skinIds;
-	}
-
-	public void setSkinImageLike(String skinImageLike) {
-		this.skinImageLike = skinImageLike;
-	}
-
 	public void setType(String type) {
 		this.type = type;
 	}
@@ -283,38 +226,6 @@ public class WxTemplateQuery extends DataQuery {
 
 	public void setUuids(List<String> uuids) {
 		this.uuids = uuids;
-	}
-
-	public WxTemplateQuery skinId(String skinId) {
-		if (skinId == null) {
-			throw new RuntimeException("skinId is null");
-		}
-		this.skinId = skinId;
-		return this;
-	}
-
-	public WxTemplateQuery skinIdLike(String skinIdLike) {
-		if (skinIdLike == null) {
-			throw new RuntimeException("skinId is null");
-		}
-		this.skinIdLike = skinIdLike;
-		return this;
-	}
-
-	public WxTemplateQuery skinIds(List<String> skinIds) {
-		if (skinIds == null) {
-			throw new RuntimeException("skinIds is empty ");
-		}
-		this.skinIds = skinIds;
-		return this;
-	}
-
-	public WxTemplateQuery skinImageLike(String skinImageLike) {
-		if (skinImageLike == null) {
-			throw new RuntimeException("skinImage is null");
-		}
-		this.skinImageLike = skinImageLike;
-		return this;
 	}
 
 	public WxTemplateQuery type(String type) {

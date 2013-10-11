@@ -76,7 +76,7 @@ public class WxCategoryServiceImpl implements WxCategoryService {
 			}
 		}
 	}
-	
+
 	/**
 	 * 获取某个分类的直接子节点列表
 	 * 
@@ -125,15 +125,14 @@ public class WxCategoryServiceImpl implements WxCategoryService {
 	 * @param type
 	 * @return
 	 */
-	public List<WxCategory> getCategoryList(String createBy, String type){
+	public List<WxCategory> getCategoryList(String createBy, String type) {
 		WxCategoryQuery query = new WxCategoryQuery();
 		query.createBy(createBy);
 		query.type(type);
 		List<WxCategory> list = wxCategoryMapper.getWxCategories(query);
 		return list;
 	}
-	
-	
+
 	protected String getTreeId(Map<Long, WxCategory> dataMap, WxCategory tree) {
 		long parentId = tree.getParentId();
 		long id = tree.getId();
@@ -158,7 +157,7 @@ public class WxCategoryServiceImpl implements WxCategoryService {
 		return wxCategory;
 	}
 
-	public 	WxCategory getWxCategoryByUUID(String uuid){
+	public WxCategory getWxCategoryByUUID(String uuid) {
 		return wxCategoryMapper.getWxCategoryByUUID(uuid);
 	}
 
@@ -169,8 +168,8 @@ public class WxCategoryServiceImpl implements WxCategoryService {
 	public List<WxCategory> getWxCategorysByQueryCriteria(int start,
 			int pageSize, WxCategoryQuery query) {
 		RowBounds rowBounds = new RowBounds(start, pageSize);
-		List<WxCategory> rows = sqlSessionTemplate.selectList("getWxCategories",
-				query, rowBounds);
+		List<WxCategory> rows = sqlSessionTemplate.selectList(
+				"getWxCategories", query, rowBounds);
 		return rows;
 	}
 

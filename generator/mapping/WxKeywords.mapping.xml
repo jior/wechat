@@ -1,0 +1,12 @@
+
+<mapping>
+    <entity name="WxKeywords" package="com.glaf.wechat" moduleName="wx" table="WX_KEYWORDS" title="WxKeywords" englishTitle="WxKeywords">
+        <id name="id" column="ID_" type="Long" title="Id" englishTitle="Id" length="255"/>
+        <property name="categoryId" column="CATEGORYID_" type="Long" title="CategoryId" englishTitle="CategoryId" length="255" editable="true"/>
+		<property name="contentId" column="CONTENTID_" type="String" title="ContentId" englishTitle="ContentId" length="250" editable="true"/>
+        <property name="keywords" column="KEYWORDS_" type="String" title="Keywords" englishTitle="Keywords" length="250" editable="true"/>
+		<property name="keywordsMatchType" column="KEYWORDSMATCHTYPE_" type="String" title="KeywordsMatchType" englishTitle="KeywordsMatchType" length="250" editable="true"/>
+        <property name="createBy" column="CREATEBY_" type="String" title="CreateBy" englishTitle="CreateBy" length="50" editable="true"/>
+        <property name="createDate" column="CREATEDATE_" type="Date" title="CreateDate" englishTitle="CreateDate" length="255" editable="true"/>
+    </entity>
+</mapping>

@@ -51,11 +51,11 @@ public class WxTemplateJsonFactory {
 		if (jsonObject.containsKey("desc")) {
 			model.setDesc(jsonObject.getString("desc"));
 		}
-		if (jsonObject.containsKey("skinId")) {
-			model.setSkinId(jsonObject.getString("skinId"));
-		}
 		if (jsonObject.containsKey("skinImage")) {
 			model.setSkinImage(jsonObject.getString("skinImage"));
+		}
+		if (jsonObject.containsKey("templateType")) {
+			model.setTemplateType(jsonObject.getString("templateType"));
 		}
 		if (jsonObject.containsKey("type")) {
 			model.setType(jsonObject.getString("type"));
@@ -108,15 +108,14 @@ public class WxTemplateJsonFactory {
 		if (model.getDesc() != null) {
 			jsonObject.put("desc", model.getDesc());
 		}
-
-		if (model.getSkinId() != null) {
-			jsonObject.put("skinId", model.getSkinId());
-		}
 		if (model.getSkinImage() != null) {
 			jsonObject.put("skinImage", model.getSkinImage());
 		}
 		if (model.getType() != null) {
 			jsonObject.put("type", model.getType());
+		}
+		if (model.getTemplateType() != null) {
+			jsonObject.put("templateType", model.getTemplateType());
 		}
 		if (model.getUrl() != null) {
 			jsonObject.put("url", model.getUrl());
@@ -166,15 +165,14 @@ public class WxTemplateJsonFactory {
 		if (model.getDesc() != null) {
 			jsonObject.put("desc", model.getDesc());
 		}
-
-		if (model.getSkinId() != null) {
-			jsonObject.put("skinId", model.getSkinId());
-		}
 		if (model.getSkinImage() != null) {
 			jsonObject.put("skinImage", model.getSkinImage());
 		}
 		if (model.getType() != null) {
 			jsonObject.put("type", model.getType());
+		}
+		if (model.getTemplateType() != null) {
+			jsonObject.put("templateType", model.getTemplateType());
 		}
 		if (model.getUrl() != null) {
 			jsonObject.put("url", model.getUrl());

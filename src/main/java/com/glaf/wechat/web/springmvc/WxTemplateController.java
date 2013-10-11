@@ -56,6 +56,8 @@ public class WxTemplateController {
 
 	protected WxTemplateService wxTemplateService;
 
+	protected WxUserTemplateService wxUserTemplateService;
+
 	public WxTemplateController() {
 
 	}
@@ -270,7 +272,7 @@ public class WxTemplateController {
 		WxTemplate wxTemplate = new WxTemplate();
 		Tools.populate(wxTemplate, params);
 
-		wxTemplate.setSkinId(request.getParameter("skinId"));
+		wxTemplate.setTemplateType(request.getParameter("templateType"));
 		wxTemplate.setSkinImage(request.getParameter("skinImage"));
 		wxTemplate.setType(request.getParameter("type"));
 		wxTemplate.setUrl(request.getParameter("url"));
@@ -282,6 +284,28 @@ public class WxTemplateController {
 		return this.list(request, modelMap);
 	}
 
+	@RequestMapping("/saveUserTemplate")
+	public ModelAndView saveUserTemplate(HttpServletRequest request,
+			ModelMap modelMap) {
+		LoginContext loginContext = RequestUtils.getLoginContext(request);
+		RequestUtils.setRequestParameterToAttribute(request);
+		String type = request.getParameter("type");
+		if (StringUtils.isEmpty(type)) {
+			type = "0";
+		}
+
+		Long categoryId = RequestUtils.getLong(request, "categoryId", 0);
+		Long templateId = RequestUtils.getLong(request, "templateId");
+		WxUserTemplate wxUserTemplate = new WxUserTemplate();
+		wxUserTemplate.setCategoryId(categoryId);
+		wxUserTemplate.setTemplateId(templateId);
+		wxUserTemplate.setType(type);
+		wxUserTemplate.setCreateBy(loginContext.getActorId());
+		wxUserTemplateService.save(wxUserTemplate);
+
+		return this.settings(request, modelMap);
+	}
+
 	@ResponseBody
 	@RequestMapping("/saveWxTemplate")
 	public byte[] saveWxTemplate(HttpServletRequest request) {
@@ -291,7 +315,7 @@ public class WxTemplateController {
 		WxTemplate wxTemplate = new WxTemplate();
 		try {
 			Tools.populate(wxTemplate, params);
-			wxTemplate.setSkinId(request.getParameter("skinId"));
+			wxTemplate.setTemplateType(request.getParameter("templateType"));
 			wxTemplate.setSkinImage(request.getParameter("skinImage"));
 			wxTemplate.setType(request.getParameter("type"));
 			wxTemplate.setUrl(request.getParameter("url"));
@@ -308,9 +332,51 @@ public class WxTemplateController {
 		return ResponseUtils.responseJsonResult(false);
 	}
 
+	@RequestMapping("/settings")
+	public ModelAndView settings(HttpServletRequest request, ModelMap modelMap) {
+		LoginContext loginContext = RequestUtils.getLoginContext(request);
+		RequestUtils.setRequestParameterToAttribute(request);
+		String type = request.getParameter("type");
+		if (StringUtils.isEmpty(type)) {
+			type = "0";
+		}
+
+		Long categoryId = RequestUtils.getLong(request, "categoryId", 0);
+
+		List<WxTemplate> templates = wxTemplateService.getTemplates(
+				loginContext.getActorId(), type, categoryId);
+		if (templates == null || templates.isEmpty()) {
+			templates = wxTemplateService.getTemplates("system", type, 0L);
+		}
+
+		request.setAttribute("templates", templates);
+
+		WxUserTemplate wxUserTemplate = wxUserTemplateService
+				.getWxUserTemplate(loginContext.getActorId(), type, categoryId);
+		request.setAttribute("wxUserTemplate", wxUserTemplate);
+
+		String x_view = ViewProperties.getString("wxTemplate.settings");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view, modelMap);
+		}
+
+		return new ModelAndView("/wx/template/settings", modelMap);
+	}
+
 	@javax.annotation.Resource
 	public void setWxTemplateService(WxTemplateService wxTemplateService) {
 		this.wxTemplateService = wxTemplateService;
+	}
+
+	@javax.annotation.Resource
+	public void setWxUserTemplateService(
+			WxUserTemplateService wxUserTemplateService) {
+		this.wxUserTemplateService = wxUserTemplateService;
 	}
 
 	@RequestMapping("/showUpload")
@@ -343,7 +409,7 @@ public class WxTemplateController {
 				&& (StringUtils.equals(wxTemplate.getCreateBy(),
 						loginContext.getActorId()) || loginContext
 						.isSystemAdministrator())) {
-			wxTemplate.setSkinId(request.getParameter("skinId"));
+			wxTemplate.setTemplateType(request.getParameter("templateType"));
 			wxTemplate.setSkinImage(request.getParameter("skinImage"));
 			wxTemplate.setType(request.getParameter("type"));
 			wxTemplate.setUrl(request.getParameter("url"));

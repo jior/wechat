@@ -64,6 +64,12 @@ public class WxTemplate implements java.io.Serializable, JSONable {
 	protected String name;
 
 	/**
+	 * 模板类型(html,ftl)
+	 */
+	@Column(name = "TEMPLATETYPE_", length = 50)
+	protected String templateType;
+
+	/**
 	 * 描述
 	 */
 	@Column(name = "DESC_", length = 500)
@@ -74,19 +80,13 @@ public class WxTemplate implements java.io.Serializable, JSONable {
 	protected String content;
 
 	/**
-	 * 模板编号
-	 */
-	@Column(name = "SKINID_", length = 50)
-	protected String skinId;
-
-	/**
 	 * 模板图片
 	 */
 	@Column(name = "SKINIMAGE_", length = 250)
 	protected String skinImage;
 
 	/**
-	 * 模板类型（首页0|列表1|详细2）
+	 * 类型（首页0|列表1|详细2）
 	 */
 	@Column(name = "TYPE_", length = 50)
 	protected String type;
@@ -189,12 +189,12 @@ public class WxTemplate implements java.io.Serializable, JSONable {
 		return name;
 	}
 
-	public String getSkinId() {
-		return skinId;
-	}
-
 	public String getSkinImage() {
 		return skinImage;
+	}
+
+	public String getTemplateType() {
+		return templateType;
 	}
 
 	public String getType() {
@@ -257,12 +257,12 @@ public class WxTemplate implements java.io.Serializable, JSONable {
 		this.name = name;
 	}
 
-	public void setSkinId(String skinId) {
-		this.skinId = skinId;
-	}
-
 	public void setSkinImage(String skinImage) {
 		this.skinImage = skinImage;
+	}
+
+	public void setTemplateType(String templateType) {
+		this.templateType = templateType;
 	}
 
 	public void setType(String type) {

@@ -75,7 +75,7 @@ public class WxTemplateServiceImpl implements WxTemplateService {
 			}
 		}
 	}
-	
+
 	public WxTemplate getWxTemplate(Long id) {
 		if (id == null) {
 			return null;
@@ -84,12 +84,29 @@ public class WxTemplateServiceImpl implements WxTemplateService {
 		return wxTemplate;
 	}
 
-	public WxTemplate getWxTemplateByUUID(String uuid){
+	public WxTemplate getWxTemplateByUUID(String uuid) {
 		return wxTemplateMapper.getWxTemplateByUUID(uuid);
 	}
 
 	public int getWxTemplateCountByQueryCriteria(WxTemplateQuery query) {
 		return wxTemplateMapper.getWxTemplateCount(query);
+	}
+
+	/**
+	 * 获取某个栏目指定类型的模板
+	 * 
+	 * @param createBy
+	 * @param type
+	 * @param categoryId
+	 * @return
+	 */
+	public List<WxTemplate> getTemplates(String createBy, String type,
+			Long categoryId) {
+		WxTemplateQuery query = new WxTemplateQuery();
+		query.categoryId(categoryId);
+		query.createBy(createBy);
+		query.type(type);
+		return this.list(query);
 	}
 
 	public List<WxTemplate> getWxTemplatesByQueryCriteria(int start,

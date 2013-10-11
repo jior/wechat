@@ -154,23 +154,14 @@ limitations under the License.
 			 </script>
 		</td>
 	 </tr>
+
 	 <tr>
 		<td width="15%" align="left">内容</td>
 		<td align="left" colspan="3">
 			<textarea  id="content" name="content" class="x-textarea"  rows="5" cols="38" style="width:535px;height:380px;"><c:out value="${wxTemplate.content}" escapeXml="false"/></textarea> 
 		</td>
 	</tr>
-	 
-	<tr>
-		<td width="15%" align="left">链接地址</td>
-		<td align="left" colspan="3">
-            <input id="url" name="url" type="text" 
-			       class="easyui-validatebox x-text"  
-			       size="80"
-				   value="${wxTemplate.url}"/>
-		</td>
-	</tr>
-
+ 
 	<tr>
 	    <td width="20%" align="left"></td>
 		<td align="left" ><br>

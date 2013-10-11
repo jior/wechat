@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.wechat.mapper.WxUserTemplateMapper">
+
+	<resultMap id="wxUserTemplateResultMap" type="com.glaf.wechat.domain.WxUserTemplate">
+		<id property="id" column="ID_" jdbcType="BIGINT" />
+		<result property="categoryId" column="CATEGORYID_" jdbcType="BIGINT" />
+		<result property="templateId" column="TEMPLATEID_" jdbcType="BIGINT" />
+		<result property="type" column="TYPE_" jdbcType="VARCHAR" />
+		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
+		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+
+	<insert id="insertWxUserTemplate" parameterType="com.glaf.wechat.domain.WxUserTemplate">
+		insert into WX_USER_TEMPLATE
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ID_
+			<if test="categoryId != null">
+				,CATEGORYID_
+			</if>
+			<if test="templateId != null">
+				,TEMPLATEID_
+			</if>
+			<if test="type != null">
+				,TYPE_
+			</if>
+			<if test="createBy != null">
+				,CREATEBY_
+			</if>
+			<if test="createDate != null">
+				,CREATEDATE_
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			#{id, jdbcType=BIGINT}
+
+			<if test="categoryId != null">
+				,#{categoryId, jdbcType=BIGINT}
+			</if>
+			<if test="templateId != null">
+				,#{templateId, jdbcType=BIGINT}
+			</if>
+			<if test="type != null">
+				,#{type, jdbcType=VARCHAR}
+			</if>
+			<if test="createBy != null">
+				,#{createBy, jdbcType=VARCHAR}
+			</if>
+			<if test="createDate != null">
+				,#{createDate, jdbcType=TIMESTAMP}
+			</if>
+		</trim>
+	</insert>
+
+
+	<update id="updateWxUserTemplate" parameterType="com.glaf.wechat.domain.WxUserTemplate">
+		update WX_USER_TEMPLATE
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">
+			<if test="templateId != null">
+				TEMPLATEID_ = #{templateId, jdbcType=BIGINT},
+			</if>
+			<if test="type != null">
+				TYPE_ = #{type, jdbcType=VARCHAR},
+			</if>
+			<if test="createBy != null">
+				CREATEBY_ = #{createBy, jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				CREATEDATE_ = #{createDate, jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+		where
+		ID_ = #{id, jdbcType=BIGINT}
+
+	</update>
+
+
+	<delete id="deleteWxUserTemplateById" parameterType="long">
+		delete from
+		WX_USER_TEMPLATE
+		where ID_ = #{id}
+	</delete>
+
+
+	<delete id="deleteWxUserTemplates" parameterType="com.glaf.wechat.query.WxUserTemplateQuery">
+		delete from WX_USER_TEMPLATE
+		where (
+		ID_ IN
+		<foreach item="x_id" index="index" collection="ids" open="("
+			separator="," close=")">
+			#{x_id}
+		</foreach>
+		)
+	</delete>
+
+
+	<select id="getWxUserTemplateById" parameterType="long"
+		resultMap="wxUserTemplateResultMap">
+		select * from WX_USER_TEMPLATE where ID_ = #{id}
+	</select>
+
+
+	<select id="getWxUserTemplates" parameterType="com.glaf.wechat.query.WxUserTemplateQuery"
+		resultMap="wxUserTemplateResultMap">
+		select distinct E.*
+		<include refid="selectWxUserTemplatesSql" />
+		<choose>
+			<when test="orderBy != null">
+				order by ${orderBy}
+			</when>
+			<otherwise>
+				order by E.ID_ desc
+			</otherwise>
+		</choose>
+	</select>
+
+
+	<select id="getWxUserTemplateCount" parameterType="com.glaf.wechat.query.WxUserTemplateQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectWxUserTemplatesSql" />
+	</select>
+
+
+	<sql id="selectWxUserTemplatesSql">
+
+		from WX_USER_TEMPLATE E
+
+		<where>
+			1 = 1
+
+			<if test="categoryId != null">
+				and E.CATEGORYID_ = #{categoryId}
+			</if>
+
+			<if test="categoryIds != null and categoryIds.size() &gt; 0">
+				and E.CATEGORYID_ IN
+				<foreach item="x_categoryId" index="index" collection="categoryIds"
+					open="(" separator="," close=")">
+					#{x_categoryId}
+				</foreach>
+			</if>
+
+			<if test="templateId != null">
+				and E.TEMPLATEID_ = #{templateId}
+			</if>
+
+			<if test="templateIds != null and templateIds.size() &gt; 0">
+				and E.TEMPLATEID_ IN
+				<foreach item="x_templateId" index="index" collection="templateIds"
+					open="(" separator="," close=")">
+					#{x_templateId}
+				</foreach>
+			</if>
+
+			<if test="type != null and type != '' ">
+				and E.TYPE_ = #{type}
+			</if>
+
+			<if test="createBy != null and createBy != '' ">
+				and E.CREATEBY_ = #{createBy}
+			</if>
+
+			<if test="createBys != null and createBys.size() &gt; 0">
+				and E.CREATEBY_ IN
+				<foreach item="x_createBy" index="index" collection="createBys"
+					open="(" separator="," close=")">
+					#{x_createBy}
+				</foreach>
+			</if>
+
+		</where>
+	</sql>
+
+</mapper>

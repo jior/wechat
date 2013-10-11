@@ -57,6 +57,16 @@ public interface WxTemplateService {
 	 * @return
 	 */
 	WxTemplate getWxTemplateByUUID(String uuid);
+	
+	
+	/**
+	 * 获取某个栏目指定类型的模板
+	 * @param createBy
+	 * @param type
+	 * @param categoryId
+	 * @return
+	 */
+	List<WxTemplate> getTemplates(String createBy, String type, Long categoryId);
 
 	/**
 	 * 根据查询参数获取记录总数

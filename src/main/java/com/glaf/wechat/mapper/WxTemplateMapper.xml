@@ -7,9 +7,10 @@
 	<resultMap id="wxTemplateResultMap" type="com.glaf.wechat.domain.WxTemplate">
 		<id property="id" column="ID_" jdbcType="BIGINT" />
 		<result property="categoryId" column="CATEGORYID_" jdbcType="BIGINT" />
-		<result property="skinId" column="SKINID_" jdbcType="VARCHAR" />
 		<result property="skinImage" column="SKINIMAGE_" jdbcType="VARCHAR" />
 		<result property="name" column="NAME_" jdbcType="VARCHAR" />
+		<result property="templateType" column="TEMPLATETYPE_"
+			jdbcType="VARCHAR" />
 		<result property="desc" column="DESC_" jdbcType="VARCHAR" />
 		<result property="content" column="CONTENT_" jdbcType="VARCHAR" />
 		<result property="type" column="TYPE_" jdbcType="VARCHAR" />
@@ -33,14 +34,14 @@
 			<if test="categoryId != null">
 				,CATEGORYID_
 			</if>
-			<if test="skinId != null">
-				,SKINID_
-			</if>
 			<if test="skinImage != null">
 				,SKINIMAGE_
 			</if>
 			<if test="name != null">
 				,NAME_
+			</if>
+			<if test="templateType != null">
+				,TEMPLATETYPE_
 			</if>
 			<if test="desc != null">
 				,DESC_
@@ -77,14 +78,14 @@
 			<if test="categoryId != null">
 				,#{categoryId, jdbcType=BIGINT}
 			</if>
-			<if test="skinId != null">
-				,#{skinId, jdbcType=VARCHAR}
-			</if>
 			<if test="skinImage != null">
 				,#{skinImage, jdbcType=VARCHAR}
 			</if>
 			<if test="name != null">
 				,#{name, jdbcType=VARCHAR}
+			</if>
+			<if test="templateType != null">
+				,#{templateType, jdbcType=VARCHAR}
 			</if>
 			<if test="desc != null">
 				,#{desc, jdbcType=VARCHAR}
@@ -124,14 +125,14 @@
 			<if test="categoryId != null">
 				CATEGORYID_ = #{categoryId, jdbcType=BIGINT},
 			</if>
-			<if test="skinId != null">
-				SKINID_ = #{skinId, jdbcType=VARCHAR},
-			</if>
 			<if test="skinImage != null">
 				SKINIMAGE_ = #{skinImage, jdbcType=VARCHAR},
 			</if>
 			<if test="name != null">
 				NAME_ = #{name, jdbcType=VARCHAR},
+			</if>
+			<if test="templateType != null">
+				TEMPLATETYPE_ = #{templateType, jdbcType=VARCHAR},
 			</if>
 			<if test="desc != null">
 				DESC_ = #{desc, jdbcType=VARCHAR},
@@ -234,26 +235,6 @@
 					open="(" separator="," close=")">
 					#{x_categoryId}
 				</foreach>
-			</if>
-
-			<if test="skinId != null and skinId != '' ">
-				and E.SKINID_ = #{skinId}
-			</if>
-
-			<if test="skinIdLike != null and skinIdLike != '' ">
-				and E.SKINID_ like #{skinIdLike}
-			</if>
-
-			<if test="skinIds != null and skinIds.size() &gt; 0">
-				and E.SKINID_ IN
-				<foreach item="x_skinId" index="index" collection="skinIds"
-					open="(" separator="," close=")">
-					#{x_skinId}
-				</foreach>
-			</if>
-
-			<if test="skinImageLike != null and skinImageLike != '' ">
-				and E.SKINIMAGE_ like #{skinImageLike}
 			</if>
 
 			<if test="type != null and type != '' ">

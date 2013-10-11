@@ -38,7 +38,10 @@ limitations under the License.
 <script type="text/javascript">
     var contextPath="<%=request.getContextPath()%>";
 
-    KE.show({  id : 'defaultReply' });
+    KE.show({  id : 'defaultReply'
+	           ,allowFileManager : true
+	           ,imageUploadJson : '<%=request.getContextPath()%>/mx/wx/uploadJson'
+			   ,fileManagerJson : '<%=request.getContextPath()%>/mx/wx/fileManagerJson'  });
 
 	function saveData(){
 		document.getElementById("defaultReply").value=KE.html('defaultReply');

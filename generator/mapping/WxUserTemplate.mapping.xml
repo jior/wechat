@@ -1,0 +1,11 @@
+
+<mapping>
+    <entity name="WxUserTemplate" package="com.glaf.wechat" moduleName="wx" table="WX_USER_TEMPLATE" title="WxUserTemplate" englishTitle="WxUserTemplate">
+        <id name="id" column="ID_" type="Long" title="Id" englishTitle="Id" length="255"/>
+		<property name="categoryId" column="CATEGORYID_" type="Long" title="CategoryId" englishTitle="CategoryId" editable="true" displayType="0"/>
+        <property name="templateId" column="TEMPLATEID_" type="Long" title="TemplateId" englishTitle="TemplateId" editable="true" displayType="0"/>
+        <property name="type" column="TYPE_" type="String" title="Type" englishTitle="Type" length="10" editable="true" displayType="0"/>
+        <property name="createBy" column="CREATEBY_" type="String" title="CreateBy" englishTitle="CreateBy" length="50" editable="true" displayType="0"/>
+        <property name="createDate" column="CREATEDATE_" type="Date" title="CreateDate" englishTitle="CreateDate" editable="true" displayType="0"/>
+    </entity>
+</mapping>
