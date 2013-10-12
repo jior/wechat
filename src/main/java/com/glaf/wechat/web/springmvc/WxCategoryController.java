@@ -32,14 +32,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 
 import com.alibaba.fastjson.*;
+import com.glaf.core.base.BaseTree;
+import com.glaf.core.base.TreeModel;
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.identity.*;
 import com.glaf.core.security.*;
+import com.glaf.core.tree.helper.TreeHelper;
 import com.glaf.core.util.*;
 import com.glaf.wechat.domain.*;
 import com.glaf.wechat.query.*;
 import com.glaf.wechat.service.*;
-import com.glaf.wechat.util.WxCategoryJsonFactory;
 
 @Controller("/wx/wxCategory")
 @RequestMapping("/wx/wxCategory")
@@ -110,29 +112,6 @@ public class WxCategoryController {
 		return null;
 	}
 
-	@ResponseBody
-	@RequestMapping("/treeJson")
-	public byte[] treeJson(HttpServletRequest request) throws IOException {
-		JSONArray array = new JSONArray();
-		LoginContext loginContext = RequestUtils.getLoginContext(request);
-		String type = request.getParameter("type");
-		Long parentId = RequestUtils.getLong(request, "parentId");
-		List<WxCategory> categories = null;
-		if (parentId != null && parentId > 0) {
-			categories = wxCategoryService.getCategoryList(
-					loginContext.getActorId(), parentId);
-		} else if (StringUtils.isNotEmpty(type)) {
-			categories = wxCategoryService.getCategoryList(
-					loginContext.getActorId(), type);
-		}
-
-		if (categories != null && !categories.isEmpty()) {
-			return WxCategoryJsonFactory.listToArray(categories).toJSONString()
-					.getBytes("UTF-8");
-		}
-		return array.toJSONString().getBytes("UTF-8");
-	}
-
 	@RequestMapping("/edit")
 	public ModelAndView edit(HttpServletRequest request, ModelMap modelMap) {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
@@ -174,13 +153,11 @@ public class WxCategoryController {
 		query.deleteFlag(0);
 		query.setActorId(loginContext.getActorId());
 		query.setLoginContext(loginContext);
-		/**
-		 * 此处业务逻辑需自行调整
-		 */
-		if (!loginContext.isSystemAdministrator()) {
-			String actorId = loginContext.getActorId();
-			query.createBy(actorId);
-		}
+		String actorId = loginContext.getActorId();
+		query.createBy(actorId);
+
+		Long parentId = RequestUtils.getLong(request, "parentId", 0);
+		query.parentId(parentId);
 
 		String gridType = ParamUtils.getString(params, "gridType");
 		if (gridType == null) {
@@ -234,6 +211,8 @@ public class WxCategoryController {
 				for (WxCategory wxCategory : list) {
 					JSONObject rowJSON = wxCategory.toJsonObject();
 					rowJSON.put("id", wxCategory.getId());
+					rowJSON.put("pId", wxCategory.getParentId());
+					rowJSON.put("categoryId", wxCategory.getId());
 					rowJSON.put("wxCategoryId", wxCategory.getId());
 					rowJSON.put("startIndex", ++start);
 					rowsJSON.add(rowJSON);
@@ -352,6 +331,51 @@ public class WxCategoryController {
 	@javax.annotation.Resource
 	public void setWxCategoryService(WxCategoryService wxCategoryService) {
 		this.wxCategoryService = wxCategoryService;
+	}
+
+	@ResponseBody
+	@RequestMapping("/treeJson")
+	public byte[] treeJson(HttpServletRequest request) throws IOException {
+		JSONArray array = new JSONArray();
+		LoginContext loginContext = RequestUtils.getLoginContext(request);
+		String type = request.getParameter("type");
+		Long parentId = RequestUtils.getLong(request, "parentId", 0);
+		List<WxCategory> categories = null;
+		if (parentId != null && parentId > 0) {
+			categories = wxCategoryService.getCategoryList(
+					loginContext.getActorId(), parentId);
+		} else if (StringUtils.isNotEmpty(type)) {
+			categories = wxCategoryService.getCategoryList(
+					loginContext.getActorId(), type);
+		}
+
+		if (categories != null && !categories.isEmpty()) {
+			Map<Long, TreeModel> treeMap = new HashMap<Long, TreeModel>();
+			List<TreeModel> treeModels = new ArrayList<TreeModel>();
+			List<Long> categoryIds = new ArrayList<Long>();
+			for (WxCategory category : categories) {
+				TreeModel tree = new BaseTree();
+				tree.setId(category.getId());
+				tree.setParentId(category.getParentId());
+				tree.setCode(category.getCode());
+				tree.setName(category.getName());
+				tree.setSortNo(category.getSort());
+				tree.setDescription(category.getDesc());
+				tree.setCreateBy(category.getCreateBy());
+				tree.setIconCls("tree_folder");
+				tree.setTreeId(category.getTreeId());
+				tree.setUrl(category.getUrl());
+				treeModels.add(tree);
+				categoryIds.add(category.getId());
+				treeMap.put(category.getId(), tree);
+			}
+			logger.debug("treeModels:" + treeModels.size());
+			TreeHelper treeHelper = new TreeHelper();
+			JSONArray jsonArray = treeHelper.getTreeJSONArray(treeModels);
+			logger.debug(jsonArray.toJSONString());
+			return jsonArray.toJSONString().getBytes("UTF-8");
+		}
+		return array.toJSONString().getBytes("UTF-8");
 	}
 
 	@RequestMapping("/update")

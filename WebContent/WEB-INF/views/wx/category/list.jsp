@@ -45,7 +45,7 @@ limitations under the License.
     var setting = {
 			async: {
 				enable: true,
-				url: getUrl,
+				url: '<%=request.getContextPath()%>/mx/wx/wxCategory/treeJson?type=${type}',
 				dataFilter: filter
 			},
 			callback: {
@@ -66,7 +66,7 @@ limitations under the License.
     function getUrl(treeId, treeNode) {
 		if(treeNode != null){
 		    var param = "parentId="+treeNode.id;
-		    return "<%=request.getContextPath()%>/mx/wx/wxCategory/treeJson?"+param;
+		    return "<%=request.getContextPath()%>/mx/wx/wxCategory/treeJson?type=${type}&"+param;
 		}
 		return "<%=request.getContextPath()%>/mx/wx/wxCategory/treeJson?type=${type}";
 	}

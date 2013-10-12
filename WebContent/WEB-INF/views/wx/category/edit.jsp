@@ -37,7 +37,7 @@ limitations under the License.
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/glaf-base.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/glaf-core.js"></script>
 <script type="text/javascript">
-        var contextPath="<%=request.getContextPath()%>";
+    var contextPath="<%=request.getContextPath()%>";
 
 	function saveData(){
 		var params = jQuery("#iForm").formSerialize();
