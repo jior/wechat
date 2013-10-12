@@ -153,7 +153,12 @@ limitations under the License.
 	}
 
 	function formatterKeys(val, row){
-		return "<a href='javascript:editRow("+row.id+");'>修改</a>";
+		return "<a href='javascript:editRow("+row.id+");'>修改</a>&nbsp;<a href='javascript:editPPT("+row.id+");'>幻灯片</a>";
+	}
+
+	function editPPT(rowId){
+		var link='<%=request.getContextPath()%>/mx/wx/wxContent/ppt?categoryId='+rowId;
+        art.dialog.open(link, { height: 420, width: 880, title: "栏目幻灯片", lock: true, scrollbars:"no" }, false);
 	}
 
 
@@ -200,7 +205,7 @@ limitations under the License.
 	    }
 	}
 
-	function functionSettings(){
+	function listTemplateSettings(){
 		var rows = jQuery('#mydatagrid').datagrid('getSelections');
 	    if(rows == null || rows.length !=1){
 		  alert("请选择其中一条记录。");
@@ -208,7 +213,19 @@ limitations under the License.
 	    }
 	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
 	    if (selected ){
-		  
+		   location.href="${contextPath}/mx/wx/wxTemplate/settings?type=1&categoryId="+selected.id;
+	    }
+	}
+
+	function detailTemplateSettings(){
+		var rows = jQuery('#mydatagrid').datagrid('getSelections');
+	    if(rows == null || rows.length !=1){
+		  alert("请选择其中一条记录。");
+		  return;
+	    }
+	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
+	    if (selected ){
+		    location.href="${contextPath}/mx/wx/wxTemplate/settings?type=2&categoryId="+selected.id;
 	    }
 	}
 
@@ -311,7 +328,9 @@ limitations under the License.
 			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-remove'"
 			   onclick="javascript:deleteSelections();">删除</a> 
 			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-sys'"
-			   onclick="javascript:functionSettings();">功能设置</a> 
+			   onclick="javascript:listTemplateSettings();">列表页模板设置</a>
+			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-sys'"
+			   onclick="javascript:detailTemplateSettings();">详细页模板设置</a>
 		   </div> 
 		  </div> 
 		  <div data-options="region:'center',border:true">

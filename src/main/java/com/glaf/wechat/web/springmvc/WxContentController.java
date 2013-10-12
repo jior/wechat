@@ -220,6 +220,11 @@ public class WxContentController {
 		query.deleteFlag(0);
 		query.setActorId(loginContext.getActorId());
 		query.setLoginContext(loginContext);
+
+		Long categoryId = RequestUtils.getLong(request, "categoryId", 0);
+		if (categoryId > 0) {
+			query.categoryId(categoryId);
+		}
 		/**
 		 * 此处业务逻辑需自行调整
 		 */
@@ -313,6 +318,27 @@ public class WxContentController {
 		}
 
 		return new ModelAndView("/wx/content/list", modelMap);
+	}
+
+	@RequestMapping("/ppt")
+	public ModelAndView ppt(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		String x_query = request.getParameter("x_query");
+		if (StringUtils.equals(x_query, "true")) {
+			Map<String, Object> paramMap = RequestUtils
+					.getParameterMap(request);
+			String x_complex_query = JsonUtils.encode(paramMap);
+			x_complex_query = RequestUtils.encodeString(x_complex_query);
+			request.setAttribute("x_complex_query", x_complex_query);
+		} else {
+			request.setAttribute("x_complex_query", "");
+		}
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view, modelMap);
+		}
+
+		return new ModelAndView("/wx/content/ppt", modelMap);
 	}
 
 	@RequestMapping("/query")

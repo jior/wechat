@@ -43,7 +43,7 @@ limitations under the License.
 		var params = jQuery("#iForm").formSerialize();
 		jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/mx/wx/wxContent/saveWxContent',
+				   url: '<%=request.getContextPath()%>/mx/wx/wxContent/saveWxContent?categoryId=${categoryId}',
 				   data: params,
 				   dataType:  'json',
 				   error: function(data){
@@ -69,7 +69,7 @@ limitations under the License.
 		var params = jQuery("#iForm").formSerialize();
 		jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/mx/wx/wxContent/saveWxContent',
+				   url: '<%=request.getContextPath()%>/mx/wx/wxContent/saveWxContent?categoryId=${categoryId}',
 				   data: params,
 				   dataType:  'json',
 				   error: function(data){

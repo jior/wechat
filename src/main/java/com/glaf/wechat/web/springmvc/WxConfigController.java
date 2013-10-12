@@ -125,9 +125,11 @@ public class WxConfigController {
 		} else {
 			wxConfig = wxConfigService.getWxConfigByUser(loginContext
 					.getActorId());
-			request.setAttribute("wxConfig", wxConfig);
-			JSONObject rowJSON = wxConfig.toJsonObject();
-			request.setAttribute("x_json", rowJSON.toJSONString());
+			if (wxConfig != null) {
+				request.setAttribute("wxConfig", wxConfig);
+				JSONObject rowJSON = wxConfig.toJsonObject();
+				request.setAttribute("x_json", rowJSON.toJSONString());
+			}
 		}
 
 		String view = request.getParameter("view");
