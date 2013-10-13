@@ -274,7 +274,6 @@ public class WxCategoryController {
 		Tools.populate(wxCategory, params);
 
 		wxCategory.setParentId(RequestUtils.getLong(request, "parentId"));
-		wxCategory.setTreeId(request.getParameter("treeId"));
 		wxCategory.setSort(RequestUtils.getInt(request, "sort"));
 		wxCategory.setIcon(request.getParameter("icon"));
 		wxCategory.setIconCls(request.getParameter("iconCls"));
@@ -304,7 +303,6 @@ public class WxCategoryController {
 		try {
 			Tools.populate(wxCategory, params);
 			wxCategory.setParentId(RequestUtils.getLong(request, "parentId"));
-			wxCategory.setTreeId(request.getParameter("treeId"));
 			wxCategory.setSort(RequestUtils.getInt(request, "sort"));
 			wxCategory.setIcon(request.getParameter("icon"));
 			wxCategory.setIconCls(request.getParameter("iconCls"));
@@ -392,7 +390,6 @@ public class WxCategoryController {
 						loginContext.getActorId()) || loginContext
 						.isSystemAdministrator())) {
 			wxCategory.setParentId(RequestUtils.getLong(request, "parentId"));
-			wxCategory.setTreeId(request.getParameter("treeId"));
 			wxCategory.setSort(RequestUtils.getInt(request, "sort"));
 			wxCategory.setIcon(request.getParameter("icon"));
 			wxCategory.setIconCls(request.getParameter("iconCls"));

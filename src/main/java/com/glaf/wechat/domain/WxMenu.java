@@ -57,21 +57,21 @@ public class WxMenu implements java.io.Serializable, JSONable {
 	protected long parentId;
 
 	/**
-	 * 名称
+	 * 按钮名称，不超过16个字节，子菜单不超过40个字节
 	 */
-	@Column(name = "NAME_", length = 100)
+	@Column(name = "NAME_", length = 50)
 	protected String name;
 
 	/**
-	 * 类型
+	 * 按钮类型，目前有click类型
 	 */
 	@Column(name = "TYPE_", length = 50)
 	protected String type;
 
 	/**
-	 * Key
+	 * 按钮KEY值，用于消息接口(event类型)推送，不超过128字节
 	 */
-	@Column(name = "KEY_", length = 50)
+	@Column(name = "KEY_", length = 200)
 	protected String key;
 
 	/**
@@ -79,6 +79,36 @@ public class WxMenu implements java.io.Serializable, JSONable {
 	 */
 	@Column(name = "URL_", length = 500)
 	protected String url;
+
+	/**
+	 * 描述
+	 */
+	@Column(name = "DESC_", length = 500)
+	protected String desc;
+
+	/**
+	 * 图标
+	 */
+	@Column(name = "ICON_", length = 150)
+	protected String icon;
+
+	/**
+	 * 图标样式
+	 */
+	@Column(name = "ICONCLS_", length = 50)
+	protected String iconCls;
+
+	/**
+	 * 分组
+	 */
+	@Column(name = "GROUP_", length = 50)
+	protected String group;
+
+	/**
+	 * 树编号
+	 */
+	@Column(name = "TREEID_", length = 500)
+	protected String treeId;
 
 	/**
 	 * 顺序号
@@ -136,6 +166,22 @@ public class WxMenu implements java.io.Serializable, JSONable {
 		return createDate;
 	}
 
+	public String getDesc() {
+		return desc;
+	}
+
+	public String getGroup() {
+		return group;
+	}
+
+	public String getIcon() {
+		return icon;
+	}
+
+	public String getIconCls() {
+		return iconCls;
+	}
+
 	public long getId() {
 		return id;
 	}
@@ -168,6 +214,10 @@ public class WxMenu implements java.io.Serializable, JSONable {
 		return sort;
 	}
 
+	public String getTreeId() {
+		return treeId;
+	}
+
 	public String getType() {
 		return type;
 	}
@@ -190,6 +240,22 @@ public class WxMenu implements java.io.Serializable, JSONable {
 
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
+	}
+
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
+
+	public void setGroup(String group) {
+		this.group = group;
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon;
+	}
+
+	public void setIconCls(String iconCls) {
+		this.iconCls = iconCls;
 	}
 
 	public void setId(long id) {
@@ -222,6 +288,10 @@ public class WxMenu implements java.io.Serializable, JSONable {
 
 	public void setSort(int sort) {
 		this.sort = sort;
+	}
+
+	public void setTreeId(String treeId) {
+		this.treeId = treeId;
 	}
 
 	public void setType(String type) {

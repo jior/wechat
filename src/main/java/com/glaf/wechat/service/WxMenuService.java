@@ -45,6 +45,24 @@ public interface WxMenuService {
 	void deleteByIds(List<Long> ids);
 
 	/**
+	 * 获取某个用户的某个分类下的全部子菜单
+	 * 
+	 * @param createBy
+	 * @param parentId
+	 * @return
+	 */
+	List<WxMenu> getMenuList(String createBy, Long parentId);
+
+	/**
+	 * 获取某个用户的某个分组的全部子菜单
+	 * 
+	 * @param createBy
+	 * @param group
+	 * @return
+	 */
+	List<WxMenu> getMenuList(String createBy, String group);
+
+	/**
 	 * 根据主键获取一条记录
 	 * 
 	 * @return

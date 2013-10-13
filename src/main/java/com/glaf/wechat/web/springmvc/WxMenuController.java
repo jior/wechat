@@ -22,21 +22,23 @@ import java.io.IOException;
 import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import com.alibaba.fastjson.*;
 
+import com.alibaba.fastjson.*;
+import com.glaf.core.base.BaseTree;
+import com.glaf.core.base.TreeModel;
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.identity.*;
 import com.glaf.core.security.*;
+import com.glaf.core.tree.helper.TreeHelper;
 import com.glaf.core.util.*;
-
 import com.glaf.wechat.domain.*;
 import com.glaf.wechat.query.*;
 import com.glaf.wechat.service.*;
@@ -149,13 +151,11 @@ public class WxMenuController {
 		query.deleteFlag(0);
 		query.setActorId(loginContext.getActorId());
 		query.setLoginContext(loginContext);
-		/**
-		 * 此处业务逻辑需自行调整
-		 */
-		if (!loginContext.isSystemAdministrator()) {
-			String actorId = loginContext.getActorId();
-			query.createBy(actorId);
-		}
+		String actorId = loginContext.getActorId();
+		query.createBy(actorId);
+
+		Long parentId = RequestUtils.getLong(request, "parentId", 0);
+		query.parentId(parentId);
 
 		String gridType = ParamUtils.getString(params, "gridType");
 		if (gridType == null) {
@@ -209,6 +209,8 @@ public class WxMenuController {
 				for (WxMenu wxMenu : list) {
 					JSONObject rowJSON = wxMenu.toJsonObject();
 					rowJSON.put("id", wxMenu.getId());
+					rowJSON.put("pId", wxMenu.getParentId());
+					rowJSON.put("menuId", wxMenu.getId());
 					rowJSON.put("wxMenuId", wxMenu.getId());
 					rowJSON.put("startIndex", ++start);
 					rowsJSON.add(rowJSON);
@@ -270,13 +272,18 @@ public class WxMenuController {
 		Tools.populate(wxMenu, params);
 
 		wxMenu.setParentId(RequestUtils.getLong(request, "parentId"));
-		wxMenu.setName(request.getParameter("name"));
-		wxMenu.setType(request.getParameter("type"));
-		wxMenu.setKey(request.getParameter("key"));
-		wxMenu.setUrl(request.getParameter("url"));
 		wxMenu.setSort(RequestUtils.getInt(request, "sort"));
-
+		wxMenu.setIcon(request.getParameter("icon"));
+		wxMenu.setIconCls(request.getParameter("iconCls"));
+		wxMenu.setLocked(RequestUtils.getInt(request, "locked"));
+		wxMenu.setName(request.getParameter("name"));
+		wxMenu.setKey(request.getParameter("key"));
+		wxMenu.setType(request.getParameter("type"));
+		wxMenu.setGroup(request.getParameter("group"));
+		wxMenu.setUrl(request.getParameter("url"));
+		wxMenu.setDesc(request.getParameter("desc"));
 		wxMenu.setCreateBy(actorId);
+		wxMenu.setLastUpdateBy(actorId);
 
 		wxMenuService.save(wxMenu);
 
@@ -293,12 +300,18 @@ public class WxMenuController {
 		try {
 			Tools.populate(wxMenu, params);
 			wxMenu.setParentId(RequestUtils.getLong(request, "parentId"));
-			wxMenu.setName(request.getParameter("name"));
-			wxMenu.setType(request.getParameter("type"));
-			wxMenu.setKey(request.getParameter("key"));
-			wxMenu.setUrl(request.getParameter("url"));
 			wxMenu.setSort(RequestUtils.getInt(request, "sort"));
+			wxMenu.setIcon(request.getParameter("icon"));
+			wxMenu.setIconCls(request.getParameter("iconCls"));
+			wxMenu.setLocked(RequestUtils.getInt(request, "locked"));
+			wxMenu.setName(request.getParameter("name"));
+			wxMenu.setKey(request.getParameter("key"));
+			wxMenu.setType(request.getParameter("type"));
+			wxMenu.setGroup(request.getParameter("group"));
+			wxMenu.setUrl(request.getParameter("url"));
+			wxMenu.setDesc(request.getParameter("desc"));
 			wxMenu.setCreateBy(actorId);
+			wxMenu.setLastUpdateBy(actorId);
 			this.wxMenuService.save(wxMenu);
 
 			return ResponseUtils.responseJsonResult(true);
@@ -312,6 +325,50 @@ public class WxMenuController {
 	@javax.annotation.Resource
 	public void setWxMenuService(WxMenuService wxMenuService) {
 		this.wxMenuService = wxMenuService;
+	}
+
+	@ResponseBody
+	@RequestMapping("/treeJson")
+	public byte[] treeJson(HttpServletRequest request) throws IOException {
+		JSONArray array = new JSONArray();
+		LoginContext loginContext = RequestUtils.getLoginContext(request);
+		String group = request.getParameter("group");
+		Long parentId = RequestUtils.getLong(request, "parentId", 0);
+		List<WxMenu> menus = null;
+		if (parentId != null && parentId > 0) {
+			menus = wxMenuService.getMenuList(loginContext.getActorId(),
+					parentId);
+		} else if (StringUtils.isNotEmpty(group)) {
+			menus = wxMenuService.getMenuList(loginContext.getActorId(), group);
+		}
+
+		if (menus != null && !menus.isEmpty()) {
+			Map<Long, TreeModel> treeMap = new HashMap<Long, TreeModel>();
+			List<TreeModel> treeModels = new ArrayList<TreeModel>();
+			List<Long> menuIds = new ArrayList<Long>();
+			for (WxMenu menu : menus) {
+				TreeModel tree = new BaseTree();
+				tree.setId(menu.getId());
+				tree.setParentId(menu.getParentId());
+				tree.setCode(menu.getKey());
+				tree.setName(menu.getName());
+				tree.setSortNo(menu.getSort());
+				tree.setDescription(menu.getDesc());
+				tree.setCreateBy(menu.getCreateBy());
+				tree.setIconCls("tree_folder");
+				tree.setTreeId(menu.getTreeId());
+				tree.setUrl(menu.getUrl());
+				treeModels.add(tree);
+				menuIds.add(menu.getId());
+				treeMap.put(menu.getId(), tree);
+			}
+			logger.debug("treeModels:" + treeModels.size());
+			TreeHelper treeHelper = new TreeHelper();
+			JSONArray jsonArray = treeHelper.getTreeJSONArray(treeModels);
+			logger.debug(jsonArray.toJSONString());
+			return jsonArray.toJSONString().getBytes("UTF-8");
+		}
+		return array.toJSONString().getBytes("UTF-8");
 	}
 
 	@RequestMapping("/update")
@@ -328,13 +385,17 @@ public class WxMenuController {
 						loginContext.getActorId()) || loginContext
 						.isSystemAdministrator())) {
 			wxMenu.setParentId(RequestUtils.getLong(request, "parentId"));
-			wxMenu.setName(request.getParameter("name"));
-			wxMenu.setType(request.getParameter("type"));
-			wxMenu.setKey(request.getParameter("key"));
-			wxMenu.setUrl(request.getParameter("url"));
 			wxMenu.setSort(RequestUtils.getInt(request, "sort"));
+			wxMenu.setIcon(request.getParameter("icon"));
+			wxMenu.setIconCls(request.getParameter("iconCls"));
+			wxMenu.setLocked(RequestUtils.getInt(request, "locked"));
+			wxMenu.setName(request.getParameter("name"));
+			wxMenu.setKey(request.getParameter("key"));
+			wxMenu.setType(request.getParameter("type"));
+			wxMenu.setGroup(request.getParameter("group"));
+			wxMenu.setUrl(request.getParameter("url"));
+			wxMenu.setDesc(request.getParameter("desc"));
 			wxMenu.setLastUpdateBy(loginContext.getActorId());
-
 			wxMenuService.save(wxMenu);
 		}
 

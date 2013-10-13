@@ -76,6 +76,22 @@ public class WxMenuServiceImpl implements WxMenuService {
 		}
 	}
 
+	public List<WxMenu> getMenuList(String createBy, Long parentId) {
+		WxMenuQuery query = new WxMenuQuery();
+		query.createBy(createBy);
+		query.parentId(parentId);
+		List<WxMenu> list = wxMenuMapper.getWxMenus(query);
+		return list;
+	}
+
+	public List<WxMenu> getMenuList(String createBy, String group) {
+		WxMenuQuery query = new WxMenuQuery();
+		query.createBy(createBy);
+		query.group(group);
+		List<WxMenu> list = wxMenuMapper.getWxMenus(query);
+		return list;
+	}
+
 	public WxMenu getWxMenu(Long id) {
 		if (id == null) {
 			return null;
@@ -108,6 +124,14 @@ public class WxMenuServiceImpl implements WxMenuService {
 			wxMenu.setId(idGenerator.nextId());
 			wxMenu.setCreateDate(new Date());
 			wxMenu.setUuid(UUID32.getUUID());
+			if (wxMenu.getParentId() > 0) {
+				WxMenu parent = this.getWxMenu(wxMenu.getParentId());
+				if (parent != null && parent.getTreeId() != null) {
+					wxMenu.setTreeId(parent.getTreeId() + wxMenu.getId() + "|");
+				}
+			} else {
+				wxMenu.setTreeId(wxMenu.getId() + "|");
+			}
 			wxMenuMapper.insertWxMenu(wxMenu);
 		} else {
 			wxMenu.setLastUpdateDate(new Date());

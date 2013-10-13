@@ -24,11 +24,11 @@ import com.glaf.core.query.DataQuery;
 public class WxMenuQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
 	protected List<Long> ids;
+	protected String group;
 	protected String name;
 	protected String nameLike;
 	protected List<String> names;
-	protected String type;
-	protected List<String> types;
+
 	protected String key;
 	protected String keyLike;
 	protected List<String> keys;
@@ -70,14 +70,6 @@ public class WxMenuQuery extends DataQuery {
 
 	public List<String> getNames() {
 		return names;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public List<String> getTypes() {
-		return types;
 	}
 
 	public String getKey() {
@@ -156,14 +148,6 @@ public class WxMenuQuery extends DataQuery {
 		this.names = names;
 	}
 
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	public void setTypes(List<String> types) {
-		this.types = types;
-	}
-
 	public void setKey(String key) {
 		this.key = key;
 	}
@@ -237,20 +221,28 @@ public class WxMenuQuery extends DataQuery {
 		return this;
 	}
 
-	public WxMenuQuery type(String type) {
-		if (type == null) {
-			throw new RuntimeException("type is null");
+	public WxMenuQuery group(String group) {
+		if (group == null) {
+			throw new RuntimeException("group is null");
 		}
-		this.type = type;
+		this.group = group;
 		return this;
 	}
 
-	public WxMenuQuery types(List<String> types) {
-		if (types == null) {
-			throw new RuntimeException("types is empty ");
-		}
-		this.types = types;
-		return this;
+	public List<Long> getIds() {
+		return ids;
+	}
+
+	public void setIds(List<Long> ids) {
+		this.ids = ids;
+	}
+
+	public String getGroup() {
+		return group;
+	}
+
+	public void setGroup(String group) {
+		this.group = group;
 	}
 
 	public WxMenuQuery key(String key) {
@@ -391,6 +383,12 @@ public class WxMenuQuery extends DataQuery {
 		addColumn("key", "KEY_");
 		addColumn("url", "URL_");
 		addColumn("sort", "SORT_");
+		addColumn("treeId", "TREEID_");
+		addColumn("locked", "LOCKED_");
+		addColumn("icon", "ICON_");
+		addColumn("iconCls", "ICONCLS_");
+		addColumn("group", "GROUP_");
+		addColumn("desc", "DESC_");
 		addColumn("uuid", "UUID_");
 		addColumn("createBy", "CREATEBY_");
 		addColumn("createDate", "CREATEDATE_");

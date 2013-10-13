@@ -45,6 +45,12 @@ public class WxMenuJsonFactory {
 		if (jsonObject.containsKey("parentId")) {
 			model.setParentId(jsonObject.getLong("parentId"));
 		}
+		if (jsonObject.containsKey("treeId")) {
+			model.setTreeId(jsonObject.getString("treeId"));
+		}
+		if (jsonObject.containsKey("group")) {
+			model.setGroup(jsonObject.getString("group"));
+		}
 		if (jsonObject.containsKey("name")) {
 			model.setName(jsonObject.getString("name"));
 		}
@@ -62,6 +68,15 @@ public class WxMenuJsonFactory {
 		}
 		if (jsonObject.containsKey("locked")) {
 			model.setLocked(jsonObject.getInteger("locked"));
+		}
+		if (jsonObject.containsKey("icon")) {
+			model.setIcon(jsonObject.getString("icon"));
+		}
+		if (jsonObject.containsKey("iconCls")) {
+			model.setIconCls(jsonObject.getString("iconCls"));
+		}
+		if (jsonObject.containsKey("desc")) {
+			model.setDesc(jsonObject.getString("desc"));
 		}
 		if (jsonObject.containsKey("uuid")) {
 			model.setUuid(jsonObject.getString("uuid"));
@@ -107,6 +122,26 @@ public class WxMenuJsonFactory {
 		}
 		jsonObject.put("sort", model.getSort());
 		jsonObject.put("locked", model.getLocked());
+
+		if (model.getGroup() != null) {
+			jsonObject.put("group", model.getGroup());
+		}
+
+		if (model.getTreeId() != null) {
+			jsonObject.put("treeId", model.getTreeId());
+		}
+
+		if (model.getIcon() != null) {
+			jsonObject.put("icon", model.getIcon());
+		}
+		if (model.getIconCls() != null) {
+			jsonObject.put("iconCls", model.getIconCls());
+		}
+
+		if (model.getDesc() != null) {
+			jsonObject.put("desc", model.getDesc());
+		}
+
 		if (model.getUuid() != null) {
 			jsonObject.put("uuid", model.getUuid());
 		}
@@ -155,6 +190,25 @@ public class WxMenuJsonFactory {
 		}
 		jsonObject.put("sort", model.getSort());
 		jsonObject.put("locked", model.getLocked());
+
+		if (model.getTreeId() != null) {
+			jsonObject.put("treeId", model.getTreeId());
+		}
+		if (model.getGroup() != null) {
+			jsonObject.put("group", model.getGroup());
+		}
+
+		if (model.getIcon() != null) {
+			jsonObject.put("icon", model.getIcon());
+		}
+		if (model.getIconCls() != null) {
+			jsonObject.put("iconCls", model.getIconCls());
+		}
+
+		if (model.getDesc() != null) {
+			jsonObject.put("desc", model.getDesc());
+		}
+
 		if (model.getUuid() != null) {
 			jsonObject.put("uuid", model.getUuid());
 		}
