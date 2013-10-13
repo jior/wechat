@@ -152,13 +152,9 @@ public class WxTemplateController {
 		query.deleteFlag(0);
 		query.setActorId(loginContext.getActorId());
 		query.setLoginContext(loginContext);
-		/**
-		 * 此处业务逻辑需自行调整
-		 */
-		if (!loginContext.isSystemAdministrator()) {
-			String actorId = loginContext.getActorId();
-			query.createBy(actorId);
-		}
+
+		String actorId = loginContext.getActorId();
+		query.createBy(actorId);
 
 		String gridType = ParamUtils.getString(params, "gridType");
 		if (gridType == null) {

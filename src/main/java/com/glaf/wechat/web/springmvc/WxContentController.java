@@ -225,13 +225,9 @@ public class WxContentController {
 		if (categoryId > 0) {
 			query.categoryId(categoryId);
 		}
-		/**
-		 * 此处业务逻辑需自行调整
-		 */
-		if (!loginContext.isSystemAdministrator()) {
-			String actorId = loginContext.getActorId();
-			query.createBy(actorId);
-		}
+
+		String actorId = loginContext.getActorId();
+		query.createBy(actorId);
 
 		String gridType = ParamUtils.getString(params, "gridType");
 		if (gridType == null) {
