@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.wechat.mapper.WxLogMapper">
+
+	<resultMap id="sysLogResultMap" type="com.glaf.wechat.domain.WxLog">
+		<id property="id" column="ID_" jdbcType="BIGINT" />
+		<result property="account" column="ACCOUNT_" jdbcType="VARCHAR" />
+		<result property="ip" column="IP_" jdbcType="VARCHAR" />
+		<result property="createTime" column="CREATETIME_" jdbcType="TIMESTAMP" />
+		<result property="operate" column="OPERATE_" jdbcType="VARCHAR" />
+		<result property="flag" column="FLAG_" jdbcType="INTEGER" />
+	</resultMap>
+
+
+	<insert id="insertWxLog" parameterType="com.glaf.wechat.domain.WxLog">
+		insert into wx_log${suffix}
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ID_
+			<if test="account != null">
+				,ACCOUNT_
+			</if>
+			<if test="ip != null">
+				,IP_
+			</if>
+			<if test="createTime != null">
+				,CREATETIME_
+			</if>
+			<if test="operate != null">
+				,OPERATE_
+			</if>
+			<if test="flag != null">
+				,FLAG_
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			#{id, jdbcType=BIGINT}
+
+			<if test="account != null">
+				,#{account, jdbcType=VARCHAR}
+			</if>
+			<if test="ip != null">
+				,#{ip, jdbcType=VARCHAR}
+			</if>
+			<if test="createTime != null">
+				,#{createTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="operate != null">
+				,#{operate, jdbcType=VARCHAR}
+			</if>
+			<if test="flag != null">
+				,#{flag, jdbcType=INTEGER}
+			</if>
+		</trim>
+	</insert>
+
+
+	<delete id="deleteWxLog" parameterType="com.glaf.wechat.domain.WxLog">
+		delete from
+		wx_log${suffix}
+		where ID_ = #{id}
+	</delete>
+
+
+	<delete id="deleteWxLogs" parameterType="com.glaf.core.query.WxLogQuery">
+		delete from wx_log${suffix}
+		where (
+		ID_ IN
+		<foreach item="x_rowId" index="index" collection="rowIds"
+			open="(" separator="," close=")">
+			#{x_rowId}
+		</foreach>
+		)
+	</delete>
+
+
+	<select id="getWxLogById" parameterType="long" resultMap="sysLogResultMap">
+		select
+		* from wx_log${suffix} where ID_ = #{id}
+	</select>
+
+
+	<select id="getWxLogs" parameterType="com.glaf.core.query.WxLogQuery"
+		resultMap="sysLogResultMap">
+		select E.*
+		<include refid="selectWxLogsSql" />
+		<choose>
+			<when test="orderBy != null">
+				order by ${orderBy}
+			</when>
+			<otherwise>
+				order by E.CREATETIME_ desc
+			</otherwise>
+		</choose>
+	</select>
+
+
+	<select id="getWxLogCount" parameterType="com.glaf.core.query.WxLogQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectWxLogsSql" />
+	</select>
+
+
+	<sql id="selectWxLogsSql">
+
+		from wx_log${suffix} E
+
+		<where>
+			1 = 1
+
+			<if test="account != null and account != '' ">
+				and E.ACCOUNT_ = #{account}
+			</if>
+
+			<if test="accounts != null and accounts.size() &gt; 0">
+				and E.ACCOUNT_ IN
+				<foreach item="x_account" index="index" collection="accounts"
+					open="(" separator="," close=")">
+					#{x_account}
+				</foreach>
+			</if>
+
+			<if test="ip != null and ip != '' ">
+				and E.IP_ = #{ip}
+			</if>
+
+			<if test="ipLike != null and ipLike != '' ">
+				and E.IP_ like #{ipLike}
+			</if>
+
+			<if test="createTimeGreaterThanOrEqual != null">
+				and E.CREATETIME_ &gt;= #{createTimeGreaterThanOrEqual}
+			</if>
+
+			<if test="createTimeLessThanOrEqual != null">
+				and E.CREATETIME_ &lt;= #{createTimeLessThanOrEqual}
+			</if>
+
+			<if test="operate != null and operate != '' ">
+				and E.OPERATE_ = #{operate}
+			</if>
+
+			<if test="flag != null">
+				and E.FLAG_ = #{flag}
+			</if>
+
+		</where>
+	</sql>
+
+</mapper>
