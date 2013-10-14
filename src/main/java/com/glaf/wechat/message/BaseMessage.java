@@ -18,10 +18,11 @@
 
 package com.glaf.wechat.message;
 
+import org.apache.commons.lang.StringUtils;
 import org.dom4j.*;
 
 /**
- * 消息基类（普通用户 -> 公众帐号）
+ * 消息基类
  * 
  * @author jior
  */
@@ -37,13 +38,13 @@ public class BaseMessage implements java.io.Serializable {
 	// 消息创建时间 （64位长整型）
 	private long createTime;
 
-	// 消息类型（text/image/location/link/voice）
-	private String msgType;
-
 	// 消息id（64位长整型）
 	private long msgId;
 
-	// 位0x0001被标志时，代表刚收到的消息
+	// 消息类型（text/image/location/link/voice）
+	private String msgType;
+
+	// 位0x0001被标志时，星标刚收到的消息
 	private int funcFlag;
 
 	private String type;
@@ -124,7 +125,9 @@ public class BaseMessage implements java.io.Serializable {
 		root.addElement("ToUserName").setText(toUserName);
 		root.addElement("FromUserName").setText(fromUserName);
 		root.addElement("CreateTime").setText(String.valueOf(createTime));
-		root.addElement("Content").setText(content);
+		if (StringUtils.isNotEmpty(content)) {
+			root.addElement("Content").setText(content);
+		}
 		root.addElement("MsgType").setText(msgType);
 		root.addElement("MsgId").setText(String.valueOf(msgId));
 		root.addElement("FuncFlag").setText(String.valueOf(funcFlag));
