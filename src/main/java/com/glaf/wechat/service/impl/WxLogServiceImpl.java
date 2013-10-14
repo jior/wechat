@@ -37,7 +37,7 @@ import com.glaf.wechat.mapper.*;
 import com.glaf.wechat.query.*;
 import com.glaf.wechat.service.*;
 
-@Service("sysLogService")
+@Service("wxLogService")
 @Transactional(readOnly = true)
 public class WxLogServiceImpl implements WxLogService {
 	protected final static Log logger = LogFactory

@@ -4,7 +4,7 @@
 
 <mapper namespace="com.glaf.wechat.mapper.WxLogMapper">
 
-	<resultMap id="sysLogResultMap" type="com.glaf.wechat.domain.WxLog">
+	<resultMap id="wxLogResultMap" type="com.glaf.wechat.domain.WxLog">
 		<id property="id" column="ID_" jdbcType="BIGINT" />
 		<result property="account" column="ACCOUNT_" jdbcType="VARCHAR" />
 		<result property="ip" column="IP_" jdbcType="VARCHAR" />
@@ -64,7 +64,7 @@
 	</delete>
 
 
-	<delete id="deleteWxLogs" parameterType="com.glaf.core.query.WxLogQuery">
+	<delete id="deleteWxLogs" parameterType="com.glaf.wechat.query.WxLogQuery">
 		delete from wx_log${suffix}
 		where (
 		ID_ IN
@@ -76,14 +76,14 @@
 	</delete>
 
 
-	<select id="getWxLogById" parameterType="long" resultMap="sysLogResultMap">
+	<select id="getWxLogById" parameterType="long" resultMap="wxLogResultMap">
 		select
 		* from wx_log${suffix} where ID_ = #{id}
 	</select>
 
 
-	<select id="getWxLogs" parameterType="com.glaf.core.query.WxLogQuery"
-		resultMap="sysLogResultMap">
+	<select id="getWxLogs" parameterType="com.glaf.wechat.query.WxLogQuery"
+		resultMap="wxLogResultMap">
 		select E.*
 		<include refid="selectWxLogsSql" />
 		<choose>
@@ -97,7 +97,7 @@
 	</select>
 
 
-	<select id="getWxLogCount" parameterType="com.glaf.core.query.WxLogQuery"
+	<select id="getWxLogCount" parameterType="com.glaf.wechat.query.WxLogQuery"
 		resultType="int">
 		select count(*)
 		<include refid="selectWxLogsSql" />
