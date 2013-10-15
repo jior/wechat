@@ -9,13 +9,13 @@ import com.glaf.wechat.sdk.message.Message;
  * returns the message response
  * 
  */
-public class FilterDefaultResponse extends MessageFilterHelper implements
+public class GreetingMessageFilter extends AbstractMessageFilter implements
 		IMessageFilter {
 
 	@Override
 	public Message doSpecailMessageFilter(Message message) {
 		return buildResponseTextMessage(ResourceManager
-				.getValue("default_response"));
+				.getValue("default_greeting"));
 	}
 
 }

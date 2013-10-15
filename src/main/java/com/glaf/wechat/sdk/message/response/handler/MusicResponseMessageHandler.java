@@ -8,7 +8,7 @@ import com.glaf.wechat.sdk.message.ResponseMusicMessage;
  * message response music handler
  * 
  */
-public class ResponseMusicMessageHandler extends ResponseMessageHandlerHelper {
+public class MusicResponseMessageHandler extends AbstractResponseMessageHandler {
 
 	@Override
 	public String response(Message message) {

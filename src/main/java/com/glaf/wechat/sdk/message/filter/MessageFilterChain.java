@@ -9,7 +9,7 @@ import com.glaf.wechat.sdk.message.Message;
  * message filter chain
  * 
  */
-public class FilterChain {
+public class MessageFilterChain {
 
 	public List<IMessageFilter> filters = new ArrayList<IMessageFilter>();
 
@@ -25,7 +25,7 @@ public class FilterChain {
 			msg = filters.get(i).filterMessage(message);
 			if (msg != null) {
 				return msg;// if one filter can deal the message,then
-										// do it!so,it can be returned!
+							// do it!so,it can be returned!
 			}
 		}
 		return msg;// if none of the filter can do it!

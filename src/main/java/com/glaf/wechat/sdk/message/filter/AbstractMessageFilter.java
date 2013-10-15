@@ -3,14 +3,14 @@ package com.glaf.wechat.sdk.message.filter;
 import org.dom4j.Element;
 
 import com.glaf.wechat.sdk.message.Message;
-import com.glaf.wechat.sdk.message.handler.MessageHandlerHelper;
+import com.glaf.wechat.sdk.message.handler.AbstractMessageHandler;
 
 /**
- * message filter helper class <br>
+ * message filter abstract class <br>
  * extends message handler helper,then filter can access the message handling
  * method
  */
-public abstract class MessageFilterHelper extends MessageHandlerHelper
+public abstract class AbstractMessageFilter extends AbstractMessageHandler
 		implements IMessageFilter {
 
 	// subclass handle it
@@ -23,13 +23,13 @@ public abstract class MessageFilterHelper extends MessageHandlerHelper
 	}
 
 	@Override
-	protected Message handleSpecialMessage(Message message) {// do nothing
+	protected Message handleSpecialMessage(Message message) { 
 		return null;
 	}
 
 	@Override
-	protected void parseSpecialMessage(Message message, Element root) {// do
-																		// nothing
+	protected void parseSpecialMessage(Message message, Element root) { 
+		
 	}
 
 }

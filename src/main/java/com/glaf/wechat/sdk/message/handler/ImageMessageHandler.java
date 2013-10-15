@@ -4,21 +4,20 @@ import org.dom4j.Element;
 
 import com.glaf.wechat.sdk.message.Message;
 import com.glaf.wechat.sdk.message.ImageMessage;
-import com.glaf.wechat.sdk.message.filter.FilterChain;
-import com.glaf.wechat.sdk.message.filter.FilterDefaultResponse;
+import com.glaf.wechat.sdk.message.filter.MessageFilterChain;
+import com.glaf.wechat.sdk.message.filter.DefaultResponseMessageFilter;
 
 /**
  * handle image message
  * 
  */
-public class ImageMessageHandler extends MessageHandlerHelper {
+public class ImageMessageHandler extends AbstractMessageHandler {
 
 	@Override
 	public Message handleSpecialMessage(Message message) {
-		FilterChain filterChain = new FilterChain();
-		// add this,so the next line does not have to verify whether response is
-		// null or not
-		filterChain.addFilter(new FilterDefaultResponse());
+		MessageFilterChain filterChain = new MessageFilterChain();
+		//加入默认的响应处理类
+		filterChain.addFilter(new DefaultResponseMessageFilter());
 		return filterChain.doFilterChain(message);
 	}
 

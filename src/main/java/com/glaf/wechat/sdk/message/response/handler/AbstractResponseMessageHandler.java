@@ -4,15 +4,13 @@ import com.glaf.wechat.sdk.message.IMessage;
 import com.glaf.wechat.sdk.message.Message;
 
 /**
- * a helper class for handle message response
+ * a abstract class for handle message response
  * 
  */
-public class ResponseMessageHandlerHelper implements IMessage,
+public abstract class AbstractResponseMessageHandler implements IMessage,
 		IResponseMessageHandler {
 
-	public String response(Message message) {
-		return null;
-	}
+	public abstract String response(Message message);
 
 	// wrap the content by tag & content & whether CDATA used
 	public String wrapperContent(String tag, String content, boolean isCDATA) {

@@ -14,14 +14,15 @@ import com.glaf.wechat.sdk.message.ResponseNewsMessage;
 import com.glaf.wechat.sdk.message.ResponseTextMessage;
 
 /**
- * helper class for message handling
+ * abstract class for message handling
  * 
  */
-public abstract class MessageHandlerHelper implements IMessageHadler, IMessage {
+public abstract class AbstractMessageHandler implements IMessageHandler,
+		IMessage {
 
 	protected Message message;
 
-	// build response message news
+	// build response music message
 	protected Message buildResponseMusicMessage(ItemMusic item) {
 		ResponseMusicMessage msg = new ResponseMusicMessage();
 		msg.setMsgType(MESSAGE_RESPONSE_MUSIC);
@@ -33,7 +34,7 @@ public abstract class MessageHandlerHelper implements IMessageHadler, IMessage {
 		return msg;
 	}
 
-	// build response message news
+	// build response news message
 	protected Message buildResponseNewsMessage(List<ItemArticle> items) {
 		ResponseNewsMessage msg = new ResponseNewsMessage();
 		msg.setMsgType(MESSAGE_RESPONSE_NEWS);
@@ -46,7 +47,7 @@ public abstract class MessageHandlerHelper implements IMessageHadler, IMessage {
 		return msg;
 	}
 
-	// build response message text
+	// build response text message
 	protected Message buildResponseTextMessage(String content) {
 		ResponseTextMessage msg = new ResponseTextMessage();
 		msg.setMsgType(MESSAGE_RESPONSE_TEXT);

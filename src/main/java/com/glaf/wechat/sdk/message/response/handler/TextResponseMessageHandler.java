@@ -6,7 +6,7 @@ import com.glaf.wechat.sdk.message.ResponseTextMessage;
 /**
  * message response text handler
  */
-public class ResponseTextMessageHandler extends ResponseMessageHandlerHelper {
+public class TextResponseMessageHandler extends AbstractResponseMessageHandler {
 
 	@Override
 	public String response(Message message) {

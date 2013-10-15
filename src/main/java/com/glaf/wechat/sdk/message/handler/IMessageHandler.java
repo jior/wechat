@@ -8,7 +8,7 @@ import com.glaf.wechat.sdk.message.Message;
  * interface of handling message
  * 
  */
-public interface IMessageHadler {
+public interface IMessageHandler {
 
 	/**
 	 * handle message, and return the message response

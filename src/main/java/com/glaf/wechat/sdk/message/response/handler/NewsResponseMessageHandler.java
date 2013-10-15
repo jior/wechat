@@ -8,7 +8,7 @@ import com.glaf.wechat.sdk.message.ResponseNewsMessage;
  * message response news handler
  * 
  */
-public class ResponseNewsMessageHandler extends ResponseMessageHandlerHelper {
+public class NewsResponseMessageHandler extends AbstractResponseMessageHandler {
 
 	@Override
 	public String response(Message message) {

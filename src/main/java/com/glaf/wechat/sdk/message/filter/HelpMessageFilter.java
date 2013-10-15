@@ -10,7 +10,7 @@ import com.glaf.wechat.sdk.message.TextMessage;
  * filter whether the message is for help
  * 
  */
-public class FilterHelp extends MessageFilterHelper implements IMessageFilter {
+public class HelpMessageFilter extends AbstractMessageFilter implements IMessageFilter {
 
 	@Override
 	public Message doSpecailMessageFilter(Message message) {

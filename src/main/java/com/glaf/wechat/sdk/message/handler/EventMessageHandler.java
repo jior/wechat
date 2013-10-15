@@ -4,21 +4,21 @@ import org.dom4j.Element;
 
 import com.glaf.wechat.sdk.message.Message;
 import com.glaf.wechat.sdk.message.EventMessage;
-import com.glaf.wechat.sdk.message.filter.FilterChain;
-import com.glaf.wechat.sdk.message.filter.FilterDefaultResponse;
-import com.glaf.wechat.sdk.message.filter.FilterGreeting;
+import com.glaf.wechat.sdk.message.filter.MessageFilterChain;
+import com.glaf.wechat.sdk.message.filter.DefaultResponseMessageFilter;
+import com.glaf.wechat.sdk.message.filter.GreetingMessageFilter;
 
 /**
  * handle event message
  */
-public class EventMessageHandler extends MessageHandlerHelper {
+public class EventMessageHandler extends AbstractMessageHandler {
 
 	@Override
 	public Message handleSpecialMessage(Message message) {
-		FilterChain filterChain = new FilterChain();
+		MessageFilterChain filterChain = new MessageFilterChain();
 		// I do not check if it is "subscribe"
-		filterChain.addFilter(new FilterGreeting());
-		filterChain.addFilter(new FilterDefaultResponse());
+		filterChain.addFilter(new GreetingMessageFilter());
+		filterChain.addFilter(new DefaultResponseMessageFilter());
 		return filterChain.doFilterChain(message);
 	}
 

@@ -4,9 +4,9 @@ import org.dom4j.Element;
 
 import com.glaf.wechat.sdk.message.Message;
 import com.glaf.wechat.sdk.message.TextMessage;
-import com.glaf.wechat.sdk.message.filter.FilterChain;
-import com.glaf.wechat.sdk.message.filter.FilterDefaultResponse;
-import com.glaf.wechat.sdk.message.filter.FilterHelp;
+import com.glaf.wechat.sdk.message.filter.MessageFilterChain;
+import com.glaf.wechat.sdk.message.filter.DefaultResponseMessageFilter;
+import com.glaf.wechat.sdk.message.filter.HelpMessageFilter;
 
 /**
  * handle text message <br>
@@ -14,13 +14,14 @@ import com.glaf.wechat.sdk.message.filter.FilterHelp;
  * create it by handling directly
  * 
  */
-public class TextMessageHandler extends MessageHandlerHelper {
+public class TextMessageHandler extends AbstractMessageHandler {
 
 	@Override
 	public Message handleSpecialMessage(Message message) {
-		FilterChain filterChain = new FilterChain();
-		filterChain.addFilter(new FilterHelp());
-		filterChain.addFilter(new FilterDefaultResponse());
+		MessageFilterChain filterChain = new MessageFilterChain();
+		filterChain.addFilter(new HelpMessageFilter());
+		//加入默认的响应处理类
+		filterChain.addFilter(new DefaultResponseMessageFilter());
 		return filterChain.doFilterChain(message);
 	}
 
