@@ -19,6 +19,7 @@
 package com.glaf.wechat.query;
 
 import java.util.*;
+
 import com.glaf.core.query.DataQuery;
 
 public class WxContentQuery extends DataQuery {
@@ -26,6 +27,7 @@ public class WxContentQuery extends DataQuery {
 	protected List<Long> ids;
 	protected Long categoryId;
 	protected List<Long> categoryIds;
+	protected List<Long> contentIds;
 	protected String titleLike;
 	protected String contentLike;
 	protected Integer priority;
@@ -64,6 +66,14 @@ public class WxContentQuery extends DataQuery {
 		return this;
 	}
 
+	public WxContentQuery contentIds(List<Long> contentIds) {
+		if (contentIds == null) {
+			throw new RuntimeException("contentIds is empty ");
+		}
+		this.contentIds = contentIds;
+		return this;
+	}
+
 	public WxContentQuery contentLike(String contentLike) {
 		if (contentLike == null) {
 			throw new RuntimeException("content is null");
@@ -96,6 +106,10 @@ public class WxContentQuery extends DataQuery {
 
 	public List<Long> getCategoryIds() {
 		return categoryIds;
+	}
+
+	public List<Long> getContentIds() {
+		return contentIds;
 	}
 
 	public String getContentLike() {
@@ -383,6 +397,10 @@ public class WxContentQuery extends DataQuery {
 
 	public void setCategoryIds(List<Long> categoryIds) {
 		this.categoryIds = categoryIds;
+	}
+
+	public void setContentIds(List<Long> contentIds) {
+		this.contentIds = contentIds;
 	}
 
 	public void setContentLike(String contentLike) {

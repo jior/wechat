@@ -1,9 +1,10 @@
 package com.glaf.wechat.sdk.message;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * response message news
+ * response news message 
  * 
  */
 public class ResponseNewsMessage extends Message {
@@ -11,6 +12,13 @@ public class ResponseNewsMessage extends Message {
 	protected int funcFlag;
 	protected int count;
 	protected List<ItemArticle> articleItems;
+	
+	public void addItemArticle(ItemArticle item){
+		if(articleItems == null){
+			articleItems = new ArrayList<ItemArticle>();
+		}
+		articleItems.add(item);
+	}
 
 	public List<ItemArticle> getArticleItems() {
 		return articleItems;

@@ -1,7 +1,8 @@
 package com.glaf.wechat.sdk.message.filter;
 
-import com.glaf.wechat.sdk.ResourceManager;
+ 
 import com.glaf.wechat.sdk.message.Message;
+import com.glaf.wechat.sdk.message.ResponseNewsMessage;
 
 /**
  * filter whether the message is for everything<br>
@@ -14,8 +15,9 @@ public class DefaultResponseMessageFilter extends AbstractMessageFilter implemen
 
 	@Override
 	public Message doSpecailMessageFilter(Message message) {
-		return buildResponseTextMessage(ResourceManager
-				.getValue("default_response"));
+		Message msg = new ResponseNewsMessage();
+		
+		return msg;
 	}
 
 }

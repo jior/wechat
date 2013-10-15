@@ -1,7 +1,7 @@
 package com.glaf.wechat.sdk.message;
 
 /**
- * response message music
+ * response music message 
  */
 public class ResponseMusicMessage extends Message {
 	private static final long serialVersionUID = 1L;

@@ -1,5 +1,7 @@
 package com.glaf.wechat.sdk.message;
 
+import org.dom4j.Element;
+
 /**
  * 消息基础类
  * 
@@ -13,6 +15,8 @@ public class Message implements IMessage, java.io.Serializable {
 	protected String toUserName;// 开发者微信号
 	protected long msgId;// 消息id（64位长整型）
 	protected long createTime;// 消息创建时间 （64位长整型）
+	protected String customer;//客户编号
+	protected Element root;
 
 	public Message() {
 
@@ -20,6 +24,10 @@ public class Message implements IMessage, java.io.Serializable {
 
 	public long getCreateTime() {
 		return createTime;
+	}
+
+	public String getCustomer() {
+		return customer;
 	}
 
 	public String getFromUserName() {
@@ -34,12 +42,20 @@ public class Message implements IMessage, java.io.Serializable {
 		return msgType;
 	}
 
+	public Element getRoot() {
+		return root;
+	}
+
 	public String getToUserName() {
 		return toUserName;
 	}
 
 	public void setCreateTime(long createTime) {
 		this.createTime = createTime;
+	}
+
+	public void setCustomer(String customer) {
+		this.customer = customer;
 	}
 
 	public void setFromUserName(String fromUserName) {
@@ -52,6 +68,10 @@ public class Message implements IMessage, java.io.Serializable {
 
 	public void setMsgType(String msgType) {
 		this.msgType = msgType;
+	}
+
+	public void setRoot(Element root) {
+		this.root = root;
 	}
 
 	public void setToUserName(String toUserName) {

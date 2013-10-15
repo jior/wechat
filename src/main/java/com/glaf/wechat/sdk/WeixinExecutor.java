@@ -83,6 +83,9 @@ public class WeixinExecutor implements IMessage {
 			throw new RuntimeException(ex);
 		}
 
+		String uri = request.getRequestURI();
+		String customer = uri.substring(uri.lastIndexOf("/") + 1);
+
 		Element root = doc.getRootElement();
 
 		String type = root.elementText(IMessage.TAG_MSGTYPE);
@@ -104,6 +107,8 @@ public class WeixinExecutor implements IMessage {
 			message = new LocationMessage();
 			messageHandler = new LocationMessageHandler();
 		}
+		message.setRoot(root);
+		message.setCustomer(customer);
 		// do the default/common parse!
 		messageHandler.parseMessage(message, root);
 	}

@@ -1,7 +1,7 @@
 package com.glaf.wechat.sdk.message;
 
 /**
- * response message text
+ * response text message 
  * 
  */
 public class ResponseTextMessage extends Message {

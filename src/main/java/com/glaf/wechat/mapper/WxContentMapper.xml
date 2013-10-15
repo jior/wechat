@@ -316,6 +316,14 @@
 		<where>
 			1 = 1
 
+			<if test="contentIds != null and contentIds &gt; 0">
+				and E.ID_ IN
+				<foreach item="x_contentId" index="index" collection="contentIds"
+					open="(" separator="," close=")">
+					#{x_contentId}
+				</foreach>
+			</if>
+
 			<if test="categoryId != null">
 				and E.CATEGORYID_ = #{categoryId}
 			</if>
