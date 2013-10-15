@@ -39,7 +39,7 @@ public class WeixinExecutor implements IMessage {
 	private HttpServletRequest request;// request
 	private HttpServletResponse response;// response
 	private Message message;// message comes from
-	private Message messageResponse;// message will response
+	private Message responseMessage;// message will response
 	private IMessageHandler messageHandler;// handle message
 	private IResponseMessageHandler responseMessageHandler;// handle
 															// response
@@ -57,16 +57,16 @@ public class WeixinExecutor implements IMessage {
 		return messageHandler;
 	}
 
-	public Message getMessageResponse() {
-		return messageResponse;
-	}
-
 	public HttpServletRequest getRequest() {
 		return request;
 	}
 
 	public HttpServletResponse getResponse() {
 		return response;
+	}
+
+	public Message getResponseMessage() {
+		return responseMessage;
 	}
 
 	public IResponseMessageHandler getResponseMessageHandler() {
@@ -111,6 +111,9 @@ public class WeixinExecutor implements IMessage {
 	// deal the message from user
 	public void processMessage(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
+		this.message = null;
+		this.messageHandler = null;
+		this.responseMessage = null;
 		this.request = request;
 		this.response = response;
 		String echostr = request.getParameter("echostr");
@@ -127,12 +130,27 @@ public class WeixinExecutor implements IMessage {
 				response.setCharacterEncoding("UTF-8");
 				response.setContentType("text/xml;charset=UTF-8");
 				try {
-					parseInputStream();// parse message
+					this.parseInputStream();// parse message
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
-				messageResponse = messageHandler.handleMessage(message);
-				writeMessageToOuputStream();
+
+				responseMessage = messageHandler.handleMessage(message);
+
+				if (StringUtils.equalsIgnoreCase(responseMessage.getMsgType(),
+						MESSAGE_RESPONSE_TEXT)) {
+					responseMessageHandler = new TextResponseMessageHandler();
+				} else if (StringUtils.equalsIgnoreCase(
+						responseMessage.getMsgType(), MESSAGE_RESPONSE_NEWS)) {
+					responseMessageHandler = new NewsResponseMessageHandler();
+				} else if (StringUtils.equalsIgnoreCase(
+						responseMessage.getMsgType(), MESSAGE_RESPONSE_MUSIC)) {
+					responseMessageHandler = new MusicResponseMessageHandler();
+				}
+
+				String responseContent = responseMessageHandler
+						.response(responseMessage);
+				response.getWriter().print(responseContent);
 			}
 		} else {
 			try {
@@ -152,10 +170,6 @@ public class WeixinExecutor implements IMessage {
 		this.messageHandler = messageHandler;
 	}
 
-	public void setMessageResponse(Message messageResponse) {
-		this.messageResponse = messageResponse;
-	}
-
 	public void setRequest(HttpServletRequest request) {
 		this.request = request;
 	}
@@ -164,26 +178,13 @@ public class WeixinExecutor implements IMessage {
 		this.response = response;
 	}
 
+	public void setResponseMessage(Message responseMessage) {
+		this.responseMessage = responseMessage;
+	}
+
 	public void setResponseMessageHandler(
 			IResponseMessageHandler responseMessageHandler) {
 		this.responseMessageHandler = responseMessageHandler;
-	}
-
-	// write the response message
-	private void writeMessageToOuputStream() throws IOException {
-		if (StringUtils.equalsIgnoreCase(messageResponse.getMsgType(),
-				MESSAGE_RESPONSE_TEXT)) {
-			responseMessageHandler = new TextResponseMessageHandler();
-		} else if (StringUtils.equalsIgnoreCase(messageResponse.getMsgType(),
-				MESSAGE_RESPONSE_NEWS)) {
-			responseMessageHandler = new NewsResponseMessageHandler();
-		} else if (StringUtils.equalsIgnoreCase(messageResponse.getMsgType(),
-				MESSAGE_RESPONSE_MUSIC)) {
-			responseMessageHandler = new MusicResponseMessageHandler();
-		}
-		String responseContent = responseMessageHandler
-				.response(messageResponse);
-		response.getWriter().print(responseContent);
 	}
 
 }

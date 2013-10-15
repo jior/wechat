@@ -24,8 +24,9 @@ public class MessageFilterChain {
 		for (int i = 0; i < filters.size(); i++) {
 			msg = filters.get(i).filterMessage(message);
 			if (msg != null) {
-				return msg;// if one filter can deal the message,then
-							// do it!so,it can be returned!
+				// if one filter can deal the message,then do it!so,it can be
+				// returned!
+				return msg;
 			}
 		}
 		return msg;// if none of the filter can do it!

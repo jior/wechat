@@ -18,6 +18,7 @@ public class EventMessageHandler extends AbstractMessageHandler {
 		MessageFilterChain filterChain = new MessageFilterChain();
 		// I do not check if it is "subscribe"
 		filterChain.addFilter(new GreetingMessageFilter());
+		//加入默认的响应处理类
 		filterChain.addFilter(new DefaultResponseMessageFilter());
 		return filterChain.doFilterChain(message);
 	}
