@@ -143,12 +143,12 @@
     </servlet-mapping>
 
 	<servlet>
-		<servlet-name>WechatCoreServlet</servlet-name>
-		<servlet-class>com.glaf.wechat.servlet.WechatCoreServlet</servlet-class>
+		<servlet-name>WeixinServlet</servlet-name>
+		<servlet-class>com.glaf.wechat.sdk.WeixinServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>WechatCoreServlet</servlet-name>
+		<servlet-name>WeixinServlet</servlet-name>
 		<url-pattern>/weixin/*</url-pattern>
 	</servlet-mapping>
 

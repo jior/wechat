@@ -63,6 +63,9 @@ public class WxMenuJsonFactory {
 		if (jsonObject.containsKey("url")) {
 			model.setUrl(jsonObject.getString("url"));
 		}
+		if (jsonObject.containsKey("picUrl")) {
+			model.setPicUrl(jsonObject.getString("picUrl"));
+		}
 		if (jsonObject.containsKey("sort")) {
 			model.setSort(jsonObject.getInteger("sort"));
 		}
@@ -119,6 +122,9 @@ public class WxMenuJsonFactory {
 		}
 		if (model.getUrl() != null) {
 			jsonObject.put("url", model.getUrl());
+		}
+		if (model.getPicUrl() != null) {
+			jsonObject.put("picUrl", model.getPicUrl());
 		}
 		jsonObject.put("sort", model.getSort());
 		jsonObject.put("locked", model.getLocked());
@@ -187,6 +193,9 @@ public class WxMenuJsonFactory {
 		}
 		if (model.getUrl() != null) {
 			jsonObject.put("url", model.getUrl());
+		}
+		if (model.getPicUrl() != null) {
+			jsonObject.put("picUrl", model.getPicUrl());
 		}
 		jsonObject.put("sort", model.getSort());
 		jsonObject.put("locked", model.getLocked());

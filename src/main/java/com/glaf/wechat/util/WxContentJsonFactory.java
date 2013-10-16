@@ -102,6 +102,9 @@ public class WxContentJsonFactory {
 		if (jsonObject.containsKey("url")) {
 			model.setUrl(jsonObject.getString("url"));
 		}
+		if (jsonObject.containsKey("picUrl")) {
+			model.setPicUrl(jsonObject.getString("picUrl"));
+		}
 		if (jsonObject.containsKey("createBy")) {
 			model.setCreateBy(jsonObject.getString("createBy"));
 		}
@@ -181,6 +184,9 @@ public class WxContentJsonFactory {
 		}
 		if (model.getUrl() != null) {
 			jsonObject.put("url", model.getUrl());
+		}
+		if (model.getPicUrl() != null) {
+			jsonObject.put("picUrl", model.getPicUrl());
 		}
 		if (model.getCreateBy() != null) {
 			jsonObject.put("createBy", model.getCreateBy());
@@ -282,6 +288,9 @@ public class WxContentJsonFactory {
 		}
 		if (model.getUrl() != null) {
 			jsonObject.put("url", model.getUrl());
+		}
+		if (model.getPicUrl() != null) {
+			jsonObject.put("picUrl", model.getPicUrl());
 		}
 		if (model.getCreateBy() != null) {
 			jsonObject.put("createBy", model.getCreateBy());

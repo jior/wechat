@@ -13,32 +13,23 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/bcprov.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/bsf.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/bsh.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/c3p0.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/cglib.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-beanutils.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-chain.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-cli.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-codec.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-collections.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-compress.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-configuration.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-dbcp.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-digester.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-discovery.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-el.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-fileupload.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-io.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-jexl-1.1.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-jexl-2.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-lang2.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-lang3.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-logging.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-math.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-net.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-pool.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-resources.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-validator.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-vfs.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/dom4j.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/druid.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/ehcache-core.jar"/>
@@ -53,15 +44,10 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/glaf-setup.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/glaf-shiro.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/glaf-ui.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/gson.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/guava.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/hamcrest-core.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/hibernate-validator-4.2.0.Final.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/hibernate3.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/htmlparser.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/httpclient.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/httpcore.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/httpmime.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jackson-annotations.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jackson-core-asl-1.9.12.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jackson-core.jar"/>
@@ -78,15 +64,11 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jbpm-jpdl.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jcommon.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jettison.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jetty-util.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jfreechart.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/joda-time.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/json-lib-2.4-jdk15.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/json.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jstl-1.2.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jxl.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jxls-core.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jxls-reader.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/log4j.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/mail.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/memcached-java-client.jar"/>
@@ -94,8 +76,6 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/mybatis-2.3.5.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/mybatis-spring.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/mybatis.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/netty.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/poi.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/quartz-all.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/resteasy-cache-core.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/resteasy-crypto.jar"/>
@@ -125,7 +105,6 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-tx.RELEASE.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-web.RELEASE.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-webmvc.RELEASE.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/velocity.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/xmemcached.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/xml-apis-ext.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/xml-apis.jar"/>
@@ -137,5 +116,7 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/glaf-test.jar"/>
 	<classpathentry kind="lib" path="conf"/>
 	<classpathentry kind="lib" path="lib/postgresql.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/httpclient.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/httpcore.jar"/>
 	<classpathentry kind="output" path="WebContent/WEB-INF/classes"/>
 </classpath>

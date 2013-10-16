@@ -18,30 +18,36 @@
 package com.glaf.wechat.sdk.message.response.handler;
 
 import com.glaf.wechat.sdk.message.Message;
-import com.glaf.wechat.sdk.message.ResponseTextMessage;
+import com.glaf.wechat.sdk.message.ResponseMenuMessage;
 
 /**
- * message response text handler
+ * message response menu handler
+ * 
  */
-public class TextResponseMessageHandler extends AbstractResponseMessageHandler {
+public class MenuResponseMessageHandler extends AbstractResponseMessageHandler {
 
 	@Override
 	public String response(Message message) {
-		ResponseTextMessage textMessage = (ResponseTextMessage) message;
+		ResponseMenuMessage menuMessage = (ResponseMenuMessage) message;
 		StringBuffer buffer = new StringBuffer();
+
 		buffer.append(
-				wrapperContent(TAG_TOUSERNAME, textMessage.getToUserName(),
+				wrapperContent(TAG_TOUSERNAME, menuMessage.getToUserName(),
 						true))
 				.append(wrapperContent(TAG_FROMUSERNAME,
-						textMessage.getFromUserName(), true))
+						menuMessage.getFromUserName(), true))
 				.append(wrapperContent(TAG_CREATETIME,
-						textMessage.getCreateTime() + "", false))
-				.append(wrapperContent(TAG_MSGTYPE, textMessage.getMsgType(),
-						true))
-				.append(wrapperContent(TAG_CONTENT, textMessage.getContent(),
-						true))
-				.append(wrapperContent(TAG_FUNCFLAG, textMessage.getFuncFlag()
-						+ "", false));
+						menuMessage.getCreateTime() + "", false))
+				.append(wrapperContent(TAG_MSGTYPE, menuMessage.getMsgType(),
+						true));
+
+		buffer.append(wrapperContent(TAG_TITLE, menuMessage.getTitle(), true))
+				.append(wrapperContent(TAG_DESCRIPTION,
+						menuMessage.getDescription(), true))
+				.append(wrapperContent(TAG_URL, menuMessage.getUrl(), true))
+				.append(wrapperContent(TAG_PICURL, menuMessage.getPicUrl(),
+						true));
+
 		return wrapperXmlContent(buffer.toString());
 	}
 

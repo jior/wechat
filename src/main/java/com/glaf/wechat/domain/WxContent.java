@@ -172,6 +172,12 @@ public class WxContent implements java.io.Serializable, JSONable {
 	protected String url;
 
 	/**
+	 * 图片链接地址
+	 */
+	@Column(name = "PICURL_", length = 500)
+	protected String picUrl;
+
+	/**
 	 * 创建人
 	 */
 	@Column(name = "CREATEBY_", length = 50)
@@ -261,6 +267,10 @@ public class WxContent implements java.io.Serializable, JSONable {
 
 	public Date getLastUpdateDate() {
 		return lastUpdateDate;
+	}
+
+	public String getPicUrl() {
+		return picUrl;
 	}
 
 	public int getPriority() {
@@ -373,6 +383,10 @@ public class WxContent implements java.io.Serializable, JSONable {
 
 	public void setLastUpdateDate(Date lastUpdateDate) {
 		this.lastUpdateDate = lastUpdateDate;
+	}
+
+	public void setPicUrl(String picUrl) {
+		this.picUrl = picUrl;
 	}
 
 	public void setPriority(int priority) {

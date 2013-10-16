@@ -270,6 +270,27 @@ limitations under the License.
 	    jQuery('#mydatagrid').datagrid('reload');	
 	    jQuery('#dlg').dialog('close');
 	}
+
+	function syncWxServer(){
+		if(confirm("因微信服务器缓存原因更新菜单需要24小时后才能生效，确定重新同步吗？")){
+            jQuery.ajax({
+				   type: "POST",
+				   url: '<%=request.getContextPath()%>/mx/wx/wxMenu/syncWxServer',
+				   dataType:  'json',
+				   error: function(data){
+					   alert('服务器处理错误！');
+				   },
+				   success: function(data){
+					   if(data != null && data.message != null){
+						   alert(data.message);
+					   } else {
+						 alert('操作成功完成！');
+					   }
+					   jQuery('#mydatagrid').datagrid('reload');
+				   }
+			 });
+		}
+	}
 		 
 </script>
 </head>
@@ -297,6 +318,8 @@ limitations under the License.
 			   onclick="javascript:editSelected();">修改</a>  
 			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-remove'"
 			   onclick="javascript:deleteSelections();">删除</a> 
+			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-reload'"
+			   onclick="javascript:syncWxServer();">同步到微信服务器</a> 
 		   </div> 
 		  </div> 
 		  <div data-options="region:'center',border:true">

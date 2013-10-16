@@ -29,6 +29,7 @@
 		<result property="bigIcon" column="BIGICON_" jdbcType="VARCHAR" />
 		<result property="smallIcon" column="SMALLICON_" jdbcType="VARCHAR" />
 		<result property="url" column="URL_" jdbcType="VARCHAR" />
+		<result property="picUrl" column="PICURL_" jdbcType="VARCHAR" />
 		<result property="sort" column="SORT_" jdbcType="INTEGER" />
 		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
 		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP" />
@@ -103,6 +104,9 @@
 			<if test="url != null">
 				,URL_
 			</if>
+			<if test="picUrl != null">
+				,PICURL_
+			</if>
 			<if test="createBy != null">
 				,CREATEBY_
 			</if>
@@ -174,6 +178,9 @@
 			<if test="url != null">
 				,#{url, jdbcType=VARCHAR}
 			</if>
+			<if test="picUrl != null">
+				,#{picUrl, jdbcType=VARCHAR}
+			</if>
 			<if test="createBy != null">
 				,#{createBy, jdbcType=VARCHAR}
 			</if>
@@ -243,6 +250,9 @@
 			</if>
 			<if test="url != null">
 				URL_ = #{url, jdbcType=VARCHAR},
+			</if>
+			<if test="picUrl != null">
+				PICURL_ = #{picUrl, jdbcType=VARCHAR},
 			</if>
 			<if test="lastUpdateDate != null">
 				LASTUPDATEDATE_ = #{lastUpdateDate, jdbcType=TIMESTAMP},

@@ -39,9 +39,13 @@ import com.glaf.core.identity.*;
 import com.glaf.core.security.*;
 import com.glaf.core.tree.helper.TreeHelper;
 import com.glaf.core.util.*;
+import com.glaf.wechat.component.Button;
+import com.glaf.wechat.component.Menu;
 import com.glaf.wechat.domain.*;
+import com.glaf.wechat.model.AccessToken;
 import com.glaf.wechat.query.*;
 import com.glaf.wechat.service.*;
+import com.glaf.wechat.util.WechatUtils;
 
 @Controller("/wx/wxMenu")
 @RequestMapping("/wx/wxMenu")
@@ -50,6 +54,8 @@ public class WxMenuController {
 			.getLog(WxMenuController.class);
 
 	protected WxMenuService wxMenuService;
+
+	protected WxConfigService wxConfigService;
 
 	public WxMenuController() {
 
@@ -281,6 +287,7 @@ public class WxMenuController {
 		wxMenu.setType(request.getParameter("type"));
 		wxMenu.setGroup(request.getParameter("group"));
 		wxMenu.setUrl(request.getParameter("url"));
+		wxMenu.setPicUrl(request.getParameter("picUrl"));
 		wxMenu.setDesc(request.getParameter("desc"));
 		wxMenu.setCreateBy(actorId);
 		wxMenu.setLastUpdateBy(actorId);
@@ -309,6 +316,7 @@ public class WxMenuController {
 			wxMenu.setType(request.getParameter("type"));
 			wxMenu.setGroup(request.getParameter("group"));
 			wxMenu.setUrl(request.getParameter("url"));
+			wxMenu.setPicUrl(request.getParameter("picUrl"));
 			wxMenu.setDesc(request.getParameter("desc"));
 			wxMenu.setCreateBy(actorId);
 			wxMenu.setLastUpdateBy(actorId);
@@ -325,6 +333,63 @@ public class WxMenuController {
 	@javax.annotation.Resource
 	public void setWxMenuService(WxMenuService wxMenuService) {
 		this.wxMenuService = wxMenuService;
+	}
+
+	@javax.annotation.Resource
+	public void setWxConfigService(WxConfigService wxConfigService) {
+		this.wxConfigService = wxConfigService;
+	}
+
+	@ResponseBody
+	@RequestMapping("/syncWxServer")
+	public byte[] syncWxServer(HttpServletRequest request) {
+		LoginContext loginContext = RequestUtils.getLoginContext(request);
+
+		List<WxMenu> menus = wxMenuService.getMenuList(
+				loginContext.getActorId(), "menu", 0L);
+
+		if (menus != null && !menus.isEmpty()) {
+			WxConfig wxConfig = wxConfigService.getWxConfigByUser(loginContext
+					.getActorId());
+			if (wxConfig != null) {
+				if (StringUtils.isNotEmpty(wxConfig.getAppId())
+						&& StringUtils.isNotEmpty(wxConfig.getAppSecret())) {
+					AccessToken accessToken = WechatUtils.getAccessToken(
+							wxConfig.getAppId(), wxConfig.getAppSecret());
+					if (accessToken != null && accessToken.getToken() != null) {
+						Menu menu = new Menu();
+						for (int i = 0; i < menus.size() && i < 3; i++) {
+							WxMenu wxm = menus.get(i);
+							Button button = new Button();
+							button.setKey(wxm.getKey());
+							button.setName(wxm.getName());
+							button.setType(wxm.getType());
+
+							List<WxMenu> childrenMenus = wxMenuService
+									.getMenuList(loginContext.getActorId(),
+											wxm.getId());
+							for (int j = 0; j < childrenMenus.size() && j < 5; i++) {
+								WxMenu m = childrenMenus.get(i);
+								Button b = new Button();
+								b.setKey(m.getKey());
+								b.setName(m.getName());
+								b.setType(m.getType());
+								button.addChild(b);
+							}
+
+							menu.addButton(button);
+						}
+
+						int result = WechatUtils.createMenu(menu,
+								accessToken.getToken());
+						if (result == 0) {
+							return ResponseUtils.responseJsonResult(true);
+						}
+					}
+				}
+			}
+		}
+		return ResponseUtils.responseJsonResult(false);
 	}
 
 	@ResponseBody
@@ -394,6 +459,7 @@ public class WxMenuController {
 			wxMenu.setType(request.getParameter("type"));
 			wxMenu.setGroup(request.getParameter("group"));
 			wxMenu.setUrl(request.getParameter("url"));
+			wxMenu.setPicUrl(request.getParameter("picUrl"));
 			wxMenu.setDesc(request.getParameter("desc"));
 			wxMenu.setLastUpdateBy(loginContext.getActorId());
 			wxMenuService.save(wxMenu);

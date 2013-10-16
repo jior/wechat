@@ -15,49 +15,47 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.glaf.wechat.sdk.message;
+package com.glaf.wechat.message.request;
 
-/**
- * location message
- * 
- */
-public class LocationMessage extends Message {
+import org.dom4j.Document;
+import org.dom4j.Element;
+
+import com.glaf.wechat.message.BaseMessage;
+
+public class EventMessage extends BaseMessage implements java.io.Serializable {
+
 	private static final long serialVersionUID = 1L;
-	protected String locationX;
-	protected String locationY;
-	protected String scale;
-	protected String label;
 
-	public String getLabel() {
-		return label;
+	protected String event;
+
+	protected String eventKey;
+
+	public EventMessage() {
+
 	}
 
-	public String getLocationX() {
-		return locationX;
+	public String getEvent() {
+		return event;
 	}
 
-	public String getLocationY() {
-		return locationY;
+	public String getEventKey() {
+		return eventKey;
 	}
 
-	public String getScale() {
-		return scale;
+	public void setEvent(String event) {
+		this.event = event;
 	}
 
-	public void setLabel(String label) {
-		this.label = label;
+	public void setEventKey(String eventKey) {
+		this.eventKey = eventKey;
 	}
 
-	public void setLocationX(String locationX) {
-		this.locationX = locationX;
-	}
-
-	public void setLocationY(String locationY) {
-		this.locationY = locationY;
-	}
-
-	public void setScale(String scale) {
-		this.scale = scale;
+	public Document toDocument() {
+		Document doc = super.toDocument();
+		Element root = doc.getRootElement();
+		root.addElement("Event").setText(event);
+		root.addElement("EventKey").setText(eventKey);
+		return doc;
 	}
 
 }

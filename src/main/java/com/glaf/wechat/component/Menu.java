@@ -18,6 +18,9 @@
 
 package com.glaf.wechat.component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.alibaba.fastjson.*;
 
 /**
@@ -29,24 +32,31 @@ public class Menu implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private Button[] buttons;
+	private List<Button> buttons;
 
 	public Menu() {
 
 	}
+	
+	public void addButton(Button button){
+		if(buttons == null){
+			buttons = new ArrayList<Button>();
+		}
+		buttons.add(button);
+	}
 
-	public Button[] getButtons() {
+	public List<Button> getButtons() {
 		return buttons;
 	}
 
-	public void setButtons(Button[] buttons) {
+	public void setButtons(List<Button> buttons) {
 		this.buttons = buttons;
 	}
 
 	public JSONObject toJSONObject() {
 		JSONObject result = new JSONObject();
 		JSONObject menu = new JSONObject();
-		if (buttons != null && buttons.length > 0) {
+		if (buttons != null && buttons.size() > 0) {
 			JSONArray array = new JSONArray();
 			for (Button button : buttons) {
 				JSONObject json = button.toJSONObject();

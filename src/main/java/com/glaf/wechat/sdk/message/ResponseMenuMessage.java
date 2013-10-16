@@ -15,49 +15,50 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.glaf.wechat.sdk.message;
 
-/**
- * location message
- * 
- */
-public class LocationMessage extends Message {
+public class ResponseMenuMessage extends Message {
 	private static final long serialVersionUID = 1L;
-	protected String locationX;
-	protected String locationY;
-	protected String scale;
-	protected String label;
+	protected String title;
+	protected String description;
+	protected String url;
+	protected String picUrl;
 
-	public String getLabel() {
-		return label;
+	public ResponseMenuMessage() {
+
 	}
 
-	public String getLocationX() {
-		return locationX;
+	public String getDescription() {
+		return description;
 	}
 
-	public String getLocationY() {
-		return locationY;
+	public String getPicUrl() {
+		return picUrl;
 	}
 
-	public String getScale() {
-		return scale;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setLabel(String label) {
-		this.label = label;
+	public String getUrl() {
+		return url;
 	}
 
-	public void setLocationX(String locationX) {
-		this.locationX = locationX;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
-	public void setLocationY(String locationY) {
-		this.locationY = locationY;
+	public void setPicUrl(String picUrl) {
+		this.picUrl = picUrl;
 	}
 
-	public void setScale(String scale) {
-		this.scale = scale;
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
 }

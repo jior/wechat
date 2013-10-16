@@ -20,42 +20,32 @@ package com.glaf.wechat.sdk.message.filter;
 import java.util.List;
 
 import com.glaf.core.context.ContextFactory;
-import com.glaf.wechat.domain.WxContent;
-import com.glaf.wechat.query.WxContentQuery;
-import com.glaf.wechat.sdk.message.ItemArticle;
+import com.glaf.wechat.domain.WxMenu;
+import com.glaf.wechat.query.WxMenuQuery;
+import com.glaf.wechat.sdk.message.EventMessage;
 import com.glaf.wechat.sdk.message.Message;
-import com.glaf.wechat.sdk.message.ResponseNewsMessage;
-import com.glaf.wechat.service.WxContentService;
+import com.glaf.wechat.sdk.message.ResponseMenuMessage;
+import com.glaf.wechat.service.WxMenuService;
 
-/**
- * filter whether the message is for everything<br>
- * so,if this filter locates in the last of filterchain,then it certainly
- * returns the message response
- * 
- */
-public class DefaultResponseMessageFilter extends AbstractMessageFilter
-		implements IMessageFilter {
+public class MenuMessageFilter extends AbstractMessageFilter implements
+		IMessageFilter {
 
 	@Override
 	public Message doSpecailMessageFilter(Message message) {
-		WxContentService wxContentService = ContextFactory
-				.getBean("wxContentService");
-		WxContentQuery query = new WxContentQuery();
+		EventMessage msg = (EventMessage) message;
+		WxMenuService wxMenuService = ContextFactory.getBean("wxMenuService");
+		WxMenuQuery query = new WxMenuQuery();
 		query.createBy(message.getCustomer());
-		query.type("D");
-		List<WxContent> rows = wxContentService.list(query);
+		query.key(msg.getEventKey());
+		List<WxMenu> rows = wxMenuService.list(query);
 		if (rows != null && !rows.isEmpty()) {
-			ResponseNewsMessage newsMessage = new ResponseNewsMessage();
-			newsMessage.setCount(rows.size());
-			for (WxContent c : rows) {
-				ItemArticle art = new ItemArticle();
-				art.setDescription(c.getSummary());
-				art.setTitle(c.getTitle());
-				art.setUrl(c.getUrl());//
-				art.setPicUrl(c.getPicUrl());//
-				newsMessage.addItemArticle(art);
-			}
-			return newsMessage;
+			WxMenu menu = rows.get(0);
+			ResponseMenuMessage menuMessage = new ResponseMenuMessage();
+			menuMessage.setDescription(menu.getDesc());
+			menuMessage.setTitle(menu.getName());
+			menuMessage.setUrl(menu.getUrl());//
+			menuMessage.setPicUrl(menu.getPicUrl());//
+			return menuMessage;
 		}
 		return null;
 	}

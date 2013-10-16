@@ -91,6 +91,23 @@ public class WxMenuServiceImpl implements WxMenuService {
 		List<WxMenu> list = wxMenuMapper.getWxMenus(query);
 		return list;
 	}
+	
+	/**
+	 * 获取某个用户的某个分组的全部子菜单
+	 * 
+	 * @param createBy
+	 * @param group
+	 * @param parentId
+	 * @return
+	 */
+	public List<WxMenu> getMenuList(String createBy, String group, Long parentId){
+		WxMenuQuery query = new WxMenuQuery();
+		query.createBy(createBy);
+		query.parentId(parentId);
+		query.group(group);
+		List<WxMenu> list = wxMenuMapper.getWxMenus(query);
+		return list;
+	}
 
 	public WxMenu getWxMenu(Long id) {
 		if (id == null) {

@@ -11,6 +11,7 @@
 		<result property="type" column="TYPE_" jdbcType="VARCHAR" />
 		<result property="key" column="KEY_" jdbcType="VARCHAR" />
 		<result property="url" column="URL_" jdbcType="VARCHAR" />
+		<result property="picUrl" column="PICURL_" jdbcType="VARCHAR" />
 		<result property="sort" column="SORT_" jdbcType="INTEGER" />
 		<result property="locked" column="LOCKED_" jdbcType="INTEGER" />
 		<result property="group" column="GROUP_" jdbcType="VARCHAR" />
@@ -46,6 +47,9 @@
 			</if>
 			<if test="url != null">
 				,URL_
+			</if>
+			<if test="picUrl != null">
+				,PICURL_
 			</if>
 			<if test="sort != null">
 				,SORT_
@@ -96,6 +100,9 @@
 			</if>
 			<if test="url != null">
 				,#{url, jdbcType=VARCHAR}
+			</if>
+			<if test="picUrl != null">
+				,#{picUrl, jdbcType=VARCHAR}
 			</if>
 			<if test="sort != null">
 				,#{sort, jdbcType=INTEGER}
@@ -149,6 +156,9 @@
 			</if>
 			<if test="url != null">
 				URL_ = #{url, jdbcType=VARCHAR},
+			</if>
+			<if test="picUrl != null">
+				PICURL_ = #{picUrl, jdbcType=VARCHAR},
 			</if>
 			<if test="sort != null">
 				SORT_ = #{sort, jdbcType=INTEGER},

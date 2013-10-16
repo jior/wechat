@@ -382,6 +382,7 @@ public class WxContentController {
 		wxContent.setBigIcon(request.getParameter("bigIcon"));
 		wxContent.setSmallIcon(request.getParameter("smallIcon"));
 		wxContent.setUrl(request.getParameter("url"));
+		wxContent.setPicUrl(request.getParameter("picUrl"));
 		wxContent.setCreateBy(actorId);
 
 		wxContentService.save(wxContent);
@@ -420,6 +421,7 @@ public class WxContentController {
 			wxContent.setBigIcon(request.getParameter("bigIcon"));
 			wxContent.setSmallIcon(request.getParameter("smallIcon"));
 			wxContent.setUrl(request.getParameter("url"));
+			wxContent.setPicUrl(request.getParameter("picUrl"));
 			wxContent.setCreateBy(actorId);
 			this.wxContentService.save(wxContent);
 
@@ -561,6 +563,7 @@ public class WxContentController {
 			wxContent.setBigIcon(request.getParameter("bigIcon"));
 			wxContent.setSmallIcon(request.getParameter("smallIcon"));
 			wxContent.setUrl(request.getParameter("url"));
+			wxContent.setPicUrl(request.getParameter("picUrl"));
 			wxContent.setLastUpdateBy(loginContext.getActorId());
 
 			wxContentService.save(wxContent);

@@ -63,6 +63,16 @@ public interface WxMenuService {
 	List<WxMenu> getMenuList(String createBy, String group);
 
 	/**
+	 * 获取某个用户的某个分组的全部子菜单
+	 * 
+	 * @param createBy
+	 * @param group
+	 * @param parentId
+	 * @return
+	 */
+	List<WxMenu> getMenuList(String createBy, String group, Long parentId);
+
+	/**
 	 * 根据主键获取一条记录
 	 * 
 	 * @return

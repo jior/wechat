@@ -81,6 +81,12 @@ public class WxMenu implements java.io.Serializable, JSONable {
 	protected String url;
 
 	/**
+	 * Õº∆¨¡¥Ω”µÿ÷∑
+	 */
+	@Column(name = "PICURL_", length = 500)
+	protected String picUrl;
+
+	/**
 	 * √Ë ˆ
 	 */
 	@Column(name = "DESC_", length = 500)
@@ -210,6 +216,10 @@ public class WxMenu implements java.io.Serializable, JSONable {
 		return parentId;
 	}
 
+	public String getPicUrl() {
+		return picUrl;
+	}
+
 	public int getSort() {
 		return sort;
 	}
@@ -284,6 +294,10 @@ public class WxMenu implements java.io.Serializable, JSONable {
 
 	public void setParentId(long parentId) {
 		this.parentId = parentId;
+	}
+
+	public void setPicUrl(String picUrl) {
+		this.picUrl = picUrl;
 	}
 
 	public void setSort(int sort) {

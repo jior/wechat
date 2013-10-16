@@ -18,6 +18,9 @@
 
 package com.glaf.wechat.test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.glaf.wechat.component.Button;
 import com.glaf.wechat.component.Menu;
 import com.glaf.wechat.model.AccessToken;
@@ -120,7 +123,11 @@ public class MenuTest {
 		 * menu.setButton(new Button[] { mainBtn1, mainBtn2, btn33 });
 		 */
 		Menu menu = new Menu();
-		menu.setButtons(new Button[] { mainBtn1, mainBtn2, mainBtn3 });
+		List<Button> buttons = new ArrayList<Button>();
+		buttons.add(mainBtn1);
+		buttons.add(mainBtn2);
+		buttons.add(mainBtn3);
+		menu.setButtons(buttons);
 
 		return menu;
 	}
