@@ -105,6 +105,8 @@ public class WxPublicContentController {
 				Map<String, Object> context = RequestUtils
 						.getParameterMap(request);
 				context.put("customer", customer);
+				context.put("content", wxContent);
+				context.put("template", template);
 				context.put("contextPath", request.getContextPath());
 				context.put("serviceUrl", serviceUrl);
 				context.put("serverUrl", serviceUrl);
@@ -136,6 +138,7 @@ public class WxPublicContentController {
 				Map<String, Object> context = RequestUtils
 						.getParameterMap(request);
 				context.put("customer", customer);
+				context.put("template", template);
 				context.put("contextPath", request.getContextPath());
 				context.put("serviceUrl", serviceUrl);
 				context.put("serverUrl", serviceUrl);
@@ -169,6 +172,7 @@ public class WxPublicContentController {
 					Map<String, Object> context = RequestUtils
 							.getParameterMap(request);
 					context.put("customer", category.getCreateBy());
+					context.put("template", template);
 					context.put("contextPath", request.getContextPath());
 					context.put("serviceUrl", serviceUrl);
 					context.put("serverUrl", serviceUrl);

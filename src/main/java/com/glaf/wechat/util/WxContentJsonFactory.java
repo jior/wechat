@@ -215,6 +215,7 @@ public class WxContentJsonFactory {
 			JSONArray arrayObject = new JSONArray();
 			for (WxContent content : model.getRelations()) {
 				JSONObject json = toJsonObject(content);
+				json.remove("content");
 				arrayObject.add(json);
 			}
 			jsonObject.put("relations", arrayObject);
@@ -225,6 +226,7 @@ public class WxContentJsonFactory {
 			JSONArray arrayObject = new JSONArray();
 			for (WxContent content : model.getRecommendations()) {
 				JSONObject json = toJsonObject(content);
+				json.remove("content");
 				arrayObject.add(json);
 			}
 			jsonObject.put("recommendations", arrayObject);
@@ -319,6 +321,7 @@ public class WxContentJsonFactory {
 			ArrayNode arrayObject = new ObjectMapper().createArrayNode();
 			for (WxContent content : model.getRelations()) {
 				ObjectNode json = toObjectNode(content);
+				json.remove("content");
 				arrayObject.add(json);
 			}
 			jsonObject.put("relations", arrayObject);
@@ -329,6 +332,7 @@ public class WxContentJsonFactory {
 			ArrayNode arrayObject = new ObjectMapper().createArrayNode();
 			for (WxContent content : model.getRecommendations()) {
 				ObjectNode json = toObjectNode(content);
+				json.remove("content");
 				arrayObject.add(json);
 			}
 			jsonObject.put("recommendations", arrayObject);
