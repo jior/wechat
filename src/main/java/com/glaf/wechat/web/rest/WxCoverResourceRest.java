@@ -38,7 +38,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-
 import com.glaf.core.util.PageResult;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
@@ -64,6 +63,9 @@ public class WxCoverResourceRest {
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		WxCoverQuery query = new WxCoverQuery();
 		Tools.populate(query, params);
+		String uri = request.getRequestURI();
+		String customer = uri.substring(uri.lastIndexOf("/") + 1);
+		query.createBy(customer);
 
 		String gridType = ParamUtils.getString(params, "gridType");
 		if (gridType == null) {
@@ -135,24 +137,5 @@ public class WxCoverResourceRest {
 	public void setWxCoverService(WxCoverService wxCoverService) {
 		this.wxCoverService = wxCoverService;
 	}
-
-	@GET
-	@POST
-	@Path("/view")
-	@ResponseBody
-	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
-	public byte[] view(@Context HttpServletRequest request) throws IOException {
-		WxCover wxCover = null;
-		if (StringUtils.isNotEmpty(request.getParameter("id"))) {
-			wxCover = wxCoverService.getWxCover(RequestUtils.getLong(request,
-					"id"));
-		}
-		JSONObject result = new JSONObject();
-		if (wxCover != null) {
-			result = wxCover.toJsonObject();
-			result.put("id", wxCover.getId());
-			result.put("coverId", wxCover.getId());
-		}
-		return result.toJSONString().getBytes("UTF-8");
-	}
+ 
 }

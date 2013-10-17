@@ -38,12 +38,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-
 import com.glaf.core.util.PageResult;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.Tools;
-
 import com.glaf.wechat.domain.WxCategory;
 import com.glaf.wechat.query.WxCategoryQuery;
 import com.glaf.wechat.service.WxCategoryService;
@@ -65,6 +63,9 @@ public class WxCategoryResourceRest {
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		WxCategoryQuery query = new WxCategoryQuery();
 		Tools.populate(query, params);
+		String uri = request.getRequestURI();
+		String customer = uri.substring(uri.lastIndexOf("/") + 1);
+		query.createBy(customer);
 
 		String gridType = ParamUtils.getString(params, "gridType");
 		if (gridType == null) {
@@ -144,9 +145,9 @@ public class WxCategoryResourceRest {
 	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
 	public byte[] view(@Context HttpServletRequest request) throws IOException {
 		WxCategory wxCategory = null;
-		if (StringUtils.isNotEmpty(request.getParameter("id"))) {
-			wxCategory = wxCategoryService.getWxCategory(RequestUtils.getLong(
-					request, "id"));
+		if (StringUtils.isNotEmpty(request.getParameter("uuid"))) {
+			wxCategory = wxCategoryService.getWxCategoryByUUID(RequestUtils
+					.getString(request, "uuid"));
 		}
 		JSONObject result = new JSONObject();
 		if (wxCategory != null) {

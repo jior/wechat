@@ -65,6 +65,18 @@ public interface WxContentService {
 	 * @return
 	 */
 	WxContent getWxContentWithRefs(Long id);
+	
+	WxContent getWxContentByUUIDWithRefs(String uuid);
+
+	
+	/**
+	 * 获取某个用户某个栏目指定类型的内容
+	 * @param createBy
+	 * @param categoryId
+	 * @param type
+	 * @return
+	 */
+	List<WxContent> getWxContents(String createBy, Long categoryId, String type);
 
 	/**
 	 * 根据查询参数获取记录总数

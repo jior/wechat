@@ -50,6 +50,8 @@ public interface WxFileService {
 	 * @return
 	 */
 	WxFile getWxFile(Long id);
+	
+	WxFile getWxFileByUUID(String uuid);
 
 	/**
 	 * 根据查询参数获取记录总数

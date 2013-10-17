@@ -19,8 +19,6 @@
 package com.glaf.wechat.web.rest;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
@@ -36,16 +34,11 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
-import com.glaf.core.util.PageResult;
-import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
-import com.glaf.core.util.Tools;
 
 import com.glaf.wechat.domain.WxFile;
-import com.glaf.wechat.query.WxFileQuery;
 import com.glaf.wechat.service.WxFileService;
 
 @Controller
@@ -55,82 +48,6 @@ public class WxFileResourceRest {
 			.getLog(WxFileResourceRest.class);
 
 	protected WxFileService wxFileService;
-
-	@GET
-	@POST
-	@Path("/list")
-	@ResponseBody
-	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
-	public byte[] list(@Context HttpServletRequest request) throws IOException {
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		WxFileQuery query = new WxFileQuery();
-		Tools.populate(query, params);
-
-		String gridType = ParamUtils.getString(params, "gridType");
-		if (gridType == null) {
-			gridType = "easyui";
-		}
-		int start = 0;
-		int limit = 10;
-		String orderName = null;
-		String order = null;
-
-		int pageNo = ParamUtils.getInt(params, "page");
-		limit = ParamUtils.getInt(params, "rows");
-		start = (pageNo - 1) * limit;
-		orderName = ParamUtils.getString(params, "sortName");
-		order = ParamUtils.getString(params, "sortOrder");
-
-		if (start < 0) {
-			start = 0;
-		}
-
-		if (limit <= 0) {
-			limit = PageResult.DEFAULT_PAGE_SIZE;
-		}
-
-		JSONObject result = new JSONObject();
-		int total = wxFileService.getWxFileCountByQueryCriteria(query);
-		if (total > 0) {
-			result.put("total", total);
-			result.put("totalCount", total);
-			result.put("totalRecords", total);
-			result.put("start", start);
-			result.put("startIndex", start);
-			result.put("limit", limit);
-			result.put("pageSize", limit);
-
-			if (StringUtils.isNotEmpty(orderName)) {
-				query.setSortOrder(orderName);
-				if (StringUtils.equals(order, "desc")) {
-					query.setSortOrder(" desc ");
-				}
-			}
-
-			List<WxFile> list = wxFileService.getWxFilesByQueryCriteria(start,
-					limit, query);
-
-			if (list != null && !list.isEmpty()) {
-				JSONArray rowsJSON = new JSONArray();
-
-				result.put("rows", rowsJSON);
-
-				for (WxFile wxFile : list) {
-					JSONObject rowJSON = wxFile.toJsonObject();
-					rowJSON.put("id", wxFile.getId());
-					rowJSON.put("fileId", wxFile.getId());
-					rowJSON.put("startIndex", ++start);
-					rowsJSON.add(rowJSON);
-				}
-
-			}
-		} else {
-			JSONArray rowsJSON = new JSONArray();
-			result.put("rows", rowsJSON);
-			result.put("total", total);
-		}
-		return result.toJSONString().getBytes("UTF-8");
-	}
 
 	@javax.annotation.Resource
 	public void setWxFileService(WxFileService wxFileService) {
@@ -144,9 +61,9 @@ public class WxFileResourceRest {
 	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
 	public byte[] view(@Context HttpServletRequest request) throws IOException {
 		WxFile wxFile = null;
-		if (StringUtils.isNotEmpty(request.getParameter("id"))) {
-			wxFile = wxFileService.getWxFile(RequestUtils
-					.getLong(request, "id"));
+		if (StringUtils.isNotEmpty(request.getParameter("uuid"))) {
+			wxFile = wxFileService.getWxFileByUUID(RequestUtils
+					.getString(request, "uuid"));
 		}
 		JSONObject result = new JSONObject();
 		if (wxFile != null) {

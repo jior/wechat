@@ -62,6 +62,15 @@ public interface WxUserTemplateService {
 	 * @return
 	 */
 	WxUserTemplate getWxUserTemplate(String createBy, String type, Long categoryId);
+	
+	
+	/**
+	 * 获取某个栏目指定类型的模板实例
+	 * @param type
+	 * @param categoryId
+	 * @return
+	 */
+	WxUserTemplate getWxUserTemplate(Long categoryId, String type );
 
 	/**
 	 * 保存一条记录

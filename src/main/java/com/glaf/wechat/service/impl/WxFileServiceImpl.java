@@ -84,6 +84,10 @@ public class WxFileServiceImpl implements WxFileService {
 		return wxFile;
 	}
 
+	public WxFile getWxFileByUUID(String uuid) {
+		return wxFileMapper.getWxFileByUUID(uuid);
+	}
+
 	public int getWxFileCountByQueryCriteria(WxFileQuery query) {
 		return wxFileMapper.getWxFileCount(query);
 	}

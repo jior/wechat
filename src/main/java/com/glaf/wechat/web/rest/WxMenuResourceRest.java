@@ -38,12 +38,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-
 import com.glaf.core.util.PageResult;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.Tools;
-
 import com.glaf.wechat.domain.WxMenu;
 import com.glaf.wechat.query.WxMenuQuery;
 import com.glaf.wechat.service.WxMenuService;
@@ -65,6 +63,9 @@ public class WxMenuResourceRest {
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		WxMenuQuery query = new WxMenuQuery();
 		Tools.populate(query, params);
+		String uri = request.getRequestURI();
+		String customer = uri.substring(uri.lastIndexOf("/") + 1);
+		query.createBy(customer);
 
 		String gridType = ParamUtils.getString(params, "gridType");
 		if (gridType == null) {
@@ -137,24 +138,4 @@ public class WxMenuResourceRest {
 		this.wxMenuService = wxMenuService;
 	}
 
-	@GET
-	@POST
-	@Path("/view")
-	@ResponseBody
-	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
-	public byte[] view(@Context HttpServletRequest request) throws IOException {
-		WxMenu wxMenu = null;
-		if (StringUtils.isNotEmpty(request.getParameter("id"))) {
-			wxMenu = wxMenuService.getWxMenu(RequestUtils
-					.getLong(request, "id"));
-		}
-		JSONObject result = new JSONObject();
-		if (wxMenu != null) {
-			result = wxMenu.toJsonObject();
-
-			result.put("id", wxMenu.getId());
-			result.put("menuId", wxMenu.getId());
-		}
-		return result.toJSONString().getBytes("UTF-8");
-	}
 }

@@ -38,12 +38,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-
 import com.glaf.core.util.PageResult;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.Tools;
-
 import com.glaf.wechat.domain.WxMessage;
 import com.glaf.wechat.query.WxMessageQuery;
 import com.glaf.wechat.service.WxMessageService;
@@ -65,6 +63,9 @@ public class WxMessageResourceRest {
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		WxMessageQuery query = new WxMessageQuery();
 		Tools.populate(query, params);
+		String uri = request.getRequestURI();
+		String customer = uri.substring(uri.lastIndexOf("/") + 1);
+		query.createBy(customer);
 
 		String gridType = ParamUtils.getString(params, "gridType");
 		if (gridType == null) {
@@ -137,24 +138,4 @@ public class WxMessageResourceRest {
 		this.wxMessageService = wxMessageService;
 	}
 
-	@GET
-	@POST
-	@Path("/view")
-	@ResponseBody
-	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
-	public byte[] view(@Context HttpServletRequest request) throws IOException {
-		WxMessage wxMessage = null;
-		if (StringUtils.isNotEmpty(request.getParameter("id"))) {
-			wxMessage = wxMessageService.getWxMessage(RequestUtils.getLong(
-					request, "id"));
-		}
-		JSONObject result = new JSONObject();
-		if (wxMessage != null) {
-			result = wxMessage.toJsonObject();
-
-			result.put("id", wxMessage.getId());
-			result.put("messageId", wxMessage.getId());
-		}
-		return result.toJSONString().getBytes("UTF-8");
-	}
 }

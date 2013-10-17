@@ -38,7 +38,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-
 import com.glaf.core.util.PageResult;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
@@ -64,6 +63,9 @@ public class WxContentResourceRest {
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		WxContentQuery query = new WxContentQuery();
 		Tools.populate(query, params);
+		String uri = request.getRequestURI();
+		String customer = uri.substring(uri.lastIndexOf("/") + 1);
+		query.createBy(customer);
 
 		String gridType = ParamUtils.getString(params, "gridType");
 		if (gridType == null) {
@@ -143,9 +145,9 @@ public class WxContentResourceRest {
 	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
 	public byte[] view(@Context HttpServletRequest request) throws IOException {
 		WxContent wxContent = null;
-		if (StringUtils.isNotEmpty(request.getParameter("id"))) {
-			wxContent = wxContentService.getWxContent(RequestUtils.getLong(
-					request, "id"));
+		if (StringUtils.isNotEmpty(request.getParameter("uuid"))) {
+			wxContent = wxContentService.getWxContentByUUID(RequestUtils
+					.getString(request, "uuid"));
 		}
 		JSONObject result = new JSONObject();
 		if (wxContent != null) {

@@ -297,6 +297,17 @@
 	</select>
 
 
+	<select id="getWxContentsByIds" resultMap="wxContentResultMap">
+
+		select * from WX_CONTENT E
+		where E.ID_ in
+		<foreach item="item" index="index" collection="list" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+
+	</select>
+
 	<select id="getWxContents" parameterType="com.glaf.wechat.query.WxContentQuery"
 		resultMap="wxContentResultMap">
 		select distinct E.*
@@ -343,22 +354,6 @@
 				<foreach item="x_categoryId" index="index" collection="categoryIds"
 					open="(" separator="," close=")">
 					#{x_categoryId}
-				</foreach>
-			</if>
-
-			<if test="relationIds != null and relationIds &gt; 0">
-				and E.ID_ IN
-				<foreach item="x_relationId" index="index" collection="relationIds"
-					open="(" separator="," close=")">
-					#{x_relationId}
-				</foreach>
-			</if>
-
-			<if test="recommendationIds != null and recommendationIds &gt; 0">
-				and E.ID_ IN
-				<foreach item="x_recommendationId" index="index" collection="recommendationIds"
-					open="(" separator="," close=")">
-					#{x_recommendationId}
 				</foreach>
 			</if>
 

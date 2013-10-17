@@ -96,6 +96,23 @@ public class WxContentServiceImpl implements WxContentService {
 		return wxContentMapper.getWxContentCount(query);
 	}
 
+	/**
+	 * 获取某个用户某个栏目指定类型的内容
+	 * 
+	 * @param createBy
+	 * @param categoryId
+	 * @param type
+	 * @return
+	 */
+	public List<WxContent> getWxContents(String createBy, Long categoryId,
+			String type) {
+		WxContentQuery query = new WxContentQuery();
+		query.categoryId(categoryId);
+		query.createBy(createBy);
+		query.type(type);
+		return this.list(query);
+	}
+
 	public List<WxContent> getWxContentsByQueryCriteria(int start,
 			int pageSize, WxContentQuery query) {
 		RowBounds rowBounds = new RowBounds(start, pageSize);
@@ -111,21 +128,44 @@ public class WxContentServiceImpl implements WxContentService {
 		WxContent wxContent = wxContentMapper.getWxContentById(id);
 		if (wxContent != null
 				&& StringUtils.isNotEmpty(wxContent.getRelationIds())) {
-			List<String> relationIds = StringTools.split(wxContent
+			List<Long> relationIds = StringTools.splitToLong(wxContent
 					.getRelationIds());
-			WxContentQuery query = new WxContentQuery();
-			query.relationIds(relationIds);
-			List<WxContent> relations = wxContentMapper.getWxContents(query);
+			logger.debug("relationIds:" + relationIds);
+			List<WxContent> relations = wxContentMapper
+					.getWxContentsByIds(relationIds);
 			wxContent.setRelations(relations);
 		}
 		if (wxContent != null
 				&& StringUtils.isNotEmpty(wxContent.getRecommendationIds())) {
-			List<String> recommendationIds = StringTools.split(wxContent
+			List<Long> recommendationIds = StringTools.splitToLong(wxContent
 					.getRecommendationIds());
-			WxContentQuery query = new WxContentQuery();
-			query.recommendationIds(recommendationIds);
 			List<WxContent> recommendations = wxContentMapper
-					.getWxContents(query);
+					.getWxContentsByIds(recommendationIds);
+			wxContent.setRecommendations(recommendations);
+		}
+		return wxContent;
+	}
+
+	public WxContent getWxContentByUUIDWithRefs(String uuid) {
+		if (uuid == null) {
+			return null;
+		}
+		WxContent wxContent = wxContentMapper.getWxContentByUUID(uuid);
+		if (wxContent != null
+				&& StringUtils.isNotEmpty(wxContent.getRelationIds())) {
+			List<Long> relationIds = StringTools.splitToLong(wxContent
+					.getRelationIds());
+			logger.debug("relationIds:" + relationIds);
+			List<WxContent> relations = wxContentMapper
+					.getWxContentsByIds(relationIds);
+			wxContent.setRelations(relations);
+		}
+		if (wxContent != null
+				&& StringUtils.isNotEmpty(wxContent.getRecommendationIds())) {
+			List<Long> recommendationIds = StringTools.splitToLong(wxContent
+					.getRecommendationIds());
+			List<WxContent> recommendations = wxContentMapper
+					.getWxContentsByIds(recommendationIds);
 			wxContent.setRecommendations(recommendations);
 		}
 		return wxContent;

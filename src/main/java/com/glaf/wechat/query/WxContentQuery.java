@@ -43,8 +43,6 @@ public class WxContentQuery extends DataQuery {
 	protected String urlLike;
 	protected Date createDateGreaterThanOrEqual;
 	protected Date createDateLessThanOrEqual;
-	protected List<String> relationIds;
-	protected List<String> recommendationIds;
 
 	public WxContentQuery() {
 
@@ -239,14 +237,6 @@ public class WxContentQuery extends DataQuery {
 		return priorityLessThanOrEqual;
 	}
 
-	public List<String> getRecommendationIds() {
-		return recommendationIds;
-	}
-
-	public List<String> getRelationIds() {
-		return relationIds;
-	}
-
 	public Integer getStatus() {
 		return status;
 	}
@@ -375,22 +365,6 @@ public class WxContentQuery extends DataQuery {
 		return this;
 	}
 
-	public WxContentQuery recommendationIds(List<String> recommendationIds) {
-		if (recommendationIds == null) {
-			throw new RuntimeException("recommendationIds is empty ");
-		}
-		this.recommendationIds = recommendationIds;
-		return this;
-	}
-
-	public WxContentQuery relationIds(List<String> relationIds) {
-		if (relationIds == null) {
-			throw new RuntimeException("relationIds is empty ");
-		}
-		this.relationIds = relationIds;
-		return this;
-	}
-
 	public void setCategoryId(Long categoryId) {
 		this.categoryId = categoryId;
 	}
@@ -438,14 +412,6 @@ public class WxContentQuery extends DataQuery {
 
 	public void setPriorityLessThanOrEqual(Integer priorityLessThanOrEqual) {
 		this.priorityLessThanOrEqual = priorityLessThanOrEqual;
-	}
-
-	public void setRecommendationIds(List<String> recommendationIds) {
-		this.recommendationIds = recommendationIds;
-	}
-
-	public void setRelationIds(List<String> relationIds) {
-		this.relationIds = relationIds;
 	}
 
 	public void setSummaryLike(String summaryLike) {

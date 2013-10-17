@@ -35,6 +35,10 @@ public class WxUserTemplateServiceImpl implements WxUserTemplateService {
 
 	}
 
+	public int count(WxUserTemplateQuery query) {
+		return wxUserTemplateMapper.getWxUserTemplateCount(query);
+	}
+
 	@Transactional
 	public void deleteById(Long id) {
 		if (id != null) {
@@ -51,34 +55,32 @@ public class WxUserTemplateServiceImpl implements WxUserTemplateService {
 		}
 	}
 
-	public int count(WxUserTemplateQuery query) {
-		return wxUserTemplateMapper.getWxUserTemplateCount(query);
-	}
-
-	public List<WxUserTemplate> list(WxUserTemplateQuery query) {
-		List<WxUserTemplate> list = wxUserTemplateMapper
-				.getWxUserTemplates(query);
-		return list;
-	}
-
-	public int getWxUserTemplateCountByQueryCriteria(WxUserTemplateQuery query) {
-		return wxUserTemplateMapper.getWxUserTemplateCount(query);
-	}
-
-	public List<WxUserTemplate> getWxUserTemplatesByQueryCriteria(int start,
-			int pageSize, WxUserTemplateQuery query) {
-		RowBounds rowBounds = new RowBounds(start, pageSize);
-		List<WxUserTemplate> rows = sqlSessionTemplate.selectList(
-				"getWxUserTemplates", query, rowBounds);
-		return rows;
-	}
-
 	public WxUserTemplate getWxUserTemplate(Long id) {
 		if (id == null) {
 			return null;
 		}
 		WxUserTemplate wxUserTemplate = wxUserTemplateMapper
 				.getWxUserTemplateById(id);
+		return wxUserTemplate;
+	}
+
+	/**
+	 * 获取某个栏目指定类型的模板实例
+	 * @param type
+	 * @param categoryId
+	 * @return
+	 */
+	public WxUserTemplate getWxUserTemplate(Long categoryId, String type 
+			) {
+		WxUserTemplate wxUserTemplate = null;
+		WxUserTemplateQuery query = new WxUserTemplateQuery();
+		query.type(type);
+		query.categoryId(categoryId);
+		List<WxUserTemplate> list = wxUserTemplateMapper
+				.getWxUserTemplates(query);
+		if (list != null && !list.isEmpty()) {
+			wxUserTemplate = list.get(0);
+		}
 		return wxUserTemplate;
 	}
 
@@ -105,6 +107,24 @@ public class WxUserTemplateServiceImpl implements WxUserTemplateService {
 		return wxUserTemplate;
 	}
 
+	public int getWxUserTemplateCountByQueryCriteria(WxUserTemplateQuery query) {
+		return wxUserTemplateMapper.getWxUserTemplateCount(query);
+	}
+
+	public List<WxUserTemplate> getWxUserTemplatesByQueryCriteria(int start,
+			int pageSize, WxUserTemplateQuery query) {
+		RowBounds rowBounds = new RowBounds(start, pageSize);
+		List<WxUserTemplate> rows = sqlSessionTemplate.selectList(
+				"getWxUserTemplates", query, rowBounds);
+		return rows;
+	}
+	
+	public List<WxUserTemplate> list(WxUserTemplateQuery query) {
+		List<WxUserTemplate> list = wxUserTemplateMapper
+				.getWxUserTemplates(query);
+		return list;
+	}
+
 	@Transactional
 	public void save(WxUserTemplate wxUserTemplate) {
 		WxUserTemplate model = this.getWxUserTemplate(
@@ -129,14 +149,14 @@ public class WxUserTemplateServiceImpl implements WxUserTemplateService {
 	}
 
 	@Resource
-	public void setWxUserTemplateMapper(
-			WxUserTemplateMapper wxUserTemplateMapper) {
-		this.wxUserTemplateMapper = wxUserTemplateMapper;
+	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
+		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
 
 	@Resource
-	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
-		this.sqlSessionTemplate = sqlSessionTemplate;
+	public void setWxUserTemplateMapper(
+			WxUserTemplateMapper wxUserTemplateMapper) {
+		this.wxUserTemplateMapper = wxUserTemplateMapper;
 	}
 
 }

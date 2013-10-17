@@ -26,17 +26,19 @@ import com.glaf.wechat.query.*;
 @Component
 public interface WxContentMapper {
 
-	void deleteWxContents(WxContentQuery query);
-
 	void deleteWxContentById(Long id);
 
+	void deleteWxContents(WxContentQuery query);
+
 	WxContent getWxContentById(Long id);
-	
+
 	WxContent getWxContentByUUID(String uuid);
 
 	int getWxContentCount(WxContentQuery query);
 
 	List<WxContent> getWxContents(WxContentQuery query);
+
+	List<WxContent> getWxContentsByIds(List<Long> ids);
 
 	void insertWxContent(WxContent model);
 
