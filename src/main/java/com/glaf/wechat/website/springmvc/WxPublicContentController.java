@@ -23,6 +23,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -32,6 +33,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.glaf.core.freemarker.TemplateUtils;
+import com.glaf.core.util.HashUtils;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.wechat.domain.WxCategory;
 import com.glaf.wechat.domain.WxContent;
@@ -104,7 +106,11 @@ public class WxPublicContentController {
 						+ request.getServerPort();
 				Map<String, Object> context = RequestUtils
 						.getParameterMap(request);
+				String rand = String.valueOf(Math.abs(HashUtils
+						.FNVHash1(customer) % 1024));
+				context.put("rand", rand);
 				context.put("customer", customer);
+				context.put("customerMD5Hex", DigestUtils.md5Hex(customer));
 				context.put("content", wxContent);
 				context.put("template", template);
 				context.put("contextPath", request.getContextPath());
@@ -137,7 +143,11 @@ public class WxPublicContentController {
 						+ request.getServerPort();
 				Map<String, Object> context = RequestUtils
 						.getParameterMap(request);
+				String rand = String.valueOf(Math.abs(HashUtils
+						.FNVHash1(customer) % 1024));
+				context.put("rand", rand);
 				context.put("customer", customer);
+				context.put("customerMD5Hex", DigestUtils.md5Hex(customer));
 				context.put("template", template);
 				context.put("contextPath", request.getContextPath());
 				context.put("serviceUrl", serviceUrl);
@@ -171,7 +181,12 @@ public class WxPublicContentController {
 							+ ":" + request.getServerPort();
 					Map<String, Object> context = RequestUtils
 							.getParameterMap(request);
+					String rand = String.valueOf(Math.abs(HashUtils
+							.FNVHash1(category.getCreateBy()) % 1024));
+					context.put("rand", rand);
 					context.put("customer", category.getCreateBy());
+					context.put("customerMD5Hex",
+							DigestUtils.md5Hex(category.getCreateBy()));
 					context.put("template", template);
 					context.put("contextPath", request.getContextPath());
 					context.put("serviceUrl", serviceUrl);
