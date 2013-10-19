@@ -109,4 +109,7 @@ public interface WxMenuService {
 	@Transactional
 	void save(WxMenu wxMenu);
 
+	@Transactional
+	void saveAll(List<WxMenu> rows);
+
 }

@@ -54,6 +54,9 @@ public class WechatUtils {
 	// 菜单创建（POST） 限100（次/天）
 	public static String menu_create_url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=ACCESS_TOKEN";
 
+	// 菜单获取
+	public static String menu_get_url = "https://api.weixin.qq.com/cgi-bin/menu/get?access_token=ACCESS_TOKEN";
+
 	/**
 	 * 创建菜单
 	 * 
@@ -116,6 +119,20 @@ public class WechatUtils {
 			}
 		}
 		return accessToken;
+	}
+
+	/**
+	 * 获取菜单
+	 * 
+	 * @param accessToken
+	 *            有效的access_token
+	 * @return 菜单实例JSON
+	 */
+	public static JSONObject getMenu(String accessToken) {
+		String url = menu_get_url.replace("ACCESS_TOKEN", accessToken);
+		// 调用接口创建菜单
+		JSONObject jsonObject = httpRequest(url, "GET", null);
+		return jsonObject;
 	}
 
 	/**

@@ -19,7 +19,10 @@ limitations under the License.
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%
     String theme = com.glaf.core.util.RequestUtils.getTheme(request);
+	String actorId = com.glaf.core.util.RequestUtils.getActorId(request);
     request.setAttribute("theme", theme);
+    String serviceUrl = "http://" + request.getServerName() + ":"+ request.getServerPort();
+
 %>
 <!DOCTYPE html>
 <html>
@@ -109,8 +112,8 @@ limitations under the License.
 		<td width="20%" align="left">微信接口URL</td>
 		<td align="left">
             <input id="callBackUrl" name="callBackUrl" type="text" 
-			       class="easyui-validatebox x-text"  size="80"
-				   value="${wxConfig.callBackUrl}"
+			       class="easyui-validatebox x-text"  size="80" readonly
+				   value="<%=serviceUrl+request.getContextPath()+"/weixin/"+actorId%>"
 				   data-options="required:true"/>
 		</td>
 	</tr>

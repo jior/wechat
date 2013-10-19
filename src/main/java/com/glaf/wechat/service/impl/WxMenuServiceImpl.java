@@ -91,7 +91,7 @@ public class WxMenuServiceImpl implements WxMenuService {
 		List<WxMenu> list = wxMenuMapper.getWxMenus(query);
 		return list;
 	}
-	
+
 	/**
 	 * 获取某个用户的某个分组的全部子菜单
 	 * 
@@ -100,7 +100,7 @@ public class WxMenuServiceImpl implements WxMenuService {
 	 * @param parentId
 	 * @return
 	 */
-	public List<WxMenu> getMenuList(String createBy, String group, Long parentId){
+	public List<WxMenu> getMenuList(String createBy, String group, Long parentId) {
 		WxMenuQuery query = new WxMenuQuery();
 		query.createBy(createBy);
 		query.parentId(parentId);
@@ -133,6 +133,27 @@ public class WxMenuServiceImpl implements WxMenuService {
 		query.ensureInitialized();
 		List<WxMenu> list = wxMenuMapper.getWxMenus(query);
 		return list;
+	}
+
+	@Transactional
+	public void saveAll(List<WxMenu> rows) {
+		for (WxMenu wxMenu : rows) {
+			wxMenu.setId(idGenerator.nextId());
+			wxMenu.setCreateDate(new Date());
+			wxMenu.setUuid(UUID32.getUUID());
+			wxMenu.setTreeId(wxMenu.getId() + "|");
+			wxMenuMapper.insertWxMenu(wxMenu);
+			if (wxMenu.getChildren() != null && !wxMenu.getChildren().isEmpty()) {
+				for (WxMenu child : wxMenu.getChildren()) {
+					child.setId(idGenerator.nextId());
+					child.setCreateDate(new Date());
+					child.setUuid(UUID32.getUUID());
+					child.setParentId(wxMenu.getId());
+					child.setTreeId(wxMenu.getTreeId() + child.getId() + "|");
+					wxMenuMapper.insertWxMenu(child);
+				}
+			}
+		}
 	}
 
 	@Transactional

@@ -291,6 +291,27 @@ limitations under the License.
 			 });
 		}
 	}
+
+	function fetchMenuFromWxServer(){
+		if(confirm("确定从微信服务器获取菜单吗？")){
+            jQuery.ajax({
+				   type: "POST",
+				   url: '<%=request.getContextPath()%>/mx/wx/wxMenu/fetchMenuFromWxServer',
+				   dataType:  'json',
+				   error: function(data){
+					   alert('服务器处理错误！');
+				   },
+				   success: function(data){
+					   if(data != null && data.message != null){
+						   alert(data.message);
+					   } else {
+						   alert('操作成功完成，请刷新左边菜单分类树！');
+					   }
+					   jQuery('#mydatagrid').datagrid('reload');
+				   }
+			 });
+		}
+	}
 		 
 </script>
 </head>
@@ -320,6 +341,8 @@ limitations under the License.
 			   onclick="javascript:deleteSelections();">删除</a> 
 			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-reload'"
 			   onclick="javascript:syncWxServer();">同步到微信服务器</a> 
+			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-reload'"
+			   onclick="javascript:fetchMenuFromWxServer();">从微信服务器获取菜单</a> 
 		   </div> 
 		  </div> 
 		  <div data-options="region:'center',border:true">

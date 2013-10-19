@@ -146,6 +146,45 @@ public class WxMenuController {
 		return new ModelAndView("/wx/menu/edit", modelMap);
 	}
 
+	@ResponseBody
+	@RequestMapping("/fetchMenuFromWxServer")
+	public byte[] fetchMenuFromWxServer(HttpServletRequest request) {
+		LoginContext loginContext = RequestUtils.getLoginContext(request);
+		WxConfig wxConfig = wxConfigService.getWxConfigByUser(loginContext
+				.getActorId());
+		if (wxConfig != null) {
+			if (StringUtils.isNotEmpty(wxConfig.getAppId())
+					&& StringUtils.isNotEmpty(wxConfig.getAppSecret())) {
+				AccessToken accessToken = WechatUtils.getAccessToken(
+						wxConfig.getAppId(), wxConfig.getAppSecret());
+				if (accessToken != null && accessToken.getToken() != null) {
+					JSONObject jsonObject = WechatUtils.getMenu(accessToken
+							.getToken());
+					if (jsonObject != null) {
+						if (jsonObject.containsKey("menu")) {
+							JSONObject menuJson = jsonObject
+									.getJSONObject("menu");
+							if (menuJson.containsKey("button")) {
+								List<WxMenu> menus = new ArrayList<WxMenu>();
+								JSONArray buttonArray = menuJson
+										.getJSONArray("button");
+								for (int i = 0; i < buttonArray.size(); i++) {
+									JSONObject buttonJson = buttonArray
+											.getJSONObject(i);
+									WxMenu menu = this.jsonToMenu(buttonJson);
+									menus.add(menu);
+								}
+								wxMenuService.saveAll(menus);
+								return ResponseUtils.responseJsonResult(true);
+							}
+						}
+					}
+				}
+			}
+		}
+		return ResponseUtils.responseJsonResult(false);
+	}
+
 	@RequestMapping("/json")
 	@ResponseBody
 	public byte[] json(HttpServletRequest request, ModelMap modelMap)
@@ -229,6 +268,35 @@ public class WxMenuController {
 			result.put("total", total);
 		}
 		return result.toJSONString().getBytes("UTF-8");
+	}
+
+	protected WxMenu jsonToMenu(JSONObject buttonJson) {
+		WxMenu menu = new WxMenu();
+		menu.setName(buttonJson.getString("name"));
+		menu.setType(buttonJson.getString("type"));
+		if (buttonJson.containsKey("key")) {
+			menu.setKey(buttonJson.getString("key"));
+		}
+		if (buttonJson.containsKey("url")) {
+			menu.setUrl(buttonJson.getString("url"));
+		}
+		if (buttonJson.containsKey("sub_button")) {
+			JSONArray subButtonArray = buttonJson.getJSONArray("sub_button");
+			for (int i = 0; i < subButtonArray.size(); i++) {
+				JSONObject subButtonJson = subButtonArray.getJSONObject(i);
+				WxMenu m = new WxMenu();
+				m.setName(subButtonJson.getString("name"));
+				m.setType(subButtonJson.getString("type"));
+				if (subButtonJson.containsKey("key")) {
+					m.setKey(subButtonJson.getString("key"));
+				}
+				if (subButtonJson.containsKey("url")) {
+					m.setUrl(subButtonJson.getString("url"));
+				}
+				menu.addChild(m);
+			}
+		}
+		return menu;
 	}
 
 	@RequestMapping
@@ -331,13 +399,13 @@ public class WxMenuController {
 	}
 
 	@javax.annotation.Resource
-	public void setWxMenuService(WxMenuService wxMenuService) {
-		this.wxMenuService = wxMenuService;
+	public void setWxConfigService(WxConfigService wxConfigService) {
+		this.wxConfigService = wxConfigService;
 	}
 
 	@javax.annotation.Resource
-	public void setWxConfigService(WxConfigService wxConfigService) {
-		this.wxConfigService = wxConfigService;
+	public void setWxMenuService(WxMenuService wxMenuService) {
+		this.wxMenuService = wxMenuService;
 	}
 
 	@ResponseBody

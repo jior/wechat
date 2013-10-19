@@ -18,7 +18,9 @@
 
 package com.glaf.wechat.domain;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -160,8 +162,22 @@ public class WxMenu implements java.io.Serializable, JSONable {
 	@Column(name = "LASTUPDATEDATE_")
 	protected Date lastUpdateDate;
 
+	@javax.persistence.Transient
+	protected List<WxMenu> children = new ArrayList<WxMenu>();
+
 	public WxMenu() {
 
+	}
+
+	public void addChild(WxMenu menu) {
+		if (menu == null) {
+			children = new ArrayList<WxMenu>();
+		}
+		children.add(menu);
+	}
+
+	public List<WxMenu> getChildren() {
+		return children;
 	}
 
 	public String getCreateBy() {
@@ -242,6 +258,10 @@ public class WxMenu implements java.io.Serializable, JSONable {
 
 	public WxMenu jsonToObject(JSONObject jsonObject) {
 		return WxMenuJsonFactory.jsonToObject(jsonObject);
+	}
+
+	public void setChildren(List<WxMenu> children) {
+		this.children = children;
 	}
 
 	public void setCreateBy(String createBy) {
