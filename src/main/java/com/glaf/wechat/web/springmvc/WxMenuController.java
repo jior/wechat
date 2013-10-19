@@ -172,6 +172,7 @@ public class WxMenuController {
 									JSONObject buttonJson = buttonArray
 											.getJSONObject(i);
 									WxMenu menu = this.jsonToMenu(buttonJson);
+									menu.setSort(100-i);
 									menus.add(menu);
 								}
 								wxMenuService.saveAll(menus);
@@ -293,6 +294,7 @@ public class WxMenuController {
 				if (subButtonJson.containsKey("url")) {
 					m.setUrl(subButtonJson.getString("url"));
 				}
+				m.setSort(100-i);
 				menu.addChild(m);
 			}
 		}
