@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <mapping>
 	<definition name="Entity">
-		<savePath>/java/model</savePath>
+		<savePath>/java/domain</savePath>
 		<saveName>${entityName}.java</saveName>
 		<template>/templates/java/entity/Entity.java.ftl</template>
 	</definition>
