@@ -74,6 +74,23 @@ public class WxContentController {
 		return new ModelAndView("/wx/content/choose_contents", modelMap);
 	}
 
+	@RequestMapping("/chooseOne")
+	public ModelAndView chooseOne(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view, modelMap);
+		}
+
+		String x_view = ViewProperties.getString("wxContent.chooseOne");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
+		return new ModelAndView("/wx/content/choose_single_content", modelMap);
+	}
+
 	@ResponseBody
 	@RequestMapping("/delete")
 	public void delete(HttpServletRequest request, ModelMap modelMap) {

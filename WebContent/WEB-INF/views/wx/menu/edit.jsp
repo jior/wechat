@@ -107,6 +107,16 @@ limitations under the License.
 		openWindow(link,self,x, y, 745, 480);
 	}
 
+	function editLinks(){
+		var link = '<%=request.getContextPath()%>/mx/wx/wxContent/chooseOne?elementId=url&elementName=url&type=category';
+		var x=100;
+		var y=100;
+		if(is_ie) {
+			x=document.body.scrollLeft+event.clientX-event.offsetX-200;
+			y=document.body.scrollTop+event.clientY-event.offsetY-200;
+		}
+		openWindow(link,self,x, y, 745, 480);
+	}
 
 </script>
 </head>
@@ -173,7 +183,8 @@ limitations under the License.
 		<td align="left">
             <input id="url" name="url" type="text"  size="50"
 			       class="easyui-validatebox x-text"  
-				   value="${wxMenu.url}"/>
+				   value="${wxMenu.url}"/> 
+		    &nbsp;<img src="<%=request.getContextPath()%>/images/link.png" onclick="javascript:editLinks();" border="0"/>&nbsp;
 		</td>
 	</tr>
 	<tr>
