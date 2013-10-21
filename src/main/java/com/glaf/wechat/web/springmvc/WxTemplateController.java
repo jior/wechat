@@ -27,7 +27,6 @@ import java.util.zip.ZipInputStream;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -44,9 +43,11 @@ import com.glaf.core.config.ViewProperties;
 import com.glaf.core.identity.*;
 import com.glaf.core.security.*;
 import com.glaf.core.util.*;
+
 import com.glaf.wechat.domain.*;
 import com.glaf.wechat.query.*;
 import com.glaf.wechat.service.*;
+import com.glaf.wechat.util.WechatUtils;
 
 @Controller("/wx/wxTemplate")
 @RequestMapping("/wx/wxTemplate")
@@ -434,8 +435,8 @@ public class WxTemplateController {
 			MultipartFile mFile = entry.getValue();
 			if (mFile.getOriginalFilename().endsWith(".zip")
 					&& mFile.getSize() > 0) {
-				String rand = Math.abs(HashUtils.FNVHash1(actorId) % 1024)
-						+ "/" + DigestUtils.md5Hex(loginContext.getActorId());
+				String rand = WechatUtils.getHashedPath(loginContext
+						.getActorId());
 				String path = "/templates/users/" + rand + "/" + categoryId;
 				try {
 					FileUtils.mkdirs(SystemProperties.getAppPath() + path);

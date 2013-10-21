@@ -30,12 +30,14 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
+import com.glaf.core.util.HashUtils;
 import com.glaf.wechat.component.Menu;
 import com.glaf.wechat.model.AccessToken;
 
@@ -119,6 +121,28 @@ public class WechatUtils {
 			}
 		}
 		return accessToken;
+	}
+
+	/**
+	 * 获取哈希分区后的路径
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	public static String getHashedPath(String userId) {
+		String path = Math.abs(HashUtils.FNVHash1(userId) % 1024) + "/"
+				+ DigestUtils.md5Hex(userId);
+		return path;
+	}
+
+	public static String getCategoryJsonSavePath(String userId) {
+		String path = Constants.PUBLISH_JSON_PATH + getHashedPath(userId);
+		return path;
+	}
+
+	public static String getContentJsonSavePath(String userId) {
+		String path = Constants.PUBLISH_JSON_PATH + getHashedPath(userId);
+		return path;
 	}
 
 	/**

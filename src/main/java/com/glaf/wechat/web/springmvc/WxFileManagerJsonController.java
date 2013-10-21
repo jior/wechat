@@ -28,18 +28,18 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.security.LoginContext;
 import com.glaf.core.util.DateUtils;
-import com.glaf.core.util.HashUtils;
 import com.glaf.core.util.RequestUtils;
+
 import com.glaf.wechat.domain.WxFile;
 import com.glaf.wechat.query.WxFileQuery;
 import com.glaf.wechat.service.WxFileService;
+import com.glaf.wechat.util.WechatUtils;
 
 @Controller("/wx/fileManagerJson")
 @RequestMapping("/wx/fileManagerJson")
@@ -175,10 +175,8 @@ public class WxFileManagerJsonController {
 		}
 		JSONObject result = new JSONObject();
 
-		String rand = Math
-				.abs(HashUtils.FNVHash1(loginContext.getActorId()) % 1024)
-				+ "/" + DigestUtils.md5Hex(loginContext.getActorId());
-		String path = "/upload/users/" + rand + "/";
+		String rand = WechatUtils.getHashedPath(loginContext.getActorId());
+		String path = com.glaf.wechat.util.Constants.UPLOAD_PATH + rand + "/";
 
 		result.put("moveup_dir_path", request.getContextPath() + path);
 		result.put("current_dir_path", request.getContextPath() + path);

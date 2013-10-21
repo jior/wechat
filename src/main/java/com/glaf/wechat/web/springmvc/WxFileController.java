@@ -25,7 +25,7 @@ import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.codec.digest.DigestUtils;
+ 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -41,9 +41,11 @@ import com.glaf.core.config.SystemProperties;
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.security.*;
 import com.glaf.core.util.*;
+
 import com.glaf.wechat.domain.*;
 import com.glaf.wechat.query.*;
 import com.glaf.wechat.service.*;
+import com.glaf.wechat.util.WechatUtils;
 
 @Controller("/wx/wxFile")
 @RequestMapping("/wx/wxFile")
@@ -293,9 +295,8 @@ public class WxFileController {
 		for (Entry<String, MultipartFile> entry : entrySet) {
 			MultipartFile mFile = entry.getValue();
 			if (mFile.getSize() > 0) {
-				String rand = Math.abs(HashUtils.FNVHash1(actorId) % 1024)
-						+ "/" + DigestUtils.md5Hex(loginContext.getActorId());
-				String path = "/upload/users/" + rand;
+				String rand = WechatUtils.getHashedPath(loginContext.getActorId());
+				String path = com.glaf.wechat.util.Constants.UPLOAD_PATH + rand;
 				try {
 					FileUtils.mkdirs(SystemProperties.getAppPath() + path);
 				} catch (IOException ex) {

@@ -20,7 +20,6 @@ package com.glaf.wechat.generation;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -32,11 +31,12 @@ import com.glaf.core.base.TreeModel;
 import com.glaf.core.context.ContextFactory;
 import com.glaf.core.tree.helper.TreeHelper;
 import com.glaf.core.util.FileUtils;
-import com.glaf.core.util.HashUtils;
 import com.glaf.core.util.StringTools;
+
 import com.glaf.wechat.domain.WxCategory;
 import com.glaf.wechat.query.WxCategoryQuery;
 import com.glaf.wechat.service.WxCategoryService;
+import com.glaf.wechat.util.WechatUtils;
 
 public class CategoryJsonGeneration {
 
@@ -90,11 +90,9 @@ public class CategoryJsonGeneration {
 			}
 			TreeHelper treeHelper = new TreeHelper();
 			JSONArray result = treeHelper.getTreeJSONArray(treeModels);
-			String rand = String
-					.valueOf(Math.abs(HashUtils.FNVHash1(createBy) % 1024));
-			String filename = rootDir + rand + "/"
-					+ DigestUtils.md5Hex(createBy) + "/" + type + ".json";
-			String path = rootDir + rand + "/" + DigestUtils.md5Hex(createBy);
+			String rand = WechatUtils.getHashedPath(createBy);
+			String filename = rootDir + rand + "/" + type + ".json";
+			String path = rootDir + rand;
 			boolean success = false;
 			int retry = 0;
 			byte[] bytes = null;

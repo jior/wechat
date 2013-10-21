@@ -34,10 +34,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.glaf.core.freemarker.TemplateUtils;
-import com.glaf.core.util.HashUtils;
 import com.glaf.core.util.Paging;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
+
 import com.glaf.wechat.domain.WxCategory;
 import com.glaf.wechat.domain.WxContent;
 import com.glaf.wechat.domain.WxTemplate;
@@ -53,6 +53,7 @@ import com.glaf.wechat.service.WxMenuService;
 import com.glaf.wechat.service.WxSiteInfoService;
 import com.glaf.wechat.service.WxTemplateService;
 import com.glaf.wechat.service.WxUserTemplateService;
+import com.glaf.wechat.util.WechatUtils;
 
 @Controller("/wx/content")
 @RequestMapping("/wx/content")
@@ -118,9 +119,8 @@ public class WxPublicContentController {
 							+ ":" + request.getServerPort();
 					Map<String, Object> context = RequestUtils
 							.getParameterMap(request);
-					String rand = String.valueOf(Math.abs(HashUtils
-							.FNVHash1(customer) % 1024));
-					context.put("rand", rand);
+					String hashedPath = WechatUtils.getHashedPath(customer);
+					context.put("hashedPath", hashedPath);
 					context.put("customer", customer);
 					context.put("customerMD5Hex", DigestUtils.md5Hex(customer));
 					context.put("content", wxContent);
@@ -170,9 +170,8 @@ public class WxPublicContentController {
 						+ request.getServerPort();
 				Map<String, Object> context = RequestUtils
 						.getParameterMap(request);
-				String rand = String.valueOf(Math.abs(HashUtils
-						.FNVHash1(customer) % 1024));
-				context.put("rand", rand);
+				String hashedPath = WechatUtils.getHashedPath(customer);
+				context.put("hashedPath", hashedPath);
 				context.put("customer", customer);
 				context.put("customerMD5Hex", DigestUtils.md5Hex(customer));
 				context.put("template", template);
@@ -226,9 +225,9 @@ public class WxPublicContentController {
 							+ ":" + request.getServerPort();
 					Map<String, Object> context = RequestUtils
 							.getParameterMap(request);
-					String rand = String.valueOf(Math.abs(HashUtils
-							.FNVHash1(category.getCreateBy()) % 1024));
-					context.put("rand", rand);
+					String customer = category.getCreateBy();
+					String hashedPath = WechatUtils.getHashedPath(customer);
+					context.put("hashedPath", hashedPath);
 					context.put("customer", category.getCreateBy());
 					context.put("customerMD5Hex",
 							DigestUtils.md5Hex(category.getCreateBy()));
