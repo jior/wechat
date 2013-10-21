@@ -298,6 +298,19 @@ limitations under the License.
 	    jQuery('#mydatagrid').datagrid('reload');	
 	    jQuery('#dlg').dialog('close');
 	}
+
+	function viewSite(rowId){
+	    var link = '<%=request.getContextPath()%>/website/wx/content/index/<%=com.glaf.core.util.RequestUtils.getActorId(request)%>';
+	    //art.dialog.open(link, { height: 720, width: 400, title: "预览效果", lock: true, scrollbars:"no" }, false);
+		var x=200;
+		var y=150;
+		var fx = "height=520,width=400,status=0,toolbar=no,menubar=no,location=no,scrollbars=yes,top="+y+",left="+x+",resizable=no,modal=yes,dependent=yes,dialog=yes,minimizable=no";
+		if(jQuery.browser.msie){
+			window.open(link,  "预览效果", fx);
+		}else{
+            window.open(link, self, fx, true);
+		}
+	}
 		 
 </script>
 </head>
@@ -325,6 +338,8 @@ limitations under the License.
 			   onclick="javascript:editSelected();">修改</a>  
 			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-remove'"
 			   onclick="javascript:deleteSelections();">删除</a>  
+			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-view'"
+			   onclick="javascript:viewSite();">预览手机网站</a>  
 		   </div> 
 		  </div> 
 		  <div data-options="region:'center',border:true">
@@ -333,21 +348,5 @@ limitations under the License.
       </div>
 	</div>
 </div>
-<div id="edit_dlg" class="easyui-dialog" style="width:400px;height:280px;padding:10px 20px"
-	closed="true" buttons="#dlg-buttons">
-    <form id="editForm" name="editForm" method="post">
-         
-    </form>
-</div>
-<div id="dlg" class="easyui-dialog" style="width:400px;height:280px;padding:10px 20px"
-	closed="true" buttons="#dlg-buttons">
-    <form id="searchForm" name="searchForm" method="post">
-	<table class="easyui-form" >
-            <tbody>
-	    </tbody>
-        </table>
-    </form>
-</div>
- 
 </body>
 </html>

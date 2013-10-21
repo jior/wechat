@@ -271,7 +271,7 @@ public class WxTemplateController {
 		wxTemplate.setTemplateType(request.getParameter("templateType"));
 		wxTemplate.setSkinImage(request.getParameter("skinImage"));
 		wxTemplate.setType(request.getParameter("type"));
-		wxTemplate.setUrl(request.getParameter("url"));
+		wxTemplate.setPath(request.getParameter("path"));
 		wxTemplate.setDefaultFlag(RequestUtils.getInt(request, "defaultFlag"));
 		wxTemplate.setCreateBy(actorId);
 
@@ -314,7 +314,7 @@ public class WxTemplateController {
 			wxTemplate.setTemplateType(request.getParameter("templateType"));
 			wxTemplate.setSkinImage(request.getParameter("skinImage"));
 			wxTemplate.setType(request.getParameter("type"));
-			wxTemplate.setUrl(request.getParameter("url"));
+			wxTemplate.setPath(request.getParameter("path"));
 			wxTemplate.setDefaultFlag(RequestUtils.getInt(request,
 					"defaultFlag"));
 			wxTemplate.setCreateBy(actorId);
@@ -408,7 +408,7 @@ public class WxTemplateController {
 			wxTemplate.setTemplateType(request.getParameter("templateType"));
 			wxTemplate.setSkinImage(request.getParameter("skinImage"));
 			wxTemplate.setType(request.getParameter("type"));
-			wxTemplate.setUrl(request.getParameter("url"));
+			wxTemplate.setPath(request.getParameter("path"));
 			wxTemplate.setDefaultFlag(RequestUtils.getInt(request,
 					"defaultFlag"));
 			wxTemplate.setLastUpdateBy(loginContext.getActorId());
@@ -475,7 +475,7 @@ public class WxTemplateController {
 							WxTemplate wxTemplate = new WxTemplate();
 							wxTemplate.setCategoryId(categoryId);
 							wxTemplate.setCreateBy(actorId);
-							wxTemplate.setUrl(path + "/" + categoryId + "/"
+							wxTemplate.setPath(path + "/" + categoryId + "/"
 									+ name);
 
 							if (StringUtils

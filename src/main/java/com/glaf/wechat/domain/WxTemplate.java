@@ -92,10 +92,10 @@ public class WxTemplate implements java.io.Serializable, JSONable {
 	protected String type;
 
 	/**
-	 * 模板链接
+	 * 存放路径，相对于应用根目录的路径
 	 */
-	@Column(name = "URL_", length = 500)
-	protected String url;
+	@Column(name = "PATH_", length = 500)
+	protected String path;
 
 	/**
 	 * 是否默认模板
@@ -201,9 +201,7 @@ public class WxTemplate implements java.io.Serializable, JSONable {
 		return type;
 	}
 
-	public String getUrl() {
-		return url;
-	}
+ 
 
 	public String getUuid() {
 		return uuid;
@@ -269,8 +267,14 @@ public class WxTemplate implements java.io.Serializable, JSONable {
 		this.type = type;
 	}
 
-	public void setUrl(String url) {
-		this.url = url;
+	 
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
 	}
 
 	public void setUuid(String uuid) {

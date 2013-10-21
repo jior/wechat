@@ -23,7 +23,7 @@ public class WxTemplateTest extends AbstractTest {
 			WxTemplate wxTemplate = new WxTemplate();
 			wxTemplate.setSkinImage("SkinImage");
 			wxTemplate.setType("Type");
-			wxTemplate.setUrl("Url");
+			wxTemplate.setPath("path");
 			wxTemplate.setDefaultFlag(1);
 			wxTemplate.setUuid("Uuid");
 			wxTemplate.setCreateBy("CreateBy");

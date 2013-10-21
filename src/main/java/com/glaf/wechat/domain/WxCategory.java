@@ -174,6 +174,9 @@ public class WxCategory implements java.io.Serializable, JSONable {
 	@javax.persistence.Transient
 	protected List<WxCategory> children = new ArrayList<WxCategory>();
 
+	@javax.persistence.Transient
+	protected List<WxContent> pptList = new ArrayList<WxContent>();
+
 	public WxCategory() {
 
 	}
@@ -185,12 +188,23 @@ public class WxCategory implements java.io.Serializable, JSONable {
 		children.add(child);
 	}
 
+	public void addPPT(WxContent ppt) {
+		if (pptList == null) {
+			pptList = new ArrayList<WxContent>();
+		}
+		pptList.add(ppt);
+	}
+
 	public List<WxCategory> getChildren() {
 		return children;
 	}
 
 	public String getCode() {
 		return code;
+	}
+
+	public String getCoverIcon() {
+		return coverIcon;
 	}
 
 	public String getCreateBy() {
@@ -221,8 +235,6 @@ public class WxCategory implements java.io.Serializable, JSONable {
 		return id;
 	}
 
-	 
-
 	public int getIndexShow() {
 		return indexShow;
 	}
@@ -245,6 +257,10 @@ public class WxCategory implements java.io.Serializable, JSONable {
 
 	public long getParentId() {
 		return parentId;
+	}
+
+	public List<WxContent> getPptList() {
+		return pptList;
 	}
 
 	public int getSort() {
@@ -279,6 +295,10 @@ public class WxCategory implements java.io.Serializable, JSONable {
 		this.code = code;
 	}
 
+	public void setCoverIcon(String coverIcon) {
+		this.coverIcon = coverIcon;
+	}
+
 	public void setCreateBy(String createBy) {
 		this.createBy = createBy;
 	}
@@ -307,16 +327,6 @@ public class WxCategory implements java.io.Serializable, JSONable {
 		this.id = id;
 	}
 
-	 
-
-	public String getCoverIcon() {
-		return coverIcon;
-	}
-
-	public void setCoverIcon(String coverIcon) {
-		this.coverIcon = coverIcon;
-	}
-
 	public void setIndexShow(int indexShow) {
 		this.indexShow = indexShow;
 	}
@@ -339,6 +349,10 @@ public class WxCategory implements java.io.Serializable, JSONable {
 
 	public void setParentId(long parentId) {
 		this.parentId = parentId;
+	}
+
+	public void setPptList(List<WxContent> pptList) {
+		this.pptList = pptList;
 	}
 
 	public void setSort(int sort) {

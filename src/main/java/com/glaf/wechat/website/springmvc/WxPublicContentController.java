@@ -18,6 +18,7 @@
 package com.glaf.wechat.website.springmvc;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,11 +35,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.glaf.core.freemarker.TemplateUtils;
 import com.glaf.core.util.HashUtils;
+import com.glaf.core.util.Paging;
+import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.wechat.domain.WxCategory;
 import com.glaf.wechat.domain.WxContent;
 import com.glaf.wechat.domain.WxTemplate;
 import com.glaf.wechat.domain.WxUserTemplate;
+import com.glaf.wechat.query.WxCategoryQuery;
+import com.glaf.wechat.query.WxContentQuery;
 import com.glaf.wechat.service.WxCategoryService;
 import com.glaf.wechat.service.WxConfigService;
 import com.glaf.wechat.service.WxContentService;
@@ -79,15 +84,19 @@ public class WxPublicContentController {
 	}
 
 	@ResponseBody
-	@RequestMapping("/detail/{customer}/{uuid}")
-	public void detail(@PathVariable("customer") String customer,
-			@PathVariable("uuid") String uuid, HttpServletRequest request,
-			HttpServletResponse response) throws IOException {
+	@RequestMapping("/detail/{uuid}")
+	public void detail(@PathVariable("uuid") String uuid,
+			HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html;charset=UTF-8");
 		WxContent wxContent = null;
 		if (StringUtils.isNotEmpty(uuid)) {
 			wxContent = wxContentService.getWxContentByUUIDWithRefs(uuid);
 		}
 		if (wxContent != null) {
+			String customer = wxContent.getCreateBy();
 			Long categoryId = wxContent.getCategoryId();
 			WxUserTemplate wxUserTemplate = wxUserTemplateService
 					.getWxUserTemplate(customer, "2", categoryId);
@@ -99,26 +108,41 @@ public class WxPublicContentController {
 				wxUserTemplate = wxUserTemplateService.getWxUserTemplate(
 						"system", "2", 0L);
 			}
-			Long templateId = wxUserTemplate.getTemplateId();
-			WxTemplate template = wxTemplateService.getWxTemplate(templateId);
-			if (template != null && template.getContent() != null) {
-				String serviceUrl = "http://" + request.getServerName() + ":"
-						+ request.getServerPort();
-				Map<String, Object> context = RequestUtils
-						.getParameterMap(request);
-				String rand = String.valueOf(Math.abs(HashUtils
-						.FNVHash1(customer) % 1024));
-				context.put("rand", rand);
-				context.put("customer", customer);
-				context.put("customerMD5Hex", DigestUtils.md5Hex(customer));
-				context.put("content", wxContent);
-				context.put("template", template);
-				context.put("contextPath", request.getContextPath());
-				context.put("serviceUrl", serviceUrl);
-				context.put("serverUrl", serviceUrl);
-				String content = TemplateUtils.process(context,
-						template.getContent());
-				response.getWriter().write(content);
+			WxCategory category = wxCategoryService.getWxCategory(categoryId);
+			if (category != null) {
+				Long templateId = wxUserTemplate.getTemplateId();
+				WxTemplate template = wxTemplateService
+						.getWxTemplate(templateId);
+				if (template != null && template.getContent() != null) {
+					String serviceUrl = "http://" + request.getServerName()
+							+ ":" + request.getServerPort();
+					Map<String, Object> context = RequestUtils
+							.getParameterMap(request);
+					String rand = String.valueOf(Math.abs(HashUtils
+							.FNVHash1(customer) % 1024));
+					context.put("rand", rand);
+					context.put("customer", customer);
+					context.put("customerMD5Hex", DigestUtils.md5Hex(customer));
+					context.put("content", wxContent);
+					context.put("template", template);
+					context.put("contextPath", request.getContextPath());
+					context.put("serviceUrl", serviceUrl);
+					context.put("serverUrl", serviceUrl);
+
+					WxCategoryQuery query3 = new WxCategoryQuery();
+					query3.createBy(customer);
+					query3.parentId(0L);
+					query3.type("category");
+					List<WxCategory> list3 = wxCategoryService.list(query3);
+					context.put("categories", list3);
+
+					context.put("category", category);
+
+					String content = TemplateUtils.process(context,
+							template.getContent());
+
+					response.getWriter().write(content);
+				}
 			}
 		}
 	}
@@ -128,6 +152,9 @@ public class WxPublicContentController {
 	public void index(@PathVariable("customer") String customer,
 			HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html;charset=UTF-8");
 		Long categoryId = RequestUtils.getLong(request, "categoryId", 0);
 		WxUserTemplate wxUserTemplate = wxUserTemplateService
 				.getWxUserTemplate(customer, "0", categoryId);
@@ -152,6 +179,21 @@ public class WxPublicContentController {
 				context.put("contextPath", request.getContextPath());
 				context.put("serviceUrl", serviceUrl);
 				context.put("serverUrl", serviceUrl);
+
+				WxContentQuery query = new WxContentQuery();
+				query.createBy(customer);
+				query.categoryId(0L);
+				query.type("PPT");
+				List<WxContent> list = wxContentService.list(query);
+				context.put("pptList", list);
+
+				WxCategoryQuery query3 = new WxCategoryQuery();
+				query3.createBy(customer);
+				query3.parentId(0L);
+				query3.type("category");
+				List<WxCategory> list3 = wxCategoryService.list(query3);
+				context.put("categories", list3);
+
 				String content = TemplateUtils.process(context,
 						template.getContent());
 				response.getWriter().write(content);
@@ -164,6 +206,9 @@ public class WxPublicContentController {
 	public void list(@PathVariable("categoryId") Long categoryId,
 			HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html;charset=UTF-8");
 		WxCategory category = wxCategoryService.getWxCategory(categoryId);
 		if (category != null) {
 			WxUserTemplate wxUserTemplate = wxUserTemplateService
@@ -191,6 +236,55 @@ public class WxPublicContentController {
 					context.put("contextPath", request.getContextPath());
 					context.put("serviceUrl", serviceUrl);
 					context.put("serverUrl", serviceUrl);
+					context.put("pageSize", 1);
+					context.put("pageNo", 1);
+
+					Map<String, Object> params = RequestUtils
+							.getParameterMap(request);
+					int start = 0;
+					int limit = 10;
+					int pageNo = ParamUtils.getInt(params, "pageNo");
+					start = (pageNo - 1) * limit;
+					if (start < 0) {
+						start = 0;
+					}
+					if (limit <= 0) {
+						limit = Paging.DEFAULT_PAGE_SIZE;
+					}
+					if (pageNo < 1) {
+						pageNo = 1;
+					}
+					context.put("pageNo", pageNo);
+
+					WxContentQuery query = new WxContentQuery();
+					query.categoryId(categoryId);
+					query.status(1);
+
+					int total = wxContentService
+							.getWxContentCountByQueryCriteria(query);
+					if (total > 0) {
+						List<WxContent> list = wxContentService
+								.getWxContentsByQueryCriteria(start, limit,
+										query);
+						context.put("contents", list);
+						context.put("pageSize", (total / limit + 1));
+					}
+
+					WxContentQuery query2 = new WxContentQuery();
+					query2.createBy(category.getCreateBy());
+					query2.categoryId(categoryId);
+					query2.type("PPT");
+					List<WxContent> list = wxContentService.list(query2);
+					context.put("pptList", list);
+					context.put("category", category);
+
+					WxCategoryQuery query3 = new WxCategoryQuery();
+					query3.createBy(category.getCreateBy());
+					query3.parentId(0L);
+					query3.type("category");
+					List<WxCategory> list3 = wxCategoryService.list(query3);
+					context.put("categories", list3);
+
 					String content = TemplateUtils.process(context,
 							template.getContent());
 					response.getWriter().write(content);

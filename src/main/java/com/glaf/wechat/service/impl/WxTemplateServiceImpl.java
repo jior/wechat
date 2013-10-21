@@ -18,11 +18,13 @@
 
 package com.glaf.wechat.service.impl;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
@@ -30,8 +32,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.glaf.core.config.SystemProperties;
 import com.glaf.core.dao.EntityDAO;
 import com.glaf.core.id.IdGenerator;
+import com.glaf.core.util.FileUtils;
 import com.glaf.core.util.UUID32;
 import com.glaf.wechat.domain.WxTemplate;
 import com.glaf.wechat.mapper.WxTemplateMapper;
@@ -76,22 +80,6 @@ public class WxTemplateServiceImpl implements WxTemplateService {
 		}
 	}
 
-	public WxTemplate getWxTemplate(Long id) {
-		if (id == null) {
-			return null;
-		}
-		WxTemplate wxTemplate = wxTemplateMapper.getWxTemplateById(id);
-		return wxTemplate;
-	}
-
-	public WxTemplate getWxTemplateByUUID(String uuid) {
-		return wxTemplateMapper.getWxTemplateByUUID(uuid);
-	}
-
-	public int getWxTemplateCountByQueryCriteria(WxTemplateQuery query) {
-		return wxTemplateMapper.getWxTemplateCount(query);
-	}
-
 	/**
 	 * 获取某个栏目指定类型的模板
 	 * 
@@ -107,6 +95,33 @@ public class WxTemplateServiceImpl implements WxTemplateService {
 		query.createBy(createBy);
 		query.type(type);
 		return this.list(query);
+	}
+
+	public WxTemplate getWxTemplate(Long id) {
+		if (id == null) {
+			return null;
+		}
+		WxTemplate wxTemplate = wxTemplateMapper.getWxTemplateById(id);
+		if (wxTemplate != null && StringUtils.isNotEmpty(wxTemplate.getPath())) {
+			String filename = SystemProperties.getAppPath()
+					+ wxTemplate.getPath();
+			String content = null;
+			try {
+				content = new String(FileUtils.getBytes(filename), "UTF-8");
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+			wxTemplate.setContent(content);
+		}
+		return wxTemplate;
+	}
+
+	public WxTemplate getWxTemplateByUUID(String uuid) {
+		return wxTemplateMapper.getWxTemplateByUUID(uuid);
+	}
+
+	public int getWxTemplateCountByQueryCriteria(WxTemplateQuery query) {
+		return wxTemplateMapper.getWxTemplateCount(query);
 	}
 
 	public List<WxTemplate> getWxTemplatesByQueryCriteria(int start,

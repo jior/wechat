@@ -14,7 +14,7 @@
 		<result property="desc" column="DESC_" jdbcType="VARCHAR" />
 		<result property="content" column="CONTENT_" jdbcType="VARCHAR" />
 		<result property="type" column="TYPE_" jdbcType="VARCHAR" />
-		<result property="url" column="URL_" jdbcType="VARCHAR" />
+		<result property="path" column="PATH_" jdbcType="VARCHAR" />
 		<result property="defaultFlag" column="DEFAULTFLAG_" jdbcType="INTEGER" />
 		<result property="locked" column="LOCKED_" jdbcType="INTEGER" />
 		<result property="uuid" column="UUID_" jdbcType="VARCHAR" />
@@ -52,8 +52,8 @@
 			<if test="type != null">
 				,TYPE_
 			</if>
-			<if test="url != null">
-				,URL_
+			<if test="path != null">
+				,PATH_
 			</if>
 			<if test="defaultFlag != null">
 				,DEFAULTFLAG_
@@ -96,8 +96,8 @@
 			<if test="type != null">
 				,#{type, jdbcType=VARCHAR}
 			</if>
-			<if test="url != null">
-				,#{url, jdbcType=VARCHAR}
+			<if test="path != null">
+				,#{path, jdbcType=VARCHAR}
 			</if>
 			<if test="defaultFlag != null">
 				,#{defaultFlag, jdbcType=INTEGER}
@@ -143,8 +143,8 @@
 			<if test="type != null">
 				TYPE_ = #{type, jdbcType=VARCHAR},
 			</if>
-			<if test="url != null">
-				URL_ = #{url, jdbcType=VARCHAR},
+			<if test="path != null">
+				PATH_ = #{path, jdbcType=VARCHAR},
 			</if>
 			<if test="defaultFlag != null">
 				DEFAULTFLAG_ = #{defaultFlag, jdbcType=INTEGER},
@@ -239,18 +239,6 @@
 
 			<if test="type != null and type != '' ">
 				and E.TYPE_ = #{type}
-			</if>
-
-			<if test="types != null and types.size() &gt; 0">
-				and E.TYPE_ IN
-				<foreach item="x_type" index="index" collection="types"
-					open="(" separator="," close=")">
-					#{x_type}
-				</foreach>
-			</if>
-
-			<if test="urlLike != null and urlLike != '' ">
-				and E.URL_ like #{urlLike}
 			</if>
 
 			<if test="defaultFlag != null">

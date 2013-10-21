@@ -28,8 +28,6 @@ public class WxTemplateQuery extends DataQuery {
 	protected Long categoryId;
 	protected List<Long> categoryIds;
 	protected String type;
-	protected List<String> types;
-	protected String urlLike;
 	protected Integer defaultFlag;
 	protected String uuid;
 	protected List<String> uuids;
@@ -121,10 +119,6 @@ public class WxTemplateQuery extends DataQuery {
 				orderBy = "E.TYPE_" + a_x;
 			}
 
-			if ("url".equals(sortColumn)) {
-				orderBy = "E.URL_" + a_x;
-			}
-
 			if ("defaultFlag".equals(sortColumn)) {
 				orderBy = "E.DEFAULTFLAG_" + a_x;
 			}
@@ -149,22 +143,6 @@ public class WxTemplateQuery extends DataQuery {
 		return type;
 	}
 
-	public List<String> getTypes() {
-		return types;
-	}
-
-	public String getUrlLike() {
-		if (urlLike != null && urlLike.trim().length() > 0) {
-			if (!urlLike.startsWith("%")) {
-				urlLike = "%" + urlLike;
-			}
-			if (!urlLike.endsWith("%")) {
-				urlLike = urlLike + "%";
-			}
-		}
-		return urlLike;
-	}
-
 	public String getUuid() {
 		return uuid;
 	}
@@ -180,7 +158,7 @@ public class WxTemplateQuery extends DataQuery {
 		addColumn("categoryId", "CATEGORYID_");
 		addColumn("skinImage", "SKINIMAGE_");
 		addColumn("type", "TYPE_");
-		addColumn("url", "URL_");
+		addColumn("path", "PATH_");
 		addColumn("defaultFlag", "DEFAULTFLAG_");
 		addColumn("uuid", "UUID_");
 		addColumn("createBy", "CREATEBY_");
@@ -212,14 +190,6 @@ public class WxTemplateQuery extends DataQuery {
 		this.type = type;
 	}
 
-	public void setTypes(List<String> types) {
-		this.types = types;
-	}
-
-	public void setUrlLike(String urlLike) {
-		this.urlLike = urlLike;
-	}
-
 	public void setUuid(String uuid) {
 		this.uuid = uuid;
 	}
@@ -233,22 +203,6 @@ public class WxTemplateQuery extends DataQuery {
 			throw new RuntimeException("type is null");
 		}
 		this.type = type;
-		return this;
-	}
-
-	public WxTemplateQuery types(List<String> types) {
-		if (types == null) {
-			throw new RuntimeException("types is empty ");
-		}
-		this.types = types;
-		return this;
-	}
-
-	public WxTemplateQuery urlLike(String urlLike) {
-		if (urlLike == null) {
-			throw new RuntimeException("url is null");
-		}
-		this.urlLike = urlLike;
 		return this;
 	}
 

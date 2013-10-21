@@ -60,8 +60,8 @@ public class WxTemplateJsonFactory {
 		if (jsonObject.containsKey("type")) {
 			model.setType(jsonObject.getString("type"));
 		}
-		if (jsonObject.containsKey("url")) {
-			model.setUrl(jsonObject.getString("url"));
+		if (jsonObject.containsKey("path")) {
+			model.setPath(jsonObject.getString("path"));
 		}
 		if (jsonObject.containsKey("defaultFlag")) {
 			model.setDefaultFlag(jsonObject.getInteger("defaultFlag"));
@@ -117,8 +117,8 @@ public class WxTemplateJsonFactory {
 		if (model.getTemplateType() != null) {
 			jsonObject.put("templateType", model.getTemplateType());
 		}
-		if (model.getUrl() != null) {
-			jsonObject.put("url", model.getUrl());
+		if (model.getPath() != null) {
+			jsonObject.put("path", model.getPath());
 		}
 		jsonObject.put("defaultFlag", model.getDefaultFlag());
 		jsonObject.put("locked", model.getLocked());
@@ -174,8 +174,8 @@ public class WxTemplateJsonFactory {
 		if (model.getTemplateType() != null) {
 			jsonObject.put("templateType", model.getTemplateType());
 		}
-		if (model.getUrl() != null) {
-			jsonObject.put("url", model.getUrl());
+		if (model.getPath() != null) {
+			jsonObject.put("path", model.getPath());
 		}
 		jsonObject.put("defaultFlag", model.getDefaultFlag());
 		jsonObject.put("locked", model.getLocked());
