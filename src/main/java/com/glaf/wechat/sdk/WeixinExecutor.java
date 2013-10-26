@@ -17,6 +17,7 @@
  */
 package com.glaf.wechat.sdk;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Map;
 
@@ -40,6 +41,7 @@ import com.glaf.wechat.sdk.message.EventMessage;
 import com.glaf.wechat.sdk.message.ImageMessage;
 import com.glaf.wechat.sdk.message.LinkMessage;
 import com.glaf.wechat.sdk.message.LocationMessage;
+import com.glaf.wechat.sdk.message.ResponseNewsMessage;
 import com.glaf.wechat.sdk.message.TextMessage;
 import com.glaf.wechat.sdk.message.handler.EventMessageHandler;
 import com.glaf.wechat.sdk.message.handler.IMessageHandler;
@@ -104,7 +106,9 @@ public class WeixinExecutor implements IMessage {
 		try {
 			doc = xmlReader.read(request.getInputStream());
 		} catch (DocumentException ex) {
-			throw new RuntimeException(ex);
+			ex.printStackTrace();
+			doc = xmlReader.read(new ByteArrayInputStream(request.getParameter(
+					"xml").getBytes("UTF-8")));
 		}
 
 		String uri = request.getRequestURI();
@@ -169,9 +173,16 @@ public class WeixinExecutor implements IMessage {
 					this.parseInputStream();// parse message
 				} catch (Exception ex) {
 					ex.printStackTrace();
+					logger.error(ex);
 				}
 
+				logger.debug("message class:" + message.getClass().getName());
+				logger.debug("messageHandler class:"
+						+ messageHandler.getClass().getName());
+
 				responseMessage = messageHandler.handleMessage(message);
+				logger.debug("responseMessage type:"
+						+ responseMessage.getMsgType());
 
 				if (StringUtils.equalsIgnoreCase(responseMessage.getMsgType(),
 						MESSAGE_RESPONSE_TEXT)) {
@@ -182,11 +193,19 @@ public class WeixinExecutor implements IMessage {
 				} else if (StringUtils.equalsIgnoreCase(
 						responseMessage.getMsgType(), MESSAGE_RESPONSE_MUSIC)) {
 					responseMessageHandler = new MusicResponseMessageHandler();
+				} else {
+					if (responseMessage instanceof ResponseNewsMessage) {
+						responseMessageHandler = new NewsResponseMessageHandler();
+					} else {
+						responseMessageHandler = new TextResponseMessageHandler();
+					}
 				}
 
+				logger.debug("responseMessageHandler class:"
+						+ responseMessageHandler);
 				String responseContent = responseMessageHandler
 						.response(responseMessage);
-				logger.debug("response content:"+responseContent);
+				logger.debug("response content:" + responseContent);
 				response.getWriter().print(responseContent);
 			}
 		} else {

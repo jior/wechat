@@ -47,6 +47,7 @@ public class TextMessageHandler extends AbstractMessageHandler {
 	@Override
 	protected void parseSpecialMessage(Message message, Element root) {
 		TextMessage msg = (TextMessage) message;
+		msg.setMsgType(message.getMsgType());
 		msg.setContent(root.elementText(TAG_CONTENT));
 	}
 
