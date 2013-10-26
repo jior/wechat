@@ -38,6 +38,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.glaf.core.identity.User;
+import com.glaf.core.security.IdentityFactory;
 import com.glaf.core.util.PageResult;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
@@ -64,8 +66,10 @@ public class WxMenuResourceRest {
 		WxMenuQuery query = new WxMenuQuery();
 		Tools.populate(query, params);
 		String uri = request.getRequestURI();
-		String customer = uri.substring(uri.lastIndexOf("/") + 1);
-		query.createBy(customer);
+		String id = uri.substring(uri.lastIndexOf("/") + 1);
+		Long userId = Long.parseLong(id);
+		User user = IdentityFactory.getUserByUserId(userId);
+		query.createBy(user.getActorId());
 
 		String gridType = ParamUtils.getString(params, "gridType");
 		if (gridType == null) {

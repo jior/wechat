@@ -20,8 +20,9 @@ limitations under the License.
 <%
     String theme = com.glaf.core.util.RequestUtils.getTheme(request);
 	String actorId = com.glaf.core.util.RequestUtils.getActorId(request);
+	com.glaf.core.identity.User user = com.glaf.core.security.IdentityFactory.getUser(actorId);
     request.setAttribute("theme", theme);
-    String serviceUrl = "http://" + request.getServerName() + ":"+ request.getServerPort();
+    String serviceUrl =  com.glaf.wechat.util.WechatUtils.getServiceUrl(request);
 
 %>
 <!DOCTYPE html>
@@ -113,7 +114,7 @@ limitations under the License.
 		<td align="left">
             <input id="callBackUrl" name="callBackUrl" type="text" 
 			       class="easyui-validatebox x-text"  size="80" readonly
-				   value="<%=serviceUrl+request.getContextPath()+"/weixin/"+actorId%>"
+				   value="<%=serviceUrl+"/weixin/"+user.getId()%>"
 				   data-options="required:true"/>
 		</td>
 	</tr>

@@ -84,7 +84,7 @@ limitations under the License.
 	       }
 	 %>
           <td width="20%">
-		      <img src="<%=request.getContextPath()%>/<%=template.getSkinImage()%>" border="0">
+		      <img src="<%=request.getContextPath()%><%=template.getSkinImage()%>" border="0">
 			  <br><br>
 			  <input type="radio" name="tmp_<%=template.getId()%>" <%=checked%>
 			         onclick="javascript:document.getElementById('templateId').value='<%=template.getId()%>'">

@@ -29,6 +29,7 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
@@ -157,6 +158,17 @@ public class WechatUtils {
 		// 调用接口创建菜单
 		JSONObject jsonObject = httpRequest(url, "GET", null);
 		return jsonObject;
+	}
+
+	public static String getServiceUrl(HttpServletRequest request) {
+		String serviceUrl = "http://" + request.getServerName();
+		if (request.getServerPort() != 80) {
+			serviceUrl += ":" + request.getServerPort();
+		}
+		if (!"/".equals(request.getContextPath())) {
+			serviceUrl += request.getContextPath();
+		}
+		return serviceUrl;
 	}
 
 	/**

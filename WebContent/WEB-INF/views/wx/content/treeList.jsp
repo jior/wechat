@@ -20,6 +20,8 @@ limitations under the License.
 <%
     String theme = com.glaf.core.util.RequestUtils.getTheme(request);
     request.setAttribute("theme", theme);
+	String actorId = com.glaf.core.util.RequestUtils.getActorId(request);
+	com.glaf.core.identity.User user = com.glaf.core.security.IdentityFactory.getUser(actorId);
 %>
 <!DOCTYPE html>
 <html>
@@ -300,7 +302,7 @@ limitations under the License.
 	}
 
 	function viewSite(rowId){
-	    var link = '<%=request.getContextPath()%>/website/wx/content/index/<%=com.glaf.core.util.RequestUtils.getActorId(request)%>';
+	    var link = '<%=request.getContextPath()%>/website/wx/content/index/<%=user.getId()%>';
 	    //art.dialog.open(link, { height: 720, width: 400, title: "预览效果", lock: true, scrollbars:"no" }, false);
 		var x=200;
 		var y=150;

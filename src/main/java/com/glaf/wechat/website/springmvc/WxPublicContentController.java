@@ -34,10 +34,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.glaf.core.freemarker.TemplateUtils;
+import com.glaf.core.identity.User;
+import com.glaf.core.security.IdentityFactory;
 import com.glaf.core.util.Paging;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
-
 import com.glaf.wechat.domain.WxCategory;
 import com.glaf.wechat.domain.WxContent;
 import com.glaf.wechat.domain.WxTemplate;
@@ -97,13 +98,13 @@ public class WxPublicContentController {
 			wxContent = wxContentService.getWxContentByUUIDWithRefs(uuid);
 		}
 		if (wxContent != null) {
-			String customer = wxContent.getCreateBy();
+			String actorId = wxContent.getCreateBy();
 			Long categoryId = wxContent.getCategoryId();
 			WxUserTemplate wxUserTemplate = wxUserTemplateService
-					.getWxUserTemplate(customer, "2", categoryId);
+					.getWxUserTemplate(actorId, "2", categoryId);
 			if (wxUserTemplate == null) {
 				wxUserTemplate = wxUserTemplateService.getWxUserTemplate(
-						customer, "2", 0L);
+						actorId, "2", 0L);
 			}
 			if (wxUserTemplate == null) {
 				wxUserTemplate = wxUserTemplateService.getWxUserTemplate(
@@ -115,14 +116,15 @@ public class WxPublicContentController {
 				WxTemplate template = wxTemplateService
 						.getWxTemplate(templateId);
 				if (template != null && template.getContent() != null) {
-					String serviceUrl = "http://" + request.getServerName()
-							+ ":" + request.getServerPort();
+					String serviceUrl =  WechatUtils.getServiceUrl(request);
 					Map<String, Object> context = RequestUtils
 							.getParameterMap(request);
-					String hashedPath = WechatUtils.getHashedPath(customer);
+					User user = IdentityFactory.getUser(actorId);
+					String hashedPath = WechatUtils.getHashedPath(actorId);
 					context.put("hashedPath", hashedPath);
-					context.put("customer", customer);
-					context.put("customerMD5Hex", DigestUtils.md5Hex(customer));
+					context.put("userId", user.getId());
+					context.put("actorId", actorId);
+					context.put("actorIdMD5Hex", DigestUtils.md5Hex(actorId));
 					context.put("content", wxContent);
 					context.put("template", template);
 					context.put("contextPath", request.getContextPath());
@@ -130,7 +132,7 @@ public class WxPublicContentController {
 					context.put("serverUrl", serviceUrl);
 
 					WxCategoryQuery query3 = new WxCategoryQuery();
-					query3.createBy(customer);
+					query3.createBy(actorId);
 					query3.parentId(0L);
 					query3.type("category");
 					List<WxCategory> list3 = wxCategoryService.list(query3);
@@ -148,16 +150,18 @@ public class WxPublicContentController {
 	}
 
 	@ResponseBody
-	@RequestMapping("/index/{customer}")
-	public void index(@PathVariable("customer") String customer,
+	@RequestMapping("/index/{userId}")
+	public void index(@PathVariable("userId") Long userId,
 			HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
 		Long categoryId = RequestUtils.getLong(request, "categoryId", 0);
+		User user = IdentityFactory.getUserByUserId(userId);
+		String actorId = user.getActorId();
 		WxUserTemplate wxUserTemplate = wxUserTemplateService
-				.getWxUserTemplate(customer, "0", categoryId);
+				.getWxUserTemplate(actorId, "0", categoryId);
 		if (wxUserTemplate == null) {
 			wxUserTemplate = wxUserTemplateService.getWxUserTemplate("system",
 					"0", 0L);
@@ -166,28 +170,28 @@ public class WxPublicContentController {
 			Long templateId = wxUserTemplate.getTemplateId();
 			WxTemplate template = wxTemplateService.getWxTemplate(templateId);
 			if (template != null && template.getContent() != null) {
-				String serviceUrl = "http://" + request.getServerName() + ":"
-						+ request.getServerPort();
+				String serviceUrl =  WechatUtils.getServiceUrl(request);
 				Map<String, Object> context = RequestUtils
 						.getParameterMap(request);
-				String hashedPath = WechatUtils.getHashedPath(customer);
+				String hashedPath = WechatUtils.getHashedPath(actorId);
 				context.put("hashedPath", hashedPath);
-				context.put("customer", customer);
-				context.put("customerMD5Hex", DigestUtils.md5Hex(customer));
+				context.put("userId", userId);
+				context.put("actorId", actorId);
+				context.put("actorIdMD5Hex", DigestUtils.md5Hex(actorId));
 				context.put("template", template);
 				context.put("contextPath", request.getContextPath());
 				context.put("serviceUrl", serviceUrl);
 				context.put("serverUrl", serviceUrl);
 
 				WxContentQuery query = new WxContentQuery();
-				query.createBy(customer);
+				query.createBy(actorId);
 				query.categoryId(0L);
 				query.type("PPT");
 				List<WxContent> list = wxContentService.list(query);
 				context.put("pptList", list);
 
 				WxCategoryQuery query3 = new WxCategoryQuery();
-				query3.createBy(customer);
+				query3.createBy(actorId);
 				query3.parentId(0L);
 				query3.type("category");
 				List<WxCategory> list3 = wxCategoryService.list(query3);
@@ -221,15 +225,16 @@ public class WxPublicContentController {
 				WxTemplate template = wxTemplateService
 						.getWxTemplate(templateId);
 				if (template != null && template.getContent() != null) {
-					String serviceUrl = "http://" + request.getServerName()
-							+ ":" + request.getServerPort();
+					String serviceUrl =  WechatUtils.getServiceUrl(request);
 					Map<String, Object> context = RequestUtils
 							.getParameterMap(request);
-					String customer = category.getCreateBy();
-					String hashedPath = WechatUtils.getHashedPath(customer);
+					String actorId = category.getCreateBy();
+					User user = IdentityFactory.getUser(actorId);
+					String hashedPath = WechatUtils.getHashedPath(actorId);
 					context.put("hashedPath", hashedPath);
-					context.put("customer", category.getCreateBy());
-					context.put("customerMD5Hex",
+					context.put("userId", user.getId());
+					context.put("actorId", category.getCreateBy());
+					context.put("actorIdMD5Hex",
 							DigestUtils.md5Hex(category.getCreateBy()));
 					context.put("template", template);
 					context.put("contextPath", request.getContextPath());

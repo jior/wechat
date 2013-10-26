@@ -29,6 +29,8 @@ import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
+import com.glaf.core.identity.User;
+import com.glaf.core.security.IdentityFactory;
 import com.glaf.wechat.sdk.message.IMessage;
 import com.glaf.wechat.sdk.message.Message;
 import com.glaf.wechat.sdk.message.EventMessage;
@@ -101,7 +103,9 @@ public class WeixinExecutor implements IMessage {
 		}
 
 		String uri = request.getRequestURI();
-		String customer = uri.substring(uri.lastIndexOf("/") + 1);
+		String id = uri.substring(uri.lastIndexOf("/") + 1);
+		Long userId = Long.parseLong(id);
+		User user = IdentityFactory.getUserByUserId(userId);
 
 		Element root = doc.getRootElement();
 
@@ -125,7 +129,7 @@ public class WeixinExecutor implements IMessage {
 			messageHandler = new LocationMessageHandler();
 		}
 		message.setRoot(root);
-		message.setCustomer(customer);
+		message.setCustomer(user.getActorId());
 		// do the default/common parse!
 		messageHandler.parseMessage(message, root);
 	}

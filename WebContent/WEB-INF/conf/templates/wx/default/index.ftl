@@ -64,7 +64,7 @@ width:960px;
 <a class="ui-btn-left_pre" href="#"></a> 
 <a class="ui-btn-left_pre1" href="#"></a> 
 <a class="ui-btn-right2" href="#"></a>
-<a class="ui-btn-right" href="${contextPath}/website/wx/content/index/${customer}"></a>
+<a class="ui-btn-right" href="${contextPath}/website/wx/content/index/${userId}"></a>
 </div>
 </div>
 <div id="overlay"></div>

@@ -34,7 +34,7 @@ oWin.style.display = "none"
 <div id="ui-header">
 <div class="fixed">
 <a class="ui-title" id="popmenu">选择分类</a>
-<a class="ui-btn-left_pre" href="${contextPath}/website/wx/content/index/${customer}"></a>
+<a class="ui-btn-left_pre" href="${contextPath}/website/wx/content/index/${userId}"></a>
 <a class="ui-btn-right" href="${contextPath}/website/wx/content/list/${category.id?string('####')}"></a>
 </div>
 </div>
