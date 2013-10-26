@@ -36,6 +36,7 @@ public class Message implements IMessage, java.io.Serializable {
 	protected long createTime;// 消息创建时间 （64位长整型）
 	protected String contextPath;
 	protected String customer;// 客户编号
+	protected String serviceUrl;
 	protected Element root;
 	protected Map<String, Object> requestParameters;
 
@@ -75,6 +76,10 @@ public class Message implements IMessage, java.io.Serializable {
 		return root;
 	}
 
+	public String getServiceUrl() {
+		return serviceUrl;
+	}
+
 	public String getToUserName() {
 		return toUserName;
 	}
@@ -109,6 +114,10 @@ public class Message implements IMessage, java.io.Serializable {
 
 	public void setRoot(Element root) {
 		this.root = root;
+	}
+
+	public void setServiceUrl(String serviceUrl) {
+		this.serviceUrl = serviceUrl;
 	}
 
 	public void setToUserName(String toUserName) {

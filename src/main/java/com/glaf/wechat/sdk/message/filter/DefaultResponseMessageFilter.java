@@ -54,23 +54,20 @@ public class DefaultResponseMessageFilter extends AbstractMessageFilter
 				art.setDescription(c.getSummary());
 				art.setTitle(c.getTitle());
 				if (StringUtils.isNotEmpty(c.getUrl())) {
-					if (StringUtils.startsWith(c.getUrl(), "/mx/wx/")) {
-						String url = message.getContextPath()
-								+ c.getUrl();
+					if (StringUtils.startsWith(c.getUrl(), "/website/wx/")) {
+						String url = message.getServiceUrl() + c.getUrl();
 						art.setUrl(url);
 					} else {
 						art.setUrl(c.getUrl());
 					}
 				} else {
-					String url = message.getContextPath()
-							+ "/mx/wx/content/detail/" + c.getUuid();
+					String url = message.getServiceUrl()
+							+ "/website/wx/content/view/" + c.getId();
 					art.setUrl(url);
 				}
 				if (StringUtils.isNotEmpty(c.getPicUrl())) {
-					if (StringUtils
-							.startsWith(c.getPicUrl(), "/mx/wx/")) {
-						String url = message.getContextPath()
-								+ c.getPicUrl();
+					if (StringUtils.startsWith(c.getPicUrl(), "/website/wx/")) {
+						String url = message.getServiceUrl() + c.getPicUrl();
 						art.setPicUrl(url);
 					} else {
 						art.setPicUrl(c.getPicUrl());

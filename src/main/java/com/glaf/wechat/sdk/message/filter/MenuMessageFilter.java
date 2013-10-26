@@ -46,20 +46,20 @@ public class MenuMessageFilter extends AbstractMessageFilter implements
 			menuMessage.setDescription(menu.getDesc());
 			menuMessage.setTitle(menu.getName());
 			if (StringUtils.isNotEmpty(menu.getUrl())) {
-				if (StringUtils.startsWith(menu.getUrl(), "/mx/wx/")) {
-					String url = message.getContextPath() + menu.getUrl();
+				if (StringUtils.startsWith(menu.getUrl(), "/website/wx/")) {
+					String url = message.getServiceUrl() + menu.getUrl();
 					menuMessage.setUrl(url);
 				} else {
 					menuMessage.setUrl(menu.getUrl());
 				}
 			} else {
-				String url = message.getContextPath()
-						+ "/mx/wx/content/detail/" + menu.getUuid();
+				String url = message.getServiceUrl()
+						+ "/website/wx/content/view/" + menu.getId();
 				menuMessage.setUrl(url);
 			}
 			if (StringUtils.isNotEmpty(menu.getPicUrl())) {
-				if (StringUtils.startsWith(menu.getPicUrl(), "/mx/wx/")) {
-					String url = message.getContextPath() + menu.getPicUrl();
+				if (StringUtils.startsWith(menu.getPicUrl(), "/website/wx/")) {
+					String url = message.getServiceUrl() + menu.getPicUrl();
 					menuMessage.setPicUrl(url);
 				} else {
 					menuMessage.setPicUrl(menu.getPicUrl());

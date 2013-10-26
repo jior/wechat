@@ -40,7 +40,7 @@ oWin.style.display = "none"
 };
 </script>
 <body id="news2">
- 
+<#if category?exists> 
 <div id="ui-header">
 <div class="fixed">
 <a class="ui-title" id="popmenu">选择分类</a>
@@ -48,6 +48,7 @@ oWin.style.display = "none"
 <a class="ui-btn-right" href="${serviceUrl}/website/wx/content/detail/${content.uuid}"></a>
 </div>
 </div>
+</#if>
 <div id="overlay"></div>
 <div id="win">
 <ul class="dropdown"> 

@@ -40,13 +40,13 @@ public abstract class AbstractMessageFilter extends AbstractMessageHandler
 	}
 
 	@Override
-	protected Message handleSpecialMessage(Message message) { 
+	protected Message handleSpecialMessage(Message message) {
 		return null;
 	}
 
 	@Override
-	protected void parseSpecialMessage(Message message, Element root) { 
-		
+	protected void parseSpecialMessage(Message message, Element root) {
+
 	}
 
 }

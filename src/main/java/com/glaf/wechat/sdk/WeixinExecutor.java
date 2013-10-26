@@ -19,6 +19,7 @@ package com.glaf.wechat.sdk;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,6 +35,7 @@ import org.dom4j.io.SAXReader;
 
 import com.glaf.core.identity.User;
 import com.glaf.core.security.IdentityFactory;
+import com.glaf.core.util.IOUtils;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.wechat.sdk.message.IMessage;
 import com.glaf.wechat.sdk.message.Message;
@@ -55,6 +57,7 @@ import com.glaf.wechat.sdk.message.response.handler.NewsResponseMessageHandler;
 import com.glaf.wechat.sdk.message.response.handler.TextResponseMessageHandler;
 import com.glaf.wechat.util.SignUtils;
 import com.glaf.wechat.util.TimeUtils;
+import com.glaf.wechat.util.WechatUtils;
 
 /**
  * Weixin executor class
@@ -143,6 +146,8 @@ public class WeixinExecutor implements IMessage {
 		message.setCustomer(user.getActorId());
 		message.setContextPath(request.getContextPath());
 		message.setRequestParameters(RequestUtils.getParameterMap(request));
+		String serviceUrl = WechatUtils.getServiceUrl(request);
+		message.setServiceUrl(serviceUrl);
 		// do the default/common parse!
 		messageHandler.parseMessage(message, root);
 	}
@@ -161,11 +166,12 @@ public class WeixinExecutor implements IMessage {
 		String signature = request.getParameter("signature");
 		String nonce = request.getParameter("nonce");
 		String timestamp = request.getParameter("timestamp");
+		PrintWriter out = response.getWriter();
 		if (signature != null
 				&& SignUtils.checkSignature(signature, timestamp, nonce)) {
 			if (echostr != null) {
 				response.setContentType("text/plain");
-				response.getWriter().write(echostr);
+				out.write(echostr);
 			} else {// do post
 				request.setCharacterEncoding("UTF-8");
 				response.setCharacterEncoding("UTF-8");
@@ -204,8 +210,9 @@ public class WeixinExecutor implements IMessage {
 						responseMessageHandler = new TextResponseMessageHandler();
 					}
 				}
-				
-				responseMessage.setCreateTime(TimeUtils.getCurrentUnixTimestamp());
+
+				responseMessage.setCreateTime(TimeUtils
+						.getCurrentUnixTimestamp());
 				responseMessage.setFromUserName(message.getToUserName());
 				responseMessage.setToUserName(message.getFromUserName());
 				responseMessage.setMsgType(responseMsgType);
@@ -215,12 +222,16 @@ public class WeixinExecutor implements IMessage {
 				String responseContent = responseMessageHandler
 						.response(responseMessage);
 				logger.debug("response content:" + responseContent);
-				response.getWriter().print(responseContent);
+				out.print(responseContent);
+				out.flush();
+				IOUtils.closeStream(out);
 			}
 		} else {
 			request.setCharacterEncoding("UTF-8");
 			response.setCharacterEncoding("UTF-8");
-			response.getWriter().print("不正确的命令");
+			out.print("不正确的命令");
+			out.flush();
+			IOUtils.closeStream(out);
 		}
 	}
 

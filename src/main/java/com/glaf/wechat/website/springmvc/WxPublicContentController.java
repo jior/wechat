@@ -18,6 +18,7 @@
 package com.glaf.wechat.website.springmvc;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
 
@@ -37,6 +38,7 @@ import com.glaf.core.config.Configuration;
 import com.glaf.core.freemarker.TemplateUtils;
 import com.glaf.core.identity.User;
 import com.glaf.core.security.IdentityFactory;
+import com.glaf.core.util.IOUtils;
 import com.glaf.core.util.Paging;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
@@ -114,52 +116,54 @@ public class WxPublicContentController {
 				wxUserTemplate = wxUserTemplateService.getWxUserTemplate(
 						"system", "2", 0L);
 			}
-			WxCategory category = wxCategoryService.getWxCategory(categoryId);
-			if (category != null) {
-				Long templateId = wxUserTemplate.getTemplateId();
-				boolean cache = conf.getBoolean("wx_template_cache", true);
-				WxTemplate template = wxTemplateService.getWxTemplate(
-						templateId, cache);
-				if (template != null && template.getContent() != null) {
-					String serviceUrl = WechatUtils.getServiceUrl(request);
-					Map<String, Object> context = RequestUtils
-							.getParameterMap(request);
-					User user = IdentityFactory.getUser(actorId);
-					String hashedPath = WechatUtils.getHashedPath(actorId);
-					context.put("hashedPath", hashedPath);
-					context.put("userId", user.getId());
-					context.put("actorId", actorId);
-					context.put("actorIdMD5Hex", DigestUtils.md5Hex(actorId));
-					context.put("content", wxContent);
-					context.put("template", template);
-					context.put("contextPath", request.getContextPath());
-					context.put("serviceUrl", serviceUrl);
-					context.put("serverUrl", serviceUrl);
 
-					WxCategoryQuery query3 = new WxCategoryQuery();
-					query3.createBy(actorId);
-					query3.parentId(0L);
-					query3.type("category");
-					List<WxCategory> list3 = wxCategoryService.list(query3);
-					if (list3 != null && !list3.isEmpty()) {
-						for (WxCategory cat : list3) {
-							if (StringUtils.isNotEmpty(cat.getUrl())) {
-								if (StringUtils.startsWith(cat.getUrl(),
-										"/mx/wx/")) {
-									cat.setUrl(serviceUrl + cat.getUrl());
-								}
+			// categoryId == 0 为回复内容或ppt
+			WxCategory category = wxCategoryService.getWxCategory(categoryId);
+			Long templateId = wxUserTemplate.getTemplateId();
+			boolean cache = conf.getBoolean("wx_template_cache", true);
+			WxTemplate template = wxTemplateService.getWxTemplate(templateId,
+					cache);
+			if (template != null && template.getContent() != null) {
+				String serviceUrl = WechatUtils.getServiceUrl(request);
+				Map<String, Object> context = RequestUtils
+						.getParameterMap(request);
+				User user = IdentityFactory.getUser(actorId);
+				String hashedPath = WechatUtils.getHashedPath(actorId);
+				context.put("hashedPath", hashedPath);
+				context.put("userId", user.getId());
+				context.put("actorId", actorId);
+				context.put("actorIdMD5Hex", DigestUtils.md5Hex(actorId));
+				context.put("content", wxContent);
+				context.put("template", template);
+				context.put("contextPath", request.getContextPath());
+				context.put("serviceUrl", serviceUrl);
+				context.put("serverUrl", serviceUrl);
+
+				WxCategoryQuery query3 = new WxCategoryQuery();
+				query3.createBy(actorId);
+				query3.parentId(0L);
+				query3.type("category");
+				List<WxCategory> list3 = wxCategoryService.list(query3);
+				if (list3 != null && !list3.isEmpty()) {
+					for (WxCategory cat : list3) {
+						if (StringUtils.isNotEmpty(cat.getUrl())) {
+							if (StringUtils.startsWith(cat.getUrl(), "/mx/wx/")) {
+								cat.setUrl(serviceUrl + cat.getUrl());
 							}
 						}
 					}
-					context.put("categories", list3);
-
-					context.put("category", category);
-
-					String content = TemplateUtils.process(context,
-							template.getContent());
-
-					response.getWriter().write(content);
 				}
+				context.put("categories", list3);
+
+				context.put("category", category);
+
+				String content = TemplateUtils.process(context,
+						template.getContent());
+
+				PrintWriter out = response.getWriter();
+				out.write(content);
+				out.flush();
+				IOUtils.closeStream(out);
 			}
 		}
 	}
@@ -225,7 +229,10 @@ public class WxPublicContentController {
 
 				String content = TemplateUtils.process(context,
 						template.getContent());
-				response.getWriter().write(content);
+				PrintWriter out = response.getWriter();
+				out.write(content);
+				out.flush();
+				IOUtils.closeStream(out);
 			}
 		}
 	}
@@ -328,7 +335,10 @@ public class WxPublicContentController {
 
 					String content = TemplateUtils.process(context,
 							template.getContent());
-					response.getWriter().write(content);
+					PrintWriter out = response.getWriter();
+					out.write(content);
+					out.flush();
+					IOUtils.closeStream(out);
 				}
 			}
 		}
@@ -404,52 +414,54 @@ public class WxPublicContentController {
 				wxUserTemplate = wxUserTemplateService.getWxUserTemplate(
 						"system", "2", 0L);
 			}
+
 			WxCategory category = wxCategoryService.getWxCategory(categoryId);
-			if (category != null) {
-				Long templateId = wxUserTemplate.getTemplateId();
-				boolean cache = conf.getBoolean("wx_template_cache", true);
-				WxTemplate template = wxTemplateService.getWxTemplate(
-						templateId, cache);
-				if (template != null && template.getContent() != null) {
-					String serviceUrl = WechatUtils.getServiceUrl(request);
-					Map<String, Object> context = RequestUtils
-							.getParameterMap(request);
-					User user = IdentityFactory.getUser(actorId);
-					String hashedPath = WechatUtils.getHashedPath(actorId);
-					context.put("hashedPath", hashedPath);
-					context.put("userId", user.getId());
-					context.put("actorId", actorId);
-					context.put("actorIdMD5Hex", DigestUtils.md5Hex(actorId));
-					context.put("content", wxContent);
-					context.put("template", template);
-					context.put("contextPath", request.getContextPath());
-					context.put("serviceUrl", serviceUrl);
-					context.put("serverUrl", serviceUrl);
 
-					WxCategoryQuery query3 = new WxCategoryQuery();
-					query3.createBy(actorId);
-					query3.parentId(0L);
-					query3.type("category");
-					List<WxCategory> list3 = wxCategoryService.list(query3);
+			Long templateId = wxUserTemplate.getTemplateId();
+			boolean cache = conf.getBoolean("wx_template_cache", true);
+			WxTemplate template = wxTemplateService.getWxTemplate(templateId,
+					cache);
+			if (template != null && template.getContent() != null) {
+				String serviceUrl = WechatUtils.getServiceUrl(request);
+				Map<String, Object> context = RequestUtils
+						.getParameterMap(request);
+				User user = IdentityFactory.getUser(actorId);
+				String hashedPath = WechatUtils.getHashedPath(actorId);
+				context.put("hashedPath", hashedPath);
+				context.put("userId", user.getId());
+				context.put("actorId", actorId);
+				context.put("actorIdMD5Hex", DigestUtils.md5Hex(actorId));
+				context.put("content", wxContent);
+				context.put("template", template);
+				context.put("contextPath", request.getContextPath());
+				context.put("serviceUrl", serviceUrl);
+				context.put("serverUrl", serviceUrl);
 
-					if (list3 != null && !list3.isEmpty()) {
-						for (WxCategory cat : list3) {
-							if (StringUtils.isNotEmpty(cat.getUrl())) {
-								if (StringUtils.startsWith(cat.getUrl(),
-										"/mx/wx/")) {
-									cat.setUrl(serviceUrl + cat.getUrl());
-								}
+				WxCategoryQuery query3 = new WxCategoryQuery();
+				query3.createBy(actorId);
+				query3.parentId(0L);
+				query3.type("category");
+				List<WxCategory> list3 = wxCategoryService.list(query3);
+
+				if (list3 != null && !list3.isEmpty()) {
+					for (WxCategory cat : list3) {
+						if (StringUtils.isNotEmpty(cat.getUrl())) {
+							if (StringUtils.startsWith(cat.getUrl(), "/mx/wx/")) {
+								cat.setUrl(serviceUrl + cat.getUrl());
 							}
 						}
 					}
-					context.put("categories", list3);
-					context.put("category", category);
-
-					String content = TemplateUtils.process(context,
-							template.getContent());
-
-					response.getWriter().write(content);
 				}
+				context.put("categories", list3);
+				context.put("category", category);
+
+				String content = TemplateUtils.process(context,
+						template.getContent());
+
+				PrintWriter out = response.getWriter();
+				out.write(content);
+				out.flush();
+				IOUtils.closeStream(out);
 			}
 		}
 	}
