@@ -146,8 +146,7 @@ public class WxPublicContentController {
 							if (StringUtils.isNotEmpty(cat.getUrl())) {
 								if (StringUtils.startsWith(cat.getUrl(),
 										"/mx/wx/")) {
-									cat.setUrl(request.getContextPath()
-											+ cat.getUrl());
+									cat.setUrl(serviceUrl + cat.getUrl());
 								}
 							}
 						}
@@ -218,8 +217,7 @@ public class WxPublicContentController {
 					for (WxCategory cat : list3) {
 						if (StringUtils.isNotEmpty(cat.getUrl())) {
 							if (StringUtils.startsWith(cat.getUrl(), "/mx/wx/")) {
-								cat.setUrl(request.getContextPath()
-										+ cat.getUrl());
+								cat.setUrl(serviceUrl + cat.getUrl());
 							}
 						}
 					}
@@ -322,8 +320,7 @@ public class WxPublicContentController {
 							if (StringUtils.isNotEmpty(cat.getUrl())) {
 								if (StringUtils.startsWith(cat.getUrl(),
 										"/mx/wx/")) {
-									cat.setUrl(request.getContextPath()
-											+ cat.getUrl());
+									cat.setUrl(serviceUrl + cat.getUrl());
 								}
 							}
 						}
@@ -440,8 +437,7 @@ public class WxPublicContentController {
 							if (StringUtils.isNotEmpty(cat.getUrl())) {
 								if (StringUtils.startsWith(cat.getUrl(),
 										"/mx/wx/")) {
-									cat.setUrl(request.getContextPath()
-											+ cat.getUrl());
+									cat.setUrl(serviceUrl + cat.getUrl());
 								}
 							}
 						}

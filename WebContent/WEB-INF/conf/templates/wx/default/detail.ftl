@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="format-detection" content="telephone=no">
 <meta charset="utf-8">
-<link href="${contextPath}/templates/01/css/news4.css" rel="stylesheet" type="text/css" />
+<link href="${serviceUrl}/templates/01/css/news4.css" rel="stylesheet" type="text/css" />
  
 <style type="text/css">
 <!--
@@ -44,8 +44,8 @@ oWin.style.display = "none"
 <div id="ui-header">
 <div class="fixed">
 <a class="ui-title" id="popmenu">选择分类</a>
-<a class="ui-btn-left_pre" href="${contextPath}/website/wx/content/list/${category.id?string('####')}"></a>
-<a class="ui-btn-right" href="${contextPath}/website/wx/content/detail/${content.uuid}"></a>
+<a class="ui-btn-left_pre" href="${serviceUrl}/website/wx/content/list/${category.id?string('####')}"></a>
+<a class="ui-btn-right" href="${serviceUrl}/website/wx/content/detail/${content.uuid}"></a>
 </div>
 </div>
 <div id="overlay"></div>
@@ -56,7 +56,7 @@ oWin.style.display = "none"
 <#if category.url?exists && category.url != ''>
 <li><a href="${category.url}"><span>${category.name}</span></a></li>
 <#else>
-<li><a href="${contextPath}/website/wx/content/list/${category.id?string('####')}"><span>${category.name}</span></a></li>
+<li><a href="${serviceUrl}/website/wx/content/list/${category.id?string('####')}"><span>${category.name}</span></a></li>
 </#if>
 </#list> 
 </#if>   	
@@ -71,7 +71,7 @@ oWin.style.display = "none"
 <span id="post-date">${content.createDate?string("yyyy-MM-dd")}</span>　<span class="commentNum"></span>
 </div>
 <#if content.bigIcon?exists>
-<div class="showpic"><img src="${contextPath}/${content.bigIcon}" ></div>
+<div class="showpic"><img src="${serviceUrl}/${content.bigIcon}" ></div>
 </#if>
 <div class="text" id="content">
   ${content.content?if_exists}
@@ -93,7 +93,7 @@ oWin.style.display = "none"
 <#if content.recommendations?exists>
 <#list  content.recommendations as recommendation>    
   <li class="newsmore">
-   <a href="${contextPath}/website/wx/content/detail/${recommendation.uuid}" >
+   <a href="${serviceUrl}/website/wx/content/detail/${recommendation.uuid}" >
     <div class="olditem">
      <div class="title">${recommendation.title}</div> 
     </div>

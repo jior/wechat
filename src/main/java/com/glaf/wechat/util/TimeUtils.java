@@ -1148,6 +1148,11 @@ public class TimeUtils {
         // 2010-01-12T13:00:00+08:00
         return dateTime.replaceFirst("T.*", "").replace("-", "");
     }
+    
+    public static int getCurrentUnixTimestamp() {
+		Date date = new Date();
+		return (int) (date.getTime() / 1000);
+	}
 	
 	/**
      * 将UTC-second类型时间转化为hh:mm:ss格式

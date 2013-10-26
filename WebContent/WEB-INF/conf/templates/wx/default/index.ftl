@@ -8,8 +8,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="format-detection" content="telephone=no">
 <meta charset="utf-8">
-<link href="${contextPath}/templates/01/css/news4.css" rel="stylesheet" type="text/css" />
-<script src="${contextPath}/scripts/iscroll.js" type="text/javascript"></script>
+<link href="${serviceUrl}/templates/01/css/news4.css" rel="stylesheet" type="text/css" />
+<script src="${serviceUrl}/scripts/iscroll.js" type="text/javascript"></script>
 <script type="text/javascript">
 var myScroll;
 
@@ -64,7 +64,7 @@ width:960px;
 <a class="ui-btn-left_pre" href="#"></a> 
 <a class="ui-btn-left_pre1" href="#"></a> 
 <a class="ui-btn-right2" href="#"></a>
-<a class="ui-btn-right" href="${contextPath}/website/wx/content/index/${userId}"></a>
+<a class="ui-btn-right" href="${serviceUrl}/website/wx/content/index/${userId}"></a>
 </div>
 </div>
 <div id="overlay"></div>
@@ -75,7 +75,7 @@ width:960px;
 <#if category.url?exists && category.url != ''>
 <li><a href="${category.url}"><span>${category.name}</span></a></li>
 <#else>
-<li><a href="${contextPath}/website/wx/content/list/${category.id?string('####')}"><span>${category.name}</span></a></li>
+<li><a href="${serviceUrl}/website/wx/content/list/${category.id?string('####')}"><span>${category.name}</span></a></li>
 </#if>
 </#list> 
 </#if> 
@@ -96,11 +96,11 @@ width:960px;
 <#if item.url?exists && item.url != ''>
 <a href="${item.url}">
 <#else>
-<a href="${contextPath}/website/wx/content/list/${item.id?string('####')}">
+<a href="${serviceUrl}/website/wx/content/list/${item.id?string('####')}">
 </#if>
 <div class="menubtn">
 <#if item.coverIcon?exists>
-<div class="menuimg"><img src="${contextPath}/${item.coverIcon}" /></div>
+<div class="menuimg"><img src="${serviceUrl}/${item.coverIcon}" /></div>
 </#if>
 <div class="menutitle">${item.name}</div>
 </div>

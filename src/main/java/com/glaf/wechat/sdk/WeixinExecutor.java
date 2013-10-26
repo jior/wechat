@@ -54,6 +54,7 @@ import com.glaf.wechat.sdk.message.response.handler.MusicResponseMessageHandler;
 import com.glaf.wechat.sdk.message.response.handler.NewsResponseMessageHandler;
 import com.glaf.wechat.sdk.message.response.handler.TextResponseMessageHandler;
 import com.glaf.wechat.util.SignUtils;
+import com.glaf.wechat.util.TimeUtils;
 
 /**
  * Weixin executor class
@@ -184,6 +185,7 @@ public class WeixinExecutor implements IMessage {
 				logger.debug("responseMessage type:"
 						+ responseMessage.getMsgType());
 
+				String responseMsgType = responseMessage.getMsgType();
 				if (StringUtils.equalsIgnoreCase(responseMessage.getMsgType(),
 						MESSAGE_RESPONSE_TEXT)) {
 					responseMessageHandler = new TextResponseMessageHandler();
@@ -195,11 +197,18 @@ public class WeixinExecutor implements IMessage {
 					responseMessageHandler = new MusicResponseMessageHandler();
 				} else {
 					if (responseMessage instanceof ResponseNewsMessage) {
+						responseMsgType = MESSAGE_RESPONSE_NEWS;
 						responseMessageHandler = new NewsResponseMessageHandler();
 					} else {
+						responseMsgType = MESSAGE_RESPONSE_TEXT;
 						responseMessageHandler = new TextResponseMessageHandler();
 					}
 				}
+				
+				responseMessage.setCreateTime(TimeUtils.getCurrentUnixTimestamp());
+				responseMessage.setFromUserName(message.getToUserName());
+				responseMessage.setToUserName(message.getFromUserName());
+				responseMessage.setMsgType(responseMsgType);
 
 				logger.debug("responseMessageHandler class:"
 						+ responseMessageHandler);

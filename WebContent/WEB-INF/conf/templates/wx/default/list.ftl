@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="format-detection" content="telephone=no">
 <meta charset="utf-8">
-<link href="${contextPath}/templates/01/css/news4.css" rel="stylesheet" type="text/css" />
+<link href="${serviceUrl}/templates/01/css/news4.css" rel="stylesheet" type="text/css" />
 </head>
 <script>
 window.onload = function ()
@@ -34,8 +34,8 @@ oWin.style.display = "none"
 <div id="ui-header">
 <div class="fixed">
 <a class="ui-title" id="popmenu">选择分类</a>
-<a class="ui-btn-left_pre" href="${contextPath}/website/wx/content/index/${userId}"></a>
-<a class="ui-btn-right" href="${contextPath}/website/wx/content/list/${category.id?string('####')}"></a>
+<a class="ui-btn-left_pre" href="${serviceUrl}/website/wx/content/index/${userId}"></a>
+<a class="ui-btn-right" href="${serviceUrl}/website/wx/content/list/${category.id?string('####')}"></a>
 </div>
 </div>
 <div id="overlay"></div>
@@ -46,7 +46,7 @@ oWin.style.display = "none"
 <#if item.url?exists && item.url != ''>
 <li><a href="${item.url}"><span>${item.name}</span></a></li>
 <#else>
-<li><a href="${contextPath}/website/wx/content/list/${item.id?string('####')}"><span>${item.name}</span></a></li>
+<li><a href="${serviceUrl}/website/wx/content/list/${item.id?string('####')}"><span>${item.name}</span></a></li>
 </#if>
 </#list>  	
 </#if>
@@ -60,7 +60,7 @@ oWin.style.display = "none"
 <#if pptList?exists>
 <#list pptList as ppt>
 <li>
-<a href="${contextPath}/website/wx/content/detail/${ppt.uuid}">
+<a href="${serviceUrl}/website/wx/content/detail/${ppt.uuid}">
 <img alt="${ppt.title}" src="${contextPath}/${ppt.icon}">
 <div class="opacity"></div>
 <h2>${ppt.title}</h2>
@@ -76,9 +76,9 @@ oWin.style.display = "none"
 <#if contents?exists>
 <#list  contents as content>      
 <li>
-<a href="${contextPath}/website/wx/content/detail/${content.uuid}">
+<a href="${serviceUrl}/website/wx/content/detail/${content.uuid}">
 <#if content.icon?exists>
-<div class="img"><img src="${contextPath}/${content.icon}"></div>
+<div class="img"><img src="${serviceUrl}/${content.icon}"></div>
 </#if>
 <h2>${content.title}</h2>
 <p class="onlyheight">
@@ -96,7 +96,7 @@ oWin.style.display = "none"
 <section class="c-p-sec">
 <#if (pageNo > 1) >
 <div class="c-p-pre  c-p-grey  "><span class="c-p-p"><em></em></span>
-<a href="${contextPath}/website/wx/content/list/${item.id?string('####')}?pageNo=${pageNo-1}" >上一页</a>
+<a href="${serviceUrl}/website/wx/content/list/${item.id?string('####')}?pageNo=${pageNo-1}" >上一页</a>
 </div>
 </#if>
 <div class="c-p-cur">
@@ -105,7 +105,7 @@ oWin.style.display = "none"
 </div>
 <#if (pageNo != pageSize) && (pageNo+1 <= pageSize)>
 <div class="c-p-next  c-p-grey">
-<a href="${contextPath}/website/wx/content/list/${item.id?string('####')}?pageNo=${pageNo+1}">下一页</a>
+<a href="${serviceUrl}/website/wx/content/list/${item.id?string('####')}?pageNo=${pageNo+1}">下一页</a>
 <span class="c-p-p"><em></em></span>
 </div>
 </#if>
