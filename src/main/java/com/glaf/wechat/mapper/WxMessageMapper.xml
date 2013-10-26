@@ -171,7 +171,7 @@
 				and E.NAME_ like #{nameLike}
 			</if>
 
-			<if test="names != null and names.size() &gt; 0">
+			<if test="names != null and names.size !=0">
 				and E.NAME_ IN
 				<foreach item="x_name" index="index" collection="names"
 					open="(" separator="," close=")">
@@ -199,7 +199,7 @@
 				and E.UUID_ = #{uuid}
 			</if>
 
-			<if test="uuids != null and uuids.size() &gt; 0">
+			<if test="uuids != null and uuids.size !=0">
 				and E.UUID_ IN
 				<foreach item="x_uuid" index="index" collection="uuids"
 					open="(" separator="," close=")">

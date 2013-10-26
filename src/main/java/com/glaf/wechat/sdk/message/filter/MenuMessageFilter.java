@@ -19,6 +19,8 @@ package com.glaf.wechat.sdk.message.filter;
 
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.glaf.core.context.ContextFactory;
 import com.glaf.wechat.domain.WxMenu;
 import com.glaf.wechat.query.WxMenuQuery;
@@ -43,8 +45,26 @@ public class MenuMessageFilter extends AbstractMessageFilter implements
 			ResponseMenuMessage menuMessage = new ResponseMenuMessage();
 			menuMessage.setDescription(menu.getDesc());
 			menuMessage.setTitle(menu.getName());
-			menuMessage.setUrl(menu.getUrl());//
-			menuMessage.setPicUrl(menu.getPicUrl());//
+			if (StringUtils.isNotEmpty(menu.getUrl())) {
+				if (StringUtils.startsWith(menu.getUrl(), "/mx/wx/")) {
+					String url = message.getContextPath() + menu.getUrl();
+					menuMessage.setUrl(url);
+				} else {
+					menuMessage.setUrl(menu.getUrl());
+				}
+			} else {
+				String url = message.getContextPath()
+						+ "/mx/wx/content/detail/" + menu.getUuid();
+				menuMessage.setUrl(url);
+			}
+			if (StringUtils.isNotEmpty(menu.getPicUrl())) {
+				if (StringUtils.startsWith(menu.getPicUrl(), "/mx/wx/")) {
+					String url = message.getContextPath() + menu.getPicUrl();
+					menuMessage.setPicUrl(url);
+				} else {
+					menuMessage.setPicUrl(menu.getPicUrl());
+				}
+			}
 			return menuMessage;
 		}
 		return null;

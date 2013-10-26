@@ -20,6 +20,10 @@ package com.glaf.wechat.sdk.message.filter;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.glaf.core.context.ContextFactory;
 import com.glaf.wechat.domain.WxContent;
 import com.glaf.wechat.domain.WxKeywords;
@@ -38,6 +42,9 @@ import com.glaf.wechat.service.WxKeywordsService;
  */
 public class KeywordsMessageFilter extends AbstractMessageFilter implements
 		IMessageFilter {
+
+	protected static final Log logger = LogFactory
+			.getLog(KeywordsMessageFilter.class);
 
 	@Override
 	public Message doSpecailMessageFilter(Message message) {
@@ -68,10 +75,33 @@ public class KeywordsMessageFilter extends AbstractMessageFilter implements
 						ItemArticle art = new ItemArticle();
 						art.setDescription(c.getSummary());
 						art.setTitle(c.getTitle());
-						art.setUrl(c.getUrl());//
-						art.setPicUrl(c.getPicUrl());//
+						if (StringUtils.isNotEmpty(c.getUrl())) {
+							if (StringUtils.startsWith(c.getUrl(), "/mx/wx/")) {
+								String url = message.getContextPath()
+										+ c.getUrl();
+								art.setUrl(url);
+							} else {
+								art.setUrl(c.getUrl());
+							}
+						} else {
+							String url = message.getContextPath()
+									+ "/mx/wx/content/detail/" + c.getUuid();
+							art.setUrl(url);
+						}
+						if (StringUtils.isNotEmpty(c.getPicUrl())) {
+							if (StringUtils
+									.startsWith(c.getPicUrl(), "/mx/wx/")) {
+								String url = message.getContextPath()
+										+ c.getPicUrl();
+								art.setPicUrl(url);
+							} else {
+								art.setPicUrl(c.getPicUrl());
+							}
+						}
 						newsMessage.addItemArticle(art);
 					}
+					logger.debug(msg.getContent() + " reply content:"
+							+ newsMessage.getArticleItems().size());
 					return newsMessage;
 				}
 			}

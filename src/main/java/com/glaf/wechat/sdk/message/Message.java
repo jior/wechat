@@ -17,6 +17,8 @@
  */
 package com.glaf.wechat.sdk.message;
 
+import java.util.Map;
+
 import org.dom4j.Element;
 
 /**
@@ -32,11 +34,17 @@ public class Message implements IMessage, java.io.Serializable {
 	protected String toUserName;// 开发者微信号
 	protected long msgId;// 消息id（64位长整型）
 	protected long createTime;// 消息创建时间 （64位长整型）
-	protected String customer;//客户编号
+	protected String contextPath;
+	protected String customer;// 客户编号
 	protected Element root;
+	protected Map<String, Object> requestParameters;
 
 	public Message() {
 
+	}
+
+	public String getContextPath() {
+		return contextPath;
 	}
 
 	public long getCreateTime() {
@@ -59,12 +67,20 @@ public class Message implements IMessage, java.io.Serializable {
 		return msgType;
 	}
 
+	public Map<String, Object> getRequestParameters() {
+		return requestParameters;
+	}
+
 	public Element getRoot() {
 		return root;
 	}
 
 	public String getToUserName() {
 		return toUserName;
+	}
+
+	public void setContextPath(String contextPath) {
+		this.contextPath = contextPath;
 	}
 
 	public void setCreateTime(long createTime) {
@@ -85,6 +101,10 @@ public class Message implements IMessage, java.io.Serializable {
 
 	public void setMsgType(String msgType) {
 		this.msgType = msgType;
+	}
+
+	public void setRequestParameters(Map<String, Object> requestParameters) {
+		this.requestParameters = requestParameters;
 	}
 
 	public void setRoot(Element root) {

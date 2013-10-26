@@ -262,7 +262,7 @@
 				and E.PARENT_ = #{parentId}
 			</if>
 
-			<if test="parentIds != null and parentIds.size() &gt; 0">
+			<if test="parentIds != null and parentIds.size !=0">
 				and E.PARENT_ IN
 				<foreach item="x_parentId" index="index" collection="parentIds"
 					open="(" separator="," close=")">
@@ -278,7 +278,7 @@
 				and E.TREEID_ like #{treeIdLike}
 			</if>
 
-			<if test="treeIds != null and treeIds.size() &gt; 0">
+			<if test="treeIds != null and treeIds.size !=0">
 				and E.TREEID_ IN
 				<foreach item="x_treeId" index="index" collection="treeIds"
 					open="(" separator="," close=")">
@@ -334,7 +334,7 @@
 				and E.NAME_ like #{nameLike}
 			</if>
 
-			<if test="names != null and names.size() &gt; 0">
+			<if test="names != null and names.size !=0">
 				and E.NAME_ IN
 				<foreach item="x_name" index="index" collection="names"
 					open="(" separator="," close=")">
@@ -350,7 +350,7 @@
 				and E.CODE_ like #{codeLike}
 			</if>
 
-			<if test="codes != null and codes.size() &gt; 0">
+			<if test="codes != null and codes.size !=0">
 				and E.CODE_ IN
 				<foreach item="x_code" index="index" collection="codes"
 					open="(" separator="," close=")">
@@ -374,7 +374,7 @@
 				and E.EVENTTYPE_ like #{eventTypeLike}
 			</if>
 
-			<if test="eventTypes != null and eventTypes.size() &gt; 0">
+			<if test="eventTypes != null and eventTypes.size !=0">
 				and E.EVENTTYPE_ IN
 				<foreach item="x_eventType" index="index" collection="eventTypes"
 					open="(" separator="," close=")">
@@ -390,7 +390,7 @@
 				and E.UUID_ = #{uuid}
 			</if>
 
-			<if test="uuids != null and uuids.size() &gt; 0">
+			<if test="uuids != null and uuids.size !=0">
 				and E.UUID_ IN
 				<foreach item="x_uuid" index="index" collection="uuids"
 					open="(" separator="," close=")">

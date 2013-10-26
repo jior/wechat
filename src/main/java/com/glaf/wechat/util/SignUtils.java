@@ -29,7 +29,7 @@ import java.util.Arrays;
  */
 public class SignUtils {
 	// 与接口配置信息中的Token要一致
-	private static String token = "weixinGlaf";
+	public static String token = "weixinGlaf";
 
 	/**
 	 * 将字节转换为十六进制字符串

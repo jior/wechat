@@ -256,7 +256,7 @@
 				and E.UUID_ = #{uuid}
 			</if>
 
-			<if test="uuids != null and uuids.size() &gt; 0">
+			<if test="uuids != null and uuids.size !=0">
 				and E.UUID_ IN
 				<foreach item="x_uuid" index="index" collection="uuids"
 					open="(" separator="," close=")">

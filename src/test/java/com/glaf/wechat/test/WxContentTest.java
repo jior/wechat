@@ -17,7 +17,7 @@ public class WxContentTest extends AbstractTest {
 		wxContentService = getBean("wxContentService");
 	}
 
-	@Test
+ 
 	public void insertWxContent() {
 		for (int i = 0; i < 10; i++) {
 			WxContent wxContent = new WxContent();
@@ -45,7 +45,9 @@ public class WxContentTest extends AbstractTest {
 	@Test
 	public void list() {
 		WxContentQuery wxContentQuery = new WxContentQuery();
-
+		List<Long> contentIds = new ArrayList<Long>();
+		contentIds.add(2494L);
+		wxContentQuery.contentIds(contentIds);
 		logger.debug("---------------------total----------------------");
 		int total = wxContentService
 				.getWxContentCountByQueryCriteria(wxContentQuery);

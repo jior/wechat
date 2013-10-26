@@ -19,6 +19,8 @@ package com.glaf.wechat.sdk.message.filter;
 
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.glaf.core.context.ContextFactory;
 import com.glaf.wechat.domain.WxContent;
 import com.glaf.wechat.query.WxContentQuery;
@@ -51,8 +53,29 @@ public class DefaultResponseMessageFilter extends AbstractMessageFilter
 				ItemArticle art = new ItemArticle();
 				art.setDescription(c.getSummary());
 				art.setTitle(c.getTitle());
-				art.setUrl(c.getUrl());//
-				art.setPicUrl(c.getPicUrl());//
+				if (StringUtils.isNotEmpty(c.getUrl())) {
+					if (StringUtils.startsWith(c.getUrl(), "/mx/wx/")) {
+						String url = message.getContextPath()
+								+ c.getUrl();
+						art.setUrl(url);
+					} else {
+						art.setUrl(c.getUrl());
+					}
+				} else {
+					String url = message.getContextPath()
+							+ "/mx/wx/content/detail/" + c.getUuid();
+					art.setUrl(url);
+				}
+				if (StringUtils.isNotEmpty(c.getPicUrl())) {
+					if (StringUtils
+							.startsWith(c.getPicUrl(), "/mx/wx/")) {
+						String url = message.getContextPath()
+								+ c.getPicUrl();
+						art.setPicUrl(url);
+					} else {
+						art.setPicUrl(c.getPicUrl());
+					}
+				}
 				newsMessage.addItemArticle(art);
 			}
 			return newsMessage;

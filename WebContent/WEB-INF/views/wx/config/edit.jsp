@@ -113,7 +113,7 @@ limitations under the License.
 		<td width="20%" align="left">微信接口URL</td>
 		<td align="left">
             <input id="callBackUrl" name="callBackUrl" type="text" 
-			       class="easyui-validatebox x-text"  size="80" readonly
+			       class="easyui-validatebox x-text" size="80" readonly
 				   value="<%=serviceUrl+"/weixin/"+user.getId()%>"
 				   data-options="required:true"/>
 		</td>
@@ -122,8 +122,8 @@ limitations under the License.
 		<td width="20%" align="left">微信接口Token</td>
 		<td align="left">
             <input id="token" name="token" type="text" 
-			       class="easyui-validatebox x-text"   size="80"
-				   value="${wxConfig.token}"
+			       class="easyui-validatebox x-text" size="80" readonly
+				   value="<%=com.glaf.wechat.util.SignUtils.token%>"
 				   data-options="required:true"/>
 		</td>
 	</tr>

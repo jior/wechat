@@ -138,7 +138,7 @@
 				and E.CATEGORYID_ = #{categoryId}
 			</if>
 
-			<if test="categoryIds != null and categoryIds.size() &gt; 0">
+			<if test="categoryIds != null and categoryIds.size !=0">
 				and E.CATEGORYID_ IN
 				<foreach item="x_categoryId" index="index" collection="categoryIds"
 					open="(" separator="," close=")">
@@ -150,7 +150,7 @@
 				and E.TEMPLATEID_ = #{templateId}
 			</if>
 
-			<if test="templateIds != null and templateIds.size() &gt; 0">
+			<if test="templateIds != null and templateIds.size !=0">
 				and E.TEMPLATEID_ IN
 				<foreach item="x_templateId" index="index" collection="templateIds"
 					open="(" separator="," close=")">
@@ -166,7 +166,7 @@
 				and E.CREATEBY_ = #{createBy}
 			</if>
 
-			<if test="createBys != null and createBys.size() &gt; 0">
+			<if test="createBys != null and createBys.size !=0">
 				and E.CREATEBY_ IN
 				<foreach item="x_createBy" index="index" collection="createBys"
 					open="(" separator="," close=")">

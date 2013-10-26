@@ -337,11 +337,11 @@
 		<where>
 			1 = 1
 
-			<if test="contentIds != null and contentIds &gt; 0">
+			<if test="contentIds != null and contentIds.size !=0">
 				and E.ID_ IN
-				<foreach item="x_contentId" index="index" collection="contentIds"
+				<foreach item="x_nodeId" index="index" collection="contentIds"
 					open="(" separator="," close=")">
-					#{x_contentId}
+					#{x_nodeId}
 				</foreach>
 			</if>
 
@@ -349,7 +349,7 @@
 				and E.CATEGORYID_ = #{categoryId}
 			</if>
 
-			<if test="categoryIds != null and categoryIds.size() &gt; 0">
+			<if test="categoryIds != null and categoryIds.size !=0">
 				and E.CATEGORYID_ IN
 				<foreach item="x_categoryId" index="index" collection="categoryIds"
 					open="(" separator="," close=")">
@@ -385,7 +385,7 @@
 				and E.TYPE_ = #{type}
 			</if>
 
-			<if test="types != null and types.size() &gt; 0">
+			<if test="types != null and types.size != 0">
 				and E.TYPE_ IN
 				<foreach item="x_type" index="index" collection="types"
 					open="(" separator="," close=")">
@@ -397,7 +397,7 @@
 				and E.UUID_ = #{uuid}
 			</if>
 
-			<if test="uuids != null and uuids.size() &gt; 0">
+			<if test="uuids != null and uuids.size !=0">
 				and E.UUID_ IN
 				<foreach item="x_uuid" index="index" collection="uuids"
 					open="(" separator="," close=")">

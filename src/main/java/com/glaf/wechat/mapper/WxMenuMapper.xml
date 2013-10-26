@@ -249,7 +249,7 @@
 				and E.PARENT_ = #{parentId}
 			</if>
 
-			<if test="parentIds != null and parentIds.size() &gt; 0">
+			<if test="parentIds != null and parentIds.size !=0">
 				and E.PARENT_ IN
 				<foreach item="x_parentId" index="index" collection="parentIds"
 					open="(" separator="," close=")">
@@ -269,7 +269,7 @@
 				and E.NAME_ like #{nameLike}
 			</if>
 
-			<if test="names != null and names.size() &gt; 0">
+			<if test="names != null and names.size !=0">
 				and E.NAME_ IN
 				<foreach item="x_name" index="index" collection="names"
 					open="(" separator="," close=")">
@@ -285,7 +285,7 @@
 				and E.KEY_ like #{keyLike}
 			</if>
 
-			<if test="keys != null and keys.size() &gt; 0">
+			<if test="keys != null and keys.size !=0">
 				and E.KEY_ IN
 				<foreach item="x_key" index="index" collection="keys" open="("
 					separator="," close=")">
@@ -313,7 +313,7 @@
 				and E.UUID_ = #{uuid}
 			</if>
 
-			<if test="uuids != null and uuids.size() &gt; 0">
+			<if test="uuids != null and uuids.size !=0">
 				and E.UUID_ IN
 				<foreach item="x_uuid" index="index" collection="uuids"
 					open="(" separator="," close=")">
