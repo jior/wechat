@@ -208,7 +208,9 @@ limitations under the License.
 		<td align="left" valign="middle">
 			<input id="url" name="url" type="text" size="50"
 			       class="easyui-validatebox x-text" readonly 
-				   value="${wxCategory.url}" onclick="javascript:chooseLink();"/>  
+				   value="${wxCategory.url}" onclick="javascript:chooseLink();"/> 
+		    &nbsp;<img src="<%=request.getContextPath()%>/images/code_colored.png"  onclick="javascript:chooseLink();">
+		    <br>当该栏目只有唯一页面时请选择
 		</td>
 	</tr> 
 	<tr>

@@ -33,17 +33,17 @@
 
     var openTabSize = 0;  
 
-	$(function() {
-        changeTheme();
-        $('#editTheme').click(function() {
-            $('#w').window('open');
+	jQuery(function() {
+        //changeTheme();
+        jQuery('#editTheme').click(function() {
+            jQuery('#themeWin').window('open');
         });  
 	});	
 
     
 	function mopenTabs(title, menuId){
-		if ($('#tabs').tabs('exists', title)){
-			$('#tabs').tabs('select', title);
+		if (jQuery('#tabs').tabs('exists', title)){
+			jQuery('#tabs').tabs('select', title);
 		} else {
 			//alert(menuId);
 			var url = "${contextPath}/my/menu.do?method=jump&id="+menuId;
@@ -52,28 +52,28 @@
 	}
 
 	function openTabs(subtitle,menuId){
-	  if(!$('#tabs').tabs('exists',subtitle)){
+	  if(!jQuery('#tabs').tabs('exists',subtitle)){
 		//alert(menuId);
 		openTabSize = openTabSize + 1;
 		if(openTabSize > 10){
-			$('#tabs').tabs('close', 1);//关闭第二个,第一个为我的桌面，不能关闭
+			jQuery('#tabs').tabs('close', 1);//关闭第二个,第一个为我的桌面，不能关闭
 		}
 		var url = "${contextPath}/my/menu.do?method=jump&id="+menuId;
-		$('#tabs').tabs('add',{
+		jQuery('#tabs').tabs('add',{
 			title:subtitle,
 			content:createFrame(url),
 			closable:true,
 			icon:"icon-gears"
 		});
 	  }else{
-		$('#tabs').tabs('select',subtitle);
-		$('#mm-tabupdate').click();
+		jQuery('#tabs').tabs('select',subtitle);
+		jQuery('#mm-tabupdate').click();
 	  }
 	tabClose();
   }
 
 	function openThemeWin(){
-		 $('#themeWin').window('open');
+		 jQuery('#themeWin').window('open');
 	}
 	
     function changeTheme(){
@@ -90,7 +90,7 @@
 							location.reload();
 							//var css = document.getElementById("theme_css");
                             //css.href = '${contextPath}/scripts/easyui/themes/'+theme+'/easyui.css'; 
-					        $('#themeWin').window('close');
+					        jQuery('#themeWin').window('close');
 					   }
 				 });
 	}
@@ -98,7 +98,7 @@
  
     function showDesktop(){
 		  var url = "${contextPath}/mx/user/portal?easyuiPortal=true";
-          $('#cc').attr('src', url);
+          jQuery('#cc').attr('src', url);
 	 }
 
   	 function relogin(){
@@ -109,8 +109,12 @@
 	}
  
     jQuery(document).ready(function(){
-        $('#themeWin').window('close'); 
+        jQuery('#themeWin').window('close'); 
 	});
+
+	function closeThemeWin(){
+		jQuery('#themeWin').window('close'); 
+	}
 	
 </script>
 </head>
@@ -249,9 +253,15 @@
 		<div id="closeright">当前页右侧全部关闭</div>
 		<div id="closeleft">当前页左侧全部关闭</div>
 	</div>
-
+<script type="text/javascript">
+	var waitTime=1000; //1 秒 
+	timer=setInterval("OnTimer()",1000); 
+	function OnTimer(){ 
+		waitTime=waitTime-1000; 
+		if(waitTime==0){ 
+			jQuery('#themeWin').window('close'); 
+		}
+	}
+</script>
 </body>
 </html>
-<script type="text/javascript">
-   
-</script>
