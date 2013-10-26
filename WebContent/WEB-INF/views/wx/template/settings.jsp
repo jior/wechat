@@ -108,6 +108,11 @@ limitations under the License.
 <br />
 <input type="button" class="btnGreen" value="确定"
 	onclick="javascript:submitRequest(this.form);" /> 
+<c:if test="${not empty categoryId && categoryId > 0 }">
+&nbsp;
+<input type="button" class="btnGreen" value="返回"
+	onclick="javascript:history.back();" />
+</c:if>
 <br />
 <br />
 </div>

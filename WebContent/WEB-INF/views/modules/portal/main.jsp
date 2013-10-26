@@ -28,7 +28,7 @@
 <link href="<%=request.getContextPath()%>/icons/styles.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/jquery.easyui.min.js"></script>
-<script type="text/javascript" src='${contextPath}/scripts/easyui.simple.extend.js'></script> 
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui.simple.extend.js"></script> 
 <script type="text/javascript">
 
     var openTabSize = 0;  
@@ -73,7 +73,7 @@
   }
 
 	function openThemeWin(){
-		 $('#themeWin').window('open');
+		 jQuery('#themeWin').window('open');
 	}
 	
     function changeTheme(){
@@ -109,7 +109,7 @@
 	}
  
     jQuery(document).ready(function(){
-        $('#themeWin').window('close'); 
+        jQuery('#themeWin').window('close'); 
 	});
 	
 </script>

@@ -107,6 +107,17 @@ limitations under the License.
 		openWindow(link,self,x, y, 745, 480);
 	}
 
+	function chooseLink(){
+		var link = '<%=request.getContextPath()%>/mx/wx/wxContent/chooseOne?elementId=url&elementName=url';
+		var x=100;
+		var y=100;
+		if(is_ie) {
+			x=document.body.scrollLeft+event.clientX-event.offsetX-200;
+			y=document.body.scrollTop+event.clientY-event.offsetY-200;
+		}
+		openWindow(link,self,x, y, 745, 480);
+	}
+
 
 </script>
 </head>
@@ -192,7 +203,14 @@ limitations under the License.
 				   value="${wxCategory.sort}"/>&nbsp;(同级栏目顺序越大越靠前)
 		</td>
 	</tr>
-	 
+	<tr>
+		<td width="15%" align="left" valign="middle">链接</td>
+		<td align="left" valign="middle">
+			<input id="url" name="url" type="text" size="50"
+			       class="easyui-validatebox x-text" readonly 
+				   value="${wxCategory.url}" onclick="javascript:chooseLink();"/>  
+		</td>
+	</tr> 
 	<tr>
 		<td width="20%" align="left">是否官网显示</td>
 		<td align="left">

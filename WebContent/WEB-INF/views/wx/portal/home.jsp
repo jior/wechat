@@ -146,10 +146,10 @@
 </div>
     
     
-    <!--修改密码窗口-->
-    <div id="w" class="easyui-window" title="修改密码" collapsible="false" 
+    <!--选择主题窗口-->
+    <div id="w" class="easyui-window" title="切换主题" collapsible="false" 
          minimizable="false" maximizable="false" icon="icon-save"  
-		 style="width: 300px; height: 150px; padding: 5px; background: #fafafa;">
+		 style="width: 300px; height: 150px; padding: 5px; background: #fafafa;display:hidden;">
         <div class="easyui-layout" fit="true">
             <div region="center" border="false" style="padding: 10px; background: #fff; border: 1px solid #ccc;">
                 <table cellpadding=3>

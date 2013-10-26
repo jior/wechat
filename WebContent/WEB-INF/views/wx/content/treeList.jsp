@@ -341,7 +341,7 @@ limitations under the License.
 			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-remove'"
 			   onclick="javascript:deleteSelections();">删除</a>  
 			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-view'"
-			   onclick="javascript:viewSite();">预览手机网站</a>  
+			   onclick="javascript:viewSite();">预览我的微网站</a>  
 		   </div> 
 		  </div> 
 		  <div data-options="region:'center',border:true">

@@ -43,13 +43,20 @@ public interface WxTemplateService {
 	 */
 	@Transactional
 	void deleteByIds(List<Long> ids);
-
+	
 	/**
 	 * 根据主键获取一条记录
 	 * 
 	 * @return
 	 */
 	WxTemplate getWxTemplate(Long id);
+
+	/**
+	 * 根据主键获取一条记录
+	 * 
+	 * @return
+	 */
+	WxTemplate getWxTemplate(Long id, boolean cache);
 	
 	/**
 	 * 根据uuid获取一条记录

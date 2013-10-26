@@ -52,10 +52,14 @@ oWin.style.display = "none"
 <div id="win">
 <ul class="dropdown"> 
 <#if categories?exists>
-<#list  categories as category>
+<#list categories as category>
+<#if category.url?exists && category.url != ''>
+<li><a href="${category.url}"><span>${category.name}</span></a></li>
+<#else>
 <li><a href="${contextPath}/website/wx/content/list/${category.id?string('####')}"><span>${category.name}</span></a></li>
-</#list>  
-</#if>  	
+</#if>
+</#list> 
+</#if>   	
 <div class="clr"></div>
 </ul>
 </div>

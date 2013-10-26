@@ -143,11 +143,9 @@ limitations under the License.
 			var parent_window = getOpener();
 			var x_elementId = parent_window.document.getElementById("${elementId}");
             var x_element_name = parent_window.document.getElementById("${elementName}");
-			if(confirm("您确定选择'"+selected.path+"'吗？")){
-			    x_elementId.value=selected.path;
-			    x_element_name.value=selected.path;
-			    window.close();
-			}
+			x_elementId.value=selected.path;
+			x_element_name.value=selected.path;
+			window.close();
 	    }
 	}
  

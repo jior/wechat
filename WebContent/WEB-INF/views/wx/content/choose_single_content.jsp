@@ -47,7 +47,7 @@
         var selectedNodes  = zTree.getCheckedNodes(true);
 
 		if(selectedNodes.length>1){
-			alert("最多可以选择1项，请重新选择！");
+			alert("只能选择其中一项，请重新选择！");
 			return;
 		}
 
@@ -62,9 +62,9 @@
 			if (sx_name != ''){ 
 				sx_name += ','; 
 			}
-			if(selectedNodes[i].url){
-			  sx += selectedNodes[i].url; 
-              sx_name += selectedNodes[i].url; 
+			if(selectedNodes[i].id){
+			  sx += "/mx/wx/content/view/"+selectedNodes[i].id; 
+              sx_name += "/mx/wx/content/view/"+selectedNodes[i].id; 
 			}
         }  
 

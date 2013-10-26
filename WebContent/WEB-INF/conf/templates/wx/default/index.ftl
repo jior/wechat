@@ -71,15 +71,18 @@ width:960px;
 <div id="win">
 <ul class="dropdown"> 
 <#if categories?exists>
-<#list  categories as category>
+<#list categories as category>
+<#if category.url?exists && category.url != ''>
+<li><a href="${category.url}"><span>${category.name}</span></a></li>
+<#else>
 <li><a href="${contextPath}/website/wx/content/list/${category.id?string('####')}"><span>${category.name}</span></a></li>
+</#if>
 </#list> 
 </#if> 
 <div class="clr"></div>
 </ul>
 </div> 
  
-
 <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
   <tr>
     <td height="60"> </td>
@@ -87,25 +90,26 @@ width:960px;
 </table>
 
 <ul class="cateul">
-
 <#if categories?exists>
-<#list  categories as category>   
+<#list categories as item>   
 <li class="li0 ">
-<a href="${contextPath}/website/wx/content/list/${category.id?string('####')}">
-<div class="menubtn">
-<#if category.coverIcon?exists>
-<div class="menuimg"><img src="${contextPath}/${category.coverIcon}" /></div>
+<#if item.url?exists && item.url != ''>
+<a href="${item.url}">
+<#else>
+<a href="${contextPath}/website/wx/content/list/${item.id?string('####')}">
 </#if>
-<div class="menutitle">${category.name}</div>
+<div class="menubtn">
+<#if item.coverIcon?exists>
+<div class="menuimg"><img src="${contextPath}/${item.coverIcon}" /></div>
+</#if>
+<div class="menutitle">${item.name}</div>
 </div>
 </a>
 </li>
 </#list> 
 </#if> 
- 	
 <div class="clr"></div>
 </ul>
-
 
 <div style="display:none"> </div>
 

@@ -25,6 +25,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>登录<%=SystemConfig.getString("res_system_name")%></title>
 <link href="${contextPath}/scripts/easyui/themes/gray/easyui.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/core.css">
 <style type="text/css">
 .default {
 	font-weight:normal;
@@ -132,7 +133,7 @@
 	});
 </script>
 </head>
-<body <%if(!debug){%>onload="openMainPage();"<%}%>>
+<body>
     <div id="loginWindow" class="easyui-window" title="Login Form" iconcls="icon-login"
         style="width: 300px; height: 180px; padding: 5px; background: #fafafa;">
         <div border="false" style="padding-left: 30px;  border: 1px solid #ccc;">
@@ -144,7 +145,7 @@
                     </td>
                     <td>
                         <input id="x" name="x" class="easyui-validatebox input" required="true" validtype="length[3,20]"
-                            style="width: 150px;" datatype="string" nullable="no" maxsize="20" chname="用户名" value="root" />
+                            style="width: 150px;" datatype="string" nullable="no" maxsize="20" chname="用户名" value="" />
                     </td>
                 </tr>
                 <tr>
@@ -153,16 +154,17 @@
                     </td>
                     <td>
                         <input type="password" id="y" name="y" style="width: 150px;" class="easyui-validatebox input"
-                            required="true" validtype="length[6,20]" datatype="string" nullable="no" maxsize="20" chname="密码" value="111111"/>
+                            required="true" validtype="length[6,20]" datatype="string" nullable="no" maxsize="20" chname="密码" value=""/>
                     </td>
                 </tr>
+				<tr>
+				  <td>&nbsp;</td>
+				  <td>
+				  <input type="submit" value=" 登 录 " onclick="javascript:doLogin();" class="btnGreen">
+				  </td>
+				</tr>
             </table>
             </html:form>
-        </div>
-             
-        <div class="toolbar" style="text-align: center; margin-top: 20px;">
-             <a href="#" class="easyui-linkbutton" iconcls="icon-ok" id="btnLogin" style="margin-left: 2px;" 
-			    onclick="javascript:doLogin();"> 登 录 </a>
         </div>
     </div>
 </body>

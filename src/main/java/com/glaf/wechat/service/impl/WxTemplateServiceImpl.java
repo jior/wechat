@@ -32,6 +32,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.glaf.core.cache.CacheFactory;
 import com.glaf.core.config.SystemProperties;
 import com.glaf.core.dao.EntityDAO;
 import com.glaf.core.id.IdGenerator;
@@ -98,20 +99,31 @@ public class WxTemplateServiceImpl implements WxTemplateService {
 	}
 
 	public WxTemplate getWxTemplate(Long id) {
+		return this.getWxTemplate(id, true);
+	}
+
+	public WxTemplate getWxTemplate(Long id, boolean cache) {
 		if (id == null) {
 			return null;
 		}
 		WxTemplate wxTemplate = wxTemplateMapper.getWxTemplateById(id);
 		if (wxTemplate != null && StringUtils.isNotEmpty(wxTemplate.getPath())) {
-			String filename = SystemProperties.getAppPath()
-					+ wxTemplate.getPath();
-			String content = null;
-			try {
-				content = new String(FileUtils.getBytes(filename), "UTF-8");
-			} catch (IOException ex) {
-				ex.printStackTrace();
+			String cacheKey = "wx_tpl_" + wxTemplate.getPath();
+			if (cache && CacheFactory.getString(cacheKey) != null) {
+				logger.debug("从缓存中获取模板");
+				wxTemplate.setContent(CacheFactory.getString(cacheKey));
+			} else {
+				String filename = SystemProperties.getAppPath()
+						+ wxTemplate.getPath();
+				String content = null;
+				try {
+					content = new String(FileUtils.getBytes(filename), "UTF-8");
+					CacheFactory.put(cacheKey, content);
+				} catch (IOException ex) {
+					ex.printStackTrace();
+				}
+				wxTemplate.setContent(content);
 			}
-			wxTemplate.setContent(content);
 		}
 		return wxTemplate;
 	}
@@ -148,6 +160,10 @@ public class WxTemplateServiceImpl implements WxTemplateService {
 		} else {
 			wxTemplate.setLastUpdateDate(new Date());
 			wxTemplateMapper.updateWxTemplate(wxTemplate);
+			if (StringUtils.isNotEmpty(wxTemplate.getPath())) {
+				String cacheKey = "wx_tpl_" + wxTemplate.getPath();
+				CacheFactory.remove(cacheKey);
+			}
 		}
 	}
 
