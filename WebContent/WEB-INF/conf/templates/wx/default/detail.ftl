@@ -44,7 +44,7 @@ oWin.style.display = "none"
 <div id="ui-header">
 <div class="fixed">
 <a class="ui-title" id="popmenu">选择分类</a>
-<a class="ui-btn-left_pre" href="${serviceUrl}/website/wx/content/list/${category.id?string('####')}"></a>
+<a class="ui-btn-left_pre" href="${serviceUrl}/website/wx/content/list/${category.stringId}"></a>
 <a class="ui-btn-right" href="${serviceUrl}/website/wx/content/detail/${content.uuid}"></a>
 </div>
 </div>
@@ -57,7 +57,7 @@ oWin.style.display = "none"
 <#if category.url?exists && category.url != ''>
 <li><a href="${category.url}"><span>${category.name}</span></a></li>
 <#else>
-<li><a href="${serviceUrl}/website/wx/content/list/${category.id?string('####')}"><span>${category.name}</span></a></li>
+<li><a href="${serviceUrl}/website/wx/content/list/${category.stringId}"><span>${category.name}</span></a></li>
 </#if>
 </#list> 
 </#if>   	

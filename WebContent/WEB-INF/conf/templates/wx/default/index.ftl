@@ -62,8 +62,8 @@ width:960px;
 <div class="fixed">
 <a class="ui-title" id="popmenu">选择分类</a>
 <a class="ui-btn-left_pre" href="#"></a> 
-<a class="ui-btn-left_pre1" href="#"></a> 
-<a class="ui-btn-right2" href="#"></a>
+<!-- <a class="ui-btn-left_pre1" href="#"></a> 
+<a class="ui-btn-right2" href="#"></a> -->
 <a class="ui-btn-right" href="${serviceUrl}/website/wx/content/index/${userId}"></a>
 </div>
 </div>
@@ -75,7 +75,7 @@ width:960px;
 <#if category.url?exists && category.url != ''>
 <li><a href="${category.url}"><span>${category.name}</span></a></li>
 <#else>
-<li><a href="${serviceUrl}/website/wx/content/list/${category.id?string('####')}"><span>${category.name}</span></a></li>
+<li><a href="${serviceUrl}/website/wx/content/list/${category.stringId}"><span>${category.name}</span></a></li>
 </#if>
 </#list> 
 </#if> 
@@ -91,12 +91,12 @@ width:960px;
 
 <ul class="cateul">
 <#if categories?exists>
-<#list categories as item>   
-<li class="li0 ">
+<#list categories as item>  
+<li class="li${item_index%3} ">
 <#if item.url?exists && item.url != ''>
 <a href="${item.url}">
 <#else>
-<a href="${serviceUrl}/website/wx/content/list/${item.id?string('####')}">
+<a href="${serviceUrl}/website/wx/content/list/${item.stringId}">
 </#if>
 <div class="menubtn">
 <#if item.coverIcon?exists>

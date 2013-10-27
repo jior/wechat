@@ -267,6 +267,10 @@ public class WxCategory implements java.io.Serializable, JSONable {
 		return sort;
 	}
 
+	public String getStringId() {
+		return String.valueOf(id);
+	}
+
 	public String getTreeId() {
 		return treeId;
 	}

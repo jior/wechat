@@ -130,7 +130,7 @@ public class WxPublicContentController {
 				User user = IdentityFactory.getUser(actorId);
 				String hashedPath = WechatUtils.getHashedPath(actorId);
 				context.put("hashedPath", hashedPath);
-				context.put("userId", user.getId());
+				context.put("userId", String.valueOf(user.getId()));
 				context.put("actorId", actorId);
 				context.put("actorIdMD5Hex", DigestUtils.md5Hex(actorId));
 				context.put("content", wxContent);
@@ -143,11 +143,16 @@ public class WxPublicContentController {
 				query3.createBy(actorId);
 				query3.parentId(0L);
 				query3.type("category");
+				query3.locked(0);
 				List<WxCategory> list3 = wxCategoryService.list(query3);
 				if (list3 != null && !list3.isEmpty()) {
 					for (WxCategory cat : list3) {
 						if (StringUtils.isNotEmpty(cat.getUrl())) {
 							if (StringUtils.startsWith(cat.getUrl(), "/mx/wx/")) {
+								cat.setUrl(serviceUrl + cat.getUrl());
+							}
+							if (StringUtils.startsWith(cat.getUrl(),
+									"/website/wx/")) {
 								cat.setUrl(serviceUrl + cat.getUrl());
 							}
 						}
@@ -196,7 +201,7 @@ public class WxPublicContentController {
 						.getParameterMap(request);
 				String hashedPath = WechatUtils.getHashedPath(actorId);
 				context.put("hashedPath", hashedPath);
-				context.put("userId", userId);
+				context.put("userId", String.valueOf(user.getId()));
 				context.put("actorId", actorId);
 				context.put("actorIdMD5Hex", DigestUtils.md5Hex(actorId));
 				context.put("template", template);
@@ -215,12 +220,17 @@ public class WxPublicContentController {
 				query3.createBy(actorId);
 				query3.parentId(0L);
 				query3.type("category");
+				query3.locked(0);
 				List<WxCategory> list3 = wxCategoryService.list(query3);
 				context.put("categories", list3);
 				if (list3 != null && !list3.isEmpty()) {
 					for (WxCategory cat : list3) {
 						if (StringUtils.isNotEmpty(cat.getUrl())) {
 							if (StringUtils.startsWith(cat.getUrl(), "/mx/wx/")) {
+								cat.setUrl(serviceUrl + cat.getUrl());
+							}
+							if (StringUtils.startsWith(cat.getUrl(),
+									"/website/wx/")) {
 								cat.setUrl(serviceUrl + cat.getUrl());
 							}
 						}
@@ -266,7 +276,7 @@ public class WxPublicContentController {
 					User user = IdentityFactory.getUser(actorId);
 					String hashedPath = WechatUtils.getHashedPath(actorId);
 					context.put("hashedPath", hashedPath);
-					context.put("userId", user.getId());
+					context.put("userId", String.valueOf(user.getId()));
 					context.put("actorId", category.getCreateBy());
 					context.put("actorIdMD5Hex",
 							DigestUtils.md5Hex(category.getCreateBy()));
@@ -320,6 +330,7 @@ public class WxPublicContentController {
 					query3.createBy(category.getCreateBy());
 					query3.parentId(0L);
 					query3.type("category");
+					query3.locked(0);
 					List<WxCategory> list3 = wxCategoryService.list(query3);
 					context.put("categories", list3);
 					if (list3 != null && !list3.isEmpty()) {
@@ -327,6 +338,10 @@ public class WxPublicContentController {
 							if (StringUtils.isNotEmpty(cat.getUrl())) {
 								if (StringUtils.startsWith(cat.getUrl(),
 										"/mx/wx/")) {
+									cat.setUrl(serviceUrl + cat.getUrl());
+								}
+								if (StringUtils.startsWith(cat.getUrl(),
+										"/website/wx/")) {
 									cat.setUrl(serviceUrl + cat.getUrl());
 								}
 							}
@@ -428,7 +443,7 @@ public class WxPublicContentController {
 				User user = IdentityFactory.getUser(actorId);
 				String hashedPath = WechatUtils.getHashedPath(actorId);
 				context.put("hashedPath", hashedPath);
-				context.put("userId", user.getId());
+				context.put("userId", String.valueOf(user.getId()));
 				context.put("actorId", actorId);
 				context.put("actorIdMD5Hex", DigestUtils.md5Hex(actorId));
 				context.put("content", wxContent);
@@ -441,12 +456,17 @@ public class WxPublicContentController {
 				query3.createBy(actorId);
 				query3.parentId(0L);
 				query3.type("category");
+				query3.locked(0);
 				List<WxCategory> list3 = wxCategoryService.list(query3);
 
 				if (list3 != null && !list3.isEmpty()) {
 					for (WxCategory cat : list3) {
 						if (StringUtils.isNotEmpty(cat.getUrl())) {
 							if (StringUtils.startsWith(cat.getUrl(), "/mx/wx/")) {
+								cat.setUrl(serviceUrl + cat.getUrl());
+							}
+							if (StringUtils.startsWith(cat.getUrl(),
+									"/website/wx/")) {
 								cat.setUrl(serviceUrl + cat.getUrl());
 							}
 						}

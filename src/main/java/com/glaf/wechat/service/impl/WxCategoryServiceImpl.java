@@ -180,7 +180,7 @@ public class WxCategoryServiceImpl implements WxCategoryService {
 
 	@Transactional
 	public void save(WxCategory wxCategory) {
-		if (wxCategory.getId() == 0) {
+		if ( wxCategory.getId() == 0) {
 			wxCategory.setId(idGenerator.nextId());
 			wxCategory.setCreateDate(new Date());
 			wxCategory.setUuid(UUID32.getUUID());

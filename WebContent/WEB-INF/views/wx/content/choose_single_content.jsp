@@ -63,8 +63,8 @@
 				sx_name += ','; 
 			}
 			if(selectedNodes[i].id){
-			  sx += "/mx/wx/content/view/"+selectedNodes[i].id; 
-              sx_name += "/mx/wx/content/view/"+selectedNodes[i].id; 
+			  sx += "/website/wx/content/view/"+selectedNodes[i].id; 
+              sx_name += "/website/wx/content/view/"+selectedNodes[i].id; 
 			}
         }  
 

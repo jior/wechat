@@ -35,7 +35,7 @@ oWin.style.display = "none"
 <div class="fixed">
 <a class="ui-title" id="popmenu">选择分类</a>
 <a class="ui-btn-left_pre" href="${serviceUrl}/website/wx/content/index/${userId}"></a>
-<a class="ui-btn-right" href="${serviceUrl}/website/wx/content/list/${category.id?string('####')}"></a>
+<a class="ui-btn-right" href="${serviceUrl}/website/wx/content/list/${category.stringId}"></a>
 </div>
 </div>
 <div id="overlay"></div>
@@ -46,7 +46,7 @@ oWin.style.display = "none"
 <#if item.url?exists && item.url != ''>
 <li><a href="${item.url}"><span>${item.name}</span></a></li>
 <#else>
-<li><a href="${serviceUrl}/website/wx/content/list/${item.id?string('####')}"><span>${item.name}</span></a></li>
+<li><a href="${serviceUrl}/website/wx/content/list/${item.stringId}"><span>${item.name}</span></a></li>
 </#if>
 </#list>  	
 </#if>
@@ -96,7 +96,7 @@ oWin.style.display = "none"
 <section class="c-p-sec">
 <#if (pageNo > 1) >
 <div class="c-p-pre  c-p-grey  "><span class="c-p-p"><em></em></span>
-<a href="${serviceUrl}/website/wx/content/list/${item.id?string('####')}?pageNo=${pageNo-1}" >上一页</a>
+<a href="${serviceUrl}/website/wx/content/list/${item.stringId}?pageNo=${pageNo-1}" >上一页</a>
 </div>
 </#if>
 <div class="c-p-cur">
@@ -105,7 +105,7 @@ oWin.style.display = "none"
 </div>
 <#if (pageNo != pageSize) && (pageNo+1 <= pageSize)>
 <div class="c-p-next  c-p-grey">
-<a href="${serviceUrl}/website/wx/content/list/${item.id?string('####')}?pageNo=${pageNo+1}">下一页</a>
+<a href="${serviceUrl}/website/wx/content/list/${item.stringId}?pageNo=${pageNo+1}">下一页</a>
 <span class="c-p-p"><em></em></span>
 </div>
 </#if>
@@ -115,7 +115,7 @@ oWin.style.display = "none"
 </div>
 <script>
 function dourl(url){
-location.href= url;
+  location.href= url;
 }
 </script>
 <div style="display:none"> </div>
