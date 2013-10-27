@@ -51,6 +51,10 @@ public class KeywordsMessageFilter extends AbstractMessageFilter implements
 		if (message instanceof TextMessage) {
 			TextMessage msg = (TextMessage) message;
 			String content = msg.getContent();
+			if (StringUtils.equals(content, "Ö÷Ò³")
+					|| StringUtils.equals(content, "Ê×Ò³")) {
+
+			}
 			WxContentService wxContentService = ContextFactory
 					.getBean("wxContentService");
 			WxKeywordsService wxKeywordsService = ContextFactory
