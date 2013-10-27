@@ -45,12 +45,16 @@ import com.glaf.wechat.sdk.message.LinkMessage;
 import com.glaf.wechat.sdk.message.LocationMessage;
 import com.glaf.wechat.sdk.message.ResponseNewsMessage;
 import com.glaf.wechat.sdk.message.TextMessage;
+import com.glaf.wechat.sdk.message.VideoMessage;
+import com.glaf.wechat.sdk.message.VoiceMessage;
 import com.glaf.wechat.sdk.message.handler.EventMessageHandler;
 import com.glaf.wechat.sdk.message.handler.IMessageHandler;
 import com.glaf.wechat.sdk.message.handler.ImageMessageHandler;
 import com.glaf.wechat.sdk.message.handler.LinkMessageHandler;
 import com.glaf.wechat.sdk.message.handler.LocationMessageHandler;
 import com.glaf.wechat.sdk.message.handler.TextMessageHandler;
+import com.glaf.wechat.sdk.message.handler.VideoMessageHandler;
+import com.glaf.wechat.sdk.message.handler.VoiceMessageHandler;
 import com.glaf.wechat.sdk.message.response.handler.IResponseMessageHandler;
 import com.glaf.wechat.sdk.message.response.handler.MusicResponseMessageHandler;
 import com.glaf.wechat.sdk.message.response.handler.NewsResponseMessageHandler;
@@ -141,7 +145,14 @@ public class WeixinExecutor implements IMessage {
 		} else if (StringUtils.equalsIgnoreCase(type, MESSAGE_LOCATION)) {
 			message = new LocationMessage();
 			messageHandler = new LocationMessageHandler();
+		} else if (StringUtils.equalsIgnoreCase(type, MESSAGE_VOICE)) {
+			message = new VoiceMessage();
+			messageHandler = new VoiceMessageHandler();
+		} else if (StringUtils.equalsIgnoreCase(type, MESSAGE_VIDEO)) {
+			message = new VideoMessage();
+			messageHandler = new VideoMessageHandler();
 		}
+
 		message.setRoot(root);
 		message.setCustomer(user.getActorId());
 		message.setContextPath(request.getContextPath());
@@ -160,6 +171,9 @@ public class WeixinExecutor implements IMessage {
 		this.responseMessage = null;
 		this.request = request;
 		this.response = response;
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("text/xml;charset=UTF-8");
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		logger.debug("params:" + params);
 		String echostr = request.getParameter("echostr");
@@ -173,9 +187,6 @@ public class WeixinExecutor implements IMessage {
 				response.setContentType("text/plain");
 				out.write(echostr);
 			} else {// do post
-				request.setCharacterEncoding("UTF-8");
-				response.setCharacterEncoding("UTF-8");
-				response.setContentType("text/xml;charset=UTF-8");
 				try {
 					this.parseInputStream();// parse message
 				} catch (Exception ex) {

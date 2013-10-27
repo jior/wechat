@@ -86,8 +86,7 @@ public class KeywordsMessageFilter extends AbstractMessageFilter implements
 							}
 						} else {
 							String url = message.getServiceUrl()
-									+ "/website/wx/content/view/"
-									+ c.getId();
+									+ "/website/wx/content/view/" + c.getId();
 							art.setUrl(url);
 						}
 						if (StringUtils.isNotEmpty(c.getPicUrl())) {
@@ -98,6 +97,15 @@ public class KeywordsMessageFilter extends AbstractMessageFilter implements
 								art.setPicUrl(url);
 							} else {
 								art.setPicUrl(c.getPicUrl());
+							}
+						} else {
+							if (StringUtils.isNotEmpty(c.getIcon())) {
+								if (StringUtils.startsWith(c.getIcon(),
+										"/wx/upload/")) {
+									String url = message.getServiceUrl()
+											+ c.getIcon();
+									art.setPicUrl(url);
+								}
 							}
 						}
 						newsMessage.addItemArticle(art);

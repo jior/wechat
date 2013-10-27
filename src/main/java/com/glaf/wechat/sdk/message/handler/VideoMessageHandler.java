@@ -20,10 +20,10 @@ package com.glaf.wechat.sdk.message.handler;
 import org.dom4j.Element;
 
 import com.glaf.wechat.sdk.message.Message;
-import com.glaf.wechat.sdk.message.TextMessage;
-import com.glaf.wechat.sdk.message.filter.KeywordsMessageFilter;
+import com.glaf.wechat.sdk.message.VideoMessage;
 import com.glaf.wechat.sdk.message.filter.MessageFilterChain;
 import com.glaf.wechat.sdk.message.filter.DefaultResponseMessageFilter;
+import com.glaf.wechat.sdk.message.filter.HelpMessageFilter;
 
 /**
  * handle text message <br>
@@ -31,12 +31,12 @@ import com.glaf.wechat.sdk.message.filter.DefaultResponseMessageFilter;
  * create it by handling directly
  * 
  */
-public class TextMessageHandler extends AbstractMessageHandler {
+public class VideoMessageHandler extends AbstractMessageHandler {
 
 	@Override
 	public Message handleSpecialMessage(Message message) {
 		MessageFilterChain filterChain = new MessageFilterChain();
-		filterChain.addFilter(new KeywordsMessageFilter());
+		filterChain.addFilter(new HelpMessageFilter());
 		// 加入默认的响应处理类
 		filterChain.addFilter(new DefaultResponseMessageFilter());
 		return filterChain.doFilterChain(message);
@@ -44,9 +44,10 @@ public class TextMessageHandler extends AbstractMessageHandler {
 
 	@Override
 	protected void parseSpecialMessage(Message message, Element root) {
-		TextMessage msg = (TextMessage) message;
+		VideoMessage msg = (VideoMessage) message;
 		msg.setMsgType(message.getMsgType());
-		msg.setContent(root.elementText(TAG_CONTENT));
+		msg.setThumbMediaId(root.elementText(TAG_THUMBMEDIAID));
+		msg.setMediaId(root.elementText(TAG_MEDIAID));
 	}
 
 }

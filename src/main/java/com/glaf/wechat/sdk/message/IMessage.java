@@ -29,6 +29,8 @@ public interface IMessage {
 	public static final String MESSAGE_LINK = "link";
 	public static final String MESSAGE_LOCATION = "location";
 	public static final String MESSAGE_TEXT = "text";
+	public static final String MESSAGE_VOICE = "voice";
+	public static final String MESSAGE_VIDEO = "video";
 
 	// 响应的消息类型
 	public static final String MESSAGE_RESPONSE_MUSIC = "music";
@@ -65,5 +67,8 @@ public interface IMessage {
 	public static final String TAG_TOUSERNAME = "ToUserName";
 	public static final String TAG_URL = "Url";
 	public static final String TAG_XML = "xml";
+	public static final String TAG_MEDIAID="MediaId";
+	public static final String TAG_THUMBMEDIAID="thumbMediaId";
+	public static final String TAG_FORMAT ="Format";
 
 }
