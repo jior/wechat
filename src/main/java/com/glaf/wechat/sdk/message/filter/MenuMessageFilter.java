@@ -45,6 +45,7 @@ public class MenuMessageFilter extends AbstractMessageFilter implements
 			ResponseMenuMessage menuMessage = new ResponseMenuMessage();
 			menuMessage.setDescription(menu.getDesc());
 			menuMessage.setTitle(menu.getName());
+
 			if (StringUtils.isNotEmpty(menu.getUrl())) {
 				if (StringUtils.startsWith(menu.getUrl(), "/website/wx/")) {
 					String url = message.getServiceUrl() + menu.getUrl();
@@ -52,17 +53,13 @@ public class MenuMessageFilter extends AbstractMessageFilter implements
 				} else {
 					menuMessage.setUrl(menu.getUrl());
 				}
-			} else {
-				String url = message.getServiceUrl()
-						+ "/website/wx/content/view/" + menu.getId();
-				menuMessage.setUrl(url);
 			}
-			if (StringUtils.isNotEmpty(menu.getPicUrl())) {
-				if (StringUtils.startsWith(menu.getPicUrl(), "/website/wx/")) {
-					String url = message.getServiceUrl() + menu.getPicUrl();
+			if (StringUtils.isNotEmpty(menu.getIcon())) {
+				if (StringUtils.startsWith(menu.getIcon(), "/wx/upload/")) {
+					String url = message.getServiceUrl() + menu.getIcon();
 					menuMessage.setPicUrl(url);
 				} else {
-					menuMessage.setPicUrl(menu.getPicUrl());
+					menuMessage.setPicUrl(menu.getIcon());
 				}
 			}
 			return menuMessage;

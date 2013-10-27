@@ -23,10 +23,24 @@ package com.glaf.wechat.sdk.message;
  */
 public class TextMessage extends Message {
 	private static final long serialVersionUID = 1L;
+	protected String author;
+	
 	protected String content;
+	
+	public TextMessage(){
+		
+	}
+
+	public String getAuthor() {
+		return author;
+	}
 
 	public String getContent() {
 		return content;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
 	}
 
 	public void setContent(String content) {

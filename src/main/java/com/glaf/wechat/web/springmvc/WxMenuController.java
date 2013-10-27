@@ -356,7 +356,6 @@ public class WxMenuController {
 		wxMenu.setIconCls(request.getParameter("iconCls"));
 		wxMenu.setLocked(RequestUtils.getInt(request, "locked"));
 		wxMenu.setName(request.getParameter("name"));
-		wxMenu.setKey(request.getParameter("key"));
 		wxMenu.setType(request.getParameter("type"));
 		wxMenu.setGroup(request.getParameter("group"));
 		wxMenu.setUrl(request.getParameter("url"));
@@ -385,7 +384,6 @@ public class WxMenuController {
 			wxMenu.setIconCls(request.getParameter("iconCls"));
 			wxMenu.setLocked(RequestUtils.getInt(request, "locked"));
 			wxMenu.setName(request.getParameter("name"));
-			wxMenu.setKey(request.getParameter("key"));
 			wxMenu.setType(request.getParameter("type"));
 			wxMenu.setGroup(request.getParameter("group"));
 			wxMenu.setUrl(request.getParameter("url"));

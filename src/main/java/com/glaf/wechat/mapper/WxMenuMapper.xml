@@ -151,9 +151,6 @@
 			<if test="type != null">
 				TYPE_ = #{type, jdbcType=VARCHAR},
 			</if>
-			<if test="key != null">
-				KEY_ = #{key, jdbcType=VARCHAR},
-			</if>
 			<if test="url != null">
 				URL_ = #{url, jdbcType=VARCHAR},
 			</if>

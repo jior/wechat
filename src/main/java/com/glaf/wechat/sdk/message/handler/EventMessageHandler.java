@@ -18,6 +18,8 @@
 package com.glaf.wechat.sdk.message.handler;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.dom4j.Element;
 
 import com.glaf.wechat.sdk.message.Message;
@@ -25,13 +27,14 @@ import com.glaf.wechat.sdk.message.EventMessage;
 import com.glaf.wechat.sdk.message.filter.MenuMessageFilter;
 import com.glaf.wechat.sdk.message.filter.MessageFilterChain;
 import com.glaf.wechat.sdk.message.filter.DefaultResponseMessageFilter;
-import com.glaf.wechat.sdk.message.filter.GreetingMessageFilter;
 import com.glaf.wechat.sdk.message.filter.SubscribeMessageFilter;
 
 /**
  * handle event message
  */
 public class EventMessageHandler extends AbstractMessageHandler {
+	protected static final Log logger = LogFactory
+			.getLog(EventMessageHandler.class);
 
 	@Override
 	public Message handleSpecialMessage(Message message) {
@@ -45,10 +48,10 @@ public class EventMessageHandler extends AbstractMessageHandler {
 			String eventKey = msg.getEventKey();
 			if (StringUtils.isNotEmpty(eventKey)) {
 				filterChain.addFilter(new MenuMessageFilter());
+				logger.debug("自定义菜单点击事件:" + eventKey);
 			}
 		}
-		// I do not check if it is "subscribe"
-		filterChain.addFilter(new GreetingMessageFilter());
+
 		// 加入默认的响应处理类
 		filterChain.addFilter(new DefaultResponseMessageFilter());
 		return filterChain.doFilterChain(message);

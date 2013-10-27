@@ -56,6 +56,7 @@ import com.glaf.wechat.sdk.message.handler.TextMessageHandler;
 import com.glaf.wechat.sdk.message.handler.VideoMessageHandler;
 import com.glaf.wechat.sdk.message.handler.VoiceMessageHandler;
 import com.glaf.wechat.sdk.message.response.handler.IResponseMessageHandler;
+import com.glaf.wechat.sdk.message.response.handler.MenuResponseMessageHandler;
 import com.glaf.wechat.sdk.message.response.handler.MusicResponseMessageHandler;
 import com.glaf.wechat.sdk.message.response.handler.NewsResponseMessageHandler;
 import com.glaf.wechat.sdk.message.response.handler.TextResponseMessageHandler;
@@ -212,6 +213,10 @@ public class WeixinExecutor implements IMessage {
 				} else if (StringUtils.equalsIgnoreCase(
 						responseMessage.getMsgType(), MESSAGE_RESPONSE_MUSIC)) {
 					responseMessageHandler = new MusicResponseMessageHandler();
+				} else if (StringUtils.equalsIgnoreCase(message.getMsgType(),
+						"event")) {
+					responseMessageHandler = new MenuResponseMessageHandler();
+					responseMsgType = "news";
 				} else {
 					if (responseMessage instanceof ResponseNewsMessage) {
 						responseMsgType = MESSAGE_RESPONSE_NEWS;

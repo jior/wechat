@@ -150,10 +150,12 @@ public class WxMenuServiceImpl implements WxMenuService {
 			wxMenu.setCreateDate(new Date());
 			wxMenu.setUuid(UUID32.getUUID());
 			wxMenu.setTreeId(wxMenu.getId() + "|");
+			wxMenu.setKey("wx_" + wxMenu.getId());
 			wxMenuMapper.insertWxMenu(wxMenu);
 			if (wxMenu.getChildren() != null && !wxMenu.getChildren().isEmpty()) {
 				for (WxMenu child : wxMenu.getChildren()) {
 					child.setId(idGenerator.nextId());
+					child.setKey("wx_" + child.getId());
 					child.setCreateDate(new Date());
 					child.setUuid(UUID32.getUUID());
 					child.setParentId(wxMenu.getId());
@@ -168,6 +170,7 @@ public class WxMenuServiceImpl implements WxMenuService {
 	public void save(WxMenu wxMenu) {
 		if (wxMenu.getId() == 0) {
 			wxMenu.setId(idGenerator.nextId());
+			wxMenu.setKey("wx_" + wxMenu.getId());
 			wxMenu.setCreateDate(new Date());
 			wxMenu.setUuid(UUID32.getUUID());
 			if (wxMenu.getParentId() > 0) {

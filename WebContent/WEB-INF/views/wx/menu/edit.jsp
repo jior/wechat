@@ -186,15 +186,6 @@ limitations under the License.
 		</td>
 	</tr>
 	<tr>
-		<td width="20%" align="left">代码</td>
-		<td align="left">
-            <input id="key" name="key" type="text"  size="50"
-			       class="easyui-validatebox x-text"  
-			       data-options="required:false"
-				   value="${wxMenu.key}"/>
-		</td>
-	</tr> 
-	<tr>
 		<td width="15%" align="left">按钮类型</td>
 		<td align="left">
              <select id="type" name="type">
@@ -220,21 +211,26 @@ limitations under the License.
             <input id="url" name="url" type="text"  size="50"
 			       class="easyui-validatebox x-text"  
 				   value="${wxMenu.url}"/> 
-		    &nbsp;<img src="<%=request.getContextPath()%>/images/link.png" onclick="javascript:editLinks();" border="0"/>&nbsp;
+		    &nbsp;<img src="<%=request.getContextPath()%>/images/link.png" 
+			           title="内部链接"
+			           onclick="javascript:editLinks();" border="0"/>&nbsp;
 		</td>
 	</tr>
 	<tr>
 		<td width="15%" align="left" valign="middle">图标</td>
 		<td align="left" valign="top">
 		     <c:if test="${not empty wxMenu.icon }">
-			     <img src="<%=request.getContextPath()%>/${wxMenu.icon}" width="60" height="60" border="0"/>&nbsp;
+			     <img src="<%=request.getContextPath()%>/${wxMenu.icon}" width="60" height="60" border="0"
+				      />&nbsp;
+				 <br>
 			</c:if>
 			<input id="icon" name="icon" type="text" 
-			       class="easyui-validatebox x-text" size="38"
+			       class="easyui-validatebox x-text" size="50"
 			       data-options="required:false"
 				   value="${wxMenu.icon}" onclick="javascript:chooseImage();"/>
-			&nbsp; <img src="<%=request.getContextPath()%>/images/icon.gif" border="0"  onclick="javascript:chooseImage();"/>
-           <br>用于二级页面菜单及其他菜单信息时的小图标
+			&nbsp; <img src="<%=request.getContextPath()%>/images/icon.gif" border="0" 
+			            title="图标"
+			            onclick="javascript:chooseImage();"/>
 		</td>
 	</tr>
 	<tr>

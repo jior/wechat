@@ -45,6 +45,7 @@ public interface IMessage {
 	// œ˚œ¢±Í«©
 	public static final String TAG_ARTICLECOUNT = "ArticleCount";
 	public static final String TAG_ARTICLES = "Articles";
+	public static final String TAG_AUTHOR = "Author";
 	public static final String TAG_CONTENT = "Content";
 	public static final String TAG_CREATETIME = "CreateTime";
 	public static final String TAG_DESCRIPTION = "Description";
@@ -67,8 +68,8 @@ public interface IMessage {
 	public static final String TAG_TOUSERNAME = "ToUserName";
 	public static final String TAG_URL = "Url";
 	public static final String TAG_XML = "xml";
-	public static final String TAG_MEDIAID="MediaId";
-	public static final String TAG_THUMBMEDIAID="thumbMediaId";
-	public static final String TAG_FORMAT ="Format";
+	public static final String TAG_MEDIAID = "MediaId";
+	public static final String TAG_THUMBMEDIAID = "thumbMediaId";
+	public static final String TAG_FORMAT = "Format";
 
 }

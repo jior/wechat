@@ -29,8 +29,20 @@ public class MenuResponseMessageHandler extends AbstractResponseMessageHandler {
 	@Override
 	public String response(Message message) {
 		ResponseMenuMessage menuMessage = (ResponseMenuMessage) message;
-		StringBuffer buffer = new StringBuffer();
 
+		StringBuffer buffer = new StringBuffer();
+		StringBuffer items = new StringBuffer();
+		StringBuffer item = new StringBuffer();
+
+		item.append(wrapperContent(TAG_TITLE, menuMessage.getTitle(), true))
+				.append(wrapperContent(TAG_DESCRIPTION,
+						menuMessage.getDescription(), true))
+				.append(wrapperContent(TAG_PICURL, menuMessage.getPicUrl(),
+						true))
+				.append(wrapperContent(TAG_URL, menuMessage.getUrl(), true));
+		items.append(wrapperContent(TAG_ITEM, item.toString(), false));
+
+		String articles = wrapperContent(TAG_ARTICLES, items.toString(), false);
 		buffer.append(
 				wrapperContent(TAG_TOUSERNAME, menuMessage.getToUserName(),
 						true))
@@ -39,16 +51,12 @@ public class MenuResponseMessageHandler extends AbstractResponseMessageHandler {
 				.append(wrapperContent(TAG_CREATETIME,
 						menuMessage.getCreateTime() + "", false))
 				.append(wrapperContent(TAG_MSGTYPE, menuMessage.getMsgType(),
-						true));
-
-		buffer.append(wrapperContent(TAG_TITLE, menuMessage.getTitle(), true))
-				.append(wrapperContent(TAG_DESCRIPTION,
-						menuMessage.getDescription(), true))
-				.append(wrapperContent(TAG_URL, menuMessage.getUrl(), true))
-				.append(wrapperContent(TAG_PICURL, menuMessage.getPicUrl(),
-						true));
-
+						true))
+				.append(wrapperContent(TAG_ARTICLECOUNT, 1 + "", false))
+				.append(articles)
+				.append(wrapperContent(TAG_FUNCFLAG, 1 + "", false));
 		return wrapperXmlContent(buffer.toString());
+
 	}
 
 }
