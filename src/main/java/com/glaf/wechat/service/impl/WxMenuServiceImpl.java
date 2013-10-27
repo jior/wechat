@@ -63,6 +63,14 @@ public class WxMenuServiceImpl implements WxMenuService {
 	@Transactional
 	public void deleteById(Long id) {
 		if (id != null) {
+			WxMenuQuery query = new WxMenuQuery();
+			query.parentId(id);
+			List<WxMenu> list = wxMenuMapper.getWxMenus(query);
+			if (list != null && !list.isEmpty()) {
+				for (WxMenu m : list) {
+					wxMenuMapper.deleteWxMenuById(m.getId());
+				}
+			}
 			wxMenuMapper.deleteWxMenuById(id);
 		}
 	}
@@ -173,6 +181,14 @@ public class WxMenuServiceImpl implements WxMenuService {
 			wxMenuMapper.insertWxMenu(wxMenu);
 		} else {
 			wxMenu.setLastUpdateDate(new Date());
+			if (wxMenu.getParentId() > 0) {
+				WxMenu parent = this.getWxMenu(wxMenu.getParentId());
+				if (parent != null && parent.getTreeId() != null) {
+					wxMenu.setTreeId(parent.getTreeId() + wxMenu.getId() + "|");
+				}
+			} else {
+				wxMenu.setTreeId(wxMenu.getId() + "|");
+			}
 			wxMenuMapper.updateWxMenu(wxMenu);
 		}
 	}

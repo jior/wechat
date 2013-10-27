@@ -108,7 +108,7 @@ public class WechatUtils {
 		JSONObject jsonObject = httpRequest(requestUrl, "GET", null);
 		// 如果请求成功
 		if (null != jsonObject) {
-			System.out.println(jsonObject.toJSONString());
+			log.debug(jsonObject.toJSONString());
 			try {
 				accessToken = new AccessToken();
 				accessToken.setToken(jsonObject.getString("access_token"));
@@ -185,6 +185,7 @@ public class WechatUtils {
 	public static JSONObject httpRequest(String requestUrl,
 			String requestMethod, String outputStr) {
 		JSONObject jsonObject = null;
+		HttpsURLConnection httpUrlConn = null;
 		StringBuffer buffer = new StringBuffer();
 		try {
 			// 创建SSLContext对象，并使用我们指定的信任管理器初始化
@@ -193,10 +194,9 @@ public class WechatUtils {
 			sslContext.init(null, tm, new java.security.SecureRandom());
 			// 从上述SSLContext对象中得到SSLSocketFactory对象
 			SSLSocketFactory ssf = sslContext.getSocketFactory();
-
+			log.debug("requestUrl:" + requestUrl);
 			URL url = new URL(requestUrl);
-			HttpsURLConnection httpUrlConn = (HttpsURLConnection) url
-					.openConnection();
+			httpUrlConn = (HttpsURLConnection) url.openConnection();
 			httpUrlConn.setSSLSocketFactory(ssf);
 
 			httpUrlConn.setDoOutput(true);
@@ -233,7 +233,9 @@ public class WechatUtils {
 			// 释放资源
 			inputStream.close();
 			inputStream = null;
-			httpUrlConn.disconnect();
+
+			log.debug("response:" + buffer.toString());
+
 			jsonObject = JSON.parseObject(buffer.toString());
 		} catch (ConnectException ce) {
 			ce.printStackTrace();
@@ -241,6 +243,10 @@ public class WechatUtils {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			log.error("https request error:{}", ex);
+		} finally {
+			if (httpUrlConn != null) {
+				httpUrlConn.disconnect();
+			}
 		}
 		return jsonObject;
 	}

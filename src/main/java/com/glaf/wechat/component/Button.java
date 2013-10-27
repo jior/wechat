@@ -21,6 +21,8 @@ package com.glaf.wechat.component;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
@@ -38,6 +40,8 @@ public class Button implements java.io.Serializable {
 	private String type;
 
 	private String key;
+
+	private String url;
 
 	private List<Button> children;
 
@@ -68,6 +72,10 @@ public class Button implements java.io.Serializable {
 		return type;
 	}
 
+	public String getUrl() {
+		return url;
+	}
+
 	public void setChildren(List<Button> children) {
 		this.children = children;
 	}
@@ -95,6 +103,10 @@ public class Button implements java.io.Serializable {
 		this.type = type;
 	}
 
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
 	public JSONObject toJSONObject() {
 		JSONObject result = new JSONObject();
 		result.put("name", this.getName());
@@ -104,13 +116,21 @@ public class Button implements java.io.Serializable {
 				JSONObject o = new JSONObject();
 				o.put("name", child.getName());
 				o.put("type", child.getType());
-				o.put("key", child.getKey());
+				if (StringUtils.equals(child.getType(), "view")) {
+					o.put("url", child.getUrl());
+				} else {
+					o.put("key", child.getKey());
+				}
 				childrenArray.add(o);
 			}
 			result.put("sub_button", childrenArray);
 		} else {
 			result.put("type", this.getType());
-			result.put("key", this.getKey());
+			if (StringUtils.equals(this.getType(), "view")) {
+				result.put("url", this.getUrl());
+			} else {
+				result.put("key", this.getKey());
+			}
 		}
 		return result;
 	}

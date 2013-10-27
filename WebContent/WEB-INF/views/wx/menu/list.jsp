@@ -221,7 +221,7 @@ limitations under the License.
 		    var rowIds = ids.join(',');
 			jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/mx/wx/wxMenu/delete?rowIds='+rowIds,
+				   url: '<%=request.getContextPath()%>/mx/wx/wxMenu/delete?ids='+rowIds,
 				   dataType:  'json',
 				   error: function(data){
 					   alert('服务器处理错误！');

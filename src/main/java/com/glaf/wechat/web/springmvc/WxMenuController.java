@@ -81,7 +81,7 @@ public class WxMenuController {
 							&& (StringUtils.equals(wxMenu.getCreateBy(),
 									loginContext.getActorId()) || loginContext
 									.isSystemAdministrator())) {
-						wxMenuService.save(wxMenu);
+						wxMenuService.deleteById(wxMenu.getId());
 					}
 				}
 			}
@@ -95,7 +95,7 @@ public class WxMenuController {
 					&& (StringUtils.equals(wxMenu.getCreateBy(),
 							loginContext.getActorId()) || loginContext
 							.isSystemAdministrator())) {
-				wxMenuService.save(wxMenu);
+				wxMenuService.deleteById(wxMenu.getId());
 			}
 		}
 	}
@@ -129,9 +129,11 @@ public class WxMenuController {
 						loginContext.getActorId()) || loginContext
 						.isSystemAdministrator())) {
 			request.setAttribute("wxMenu", wxMenu);
-			JSONObject rowJSON = wxMenu.toJsonObject();
-			request.setAttribute("x_json", rowJSON.toJSONString());
 		}
+
+		List<WxMenu> topMenus = wxMenuService.getMenuList(
+				loginContext.getActorId(), "menu", 0L);
+		request.setAttribute("topMenus", topMenus);
 
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {
@@ -172,7 +174,7 @@ public class WxMenuController {
 									JSONObject buttonJson = buttonArray
 											.getJSONObject(i);
 									WxMenu menu = this.jsonToMenu(buttonJson);
-									menu.setSort(100-i);
+									menu.setSort(100 - i);
 									menus.add(menu);
 								}
 								wxMenuService.saveAll(menus);
@@ -294,7 +296,7 @@ public class WxMenuController {
 				if (subButtonJson.containsKey("url")) {
 					m.setUrl(subButtonJson.getString("url"));
 				}
-				m.setSort(100-i);
+				m.setSort(100 - i);
 				menu.addChild(m);
 			}
 		}
@@ -428,31 +430,73 @@ public class WxMenuController {
 							wxConfig.getAppId(), wxConfig.getAppSecret());
 					if (accessToken != null && accessToken.getToken() != null) {
 						Menu menu = new Menu();
-						for (int i = 0; i < menus.size() && i < 3; i++) {
+						for (int i = 0; i < menus.size(); i++) {
 							WxMenu wxm = menus.get(i);
+							if (wxm.getLocked() != 0) {
+								continue;
+							}
+
 							Button button = new Button();
 							button.setKey(wxm.getKey());
 							button.setName(wxm.getName());
 							button.setType(wxm.getType());
+							if (StringUtils.equals(wxm.getType(), "view")) {
+								button.setUrl(wxm.getUrl());
+								if (StringUtils.startsWith(button.getUrl(),
+										"/website/wx/")) {
+									String url = WechatUtils
+											.getServiceUrl(request)
+											+ button.getUrl();
+									button.setUrl(url);
+								}
+							}
 
 							List<WxMenu> childrenMenus = wxMenuService
 									.getMenuList(loginContext.getActorId(),
 											wxm.getId());
-							for (int j = 0; j < childrenMenus.size() && j < 5; i++) {
+							for (int j = 0; j < childrenMenus.size(); j++) {
 								WxMenu m = childrenMenus.get(j);
+								if (m.getLocked() != 0) {
+									continue;
+								}
+
 								Button b = new Button();
 								b.setKey(m.getKey());
 								b.setName(m.getName());
 								b.setType(m.getType());
+								if (StringUtils.equals(m.getType(), "view")) {
+									b.setUrl(m.getUrl());
+									if (StringUtils.startsWith(b.getUrl(),
+											"/website/wx/")) {
+										String url = WechatUtils
+												.getServiceUrl(request)
+												+ b.getUrl();
+										b.setUrl(url);
+									}
+								}
 								button.addChild(b);
+
+								if (button.getChildren().size() >= 5) {
+									break;
+								}
 							}
 
 							menu.addButton(button);
+
+							if (menu.getButtons().size() >= 3) {
+								break;
+							}
 						}
+
+						logger.debug("prepare create menu...");
+						String jsonMenu = menu.toJSONObject().toJSONString();
+						logger.debug(jsonMenu);
 
 						int result = WechatUtils.createMenu(menu,
 								accessToken.getToken());
+						logger.debug("result=" + result);
 						if (result == 0) {
+							logger.debug("成功同步菜单到微信服务器。");
 							return ResponseUtils.responseJsonResult(true);
 						}
 					}

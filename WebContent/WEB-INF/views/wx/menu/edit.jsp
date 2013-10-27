@@ -135,11 +135,47 @@ limitations under the License.
   <div data-options="region:'center',border:false,cache:true">
   <form id="iForm" name="iForm" method="post">
   <input type="hidden" id="id" name="id" value="${wxMenu.id}"/>
-  <input type="hidden" id="parentId" name="parentId" value="${parentId}"/>
   <input type="hidden" id="group" name="group" value="${group}"/>
   <table class="easyui-form" style="width:600px;" align="center">
     <tbody>
-	
+	<c:choose>
+	<c:when test="${empty wxMenu }">
+	<tr>
+		<td width="20%" align="left">上级菜单</td>
+		<td align="left">
+             <select id="parentId" name="parentId">
+			   <c:forEach items="${topMenus}" var="menu">
+				<option value="${menu.id}">${menu.name}</option>
+			   </c:forEach>
+             </select>
+             <script type="text/javascript">
+                 document.getElementById("parentId").value="${parentId}";
+             </script>
+		</td>
+	</tr>
+	</c:when>
+	<c:when test="${!empty wxMenu && wxMenu.parentId != 0  }">
+	<tr>
+		<td width="20%" align="left">上级菜单</td>
+		<td align="left">
+             <select id="parentId" name="parentId">
+			   <c:forEach items="${topMenus}" var="menu">
+				<option value="${menu.id}">${menu.name}</option>
+			   </c:forEach>
+             </select>
+             <script type="text/javascript">
+                 document.getElementById("parentId").value="${parentId}";
+				 <c:if test="${!empty wxMenu }">
+				 document.getElementById("parentId").value="${wxMenu.parentId}";
+				 </c:if>
+             </script>
+		</td>
+	</tr>
+	</c:when>
+	<c:otherwise>
+	  <input type="hidden" id="parentId" name="parentId" value="${parentId}">
+	</c:otherwise>
+	</c:choose>
 	<tr>
 		<td width="20%" align="left">名称</td>
 		<td align="left">

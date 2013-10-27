@@ -37,9 +37,9 @@ public class Menu implements java.io.Serializable {
 	public Menu() {
 
 	}
-	
-	public void addButton(Button button){
-		if(buttons == null){
+
+	public void addButton(Button button) {
+		if (buttons == null) {
 			buttons = new ArrayList<Button>();
 		}
 		buttons.add(button);
@@ -55,16 +55,14 @@ public class Menu implements java.io.Serializable {
 
 	public JSONObject toJSONObject() {
 		JSONObject result = new JSONObject();
-		JSONObject menu = new JSONObject();
 		if (buttons != null && buttons.size() > 0) {
 			JSONArray array = new JSONArray();
 			for (Button button : buttons) {
 				JSONObject json = button.toJSONObject();
 				array.add(json);
 			}
-			menu.put("button", array);
+			result.put("button", array);
 		}
-		result.put("menu", result);
 		return result;
 	}
 }
