@@ -200,9 +200,9 @@ limitations under the License.
 	<tr>
 		<td width="20%" align="left">描述</td>
 		<td align="left">
-            <input id="desc" name="desc" type="text"  size="50"
-			       class="easyui-validatebox x-text"  
-				   value="${wxMenu.desc}"/>
+		    <textarea id="desc" name="desc" rows="8" cols="48" 
+			 style="width:320px;height:120px;"
+			 class="easyui-validatebox x-textarea" >${wxMenu.desc}</textarea>
 		</td>
 	</tr>
 	<tr>
@@ -265,7 +265,6 @@ limitations under the License.
     </tbody>
   </table>
  </form>
-<p>&nbsp;</p>
 </div>
 </div>
 </body>
