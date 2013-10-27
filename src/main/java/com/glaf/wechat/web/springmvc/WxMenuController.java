@@ -439,7 +439,7 @@ public class WxMenuController {
 									.getMenuList(loginContext.getActorId(),
 											wxm.getId());
 							for (int j = 0; j < childrenMenus.size() && j < 5; i++) {
-								WxMenu m = childrenMenus.get(i);
+								WxMenu m = childrenMenus.get(j);
 								Button b = new Button();
 								b.setKey(m.getKey());
 								b.setName(m.getName());
