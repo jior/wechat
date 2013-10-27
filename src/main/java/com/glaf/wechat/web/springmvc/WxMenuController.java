@@ -41,6 +41,7 @@ import com.glaf.core.tree.helper.TreeHelper;
 import com.glaf.core.util.*;
 import com.glaf.wechat.component.Button;
 import com.glaf.wechat.component.Menu;
+import com.glaf.wechat.config.WechatCodeProperties;
 import com.glaf.wechat.domain.*;
 import com.glaf.wechat.model.AccessToken;
 import com.glaf.wechat.query.*;
@@ -498,6 +499,13 @@ public class WxMenuController {
 						if (result == 0) {
 							logger.debug("成功同步菜单到微信服务器。");
 							return ResponseUtils.responseJsonResult(true);
+						} else {
+							String message = WechatCodeProperties.getString(""
+									+ result);
+							if (message != null) {
+								return ResponseUtils.responseJsonResult(false,
+										message);
+							}
 						}
 					}
 				}
