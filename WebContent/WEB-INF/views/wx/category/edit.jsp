@@ -168,7 +168,7 @@ limitations under the License.
 			  <option value="<%=bean2.getId()%>">
 			  <%
 				for(int i=1;i<bean2.getDeep();i++){
-				  out.print("&nbsp;&nbsp;");
+				  out.print("&nbsp;&nbsp;--");
 				}
 				out.print(bean2.getName());
 				%>

@@ -118,6 +118,7 @@ public class WxCategoryServiceImpl implements WxCategoryService {
 	public List<WxCategory> getCategoryList(String createBy) {
 		WxCategoryQuery query = new WxCategoryQuery();
 		query.createBy(createBy);
+		query.setOrderBy(" E.TREEID_ asc");
 		List<WxCategory> list = wxCategoryMapper.getWxCategories(query);
 		return list;
 	}
@@ -133,6 +134,7 @@ public class WxCategoryServiceImpl implements WxCategoryService {
 		WxCategoryQuery query = new WxCategoryQuery();
 		query.createBy(createBy);
 		query.parentId(parentId);
+		query.setOrderBy(" E.TREEID_ asc");
 		List<WxCategory> list = wxCategoryMapper.getWxCategories(query);
 		return list;
 	}
@@ -148,6 +150,7 @@ public class WxCategoryServiceImpl implements WxCategoryService {
 		WxCategoryQuery query = new WxCategoryQuery();
 		query.createBy(createBy);
 		query.type(type);
+		query.setOrderBy(" E.TREEID_ asc");
 		List<WxCategory> list = wxCategoryMapper.getWxCategories(query);
 		return list;
 	}

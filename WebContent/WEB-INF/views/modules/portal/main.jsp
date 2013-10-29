@@ -59,12 +59,15 @@
 			$('#tabs').tabs('close', 1);//关闭第二个,第一个为我的桌面，不能关闭
 		}
 		var url = "${contextPath}/my/menu.do?method=jump&id="+menuId;
-		$('#tabs').tabs('add',{
+		jQuery('#cc').attr('src', url);
+		/**
+		jQuery('#tabs').tabs('add',{
 			title:subtitle,
 			content:createFrame(url),
 			closable:true,
 			icon:"icon-gears"
 		});
+		**/
 	  }else{
 		$('#tabs').tabs('select',subtitle);
 		$('#mm-tabupdate').click();
@@ -199,7 +202,7 @@
 		style="background: #eee; overflow-y: hidden">
 		<div id="tabs" class="easyui-tabs" fit="true" border="false">
 			<div title="我的桌面" style="padding: 1px; overflow: hidden; color: red;">
-				<iframe
+				<iframe id="cc"
 					src="${contextPath}/mx/user/portal?easyuiPortal=true"
 					width='100%' height='100%' frameborder='0' scrolling='no' noResize></iframe>
 			</div>
