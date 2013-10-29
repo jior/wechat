@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.wechat.mapper.WxProductMapper">
+
+	<resultMap id="wxProductResultMap" type="com.glaf.wechat.domain.WxProduct">
+		<id property="id" column="ID_" jdbcType="BIGINT" />
+		<result property="name" column="NAME_" jdbcType="VARCHAR" />
+		<result property="price" column="PRICE_" jdbcType="DOUBLE" />
+		<result property="newsNum" column="NEWSNUM_" jdbcType="INTEGER" />
+		<result property="categoryNum" column="CATEGORYNUM_" jdbcType="INTEGER" />
+		<result property="dayNum" column="DAYNUM_" jdbcType="INTEGER" />
+		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
+		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+
+	<insert id="insertWxProduct" parameterType="com.glaf.wechat.domain.WxProduct">
+		insert into WX_WXPRODUCT
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ID_
+			<if test="name != null">
+				,NAME_
+			</if>
+			<if test="price != null">
+				,PRICE_
+			</if>
+			<if test="newsNum != null">
+				,NEWSNUM_
+			</if>
+			<if test="categoryNum != null">
+				,CATEGORYNUM_
+			</if>
+			<if test="dayNum != null">
+				,DAYNUM_
+			</if>
+			<if test="createBy != null">
+				,CREATEBY_
+			</if>
+			<if test="createDate != null">
+				,CREATEDATE_
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			#{id, jdbcType=BIGINT}
+
+			<if test="name != null">
+				,#{name, jdbcType=VARCHAR}
+			</if>
+			<if test="price != null">
+				,#{price, jdbcType=DOUBLE}
+			</if>
+			<if test="newsNum != null">
+				,#{newsNum, jdbcType=INTEGER}
+			</if>
+			<if test="categoryNum != null">
+				,#{categoryNum, jdbcType=INTEGER}
+			</if>
+			<if test="dayNum != null">
+				,#{dayNum, jdbcType=INTEGER}
+			</if>
+			<if test="createBy != null">
+				,#{createBy, jdbcType=VARCHAR}
+			</if>
+			<if test="createDate != null">
+				,#{createDate, jdbcType=TIMESTAMP}
+			</if>
+		</trim>
+	</insert>
+
+
+	<update id="updateWxProduct" parameterType="com.glaf.wechat.domain.WxProduct">
+		update WX_WXPRODUCT
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">
+			<if test="name != null">
+				NAME_ = #{name, jdbcType=VARCHAR},
+			</if>
+			<if test="price != null">
+				PRICE_ = #{price, jdbcType=DOUBLE},
+			</if>
+			<if test="newsNum != null">
+				NEWSNUM_ = #{newsNum, jdbcType=INTEGER},
+			</if>
+			<if test="categoryNum != null">
+				CATEGORYNUM_ = #{categoryNum, jdbcType=INTEGER},
+			</if>
+			<if test="dayNum != null">
+				DAYNUM_ = #{dayNum, jdbcType=INTEGER},
+			</if>
+			<if test="createBy != null">
+				CREATEBY_ = #{createBy, jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				CREATEDATE_ = #{createDate, jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+		where
+		ID_ = #{id, jdbcType=BIGINT}
+
+	</update>
+
+
+	<delete id="deleteWxProductById" parameterType="long">
+		delete from WX_WXPRODUCT
+		where ID_ = #{id}
+	</delete>
+
+
+	<delete id="deleteWxProducts" parameterType="com.glaf.wechat.query.WxProductQuery">
+		delete from WX_WXPRODUCT
+		where (
+		ID_ IN
+		<foreach item="x_id" index="index" collection="ids" open="("
+			separator="," close=")">
+			#{x_id}
+		</foreach>
+		)
+	</delete>
+
+
+	<select id="getWxProductById" parameterType="long" resultMap="wxProductResultMap">
+		select * from WX_WXPRODUCT where ID_ = #{id}
+	</select>
+
+
+	<select id="getWxProducts" parameterType="com.glaf.wechat.query.WxProductQuery"
+		resultMap="wxProductResultMap">
+		select distinct E.*
+		<include refid="selectWxProductsSql" />
+		<choose>
+			<when test="orderBy != null">
+				order by ${orderBy}
+			</when>
+			<otherwise>
+				order by E.ID_ desc
+			</otherwise>
+		</choose>
+	</select>
+
+
+	<select id="getWxProductCount" parameterType="com.glaf.wechat.query.WxProductQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectWxProductsSql" />
+	</select>
+
+
+	<sql id="selectWxProductsSql">
+
+		from WX_WXPRODUCT E
+
+		<where>
+			1 = 1
+
+			<if test="name != null and name != '' ">
+				and E.NAME_ = #{name}
+			</if>
+
+			<if test="nameLike != null and nameLike != '' ">
+				and E.NAME_ like #{nameLike}
+			</if>
+
+			<if test="createBy != null and createBy != '' ">
+				and E.CREATEBY_ = #{createBy}
+			</if>
+
+		</where>
+	</sql>
+
+</mapper>

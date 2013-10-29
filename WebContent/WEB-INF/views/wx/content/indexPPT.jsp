@@ -93,9 +93,9 @@ limitations under the License.
 
 	function formatterStatus(val, row){
        if(val == 1){
-			return '<span style="color:green; font: bold 13px 宋体;">是</span>';
+			return '<span style="color:green; font: bold 13px 宋体;">发布</span>';
 	   } else  {
-			return '<span style="color:red; font: bold 13px 宋体;">否</span>';
+			return '<span style="color:red; font: bold 13px 宋体;">未发布</span>';
 	   }  
 	}
 
@@ -164,7 +164,7 @@ limitations under the License.
 	    if (selected ){
 		//location.href="<%=request.getContextPath()%>/wx/wxContent/edit?id="+selected.id;
 		var link = "<%=request.getContextPath()%>/mx/wx/wxContent/editPPT?type=${type}&id="+selected.id;
-		art.dialog.open(link, { height: 420, width: 780, title: "修改记录", lock: true, scrollbars:"no" }, false);
+		  art.dialog.open(link, { height: 420, width: 780, title: "修改记录", lock: true, scrollbars:"no" }, false);
 	    }
 	}
 
