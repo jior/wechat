@@ -59,12 +59,15 @@
 			jQuery('#tabs').tabs('close', 1);//关闭第二个,第一个为我的桌面，不能关闭
 		}
 		var url = "${contextPath}/my/menu.do?method=jump&id="+menuId;
+		jQuery('#cc').attr('src', url);
+		/**
 		jQuery('#tabs').tabs('add',{
 			title:subtitle,
 			content:createFrame(url),
 			closable:true,
 			icon:"icon-gears"
 		});
+		**/
 	  }else{
 		jQuery('#tabs').tabs('select',subtitle);
 		jQuery('#mm-tabupdate').click();
@@ -204,7 +207,7 @@
 		<div id="tabs" class="easyui-tabs" fit="true" border="false">
 			<div title="我的桌面" style="padding: 1px; overflow: hidden; color: red;">
 				<iframe
-					src="${contextPath}/mx/user/portal?easyuiPortal=true"
+					src="${contextPath}/mx/user/portal?easyuiPortal=true" id="cc"
 					width='100%' height='100%' frameborder='0' scrolling='no' noResize></iframe>
 			</div>
 		</div>
@@ -253,15 +256,15 @@
 		<div id="closeright">当前页右侧全部关闭</div>
 		<div id="closeleft">当前页左侧全部关闭</div>
 	</div>
-<script type="text/javascript">
-	var waitTime=1000; //1 秒 
-	timer=setInterval("OnTimer()",1000); 
-	function OnTimer(){ 
-		waitTime=waitTime-1000; 
-		if(waitTime==0){ 
-			jQuery('#themeWin').window('close'); 
+	<script type="text/javascript">
+		var waitTime=1000; //1 秒 
+		timer=setInterval("OnTimer()",1000); 
+		function OnTimer(){ 
+			waitTime=waitTime-1000; 
+			if(waitTime==0){ 
+				jQuery('#themeWin').window('close'); 
+			}
 		}
-	}
-</script>
+	</script>
 </body>
 </html>

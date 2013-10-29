@@ -117,6 +117,10 @@ public class WxCategoryController {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		RequestUtils.setRequestParameterToAttribute(request);
 		request.removeAttribute("canSubmit");
+		String type = request.getParameter("type");
+		if (StringUtils.isEmpty(type)) {
+			type = "category";
+		}
 
 		WxCategory wxCategory = wxCategoryService.getWxCategory(RequestUtils
 				.getLong(request, "id"));
@@ -125,9 +129,29 @@ public class WxCategoryController {
 						loginContext.getActorId()) || loginContext
 						.isSystemAdministrator())) {
 			request.setAttribute("wxCategory", wxCategory);
-			JSONObject rowJSON = wxCategory.toJsonObject();
-			request.setAttribute("x_json", rowJSON.toJSONString());
 		}
+
+		List<WxCategory> categories = wxCategoryService.getCategoryList(
+				loginContext.getActorId(), type);
+		if (wxCategory != null) {
+			List<WxCategory> subCategories = wxCategoryService
+					.getCategoryList(wxCategory.getId());
+			if (categories != null && !categories.isEmpty()) {
+				if (subCategories != null && !subCategories.isEmpty()) {
+					categories.removeAll(subCategories);
+				}
+				categories.remove(wxCategory);
+				for (WxCategory cat : categories) {
+					if (StringUtils.isNotEmpty(cat.getTreeId())) {
+						StringTokenizer token = new StringTokenizer(
+								cat.getTreeId(), "|");
+						cat.setDeep(token.countTokens());
+					}
+				}
+			}
+		}
+
+		request.setAttribute("categories", categories);
 
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {

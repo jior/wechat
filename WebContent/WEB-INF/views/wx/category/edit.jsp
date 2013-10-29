@@ -15,11 +15,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="java.util.*"%>
+<%@ page import="com.glaf.wechat.domain.*"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%
     String theme = com.glaf.core.util.RequestUtils.getTheme(request);
     request.setAttribute("theme", theme);
+	List list = (List)request.getAttribute("categories");
 %>
 <!DOCTYPE html>
 <html>
@@ -118,6 +121,10 @@ limitations under the License.
 		openWindow(link,self,x, y, 745, 480);
 	}
 
+	function setValue(obj){
+	  obj.value=obj[obj.selectedIndex].value;
+	  document.getElementById("parentId").value=obj.value;
+	}
 
 </script>
 </head>
@@ -136,11 +143,46 @@ limitations under the License.
   <div data-options="region:'center',border:false,cache:true">
   <form id="iForm" name="iForm" method="post">
   <input type="hidden" id="id" name="id" value="${wxCategory.id}"/>
-  <input type="hidden" id="parentId" name="parentId" value="${parentId}"/>
+  <c:choose>
+	<c:when test="${!empty wxCategory }">
+       <input type="hidden" id="parentId" name="parentId" value="${wxCategory.parentId}"/>
+    </c:when>
+    <c:otherwise>
+	   <input type="hidden" id="parentId" name="parentId" value="${parentId}"/>
+    </c:otherwise>
+  </c:choose>
   <input type="hidden" id="type" name="type" value="${type}"/>
   <table class="easyui-form" style="width:600px;" align="center">
     <tbody>
-	
+	<tr>
+		<td width="20%" align="left">上级节点</td>
+		<td align="left">
+            <select name="parent" onChange="javascript:setValue(this);">
+			  <option value="0">根目录/</option>
+			  <%
+				if(list!=null && !list.isEmpty()){
+				  Iterator iter=list.iterator();   
+				  while(iter.hasNext()){
+					WxCategory bean2=(WxCategory)iter.next();
+				%>
+			  <option value="<%=bean2.getId()%>">
+			  <%
+				for(int i=1;i<bean2.getDeep();i++){
+				  out.print("&nbsp;&nbsp;");
+				}
+				out.print(bean2.getName());
+				%>
+			  </option>
+			  <%    
+			   }
+			 }
+			%>
+			</select>
+			<script language="javascript">
+			  document.all.parent.value="${wxCategory.parentId}";	
+			</script>
+		</td>
+	</tr>
 	<tr>
 		<td width="20%" align="left">名称</td>
 		<td align="left">

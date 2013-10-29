@@ -172,6 +172,9 @@ public class WxCategory implements java.io.Serializable, JSONable {
 	protected Date lastUpdateDate;
 
 	@javax.persistence.Transient
+	protected int deep;
+
+	@javax.persistence.Transient
 	protected List<WxCategory> children = new ArrayList<WxCategory>();
 
 	@javax.persistence.Transient
@@ -195,6 +198,20 @@ public class WxCategory implements java.io.Serializable, JSONable {
 		pptList.add(ppt);
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		WxCategory other = (WxCategory) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
+
 	public List<WxCategory> getChildren() {
 		return children;
 	}
@@ -213,6 +230,10 @@ public class WxCategory implements java.io.Serializable, JSONable {
 
 	public Date getCreateDate() {
 		return createDate;
+	}
+
+	public int getDeep() {
+		return deep;
 	}
 
 	public String getDesc() {
@@ -287,6 +308,14 @@ public class WxCategory implements java.io.Serializable, JSONable {
 		return uuid;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (id ^ (id >>> 32));
+		return result;
+	}
+
 	public WxCategory jsonToObject(JSONObject jsonObject) {
 		return WxCategoryJsonFactory.jsonToObject(jsonObject);
 	}
@@ -309,6 +338,10 @@ public class WxCategory implements java.io.Serializable, JSONable {
 
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
+	}
+
+	public void setDeep(int deep) {
+		this.deep = deep;
 	}
 
 	public void setDesc(String desc) {

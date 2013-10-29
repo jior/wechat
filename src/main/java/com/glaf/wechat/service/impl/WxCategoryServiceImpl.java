@@ -18,6 +18,7 @@
 
 package com.glaf.wechat.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -32,8 +33,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.glaf.core.base.ColumnModel;
+import com.glaf.core.base.TableModel;
 import com.glaf.core.dao.EntityDAO;
 import com.glaf.core.id.IdGenerator;
+import com.glaf.core.service.ITableDataService;
+import com.glaf.core.util.StringTools;
 import com.glaf.core.util.UUID32;
 import com.glaf.wechat.domain.WxCategory;
 import com.glaf.wechat.mapper.WxCategoryMapper;
@@ -52,6 +57,8 @@ public class WxCategoryServiceImpl implements WxCategoryService {
 	protected SqlSessionTemplate sqlSessionTemplate;
 
 	protected WxCategoryMapper wxCategoryMapper;
+
+	protected ITableDataService tableDataService;
 
 	public WxCategoryServiceImpl() {
 
@@ -73,6 +80,18 @@ public class WxCategoryServiceImpl implements WxCategoryService {
 		if (ids != null && !ids.isEmpty()) {
 			for (Long id : ids) {
 				wxCategoryMapper.deleteWxCategoryById(id);
+			}
+		}
+	}
+
+	public void loadChildren(List<WxCategory> list, long parentId) {
+		WxCategoryQuery query = new WxCategoryQuery();
+		query.setParentId(Long.valueOf(parentId));
+		List<WxCategory> nodes = this.list(query);
+		if (nodes != null && !nodes.isEmpty()) {
+			for (WxCategory node : nodes) {
+				list.add(node);
+				this.loadChildren(list, node.getId());
 			}
 		}
 	}
@@ -180,7 +199,7 @@ public class WxCategoryServiceImpl implements WxCategoryService {
 
 	@Transactional
 	public void save(WxCategory wxCategory) {
-		if ( wxCategory.getId() == 0) {
+		if (wxCategory.getId() == 0) {
 			wxCategory.setId(idGenerator.nextId());
 			wxCategory.setCreateDate(new Date());
 			wxCategory.setUuid(UUID32.getUUID());
@@ -198,8 +217,75 @@ public class WxCategoryServiceImpl implements WxCategoryService {
 			wxCategoryMapper.insertWxCategory(wxCategory);
 		} else {
 			wxCategory.setLastUpdateDate(new Date());
-			wxCategoryMapper.updateWxCategory(wxCategory);
+			this.update(wxCategory);
 		}
+	}
+
+	@Transactional
+	public boolean update(WxCategory bean) {
+		WxCategory model = this.getWxCategory(bean.getId());
+		/**
+		 * 如果节点移动了位置，即移动到别的节点下面去了
+		 */
+		if (model.getParentId() != bean.getParentId()) {
+			List<WxCategory> list = new ArrayList<WxCategory>();
+			this.loadChildren(list, bean.getId());
+			if (!list.isEmpty()) {
+				for (WxCategory node : list) {
+					/**
+					 * 不能移动到ta自己的子节点下面去
+					 */
+					if (bean.getParentId() == node.getId()) {
+						throw new RuntimeException(
+								"Can't change node into children");
+					}
+				}
+				/**
+				 * 修正所有子节点的treeId
+				 */
+				WxCategory oldParent = this.getWxCategory(model.getParentId());
+				WxCategory newParent = this.getWxCategory(bean.getParentId());
+				if (oldParent != null && newParent != null
+						&& StringUtils.isNotEmpty(oldParent.getTreeId())
+						&& StringUtils.isNotEmpty(newParent.getTreeId())) {
+					TableModel tableModel = new TableModel();
+					tableModel.setTableName("WX_CATEGORY");
+					ColumnModel idColumn = new ColumnModel();
+					idColumn.setColumnName("ID_");
+					idColumn.setJavaType("Long");
+					tableModel.setIdColumn(idColumn);
+
+					ColumnModel treeColumn = new ColumnModel();
+					treeColumn.setColumnName("TREEID_");
+					treeColumn.setJavaType("String");
+					tableModel.addColumn(treeColumn);
+
+					for (WxCategory node : list) {
+						String treeId = node.getTreeId();
+						if (StringUtils.isNotEmpty(treeId)) {
+							treeId = StringTools.replace(treeId,
+									oldParent.getTreeId(),
+									newParent.getTreeId());
+							idColumn.setValue(node.getId());
+							treeColumn.setValue(treeId);
+							tableDataService.updateTableData(tableModel);
+						}
+					}
+				}
+			}
+		}
+
+		if (bean.getParentId() != 0) {
+			WxCategory parent = this.getWxCategory(bean.getParentId());
+			if (parent != null) {
+				if (StringUtils.isNotEmpty(parent.getTreeId())) {
+					bean.setTreeId(parent.getTreeId() + bean.getId() + "|");
+				}
+			}
+		}
+
+		wxCategoryMapper.updateWxCategory(bean);
+		return true;
 	}
 
 	@Resource(name = "myBatisEntityDAO")
@@ -220,6 +306,11 @@ public class WxCategoryServiceImpl implements WxCategoryService {
 	@Resource
 	public void setWxCategoryMapper(WxCategoryMapper wxCategoryMapper) {
 		this.wxCategoryMapper = wxCategoryMapper;
+	}
+
+	@Resource
+	public void setTableDataService(ITableDataService tableDataService) {
+		this.tableDataService = tableDataService;
 	}
 
 }
