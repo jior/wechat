@@ -20,7 +20,7 @@ package com.glaf.wechat.util;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Writer;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,16 +30,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
-
-import com.glaf.wechat.message.response.Article;
-import com.glaf.wechat.message.response.MusicMessage;
-import com.glaf.wechat.message.response.NewsMessage;
-import com.glaf.wechat.message.response.TextMessage;
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.core.util.QuickWriter;
-import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
-import com.thoughtworks.xstream.io.xml.PrettyPrintWriter;
-import com.thoughtworks.xstream.io.xml.XppDriver;
 
 /**
  * 消息工具类
@@ -109,58 +99,6 @@ public class MessageUtils {
 	public static final String EVENT_TYPE_CLICK = "CLICK";
 
 	/**
-	 * 扩展xstream，使其支持CDATA块
-	 */
-	private static XStream xstream = new XStream(new XppDriver() {
-		public HierarchicalStreamWriter createWriter(Writer out) {
-			return new PrettyPrintWriter(out) {
-				// 对所有xml节点的转换都增加CDATA标记
-				boolean cdata = true;
-
-				@SuppressWarnings("rawtypes")
-				public void startNode(String name, Class clazz) {
-					super.startNode(name, clazz);
-				}
-
-				protected void writeText(QuickWriter writer, String text) {
-					if (cdata) {
-						writer.write("<![CDATA[");
-						writer.write(text);
-						writer.write("]]>");
-					} else {
-						writer.write(text);
-					}
-				}
-			};
-		}
-	});
-
-	/**
-	 * 音乐消息对象转换成xml
-	 * 
-	 * @param musicMessage
-	 *            音乐消息对象
-	 * @return xml
-	 */
-	public static String musicMessageToXml(MusicMessage musicMessage) {
-		xstream.alias("xml", musicMessage.getClass());
-		return xstream.toXML(musicMessage);
-	}
-
-	/**
-	 * 图文消息对象转换成xml
-	 * 
-	 * @param newsMessage
-	 *            图文消息对象
-	 * @return xml
-	 */
-	public static String newsMessageToXml(NewsMessage newsMessage) {
-		xstream.alias("xml", newsMessage.getClass());
-		xstream.alias("item", new Article().getClass());
-		return xstream.toXML(newsMessage);
-	}
-
-	/**
 	 * 解析微信发来的请求（XML）
 	 * 
 	 * @param request
@@ -206,15 +144,4 @@ public class MessageUtils {
 		return map;
 	}
 
-	/**
-	 * 文本消息对象转换成xml
-	 * 
-	 * @param textMessage
-	 *            文本消息对象
-	 * @return xml
-	 */
-	public static String textMessageToXml(TextMessage textMessage) {
-		xstream.alias("xml", textMessage.getClass());
-		return xstream.toXML(textMessage);
-	}
 }

@@ -95,19 +95,33 @@ limitations under the License.
 
 
 	function formatterTitle(val, row){
-      return "<a href='#' target='blank'>"+val+"</a>";
+        return "<a href='#' onclick='javascript:preview("+row.id+");'>"+val+"</a>";
+	}
+
+	function preview(id){
+		var link = '<%=request.getContextPath()%>/website/wx/content/view/'+id;
+	    //art.dialog.open(link, { height: 720, width: 400, title: "预览效果", lock: true, scrollbars:"no" }, false);
+		var x=200;
+		var y=150;
+		var fx = "height=520,width=400,status=0,toolbar=no,menubar=no,location=no,scrollbars=yes,top="+y+",left="+x+",resizable=no,modal=yes,dependent=yes,dialog=yes,minimizable=no";
+		if(jQuery.browser.msie){
+			window.open(link,  "预览效果", fx);
+		} else {
+            window.open(link, self, fx, true);
+		}
 	}
 
 
 	function formatterLink(val, row){
-       
+       var link = '<%=com.glaf.wechat.util.WechatUtils.getServiceUrl(request)%>/website/wx/content/view/'+row.id;
+	   return '<input type="text" name="" size="30" value="'+link+'">';
 	}
 
 	function formatterStatus(val, row){
        if(val == 1){
-			return '<span style="color:green; font: bold 13px 宋体;">是</span>';
+			return '<span style="color:green; font: bold 13px 宋体;">发布</span>';
 	   } else  {
-			return '<span style="color:red; font: bold 13px 宋体;">否</span>';
+			return '<span style="color:red; font: bold 13px 宋体;">未发布</span>';
 	   }  
 	}
 

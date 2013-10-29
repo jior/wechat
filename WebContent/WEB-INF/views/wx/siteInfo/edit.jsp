@@ -20,6 +20,8 @@ limitations under the License.
 <%
     String theme = com.glaf.core.util.RequestUtils.getTheme(request);
     request.setAttribute("theme", theme);
+	String actorId = com.glaf.core.util.RequestUtils.getActorId(request);
+	com.glaf.core.identity.User user = com.glaf.core.security.IdentityFactory.getUser(actorId);
 %>
 <!DOCTYPE html>
 <html>
@@ -79,6 +81,18 @@ limitations under the License.
 			 });
 	}
 
+	function goMicroSite(){
+		var link=jQuery('#microUrl').val();
+		var x=200;
+		var y=150;
+		var fx = "height=520,width=400,status=0,toolbar=no,menubar=no,location=no,scrollbars=yes,top="+y+",left="+x+",resizable=no,modal=yes,dependent=yes,dialog=yes,minimizable=no";
+		if(jQuery.browser.msie){
+			window.open(link,  "预览效果", fx);
+		} else {
+            window.open(link, self, fx, true);
+		}
+	}
+
 </script>
 </head>
 
@@ -96,75 +110,92 @@ limitations under the License.
   <div data-options="region:'center',border:false,cache:true">
   <form id="iForm" name="iForm" method="post">
   <input type="hidden" id="id" name="id" value="${wxSiteInfo.id}"/>
-  <table class="easyui-form" style="width:600px;" align="center">
+  <table class="easyui-form" style="width:680px;" align="left">
     <tbody>
 	<tr>
 		<td width="20%" align="left">联系人</td>
 		<td align="left">
             <input id="linkman" name="linkman" type="text" 
-			       class="easyui-validatebox x-text"  size="50"
+			       class="easyui-validatebox x-text"  size="80"
 			       data-options="required:true"
 				   value="${wxSiteInfo.linkman}"/>
 		</td>
+		<td width="10%" align="left">&nbsp;</td>
 	</tr>
 	<tr>
 		<td width="20%" align="left">电话</td>
 		<td align="left">
             <input id="telephone" name="telephone" type="text" 
-			       class="easyui-validatebox x-text"  size="50"
+			       class="easyui-validatebox x-text"  size="80"
 				   value="${wxSiteInfo.telephone}"/>
 		</td>
+		<td width="10%" align="left">&nbsp;</td>
 	</tr>
 	<tr>
 		<td width="20%" align="left">手机</td>
 		<td align="left">
             <input id="mobile" name="mobile" type="text" 
-			       class="easyui-validatebox x-text" size="50" 
+			       class="easyui-validatebox x-text" size="80" 
 			       data-options="required:true"
 				   value="${wxSiteInfo.mobile}"/>
 		</td>
+		<td width="10%" align="left">&nbsp;</td>
 	</tr>
 	<tr>
 		<td width="20%" align="left">电子邮件</td>
 		<td align="left">
             <input id="mail" name="mail" type="text" 
-			       class="easyui-validatebox x-text" size="50" 
+			       class="easyui-validatebox x-text" size="80" 
 			       data-options="required:true,validType:'email'"
 				   value="${wxSiteInfo.mail}"/>
 		</td>
+		<td width="10%" align="left">&nbsp;</td>
 	</tr>
 	<tr>
 		<td width="20%" align="left">QQ</td>
 		<td align="left">
             <input id="qq" name="qq" type="text" 
 			       class="easyui-validatebox x-text"  
-			       size="50"
+			       size="80"
 				   value="${wxSiteInfo.qq}"/>
 		</td>
+		<td width="10%" align="left">&nbsp;</td>
 	</tr>
 	<tr>
 		<td width="20%" align="left">联系地址</td>
 		<td align="left">
             <input id="address" name="address" type="text" 
 			       class="easyui-validatebox x-text"  
-			       size="50"
+			       size="80"
 				   value="${wxSiteInfo.address}"/>
 		</td>
+		<td width="10%" align="left">&nbsp;</td>
 	</tr>
 	<tr>
 		<td width="20%" align="left">网站地址</td>
 		<td align="left">
             <input id="siteUrl" name="siteUrl" type="text" 
 			       class="easyui-validatebox x-text"  
-			       size="50"
+			       size="80"
 				   value="${wxSiteInfo.siteUrl}"/>
 		</td>
+		<td width="10%" align="left">&nbsp;</td>
+	</tr>
+	<tr>
+		<td width="20%" align="left">微站地址</td>
+		<td align="left">
+            <input id="microUrl" name="microUrl" type="text" 
+			       class="easyui-validatebox x-text" size="80"
+				   value="<%=com.glaf.wechat.util.WechatUtils.getServiceUrl(request)%>/website/wx/content/index/<%=user.getId()%>"/> 
+		</td>
+		<td width="10%" align="left"><a href="#" title="进入微站" onclick="javascript:goMicroSite();">微站</a></td>
 	</tr>
 	<tr>
 		<td width="20%" align="left">公众账号描述</td>
 		<td align="left">
-            <textarea id="remark" name="remark" class="x-textarea" style="width:340px;height:120px" />${wxSiteInfo.remark}</textarea>
+            <textarea id="remark" name="remark" class="x-textarea" style="width:480px;height:120px" />${wxSiteInfo.remark}</textarea>
 		</td>
+		<td width="10%" align="left">&nbsp;</td>
 	</tr>
  
  	<tr>
@@ -172,11 +203,13 @@ limitations under the License.
 		<td align="left" ><br>
             <input type="button" value="保存配置" onclick="javascript:saveData();" class="btnGreen">
 		</td>
+		<td width="10%" align="left">&nbsp;</td>
 	</tr>
 
     </tbody>
   </table>
   </form>
+  <p></p>
 </div>
 </div>
 </body>

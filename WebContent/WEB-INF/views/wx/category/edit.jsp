@@ -204,13 +204,13 @@ limitations under the License.
 		</td>
 	</tr>
 	<tr>
-		<td width="15%" align="left" valign="middle">链接</td>
+		<td width="15%" align="left" valign="middle">跳转地址</td>
 		<td align="left" valign="middle">
 			<input id="url" name="url" type="text" size="50"
-			       class="easyui-validatebox x-text" readonly 
-				   value="${wxCategory.url}" onclick="javascript:chooseLink();"/> 
-		    &nbsp;<img src="<%=request.getContextPath()%>/images/code_colored.png"  onclick="javascript:chooseLink();">
-		    <br>当该栏目只有唯一页面时请选择
+			       class="easyui-validatebox x-text" value="${wxCategory.url}"/> 
+		    &nbsp;<img src="<%=request.getContextPath()%>/images/link.png" onclick="javascript:chooseLink();">
+		    <br>当该栏目只有唯一页面时可以选择内部链接
+            <br>也可以直接输入外部链接（以http://或https://开始）
 		</td>
 	</tr> 
 	<tr>
@@ -240,8 +240,8 @@ limitations under the License.
 
 	<tr>
 	    <td width="20%" align="left"></td>
-		<td align="left" ><br>
-            <input type="button" value=" 保存 " onclick="javascript:saveData();" class="btnGreen">
+		<td align="left" >
+            <br><input type="button" value=" 保存 " onclick="javascript:saveData();" class="btnGreen">
 		</td>
 	</tr>
     </tbody>

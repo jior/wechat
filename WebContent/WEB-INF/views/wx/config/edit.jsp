@@ -107,7 +107,7 @@ limitations under the License.
   <div data-options="region:'center',border:false,cache:true">
   <form id="iForm" name="iForm" method="post">
   <input type="hidden" id="id" name="id" value="${wxConfig.id}"/>
-  <table class="easyui-form" style="width:80%;" align="center">
+  <table class="easyui-form" style="width:80%;" align="left">
     <tbody>
 	<tr>
 		<td width="20%" align="left">微信接口URL</td>

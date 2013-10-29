@@ -10,7 +10,7 @@
 
 	<context:annotation-config />
 
-	<context:component-scan base-package="com.glaf.wechat.website.**.springmvc" />
+	<context:component-scan base-package="com.glaf.**.website.springmvc" />
 
     <mvc:annotation-driven conversion-service="conversionService"/>
 

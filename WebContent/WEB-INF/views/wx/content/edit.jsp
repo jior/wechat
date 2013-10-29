@@ -193,16 +193,19 @@ limitations under the License.
 				   value="${wxContent.sort}"/>&nbsp;(同级栏目顺序越大越靠前)
 		</td>
 	</tr>
+	<c:if test="${type eq 'K' || type eq 'F' }">
 	<tr>
-		<td width="15%" align="left">关键字</td>
+		<td width="15%" align="left">关键词</td>
 		<td align="left">
             <input id="keywords" name="keywords" type="text" 
-			       class="easyui-validatebox x-text"  size="82"
+			       class="easyui-validatebox x-text"  size="80"
 				   value="${wxContent.keywords}"/>
-		<br/>(多个关键字之间用空格隔开)
+		<br/>(多个关键词之间用空格隔开)
+		<br/>最多只能加10个关键词且每关键词不能超过10个字符(超过10个字符，系统会自动过滤掉)
+        <br/>“subscribe”为粉丝关注反馈信息的关键词 
 		</td>
 	</tr>
-
+    
 	<tr>
 		<td width="15%" align="left">关键字匹配类型</td>
 		<td align="left">
@@ -215,7 +218,7 @@ limitations under the License.
 			 </script>
 		</td>
 	</tr>
-	 
+    </c:if>
 	<tr>
 		<td width="15%" align="left">简介</td>
 		<td align="left">

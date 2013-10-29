@@ -186,7 +186,7 @@ limitations under the License.
 		</td>
 	</tr>
 	<tr>
-		<td width="15%" align="left">按钮类型</td>
+		<td width="15%" align="left">类型</td>
 		<td align="left">
              <select id="type" name="type">
 				<option value="view">链接</option>
@@ -214,6 +214,8 @@ limitations under the License.
 		    &nbsp;<img src="<%=request.getContextPath()%>/images/link.png" 
 			           title="内部链接"
 			           onclick="javascript:editLinks();" border="0"/>&nbsp;
+			<br>可以选择内部链接
+			<br>也可以直接输入外部链接（以http://或https://开始）
 		</td>
 	</tr>
 	<tr>

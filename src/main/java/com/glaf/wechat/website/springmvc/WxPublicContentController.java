@@ -112,7 +112,9 @@ public class WxPublicContentController {
 				wxUserTemplate = wxUserTemplateService.getWxUserTemplate(
 						actorId, "2", 0L);
 			}
-			if (wxUserTemplate == null) {
+			if (wxUserTemplate == null
+					|| wxUserTemplate.getTemplateId() == null
+					|| wxUserTemplate.getTemplateId() == 0) {
 				wxUserTemplate = wxUserTemplateService.getWxUserTemplate(
 						"system", "2", 0L);
 			}
@@ -186,13 +188,15 @@ public class WxPublicContentController {
 		String actorId = user.getActorId();
 		WxUserTemplate wxUserTemplate = wxUserTemplateService
 				.getWxUserTemplate(actorId, "0", categoryId);
-		if (wxUserTemplate == null) {
+		if (wxUserTemplate == null || wxUserTemplate.getTemplateId() == null
+				|| wxUserTemplate.getTemplateId() == 0) {
 			wxUserTemplate = wxUserTemplateService.getWxUserTemplate("system",
 					"0", 0L);
 		}
 		if (wxUserTemplate != null) {
 			Long templateId = wxUserTemplate.getTemplateId();
 			boolean cache = conf.getBoolean("wx_template_cache", true);
+			logger.debug("templateId:"+templateId);
 			WxTemplate template = wxTemplateService.getWxTemplate(templateId,
 					cache);
 			if (template != null && template.getContent() != null) {
@@ -259,7 +263,9 @@ public class WxPublicContentController {
 		if (category != null) {
 			WxUserTemplate wxUserTemplate = wxUserTemplateService
 					.getWxUserTemplate(categoryId, "1");
-			if (wxUserTemplate == null) {
+			if (wxUserTemplate == null
+					|| wxUserTemplate.getTemplateId() == null
+					|| wxUserTemplate.getTemplateId() == 0) {
 				wxUserTemplate = wxUserTemplateService.getWxUserTemplate(
 						"system", "1", 0L);
 			}
@@ -421,7 +427,9 @@ public class WxPublicContentController {
 			Long categoryId = wxContent.getCategoryId();
 			WxUserTemplate wxUserTemplate = wxUserTemplateService
 					.getWxUserTemplate(actorId, "2", categoryId);
-			if (wxUserTemplate == null) {
+			if (wxUserTemplate == null
+					|| wxUserTemplate.getTemplateId() == null
+					|| wxUserTemplate.getTemplateId() == 0) {
 				wxUserTemplate = wxUserTemplateService.getWxUserTemplate(
 						actorId, "2", 0L);
 			}

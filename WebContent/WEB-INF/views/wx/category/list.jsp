@@ -103,15 +103,15 @@ limitations under the License.
 				singleSelect:true,
 				idField:'id',
 				columns:[[
-	                {title:'序号',field:'startIndex',width:80,sortable:false},
+	                {title:'序号',field:'startIndex',width:60,sortable:false},
 					{title:'封面图片', field:'coverIcon',align:'center', valign:'middle', width:80, formatter:formatterCover},
 					{title:'名称',field:'name', width:120},
 					{title:'描述',field:'desc', width:180},
-					{title:'顺序',field:'sort', width:90},
-					{title:'链接',field:'url', width:320},
-					{title:'前台显示',field:'indexShow', width:90, formatter:formatterShow},
-					{title:'是否有效',field:'locked', width:90, formatter:formatterStatus},
-					{title:'功能键', field:'functionKey', width:90, formatter:formatterKeys}
+					{title:'顺序',field:'sort', width:60},
+					{title:'跳转地址',field:'url', width:280},
+					{title:'前台显示',field:'indexShow', width:80, formatter:formatterShow},
+					{title:'是否有效',field:'locked', width:80, formatter:formatterStatus},
+					{title:'功能键', field:'functionKey', width:150, formatter:formatterKeys}
 				]],
 				rownumbers:false,
 				pagination:true,
@@ -153,7 +153,7 @@ limitations under the License.
 	}
 
 	function formatterKeys(val, row){
-		return "<a href='javascript:editRow("+row.id+");'>修改</a>&nbsp;<a href='javascript:editPPT("+row.id+");'>幻灯片</a>";
+		return "<a href='javascript:editRow("+row.id+");'>修改</a>&nbsp;<a href='javascript:editPPT("+row.id+");'>幻灯片</a>&nbsp;<a href='javascript:articleList("+row.id+");'>文章列表</a>";
 	}
 
 	function editPPT(rowId){
@@ -165,6 +165,11 @@ limitations under the License.
 	function editRow(rowId){
 	    var link = '<%=request.getContextPath()%>/mx/wx/wxCategory/edit?type=${type}&id='+rowId;
 	    art.dialog.open(link, { height: 420, width: 600, title: "修改记录", lock: true, scrollbars:"no" }, false);
+	}
+
+
+	function articleList(categoryId){
+        location.href="<%=request.getContextPath()%>/mx/wx/wxContent/articleList?from=category&categoryId="+categoryId;
 	}
 
 
@@ -327,6 +332,8 @@ limitations under the License.
 			   onclick="javascript:editSelected();">修改</a>  
 			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-remove'"
 			   onclick="javascript:deleteSelections();">删除</a> 
+			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-reload'"
+			   onclick="javascript:reloadGrid();">重载</a> 
 			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-sys'"
 			   onclick="javascript:listTemplateSettings();">列表页模板设置</a>
 			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-sys'"

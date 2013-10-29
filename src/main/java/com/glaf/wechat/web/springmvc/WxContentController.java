@@ -57,6 +57,35 @@ public class WxContentController {
 
 	}
 
+	@RequestMapping("/articleList")
+	public ModelAndView articleList(HttpServletRequest request,
+			ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		String x_query = request.getParameter("x_query");
+		if (StringUtils.equals(x_query, "true")) {
+			Map<String, Object> paramMap = RequestUtils
+					.getParameterMap(request);
+			String x_complex_query = JsonUtils.encode(paramMap);
+			x_complex_query = RequestUtils.encodeString(x_complex_query);
+			request.setAttribute("x_complex_query", x_complex_query);
+		} else {
+			request.setAttribute("x_complex_query", "");
+		}
+
+		Long categoryId = RequestUtils.getLong(request, "categoryId");
+		if (categoryId != null && categoryId > 0) {
+			WxCategory category = wxCategoryService.getWxCategory(categoryId);
+			request.setAttribute("category", category);
+		}
+
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view, modelMap);
+		}
+
+		return new ModelAndView("/wx/content/articleList", modelMap);
+	}
+
 	@RequestMapping("/choose")
 	public ModelAndView choose(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);

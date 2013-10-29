@@ -106,18 +106,23 @@ public class WxKeywordsServiceImpl implements WxKeywordsService {
 		}
 		String keywords = content.getKeywords();
 		if (StringUtils.isNotEmpty(keywords)) {
+			int i = 0;
 			StringTokenizer token = new StringTokenizer(keywords);
-			while (token.hasMoreTokens()) {
+			while (i < 10 && token.hasMoreTokens()) {
 				String str = token.nextToken();
-				WxKeywords wxKeywords = new WxKeywords();
-				wxKeywords.setId(idGenerator.nextId());
-				wxKeywords.setCategoryId(categoryId);
-				wxKeywords.setContentId(content.getId());
-				wxKeywords.setCreateBy(content.getCreateBy());
-				wxKeywords.setCreateDate(new Date());
-				wxKeywords.setKeywords(str);
-				wxKeywords.setKeywordsMatchType(content.getKeywordsMatchType());
-				wxKeywordsMapper.insertWxKeywords(wxKeywords);
+				if (str.length() <= 10) {
+					i++;
+					WxKeywords wxKeywords = new WxKeywords();
+					wxKeywords.setId(idGenerator.nextId());
+					wxKeywords.setCategoryId(categoryId);
+					wxKeywords.setContentId(content.getId());
+					wxKeywords.setCreateBy(content.getCreateBy());
+					wxKeywords.setCreateDate(new Date());
+					wxKeywords.setKeywords(str);
+					wxKeywords.setKeywordsMatchType(content
+							.getKeywordsMatchType());
+					wxKeywordsMapper.insertWxKeywords(wxKeywords);
+				}
 			}
 		}
 

@@ -30,55 +30,17 @@ limitations under the License.
 <title>微页面发布</title>
 <link href="<%=request.getContextPath()%>/scripts/artDialog/skins/default.css" rel="stylesheet" />
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/scripts/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/themes/${theme}/styles.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/icons/styles.css">
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/locale/easyui-lang-zh_CN.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/ztree/js/jquery.ztree.all.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/artDialog/artDialog.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/artDialog/plugins/iframeTools.js"></script>
 <script type="text/javascript">
 
-    var prevTreeNode;
-
-    var setting = {
-			async: {
-				enable: true,
-				url: getUrl,
-				dataFilter: filter
-			},
-			callback: {
-				onClick: zTreeOnClick
-			}
-		};
-  
-  	function filter(treeId, parentNode, childNodes) {
-		if (!childNodes) return null;
-		for (var i=0, l=childNodes.length; i<l; i++) {
-			childNodes[i].name = childNodes[i].name.replace(/\.n/g, '.');
-			childNodes[i].icon="<%=request.getContextPath()%>/icons/icons/basic.gif";
-		}
-		return childNodes;
-	}
-
- 
-    function getUrl(treeId, treeNode) {
-		if(treeNode != null){
-		    var param = "parentId="+treeNode.id;
-		    return "<%=request.getContextPath()%>/mx/wx/wxCategory/treeJson?"+param;
-		}
-		return "<%=request.getContextPath()%>/mx/wx/wxCategory/treeJson?type=category";
-	}
-
-
-    function zTreeOnClick(event, treeId, treeNode, clickFlag) {
-		jQuery("#nodeId").val(treeNode.id);
-		loadData('<%=request.getContextPath()%>/mx/wx/wxContent/json?type=P&categoryId='+treeNode.id);
-	}
-
+    
 	function loadData(url){
 		  jQuery.get(url,{qq:'xx'},function(data){
 		      //var text = JSON.stringify(data); 
@@ -87,11 +49,8 @@ limitations under the License.
 		  },'json');
 	  }
 
-    jQuery(document).ready(function(){
-			jQuery.fn.zTree.init(jQuery("#myTree"), setting);
-	});
-
-   jQuery(function(){
+ 
+    jQuery(function(){
 		jQuery('#mydatagrid').datagrid({
 				width:1000,
 				height:480,
@@ -100,7 +59,7 @@ limitations under the License.
 				nowrap: false,
 				striped: true,
 				collapsible:true,
-				url:'<%=request.getContextPath()%>/mx/wx/wxContent/json?type=P',
+				url:'<%=request.getContextPath()%>/mx/wx/wxContent/json?type=P&categoryId=${categoryId}',
 				remoteSort: false,
 				singleSelect:true,
 				idField:'id',
@@ -183,7 +142,7 @@ limitations under the License.
 
 	function addNew(){
 		var nodeId = jQuery("#nodeId").val();
-		var link = "<%=request.getContextPath()%>/mx/wx/wxContent/edit?type=P&categoryId="+nodeId;
+		var link = "<%=request.getContextPath()%>/mx/wx/wxContent/edit?type=P&categoryId=${categoryId}";
 	    art.dialog.open(link, { height: 420, width: 780, title: "添加记录", lock: true, scrollbars:"yes" }, false);
 	}
 
@@ -320,21 +279,12 @@ limitations under the License.
 <body style="margin:1px;">  
 <input type="hidden" id="nodeId" name="nodeId" value="" >
 <div class="easyui-layout" data-options="fit:true">  
-    <div data-options="region:'west',split:true" style="width:195px;">
-	  <div class="easyui-layout" data-options="fit:true">  
-           
-			 <div data-options="region:'center',border:false">
-			    <ul id="myTree" class="ztree"></ul>  
-			 </div> 
-			 
-        </div>  
-	</div> 
    <div data-options="region:'center'">   
 		<div class="easyui-layout" data-options="fit:true">  
 		   <div data-options="region:'north',split:true,border:true" style="height:40px"> 
 			<div class="toolbar-backgroud"  > 
 			<img src="<%=request.getContextPath()%>/images/window.png">
-			&nbsp;<span class="x_content_title">内容列表</span>
+			&nbsp;<span class="x_content_title">${category.name}内容列表</span>
 			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-add'" 
 			   onclick="javascript:addNew();">新增</a>  
 			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-edit'"
@@ -342,7 +292,11 @@ limitations under the License.
 			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-remove'"
 			   onclick="javascript:deleteSelections();">删除</a>  
 			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-view'"
-			   onclick="javascript:viewSite();">预览我的微网站</a>  
+			   onclick="javascript:viewSite();">预览我的微网站</a> 
+			<c:if test="${from eq 'category' }">
+			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-back'"
+			   onclick="javascript:history.back();">返回</a>    
+			</c:if>
 		   </div> 
 		  </div> 
 		  <div data-options="region:'center',border:true">
