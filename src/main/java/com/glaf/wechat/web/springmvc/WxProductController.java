@@ -1,3 +1,21 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.glaf.wechat.web.springmvc;
 
 import java.io.IOException;
@@ -33,88 +51,6 @@ public class WxProductController {
 
 	public WxProductController() {
 
-	}
-
-	@javax.annotation.Resource
-	public void setWxProductService(WxProductService wxProductService) {
-		this.wxProductService = wxProductService;
-	}
-
-	@RequestMapping("/save")
-	public ModelAndView save(HttpServletRequest request, ModelMap modelMap) {
-		User user = RequestUtils.getUser(request);
-		String actorId = user.getActorId();
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		params.remove("status");
-		params.remove("wfStatus");
-
-		WxProduct wxProduct = new WxProduct();
-		Tools.populate(wxProduct, params);
-
-		wxProduct.setName(request.getParameter("name"));
-		wxProduct.setPrice(RequestUtils.getDouble(request, "price"));
-		wxProduct.setNewsNum(RequestUtils.getInt(request, "newsNum"));
-		wxProduct.setCategoryNum(RequestUtils.getInt(request, "categoryNum"));
-		wxProduct.setDayNum(RequestUtils.getInt(request, "dayNum"));
-		wxProduct.setCreateBy(request.getParameter("createBy"));
-		wxProduct.setCreateDate(RequestUtils.getDate(request, "createDate"));
-
-		wxProduct.setCreateBy(actorId);
-
-		wxProductService.save(wxProduct);
-
-		return this.list(request, modelMap);
-	}
-
-	@ResponseBody
-	@RequestMapping("/saveWxProduct")
-	public byte[] saveWxProduct(HttpServletRequest request) {
-		User user = RequestUtils.getUser(request);
-		String actorId = user.getActorId();
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		WxProduct wxProduct = new WxProduct();
-		try {
-			Tools.populate(wxProduct, params);
-			wxProduct.setName(request.getParameter("name"));
-			wxProduct.setPrice(RequestUtils.getDouble(request, "price"));
-			wxProduct.setNewsNum(RequestUtils.getInt(request, "newsNum"));
-			wxProduct.setCategoryNum(RequestUtils
-					.getInt(request, "categoryNum"));
-			wxProduct.setDayNum(RequestUtils.getInt(request, "dayNum"));
-			wxProduct.setCreateBy(request.getParameter("createBy"));
-			wxProduct
-					.setCreateDate(RequestUtils.getDate(request, "createDate"));
-			wxProduct.setCreateBy(actorId);
-			this.wxProductService.save(wxProduct);
-
-			return ResponseUtils.responseJsonResult(true);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			logger.error(ex);
-		}
-		return ResponseUtils.responseJsonResult(false);
-	}
-
-	@RequestMapping("/update")
-	public ModelAndView update(HttpServletRequest request, ModelMap modelMap) {
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		params.remove("status");
-		params.remove("wfStatus");
-
-		WxProduct wxProduct = wxProductService.getWxProduct(RequestUtils
-				.getLong(request, "id"));
-
-		wxProduct.setName(request.getParameter("name"));
-		wxProduct.setPrice(RequestUtils.getDouble(request, "price"));
-		wxProduct.setNewsNum(RequestUtils.getInt(request, "newsNum"));
-		wxProduct.setCategoryNum(RequestUtils.getInt(request, "categoryNum"));
-		wxProduct.setDayNum(RequestUtils.getInt(request, "dayNum"));
-		wxProduct.setCreateBy(request.getParameter("createBy"));
-		wxProduct.setCreateDate(RequestUtils.getDate(request, "createDate"));
-
-		wxProductService.save(wxProduct);
-
-		return this.list(request, modelMap);
 	}
 
 	@ResponseBody
@@ -168,14 +104,6 @@ public class WxProductController {
 			request.setAttribute("x_json", rowJSON.toJSONString());
 		}
 
-		boolean canUpdate = false;
-		String x_method = request.getParameter("x_method");
-		if (StringUtils.equals(x_method, "submit")) {
-
-		}
-
-		request.setAttribute("canUpdate", canUpdate);
-
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {
 			return new ModelAndView(view, modelMap);
@@ -186,43 +114,7 @@ public class WxProductController {
 			return new ModelAndView(x_view, modelMap);
 		}
 
-		return new ModelAndView("/wx/wxProduct/edit", modelMap);
-	}
-
-	@RequestMapping("/view")
-	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		WxProduct wxProduct = wxProductService.getWxProduct(RequestUtils
-				.getLong(request, "id"));
-		request.setAttribute("wxProduct", wxProduct);
-		JSONObject rowJSON = wxProduct.toJsonObject();
-		request.setAttribute("x_json", rowJSON.toJSONString());
-
-		String view = request.getParameter("view");
-		if (StringUtils.isNotEmpty(view)) {
-			return new ModelAndView(view);
-		}
-
-		String x_view = ViewProperties.getString("wxProduct.view");
-		if (StringUtils.isNotEmpty(x_view)) {
-			return new ModelAndView(x_view);
-		}
-
-		return new ModelAndView("/wx/wxProduct/view");
-	}
-
-	@RequestMapping("/query")
-	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		String view = request.getParameter("view");
-		if (StringUtils.isNotEmpty(view)) {
-			return new ModelAndView(view, modelMap);
-		}
-		String x_view = ViewProperties.getString("wxProduct.query");
-		if (StringUtils.isNotEmpty(x_view)) {
-			return new ModelAndView(x_view, modelMap);
-		}
-		return new ModelAndView("/wx/wxProduct/query", modelMap);
+		return new ModelAndView("/wx/product/edit", modelMap);
 	}
 
 	@RequestMapping("/json")
@@ -296,7 +188,7 @@ public class WxProductController {
 				for (WxProduct wxProduct : list) {
 					JSONObject rowJSON = wxProduct.toJsonObject();
 					rowJSON.put("id", wxProduct.getId());
-					rowJSON.put("wxProductId", wxProduct.getId());
+					rowJSON.put("productId", wxProduct.getId());
 					rowJSON.put("startIndex", ++start);
 					rowsJSON.add(rowJSON);
 				}
@@ -328,7 +220,119 @@ public class WxProductController {
 			return new ModelAndView(view, modelMap);
 		}
 
-		return new ModelAndView("/wx/wxProduct/list", modelMap);
+		return new ModelAndView("/wx/product/list", modelMap);
+	}
+
+	@RequestMapping("/query")
+	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view, modelMap);
+		}
+		String x_view = ViewProperties.getString("wxProduct.query");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+		return new ModelAndView("/wx/product/query", modelMap);
+	}
+
+	@RequestMapping("/save")
+	public ModelAndView save(HttpServletRequest request, ModelMap modelMap) {
+		User user = RequestUtils.getUser(request);
+		String actorId = user.getActorId();
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		params.remove("status");
+		params.remove("wfStatus");
+
+		WxProduct wxProduct = new WxProduct();
+		Tools.populate(wxProduct, params);
+
+		wxProduct.setName(request.getParameter("name"));
+		wxProduct.setPrice(RequestUtils.getDouble(request, "price"));
+		wxProduct.setNewsNum(RequestUtils.getInt(request, "newsNum"));
+		wxProduct.setCategoryNum(RequestUtils.getInt(request, "categoryNum"));
+		wxProduct.setDayNum(RequestUtils.getInt(request, "dayNum"));
+
+		wxProduct.setCreateBy(actorId);
+
+		wxProductService.save(wxProduct);
+
+		return this.list(request, modelMap);
+	}
+
+	@ResponseBody
+	@RequestMapping("/saveWxProduct")
+	public byte[] saveWxProduct(HttpServletRequest request) {
+		User user = RequestUtils.getUser(request);
+		String actorId = user.getActorId();
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		logger.debug(params);
+		WxProduct wxProduct = new WxProduct();
+		try {
+			Tools.populate(wxProduct, params);
+			wxProduct.setName(request.getParameter("name"));
+			wxProduct.setPrice(RequestUtils.getDouble(request, "price"));
+			wxProduct.setNewsNum(RequestUtils.getInt(request, "newsNum"));
+			wxProduct.setCategoryNum(RequestUtils
+					.getInt(request, "categoryNum"));
+			wxProduct.setDayNum(RequestUtils.getInt(request, "dayNum"));
+			wxProduct.setCreateBy(actorId);
+			this.wxProductService.save(wxProduct);
+
+			return ResponseUtils.responseJsonResult(true);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			logger.error(ex);
+		}
+		return ResponseUtils.responseJsonResult(false);
+	}
+
+	@javax.annotation.Resource
+	public void setWxProductService(WxProductService wxProductService) {
+		this.wxProductService = wxProductService;
+	}
+
+	@RequestMapping("/update")
+	public ModelAndView update(HttpServletRequest request, ModelMap modelMap) {
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		params.remove("status");
+		params.remove("wfStatus");
+
+		WxProduct wxProduct = wxProductService.getWxProduct(RequestUtils
+				.getLong(request, "id"));
+		if (wxProduct != null) {
+			wxProduct.setName(request.getParameter("name"));
+			wxProduct.setPrice(RequestUtils.getDouble(request, "price"));
+			wxProduct.setNewsNum(RequestUtils.getInt(request, "newsNum"));
+			wxProduct.setCategoryNum(RequestUtils
+					.getInt(request, "categoryNum"));
+			wxProduct.setDayNum(RequestUtils.getInt(request, "dayNum"));
+
+			wxProductService.save(wxProduct);
+		}
+
+		return this.list(request, modelMap);
+	}
+
+	@RequestMapping("/view")
+	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		WxProduct wxProduct = wxProductService.getWxProduct(RequestUtils
+				.getLong(request, "id"));
+		request.setAttribute("wxProduct", wxProduct);
+
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view);
+		}
+
+		String x_view = ViewProperties.getString("wxProduct.view");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view);
+		}
+
+		return new ModelAndView("/wx/product/view");
 	}
 
 }

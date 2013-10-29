@@ -1,0 +1,13 @@
+
+<mapping>
+    <entity name="WxProduct" package="com.glaf.wechat" moduleName="wx" table="WX_WXPRODUCT" title="服务产品" englishTitle="WxProduct">
+        <id name="id" column="ID_" type="Long" title="主键" englishTitle="Id" length="255"/>
+        <property name="name" column="NAME_" type="String" title="订购产品" englishTitle="Name" length="100" editable="true"/>
+		<property name="price" column="PRICE_" type="Double" title="价格" englishTitle="Price" length="100" editable="true"/>
+		<property name="newsNum" column="NEWSNUM_" type="Integer" title="回复数(条)" englishTitle="NewsNum" editable="true"/>
+		<property name="categoryNum" column="CATEGORYNUM_" type="Integer" title="分类数" englishTitle="CategoryNum" editable="true"/>
+		<property name="dayNum" column="DAYNUM_" type="Integer" title="时长(天)" englishTitle="DayNum" editable="true"/>
+        <property name="createBy" column="CREATEBY_" type="String" title="创建人" englishTitle="CreateBy" length="50" editable="true" displayType="0"/>
+        <property name="createDate" column="CREATEDATE_" type="Date" title="创建日期" englishTitle="CreateDate" length="255" editable="true" displayType="0"/>
+    </entity>
+</mapping>

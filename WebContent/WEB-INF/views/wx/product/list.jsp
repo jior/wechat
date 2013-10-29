@@ -1,3 +1,19 @@
+<%--
+Licensed to the Apache Software Foundation (ASF) under one or more
+contributor license agreements.  See the NOTICE file distributed with
+this work for additional information regarding copyright ownership.
+The ASF licenses this file to You under the Apache License, Version 2.0
+(the "License"); you may not use this file except in compliance with
+the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+--%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
@@ -9,10 +25,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>${classDefinition.title}</title>
+<title>æœåŠ¡äº§å“</title>
 <link href="<%=request.getContextPath()%>/scripts/artDialog/skins/default.css" rel="stylesheet" />
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/#F{theme}/easyui.css">
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/themes/#F{theme}/styles.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/themes/${theme}/styles.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/icons/styles.css">
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script>
@@ -32,22 +48,18 @@
 				nowrap: false,
 				striped: true,
 				collapsible: true,
-				url: '<%=request.getContextPath()%>/mx/${classDefinition.moduleName}/${modelName}/json',
-				//sortName: 'id',
-				//sortOrder: 'desc',
+				url: '<%=request.getContextPath()%>/mx/wx/wxProduct/json',
 				remoteSort: false,
 				singleSelect: true,
-				idField: '${idField.name}',
+				idField: 'id',
 				columns:[[
-				        {title:'ĞòºÅ', field:'startIndex', width:80, sortable:false},
-					<#if pojo_fields?exists>
-					<#list  pojo_fields as field>
-					 <#if field.displayType == 4>
-					{title:'${field.title?if_exists}',field:'${field.name}', width:120},
-					 </#if>
-					</#list>
-					</#if>	 
-					{field:'functionKey',title:'¹¦ÄÜ¼ü',width:120}
+				        {title:'åºå·', field:'startIndex', width:60, sortable:false},
+					    {title:'è®¢è´­äº§å“', field:'name', width:180, sortable:false},
+					    {title:'ä»·æ ¼', field:'price', width:80, sortable:false},
+					    {title:'å›å¤æ•°(æ¡)', field:'newsNum', width:120, sortable:false},
+					    {title:'åˆ†ç±»æ•°', field:'categoryNum', width:90, sortable:false},
+					    {title:'æ—¶é•¿(å¤©)', field:'dayNum', width:90, sortable:false},
+					    {field:'functionKey',title:'åŠŸèƒ½é”®',width:120}
 				]],
 				rownumbers: false,
 				pagination: true,
@@ -66,19 +78,19 @@
 
 		 
 	function addNew(){
-	    //location.href="<%=request.getContextPath()%>/${classDefinition.moduleName}/${modelName}/edit";
-	    var link="<%=request.getContextPath()%>/mx/${classDefinition.moduleName}/${modelName}/edit";
-	    art.dialog.open(link, { height: 420, width: 680, title: "Ìí¼Ó¼ÇÂ¼", lock: true, scrollbars:"no" }, false);
+	    //location.href="<%=request.getContextPath()%>/wx/wxProduct/edit";
+	    var link="<%=request.getContextPath()%>/mx/wx/wxProduct/edit";
+	    art.dialog.open(link, { height: 350, width: 550, title: "æ·»åŠ è®°å½•", lock: true, scrollbars:"no" }, false);
 	}
 
 	function onRowClick(rowIndex, row){
-            //window.open('<%=request.getContextPath()%>/${classDefinition.moduleName}/${modelName}/edit?${idField.name}='+row.id);
-	    var link = '<%=request.getContextPath()%>/mx/${classDefinition.moduleName}/${modelName}/edit?${idField.name}='+row.id;
-	    art.dialog.open(link, { height: 420, width: 680, title: "ĞŞ¸Ä¼ÇÂ¼", lock: true, scrollbars:"no" }, false);
+            //window.open('<%=request.getContextPath()%>/wx/wxProduct/edit?id='+row.id);
+	    var link = '<%=request.getContextPath()%>/mx/wx/wxProduct/edit?id='+row.id;
+	    art.dialog.open(link, { height: 350, width: 550, title: "ä¿®æ”¹è®°å½•", lock: true, scrollbars:"no" }, false);
 	}
 
 	function searchWin(){
-	    jQuery('#dlg').dialog('open').dialog('setTitle','${classDefinition.title}²éÑ¯');
+	    jQuery('#dlg').dialog('open').dialog('setTitle','æœåŠ¡äº§å“æŸ¥è¯¢');
 	    //jQuery('#searchForm').form('clear');
 	}
 
@@ -92,26 +104,26 @@
 	function editSelected(){
 	    var rows = jQuery('#mydatagrid').datagrid('getSelections');
 	    if(rows == null || rows.length !=1){
-		alert("ÇëÑ¡ÔñÆäÖĞÒ»Ìõ¼ÇÂ¼¡£");
+		alert("è¯·é€‰æ‹©å…¶ä¸­ä¸€æ¡è®°å½•ã€‚");
 		return;
 	    }
 	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
 	    if (selected ){
-		//location.href="<%=request.getContextPath()%>/${classDefinition.moduleName}/${modelName}/edit?${idField.name}="+selected.id;
-		var link = "<%=request.getContextPath()%>/mx/${classDefinition.moduleName}/${modelName}/edit?${idField.name}="+selected.id;
-		art.dialog.open(link, { height: 420, width: 680, title: "ĞŞ¸Ä¼ÇÂ¼", lock: true, scrollbars:"no" }, false);
+		//location.href="<%=request.getContextPath()%>/wx/wxProduct/edit?id="+selected.id;
+		var link = "<%=request.getContextPath()%>/mx/wx/wxProduct/edit?id="+selected.id;
+		art.dialog.open(link, { height: 350, width: 550, title: "ä¿®æ”¹è®°å½•", lock: true, scrollbars:"no" }, false);
 	    }
 	}
 
 	function viewSelected(){
 		var rows = jQuery('#mydatagrid').datagrid('getSelections');
 		if(rows == null || rows.length !=1){
-			alert("ÇëÑ¡ÔñÆäÖĞÒ»Ìõ¼ÇÂ¼¡£");
+			alert("è¯·é€‰æ‹©å…¶ä¸­ä¸€æ¡è®°å½•ã€‚");
 			return;
 		}
 		var selected = jQuery('#mydatagrid').datagrid('getSelected');
 		if (selected ){
-		    location.href="<%=request.getContextPath()%>/mx/${classDefinition.moduleName}/${modelName}/edit?readonly=true&${idField.name}="+selected.id;
+		    location.href="<%=request.getContextPath()%>/mx/wx/wxProduct/edit?readonly=true&id="+selected.id;
 		}
 	}
 
@@ -121,26 +133,26 @@
 		for(var i=0;i<rows.length;i++){
 			ids.push(rows[i].id);
 		}
-		if(ids.length > 0 && confirm("Êı¾İÉ¾³ıºó²»ÄÜ»Ö¸´£¬È·¶¨É¾³ıÂğ£¿")){
+		if(ids.length > 0 && confirm("æ•°æ®åˆ é™¤åä¸èƒ½æ¢å¤ï¼Œç¡®å®šåˆ é™¤å—ï¼Ÿ")){
 		    var str = ids.join(',');
 			jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/mx/${classDefinition.moduleName}/${modelName}/delete?${idField.name}s='+str,
+				   url: '<%=request.getContextPath()%>/mx/wx/wxProduct/delete?ids='+str,
 				   dataType:  'json',
 				   error: function(data){
-					   alert('·şÎñÆ÷´¦Àí´íÎó£¡');
+					   alert('æœåŠ¡å™¨å¤„ç†é”™è¯¯ï¼');
 				   },
 				   success: function(data){
 					   if(data != null && data.message != null){
 						   alert(data.message);
 					   } else {
-						 alert('²Ù×÷³É¹¦Íê³É£¡');
+						 alert('æ“ä½œæˆåŠŸå®Œæˆï¼');
 					   }
 					   jQuery('#mydatagrid').datagrid('reload');
 				   }
 			 });
 		} else {
-			alert("ÇëÑ¡ÔñÖÁÉÙÒ»Ìõ¼ÇÂ¼¡£");
+			alert("è¯·é€‰æ‹©è‡³å°‘ä¸€æ¡è®°å½•ã€‚");
 		}
 	}
 
@@ -180,11 +192,11 @@
             var params = jQuery("#searchForm").formSerialize();
             jQuery.ajax({
                         type: "POST",
-                        url: '<%=request.getContextPath()%>/mx/${classDefinition.moduleName}/${modelName}/json',
+                        url: '<%=request.getContextPath()%>/mx/wx/wxProduct/json',
                         dataType:  'json',
                         data: params,
                         error: function(data){
-                                  alert('·şÎñÆ÷´¦Àí´íÎó£¡');
+                                  alert('æœåŠ¡å™¨å¤„ç†é”™è¯¯ï¼');
                         },
                         success: function(data){
                                   jQuery('#mydatagrid').datagrid('loadData', data);
@@ -202,62 +214,19 @@
    <div data-options="region:'north',split:true,border:true" style="height:40px"> 
     <div class="toolbar-backgroud"  > 
 	<img src="<%=request.getContextPath()%>/images/window.png">
-	&nbsp;<span class="x_content_title">${classDefinition.title}ÁĞ±í</span>
+	&nbsp;<span class="x_content_title">æœåŠ¡äº§å“åˆ—è¡¨</span>
     <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-add'" 
-	   onclick="javascript:addNew();">ĞÂÔö</a>  
+	   onclick="javascript:addNew();">æ–°å¢</a>  
     <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-edit'"
-	   onclick="javascript:editSelected();">ĞŞ¸Ä</a>  
-	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-remove'"
-	   onclick="javascript:deleteSelections();">É¾³ı</a> 
+	   onclick="javascript:editSelected();">ä¿®æ”¹</a>  
 	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-search'"
-	   onclick="javascript:searchWin();">²éÕÒ</a>
+	   onclick="javascript:searchWin();">æŸ¥æ‰¾</a>
    </div> 
   </div> 
   <div data-options="region:'center',border:true">
 	 <table id="mydatagrid"></table>
   </div>  
 </div>
-<div id="edit_dlg" class="easyui-dialog" style="width:400px;height:280px;padding:10px 20px"
-	closed="true" buttons="#dlg-buttons">
-    <form id="editForm" name="editForm" method="post">
-         
-    </form>
-</div>
-<div id="dlg" class="easyui-dialog" style="width:400px;height:280px;padding:10px 20px"
-	closed="true" buttons="#dlg-buttons">
-  <form id="searchForm" name="searchForm" method="post">
-  <table class="easyui-form" >
-    <tbody>
-<#if pojo_fields?exists>
-  <#list  pojo_fields as field>	
-    <#if field.editable>
-    <tr>
-	<td>${field.title}</td>
-	<td>
-    <#if field.javaType?exists && field.javaType== 'Date'>
-	<input id="${field.name}LessThanOrEqual" name="${field.name}LessThanOrEqual" class="easyui-datebox"></input>
-    <#elseif field.javaType?exists && field.javaType== 'Integer'>
-	<input id="${field.name}" name="${field.name}" class="easyui-numberbox" precision="0" ></input>
-    <#elseif field.javaType?exists && field.javaType== 'Long'>
-	<input id="${field.name}" name="${field.name}" class="easyui-numberbox" precision="0" ></input>
-    <#elseif field.javaType?exists && field.javaType== 'Double'>
-	<input id="${field.name}" name="${field.name}" class="easyui-numberbox" ></input>
-    <#elseif field.javaType?exists && field.javaType== 'String'>
-        <input id="${field.name}Like" name="${field.name}Like" class="easyui-validatebox" type="text"></input>
-    </#if>
-       </td>
-     </tr>
-    </#if>	 
-  </#list>
-</#if>
-      </tbody>
-    </table>
-  </form>
-</div>
-<div id="dlg-buttons">
-	<a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="javascript:searchData()">²éÑ¯</a>
-	<a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:jQuery('#dlg').dialog('close')">È¡Ïû</a>
-</div>
+
 </body>
 </html>
- 
