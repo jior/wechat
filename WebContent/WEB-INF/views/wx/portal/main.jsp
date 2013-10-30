@@ -208,7 +208,7 @@
 			<div title="我的桌面" style="padding: 1px; overflow: hidden; color: red;">
 				<iframe
 					src="${contextPath}/mx/user/portal?easyuiPortal=true" id="cc"
-					width='100%' height='100%' frameborder='0' scrolling='no' noResize></iframe>
+					width='100%' height='100%' frameborder='0' scrolling='auto' noResize></iframe>
 			</div>
 		</div>
 	</div>

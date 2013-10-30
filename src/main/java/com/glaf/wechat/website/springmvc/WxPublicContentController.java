@@ -146,6 +146,7 @@ public class WxPublicContentController {
 				query3.parentId(0L);
 				query3.type("category");
 				query3.locked(0);
+				query3.indexShow(1);
 				List<WxCategory> list3 = wxCategoryService.list(query3);
 				if (list3 != null && !list3.isEmpty()) {
 					for (WxCategory cat : list3) {
@@ -196,7 +197,7 @@ public class WxPublicContentController {
 		if (wxUserTemplate != null) {
 			Long templateId = wxUserTemplate.getTemplateId();
 			boolean cache = conf.getBoolean("wx_template_cache", true);
-			logger.debug("templateId:"+templateId);
+			logger.debug("templateId:" + templateId);
 			WxTemplate template = wxTemplateService.getWxTemplate(templateId,
 					cache);
 			if (template != null && template.getContent() != null) {
@@ -225,6 +226,7 @@ public class WxPublicContentController {
 				query3.parentId(0L);
 				query3.type("category");
 				query3.locked(0);
+				query3.indexShow(1);
 				List<WxCategory> list3 = wxCategoryService.list(query3);
 				context.put("categories", list3);
 				if (list3 != null && !list3.isEmpty()) {
@@ -337,10 +339,34 @@ public class WxPublicContentController {
 					query3.parentId(0L);
 					query3.type("category");
 					query3.locked(0);
+					query3.indexShow(1);
 					List<WxCategory> list3 = wxCategoryService.list(query3);
 					context.put("categories", list3);
 					if (list3 != null && !list3.isEmpty()) {
 						for (WxCategory cat : list3) {
+							if (StringUtils.isNotEmpty(cat.getUrl())) {
+								if (StringUtils.startsWith(cat.getUrl(),
+										"/mx/wx/")) {
+									cat.setUrl(serviceUrl + cat.getUrl());
+								}
+								if (StringUtils.startsWith(cat.getUrl(),
+										"/website/wx/")) {
+									cat.setUrl(serviceUrl + cat.getUrl());
+								}
+							}
+						}
+					}
+
+					WxCategoryQuery query4 = new WxCategoryQuery();
+					query4.createBy(category.getCreateBy());
+					query4.parentId(category.getId());
+					query4.type("category");
+					query4.locked(0);
+					query4.indexShow(1);
+					List<WxCategory> list4 = wxCategoryService.list(query4);
+					context.put("subCategories", list4);
+					if (list4 != null && !list4.isEmpty()) {
+						for (WxCategory cat : list4) {
 							if (StringUtils.isNotEmpty(cat.getUrl())) {
 								if (StringUtils.startsWith(cat.getUrl(),
 										"/mx/wx/")) {
@@ -465,6 +491,7 @@ public class WxPublicContentController {
 				query3.parentId(0L);
 				query3.type("category");
 				query3.locked(0);
+				query3.indexShow(1);
 				List<WxCategory> list3 = wxCategoryService.list(query3);
 
 				if (list3 != null && !list3.isEmpty()) {
