@@ -71,5 +71,7 @@ public interface IMessage {
 	public static final String TAG_MEDIAID = "MediaId";
 	public static final String TAG_THUMBMEDIAID = "thumbMediaId";
 	public static final String TAG_FORMAT = "Format";
+	public static final String TAG_TICKET ="Ticket";
+	
 
 }

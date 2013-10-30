@@ -132,7 +132,7 @@ limitations under the License.
 
 	function editRow(rowId){
 	    var link = '<%=request.getContextPath()%>/mx/wx/wxContent/edit?type=${type}&id='+rowId;
-	    art.dialog.open(link, { height: 420, width: 780, title: "修改记录", lock: true, scrollbars:"no" }, false);
+	    art.dialog.open(link, { height: 420, width: 880, title: "修改记录", lock: true, scrollbars:"no" }, false);
 	}
 
     function deleteRow(rowId){
@@ -159,13 +159,13 @@ limitations under the License.
 	function addNew(){
 	    //location.href="<%=request.getContextPath()%>/wx/wxContent/edit";
 	    var link="<%=request.getContextPath()%>/mx/wx/wxContent/edit?type=${type}";
-	    art.dialog.open(link, { height: 420, width: 780, title: "添加记录", lock: true, scrollbars:"no" }, false);
+	    art.dialog.open(link, { height: 420, width: 880, title: "添加记录", lock: true, scrollbars:"no" }, false);
 	}
 
 	function onRowClick(rowIndex, row){
             //window.open('<%=request.getContextPath()%>/wx/wxContent/edit?id='+row.id);
 	    var link = '<%=request.getContextPath()%>/mx/wx/wxContent/edit?type=${type}&id='+row.id;
-	    art.dialog.open(link, { height: 420, width: 780, title: "修改记录", lock: true, scrollbars:"no" }, false);
+	    art.dialog.open(link, { height: 420, width: 880, title: "修改记录", lock: true, scrollbars:"no" }, false);
 	}
 
 	function searchWin(){
@@ -190,7 +190,7 @@ limitations under the License.
 	    if (selected ){
 		//location.href="<%=request.getContextPath()%>/wx/wxContent/edit?id="+selected.id;
 		var link = "<%=request.getContextPath()%>/mx/wx/wxContent/edit?type=${type}&id="+selected.id;
-		art.dialog.open(link, { height: 420, width: 780, title: "修改记录", lock: true, scrollbars:"no" }, false);
+		art.dialog.open(link, { height: 420, width: 880, title: "修改记录", lock: true, scrollbars:"no" }, false);
 	    }
 	}
 

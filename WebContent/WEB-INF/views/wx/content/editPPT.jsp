@@ -96,6 +96,17 @@ limitations under the License.
 		openWindow(link,self,x, y, 745, 480);
 	}
 
+	function chooseLink(){
+		var link = '<%=request.getContextPath()%>/mx/wx/wxChoose/chooseOne?elementId=url&elementName=url';
+		var x=100;
+		var y=100;
+		if(is_ie) {
+			x=document.body.scrollLeft+event.clientX-event.offsetX-200;
+			y=document.body.scrollTop+event.clientY-event.offsetY-200;
+		}
+		openWindow(link,self,x, y, 745, 480);
+	}
+
 </script>
 </head>
 
@@ -116,7 +127,7 @@ limitations under the License.
   <input type="hidden" id="id" name="id" value="${wxContent.id}"/>
   <input type="hidden" id="categoryId" name="categoryId" value="${categoryId}"/>
   <input type="hidden" id="type" name="type" value="PPT"/>
-  <table class="easyui-form" style="width:96%;" align="center">
+  <table class="easyui-form" style="width:96%;" align="left">
     <tbody>
 	<tr>
 		<td width="15%" align="left">标题</td>
@@ -155,7 +166,12 @@ limitations under the License.
 	<tr>
 		<td width="15%" align="left">跳转地址</td>
 		<td align="left">
-			<textarea  id="url" name="url" class="x-textarea"  rows="5" cols="38" style="width:495px;height:60px;">${wxContent.url}</textarea> 
+			<input type="text" id="url" name="url"class="x-text" size="60" value="${wxContent.url}">
+			&nbsp;<img src="<%=request.getContextPath()%>/images/link.png" 
+			           title="链接"
+			           onclick="javascript:chooseLink();" border="0"/>&nbsp;
+			<br>可以选择内部链接
+			<br>也可以直接输入外部链接（以http://或https://开始）
 		</td>
 	</tr>
 

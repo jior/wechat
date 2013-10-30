@@ -111,7 +111,7 @@ limitations under the License.
 	}
 
 	function chooseLink(){
-		var link = '<%=request.getContextPath()%>/mx/wx/wxContent/chooseOne?elementId=url&elementName=url';
+		var link = '<%=request.getContextPath()%>/mx/wx/wxChoose/chooseOne?elementId=url&elementName=url';
 		var x=100;
 		var y=100;
 		if(is_ie) {
@@ -152,7 +152,7 @@ limitations under the License.
     </c:otherwise>
   </c:choose>
   <input type="hidden" id="type" name="type" value="${type}"/>
-  <table class="easyui-form" style="width:600px;" align="center">
+  <table class="easyui-form" style="width:600px;" align="left">
     <tbody>
 	<tr>
 		<td width="20%" align="left">上级节点</td>

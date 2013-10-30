@@ -126,6 +126,27 @@ limitations under the License.
 		openWindow(link,self,x, y, 745, 480);
 	}
 
+	function chooseLink(){
+		var link = '<%=request.getContextPath()%>/mx/wx/wxChoose/chooseOne?elementId=url&elementName=url';
+		var x=100;
+		var y=100;
+		if(is_ie) {
+			x=document.body.scrollLeft+event.clientX-event.offsetX-200;
+			y=document.body.scrollTop+event.clientY-event.offsetY-200;
+		}
+		openWindow(link,self,x, y, 745, 480);
+	}
+
+  function checkX(value){
+	  if(value=='P3'){
+		  $("#layer_url").hide();
+		  $("#layer_content").show();
+	  } else {
+          $("#layer_url").show();
+		  $("#layer_content").hide();
+	  }
+  }
+
 </script>
 </head>
 
@@ -146,7 +167,7 @@ limitations under the License.
   <input type="hidden" id="id" name="id" value="${wxContent.id}"/>
   <input type="hidden" id="categoryId" name="categoryId" value="${categoryId}"/>
   <input type="hidden" id="type" name="type" value="${type}"/>
-  <table class="easyui-form" style="width:96%;" align="center">
+  <table class="easyui-form" style="width:96%;" align="left">
     <tbody>
 	<tr>
 		<td width="15%" align="left">标题</td>
@@ -222,7 +243,7 @@ limitations under the License.
 	<tr>
 		<td width="15%" align="left">简介</td>
 		<td align="left">
-			<textarea  id="summary" name="summary" class="x-textarea"  rows="5" cols="38" style="width:545px;height:60px;">${wxContent.summary}</textarea> 
+			<textarea  id="summary" name="summary" class="x-textarea"  rows="5" cols="38" style="width:525px;height:60px;">${wxContent.summary}</textarea> 
 		</td>
 	</tr>
 
@@ -255,7 +276,33 @@ limitations under the License.
 	<tr>
 		<td width="15%" align="left" valign="middle">图文详细页内容</td>
 		<td align="left" valign="middle">
-			<textarea  id="content" name="content" class="x-textarea"  rows="5" cols="38" style="width:545px;height:380px;">${wxContent.content}</textarea> 
+		     <input type="radio" name="layout" onclick="javascript:checkX('P2')"
+					<c:if test="${!empty wxContent && wxContent.url != null && wxContent.url != ''}">checked</c:if>>链接
+				&nbsp;
+			<input type="radio" name="layout" onclick="javascript:checkX('P3')"
+					<c:if test="${empty wxContent || wxContent.url == null || wxContent.url == ''}">checked</c:if>>内容
+			 <div id="layer_url">
+			   <input type="text" id="url" name="url"class="x-text" size="80" value="${wxContent.url}">
+			   &nbsp;<img src="<%=request.getContextPath()%>/images/link.png" 
+			           title="链接" onclick="javascript:chooseLink();" border="0"/>
+			  <br>可以选择内部链接
+			  <br>也可以直接输入外部链接（以http://或https://开始）
+			 </div>
+			 <div id="layer_content">
+			  <textarea  id="content" name="content" class="x-textarea"  rows="5" cols="38" style="width:545px;height:380px;">${wxContent.content}</textarea> 
+			 </div>
+			 <script type="text/javascript">	
+			 <c:choose>
+	           <c:when test="${!empty wxContent && wxContent.url != null && wxContent.url != ''}">
+			      $("#layer_url").show();
+		          $("#layer_content").hide();
+			   </c:when>
+			   <c:otherwise>
+			      $("#layer_url").hide();
+		          $("#layer_content").show();
+			   </c:otherwise>
+	          </c:choose>
+			  </script>
 		</td>
 	</tr>
 

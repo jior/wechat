@@ -25,6 +25,11 @@ public class EventMessage extends Message {
 	private static final long serialVersionUID = 1L;
 	protected String event;
 	protected String eventKey;
+	protected String ticket;
+
+	public EventMessage() {
+
+	}
 
 	public String getEvent() {
 		return event;
@@ -34,12 +39,20 @@ public class EventMessage extends Message {
 		return eventKey;
 	}
 
+	public String getTicket() {
+		return ticket;
+	}
+
 	public void setEvent(String event) {
 		this.event = event;
 	}
 
 	public void setEventKey(String eventKey) {
 		this.eventKey = eventKey;
+	}
+
+	public void setTicket(String ticket) {
+		this.ticket = ticket;
 	}
 
 }

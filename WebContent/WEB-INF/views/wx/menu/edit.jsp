@@ -107,8 +107,8 @@ limitations under the License.
 		openWindow(link,self,x, y, 745, 480);
 	}
 
-	function editLinks(){
-		var link = '<%=request.getContextPath()%>/mx/wx/wxContent/chooseOne?elementId=url&elementName=url&type=category';
+	function chooseLink(){
+		var link = '<%=request.getContextPath()%>/mx/wx/wxChoose/chooseOne?elementId=url&elementName=url&type=category';
 		var x=100;
 		var y=100;
 		if(is_ie) {
@@ -136,7 +136,7 @@ limitations under the License.
   <form id="iForm" name="iForm" method="post">
   <input type="hidden" id="id" name="id" value="${wxMenu.id}"/>
   <input type="hidden" id="group" name="group" value="${group}"/>
-  <table class="easyui-form" style="width:600px;" align="center">
+  <table class="easyui-form" style="width:600px;" align="left">
     <tbody>
 	<c:choose>
 	<c:when test="${empty wxMenu }">
@@ -212,8 +212,8 @@ limitations under the License.
 			       class="easyui-validatebox x-text"  
 				   value="${wxMenu.url}"/> 
 		    &nbsp;<img src="<%=request.getContextPath()%>/images/link.png" 
-			           title="内部链接"
-			           onclick="javascript:editLinks();" border="0"/>&nbsp;
+			           title="链接"
+			           onclick="javascript:chooseLink();" border="0"/>&nbsp;
 			<br>可以选择内部链接
 			<br>也可以直接输入外部链接（以http://或https://开始）
 		</td>
@@ -222,8 +222,7 @@ limitations under the License.
 		<td width="15%" align="left" valign="middle">图标</td>
 		<td align="left" valign="top">
 		     <c:if test="${not empty wxMenu.icon }">
-			     <img src="<%=request.getContextPath()%>/${wxMenu.icon}" width="60" height="60" border="0"
-				      />&nbsp;
+			     <img src="<%=request.getContextPath()%>/${wxMenu.icon}" width="60" height="60" border="0"/>&nbsp;
 				 <br>
 			</c:if>
 			<input id="icon" name="icon" type="text" 
