@@ -57,6 +57,7 @@ limitations under the License.
 					{title:'封面', field:'cover', align:'center', width:80, formatter:formatterCover},
 					{title:'标题', field:'title', align:'left', width:380, formatter:formatterTitle},
 					{title:'链接地址', field:'url', align:'left', width:180, formatter:formatterLink},
+					{title:'关键词', field:'keywords', align:'left', width:120},
 					{title:'关键词数', field:'keywordsCount', align:'right', width:80},
 					{title:'关键词匹配', field:'keywordsMatchType', align:'center', width:120, formatter:formatterMatchType},
 					{title:'顺序', field:'sort', align:'right', width:60},
