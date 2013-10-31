@@ -16,40 +16,39 @@
  * limitations under the License.
  */
 
-package com.glaf.wechat.web.springmvc;
+package com.glaf.apps.vote.web.springmvc;
 
 import java.io.IOException;
 import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import com.alibaba.fastjson.*;
 
+import com.alibaba.fastjson.*;
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.identity.*;
 import com.glaf.core.security.*;
 import com.glaf.core.util.*;
+import com.glaf.apps.vote.domain.*;
+import com.glaf.apps.vote.query.*;
+import com.glaf.apps.vote.service.*;
 
-import com.glaf.wechat.domain.*;
-import com.glaf.wechat.query.*;
-import com.glaf.wechat.service.*;
-
-@Controller("/wx/wxMessage")
-@RequestMapping("/wx/wxMessage")
-public class WxMessageController {
+@Controller("/wx/wxVote")
+@RequestMapping("/wx/wxVote")
+public class WxVoteController {
 	protected static final Log logger = LogFactory
-			.getLog(WxMessageController.class);
+			.getLog(WxVoteController.class);
 
-	protected WxMessageService wxMessageService;
+	protected WxVoteService wxVoteService;
 
-	public WxMessageController() {
+	public WxVoteController() {
 
 	}
 
@@ -64,57 +63,40 @@ public class WxMessageController {
 			while (token.hasMoreTokens()) {
 				String x = token.nextToken();
 				if (StringUtils.isNotEmpty(x)) {
-					WxMessage wxMessage = wxMessageService.getWxMessage(Long
-							.valueOf(x));
-					if (wxMessage != null
-							&& (StringUtils.equals(wxMessage.getCreateBy(),
+					WxVote wxVote = wxVoteService.getWxVote(Long.valueOf(x));
+					if (wxVote != null
+							&& (StringUtils.equals(wxVote.getCreateBy(),
 									loginContext.getActorId()) || loginContext
 									.isSystemAdministrator())) {
-						wxMessageService.deleteById(wxMessage.getId());
+						wxVoteService.deleteById(wxVote.getId());
 					}
 				}
 			}
 		} else if (id != null) {
-			WxMessage wxMessage = wxMessageService.getWxMessage(Long
-					.valueOf(id));
-			if (wxMessage != null
-					&& (StringUtils.equals(wxMessage.getCreateBy(),
+			WxVote wxVote = wxVoteService.getWxVote(Long.valueOf(id));
+			if (wxVote != null
+					&& (StringUtils.equals(wxVote.getCreateBy(),
 							loginContext.getActorId()) || loginContext
 							.isSystemAdministrator())) {
-				wxMessageService.deleteById(wxMessage.getId());
+				wxVoteService.deleteById(wxVote.getId());
 			}
 		}
-	}
-
-	@ResponseBody
-	@RequestMapping("/detail")
-	public byte[] detail(HttpServletRequest request) throws IOException {
-		LoginContext loginContext = RequestUtils.getLoginContext(request);
-		WxMessage wxMessage = wxMessageService.getWxMessage(RequestUtils
-				.getLong(request, "id"));
-		if (wxMessage != null
-				&& (StringUtils.equals(wxMessage.getCreateBy(),
-						loginContext.getActorId()) || loginContext
-						.isSystemAdministrator())) {
-			JSONObject rowJSON = wxMessage.toJsonObject();
-			return rowJSON.toJSONString().getBytes("UTF-8");
-		}
-		return null;
 	}
 
 	@RequestMapping("/edit")
 	public ModelAndView edit(HttpServletRequest request, ModelMap modelMap) {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
+
 		RequestUtils.setRequestParameterToAttribute(request);
-		request.removeAttribute("canSubmit");
-		WxMessage wxMessage = wxMessageService.getWxMessage(RequestUtils
-				.getLong(request, "id"));
-		if (wxMessage != null
-				&& (StringUtils.equals(wxMessage.getCreateBy(),
+
+		WxVote wxVote = wxVoteService.getWxVote(RequestUtils.getLong(request,
+				"id"));
+		if (wxVote != null
+				&& (StringUtils.equals(wxVote.getCreateBy(),
 						loginContext.getActorId()) || loginContext
 						.isSystemAdministrator())) {
-			request.setAttribute("wxMessage", wxMessage);
-			JSONObject rowJSON = wxMessage.toJsonObject();
+			request.setAttribute("wxVote", wxVote);
+			JSONObject rowJSON = wxVote.toJsonObject();
 			request.setAttribute("x_json", rowJSON.toJSONString());
 		}
 
@@ -123,12 +105,12 @@ public class WxMessageController {
 			return new ModelAndView(view, modelMap);
 		}
 
-		String x_view = ViewProperties.getString("wxMessage.edit");
+		String x_view = ViewProperties.getString("wxVote.edit");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
 		}
 
-		return new ModelAndView("/wx/message/edit", modelMap);
+		return new ModelAndView("/wx/vote/edit", modelMap);
 	}
 
 	@RequestMapping("/json")
@@ -137,14 +119,18 @@ public class WxMessageController {
 			throws IOException {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		WxMessageQuery query = new WxMessageQuery();
+		WxVoteQuery query = new WxVoteQuery();
 		Tools.populate(query, params);
 		query.deleteFlag(0);
 		query.setActorId(loginContext.getActorId());
 		query.setLoginContext(loginContext);
-
-		String actorId = loginContext.getActorId();
-		query.createBy(actorId);
+		/**
+		 * 此处业务逻辑需自行调整
+		 */
+		if (!loginContext.isSystemAdministrator()) {
+			String actorId = loginContext.getActorId();
+			query.createBy(actorId);
+		}
 
 		String gridType = ParamUtils.getString(params, "gridType");
 		if (gridType == null) {
@@ -170,7 +156,7 @@ public class WxMessageController {
 		}
 
 		JSONObject result = new JSONObject();
-		int total = wxMessageService.getWxMessageCountByQueryCriteria(query);
+		int total = wxVoteService.getWxVoteCountByQueryCriteria(query);
 		if (total > 0) {
 			result.put("total", total);
 			result.put("totalCount", total);
@@ -187,18 +173,18 @@ public class WxMessageController {
 				}
 			}
 
-			List<WxMessage> list = wxMessageService
-					.getWxMessagesByQueryCriteria(start, limit, query);
+			List<WxVote> list = wxVoteService.getWxVotesByQueryCriteria(start,
+					limit, query);
 
 			if (list != null && !list.isEmpty()) {
 				JSONArray rowsJSON = new JSONArray();
 
 				result.put("rows", rowsJSON);
 
-				for (WxMessage wxMessage : list) {
-					JSONObject rowJSON = wxMessage.toJsonObject();
-					rowJSON.put("id", wxMessage.getId());
-					rowJSON.put("wxMessageId", wxMessage.getId());
+				for (WxVote wxVote : list) {
+					JSONObject rowJSON = wxVote.toJsonObject();
+					rowJSON.put("id", wxVote.getId());
+					rowJSON.put("voteId", wxVote.getId());
 					rowJSON.put("startIndex", ++start);
 					rowsJSON.add(rowJSON);
 				}
@@ -230,7 +216,7 @@ public class WxMessageController {
 			return new ModelAndView(view, modelMap);
 		}
 
-		return new ModelAndView("/wx/message/list", modelMap);
+		return new ModelAndView("/wx/vote/list", modelMap);
 	}
 
 	@RequestMapping("/query")
@@ -240,11 +226,11 @@ public class WxMessageController {
 		if (StringUtils.isNotEmpty(view)) {
 			return new ModelAndView(view, modelMap);
 		}
-		String x_view = ViewProperties.getString("wxMessage.query");
+		String x_view = ViewProperties.getString("wxVote.query");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
 		}
-		return new ModelAndView("/wx/message/query", modelMap);
+		return new ModelAndView("/wx/vote/query", modelMap);
 	}
 
 	@RequestMapping("/save")
@@ -252,38 +238,52 @@ public class WxMessageController {
 		User user = RequestUtils.getUser(request);
 		String actorId = user.getActorId();
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		params.remove("status");
-		params.remove("wfStatus");
 
-		WxMessage wxMessage = new WxMessage();
-		Tools.populate(wxMessage, params);
+		WxVote wxVote = new WxVote();
+		Tools.populate(wxVote, params);
 
-		wxMessage.setName(request.getParameter("name"));
-		wxMessage.setMobile(request.getParameter("mobile"));
-		wxMessage.setTitle(request.getParameter("title"));
-		wxMessage.setContent(request.getParameter("content"));
-		wxMessage.setCreateBy(actorId);
+		wxVote.setTitle(request.getParameter("title"));
+		wxVote.setContent(request.getParameter("content"));
+		wxVote.setIcon(request.getParameter("icon"));
+		wxVote.setStatus(RequestUtils.getInt(request, "status"));
+		wxVote.setSignFlag(RequestUtils.getInt(request, "signFlag"));
+		wxVote.setMultiFlag(RequestUtils.getInt(request, "multiFlag"));
+		wxVote.setLimitFlag(RequestUtils.getInt(request, "limitFlag"));
+		wxVote.setLimitTimeInterval(RequestUtils.getInt(request,
+				"limitTimeInterval"));
+		wxVote.setStartDate(RequestUtils.getDate(request, "startDate"));
+		wxVote.setEndDate(RequestUtils.getDate(request, "endDate"));
 
-		wxMessageService.save(wxMessage);
+		wxVote.setCreateBy(actorId);
+
+		wxVoteService.save(wxVote);
 
 		return this.list(request, modelMap);
 	}
 
 	@ResponseBody
-	@RequestMapping("/saveWxMessage")
-	public byte[] saveWxMessage(HttpServletRequest request) {
+	@RequestMapping("/saveWxVote")
+	public byte[] saveWxVote(HttpServletRequest request) {
 		User user = RequestUtils.getUser(request);
 		String actorId = user.getActorId();
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		WxMessage wxMessage = new WxMessage();
+		WxVote wxVote = new WxVote();
 		try {
-			Tools.populate(wxMessage, params);
-			wxMessage.setName(request.getParameter("name"));
-			wxMessage.setMobile(request.getParameter("mobile"));
-			wxMessage.setTitle(request.getParameter("title"));
-			wxMessage.setContent(request.getParameter("content"));
-			wxMessage.setCreateBy(actorId);
-			this.wxMessageService.save(wxMessage);
+			Tools.populate(wxVote, params);
+			wxVote.setTitle(request.getParameter("title"));
+			wxVote.setContent(request.getParameter("content"));
+			wxVote.setIcon(request.getParameter("icon"));
+			wxVote.setStatus(RequestUtils.getInt(request, "status"));
+			wxVote.setSignFlag(RequestUtils.getInt(request, "signFlag"));
+			wxVote.setMultiFlag(RequestUtils.getInt(request, "multiFlag"));
+			wxVote.setLimitFlag(RequestUtils.getInt(request, "limitFlag"));
+			wxVote.setLimitTimeInterval(RequestUtils.getInt(request,
+					"limitTimeInterval"));
+			wxVote.setStartDate(RequestUtils.getDate(request, "startDate"));
+			wxVote.setEndDate(RequestUtils.getDate(request, "endDate"));
+
+			wxVote.setCreateBy(actorId);
+			this.wxVoteService.save(wxVote);
 
 			return ResponseUtils.responseJsonResult(true);
 		} catch (Exception ex) {
@@ -294,30 +294,34 @@ public class WxMessageController {
 	}
 
 	@javax.annotation.Resource
-	public void setWxMessageService(WxMessageService wxMessageService) {
-		this.wxMessageService = wxMessageService;
+	public void setWxVoteService(WxVoteService wxVoteService) {
+		this.wxVoteService = wxVoteService;
 	}
 
 	@RequestMapping("/update")
 	public ModelAndView update(HttpServletRequest request, ModelMap modelMap) {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		params.remove("status");
-		params.remove("wfStatus");
 
-		WxMessage wxMessage = wxMessageService.getWxMessage(RequestUtils
-				.getLong(request, "id"));
-		if (wxMessage != null
-				&& (StringUtils.equals(wxMessage.getCreateBy(),
+		WxVote wxVote = wxVoteService.getWxVote(RequestUtils.getLong(request,
+				"id"));
+
+		if (wxVote != null
+				&& (StringUtils.equals(wxVote.getCreateBy(),
 						loginContext.getActorId()) || loginContext
 						.isSystemAdministrator())) {
-			wxMessage.setName(request.getParameter("name"));
-			wxMessage.setMobile(request.getParameter("mobile"));
-			wxMessage.setTitle(request.getParameter("title"));
-			wxMessage.setContent(request.getParameter("content"));
-			wxMessage.setLastUpdateBy(loginContext.getActorId());
+			wxVote.setTitle(request.getParameter("title"));
+			wxVote.setContent(request.getParameter("content"));
+			wxVote.setIcon(request.getParameter("icon"));
+			wxVote.setStatus(RequestUtils.getInt(request, "status"));
+			wxVote.setSignFlag(RequestUtils.getInt(request, "signFlag"));
+			wxVote.setMultiFlag(RequestUtils.getInt(request, "multiFlag"));
+			wxVote.setLimitFlag(RequestUtils.getInt(request, "limitFlag"));
+			wxVote.setLimitTimeInterval(RequestUtils.getInt(request,
+					"limitTimeInterval"));
+			wxVote.setStartDate(RequestUtils.getDate(request, "startDate"));
+			wxVote.setEndDate(RequestUtils.getDate(request, "endDate"));
 
-			wxMessageService.save(wxMessage);
+			wxVoteService.save(wxVote);
 		}
 
 		return this.list(request, modelMap);
@@ -325,25 +329,30 @@ public class WxMessageController {
 
 	@RequestMapping("/view")
 	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
+		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		RequestUtils.setRequestParameterToAttribute(request);
-
-		WxMessage wxMessage = wxMessageService.getWxMessage(RequestUtils
-				.getLong(request, "id"));
-		request.setAttribute("wxMessage", wxMessage);
-		JSONObject rowJSON = wxMessage.toJsonObject();
-		request.setAttribute("x_json", rowJSON.toJSONString());
+		WxVote wxVote = wxVoteService.getWxVote(RequestUtils.getLong(request,
+				"id"));
+		if (wxVote != null
+				&& (StringUtils.equals(wxVote.getCreateBy(),
+						loginContext.getActorId()) || loginContext
+						.isSystemAdministrator())) {
+			request.setAttribute("wxVote", wxVote);
+			JSONObject rowJSON = wxVote.toJsonObject();
+			request.setAttribute("x_json", rowJSON.toJSONString());
+		}
 
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {
 			return new ModelAndView(view);
 		}
 
-		String x_view = ViewProperties.getString("wxMessage.view");
+		String x_view = ViewProperties.getString("wxVote.view");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view);
 		}
 
-		return new ModelAndView("/wx/message/view");
+		return new ModelAndView("/wx/vote/view");
 	}
 
 }

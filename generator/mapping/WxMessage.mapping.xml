@@ -1,13 +1,13 @@
 
 <mapping>
-    <entity name="WxMessage" package="com.glaf.wechat" moduleName="wx" table="WX_MESSAGE" title="WxMessage" englishTitle="WxMessage">
+    <entity name="WxMessage" package="com.glaf.wechat" moduleName="wx" table="WX_MESSAGE" title="微反馈" englishTitle="WxMessage">
         <id name="id" column="ID_" type="Long" title="Id" englishTitle="Id" length="255"/>
-        <property name="name" column="NAME_" type="String" title="Name" englishTitle="Name" length="50" editable="true" displayType="0"/>
-        <property name="mobile" column="MOBILE_" type="String" title="Mobile" englishTitle="Mobile" length="50" editable="true" displayType="0"/>
-        <property name="title" column="TITLE_" type="String" title="Title" englishTitle="Title" length="200" editable="true" displayType="0"/>
-        <property name="content" column="CONTENT_" type="String" title="Content" englishTitle="Content" length="2048" editable="true" displayType="0"/>
-        <property name="uuid" column="UUID_" type="String" title="Uuid" englishTitle="Uuid" length="50" editable="true" displayType="0"/>
-        <property name="createBy" column="CREATEBY_" type="String" title="CreateBy" englishTitle="CreateBy" length="50" editable="true" displayType="0"/>
-        <property name="createDate" column="CREATEDATE_" type="Date" title="CreateDate" englishTitle="CreateDate" length="255" editable="true" displayType="0"/>
+        <property name="name" column="NAME_" type="String" title="姓名" englishTitle="Name" length="50" editable="true" displayType="4"/>
+        <property name="mobile" column="MOBILE_" type="String" title="手机" englishTitle="Mobile" length="50" editable="true" displayType="4"/>
+        <property name="title" column="TITLE_" type="String" title="标题" englishTitle="Title" length="200" editable="true" displayType="4"/>
+        <property name="content" column="CONTENT_" type="String" title="内容" englishTitle="Content" length="2048" editable="true" displayType="4"/>
+        <property name="uuid" column="UUID_" type="String" title="UUID" englishTitle="UUID" length="50" editable="true" displayType="0"/>
+        <property name="createBy" column="CREATEBY_" type="String" title="拥有者" englishTitle="CreateBy" length="50" editable="true" displayType="0"/>
+        <property name="createDate" column="CREATEDATE_" type="Date" title="创建日期" englishTitle="CreateDate" editable="true" displayType="4"/>
     </entity>
 </mapping>

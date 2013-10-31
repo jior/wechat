@@ -39,13 +39,13 @@
 		</javac>
 		<copy todir="bin">
 		<fileset dir="src/main/java" 
-		includes="com/glaf/wechat/**/*.conf,com/glaf/wechat/**/*.sql,com/glaf/wechat/**/*.properties,com/glaf/wechat/**/*.xml" />
+		includes="com/glaf/**/*.conf,com/glaf/**/*.sql,com/glaf/**/*.properties,com/glaf/**/*.xml" />
 		</copy>
 	</target>
 
 	<target name="copy">
 		<copy todir="WebContent/WEB-INF/classes">
-			<fileset dir="bin" includes="com/glaf/wechat/**/*.class,**/*.properties,**/*.xml,**/*.conf" />
+			<fileset dir="bin" includes="com/glaf/**/*.class,**/*.properties,**/*.xml,**/*.conf" />
 		</copy>
 		<copy todir="WebContent/WEB-INF/classes">
 			<fileset dir="src/main/java" includes="**/*.properties,**/*.xml,**/*.conf" />
@@ -57,7 +57,7 @@
 		<jar jarfile="${project.distname}-src.zip">
 			<fileset dir="." includes="*.bat,*.xml, src/**/*.*,mapping/**/*.xml" excludes="**/*.cvs,**/*.bak,**/*.tmp,**/*.scc,**/*.svn" />
 		</jar>
-		<jar jarfile="${jarfile}" basedir="${classes.dir}" includes="com/glaf/wechat/**/*.class,com/glaf/wechat/**/*.xml,com/glaf/wechat/**/*.properties" excludes="**/test/**" />
+		<jar jarfile="${jarfile}" basedir="${classes.dir}" includes="com/glaf/**/*.class,com/glaf/**/*.xml,com/glaf/**/*.properties" excludes="**/test/**" />
 
 		<jar jarfile="glaf-wechat-min-web.zip">
 			<fileset dir="WebContent" includes="**/*.*" excludes="**/*.jar,**/*.class,**/archives/*.*,**/*.ttc,**/*.lib,**/*.dll,**/*.so, **/data/index/**/*.*,**/examples/**/*.*, **/locks" casesensitive="yes" />

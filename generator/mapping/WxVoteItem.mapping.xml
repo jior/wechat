@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<mapping>
+    <entity name="WxVoteItem" package="com.glaf.apps.vote" table="wx_vote_item" title="投票选项" englishTitle="WxVoteItem">
+        <id name="id" column="ID_" title="编号" englishTitle="ID" type="Long" displayType="4" length="50" sortNo="0"/>
+		<property name="voteId" column="VOTEID_" type="Long" title="投票编号" 
+		          englishTitle="Vote Id" nullable="false"/>
+		<property name="name" column="NAME_" type="String" title="名称" 
+		          englishTitle="Name" length="200" editable="true" displayType="4" nullable="false"/>
+		<property name="value" column="VALUE_" type="String" title="值" 
+		          englishTitle="Value" length="20" editable="true" displayType="4" nullable="false"/>
+    </entity>
+</mapping>

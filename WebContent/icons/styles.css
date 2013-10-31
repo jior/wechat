@@ -110,6 +110,9 @@
 .user{
 	background:url('icons/user.gif') no-repeat ;
 }
+.preview{
+	background:url('icons/preview.gif') no-repeat ;
+}
 
 .icon-accounts{
 	background:url('icons/accounts.gif') no-repeat ;

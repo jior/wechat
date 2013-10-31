@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.apps.vote.mapper.WxVoteResultMapper">
+
+	<resultMap id="wxVoteResultResultMap" type="com.glaf.apps.vote.domain.WxVoteResult">
+		<id property="id" column="ID_" jdbcType="BIGINT" />
+		<result property="voteId" column="VOTEID_" jdbcType="BIGINT" />
+		<result property="result" column="RESULT_" jdbcType="VARCHAR" />
+		<result property="ip" column="IP_" jdbcType="VARCHAR" />
+		<result property="voteDate" column="VOTEDATE_" jdbcType="TIMESTAMP" />
+		<result property="actorId" column="ACTORID_" jdbcType="VARCHAR" />
+	</resultMap>
+
+
+	<insert id="insertWxVoteResult" parameterType="com.glaf.apps.vote.domain.WxVoteResult">
+		insert into wx_vote_result
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ID_
+			<if test="voteId != null">
+				,VOTEID_
+			</if>
+			<if test="result != null">
+				,RESULT_
+			</if>
+			<if test="ip != null">
+				,IP_
+			</if>
+			<if test="voteDate != null">
+				,VOTEDATE_
+			</if>
+			<if test="actorId != null">
+				,ACTORID_
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			#{id, jdbcType=BIGINT}
+
+			<if test="voteId != null">
+				,#{voteId, jdbcType=BIGINT}
+			</if>
+			<if test="result != null">
+				,#{result, jdbcType=VARCHAR}
+			</if>
+			<if test="ip != null">
+				,#{ip, jdbcType=VARCHAR}
+			</if>
+			<if test="voteDate != null">
+				,#{voteDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="actorId != null">
+				,#{actorId, jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</insert>
+
+
+	<update id="updateWxVoteResult" parameterType="com.glaf.apps.vote.domain.WxVoteResult">
+		update wx_vote_result
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">
+			<if test="voteId != null">
+				VOTEID_ = #{voteId, jdbcType=BIGINT},
+			</if>
+			<if test="result != null">
+				RESULT_ = #{result, jdbcType=VARCHAR},
+			</if>
+			<if test="ip != null">
+				IP_ = #{ip, jdbcType=VARCHAR},
+			</if>
+			<if test="voteDate != null">
+				VOTEDATE_ = #{voteDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="actorId != null">
+				ACTORID_ = #{actorId, jdbcType=VARCHAR},
+			</if>
+		</trim>
+		where
+		ID_ = #{id, jdbcType=BIGINT}
+
+	</update>
+
+
+	<delete id="deleteWxVoteResultById" parameterType="long">
+		delete from
+		wx_vote_result
+		where ID_ = #{id}
+	</delete>
+
+
+	<delete id="deleteWxVoteResultByVoteId" parameterType="long">
+		delete
+		from wx_vote_result
+		where VOTEID_ = #{voteId}
+	</delete>
+
+
+	<delete id="deleteWxVoteResults" parameterType="com.glaf.apps.vote.query.WxVoteResultQuery">
+		delete from wx_vote_result
+		where (
+		ID_ IN
+		<foreach item="x_id" index="index" collection="ids" open="("
+			separator="," close=")">
+			#{x_id}
+		</foreach>
+		)
+	</delete>
+
+
+	<select id="getWxVoteResultById" parameterType="long"
+		resultMap="wxVoteResultResultMap">
+		select * from wx_vote_result where ID_ = #{id}
+	</select>
+
+
+	<select id="getWxVoteResultsByVoteId" parameterType="long"
+		resultMap="wxVoteResultResultMap">
+		select * from wx_vote_result where VOTEID_ = #{voteId}
+	</select>
+
+
+	<select id="getLatestVoteResult" parameterType="com.glaf.apps.vote.query.WxVoteResultQuery"
+		resultMap="wxVoteResultResultMap">
+		select *
+		from wx_vote_result
+		where IP_ = #{ip} and
+		ID_ = (select max(ID_) from wx_vote_result where IP_ = #{ip} and VOTEID_ = #{voteId} )
+	</select>
+
+
+	<select id="getWxVoteResults" parameterType="com.glaf.apps.vote.query.WxVoteResultQuery"
+		resultMap="wxVoteResultResultMap">
+		select distinct E.*
+		<include refid="selectWxVoteResultsSql" />
+		<choose>
+			<when test="orderBy != null">
+				order by ${orderBy}
+			</when>
+			<otherwise>
+				order by E.ID_ desc
+			</otherwise>
+		</choose>
+	</select>
+
+
+	<select id="getWxVoteResultCount" parameterType="com.glaf.apps.vote.query.WxVoteResultQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectWxVoteResultsSql" />
+	</select>
+
+
+	<sql id="selectWxVoteResultsSql">
+
+		from wx_vote_result E
+
+		<where>
+			1 = 1
+
+			<if test="voteId != null">
+				and E.VOTEID_ = #{voteId}
+			</if>
+
+			<if test="voteIds != null and voteIds.size !=0">
+				and E.VOTEID_ IN
+				<foreach item="x_voteId" index="index" collection="voteIds"
+					open="(" separator="," close=")">
+					#{x_voteId}
+				</foreach>
+			</if>
+
+			<if test="ip != null and ip != '' ">
+				and E.IP_ = #{ip}
+			</if>
+
+			<if test="voteDateGreaterThanOrEqual != null">
+				and E.VOTEDATE_ &gt;= #{voteDateGreaterThanOrEqual}
+			</if>
+
+			<if test="voteDateLessThanOrEqual != null">
+				and E.VOTEDATE_ &lt;= #{voteDateLessThanOrEqual}
+			</if>
+
+			<if test="actorId != null and actorId != '' ">
+				and E.ACTORID_ = #{actorId}
+			</if>
+
+			<if test="actorIds != null and actorIds.size !=0">
+				and E.ACTORID_ IN
+				<foreach item="x_actorId" index="index" collection="actorIds"
+					open="(" separator="," close=")">
+					#{x_actorId}
+				</foreach>
+			</if>
+
+		</where>
+	</sql>
+
+</mapper>

@@ -25,22 +25,23 @@ limitations under the License.
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>WxMember</title>
+<title>微会员</title>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/themes/${theme}/styles.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/icons/styles.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/core.css">
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript">
-        var contextPath="<%=request.getContextPath()%>";
+    var contextPath="<%=request.getContextPath()%>";
 
 	function saveData(){
 		var params = jQuery("#iForm").formSerialize();
 		jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/wx/wxMember/saveWxMember',
+				   url: '<%=request.getContextPath()%>/mx/wx/wxMember/saveWxMember',
 				   data: params,
 				   dataType:  'json',
 				   error: function(data){
@@ -67,7 +68,7 @@ limitations under the License.
 		var params = jQuery("#iForm").formSerialize();
 		jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/wx/wxMember/saveWxMember',
+				   url: '<%=request.getContextPath()%>/mx/wx/wxMember/saveWxMember',
 				   data: params,
 				   dataType:  'json',
 				   error: function(data){
@@ -92,17 +93,8 @@ limitations under the License.
 <div class="easyui-layout" data-options="fit:true">  
   <div data-options="region:'north',split:true,border:true" style="height:40px"> 
     <div class="toolbar-backgroud"> 
-	<span class="x_content_title">编辑WxMember</span>
-	<!-- <input type="button" name="save" value=" 保存 " class="button btn btn-primary" onclick="javascript:saveData();">
-	<input type="button" name="saveAs" value=" 另存 " class="button btn" onclick="javascript:saveAsData();">
-	<input type="button" name="back" value=" 返回 " class="button btn" onclick="javascript:history.back();"> -->
+	<span class="x_content_title">编辑微会员</span>
 	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-save'" onclick="javascript:saveData();" >保存</a> 
-	<!-- 
-	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-saveas'" onclick="javascript:saveAsData();" >另存</a> 
-        -->
-	<!--
-	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-back'" onclick="javascript:history.back();">返回</a>
-	-->
     </div> 
   </div>
 
@@ -112,105 +104,61 @@ limitations under the License.
   <table class="easyui-form" style="width:600px;" align="center">
     <tbody>
 	<tr>
-		<td width="20%" align="left">CardNo</td>
+		<td width="20%" align="left">卡号</td>
 		<td align="left">
-            <input id="cardNo" name="cardNo" type="text" 
-			       class="easyui-validatebox"  
-			
+            <input id="cardNo" name="cardNo" type="text" size="50"
+			       class="easyui-validatebox x-text"  
 				   value="${wxMember.cardNo}"/>
 		</td>
 	</tr>
 	<tr>
-		<td width="20%" align="left">Name</td>
+		<td width="20%" align="left">姓名</td>
 		<td align="left">
-            <input id="name" name="name" type="text" 
-			       class="easyui-validatebox"  
-			
+            <input id="name" name="name" type="text"  size="50"
+			       class="easyui-validatebox x-text"  
 				   value="${wxMember.name}"/>
 		</td>
 	</tr>
 	<tr>
-		<td width="20%" align="left">Telephone</td>
+		<td width="20%" align="left">手机</td>
 		<td align="left">
-            <input id="telephone" name="telephone" type="text" 
-			       class="easyui-validatebox"  
-			
-				   value="${wxMember.telephone}"/>
-		</td>
-	</tr>
-	<tr>
-		<td width="20%" align="left">Mobile</td>
-		<td align="left">
-            <input id="mobile" name="mobile" type="text" 
-			       class="easyui-validatebox"  
-			
+            <input id="mobile" name="mobile" type="text" size="50" 
+			       class="easyui-validatebox x-text"  
 				   value="${wxMember.mobile}"/>
 		</td>
 	</tr>
 	<tr>
-		<td width="20%" align="left">Mail</td>
+		<td width="20%" align="left">邮件</td>
 		<td align="left">
-            <input id="mail" name="mail" type="text" 
-			       class="easyui-validatebox"  
-			
+            <input id="mail" name="mail" type="text" size="50" 
+			       class="easyui-validatebox x-text"  
 				   value="${wxMember.mail}"/>
 		</td>
 	</tr>
 	<tr>
-		<td width="20%" align="left">Qq</td>
+		<td width="20%" align="left">QQ</td>
 		<td align="left">
-            <input id="qq" name="qq" type="text" 
-			       class="easyui-validatebox"  
-			
+            <input id="qq" name="qq" type="text"  size="50"
+			       class="easyui-validatebox x-text"  
 				   value="${wxMember.qq}"/>
 		</td>
 	</tr>
 	<tr>
-		<td width="20%" align="left">Address</td>
+		<td width="20%" align="left">地址</td>
 		<td align="left">
-            <input id="address" name="address" type="text" 
-			       class="easyui-validatebox"  
-			
+            <input id="address" name="address" type="text"  size="50"
+			       class="easyui-validatebox x-text"  
 				   value="${wxMember.address}"/>
 		</td>
 	</tr>
+
 	<tr>
-		<td width="20%" align="left">Status</td>
-		<td align="left">
-			<input id="status" name="status" type="text" 
-			       class="easyui-numberspinner" value="0" 
-				   increment="10"  
-				   value="${wxMember.status}"/>
+	    <td width="20%" align="left"></td>
+		<td align="left" >
+            <br><input type="button" value=" 保存 " onclick="javascript:saveData();" class="btnGreen">
 		</td>
 	</tr>
-	<tr>
-		<td width="20%" align="left">Uuid</td>
-		<td align="left">
-            <input id="uuid" name="uuid" type="text" 
-			       class="easyui-validatebox"  
-			
-				   value="${wxMember.uuid}"/>
-		</td>
-	</tr>
-	<tr>
-		<td width="20%" align="left">CreateBy</td>
-		<td align="left">
-            <input id="createBy" name="createBy" type="text" 
-			       class="easyui-validatebox"  
-			
-				   value="${wxMember.createBy}"/>
-		</td>
-	</tr>
-	<tr>
-		<td width="20%" align="left">CreateDate</td>
-		<td align="left">
-			<input id="createDate" name="createDate" type="text" 
-			       class="easyui-datebox"
-			
-				  value="<fmt:formatDate value="${wxMember.createDate}" pattern="yyyy-MM-dd"/>"/>
-		</td>
-	</tr>
- 
+
     </tbody>
   </table>
   </form>

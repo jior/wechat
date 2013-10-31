@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<mapping>
+    <entity name="WxVoteResult" package="com.glaf.apps.vote" table="wx_vote_result" title="投票结果" 
+	        englishTitle="WxVoteResult">
+        <id name="id" column="ID_" title="编号" englishTitle="ID" type="Long" displayType="4" length="50" sortNo="0"/>
+		<property name="voteId" column="VOTEID_" type="Long" title="投票编号" englishTitle="Vote Id" nullable="false"/>
+		<property name="result" column="RESULT_" type="String" title="结果" englishTitle="Result" length="500" 
+		          displayType="4" nullable="false"/>
+		<property name="ip" column="IP_" type="String" title="IP地址" englishTitle="IP" length="200" 
+		          displayType="4" nullable="false"/>
+		<property name="voteDate" column="VOTEDATE_" title="投票日期"
+			      englishTitle="Vote Date" type="Date" displayType="4" nullable="false"/>
+		<property name="actorId" column="ACTORID_" type="String" title="投票人" englishTitle="ActorId" 
+		          length="50" displayType="4"/>
+    </entity>
+</mapping>

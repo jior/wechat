@@ -25,7 +25,7 @@ limitations under the License.
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>微会员</title>
+<title>投票</title>
 <link href="<%=request.getContextPath()%>/scripts/artDialog/skins/default.css" rel="stylesheet" />
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/themes/${theme}/styles.css">
@@ -48,7 +48,7 @@ limitations under the License.
 				nowrap: false,
 				striped: true,
 				collapsible: true,
-				url: '<%=request.getContextPath()%>/mx/wx/wxMember/json',
+				url: '<%=request.getContextPath()%>/mx/wx/wxVote/json',
 				//sortName: 'id',
 				//sortOrder: 'desc',
 				remoteSort: false,
@@ -56,14 +56,15 @@ limitations under the License.
 				idField: 'id',
 				columns:[[
 				        {title:'序号', field:'startIndex', width:80, sortable:false},
-					{title:'卡号',field:'cardNo', width:120},
-					{title:'姓名',field:'name', width:120},
-					{title:'手机',field:'mobile', width:120},
-					{title:'邮件',field:'mail', width:120},
-					{title:'QQ',field:'qq', width:120},
-					{title:'地址',field:'address', width:120},
-					{title:'创建日期',field:'createDate', width:120},
-					{field:'functionKey',title:'功能键',width:120, formatter:formatterKeys}
+					    {title:'主题',field:'title', width:120},
+					    {title:'是否有效',field:'status', width:120, formatter:formatterStatus},
+					    {title:'是否记名',field:'signFlag', width:120, formatter:formatterStatus2},
+					    {title:'是否多选',field:'multiFlag', width:120, formatter:formatterStatus2},
+					    {title:'是否限制IP',field:'limitFlag', width:120, formatter:formatterStatus2},
+					    {title:'限制时间间隔（分钟）',field:'limitTimeInterval', width:150},
+					    {title:'开始日期',field:'startDate', width:120},
+					    {title:'结束日期',field:'endDate', width:120},
+					    {title:'功能键',field:'functionKey',width:120, formatter:formatterKeys}
 				]],
 				rownumbers: false,
 				pagination: true,
@@ -81,16 +82,39 @@ limitations under the License.
 	});
 
 
+	function formatterStatus(val, row){
+       if(val == 1){
+			return '<span style="color:green; font: bold 13px 宋体;">是</span>';
+	   } else  {
+			return '<span style="color:red; font: bold 13px 宋体;">否</span>';
+	   }  
+	}
+
+
+	function formatterStatus2(val, row){
+       if(val == 1){
+			return '<span style="color:blue; font: bold 13px 宋体;">是</span>';
+	   } else  {
+			return '<span style="color:blue; font: bold 13px 宋体;">否</span>';
+	   }  
+	}
+
+
 	function formatterKeys(val, row){
 		return "<a href='#' onclick='javascript:editRow("+row.id+");'>修改</a>&nbsp;<a href='#' onclick='javascript:deleteRow("+row.id+");'>删除</a>";
 	}
 
+	function editRow(rowId){
+            //window.open('<%=request.getContextPath()%>/wx/wxMember/edit?id='+row.id);
+	    var link = '<%=request.getContextPath()%>/mx/wx/wxVote/edit?id='+rowId;
+	    art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"no" }, false);
+	}
 
-	function deleteRow(id){
+    function deleteRow(id){
 		if(confirm("数据删除后不能恢复，确定删除吗？")){
 			jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/mx/wx/wxMember/delete?id='+id,
+				   url: '<%=request.getContextPath()%>/mx/wx/wxVote/delete?id='+id,
 				   dataType:  'json',
 				   error: function(data){
 					   alert('服务器处理错误！');
@@ -109,26 +133,19 @@ limitations under the License.
 
 		 
 	function addNew(){
-	    //location.href="<%=request.getContextPath()%>/wx/wxMember/edit";
-	    var link="<%=request.getContextPath()%>/mx/wx/wxMember/edit";
+	    //location.href="<%=request.getContextPath()%>/apps/wxVote/edit";
+	    var link="<%=request.getContextPath()%>/mx/wx/wxVote/edit";
 	    art.dialog.open(link, { height: 420, width: 680, title: "添加记录", lock: true, scrollbars:"no" }, false);
 	}
 
-
-	function editRow(rowId){
-            //window.open('<%=request.getContextPath()%>/wx/wxMember/edit?id='+row.id);
-	    var link = '<%=request.getContextPath()%>/mx/wx/wxMember/edit?id='+rowId;
-	    art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"no" }, false);
-	}
-
 	function onRowClick(rowIndex, row){
-            //window.open('<%=request.getContextPath()%>/wx/wxMember/edit?id='+row.id);
-	    var link = '<%=request.getContextPath()%>/mx/wx/wxMember/edit?id='+row.id;
+            //window.open('<%=request.getContextPath()%>/apps/wxVote/edit?id='+row.id);
+	    var link = '<%=request.getContextPath()%>/mx/wx/wxVote/edit?id='+row.id;
 	    art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"no" }, false);
 	}
 
 	function searchWin(){
-	    jQuery('#dlg').dialog('open').dialog('setTitle','微会员查询');
+	    jQuery('#dlg').dialog('open').dialog('setTitle','投票查询');
 	    //jQuery('#searchForm').form('clear');
 	}
 
@@ -147,8 +164,8 @@ limitations under the License.
 	    }
 	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
 	    if (selected ){
-		//location.href="<%=request.getContextPath()%>/wx/wxMember/edit?id="+selected.id;
-		var link = "<%=request.getContextPath()%>/mx/wx/wxMember/edit?id="+selected.id;
+		//location.href="<%=request.getContextPath()%>/apps/wxVote/edit?id="+selected.id;
+		var link = "<%=request.getContextPath()%>/mx/wx/wxVote/edit?id="+selected.id;
 		art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"no" }, false);
 	    }
 	}
@@ -161,7 +178,7 @@ limitations under the License.
 		}
 		var selected = jQuery('#mydatagrid').datagrid('getSelected');
 		if (selected ){
-		    location.href="<%=request.getContextPath()%>/mx/wx/wxMember/edit?readonly=true&id="+selected.id;
+		    location.href="<%=request.getContextPath()%>/mx/wx/wxVote/edit?readonly=true&id="+selected.id;
 		}
 	}
 
@@ -175,7 +192,7 @@ limitations under the License.
 		    var str = ids.join(',');
 			jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/mx/wx/wxMember/delete?ids='+str,
+				   url: '<%=request.getContextPath()%>/mx/wx/wxVote/delete?ids='+str,
 				   dataType:  'json',
 				   error: function(data){
 					   alert('服务器处理错误！');
@@ -201,7 +218,7 @@ limitations under the License.
 	function getSelected(){
 	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
 	    if (selected){
-		alert(selected.code+":"+selected.name+":"+selected.addr+":"+selected.col4);
+		  alert(selected.code+":"+selected.name+":"+selected.addr+":"+selected.col4);
 	    }
 	}
 
@@ -230,7 +247,7 @@ limitations under the License.
             var params = jQuery("#searchForm").formSerialize();
             jQuery.ajax({
                         type: "POST",
-                        url: '<%=request.getContextPath()%>/mx/wx/wxMember/json',
+                        url: '<%=request.getContextPath()%>/mx/wx/wxVote/json',
                         dataType:  'json',
                         data: params,
                         error: function(data){
@@ -243,7 +260,28 @@ limitations under the License.
 
 	    jQuery('#dlg').dialog('close');
 	}
-		 
+	
+	function viewSite(){
+		var rows = jQuery('#mydatagrid').datagrid('getSelections');
+	    if(rows == null || rows.length !=1){
+		  alert("请选择其中一条记录。");
+		  return;
+	    }
+		var selected = jQuery('#mydatagrid').datagrid('getSelected');
+	    if (selected){
+			var link = '<%=request.getContextPath()%>/website/wx/vote/vote/'+selected.id;
+			//art.dialog.open(link, { height: 720, width: 400, title: "预览效果", lock: true, scrollbars:"no" }, false);
+			var x=200;
+			var y=150;
+			var fx = "height=520,width=400,status=0,toolbar=no,menubar=no,location=no,scrollbars=yes,top="+y+",left="+x+",resizable=no,modal=yes,dependent=yes,dialog=yes,minimizable=no";
+			if(jQuery.browser.msie){
+				window.open(link,  "预览效果", fx);
+			} else {
+				window.open(link, self, fx, true);
+			}
+		}
+	}
+	
 </script>
 </head>
 <body style="margin:1px;">  
@@ -252,7 +290,7 @@ limitations under the License.
    <div data-options="region:'north',split:true,border:true" style="height:40px"> 
     <div class="toolbar-backgroud"  > 
 	<img src="<%=request.getContextPath()%>/images/window.png">
-	&nbsp;<span class="x_content_title">微会员列表</span>
+	&nbsp;<span class="x_content_title">投票列表</span>
     <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-add'" 
 	   onclick="javascript:addNew();">新增</a>  
     <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-edit'"
@@ -261,6 +299,8 @@ limitations under the License.
 	   onclick="javascript:deleteSelections();">删除</a> 
 	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-search'"
 	   onclick="javascript:searchWin();">查找</a>
+	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'preview'"
+	   onclick="javascript:viewSite();">预览</a>
    </div> 
   </div> 
   <div data-options="region:'center',border:true">
@@ -279,42 +319,77 @@ limitations under the License.
   <table class="easyui-form" >
     <tbody>
     <tr>
-	<td>卡号</td>
+	<td>主题</td>
 	<td>
-        <input id="cardNoLike" name="cardNoLike" class="easyui-validatebox" type="text"></input>
+        <input id="titleLike" name="titleLike" class="easyui-validatebox" type="text"></input>
        </td>
      </tr>
     <tr>
-	<td>姓名</td>
+	<td>内容</td>
 	<td>
-        <input id="nameLike" name="nameLike" class="easyui-validatebox" type="text"></input>
+        <input id="contentLike" name="contentLike" class="easyui-validatebox" type="text"></input>
        </td>
      </tr>
     <tr>
-	<td>手机</td>
+	<td>主题图片</td>
 	<td>
-        <input id="mobileLike" name="mobileLike" class="easyui-validatebox" type="text"></input>
+        <input id="iconLike" name="iconLike" class="easyui-validatebox" type="text"></input>
        </td>
      </tr>
     <tr>
-	<td>邮件</td>
+	<td>状态</td>
 	<td>
-        <input id="mailLike" name="mailLike" class="easyui-validatebox" type="text"></input>
+	<input id="status" name="status" class="easyui-numberbox" precision="0" ></input>
        </td>
      </tr>
     <tr>
-	<td>QQ</td>
+	<td>是否记名</td>
 	<td>
-        <input id="qqLike" name="qqLike" class="easyui-validatebox" type="text"></input>
+	<input id="signFlag" name="signFlag" class="easyui-numberbox" precision="0" ></input>
        </td>
      </tr>
     <tr>
-	<td>地址</td>
+	<td>是否多选</td>
 	<td>
-        <input id="addressLike" name="addressLike" class="easyui-validatebox" type="text"></input>
+	<input id="multiFlag" name="multiFlag" class="easyui-numberbox" precision="0" ></input>
        </td>
      </tr>
-    
+    <tr>
+	<td>是否限制IP</td>
+	<td>
+	<input id="limitFlag" name="limitFlag" class="easyui-numberbox" precision="0" ></input>
+       </td>
+     </tr>
+    <tr>
+	<td>限制时间间隔</td>
+	<td>
+	<input id="limitTimeInterval" name="limitTimeInterval" class="easyui-numberbox" precision="0" ></input>
+       </td>
+     </tr>
+    <tr>
+	<td>开始日期</td>
+	<td>
+	<input id="startDateLessThanOrEqual" name="startDateLessThanOrEqual" class="easyui-datebox"></input>
+       </td>
+     </tr>
+    <tr>
+	<td>结束日期</td>
+	<td>
+	<input id="endDateLessThanOrEqual" name="endDateLessThanOrEqual" class="easyui-datebox"></input>
+       </td>
+     </tr>
+    <tr>
+	<td>创建人</td>
+	<td>
+        <input id="createByLike" name="createByLike" class="easyui-validatebox" type="text"></input>
+       </td>
+     </tr>
+    <tr>
+	<td>创建日期</td>
+	<td>
+	<input id="createDateLessThanOrEqual" name="createDateLessThanOrEqual" class="easyui-datebox"></input>
+       </td>
+     </tr>
       </tbody>
     </table>
   </form>

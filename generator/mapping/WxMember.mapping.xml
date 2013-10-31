@@ -1,17 +1,16 @@
 
 <mapping>
-    <entity name="WxMember" package="com.glaf.wechat" moduleName="wx" table="WX_MEMBER" title="WxMember" englishTitle="WxMember">
+    <entity name="WxMember" package="com.glaf.wechat" moduleName="wx" table="WX_MEMBER" title="微会员" englishTitle="WxMember">
         <id name="id" column="ID_" type="Long" title="Id" englishTitle="Id" length="255"/>
-        <property name="cardNo" column="CARDNO_" type="String" title="CardNo" englishTitle="CardNo" length="50" editable="true" displayType="0"/>
-        <property name="name" column="NAME_" type="String" title="Name" englishTitle="Name" length="50" editable="true" displayType="0"/>
-        <property name="telephone" column="TELEPHONE_" type="String" title="Telephone" englishTitle="Telephone" length="50" editable="true" displayType="0"/>
-        <property name="mobile" column="MOBILE_" type="String" title="Mobile" englishTitle="Mobile" length="50" editable="true" displayType="0"/>
-        <property name="mail" column="MAIL_" type="String" title="Mail" englishTitle="Mail" length="50" editable="true" displayType="0"/>
-        <property name="qq" column="qq_" type="String" title="Qq" englishTitle="Qq" length="50" editable="true" displayType="0"/>
-        <property name="address" column="ADDRESS_" type="String" title="Address" englishTitle="Address" length="50" editable="true" displayType="0"/>
-        <property name="status" column="STATUS_" type="Integer" title="Status" englishTitle="Status" length="255" editable="true" displayType="0"/>
-        <property name="uuid" column="UUID_" type="String" title="Uuid" englishTitle="Uuid" length="50" editable="true" displayType="0"/>
+        <property name="cardNo" column="CARDNO_" type="String" title="卡号" englishTitle="CardNo" length="50" editable="true" displayType="4"/>
+        <property name="name" column="NAME_" type="String" title="姓名" englishTitle="Name" length="50" editable="true" displayType="4"/>
+        <property name="mobile" column="MOBILE_" type="String" title="手机" englishTitle="Mobile" length="50" editable="true" displayType="4"/>
+        <property name="mail" column="MAIL_" type="String" title="邮件" englishTitle="Mail" length="50" editable="true" displayType="4"/>
+        <property name="qq" column="qq_" type="String" title="QQ" englishTitle="Qq" length="50" editable="true" displayType="4"/>
+        <property name="address" column="ADDRESS_" type="String" title="地址" englishTitle="Address" length="50" editable="true" displayType="4"/>
+        <property name="status" column="STATUS_" type="Integer" title="状态" englishTitle="Status" length="255" editable="true" displayType="4"/>
+        <property name="uuid" column="UUID_" type="String" title="UUID" englishTitle="UUID" length="50" editable="true" displayType="0"/>
         <property name="createBy" column="CREATEBY_" type="String" title="CreateBy" englishTitle="CreateBy" length="50" editable="true" displayType="0"/>
-        <property name="createDate" column="CREATEDATE_" type="Date" title="CreateDate" englishTitle="CreateDate" length="255" editable="true" displayType="0"/>
+        <property name="createDate" column="CREATEDATE_" type="Date" title="CreateDate" englishTitle="CreateDate" length="255" editable="true" displayType="4"/>
     </entity>
 </mapping>

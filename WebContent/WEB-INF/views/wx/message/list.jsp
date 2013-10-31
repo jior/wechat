@@ -25,7 +25,7 @@ limitations under the License.
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>WxMessage</title>
+<title>微反馈</title>
 <link href="<%=request.getContextPath()%>/scripts/artDialog/skins/default.css" rel="stylesheet" />
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/themes/${theme}/styles.css">
@@ -48,21 +48,26 @@ limitations under the License.
 				nowrap: false,
 				striped: true,
 				collapsible: true,
-				url: '<%=request.getContextPath()%>/wx/wxMessage/json',
-				sortName: 'id',
-				sortOrder: 'desc',
+				url: '<%=request.getContextPath()%>/mx/wx/wxMessage/json',
+				//sortName: 'id',
+				//sortOrder: 'desc',
 				remoteSort: false,
 				singleSelect: true,
 				idField: 'id',
 				columns:[[
 				        {title:'序号', field:'startIndex', width:80, sortable:false},
-					{field:'functionKey',title:'功能键',width:120}
+					    {title:'姓名',field:'name', width:120},
+					    {title:'手机',field:'mobile', width:120},
+					    {title:'标题',field:'title', width:120},
+					    {title:'内容',field:'content', width:120},
+					    {title:'创建日期',field:'createDate', width:120},
+					    {field:'functionKey',title:'功能键',width:120, formatter:formatterKeys}
 				]],
 				rownumbers: false,
 				pagination: true,
 				pageSize: 15,
 				pageList: [10,15,20,25,30,40,50,100],
-				onClickRow: onRowClick 
+				onDblClickRow: onRowClick 
 			});
 
 			var p = jQuery('#mydatagrid').datagrid('getPager');
@@ -73,21 +78,47 @@ limitations under the License.
 		    });
 	});
 
+
+	function formatterKeys(val, row){
+		return "<a href='#' onclick='javascript:deleteRow("+row.id+");'>删除</a>";
+	}
+
+	function deleteRow(id){
+		if(confirm("数据删除后不能恢复，确定删除吗？")){
+			jQuery.ajax({
+				   type: "POST",
+				   url: '<%=request.getContextPath()%>/mx/wx/wxMessage/delete?id='+id,
+				   dataType:  'json',
+				   error: function(data){
+					   alert('服务器处理错误！');
+				   },
+				   success: function(data){
+					   if(data != null && data.message != null){
+						   alert(data.message);
+					   } else {
+						 alert('操作成功完成！');
+					   }
+					   jQuery('#mydatagrid').datagrid('reload');
+				   }
+			 });
+		} 
+	}
+
 		 
 	function addNew(){
 	    //location.href="<%=request.getContextPath()%>/wx/wxMessage/edit";
-	    var link="<%=request.getContextPath()%>/wx/wxMessage/edit";
+	    var link="<%=request.getContextPath()%>/mx/wx/wxMessage/edit";
 	    art.dialog.open(link, { height: 420, width: 680, title: "添加记录", lock: true, scrollbars:"no" }, false);
 	}
 
 	function onRowClick(rowIndex, row){
             //window.open('<%=request.getContextPath()%>/wx/wxMessage/edit?id='+row.id);
-	    var link = '<%=request.getContextPath()%>/wx/wxMessage/edit?id='+row.id;
+	    var link = '<%=request.getContextPath()%>/mx/wx/wxMessage/edit?id='+row.id;
 	    art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"no" }, false);
 	}
 
 	function searchWin(){
-	    jQuery('#dlg').dialog('open').dialog('setTitle','WxMessage查询');
+	    jQuery('#dlg').dialog('open').dialog('setTitle','微反馈查询');
 	    //jQuery('#searchForm').form('clear');
 	}
 
@@ -107,7 +138,7 @@ limitations under the License.
 	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
 	    if (selected ){
 		//location.href="<%=request.getContextPath()%>/wx/wxMessage/edit?id="+selected.id;
-		var link = "<%=request.getContextPath()%>/wx/wxMessage/edit?id="+selected.id;
+		var link = "<%=request.getContextPath()%>/mx/wx/wxMessage/edit?id="+selected.id;
 		art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"no" }, false);
 	    }
 	}
@@ -120,7 +151,7 @@ limitations under the License.
 		}
 		var selected = jQuery('#mydatagrid').datagrid('getSelected');
 		if (selected ){
-		    location.href="<%=request.getContextPath()%>/wx/wxMessage/edit?readonly=true&id="+selected.id;
+		    location.href="<%=request.getContextPath()%>/mx/wx/wxMessage/edit?readonly=true&id="+selected.id;
 		}
 	}
 
@@ -134,7 +165,7 @@ limitations under the License.
 		    var str = ids.join(',');
 			jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/wx/wxMessage/delete?ids='+str,
+				   url: '<%=request.getContextPath()%>/mx/wx/wxMessage/delete?ids='+str,
 				   dataType:  'json',
 				   error: function(data){
 					   alert('服务器处理错误！');
@@ -189,7 +220,7 @@ limitations under the License.
             var params = jQuery("#searchForm").formSerialize();
             jQuery.ajax({
                         type: "POST",
-                        url: '<%=request.getContextPath()%>/wx/wxMessage/json',
+                        url: '<%=request.getContextPath()%>/mx/wx/wxMessage/json',
                         dataType:  'json',
                         data: params,
                         error: function(data){
@@ -211,15 +242,9 @@ limitations under the License.
    <div data-options="region:'north',split:true,border:true" style="height:40px"> 
     <div class="toolbar-backgroud"  > 
 	<img src="<%=request.getContextPath()%>/images/window.png">
-	&nbsp;<span class="x_content_title">WxMessage列表</span>
-    <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-add'" 
-	   onclick="javascript:addNew();">新增</a>  
-    <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-edit'"
-	   onclick="javascript:editSelected();">修改</a>  
+	&nbsp;<span class="x_content_title">微反馈列表</span>
 	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-remove'"
 	   onclick="javascript:deleteSelections();">删除</a> 
-	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-search'"
-	   onclick="javascript:searchWin();">查找</a>
    </div> 
   </div> 
   <div data-options="region:'center',border:true">
@@ -238,43 +263,43 @@ limitations under the License.
   <table class="easyui-form" >
     <tbody>
     <tr>
-	<td>Name</td>
+	<td>姓名</td>
 	<td>
         <input id="nameLike" name="nameLike" class="easyui-validatebox" type="text"></input>
        </td>
      </tr>
     <tr>
-	<td>Mobile</td>
+	<td>手机</td>
 	<td>
         <input id="mobileLike" name="mobileLike" class="easyui-validatebox" type="text"></input>
        </td>
      </tr>
     <tr>
-	<td>Title</td>
+	<td>标题</td>
 	<td>
         <input id="titleLike" name="titleLike" class="easyui-validatebox" type="text"></input>
        </td>
      </tr>
     <tr>
-	<td>Content</td>
+	<td>内容</td>
 	<td>
         <input id="contentLike" name="contentLike" class="easyui-validatebox" type="text"></input>
        </td>
      </tr>
     <tr>
-	<td>Uuid</td>
+	<td>UUID</td>
 	<td>
         <input id="uuidLike" name="uuidLike" class="easyui-validatebox" type="text"></input>
        </td>
      </tr>
     <tr>
-	<td>CreateBy</td>
+	<td>拥有者</td>
 	<td>
         <input id="createByLike" name="createByLike" class="easyui-validatebox" type="text"></input>
        </td>
      </tr>
     <tr>
-	<td>CreateDate</td>
+	<td>创建日期</td>
 	<td>
 	<input id="createDateLessThanOrEqual" name="createDateLessThanOrEqual" class="easyui-datebox"></input>
        </td>

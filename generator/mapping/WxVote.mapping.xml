@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<mapping>
+    <entity name="WxVote" package="com.glaf.apps.vote" table="wx_vote" title="投票" englishTitle="WxVote">
+        <id name="id" column="ID_" title="编号" englishTitle="ID" type="Long" displayType="4" length="50" sortNo="0"/>
+		<property name="title" column="TITLE_" type="String" title="主题" 
+		          englishTitle="Title" length="200" editable="true" displayType="4" nullable="false"/>
+		<property name="content" column="CONTENT_" type="String" title="内容" 
+		          englishTitle="Content" length="2048" editable="true" displayType="0"/>
+		<property name="icon" column="ICON_" type="String" title="主题图片" englishTitle="Icon" length="250" editable="true"/>
+		<property name="status" column="STATUS_" type="Integer" title="状态" 
+		          englishTitle="Status" editable="true" displayType="4"/>
+		<property name="signFlag" column="SIGNFLAG_" type="Integer" title="是否记名" 
+		          englishTitle="SignFlag" editable="true" displayType="4"/>
+		<property name="multiFlag" column="MULTIFLAG_" type="Integer" title="是否多选" 
+		          englishTitle="MultiFlag" editable="true" displayType="4"/>
+		<property name="limitFlag" column="LIMITFLAG_" type="Integer" title="是否限制IP" 
+		          englishTitle="LimitFlag" editable="true" displayType="4"/>
+		<property name="limitTimeInterval" column="LIMITTIMEINTERVAL_" type="Integer" title="限制时间间隔" 
+		          englishTitle="LimitTimeInterval" editable="true" displayType="4"/>
+		<property name="startDate" column="STARTDATE_" title="开始日期"
+			      englishTitle="Start Date" type="Date" displayType="4" nullable="false" editable="true"/>
+		<property name="endDate" column="ENDDATE_" title="结束日期" type="Date"
+			      englishTitle="End Date" displayType="4" nullable="false" editable="true"/>
+		<property name="createBy" column="CREATEBY_" type="String" title="创建人" 
+		          englishTitle="CreateBy" length="50" editable="true" />
+        <property name="createDate" column="CREATEDATE_" type="Date" title="创建日期" 
+		          englishTitle="CreateDate" editable="true" />
+    </entity>
+</mapping>
