@@ -20,6 +20,8 @@ limitations under the License.
 <%
     String theme = com.glaf.core.util.RequestUtils.getTheme(request);
     request.setAttribute("theme", theme);
+	String actorId = com.glaf.core.util.RequestUtils.getActorId(request);
+	com.glaf.core.identity.User user = com.glaf.core.security.IdentityFactory.getUser(actorId);
 %>
 <!DOCTYPE html>
 <html>
@@ -243,6 +245,20 @@ limitations under the License.
 
 	    jQuery('#dlg').dialog('close');
 	}
+
+
+	function viewSite(){
+			var link = '<%=request.getContextPath()%>/website/wx/member/mobile/<%=user.getId()%>';
+			//art.dialog.open(link, { height: 720, width: 400, title: "预览效果", lock: true, scrollbars:"no" }, false);
+			var x=200;
+			var y=150;
+			var fx = "height=520,width=400,status=0,toolbar=no,menubar=no,location=no,scrollbars=yes,top="+y+",left="+x+",resizable=no,modal=yes,dependent=yes,dialog=yes,minimizable=no";
+			if(jQuery.browser.msie){
+				window.open(link,  "预览效果", fx);
+			} else {
+				window.open(link, self, fx, true);
+			}
+	}
 		 
 </script>
 </head>
@@ -261,6 +277,8 @@ limitations under the License.
 	   onclick="javascript:deleteSelections();">删除</a> 
 	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-search'"
 	   onclick="javascript:searchWin();">查找</a>
+	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'preview'"
+	   onclick="javascript:viewSite();">预览</a>
    </div> 
   </div> 
   <div data-options="region:'center',border:true">

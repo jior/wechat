@@ -84,11 +84,10 @@ public class WxMemberServiceImpl implements WxMemberService {
 		return wxMember;
 	}
 
-	public WxMember getWxMemberByUUID(String uuid){
+	public WxMember getWxMemberByUUID(String uuid) {
 		return wxMemberMapper.getWxMemberByUUID(uuid);
 	}
-	
-	
+
 	public int getWxMemberCountByQueryCriteria(WxMemberQuery query) {
 		return wxMemberMapper.getWxMemberCount(query);
 	}
@@ -113,6 +112,9 @@ public class WxMemberServiceImpl implements WxMemberService {
 			wxMember.setId(idGenerator.nextId());
 			wxMember.setCreateDate(new Date());
 			wxMember.setUuid(UUID32.getUUID());
+			if (wxMember.getCardNo() == null) {
+				wxMember.setCardNo(String.valueOf(wxMember.getId()));
+			}
 			wxMemberMapper.insertWxMember(wxMember);
 		} else {
 			wxMember.setLastUpdateDate(new Date());

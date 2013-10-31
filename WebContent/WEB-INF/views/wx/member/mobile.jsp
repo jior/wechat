@@ -25,18 +25,19 @@ limitations under the License.
 <!DOCTYPE html>
 <html>
 <head>
-<title>投票</title>
+<title>会员信息</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <%@ include file="/WEB-INF/views/wx/common/wx_mobile_include.jsp" %>
 <script type="text/javascript">
      var contextPath="<%=request.getContextPath()%>";
 
-	function submitVote(){
-		var result = jQuery("#result").val();
+	function submitRequest(){
+		var params = jQuery("#iForm").formSerialize();
 		jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/website/wx/vote/post/${vote.id}?result='+result,
+				   url: '<%=request.getContextPath()%>/website/wx/member/post/${user.id}',
 				   dataType:  'json',
+				   data: params,
 				   error: function(data){
 					   alert('服务器处理错误！');
 				   },
@@ -54,23 +55,33 @@ limitations under the License.
 <body>
     <div data-role="page">
         <div data-role="header" data-theme="b">
-            <h1>${vote.title}</h1>
+            <h1>完善会员信息</h1>
         </div>
         <div data-role="content">
             <div style="margin-left: auto; margin-right: auto; width: 90%;">
        
-                <form action="<%=request.getContextPath()%>/website/wx/vote/post/${vote.id}" method="post">
-				 <input type="hidden" id="result" name="result">
-				 <fieldset data-role="controlgroup">          
-                 <c:forEach items="${vote.items}" var="item">
-					<input type="radio" id="result_<%=index%>" name="result_1"
-						   onclick="jQuery('#result').val('${item.value}');"/>
-					<label for="result_<%=index++%>">${item.name}</label>
-                 </c:forEach>
-				</fieldset>
+                <form id="iForm" name="iForm" action="" method="post">
+				<p>
+                    <b>您的姓名：</b>
+                </p>
+                <p>
+                    <input id="name" name="name" type="text" value="" />
+                </p>
+                <p>
+                    <b>您的手机：</b>
+                </p>
+                <p>
+                    <input id="mobile" name="mobile" type="text" value="" />
+                </p> 
+				<p>
+                    <b>您的邮件：</b>
+                </p>
+                <p>
+                    <input id="mail" name="mail" type="text" value="" />
+                </p> 
                 <p>
                     <input type="button" value="确认" data-role="button" data-icon="star" data-theme="b" 
-					       onclick="javascript:submitVote();"/>
+					       onclick="javascript:submitRequest();"/>
                 </p>
                 </form>
 

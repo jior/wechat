@@ -143,7 +143,7 @@
 				order by ${orderBy}
 			</when>
 			<otherwise>
-				order by E.CREATEDATE_ desc
+				order by E.ID_ desc
 			</otherwise>
 		</choose>
 	</select>
