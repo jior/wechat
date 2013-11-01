@@ -6,6 +6,7 @@
 		          englishTitle="Title" length="200" editable="true" displayType="4" nullable="false"/>
 		<property name="content" column="CONTENT_" type="String" title="内容" 
 		          englishTitle="Content" length="2048" editable="true" displayType="0"/>
+		<property name="keywords" column="KEYWORDS_" type="String" title="关键词" englishTitle="Keywords" length="150" editable="true" displayType="0"/>
 		<property name="icon" column="ICON_" type="String" title="主题图片" englishTitle="Icon" length="250" editable="true"/>
 		<property name="status" column="STATUS_" type="Integer" title="状态" 
 		          englishTitle="Status" editable="true" displayType="4"/>
@@ -17,6 +18,8 @@
 		          englishTitle="LimitFlag" editable="true" displayType="4"/>
 		<property name="limitTimeInterval" column="LIMITTIMEINTERVAL_" type="Integer" title="限制时间间隔" 
 		          englishTitle="LimitTimeInterval" editable="true" displayType="4"/>
+		<property name="resultFlag" column="RESULTFLAG_" type="Integer" title="投票结果可见性" 
+		          englishTitle="ResultFlag" editable="true" displayType="4"/>
 		<property name="startDate" column="STARTDATE_" title="开始日期"
 			      englishTitle="Start Date" type="Date" displayType="4" nullable="false" editable="true"/>
 		<property name="endDate" column="ENDDATE_" title="结束日期" type="Date"

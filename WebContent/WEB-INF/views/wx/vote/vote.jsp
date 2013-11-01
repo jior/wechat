@@ -61,6 +61,16 @@ limitations under the License.
        
                 <form action="<%=request.getContextPath()%>/website/wx/vote/post/${vote.id}" method="post">
 				 <input type="hidden" id="result" name="result">
+				 <c:if test="${!empty vote.icon && vote.showIconFlag == 1}">
+				 <p align="center">
+				   <img src="<%=request.getContextPath()%>/${vote.icon}"/>
+				 </p>
+				 </c:if>
+				 <c:if test="${!empty vote.desc}">
+				 <p>
+				   ${vote.desc}
+				 </p>
+				 </c:if>
 				 <fieldset data-role="controlgroup">          
                  <c:forEach items="${vote.items}" var="item">
 					<input type="radio" id="result_<%=index%>" name="result_1"

@@ -21,6 +21,7 @@ import org.dom4j.Element;
 
 import com.glaf.wechat.sdk.message.Message;
 import com.glaf.wechat.sdk.message.LocationMessage;
+import com.glaf.wechat.sdk.message.filter.LocationMessageFilter;
 import com.glaf.wechat.sdk.message.filter.MessageFilterChain;
 import com.glaf.wechat.sdk.message.filter.DefaultResponseMessageFilter;
 
@@ -33,6 +34,7 @@ public class LocationMessageHandler extends AbstractMessageHandler {
 	@Override
 	public Message handleSpecialMessage(Message message) {
 		MessageFilterChain filterChain = new MessageFilterChain();
+		filterChain.addFilter(new LocationMessageFilter());
 		//加入默认的响应处理类
 		filterChain.addFilter(new DefaultResponseMessageFilter());
 		return filterChain.doFilterChain(message);
@@ -41,8 +43,8 @@ public class LocationMessageHandler extends AbstractMessageHandler {
 	@Override
 	protected void parseSpecialMessage(Message message, Element root) {
 		LocationMessage msg = (LocationMessage) message;
-		msg.setLocationX(root.elementText(TAG_LOCATIONX));
-		msg.setLocationY(root.elementText(TAG_LOCATIONY));
+		msg.setLongitude(Double.parseDouble(root.elementText(TAG_LONGITUDE)));
+		msg.setLatitude(Double.parseDouble(root.elementText(TAG_LATITUDE)));
 		msg.setLabel(root.elementText(TAG_LABEL));
 		msg.setScale(root.elementText(TAG_SCALE));
 	}

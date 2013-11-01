@@ -31,6 +31,10 @@
 		<result property="url" column="URL_" jdbcType="VARCHAR" />
 		<result property="picUrl" column="PICURL_" jdbcType="VARCHAR" />
 		<result property="sort" column="SORT_" jdbcType="INTEGER" />
+		<result property="latitude" column="LATITUDE_" jdbcType="DOUBLE" />
+		<result property="longitude" column="LONGITUDE_" jdbcType="DOUBLE" />
+		<result property="scale" column="SCALE_" jdbcType="VARCHAR" />
+		<result property="label" column="LABEL_" jdbcType="VARCHAR" />
 		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
 		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP" />
 		<result property="lastUpdateDate" column="LASTUPDATEDATE_"
@@ -107,6 +111,18 @@
 			<if test="picUrl != null">
 				,PICURL_
 			</if>
+			<if test="latitude != null">
+				,LATITUDE_
+			</if>
+			<if test="longitude != null">
+				,LONGITUDE_
+			</if>
+			<if test="scale != null">
+				,SCALE_
+			</if>
+			<if test="label != null">
+				,LABEL_
+			</if>
 			<if test="createBy != null">
 				,CREATEBY_
 			</if>
@@ -181,6 +197,18 @@
 			<if test="picUrl != null">
 				,#{picUrl, jdbcType=VARCHAR}
 			</if>
+			<if test="latitude != null">
+				,#{latitude, jdbcType=DOUBLE}
+			</if>
+			<if test="longitude != null">
+				,#{longitude, jdbcType=DOUBLE}
+			</if>
+			<if test="scale != null">
+				,#{scale, jdbcType=VARCHAR}
+			</if>
+			<if test="label != null">
+				,#{label, jdbcType=VARCHAR}
+			</if>
 			<if test="createBy != null">
 				,#{createBy, jdbcType=VARCHAR}
 			</if>
@@ -253,6 +281,18 @@
 			</if>
 			<if test="picUrl != null">
 				PICURL_ = #{picUrl, jdbcType=VARCHAR},
+			</if>
+			<if test="latitude != null">
+				LATITUDE_ = #{latitude, jdbcType=DOUBLE},
+			</if>
+			<if test="longitude != null">
+				LONGITUDE_ = #{longitude, jdbcType=DOUBLE},
+			</if>
+			<if test="scale != null">
+				SCALE_ = #{scale, jdbcType=VARCHAR},
+			</if>
+			<if test="label != null">
+				LABEL_ = #{label, jdbcType=VARCHAR},
 			</if>
 			<if test="lastUpdateDate != null">
 				LASTUPDATEDATE_ = #{lastUpdateDate, jdbcType=TIMESTAMP},

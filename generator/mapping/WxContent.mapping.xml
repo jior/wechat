@@ -18,5 +18,9 @@
         <property name="url" column="URL_" type="String" title="Url" englishTitle="Url" length="500" editable="true" displayType="0"/>
         <property name="createBy" column="CREATEBY_" type="String" title="CreateBy" englishTitle="CreateBy" length="50" editable="true" displayType="0"/>
         <property name="createDate" column="CREATEDATE_" type="Date" title="CreateDate" englishTitle="CreateDate" length="255" editable="true" displayType="0"/>
+        <property name="latitude" column="LATITUDE_" type="Double" title="纬度" englishTitle="Latitude" editable="true" displayType="0"/>
+		<property name="longitude" column="LONGITUDE_" type="Double" title="经度" englishTitle="Longitude" editable="true" displayType="0"/>
+		<property name="scale" column="SCALE_" type="String" title="scale" englishTitle="scale" length="50" editable="true" displayType="0"/>
+		<property name="label" column="LABEL_" type="String" title="label" englishTitle="label" length="200" editable="true" displayType="0"/>
     </entity>
 </mapping>

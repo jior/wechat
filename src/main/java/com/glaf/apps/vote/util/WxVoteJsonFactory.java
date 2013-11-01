@@ -47,6 +47,12 @@ public class WxVoteJsonFactory {
 		if (jsonObject.containsKey("content")) {
 			model.setContent(jsonObject.getString("content"));
 		}
+		if (jsonObject.containsKey("desc")) {
+			model.setDesc(jsonObject.getString("desc"));
+		}
+		if (jsonObject.containsKey("keywords")) {
+			model.setKeywords(jsonObject.getString("keywords"));
+		}
 		if (jsonObject.containsKey("icon")) {
 			model.setIcon(jsonObject.getString("icon"));
 		}
@@ -55,6 +61,9 @@ public class WxVoteJsonFactory {
 		}
 		if (jsonObject.containsKey("signFlag")) {
 			model.setSignFlag(jsonObject.getInteger("signFlag"));
+		}
+		if (jsonObject.containsKey("showIconFlag")) {
+			model.setShowIconFlag(jsonObject.getInteger("showIconFlag"));
 		}
 		if (jsonObject.containsKey("multiFlag")) {
 			model.setMultiFlag(jsonObject.getInteger("multiFlag"));
@@ -65,6 +74,9 @@ public class WxVoteJsonFactory {
 		if (jsonObject.containsKey("limitTimeInterval")) {
 			model.setLimitTimeInterval(jsonObject
 					.getInteger("limitTimeInterval"));
+		}
+		if (jsonObject.containsKey("resultFlag")) {
+			model.setResultFlag(jsonObject.getInteger("resultFlag"));
 		}
 		if (jsonObject.containsKey("startDate")) {
 			model.setStartDate(jsonObject.getDate("startDate"));
@@ -104,14 +116,23 @@ public class WxVoteJsonFactory {
 		if (model.getContent() != null) {
 			jsonObject.put("content", model.getContent());
 		}
+		if (model.getDesc() != null) {
+			jsonObject.put("desc", model.getDesc());
+		}
+		if (model.getKeywords() != null) {
+			jsonObject.put("keywords", model.getKeywords());
+		}
 		if (model.getIcon() != null) {
 			jsonObject.put("icon", model.getIcon());
 		}
 		jsonObject.put("status", model.getStatus());
-		jsonObject.put("signFlag", model.getSignFlag());
+		jsonObject.put("signFlag", model.getShowIconFlag());
+		jsonObject.put("showIconFlag", model.getSignFlag());
 		jsonObject.put("multiFlag", model.getMultiFlag());
 		jsonObject.put("limitFlag", model.getLimitFlag());
 		jsonObject.put("limitTimeInterval", model.getLimitTimeInterval());
+		jsonObject.put("resultFlag", model.getResultFlag());
+
 		if (model.getStartDate() != null) {
 			jsonObject
 					.put("startDate", DateUtils.getDate(model.getStartDate()));
@@ -152,14 +173,23 @@ public class WxVoteJsonFactory {
 		if (model.getContent() != null) {
 			jsonObject.put("content", model.getContent());
 		}
+		if (model.getDesc() != null) {
+			jsonObject.put("desc", model.getDesc());
+		}
+		if (model.getKeywords() != null) {
+			jsonObject.put("keywords", model.getKeywords());
+		}
 		if (model.getIcon() != null) {
 			jsonObject.put("icon", model.getIcon());
 		}
 		jsonObject.put("status", model.getStatus());
 		jsonObject.put("signFlag", model.getSignFlag());
+		jsonObject.put("showIconFlag", model.getSignFlag());
 		jsonObject.put("multiFlag", model.getMultiFlag());
 		jsonObject.put("limitFlag", model.getLimitFlag());
 		jsonObject.put("limitTimeInterval", model.getLimitTimeInterval());
+		jsonObject.put("resultFlag", model.getResultFlag());
+
 		if (model.getStartDate() != null) {
 			jsonObject
 					.put("startDate", DateUtils.getDate(model.getStartDate()));

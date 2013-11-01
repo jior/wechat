@@ -9,8 +9,10 @@
 		<result property="title" column="TITLE_" jdbcType="VARCHAR" />
 		<result property="content" column="CONTENT_" jdbcType="VARCHAR" />
 		<result property="desc" column="DESC_" jdbcType="VARCHAR" />
+		<result property="keywords" column="KEYWORDS_" jdbcType="VARCHAR"/>
 		<result property="icon" column="ICON_" jdbcType="VARCHAR" />
 		<result property="status" column="STATUS_" jdbcType="INTEGER" />
+		<result property="showIconFlag" column="SHOWICONFLAG_" jdbcType="INTEGER" />
 		<result property="signFlag" column="SIGNFLAG_" jdbcType="INTEGER" />
 		<result property="multiFlag" column="MULTIFLAG_" jdbcType="INTEGER" />
 		<result property="limitFlag" column="LIMITFLAG_" jdbcType="INTEGER" />
@@ -36,11 +38,17 @@
 			<if test="desc != null">
 				,DESC_
 			</if>
+			<if test="keywords != null">
+				,KEYWORDS_ 
+			</if>
 			<if test="icon != null">
 				,ICON_
 			</if>
 			<if test="status != null">
 				,STATUS_
+			</if>
+			<if test="showIconFlag != null">
+				,SHOWICONFLAG_
 			</if>
 			<if test="signFlag != null">
 				,SIGNFLAG_
@@ -80,11 +88,17 @@
 			<if test="desc != null">
 				,#{desc, jdbcType=VARCHAR}
 			</if>
+			<if test="keywords != null">
+				,#{keywords, jdbcType=VARCHAR}
+			</if>
 			<if test="icon != null">
 				,#{icon, jdbcType=VARCHAR}
 			</if>
 			<if test="status != null">
 				,#{status, jdbcType=INTEGER}
+			</if>
+			<if test="showIconFlag != null">
+				,#{showIconFlag, jdbcType=INTEGER}
 			</if>
 			<if test="signFlag != null">
 				,#{signFlag, jdbcType=INTEGER}
@@ -127,11 +141,17 @@
 			<if test="desc != null">
 				DESC_ = #{desc, jdbcType=VARCHAR},
 			</if>
+			<if test="keywords != null">
+				KEYWORDS_ = #{keywords, jdbcType=VARCHAR},
+			</if>
 			<if test="icon != null">
 				ICON_ = #{icon, jdbcType=VARCHAR},
 			</if>
 			<if test="status != null">
 				STATUS_ = #{status, jdbcType=INTEGER},
+			</if>
+			<if test="showIconFlag != null">
+				SHOWICONFLAG_ = #{showIconFlag, jdbcType=INTEGER},
 			</if>
 			<if test="signFlag != null">
 				SIGNFLAG_ = #{signFlag, jdbcType=INTEGER},

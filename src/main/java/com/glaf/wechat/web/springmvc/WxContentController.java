@@ -429,6 +429,10 @@ public class WxContentController {
 		wxContent.setSmallIcon(request.getParameter("smallIcon"));
 		wxContent.setUrl(request.getParameter("url"));
 		wxContent.setPicUrl(request.getParameter("picUrl"));
+		wxContent.setLatitude(RequestUtils.getDouble(request, "latitude"));
+        wxContent.setLongitude(RequestUtils.getDouble(request, "longitude"));
+		wxContent.setScale(request.getParameter("scale"));
+		wxContent.setLabel(request.getParameter("label"));
 		wxContent.setCreateBy(actorId);
 
 		wxContentService.save(wxContent);
@@ -468,6 +472,10 @@ public class WxContentController {
 			wxContent.setSmallIcon(request.getParameter("smallIcon"));
 			wxContent.setUrl(request.getParameter("url"));
 			wxContent.setPicUrl(request.getParameter("picUrl"));
+			wxContent.setLatitude(RequestUtils.getDouble(request, "latitude"));
+            wxContent.setLongitude(RequestUtils.getDouble(request, "longitude"));
+			wxContent.setScale(request.getParameter("scale"));
+			wxContent.setLabel(request.getParameter("label"));
 			wxContent.setCreateBy(actorId);
 			this.wxContentService.save(wxContent);
 
@@ -610,6 +618,10 @@ public class WxContentController {
 			wxContent.setSmallIcon(request.getParameter("smallIcon"));
 			wxContent.setUrl(request.getParameter("url"));
 			wxContent.setPicUrl(request.getParameter("picUrl"));
+			wxContent.setLatitude(RequestUtils.getDouble(request, "latitude"));
+            wxContent.setLongitude(RequestUtils.getDouble(request, "longitude"));
+			wxContent.setScale(request.getParameter("scale"));
+			wxContent.setLabel(request.getParameter("label"));
 			wxContent.setLastUpdateBy(loginContext.getActorId());
 
 			wxContentService.save(wxContent);

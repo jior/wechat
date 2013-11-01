@@ -53,11 +53,17 @@ public class WxVote implements Serializable, JSONable {
 	@Column(name = "CONTENT_", length = 2048)
 	protected String content;
 
+	@Column(name = "KEYWORDS_", length = 100)
+	protected String keywords;
+
 	@Column(name = "ICON_", length = 250)
 	protected String icon;
 
 	@Column(name = "STATUS_")
 	protected Integer status;
+
+	@Column(name = "SHOWICONFLAG_")
+	protected Integer showIconFlag;
 
 	@Column(name = "SIGNFLAG_")
 	protected Integer signFlag;
@@ -70,6 +76,9 @@ public class WxVote implements Serializable, JSONable {
 
 	@Column(name = "LIMITTIMEINTERVAL_")
 	protected Integer limitTimeInterval;
+
+	@Column(name = "RESULTFLAG_")
+	protected Integer resultFlag;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "STARTDATE_")
@@ -149,6 +158,10 @@ public class WxVote implements Serializable, JSONable {
 		return items;
 	}
 
+	public String getKeywords() {
+		return keywords;
+	}
+
 	public Integer getLimitFlag() {
 		return this.limitFlag;
 	}
@@ -159,6 +172,14 @@ public class WxVote implements Serializable, JSONable {
 
 	public Integer getMultiFlag() {
 		return this.multiFlag;
+	}
+
+	public Integer getResultFlag() {
+		return resultFlag;
+	}
+
+	public Integer getShowIconFlag() {
+		return showIconFlag;
 	}
 
 	public Integer getSignFlag() {
@@ -221,6 +242,10 @@ public class WxVote implements Serializable, JSONable {
 		this.items = items;
 	}
 
+	public void setKeywords(String keywords) {
+		this.keywords = keywords;
+	}
+
 	public void setLimitFlag(Integer limitFlag) {
 		this.limitFlag = limitFlag;
 	}
@@ -231,6 +256,14 @@ public class WxVote implements Serializable, JSONable {
 
 	public void setMultiFlag(Integer multiFlag) {
 		this.multiFlag = multiFlag;
+	}
+
+	public void setResultFlag(Integer resultFlag) {
+		this.resultFlag = resultFlag;
+	}
+
+	public void setShowIconFlag(Integer showIconFlag) {
+		this.showIconFlag = showIconFlag;
 	}
 
 	public void setSignFlag(Integer signFlag) {

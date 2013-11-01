@@ -23,8 +23,8 @@ package com.glaf.wechat.sdk.message;
  */
 public class LocationMessage extends Message {
 	private static final long serialVersionUID = 1L;
-	protected String locationX;
-	protected String locationY;
+	protected Double latitude;
+	protected Double longitude;
 	protected String scale;
 	protected String label;
 
@@ -32,12 +32,12 @@ public class LocationMessage extends Message {
 		return label;
 	}
 
-	public String getLocationX() {
-		return locationX;
+	public Double getLatitude() {
+		return latitude;
 	}
 
-	public String getLocationY() {
-		return locationY;
+	public Double getLongitude() {
+		return longitude;
 	}
 
 	public String getScale() {
@@ -48,12 +48,12 @@ public class LocationMessage extends Message {
 		this.label = label;
 	}
 
-	public void setLocationX(String locationX) {
-		this.locationX = locationX;
+	public void setLatitude(Double latitude) {
+		this.latitude = latitude;
 	}
 
-	public void setLocationY(String locationY) {
-		this.locationY = locationY;
+	public void setLongitude(Double longitude) {
+		this.longitude = longitude;
 	}
 
 	public void setScale(String scale) {

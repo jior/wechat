@@ -245,12 +245,15 @@ public class WxVoteController {
 		wxVote.setTitle(request.getParameter("title"));
 		wxVote.setContent(request.getParameter("content"));
 		wxVote.setIcon(request.getParameter("icon"));
+		wxVote.setKeywords(request.getParameter("keywords"));
 		wxVote.setStatus(RequestUtils.getInt(request, "status"));
+		wxVote.setShowIconFlag(RequestUtils.getInt(request, "showIconFlag"));
 		wxVote.setSignFlag(RequestUtils.getInt(request, "signFlag"));
 		wxVote.setMultiFlag(RequestUtils.getInt(request, "multiFlag"));
 		wxVote.setLimitFlag(RequestUtils.getInt(request, "limitFlag"));
 		wxVote.setLimitTimeInterval(RequestUtils.getInt(request,
 				"limitTimeInterval"));
+		wxVote.setResultFlag(RequestUtils.getInt(request, "resultFlag"));
 		wxVote.setStartDate(RequestUtils.getDate(request, "startDate"));
 		wxVote.setEndDate(RequestUtils.getDate(request, "endDate"));
 
@@ -267,22 +270,53 @@ public class WxVoteController {
 		User user = RequestUtils.getUser(request);
 		String actorId = user.getActorId();
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		logger.debug("params:" + params);
 		WxVote wxVote = new WxVote();
 		try {
 			Tools.populate(wxVote, params);
 			wxVote.setTitle(request.getParameter("title"));
 			wxVote.setContent(request.getParameter("content"));
 			wxVote.setIcon(request.getParameter("icon"));
+			wxVote.setKeywords(request.getParameter("keywords"));
 			wxVote.setStatus(RequestUtils.getInt(request, "status"));
+			wxVote.setShowIconFlag(RequestUtils.getInt(request, "showIconFlag"));
 			wxVote.setSignFlag(RequestUtils.getInt(request, "signFlag"));
 			wxVote.setMultiFlag(RequestUtils.getInt(request, "multiFlag"));
 			wxVote.setLimitFlag(RequestUtils.getInt(request, "limitFlag"));
 			wxVote.setLimitTimeInterval(RequestUtils.getInt(request,
 					"limitTimeInterval"));
+			wxVote.setResultFlag(RequestUtils.getInt(request, "resultFlag"));
 			wxVote.setStartDate(RequestUtils.getDate(request, "startDate"));
 			wxVote.setEndDate(RequestUtils.getDate(request, "endDate"));
 
 			wxVote.setCreateBy(actorId);
+
+			Map<Integer, WxVoteItem> dataMap = new HashMap<Integer, WxVoteItem>();
+			String[] titleArray = request.getParameterValues("item_title");
+			if (titleArray != null && titleArray.length > 0) {
+				int index = 0;
+				for (String t : titleArray) {
+					WxVoteItem item = new WxVoteItem();
+					item.setName(t);
+					item.setValue(String.valueOf(index));
+					wxVote.addItem(item);
+					dataMap.put(index, item);
+					index++;
+				}
+			}
+
+			String[] sortArray = request.getParameterValues("item_sort");
+			if (sortArray != null && sortArray.length > 0) {
+				int index = 0;
+				for (String sort : sortArray) {
+					WxVoteItem item = dataMap.get(index++);
+					if (item != null && StringUtils.isNotEmpty(sort)
+							&& StringUtils.isNumeric(sort)) {
+						item.setSort(Integer.parseInt(sort));
+					}
+				}
+			}
+
 			this.wxVoteService.save(wxVote);
 
 			return ResponseUtils.responseJsonResult(true);
@@ -312,12 +346,15 @@ public class WxVoteController {
 			wxVote.setTitle(request.getParameter("title"));
 			wxVote.setContent(request.getParameter("content"));
 			wxVote.setIcon(request.getParameter("icon"));
+			wxVote.setKeywords(request.getParameter("keywords"));
 			wxVote.setStatus(RequestUtils.getInt(request, "status"));
+			wxVote.setShowIconFlag(RequestUtils.getInt(request, "showIconFlag"));
 			wxVote.setSignFlag(RequestUtils.getInt(request, "signFlag"));
 			wxVote.setMultiFlag(RequestUtils.getInt(request, "multiFlag"));
 			wxVote.setLimitFlag(RequestUtils.getInt(request, "limitFlag"));
 			wxVote.setLimitTimeInterval(RequestUtils.getInt(request,
 					"limitTimeInterval"));
+			wxVote.setResultFlag(RequestUtils.getInt(request, "resultFlag"));
 			wxVote.setStartDate(RequestUtils.getDate(request, "startDate"));
 			wxVote.setEndDate(RequestUtils.getDate(request, "endDate"));
 

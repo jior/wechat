@@ -105,6 +105,18 @@ public class WxContentJsonFactory {
 		if (jsonObject.containsKey("picUrl")) {
 			model.setPicUrl(jsonObject.getString("picUrl"));
 		}
+		if (jsonObject.containsKey("latitude")) {
+			model.setLatitude(jsonObject.getDouble("latitude"));
+		}
+		if (jsonObject.containsKey("longitude")) {
+			model.setLongitude(jsonObject.getDouble("longitude"));
+		}
+		if (jsonObject.containsKey("scale")) {
+			model.setScale(jsonObject.getString("scale"));
+		}
+		if (jsonObject.containsKey("label")) {
+			model.setLabel(jsonObject.getString("label"));
+		}
 		if (jsonObject.containsKey("createBy")) {
 			model.setCreateBy(jsonObject.getString("createBy"));
 		}
@@ -187,6 +199,14 @@ public class WxContentJsonFactory {
 		}
 		if (model.getPicUrl() != null) {
 			jsonObject.put("picUrl", model.getPicUrl());
+		}
+		jsonObject.put("latitude", model.getLatitude());
+        jsonObject.put("longitude", model.getLongitude());
+		if (model.getScale() != null) {
+			jsonObject.put("scale", model.getScale());
+		}
+		if (model.getLabel() != null) {
+			jsonObject.put("label", model.getLabel());
 		}
 		if (model.getCreateBy() != null) {
 			jsonObject.put("createBy", model.getCreateBy());
@@ -296,6 +316,14 @@ public class WxContentJsonFactory {
 		}
 		if (model.getCreateBy() != null) {
 			jsonObject.put("createBy", model.getCreateBy());
+		}
+		jsonObject.put("latitude", model.getLatitude());
+        jsonObject.put("longitude", model.getLongitude());
+		if (model.getScale() != null) {
+			jsonObject.put("scale", model.getScale());
+		}
+		if (model.getLabel() != null) {
+			jsonObject.put("label", model.getLabel());
 		}
 		if (model.getCreateDate() != null) {
 			jsonObject.put("createDate",

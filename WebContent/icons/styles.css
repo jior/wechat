@@ -10,6 +10,9 @@
 .icon-remove{
 	background:url('icons/remove.png') no-repeat ;
 }
+.icon-upload{
+	background:url('icons/upload.gif') no-repeat ;
+}
 .icon-clear{
 	background:url('icons/clear.png') no-repeat ;
 }

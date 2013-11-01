@@ -138,18 +138,28 @@ public class WxVoteServiceImpl implements WxVoteService {
 			wxVoteItemMapper.deleteWxVoteItemByVoteId(wxVote.getId());
 			wxVoteMapper.updateWxVote(wxVote);
 		}
-		if (StringUtils.isNotEmpty(wxVote.getContent())) {
-			StringTokenizer token = new StringTokenizer(wxVote.getContent());
-			while (token.hasMoreTokens()) {
-				String tmp = token.nextToken();
-				if (StringUtils.contains(tmp, "=")) {
-					WxVoteItem item = new WxVoteItem();
-					item.setId(idGenerator.nextId());
-					item.setVoteId(wxVote.getId());
-					item.setValue(tmp.substring(0, tmp.indexOf("=")));
-					item.setName(tmp.substring(tmp.indexOf("=") + 1,
-							tmp.length()));
-					wxVoteItemMapper.insertWxVoteItem(item);
+		if (wxVote.getItems() != null && !wxVote.getItems().isEmpty()) {
+			for (WxVoteItem item : wxVote.getItems()) {
+				item.setId(idGenerator.nextId());
+				item.setVoteId(wxVote.getId());
+				wxVoteItemMapper.insertWxVoteItem(item);
+			}
+		} else {
+			if (StringUtils.isNotEmpty(wxVote.getContent())) {
+				int sort = 0;
+				StringTokenizer token = new StringTokenizer(wxVote.getContent());
+				while (token.hasMoreTokens()) {
+					String tmp = token.nextToken();
+					if (StringUtils.contains(tmp, "=")) {
+						WxVoteItem item = new WxVoteItem();
+						item.setId(idGenerator.nextId());
+						item.setVoteId(wxVote.getId());
+						item.setValue(tmp.substring(0, tmp.indexOf("=")));
+						item.setName(tmp.substring(tmp.indexOf("=") + 1,
+								tmp.length()));
+						item.setSort(sort++);
+						wxVoteItemMapper.insertWxVoteItem(item);
+					}
 				}
 			}
 		}

@@ -24,6 +24,7 @@ import org.dom4j.Element;
 
 import com.glaf.wechat.sdk.message.Message;
 import com.glaf.wechat.sdk.message.EventMessage;
+import com.glaf.wechat.sdk.message.filter.LocationMessageFilter;
 import com.glaf.wechat.sdk.message.filter.MenuMessageFilter;
 import com.glaf.wechat.sdk.message.filter.MessageFilterChain;
 import com.glaf.wechat.sdk.message.filter.DefaultResponseMessageFilter;
@@ -50,6 +51,9 @@ public class EventMessageHandler extends AbstractMessageHandler {
 				filterChain.addFilter(new MenuMessageFilter());
 				logger.debug("自定义菜单点击事件:" + eventKey);
 			}
+		} else if (StringUtils.equalsIgnoreCase(msg.getEvent(), "LOCATION")) {
+			// 地理位置事件
+			filterChain.addFilter(new LocationMessageFilter());
 		}
 
 		// 加入默认的响应处理类

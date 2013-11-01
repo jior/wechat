@@ -45,40 +45,17 @@ public class WxVoteItem implements Serializable, JSONable {
 	@Column(name = "VALUE_", length = 20)
 	protected String value;
 
+	@Column(name = "SORT_")
+	protected Integer sort;
+
+	@Column(name = "ICON_", length = 150)
+	protected String icon;
+
+	@Column(name = "URL_", length = 500)
+	protected String url;
+
 	public WxVoteItem() {
 
-	}
-
-	public Long getId() {
-		return this.id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Long getVoteId() {
-		return this.voteId;
-	}
-
-	public String getName() {
-		return this.name;
-	}
-
-	public String getValue() {
-		return this.value;
-	}
-
-	public void setVoteId(Long voteId) {
-		this.voteId = voteId;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public void setValue(String value) {
-		this.value = value;
 	}
 
 	@Override
@@ -98,6 +75,34 @@ public class WxVoteItem implements Serializable, JSONable {
 		return true;
 	}
 
+	public String getIcon() {
+		return icon;
+	}
+
+	public Long getId() {
+		return this.id;
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
+	public Integer getSort() {
+		return sort;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public String getValue() {
+		return this.value;
+	}
+
+	public Long getVoteId() {
+		return this.voteId;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -108,6 +113,34 @@ public class WxVoteItem implements Serializable, JSONable {
 
 	public WxVoteItem jsonToObject(JSONObject jsonObject) {
 		return WxVoteItemJsonFactory.jsonToObject(jsonObject);
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setSort(Integer sort) {
+		this.sort = sort;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
+
+	public void setVoteId(Long voteId) {
+		this.voteId = voteId;
 	}
 
 	public JSONObject toJsonObject() {

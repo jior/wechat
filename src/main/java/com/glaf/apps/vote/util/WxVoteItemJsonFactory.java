@@ -49,6 +49,15 @@ public class WxVoteItemJsonFactory {
 		if (jsonObject.containsKey("value")) {
 			model.setValue(jsonObject.getString("value"));
 		}
+		if (jsonObject.containsKey("sort")) {
+			model.setSort(jsonObject.getInteger("sort"));
+		}
+		if (jsonObject.containsKey("icon")) {
+			model.setIcon(jsonObject.getString("icon"));
+		}
+		if (jsonObject.containsKey("url")) {
+			model.setUrl(jsonObject.getString("url"));
+		}
 
 		return model;
 	}
@@ -76,6 +85,13 @@ public class WxVoteItemJsonFactory {
 		if (model.getValue() != null) {
 			jsonObject.put("value", model.getValue());
 		}
+		jsonObject.put("sort", model.getSort());
+		if (model.getIcon() != null) {
+			jsonObject.put("icon", model.getIcon());
+		}
+		if (model.getUrl() != null) {
+			jsonObject.put("url", model.getUrl());
+		}
 		return jsonObject;
 	}
 
@@ -90,6 +106,13 @@ public class WxVoteItemJsonFactory {
 		}
 		if (model.getValue() != null) {
 			jsonObject.put("value", model.getValue());
+		}
+		jsonObject.put("sort", model.getSort());
+		if (model.getIcon() != null) {
+			jsonObject.put("icon", model.getIcon());
+		}
+		if (model.getUrl() != null) {
+			jsonObject.put("url", model.getUrl());
 		}
 		return jsonObject;
 	}

@@ -101,7 +101,7 @@ limitations under the License.
 
 
 	function formatterKeys(val, row){
-		return "<a href='#' onclick='javascript:editRow("+row.id+");'>修改</a>&nbsp;<a href='#' onclick='javascript:deleteRow("+row.id+");'>删除</a>";
+		return "<a href='#' onclick='javascript:editRow("+row.id+");'>修改</a>&nbsp;<a href='#' onclick='javascript:deleteRow("+row.id+");'>删除</a>&nbsp;<a href='#' onclick='javascript:viewMobileSite("+row.id+");'>预览</a>";
 	}
 
 	function editRow(rowId){
@@ -259,6 +259,19 @@ limitations under the License.
                         });
 
 	    jQuery('#dlg').dialog('close');
+	}
+
+	function viewMobileSite(id){		 
+		var link = '<%=request.getContextPath()%>/website/wx/vote/vote/'+id;
+		//art.dialog.open(link, { height: 720, width: 400, title: "预览效果", lock: true, scrollbars:"no" }, false);
+		var x=200;
+		var y=150;
+		var fx = "height=520,width=400,status=0,toolbar=no,menubar=no,location=no,scrollbars=yes,top="+y+",left="+x+",resizable=no,modal=yes,dependent=yes,dialog=yes,minimizable=no";
+		if(jQuery.browser.msie){
+			window.open(link,  "预览效果", fx);
+		} else {
+			window.open(link, self, fx, true);
+		}
 	}
 	
 	function viewSite(){

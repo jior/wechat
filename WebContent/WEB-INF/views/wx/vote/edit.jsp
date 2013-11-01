@@ -138,6 +138,15 @@ limitations under the License.
 			     <img src="<%=request.getContextPath()%>/${wxVote.icon}" width="60" height="60" border="0"/>
 				 <br>
 			</c:if>
+			图片显示&nbsp;
+			<select id="showIconFlag" name="showIconFlag">
+				<option value="1">显示在投票页面</option>
+				<option value="0">不显示在投票页面</option>
+			</select>
+			<script type="text/javascript">
+			   jQuery('#showIconFlag').val('${wxVote.showIconFlag}');
+			</script>
+			<br>
 			<input id="icon" name="icon" type="text" 
 			       class="easyui-validatebox x-text" size="38"
 			       data-options="required:false" style="width:415px;"
@@ -208,12 +217,54 @@ limitations under the License.
 	<tr>
 		<td width="20%" align="left">投票项目</td>
 		<td align="left">
-			<textarea id="content" name="content" class="x-textarea"  rows="5" cols="38" style="width:415px;height:80px;">${wxVote.content}</textarea> 
-			<br>说明：每行一项，值=名称，每行结束后按“Enter”回车键结束。
-			<br>例如：
-			<br>    1=赞同
-			<br>	2=不赞同
-			<br>	0=不表态
+		     <input type="button" id="vtype" class="btnGreen" value="添加选项"> <br>
+			 <table id="listTable"  style="width: 580px"> 
+			   <thead>
+	            <tr>
+                   <th align="left" width="50%">选项标题</th>
+                   <th align="left" width="30%">显示顺序</th>
+                   <th align="left" width="20%"></th>
+               </tr>
+               </thead>
+			   <tbody>
+			     <%int index = 1;%>
+			     <c:forEach items="${wxVote.items}" var="item">
+				 <tr id="tr_<%=index%>">
+				   <td align="left">
+				     <input type="text" name="item_title" class="easyui-validatebox x-text" value="${item.name}">
+				   </td> 
+				   <td align="left">
+				     <input type="text" name="item_sort" size="5" class="easyui-numberbox x-text" value="${item.sort}">
+				   </td> 
+				   <td align="left"><a class="del" href="javascript:deleteTmpRow('tr_<%=index++%>');">删除</a></td>
+				 </tr>
+                 </c:forEach>
+			   </tbody>
+             </table>
+			 <script type="text/javascript">
+			    function getTextVar(i){
+                    var text_var = '<tr id="tr_'+i+'"><td align="left"><input type="text" name="item_title" class="easyui-validatebox x-text"></td> <td align="left"><input type="text" name="item_sort" size="5" class="easyui-numberbox x-text" data-options="precision:0"></td> <td align="left"><a class="del" href="javascript:deleteTmpRow(\'tr_'+i+'\');">删除</a></td></tr>';
+				    return text_var;
+			    }
+
+                function getImgVar(i){
+				    var img_var = '<tr id="tr_'+i+'"><td><input type="text" name="item_title" class="easyui-validatebox x-text" /></td><td><input type="text" name="item_sort" class="easyui-numberbox x-text" size="5" data-options="precision:0"/></td>' +
+			        '<td><div class="input-append"> <input type="text" name="icon" class="easyui-validatebox x-text" readonly /> <span class="help-inline"><a class="btn insertimage">选择图片</a></span></div></td>' +
+			        '<td><input type="text" name="url" class="easyui-validatebox x-text" /></td>'+
+			        '<td><a class="del" href="javascript:deleteTmpRow(\'tr_'+i+'\');">删除</a></td></tr>';
+				    return img_var;
+			    }
+
+                var i=<%=index%>;
+                jQuery("#vtype").click(function () {
+                    var type = true; 
+                    jQuery("#listTable").append(type ? getTextVar(i++) : getImgVar(i++));
+			    });
+
+			    function deleteTmpRow(obj){
+                   jQuery("#"+obj).remove();
+			    }
+            </script>
 		</td>
 	</tr>
 	<tr>

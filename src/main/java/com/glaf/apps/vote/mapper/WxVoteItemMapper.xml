@@ -9,6 +9,9 @@
 		<result property="voteId" column="VOTEID_" jdbcType="BIGINT" />
 		<result property="name" column="NAME_" jdbcType="VARCHAR" />
 		<result property="value" column="VALUE_" jdbcType="VARCHAR" />
+		<result property="sort" column="SORT_" jdbcType="INTEGER" />
+		<result property="icon" column="ICON_" jdbcType="VARCHAR" />
+		<result property="url" column="URL_" jdbcType="VARCHAR" />
 	</resultMap>
 
 
@@ -25,6 +28,15 @@
 			<if test="value != null">
 				,VALUE_
 			</if>
+			<if test="sort != null">
+				,SORT_
+			</if>
+			<if test="icon != null">
+				,ICON_
+			</if>
+			<if test="url != null">
+				,URL_
+			</if>
 		</trim>
 
 		<trim prefix=" values (" suffix=")" suffixOverrides=",">
@@ -38,6 +50,15 @@
 			</if>
 			<if test="value != null">
 				,#{value, jdbcType=VARCHAR}
+			</if>
+			<if test="sort != null">
+				,#{sort, jdbcType=INTEGER}
+			</if>
+			<if test="icon != null">
+				,#{icon, jdbcType=VARCHAR}
+			</if>
+			<if test="url != null">
+				,#{url, jdbcType=VARCHAR}
 			</if>
 		</trim>
 	</insert>
@@ -55,6 +76,15 @@
 			</if>
 			<if test="value != null">
 				VALUE_ = #{value, jdbcType=VARCHAR},
+			</if>
+			<if test="sort != null">
+				SORT_ = #{sort, jdbcType=INTEGER},
+			</if>
+			<if test="icon != null">
+				ICON_ = #{icon, jdbcType=VARCHAR},
+			</if>
+			<if test="url != null">
+				URL_ = #{url, jdbcType=VARCHAR},
 			</if>
 		</trim>
 		where
@@ -99,8 +129,8 @@
 		resultMap="wxVoteItemResultMap">
 		select distinct E.*
 		from wx_vote_item E
-		where E.VOTEID_ =
-		#{voteId}
+		where E.VOTEID_ = #{voteId}
+		order by E.SORT_ desc
 	</select>
 
 	<select id="getWxVoteItems" parameterType="com.glaf.apps.vote.query.WxVoteItemQuery"
@@ -112,7 +142,7 @@
 				order by ${orderBy}
 			</when>
 			<otherwise>
-				order by E.ID_ desc
+				order by E.SORT_ desc
 			</otherwise>
 		</choose>
 	</select>

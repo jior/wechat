@@ -74,6 +74,7 @@ limitations under the License.
 
     function zTreeOnClick(event, treeId, treeNode, clickFlag) {
 		jQuery("#path").val(treeNode.path);
+		jQuery("#nodeId").val(treeNode.id);
 		loadMxData('<%=request.getContextPath()%>/mx/wx/wxFile/json?categoryId='+treeNode.id);
 	}
 
@@ -148,6 +149,12 @@ limitations under the License.
 			window.close();
 	    }
 	}
+
+	function uploadFile(){
+        var nodeId = jQuery("#nodeId").val();
+		var link = "<%=request.getContextPath()%>/mx/wx/wxFile/edit?type=category&categoryId="+nodeId;
+		window.location.href=link;
+	}
  
 </script>
 </head>
@@ -169,11 +176,16 @@ limitations under the License.
 	   <div data-options="region:'north',split:true,border:true" style="height:40px"> 
 	   <form id="iForm" name="iForm" method="post">
 	    <input type="hidden" id="path" name="path" value="" >
+		<input type="hidden" id="nodeId" name="nodeId" value="" >
 		<div class="toolbar-backgroud"  > 
 		<img src="<%=request.getContextPath()%>/images/window.png">
 		&nbsp;<span class="x_content_title">文件列表</span>
 		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-ok'"
 		   onclick="javascript:selectedFile();">选择</a> 
+		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-reload'"
+			   onclick="javascript:reloadGrid();">重载</a> 
+		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-upload'"
+		   onclick="javascript:uploadFile();">上传</a> 
 	   </div> 
 	   </form>
 	  </div> 

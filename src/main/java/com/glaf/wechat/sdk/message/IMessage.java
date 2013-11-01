@@ -56,8 +56,8 @@ public interface IMessage {
 	public static final String TAG_HQMUSICURL = "HQMusicUrl";
 	public static final String TAG_ITEM = "item";
 	public static final String TAG_LABEL = "Label";
-	public static final String TAG_LOCATIONX = "Location_X";
-	public static final String TAG_LOCATIONY = "Location_Y";
+	public static final String TAG_LATITUDE = "Location_X";
+	public static final String TAG_LONGITUDE = "Location_Y";
 	public static final String TAG_MSGID = "MsgId";
 	public static final String TAG_MSGTYPE = "MsgType";
 	public static final String TAG_MUSIC = "Music";
@@ -71,7 +71,6 @@ public interface IMessage {
 	public static final String TAG_MEDIAID = "MediaId";
 	public static final String TAG_THUMBMEDIAID = "thumbMediaId";
 	public static final String TAG_FORMAT = "Format";
-	public static final String TAG_TICKET ="Ticket";
-	
+	public static final String TAG_TICKET = "Ticket";
 
 }

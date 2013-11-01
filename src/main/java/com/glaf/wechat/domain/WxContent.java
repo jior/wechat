@@ -177,6 +177,18 @@ public class WxContent implements java.io.Serializable, JSONable {
 	@Column(name = "PICURL_", length = 500)
 	protected String picUrl;
 
+	@Column(name = "LATITUDE_")
+	protected Double latitude;
+
+	@Column(name = "LONGITUDE_")
+	protected Double longitude;
+
+	@Column(name = "SCALE_", length = 50)
+	protected String scale;
+
+	@Column(name = "LABEL_", length = 200)
+	protected String label;
+
 	/**
 	 * ¥¥Ω®»À
 	 */
@@ -261,12 +273,24 @@ public class WxContent implements java.io.Serializable, JSONable {
 		return keywordsMatchType;
 	}
 
+	public String getLabel() {
+		return label;
+	}
+
 	public String getLastUpdateBy() {
 		return lastUpdateBy;
 	}
 
 	public Date getLastUpdateDate() {
 		return lastUpdateDate;
+	}
+
+	public Double getLatitude() {
+		return latitude;
+	}
+
+	public Double getLongitude() {
+		return longitude;
 	}
 
 	public String getPicUrl() {
@@ -291,6 +315,10 @@ public class WxContent implements java.io.Serializable, JSONable {
 
 	public List<WxContent> getRelations() {
 		return relations;
+	}
+
+	public String getScale() {
+		return scale;
 	}
 
 	public String getSmallIcon() {
@@ -377,12 +405,24 @@ public class WxContent implements java.io.Serializable, JSONable {
 		this.keywordsMatchType = keywordsMatchType;
 	}
 
+	public void setLabel(String label) {
+		this.label = label;
+	}
+
 	public void setLastUpdateBy(String lastUpdateBy) {
 		this.lastUpdateBy = lastUpdateBy;
 	}
 
 	public void setLastUpdateDate(Date lastUpdateDate) {
 		this.lastUpdateDate = lastUpdateDate;
+	}
+
+	public void setLatitude(Double latitude) {
+		this.latitude = latitude;
+	}
+
+	public void setLongitude(Double longitude) {
+		this.longitude = longitude;
 	}
 
 	public void setPicUrl(String picUrl) {
@@ -407,6 +447,10 @@ public class WxContent implements java.io.Serializable, JSONable {
 
 	public void setRelations(List<WxContent> relations) {
 		this.relations = relations;
+	}
+
+	public void setScale(String scale) {
+		this.scale = scale;
 	}
 
 	public void setSmallIcon(String smallIcon) {

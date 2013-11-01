@@ -37,6 +37,7 @@ limitations under the License.
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/kindeditor/kindeditor-min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/glaf-base.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/glaf-core.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/baidumap.js"></script>
 <script type="text/javascript">
     var contextPath="<%=request.getContextPath()%>";
 
@@ -251,8 +252,8 @@ limitations under the License.
 		<td width="20%" align="left">是否发布</td>
 		<td align="left">
 			 <select id="status" name="status">
+				<option value="1" >发布
 				<option value="0" >未发布
-				<option value="1" selected>发布
 		    </select>
 			 <script type="text/javascript">
 			    jQuery("#status").val("${wxContent.status}");
@@ -323,6 +324,39 @@ limitations under the License.
 			<input type="button" value=" 添加 " onclick="javascript:editRecommendations();" class="btnGreen">
 		</td>
 	</tr>
+
+	<c:if test="${type eq 'L' }">
+      <tr>
+		<td width="15%" align="left" valign="middle">地理位置</td>
+		<td align="left" valign="middle">
+			请输入地址：(用户可以根据位置信息查询信息)
+			<br>
+                <input id="label" name="label" type="text" 
+			           class="easyui-validatebox x-text"  size="60"
+			           data-options="required:true"
+				       value="${wxContent.label}"/>&nbsp;
+				 <input id="positioning" type="button" value="查询地址" class="btnGreen" />
+			    <br>
+                <div id="l-map" style="width: 680px; height: 450px; border: 1px solid #ccc;">
+                </div>
+                <div id="r-result">
+				   <c:choose>
+				   <c:when test="${!empty wxContent && wxContent.latitude != null && wxContent.longitude != null}">
+					  纬度lat <input id="latitude" name="latitude" type="text" value="${wxContent.latitude}"  />
+					  经度lng <input id="longitude" name="longitude" type="text" value="${wxContent.longitude}"  />
+				   </c:when>
+				   <c:otherwise>
+					  纬度lat <input name="latitude" type="text" value="113.373094" id="latitude" />
+					  经度lng <input name="longitude" type="text" value="23.133293" id="longitude" />
+				   </c:otherwise>
+				  </c:choose>
+                      <input id="city" style="display: none" />
+                </div>
+                <script src="http://api.map.baidu.com/api?key=a258befb5804cb80bed5338c74dd1fd1&v=1.1&services=true" 
+				        type="text/javascript"></script>
+		</td>
+	 </tr>
+	</c:if>
 	 
   	<tr>
 	    <td width="20%" align="left"></td>
@@ -336,5 +370,20 @@ limitations under the License.
   <p>&nbsp;</p>
 </div>
 </div>
+<script type="text/javascript">
+
+     $(function () {
+		<c:choose>
+			<c:when test="${!empty wxContent && wxContent.latitude != null && wxContent.longitude != null}">
+				var json = {"lng":${wxContent.longitude},"lat":${wxContent.latitude}, "adr":'${wxContent.label}'}
+                baidu_map(json);
+			</c:when>
+			<c:otherwise>
+				baidu_map();
+			</c:otherwise>
+		</c:choose>
+     });
+
+</script>
 </body>
 </html>
