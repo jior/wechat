@@ -20,8 +20,18 @@ function getOpener() {
     return this.replace(/(^\s*)|(\s*$)/g, "");
   }
 
-function openWindow(URL, parent, x, y, width, height)
-{
+ String.prototype.startsWith = function (substring) {   
+	var reg = new RegExp("^" + substring);   
+	return reg.test(this);
+ }
+
+ String.prototype.endsWith = function (substring) {  
+	var reg = new RegExp(substring + "$"); 
+	return reg.test(this);
+ }
+
+
+ function openWindow(URL, parent, x, y, width, height) {
   if(is_ie){
      window.showModalDialog(URL,parent,"edge:raised;scroll:0;status:0;help:0;resizable:0;dialogWidth:"+width+"px;dialogHeight:"+height+"px;dialogTop:"+y+"px;dialogLeft:"+x+"px",true);
   }
