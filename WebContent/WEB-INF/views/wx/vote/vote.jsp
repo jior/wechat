@@ -94,9 +94,11 @@ limitations under the License.
                  </c:forEach>
 				 </c:when>
 				 <c:otherwise>
+				   <c:forEach items="${vote.items}" var="item">
 				    <input type="radio" id="result_<%=index%>" name="result_1"
 						   onclick="jQuery('#result').val('${item.value}');"/>
 					<label for="result_<%=index++%>">${item.name}</label>
+				   </c:forEach>
 				 </c:otherwise>
                  </c:choose>
 				</fieldset>
