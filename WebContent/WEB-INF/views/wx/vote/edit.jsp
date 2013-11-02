@@ -187,7 +187,7 @@ limitations under the License.
 				<option value="1">是</option>
 			</select>
 			<script type="text/javascript">
-			   jQuery('#limitFlag').val('${wxVote.signFlag}');
+			   jQuery('#limitFlag').val('${wxVote.limitFlag}');
 			</script>
 		</td>
 	</tr>

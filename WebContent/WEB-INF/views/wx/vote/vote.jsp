@@ -31,8 +31,22 @@ limitations under the License.
 <script type="text/javascript">
      var contextPath="<%=request.getContextPath()%>";
 
+
 	function submitVote(){
+		<c:choose>
+		<c:when test="${vote.multiFlag == 1}">
+		var arr = document.getElementsByName("result_1");
+		var result="";
+		for(var i = 0; i < arr.length; i++){
+			if(arr.item(i).checked){
+				result = result+arr.item(i).value+",";
+			}
+		}
+		</c:when>
+		<c:otherwise>
 		var result = jQuery("#result").val();
+		</c:otherwise>
+        </c:choose>
 		jQuery.ajax({
 				   type: "POST",
 				   url: '<%=request.getContextPath()%>/website/wx/vote/post/${vote.id}?result='+result,
@@ -71,12 +85,20 @@ limitations under the License.
 				   ${vote.desc}
 				 </p>
 				 </c:if>
-				 <fieldset data-role="controlgroup">          
+				 <fieldset data-role="controlgroup">  
+				 <c:choose>
+				 <c:when test="${vote.multiFlag == 1}">
                  <c:forEach items="${vote.items}" var="item">
-					<input type="radio" id="result_<%=index%>" name="result_1"
-						   onclick="jQuery('#result').val('${item.value}');"/>
+					<input type="checkbox" id="result_<%=index%>" name="result_1" value="${item.value}"/>
 					<label for="result_<%=index++%>">${item.name}</label>
                  </c:forEach>
+				 </c:when>
+				 <c:otherwise>
+				    <input type="radio" id="result_<%=index%>" name="result_1"
+						   onclick="jQuery('#result').val('${item.value}');"/>
+					<label for="result_<%=index++%>">${item.name}</label>
+				 </c:otherwise>
+                 </c:choose>
 				</fieldset>
                 <p>
                     <input type="button" value="确认" data-role="button" data-icon="star" data-theme="b" 
