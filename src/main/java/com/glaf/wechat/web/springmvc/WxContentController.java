@@ -192,6 +192,10 @@ public class WxContentController {
 			request.setAttribute("x_json", rowJSON.toJSONString());
 		}
 
+		if (wxContent != null && StringUtils.isNotEmpty(wxContent.getMsgType())) {
+			return this.editMedia(request, modelMap);
+		}
+
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {
 			return new ModelAndView(view, modelMap);
@@ -204,7 +208,7 @@ public class WxContentController {
 
 		return new ModelAndView("/wx/content/edit", modelMap);
 	}
-	
+
 	@RequestMapping("/editMedia")
 	public ModelAndView editMedia(HttpServletRequest request, ModelMap modelMap) {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);

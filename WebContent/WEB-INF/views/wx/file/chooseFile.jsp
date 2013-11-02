@@ -106,7 +106,7 @@ limitations under the License.
 				columns:[[
 	                {title:'序号',field:'startIndex',width:80,sortable:false},
 					{title:'名称',field:'title',width:220,sortable:false},
-					{title:'图片',field:'filename', align:'center', valign:'middle', width:380,sortable:false, formatter:formatterUrl},
+					{title:'文件名',field:'filename', align:'center', valign:'middle', width:380,sortable:false, formatter:formatterUrl},
 					{title:'路径',field:'path',width:180,sortable:false}
 				]],
 				rownumbers:false
@@ -121,8 +121,22 @@ limitations under the License.
 	});
 
 
+	String.prototype.startsWith = function (substring) {   
+		var reg = new RegExp("^" + substring);   
+		return reg.test(this);
+	}
+
+	String.prototype.endsWith = function (substring) {  
+		var reg = new RegExp(substring + "$"); 
+		return reg.test(this);
+	}
+
 	function formatterUrl(val, row){
-      return "<img src='${contextPath}"+row.path+"' border='0'>";
+	  if(row.path.endsWith(".jpg") || row.path.endsWith(".jpeg") || row.path.endsWith(".gif") || row.path.endsWith(".png")){
+          return "<img src='${contextPath}"+row.path+"' border='0'>";
+	  } else {
+		  return row.originalFilename;
+	  }
 	}
 
  

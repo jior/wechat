@@ -122,9 +122,10 @@ public class WxFileManagerJsonController {
 
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 
-		// 图片扩展名
+		// 文件扩展名
 		String[] fileTypes = new String[] { "gif", "jpg", "jpeg", "png", "bmp",
-				"swf" };
+				"swf", "mp3", "wma", "wav", "amr", "rm", "rmvb", "mp4", "wvm",
+				"avi", "mpg", "mpeg" };
 
 		// 排序形式，name or size or type
 		String order = request.getParameter("order") != null ? request

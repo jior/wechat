@@ -40,6 +40,7 @@ limitations under the License.
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/artDialog/plugins/iframeTools.js"></script>
 <script type="text/javascript">
 
+
     var prevTreeNode;
 
     var setting = {
@@ -105,7 +106,7 @@ limitations under the License.
 				columns:[[
 	                {title:'序号',field:'startIndex',width:80,sortable:false},
 					{title:'名称',field:'title', width:120},
-					{title:'文件名',field:'filename', width:120},
+					{title:'文件名',field:'filename', width:120,formatter:formatterUrl},
 					{title:'描述',field:'desc', width:180},
 					{title:'链接',field:'path', width:320},
 					{title:'是否有效',field:'locked', width:90, formatter:formatterStatus},
@@ -126,6 +127,24 @@ limitations under the License.
 		    });
 	});
 
+
+	String.prototype.startsWith = function (substring) {   
+		var reg = new RegExp("^" + substring);   
+		return reg.test(this);
+	}
+
+	String.prototype.endsWith = function (substring) {  
+		var reg = new RegExp(substring + "$"); 
+		return reg.test(this);
+	}
+
+	function formatterUrl(val, row){
+	  if(row.path.endsWith(".jpg") || row.path.endsWith(".jpeg") || row.path.endsWith(".gif") || row.path.endsWith(".png")){
+          return "<img src='${contextPath}"+row.path+"' border='0'>";
+	  } else {
+		  return row.originalFilename;
+	  }
+	}
 
 		 
 	function formatterStatus(val, row){
