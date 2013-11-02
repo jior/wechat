@@ -147,6 +147,13 @@ limitations under the License.
 	    art.dialog.open(link, { height: 420, width: 880, title: "添加记录", lock: true, scrollbars:"yes" }, false);
 	}
 
+
+	function addMedia(){
+		var nodeId = jQuery("#nodeId").val();
+		var link = "<%=request.getContextPath()%>/mx/wx/wxContent/editMedia?type=P&categoryId="+nodeId;
+	    art.dialog.open(link, { height: 420, width: 880, title: "添加记录", lock: true, scrollbars:"yes" }, false);
+	}
+
 	function onRowClick(rowIndex, row){
 	    var link = '<%=request.getContextPath()%>/mx/wx/wxContent/edit?type=P&id='+row.id;
 	    art.dialog.open(link, { height: 420, width: 880, title: "修改记录", lock: true, scrollbars:"yes" }, false);
@@ -287,7 +294,9 @@ limitations under the License.
 			<img src="<%=request.getContextPath()%>/images/window.png">
 			&nbsp;<span class="x_content_title">${category.name}内容列表</span>
 			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-add'" 
-			   onclick="javascript:addNew();">新增</a>  
+			   onclick="javascript:addNew();">新增</a> 
+			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-add'" 
+			   onclick="javascript:addMedia();">新增多媒体</a>  
 			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-edit'"
 			   onclick="javascript:editSelected();">修改</a>  
 			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-remove'"

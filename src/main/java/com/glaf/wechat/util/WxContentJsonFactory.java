@@ -67,6 +67,9 @@ public class WxContentJsonFactory {
 		if (jsonObject.containsKey("type")) {
 			model.setType(jsonObject.getString("type"));
 		}
+		if (jsonObject.containsKey("msgType")) {
+			model.setMsgType(jsonObject.getString("msgType"));
+		}
 		if (jsonObject.containsKey("uuid")) {
 			model.setUuid(jsonObject.getString("uuid"));
 		}
@@ -163,6 +166,9 @@ public class WxContentJsonFactory {
 		if (model.getType() != null) {
 			jsonObject.put("type", model.getType());
 		}
+		if (model.getMsgType() != null) {
+			jsonObject.put("msgType", model.getMsgType());
+		}
 		if (model.getUuid() != null) {
 			jsonObject.put("uuid", model.getUuid());
 		}
@@ -201,7 +207,7 @@ public class WxContentJsonFactory {
 			jsonObject.put("picUrl", model.getPicUrl());
 		}
 		jsonObject.put("latitude", model.getLatitude());
-        jsonObject.put("longitude", model.getLongitude());
+		jsonObject.put("longitude", model.getLongitude());
 		if (model.getScale() != null) {
 			jsonObject.put("scale", model.getScale());
 		}
@@ -280,6 +286,9 @@ public class WxContentJsonFactory {
 		if (model.getType() != null) {
 			jsonObject.put("type", model.getType());
 		}
+		if (model.getMsgType() != null) {
+			jsonObject.put("msgType", model.getMsgType());
+		}
 		if (model.getUuid() != null) {
 			jsonObject.put("uuid", model.getUuid());
 		}
@@ -318,7 +327,7 @@ public class WxContentJsonFactory {
 			jsonObject.put("createBy", model.getCreateBy());
 		}
 		jsonObject.put("latitude", model.getLatitude());
-        jsonObject.put("longitude", model.getLongitude());
+		jsonObject.put("longitude", model.getLongitude());
 		if (model.getScale() != null) {
 			jsonObject.put("scale", model.getScale());
 		}

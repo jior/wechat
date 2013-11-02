@@ -8,6 +8,7 @@
         <property name="status" column="STATUS_" type="Integer" title="Status" englishTitle="Status" length="255" editable="true" displayType="0"/>
         <property name="priority" column="PRIORTY_" type="Integer" title="Priority" englishTitle="Priority" length="255" editable="true" displayType="0"/>
         <property name="type" column="TYPE_" type="String" title="Type" englishTitle="Type" length="20" editable="true" displayType="0"/>
+		<property name="msgType" column="MSGTYPE_" type="String" title="MsgType" englishTitle="MsgType" length="20" editable="true" displayType="0"/>
         <property name="uuid" column="UUID_" type="String" title="Uuid" englishTitle="Uuid" length="50" editable="true" displayType="0"/>
         <property name="keywords" column="KEYWORDS_" type="String" title="Keywords" englishTitle="Keywords" length="250" editable="true" displayType="0"/>
         <property name="keywordsCount" column="KEYWORDSCOUNT_" type="Integer" title="KeywordsCount" englishTitle="KeywordsCount" length="255" editable="true" displayType="0"/>

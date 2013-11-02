@@ -204,6 +204,35 @@ public class WxContentController {
 
 		return new ModelAndView("/wx/content/edit", modelMap);
 	}
+	
+	@RequestMapping("/editMedia")
+	public ModelAndView editMedia(HttpServletRequest request, ModelMap modelMap) {
+		LoginContext loginContext = RequestUtils.getLoginContext(request);
+		RequestUtils.setRequestParameterToAttribute(request);
+
+		WxContent wxContent = wxContentService.getWxContent(RequestUtils
+				.getLong(request, "id"));
+		if (wxContent != null
+				&& (StringUtils.equals(wxContent.getCreateBy(),
+						loginContext.getActorId()) || loginContext
+						.isSystemAdministrator())) {
+			request.setAttribute("wxContent", wxContent);
+			JSONObject rowJSON = wxContent.toJsonObject();
+			request.setAttribute("x_json", rowJSON.toJSONString());
+		}
+
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view, modelMap);
+		}
+
+		String x_view = ViewProperties.getString("wxContent.editMedia");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
+		return new ModelAndView("/wx/content/editMedia", modelMap);
+	}
 
 	@RequestMapping("/editPPT")
 	public ModelAndView editPPT(HttpServletRequest request, ModelMap modelMap) {
@@ -416,6 +445,7 @@ public class WxContentController {
 		wxContent.setStatus(RequestUtils.getInt(request, "status"));
 		wxContent.setPriority(RequestUtils.getInt(request, "priority"));
 		wxContent.setType(request.getParameter("type"));
+		wxContent.setMsgType(request.getParameter("msgType"));
 		wxContent.setKeywords(request.getParameter("keywords"));
 		wxContent.setKeywordsMatchType(request
 				.getParameter("keywordsMatchType"));
@@ -430,7 +460,7 @@ public class WxContentController {
 		wxContent.setUrl(request.getParameter("url"));
 		wxContent.setPicUrl(request.getParameter("picUrl"));
 		wxContent.setLatitude(RequestUtils.getDouble(request, "latitude"));
-        wxContent.setLongitude(RequestUtils.getDouble(request, "longitude"));
+		wxContent.setLongitude(RequestUtils.getDouble(request, "longitude"));
 		wxContent.setScale(request.getParameter("scale"));
 		wxContent.setLabel(request.getParameter("label"));
 		wxContent.setCreateBy(actorId);
@@ -459,6 +489,7 @@ public class WxContentController {
 			wxContent.setStatus(RequestUtils.getInt(request, "status"));
 			wxContent.setPriority(RequestUtils.getInt(request, "priority"));
 			wxContent.setType(request.getParameter("type"));
+			wxContent.setMsgType(request.getParameter("msgType"));
 			wxContent.setKeywords(request.getParameter("keywords"));
 			wxContent.setKeywordsMatchType(request
 					.getParameter("keywordsMatchType"));
@@ -473,7 +504,8 @@ public class WxContentController {
 			wxContent.setUrl(request.getParameter("url"));
 			wxContent.setPicUrl(request.getParameter("picUrl"));
 			wxContent.setLatitude(RequestUtils.getDouble(request, "latitude"));
-            wxContent.setLongitude(RequestUtils.getDouble(request, "longitude"));
+			wxContent
+					.setLongitude(RequestUtils.getDouble(request, "longitude"));
 			wxContent.setScale(request.getParameter("scale"));
 			wxContent.setLabel(request.getParameter("label"));
 			wxContent.setCreateBy(actorId);
@@ -605,6 +637,7 @@ public class WxContentController {
 			wxContent.setStatus(RequestUtils.getInt(request, "status"));
 			wxContent.setPriority(RequestUtils.getInt(request, "priority"));
 			wxContent.setType(request.getParameter("type"));
+			wxContent.setMsgType(request.getParameter("msgType"));
 			wxContent.setKeywords(request.getParameter("keywords"));
 			wxContent.setKeywordsMatchType(request
 					.getParameter("keywordsMatchType"));
@@ -619,7 +652,8 @@ public class WxContentController {
 			wxContent.setUrl(request.getParameter("url"));
 			wxContent.setPicUrl(request.getParameter("picUrl"));
 			wxContent.setLatitude(RequestUtils.getDouble(request, "latitude"));
-            wxContent.setLongitude(RequestUtils.getDouble(request, "longitude"));
+			wxContent
+					.setLongitude(RequestUtils.getDouble(request, "longitude"));
 			wxContent.setScale(request.getParameter("scale"));
 			wxContent.setLabel(request.getParameter("label"));
 			wxContent.setLastUpdateBy(loginContext.getActorId());

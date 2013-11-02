@@ -138,15 +138,16 @@ limitations under the License.
 		openWindow(link,self,x, y, 745, 480);
 	}
 
-  function checkX(value){
-	  if(value=='P3'){
-		  $("#layer_url").hide();
-		  $("#layer_content").show();
-	  } else {
-          $("#layer_url").show();
-		  $("#layer_content").hide();
-	  }
-  }
+	function chooseMedia(){
+		var link = '<%=request.getContextPath()%>/mx/wx/wxFile/chooseFile?elementId=url&elementName=url';
+		var x=100;
+		var y=100;
+		if(is_ie) {
+			x=document.body.scrollLeft+event.clientX-event.offsetX-200;
+			y=document.body.scrollTop+event.clientY-event.offsetY-200;
+		}
+		openWindow(link,self,x, y, 745, 580);
+	}
 
 </script>
 </head>
@@ -261,129 +262,46 @@ limitations under the License.
 		</td>
 	</tr>
 
-	<tr>
-		<td width="20%" align="left">详细页显示图文封面</td>
+    <tr>
+		<td width="20%" align="left">媒体类型</td>
 		<td align="left">
-			 <select id="detailShowCover" name="detailShowCover">
-				<option value="0" >否
-				<option value="1" selected>是
+			 <select id="msgType" name="msgType">
+				<option value="image">图片</option>
+				<option value="voice">语音</option>
+				<option value="video">视频</option>
+				<option value="music">音乐</option>
 		    </select>
 			 <script type="text/javascript">
-			    jQuery("#detailShowCover").val("${wxContent.detailShowCover}");
+			    jQuery("#msgType").val("${wxContent.msgType}");
 			 </script>
 		</td>
 	</tr>
 
 	<tr>
-		<td width="15%" align="left" valign="middle">图文详细页内容</td>
+		<td width="15%" align="left" valign="middle">媒体链接</td>
 		<td align="left" valign="middle">
-		     <input type="radio" name="layout" onclick="javascript:checkX('P2')"
-					<c:if test="${!empty wxContent && wxContent.url != null && wxContent.url != ''}">checked</c:if>>链接
-				&nbsp;
-			<input type="radio" name="layout" onclick="javascript:checkX('P3')"
-					<c:if test="${empty wxContent || wxContent.url == null || wxContent.url == ''}">checked</c:if>>内容
-			 <div id="layer_url">
 			   <input type="text" id="url" name="url"class="x-text" size="80" value="${wxContent.url}">
 			   &nbsp;<img src="<%=request.getContextPath()%>/images/link.png" 
-			           title="链接" onclick="javascript:chooseLink();" border="0"/>
+			           title="链接" onclick="javascript:chooseMedia();" border="0"/>
 			  <br>可以选择内部链接
 			  <br>也可以直接输入外部链接（以http://或https://开始）
-			 </div>
-			 <div id="layer_content">
-			  <textarea  id="content" name="content" class="x-textarea"  rows="5" cols="38" style="width:545px;height:380px;">${wxContent.content}</textarea> 
-			 </div>
-			 <script type="text/javascript">	
-			 <c:choose>
-	           <c:when test="${!empty wxContent && wxContent.url != null && wxContent.url != ''}">
-			      $("#layer_url").show();
-		          $("#layer_content").hide();
-			   </c:when>
-			   <c:otherwise>
-			      $("#layer_url").hide();
-		          $("#layer_content").show();
-			   </c:otherwise>
-	          </c:choose>
-			  </script>
 		</td>
 	</tr>
-
-	<tr>
-		<td width="15%" align="left" valign="middle">多图文</td>
-		<td align="left" valign="middle">
-			 <input type="hidden" id="relationIds" name="relationIds" value="${wxContent.relationIds}"> 
-			 <input type="hidden" id="relations" name="relations"> 
-			 <input type="button" value=" 添加 " onclick="javascript:editRelations();" class="btnGreen">
-		</td>
-	</tr>
-
-	<tr>
-		<td width="15%" align="left" valign="middle">推荐阅读</td>
-		<td align="left" valign="middle">
-			<input type="hidden" id="recommendationIds" name="recommendationIds" value="${wxContent.recommendationIds}"> 
-			<input type="hidden" id="recommendations" name="recommendations">
-			<input type="button" value=" 添加 " onclick="javascript:editRecommendations();" class="btnGreen">
-		</td>
-	</tr>
-
-	<c:if test="${type eq 'L' }">
-      <tr>
-		<td width="15%" align="left" valign="middle">地理位置</td>
-		<td align="left" valign="middle">
-			请输入地址：(用户可以根据位置信息查询信息)
-			<br>
-                <input id="label" name="label" type="text" 
-			           class="easyui-validatebox x-text"  size="60"
-			           data-options="required:true"
-				       value="${wxContent.label}"/>&nbsp;
-				 <input id="positioning" type="button" value="查询地址" class="btnGreen" />
-			    <br>
-                <div id="l-map" style="width: 680px; height: 450px; border: 1px solid #ccc;">
-                </div>
-                <div id="r-result">
-				   <c:choose>
-				   <c:when test="${!empty wxContent && wxContent.latitude != null && wxContent.longitude != null}">
-					  纬度lat <input id="latitude" name="latitude" type="text" value="${wxContent.latitude}"  />
-					  经度lng <input id="longitude" name="longitude" type="text" value="${wxContent.longitude}"  />
-				   </c:when>
-				   <c:otherwise>
-					  纬度lat <input name="latitude" type="text" value="113.373094" id="latitude" />
-					  经度lng <input name="longitude" type="text" value="23.133293" id="longitude" />
-				   </c:otherwise>
-				  </c:choose>
-                      <input id="city" style="display: none" />
-                </div>
-                <script src="http://api.map.baidu.com/api?key=a258befb5804cb80bed5338c74dd1fd1&v=1.1&services=true" 
-				        type="text/javascript"></script>
-		</td>
-	 </tr>
-	</c:if>
 	 
   	<tr>
 	    <td width="20%" align="left"></td>
 		<td align="left" ><br>
             <input type="button" value=" 保存 " onclick="javascript:saveData();" class="btnGreen">
+			<br/><br/>
 		</td>
 	</tr>
     </tbody>
   </table>
   </form>
   <p>&nbsp;</p>
+  <p>&nbsp;</p>
 </div>
 </div>
-<script type="text/javascript">
-
-     $(function () {
-		<c:choose>
-			<c:when test="${!empty wxContent && wxContent.latitude != null && wxContent.longitude != null}">
-				var json = {"lng":${wxContent.longitude},"lat":${wxContent.latitude}, "adr":'${wxContent.label}'}
-                baidu_map(json);
-			</c:when>
-			<c:otherwise>
-				baidu_map();
-			</c:otherwise>
-		</c:choose>
-     });
-
-</script>
+ 
 </body>
 </html>

@@ -15,6 +15,7 @@
 		<result property="status" column="STATUS_" jdbcType="INTEGER" />
 		<result property="priority" column="PRIORTY_" jdbcType="INTEGER" />
 		<result property="type" column="TYPE_" jdbcType="VARCHAR" />
+		<result property="msgType" column="MSGTYPE_" jdbcType="VARCHAR" />
 		<result property="uuid" column="UUID_" jdbcType="VARCHAR" />
 		<result property="keywords" column="KEYWORDS_" jdbcType="VARCHAR" />
 		<result property="keywordsCount" column="KEYWORDSCOUNT_"
@@ -71,6 +72,9 @@
 			</if>
 			<if test="type != null">
 				,TYPE_
+			</if>
+			<if test="msgType != null">
+				,MSGTYPE_
 			</if>
 			<if test="uuid != null">
 				,UUID_
@@ -158,6 +162,9 @@
 			<if test="type != null">
 				,#{type, jdbcType=VARCHAR}
 			</if>
+			<if test="msgType != null">
+				,#{msgType, jdbcType=VARCHAR}
+			</if>
 			<if test="uuid != null">
 				,#{uuid, jdbcType=VARCHAR}
 			</if>
@@ -243,6 +250,9 @@
 			</if>
 			<if test="type != null">
 				TYPE_ = #{type, jdbcType=VARCHAR},
+			</if>
+			<if test="msgType != null">
+				MSGTYPE_ = #{msgType, jdbcType=VARCHAR},
 			</if>
 			<if test="keywords != null">
 				KEYWORDS_ = #{keywords, jdbcType=VARCHAR},
@@ -425,13 +435,9 @@
 				and E.TYPE_ = #{type}
 			</if>
 
-			<if test="types != null and types.size != 0">
-				and E.TYPE_ IN
-				<foreach item="x_type" index="index" collection="types"
-					open="(" separator="," close=")">
-					#{x_type}
-				</foreach>
-			</if>
+			<if test="msgType != null and msgType != '' ">
+				and E.MSGTYPE_ = #{msgType}
+            </if>
 
 			<if test="uuid != null and uuid != '' ">
 				and E.UUID_ = #{uuid}

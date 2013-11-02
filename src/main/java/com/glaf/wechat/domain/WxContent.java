@@ -106,6 +106,12 @@ public class WxContent implements java.io.Serializable, JSONable {
 	protected String type;
 
 	/**
+	 * 消息类型（text/image/location/link/voice）
+	 */
+	@Column(name = "MSGTYPE_", length = 20)
+	protected String msgType;
+
+	/**
 	 * UUID
 	 */
 	@Column(name = "UUID_", length = 50)
@@ -293,6 +299,10 @@ public class WxContent implements java.io.Serializable, JSONable {
 		return longitude;
 	}
 
+	public String getMsgType() {
+		return msgType;
+	}
+
 	public String getPicUrl() {
 		return picUrl;
 	}
@@ -423,6 +433,10 @@ public class WxContent implements java.io.Serializable, JSONable {
 
 	public void setLongitude(Double longitude) {
 		this.longitude = longitude;
+	}
+
+	public void setMsgType(String msgType) {
+		this.msgType = msgType;
 	}
 
 	public void setPicUrl(String picUrl) {

@@ -34,7 +34,7 @@ public class WxContentQuery extends DataQuery {
 	protected Integer priorityGreaterThanOrEqual;
 	protected Integer priorityLessThanOrEqual;
 	protected String type;
-	protected List<String> types;
+	protected String msgType;
 	protected String uuid;
 	protected List<String> uuids;
 	protected String keywordsLike;
@@ -148,6 +148,10 @@ public class WxContentQuery extends DataQuery {
 
 	public String getKeywordsMatchType() {
 		return keywordsMatchType;
+	}
+
+	public String getMsgType() {
+		return msgType;
 	}
 
 	public String getOrderBy() {
@@ -277,10 +281,6 @@ public class WxContentQuery extends DataQuery {
 		return type;
 	}
 
-	public List<String> getTypes() {
-		return types;
-	}
-
 	public String getUrlLike() {
 		if (urlLike != null && urlLike.trim().length() > 0) {
 			if (!urlLike.startsWith("%")) {
@@ -336,6 +336,14 @@ public class WxContentQuery extends DataQuery {
 			throw new RuntimeException("keywordsMatchType is null");
 		}
 		this.keywordsMatchType = keywordsMatchType;
+		return this;
+	}
+
+	public WxContentQuery msgType(String msgType) {
+		if (msgType == null) {
+			throw new RuntimeException("msgType is null");
+		}
+		this.msgType = msgType;
 		return this;
 	}
 
@@ -402,6 +410,10 @@ public class WxContentQuery extends DataQuery {
 		this.keywordsMatchType = keywordsMatchType;
 	}
 
+	public void setMsgType(String msgType) {
+		this.msgType = msgType;
+	}
+
 	public void setPriority(Integer priority) {
 		this.priority = priority;
 	}
@@ -424,10 +436,6 @@ public class WxContentQuery extends DataQuery {
 
 	public void setType(String type) {
 		this.type = type;
-	}
-
-	public void setTypes(List<String> types) {
-		this.types = types;
 	}
 
 	public void setUrlLike(String urlLike) {
@@ -463,14 +471,6 @@ public class WxContentQuery extends DataQuery {
 			throw new RuntimeException("type is null");
 		}
 		this.type = type;
-		return this;
-	}
-
-	public WxContentQuery types(List<String> types) {
-		if (types == null) {
-			throw new RuntimeException("types is empty ");
-		}
-		this.types = types;
 		return this;
 	}
 
