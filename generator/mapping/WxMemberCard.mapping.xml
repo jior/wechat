@@ -1,0 +1,26 @@
+
+<mapping>
+    <entity name="WxMemberCard" package="com.glaf.apps.member" moduleName="wx" table="WX_MEMBER_CARD" title="会员卡" englishTitle="WxMemberCard">
+        <id name="id" column="ID_" type="Long" title="Id" englishTitle="Id" length="255"/>
+        <property name="name" column="NAME_" type="String" title="名称" englishTitle="Name" 
+		          length="50" editable="true" displayType="4"/>
+        <property name="color" column="COLOR_" type="String" title="颜色" englishTitle="Color" 
+		          length="20" editable="true" displayType="4"/>
+        <property name="backgroundIcon" column="BACKGROUNDICON_" type="String" title="背景图片" englishTitle="BackgroundIcon"
+		          length="50" editable="true" displayType="4"/>
+		<property name="myBackgroundIcon" column="MYBACKGROUNDICON_" type="String" title="自己设计的背景图片" 
+		          englishTitle="MyBackgroundIcon" length="250" editable="true" displayType="4"/>
+		<property name="cardLogo" column="CARDLOGO_" type="String" title="会员卡的图标" englishTitle="CardLogo" 
+		          length="250" editable="true" displayType="4"/>
+		<property name="cardNoColor" column="CARDNOCOLOR_" type="String" title="卡号颜色" englishTitle="CardNoColor" 
+		          length="20" editable="true" displayType="4"/>
+		<property name="snPassword" column="SNPASSWORD_" type="String" title="SN码" englishTitle="SN Password" 
+		          length="50" editable="true" displayType="4"/>
+        <property name="uuid" column="UUID_" type="String" title="UUID" englishTitle="UUID" 
+		          length="50" editable="true" displayType="0"/>
+        <property name="createBy" column="CREATEBY_" type="String" title="CreateBy" englishTitle="CreateBy" 
+		          length="50" editable="true" displayType="0"/>
+        <property name="createDate" column="CREATEDATE_" type="Date" title="CreateDate" englishTitle="CreateDate" 
+		          length="255" editable="true" displayType="4"/>
+    </entity>
+</mapping>

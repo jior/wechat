@@ -1,0 +1,26 @@
+
+<mapping>
+    <entity name="WxMerchant" package="com.glaf.apps.member" moduleName="wx" table="WX_MERCHANT" title="商家信息" englishTitle="WxMerchant">
+        <id name="id" column="ID_" type="Long" title="Id" englishTitle="Id" length="255"/>
+        <property name="name" column="NAME_" type="String" title="姓名" englishTitle="Name" length="50" editable="true" displayType="4"/>
+		<property name="keywords" column="KEYWORDS_" type="String" title="关键词" englishTitle="Keywords" length="150" editable="true" displayType="0"/>
+		<property name="icon" column="ICON_" type="String" title="主题图片" englishTitle="Icon" length="250" editable="true"/>
+		<property name="content" column="CONTENT_" type="String" title="描述" englishTitle="Content" length="2048" editable="true" displayType="0"/>
+		<property name="province" column="PROVINCE_" type="String" title="省份" englishTitle="Province" length="50" editable="true" displayType="0"/>
+		<property name="city" column="CITY_" type="String" title="城市" englishTitle="City" length="200" editable="true" displayType="0"/>
+		<property name="area" column="AREA_" type="String" title="区" englishTitle="area" length="200" editable="true" displayType="0"/>
+		<property name="categoryLevel" column="CATEGORYLEVEL_" type="String" title="商家类别" englishTitle="CategoryLevel" length="200" editable="true" displayType="0"/>
+		<property name="categorySubLevel" column="CATEGORYSUBLEVEL_" type="String" title="商家子类别" englishTitle="CategorySubLevel" length="200" editable="true" displayType="0"/>
+        <property name="telephone" column="TELEPHONE_" type="String" title="电话" englishTitle="Telephone" length="50" editable="true" displayType="4"/>
+        <property name="mail" column="MAIL_" type="String" title="邮件" englishTitle="Mail" length="50" editable="true" displayType="4"/>
+        <property name="address" column="ADDRESS_" type="String" title="地址" englishTitle="Address" length="50" editable="true" displayType="4"/>
+		<property name="latitude" column="LATITUDE_" type="Double" title="纬度" englishTitle="Latitude" editable="true" displayType="0"/>
+		<property name="longitude" column="LONGITUDE_" type="Double" title="经度" englishTitle="Longitude" editable="true" displayType="0"/>
+		<property name="scale" column="SCALE_" type="String" title="比例" englishTitle="Scale" length="50" editable="true" displayType="0"/>
+		<property name="label" column="LABEL_" type="String" title="位置" englishTitle="Label" length="200" editable="true" displayType="0"/>
+        <property name="status" column="STATUS_" type="Integer" title="状态" englishTitle="Status" length="255" editable="true" displayType="4"/>
+        <property name="uuid" column="UUID_" type="String" title="UUID" englishTitle="UUID" length="50" editable="true" displayType="0"/>
+        <property name="createBy" column="CREATEBY_" type="String" title="CreateBy" englishTitle="CreateBy" length="50" editable="true" displayType="0"/>
+        <property name="createDate" column="CREATEDATE_" type="Date" title="CreateDate" englishTitle="CreateDate" length="255" editable="true" displayType="4"/>
+    </entity>
+</mapping>

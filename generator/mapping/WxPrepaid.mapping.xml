@@ -1,0 +1,18 @@
+
+<mapping>
+    <entity name="WxPrepaid" package="com.glaf.apps.member" moduleName="wx" table="WX_PREPAID" title="充值记录" englishTitle="WxPrepaid">
+        <id name="id" column="ID_" type="Long" title="Id" englishTitle="Id"/>
+		<id name="memberId" column="MEMBERID_" type="Long" title="会员编号" englishTitle="Member Id" length="255"/>
+		<property name="cardNo" column="CARDNO_" type="String" title="会员卡号" englishTitle="CardNo" length="50"  
+		          displayType="4"/>
+        <property name="name" column="NAME_" type="String" title="姓名" englishTitle="Name" length="50" editable="true" 
+		          displayType="4"/>
+        <property name="mobile" column="MOBILE_" type="String" title="手机" englishTitle="Mobile" length="50" editable="true" 
+		          displayType="4"/>
+		<property name="balance" column="BALANCE_" type="Double" title="余额" englishTitle="Balance" displayType="4"/>
+		<property name="money" column="MONEY_" type="Double" title="充值金额" englishTitle="Money"  displayType="4"/>
+        <property name="uuid" column="UUID_" type="String" title="UUID" englishTitle="UUID" length="50" displayType="0"/>
+        <property name="createBy" column="CREATEBY_" type="String" title="CreateBy" englishTitle="CreateBy" length="50"/>
+        <property name="createDate" column="CREATEDATE_" type="Date" title="CreateDate" englishTitle="CreateDate"  displayType="4"/>
+    </entity>
+</mapping>

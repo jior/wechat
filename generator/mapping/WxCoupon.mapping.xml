@@ -1,0 +1,27 @@
+
+<mapping>
+    <entity name="WxCoupon" package="com.glaf.apps.member" moduleName="wx" table="WX_Coupon" title="优惠券" englishTitle="WxCoupon">
+        <id name="id" column="ID_" type="Long" title="Id" englishTitle="Id"/>
+        <property name="name" column="NAME_" type="String" title="姓名" englishTitle="Name" length="50" editable="true" 
+		          displayType="4"/>
+		<property name="memberType" column="MEMBERTYPE_" type="String" title="会员类别" englishTitle="MemberType" 
+		          length="50" editable="true"  displayType="4"/>
+		<property name="content" column="CONTENT_" type="String" title="使用说明" englishTitle="Content" length="2048" 
+		          editable="true" displayType="0"/>
+		<property name="singleMoney" column="SINGLEMONEY_" type="Double" title="单次消费金额" englishTitle="Single Money" 
+		          displayType="4"/>
+		<property name="sumMoney" column="SUMMONEY_" type="Double" title="累计消费金额" englishTitle="Sum Money"  
+		          displayType="4"/>
+		<property name="type" column="TYPE_" type="String" title="类型" 
+		          englishTitle="Status" editable="true" displayType="4"/>
+		<property name="quantity" column="QUANTITY_" type="Integer" title="数量" 
+		          englishTitle="Quantity" editable="true" displayType="4"/>
+		<property name="startDate" column="STARTDATE_" title="开始日期"
+			      englishTitle="Start Date" type="Date" displayType="4" nullable="false" editable="true"/>
+		<property name="endDate" column="ENDDATE_" title="结束日期" type="Date"
+			      englishTitle="End Date" displayType="4" nullable="false" editable="true"/>
+        <property name="uuid" column="UUID_" type="String" title="UUID" englishTitle="UUID" length="50" displayType="0"/>
+        <property name="createBy" column="CREATEBY_" type="String" title="CreateBy" englishTitle="CreateBy" length="50"/>
+        <property name="createDate" column="CREATEDATE_" type="Date" title="CreateDate" englishTitle="CreateDate"  displayType="4"/>
+    </entity>
+</mapping>
