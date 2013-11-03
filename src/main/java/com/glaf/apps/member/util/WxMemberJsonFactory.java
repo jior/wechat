@@ -63,6 +63,9 @@ public class WxMemberJsonFactory {
 		if (jsonObject.containsKey("address")) {
 			model.setAddress(jsonObject.getString("address"));
 		}
+		if (jsonObject.containsKey("balance")) {
+			model.setBalance(jsonObject.getDouble("balance"));
+		}
 		if (jsonObject.containsKey("status")) {
 			model.setStatus(jsonObject.getInteger("status"));
 		}
@@ -116,6 +119,7 @@ public class WxMemberJsonFactory {
 		if (model.getAddress() != null) {
 			jsonObject.put("address", model.getAddress());
 		}
+		jsonObject.put("balance", model.getBalance());
 		jsonObject.put("status", model.getStatus());
 		if (model.getUuid() != null) {
 			jsonObject.put("uuid", model.getUuid());
@@ -171,6 +175,7 @@ public class WxMemberJsonFactory {
 		if (model.getAddress() != null) {
 			jsonObject.put("address", model.getAddress());
 		}
+		jsonObject.put("balance", model.getBalance());
 		jsonObject.put("status", model.getStatus());
 		if (model.getUuid() != null) {
 			jsonObject.put("uuid", model.getUuid());

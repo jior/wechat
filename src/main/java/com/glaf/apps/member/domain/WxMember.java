@@ -93,6 +93,12 @@ public class WxMember implements java.io.Serializable, JSONable {
 	protected String address;
 
 	/**
+	 * Óà¶î
+	 */
+	@Column(name = "BALANCE_")
+	protected Double balance;
+
+	/**
 	 * ×´Ì¬
 	 */
 	@Column(name = "STATUS_")
@@ -136,6 +142,10 @@ public class WxMember implements java.io.Serializable, JSONable {
 
 	public String getAddress() {
 		return address;
+	}
+
+	public Double getBalance() {
+		return balance;
 	}
 
 	public String getCardNo() {
@@ -196,6 +206,10 @@ public class WxMember implements java.io.Serializable, JSONable {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	public void setBalance(Double balance) {
+		this.balance = balance;
 	}
 
 	public void setCardNo(String cardNo) {

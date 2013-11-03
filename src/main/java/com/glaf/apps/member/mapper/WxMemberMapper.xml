@@ -13,6 +13,7 @@
 		<result property="mail" column="MAIL_" jdbcType="VARCHAR" />
 		<result property="qq" column="QQ_" jdbcType="VARCHAR" />
 		<result property="address" column="ADDRESS_" jdbcType="VARCHAR" />
+		<result property="balance" column="BALANCE_" jdbcType="DOUBLE"/>
 		<result property="status" column="STATUS_" jdbcType="INTEGER" />
 		<result property="uuid" column="UUID_" jdbcType="VARCHAR" />
 		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
@@ -49,6 +50,9 @@
 			<if test="address != null">
 				,ADDRESS_
 			</if>
+			<if test="balance != null">
+				,BALANCE_ 
+			</if>
 			<if test="status != null">
 				,STATUS_
 			</if>
@@ -66,9 +70,6 @@
 		<trim prefix=" values (" suffix=")" suffixOverrides=",">
 			#{id, jdbcType=BIGINT}
 
-			<if test="cardNo != null">
-				,#{cardNo, jdbcType=VARCHAR}
-			</if>
 			<if test="name != null">
 				,#{name, jdbcType=VARCHAR}
 			</if>
@@ -86,6 +87,9 @@
 			</if>
 			<if test="address != null">
 				,#{address, jdbcType=VARCHAR}
+			</if>
+			<if test="balance != null">
+				,#{balance, jdbcType=DOUBLE}
 			</if>
 			<if test="status != null">
 				,#{status, jdbcType=INTEGER}
@@ -127,6 +131,9 @@
 			</if>
 			<if test="address != null">
 				ADDRESS_ = #{address, jdbcType=VARCHAR},
+			</if>
+			<if test="balance != null">
+				BALANCE_ = #{balance, jdbcType=DOUBLE},
 			</if>
 			<if test="status != null">
 				STATUS_ = #{status, jdbcType=INTEGER},

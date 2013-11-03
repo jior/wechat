@@ -91,22 +91,6 @@ public class WxMemberController {
 		}
 	}
 
-	@ResponseBody
-	@RequestMapping("/detail")
-	public byte[] detail(HttpServletRequest request) throws IOException {
-		LoginContext loginContext = RequestUtils.getLoginContext(request);
-		WxMember wxMember = wxMemberService.getWxMember(RequestUtils.getLong(
-				request, "id"));
-		if (wxMember != null
-				&& (StringUtils.equals(wxMember.getCreateBy(),
-						loginContext.getActorId()) || loginContext
-						.isSystemAdministrator())) {
-			JSONObject rowJSON = wxMember.toJsonObject();
-			return rowJSON.toJSONString().getBytes("UTF-8");
-		}
-		return null;
-	}
-
 	@RequestMapping("/edit")
 	public ModelAndView edit(HttpServletRequest request, ModelMap modelMap) {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
@@ -271,6 +255,7 @@ public class WxMemberController {
 		wxMember.setMail(request.getParameter("mail"));
 		wxMember.setQq(request.getParameter("qq"));
 		wxMember.setAddress(request.getParameter("address"));
+		wxMember.setBalance(RequestUtils.getDouble(request, "balance"));
 		wxMember.setStatus(RequestUtils.getInt(request, "status"));
 
 		wxMember.setCreateBy(actorId);
@@ -296,6 +281,7 @@ public class WxMemberController {
 			wxMember.setMail(request.getParameter("mail"));
 			wxMember.setQq(request.getParameter("qq"));
 			wxMember.setAddress(request.getParameter("address"));
+			wxMember.setBalance(RequestUtils.getDouble(request, "balance"));
 			wxMember.setStatus(RequestUtils.getInt(request, "status"));
 			wxMember.setCreateBy(actorId);
 			this.wxMemberService.save(wxMember);
@@ -333,6 +319,7 @@ public class WxMemberController {
 			wxMember.setMail(request.getParameter("mail"));
 			wxMember.setQq(request.getParameter("qq"));
 			wxMember.setAddress(request.getParameter("address"));
+			wxMember.setBalance(RequestUtils.getDouble(request, "balance"));
 			wxMember.setStatus(RequestUtils.getInt(request, "status"));
 			wxMember.setLastUpdateBy(loginContext.getActorId());
 
@@ -346,11 +333,9 @@ public class WxMemberController {
 	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 
-		WxMember wxMember = wxMemberService.getWxMember(RequestUtils.getLong(
-				request, "id"));
+		WxMember wxMember = wxMemberService.getWxMemberByUUID(RequestUtils
+				.getString(request, "uuid"));
 		request.setAttribute("wxMember", wxMember);
-		JSONObject rowJSON = wxMember.toJsonObject();
-		request.setAttribute("x_json", rowJSON.toJSONString());
 
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {
