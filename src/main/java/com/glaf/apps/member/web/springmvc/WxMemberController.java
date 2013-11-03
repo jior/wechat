@@ -16,30 +16,29 @@
  * limitations under the License.
  */
 
-package com.glaf.wechat.web.springmvc;
+package com.glaf.apps.member.web.springmvc;
 
 import java.io.IOException;
 import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import com.alibaba.fastjson.*;
 
+import com.alibaba.fastjson.*;
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.identity.*;
 import com.glaf.core.security.*;
 import com.glaf.core.util.*;
-
-import com.glaf.wechat.domain.*;
-import com.glaf.wechat.query.*;
-import com.glaf.wechat.service.*;
+import com.glaf.apps.member.domain.WxMember;
+import com.glaf.apps.member.query.WxMemberQuery;
+import com.glaf.apps.member.service.WxMemberService;
 
 @Controller("/wx/wxMember")
 @RequestMapping("/wx/wxMember")

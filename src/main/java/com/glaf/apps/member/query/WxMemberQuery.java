@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.glaf.wechat.query;
+package com.glaf.apps.member.query;
 
 import java.util.*;
 import com.glaf.core.query.DataQuery;

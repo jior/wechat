@@ -16,10 +16,14 @@
  * limitations under the License.
  */
 
-package com.glaf.wechat.mapper;
+package com.glaf.apps.member.mapper;
 
 import java.util.*;
+
 import org.springframework.stereotype.Component;
+
+import com.glaf.apps.member.domain.WxMember;
+import com.glaf.apps.member.query.WxMemberQuery;
 import com.glaf.wechat.domain.*;
 import com.glaf.wechat.query.*;
 

@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.glaf.wechat.domain;
+package com.glaf.apps.member.domain;
 
 import java.util.Date;
 
@@ -32,8 +32,8 @@ import org.apache.commons.lang.builder.ToStringStyle;
 
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.glaf.apps.member.util.WxMemberJsonFactory;
 import com.glaf.core.base.JSONable;
-import com.glaf.wechat.util.WxMemberJsonFactory;
 
 /**
  * 

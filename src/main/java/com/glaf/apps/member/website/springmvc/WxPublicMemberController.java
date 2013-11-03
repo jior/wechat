@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.glaf.wechat.website.springmvc;
+package com.glaf.apps.member.website.springmvc;
 
 import java.io.IOException;
 import java.util.Map;
@@ -38,8 +38,10 @@ import com.glaf.core.security.IdentityFactory;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.ResponseUtils;
 import com.glaf.core.util.Tools;
-import com.glaf.wechat.domain.WxMember;
-import com.glaf.wechat.service.WxMemberService;
+
+import com.glaf.apps.member.domain.WxMember;
+import com.glaf.apps.member.service.WxMemberService;
+
 
 @Controller("/wx/member")
 @RequestMapping("/wx/member")

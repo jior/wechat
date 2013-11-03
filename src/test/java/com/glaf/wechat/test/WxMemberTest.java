@@ -4,9 +4,9 @@ import java.util.*;
 
 import org.junit.Test;
 
-import com.glaf.wechat.domain.WxMember;
-import com.glaf.wechat.query.WxMemberQuery;
-import com.glaf.wechat.service.WxMemberService;
+import com.glaf.apps.member.domain.WxMember;
+import com.glaf.apps.member.query.WxMemberQuery;
+import com.glaf.apps.member.service.WxMemberService;
 import com.glaf.test.AbstractTest;
 
 public class WxMemberTest extends AbstractTest {
