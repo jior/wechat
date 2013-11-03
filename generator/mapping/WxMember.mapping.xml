@@ -6,8 +6,9 @@
         <property name="name" column="NAME_" type="String" title="姓名" englishTitle="Name" length="50" editable="true" displayType="4"/>
         <property name="mobile" column="MOBILE_" type="String" title="手机" englishTitle="Mobile" length="50" editable="true" displayType="4"/>
         <property name="mail" column="MAIL_" type="String" title="邮件" englishTitle="Mail" length="50" editable="true" displayType="4"/>
-        <property name="qq" column="qq_" type="String" title="QQ" englishTitle="Qq" length="50" editable="true" displayType="4"/>
+        <property name="qq" column="QQ_" type="String" title="QQ" englishTitle="Qq" length="50" editable="true" displayType="4"/>
         <property name="address" column="ADDRESS_" type="String" title="地址" englishTitle="Address" length="50" editable="true" displayType="4"/>
+		<property name="balance" column="BALANCE_" type="Double" title="余额" englishTitle="Balance" length="255" editable="true" displayType="4"/>
         <property name="status" column="STATUS_" type="Integer" title="状态" englishTitle="Status" length="255" editable="true" displayType="4"/>
         <property name="uuid" column="UUID_" type="String" title="UUID" englishTitle="UUID" length="50" editable="true" displayType="0"/>
         <property name="createBy" column="CREATEBY_" type="String" title="CreateBy" englishTitle="CreateBy" length="50" editable="true" displayType="0"/>
