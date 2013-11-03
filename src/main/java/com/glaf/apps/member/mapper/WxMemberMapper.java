@@ -24,8 +24,6 @@ import org.springframework.stereotype.Component;
 
 import com.glaf.apps.member.domain.WxMember;
 import com.glaf.apps.member.query.WxMemberQuery;
-import com.glaf.wechat.domain.*;
-import com.glaf.wechat.query.*;
 
 @Component
 public interface WxMemberMapper {
@@ -35,7 +33,7 @@ public interface WxMemberMapper {
 	void deleteWxMemberById(Long id);
 
 	WxMember getWxMemberById(Long id);
-	
+
 	WxMember getWxMemberByUUID(String uuid);
 
 	int getWxMemberCount(WxMemberQuery query);

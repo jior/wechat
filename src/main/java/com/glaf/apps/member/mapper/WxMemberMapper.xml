@@ -2,9 +2,9 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.glaf.wechat.mapper.WxMemberMapper">
+<mapper namespace="com.glaf.apps.member.mapper.WxMemberMapper">
 
-	<resultMap id="wxMemberResultMap" type="com.glaf.wechat.domain.WxMember">
+	<resultMap id="wxMemberResultMap" type="com.glaf.apps.member.domain.WxMember">
 		<id property="id" column="ID_" jdbcType="BIGINT" />
 		<result property="cardNo" column="CARDNO_" jdbcType="VARCHAR" />
 		<result property="name" column="NAME_" jdbcType="VARCHAR" />
@@ -24,7 +24,7 @@
 	</resultMap>
 
 
-	<insert id="insertWxMember" parameterType="com.glaf.wechat.domain.WxMember">
+	<insert id="insertWxMember" parameterType="com.glaf.apps.member.domain.WxMember">
 		insert into WX_MEMBER
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			ID_
@@ -103,7 +103,7 @@
 	</insert>
 
 
-	<update id="updateWxMember" parameterType="com.glaf.wechat.domain.WxMember">
+	<update id="updateWxMember" parameterType="com.glaf.apps.member.domain.WxMember">
 		update WX_MEMBER
 		set
 		<trim prefix="" suffix="" suffixOverrides=",">
@@ -151,7 +151,7 @@
 	</delete>
 
 
-	<delete id="deleteWxMembers" parameterType="com.glaf.wechat.query.WxMemberQuery">
+	<delete id="deleteWxMembers" parameterType="com.glaf.apps.member.query.WxMemberQuery">
 		delete from WX_MEMBER
 		where (
 		ID_ IN
@@ -172,7 +172,7 @@
 		select * from WX_MEMBER where UUID_ = #{uuid}
 	</select>
 
-	<select id="getWxMembers" parameterType="com.glaf.wechat.query.WxMemberQuery"
+	<select id="getWxMembers" parameterType="com.glaf.apps.member.query.WxMemberQuery"
 		resultMap="wxMemberResultMap">
 		select distinct E.*
 		<include refid="selectWxMembersSql" />
@@ -187,7 +187,7 @@
 	</select>
 
 
-	<select id="getWxMemberCount" parameterType="com.glaf.wechat.query.WxMemberQuery"
+	<select id="getWxMemberCount" parameterType="com.glaf.apps.member.query.WxMemberQuery"
 		resultType="int">
 		select count(*)
 		<include refid="selectWxMembersSql" />
