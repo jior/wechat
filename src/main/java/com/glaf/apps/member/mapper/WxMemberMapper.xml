@@ -11,7 +11,7 @@
 		<result property="telephone" column="TELEPHONE_" jdbcType="VARCHAR" />
 		<result property="mobile" column="MOBILE_" jdbcType="VARCHAR" />
 		<result property="mail" column="MAIL_" jdbcType="VARCHAR" />
-		<result property="qq" column="qq_" jdbcType="VARCHAR" />
+		<result property="qq" column="QQ_" jdbcType="VARCHAR" />
 		<result property="address" column="ADDRESS_" jdbcType="VARCHAR" />
 		<result property="status" column="STATUS_" jdbcType="INTEGER" />
 		<result property="uuid" column="UUID_" jdbcType="VARCHAR" />
@@ -44,7 +44,7 @@
 				,MAIL_
 			</if>
 			<if test="qq != null">
-				,qq_
+				,QQ_
 			</if>
 			<if test="address != null">
 				,ADDRESS_
@@ -123,7 +123,7 @@
 				MAIL_ = #{mail, jdbcType=VARCHAR},
 			</if>
 			<if test="qq != null">
-				qq_ = #{qq, jdbcType=VARCHAR},
+				QQ_ = #{qq, jdbcType=VARCHAR},
 			</if>
 			<if test="address != null">
 				ADDRESS_ = #{address, jdbcType=VARCHAR},

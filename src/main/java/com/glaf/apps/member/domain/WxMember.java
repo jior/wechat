@@ -83,7 +83,7 @@ public class WxMember implements java.io.Serializable, JSONable {
 	/**
 	 * QQ
 	 */
-	@Column(name = "qq_", length = 50)
+	@Column(name = "QQ_", length = 50)
 	protected String qq;
 
 	/**
