@@ -78,6 +78,18 @@ legend {
 	color:#000;
 }
 
+.wechat-page{
+    min-height: 100%;
+    padding-bottom: 70px;
+    -webkit-box-sizing: border-box;
+    word-wrap: break-word;
+    word-break: keep-all;
+}
+
+.wechat-list-item{
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.4);
+}
+
 .page {
 	padding:15px;
 }
@@ -2752,3 +2764,33 @@ background-size:2px auto;
 	margin:0;
 }
 #scroller li img{ width:320px; height:auto;}
+
+
+.box_swipe{
+    overflow:hidden;
+    position:relative;
+}
+.box_swipe ul{
+    -webkit-padding-start: 0px;
+}
+
+.box_swipe>ol{
+    height:20px;
+    position: relative;
+    z-index:10;
+    margin-top:-25px;
+    text-align:right;
+    padding-right:15px;
+    background-color:rgba(0,0,0,0.3);
+}
+.box_swipe>ol>li{
+    display:inline-block;
+    margin:5px 0;
+    width:8px;
+    height:8px;
+    background-color:#757575;
+    border-radius: 8px;
+}
+.box_swipe>ol>li.on{
+    background-color:#ffffff;
+}

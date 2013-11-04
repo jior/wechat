@@ -33,8 +33,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.base.ColumnModel;
 import com.glaf.core.base.TableModel;
+import com.glaf.core.cache.CacheFactory;
 import com.glaf.core.dao.EntityDAO;
 import com.glaf.core.id.IdGenerator;
 import com.glaf.core.service.ITableDataService;
@@ -44,6 +47,7 @@ import com.glaf.wechat.domain.WxCategory;
 import com.glaf.wechat.mapper.WxCategoryMapper;
 import com.glaf.wechat.query.WxCategoryQuery;
 import com.glaf.wechat.service.*;
+import com.glaf.wechat.util.WxCategoryJsonFactory;
 
 @Service("wxCategoryService")
 @Transactional(readOnly = true)
@@ -80,18 +84,6 @@ public class WxCategoryServiceImpl implements WxCategoryService {
 		if (ids != null && !ids.isEmpty()) {
 			for (Long id : ids) {
 				wxCategoryMapper.deleteWxCategoryById(id);
-			}
-		}
-	}
-
-	public void loadChildren(List<WxCategory> list, long parentId) {
-		WxCategoryQuery query = new WxCategoryQuery();
-		query.setParentId(Long.valueOf(parentId));
-		List<WxCategory> nodes = this.list(query);
-		if (nodes != null && !nodes.isEmpty()) {
-			for (WxCategory node : nodes) {
-				list.add(node);
-				this.loadChildren(list, node.getId());
 			}
 		}
 	}
@@ -175,12 +167,38 @@ public class WxCategoryServiceImpl implements WxCategoryService {
 		if (id == null) {
 			return null;
 		}
+		String cacheKey = "wx_cat_" + id;
+		if (CacheFactory.getString(cacheKey) != null) {
+			String text = CacheFactory.getString(cacheKey);
+			JSONObject json = JSON.parseObject(text);
+			WxCategory wxCategory = WxCategoryJsonFactory.jsonToObject(json);
+			return wxCategory;
+		}
 		WxCategory wxCategory = wxCategoryMapper.getWxCategoryById(id);
+		if (wxCategory != null) {
+			JSONObject json = WxCategoryJsonFactory.toJsonObject(wxCategory);
+			CacheFactory.put(cacheKey, json.toJSONString());
+		}
 		return wxCategory;
 	}
 
 	public WxCategory getWxCategoryByUUID(String uuid) {
-		return wxCategoryMapper.getWxCategoryByUUID(uuid);
+		if (uuid == null) {
+			return null;
+		}
+		String cacheKey = "wx_cat_" + uuid;
+		if (CacheFactory.getString(cacheKey) != null) {
+			String text = CacheFactory.getString(cacheKey);
+			JSONObject json = JSON.parseObject(text);
+			WxCategory wxCategory = WxCategoryJsonFactory.jsonToObject(json);
+			return wxCategory;
+		}
+		WxCategory wxCategory = wxCategoryMapper.getWxCategoryByUUID(uuid);
+		if (wxCategory != null) {
+			JSONObject json = WxCategoryJsonFactory.toJsonObject(wxCategory);
+			CacheFactory.put(cacheKey, json.toJSONString());
+		}
+		return wxCategory;
 	}
 
 	public int getWxCategoryCountByQueryCriteria(WxCategoryQuery query) {
@@ -198,6 +216,18 @@ public class WxCategoryServiceImpl implements WxCategoryService {
 	public List<WxCategory> list(WxCategoryQuery query) {
 		List<WxCategory> list = wxCategoryMapper.getWxCategories(query);
 		return list;
+	}
+
+	public void loadChildren(List<WxCategory> list, long parentId) {
+		WxCategoryQuery query = new WxCategoryQuery();
+		query.setParentId(Long.valueOf(parentId));
+		List<WxCategory> nodes = this.list(query);
+		if (nodes != null && !nodes.isEmpty()) {
+			for (WxCategory node : nodes) {
+				list.add(node);
+				this.loadChildren(list, node.getId());
+			}
+		}
 	}
 
 	@Transactional
@@ -222,6 +252,31 @@ public class WxCategoryServiceImpl implements WxCategoryService {
 			wxCategory.setLastUpdateDate(new Date());
 			this.update(wxCategory);
 		}
+	}
+
+	@Resource(name = "myBatisEntityDAO")
+	public void setEntityDAO(EntityDAO entityDAO) {
+		this.entityDAO = entityDAO;
+	}
+
+	@Resource(name = "myBatisDbIdGenerator")
+	public void setIdGenerator(IdGenerator idGenerator) {
+		this.idGenerator = idGenerator;
+	}
+
+	@Resource
+	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
+		this.sqlSessionTemplate = sqlSessionTemplate;
+	}
+
+	@Resource
+	public void setTableDataService(ITableDataService tableDataService) {
+		this.tableDataService = tableDataService;
+	}
+
+	@Resource
+	public void setWxCategoryMapper(WxCategoryMapper wxCategoryMapper) {
+		this.wxCategoryMapper = wxCategoryMapper;
 	}
 
 	@Transactional
@@ -288,32 +343,13 @@ public class WxCategoryServiceImpl implements WxCategoryService {
 		}
 
 		wxCategoryMapper.updateWxCategory(bean);
+
+		String cacheKey = "wx_cat_" + bean.getId();
+		CacheFactory.remove(cacheKey);
+		cacheKey = "wx_cat_" + bean.getUuid();
+		CacheFactory.remove(cacheKey);
+
 		return true;
-	}
-
-	@Resource(name = "myBatisEntityDAO")
-	public void setEntityDAO(EntityDAO entityDAO) {
-		this.entityDAO = entityDAO;
-	}
-
-	@Resource(name = "myBatisDbIdGenerator")
-	public void setIdGenerator(IdGenerator idGenerator) {
-		this.idGenerator = idGenerator;
-	}
-
-	@Resource
-	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
-		this.sqlSessionTemplate = sqlSessionTemplate;
-	}
-
-	@Resource
-	public void setWxCategoryMapper(WxCategoryMapper wxCategoryMapper) {
-		this.wxCategoryMapper = wxCategoryMapper;
-	}
-
-	@Resource
-	public void setTableDataService(ITableDataService tableDataService) {
-		this.tableDataService = tableDataService;
 	}
 
 }

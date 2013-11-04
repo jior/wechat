@@ -11,12 +11,16 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.id.*;
+import com.glaf.core.cache.CacheFactory;
 import com.glaf.core.dao.*;
 import com.glaf.wechat.mapper.*;
 import com.glaf.wechat.domain.*;
 import com.glaf.wechat.query.*;
 import com.glaf.wechat.service.WxUserTemplateService;
+import com.glaf.wechat.util.WxUserTemplateJsonFactory;
 
 @Service("wxUserTemplateService")
 @Transactional(readOnly = true)
@@ -66,12 +70,12 @@ public class WxUserTemplateServiceImpl implements WxUserTemplateService {
 
 	/**
 	 * 获取某个栏目指定类型的模板实例
+	 * 
 	 * @param type
 	 * @param categoryId
 	 * @return
 	 */
-	public WxUserTemplate getWxUserTemplate(Long categoryId, String type 
-			) {
+	public WxUserTemplate getWxUserTemplate(Long categoryId, String type) {
 		WxUserTemplate wxUserTemplate = null;
 		WxUserTemplateQuery query = new WxUserTemplateQuery();
 		query.type(type);
@@ -94,6 +98,14 @@ public class WxUserTemplateServiceImpl implements WxUserTemplateService {
 	 */
 	public WxUserTemplate getWxUserTemplate(String createBy, String type,
 			Long categoryId) {
+		String cacheKey = "wx_user_tpl_" + createBy + "_" + type + "_"
+				+ categoryId;
+		if (CacheFactory.getString(cacheKey) != null) {
+			String text = CacheFactory.getString(cacheKey);
+			JSONObject json = JSON.parseObject(text);
+			WxUserTemplate tpl = WxUserTemplateJsonFactory.jsonToObject(json);
+			return tpl;
+		}
 		WxUserTemplate wxUserTemplate = null;
 		WxUserTemplateQuery query = new WxUserTemplateQuery();
 		query.createBy(createBy);
@@ -103,6 +115,9 @@ public class WxUserTemplateServiceImpl implements WxUserTemplateService {
 				.getWxUserTemplates(query);
 		if (list != null && !list.isEmpty()) {
 			wxUserTemplate = list.get(0);
+			JSONObject json = WxUserTemplateJsonFactory
+					.toJsonObject(wxUserTemplate);
+			CacheFactory.put(cacheKey, json.toJSONString());
 		}
 		return wxUserTemplate;
 	}
@@ -118,7 +133,7 @@ public class WxUserTemplateServiceImpl implements WxUserTemplateService {
 				"getWxUserTemplates", query, rowBounds);
 		return rows;
 	}
-	
+
 	public List<WxUserTemplate> list(WxUserTemplateQuery query) {
 		List<WxUserTemplate> list = wxUserTemplateMapper
 				.getWxUserTemplates(query);
@@ -136,6 +151,10 @@ public class WxUserTemplateServiceImpl implements WxUserTemplateService {
 		wxUserTemplate.setId(idGenerator.nextId());
 		wxUserTemplate.setCreateDate(new Date());
 		wxUserTemplateMapper.insertWxUserTemplate(wxUserTemplate);
+		String cacheKey = "wx_user_tpl_" + wxUserTemplate.getCreateBy() + "_"
+				+ wxUserTemplate.getType() + "_"
+				+ wxUserTemplate.getCategoryId();
+		CacheFactory.remove(cacheKey);
 	}
 
 	@Resource(name = "myBatisEntityDAO")

@@ -32,6 +32,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.cache.CacheFactory;
 import com.glaf.core.config.SystemProperties;
 import com.glaf.core.dao.EntityDAO;
@@ -42,6 +44,7 @@ import com.glaf.wechat.domain.WxTemplate;
 import com.glaf.wechat.mapper.WxTemplateMapper;
 import com.glaf.wechat.query.WxTemplateQuery;
 import com.glaf.wechat.service.*;
+import com.glaf.wechat.util.WxTemplateJsonFactory;
 
 @Service("wxTemplateService")
 @Transactional(readOnly = true)
@@ -106,23 +109,35 @@ public class WxTemplateServiceImpl implements WxTemplateService {
 		if (id == null) {
 			return null;
 		}
+		String cacheKey01 = "wx_tpl_" + id;
+		if (cache && CacheFactory.getString(cacheKey01) != null) {
+			String text = CacheFactory.getString(cacheKey01);
+			JSONObject json = JSON.parseObject(text);
+			WxTemplate wxTemplate = WxTemplateJsonFactory.jsonToObject(json);
+			return wxTemplate;
+		}
 		WxTemplate wxTemplate = wxTemplateMapper.getWxTemplateById(id);
 		if (wxTemplate != null && StringUtils.isNotEmpty(wxTemplate.getPath())) {
-			String cacheKey = "wx_tpl_" + wxTemplate.getPath();
-			if (cache && CacheFactory.getString(cacheKey) != null) {
+			String cacheKey02 = "wx_tpl_" + wxTemplate.getPath();
+			if (cache && CacheFactory.getString(cacheKey02) != null) {
 				logger.debug("从缓存中获取模板");
-				wxTemplate.setContent(CacheFactory.getString(cacheKey));
+				wxTemplate.setContent(CacheFactory.getString(cacheKey02));
 			} else {
 				String filename = SystemProperties.getAppPath()
 						+ wxTemplate.getPath();
 				String content = null;
 				try {
 					content = new String(FileUtils.getBytes(filename), "UTF-8");
-					CacheFactory.put(cacheKey, content);
+					CacheFactory.put(cacheKey02, content);
 				} catch (IOException ex) {
 					ex.printStackTrace();
 				}
 				wxTemplate.setContent(content);
+			}
+			if (cache) {
+				JSONObject json = WxTemplateJsonFactory
+						.toJsonObject(wxTemplate);
+				CacheFactory.put(cacheKey01, json.toJSONString());
 			}
 		}
 		return wxTemplate;
@@ -160,9 +175,12 @@ public class WxTemplateServiceImpl implements WxTemplateService {
 		} else {
 			wxTemplate.setLastUpdateDate(new Date());
 			wxTemplateMapper.updateWxTemplate(wxTemplate);
+			String cacheKey01 = "wx_tpl_" + wxTemplate.getId();
+			CacheFactory.remove(cacheKey01);
+
 			if (StringUtils.isNotEmpty(wxTemplate.getPath())) {
-				String cacheKey = "wx_tpl_" + wxTemplate.getPath();
-				CacheFactory.remove(cacheKey);
+				String cacheKey02 = "wx_tpl_" + wxTemplate.getPath();
+				CacheFactory.remove(cacheKey02);
 			}
 		}
 	}

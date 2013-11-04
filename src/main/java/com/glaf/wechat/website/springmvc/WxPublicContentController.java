@@ -219,6 +219,19 @@ public class WxPublicContentController {
 				query.categoryId(0L);
 				query.type("PPT");
 				List<WxContent> list = wxContentService.list(query);
+				if (list != null && !list.isEmpty()) {
+					for (WxContent c : list) {
+						if (StringUtils.isNotEmpty(c.getUrl())) {
+							if (StringUtils.startsWith(c.getUrl(), "/mx/wx/")) {
+								c.setUrl(serviceUrl + c.getUrl());
+							}
+							if (StringUtils.startsWith(c.getUrl(),
+									"/website/wx/")) {
+								c.setUrl(serviceUrl + c.getUrl());
+							}
+						}
+					}
+				}
 				context.put("pptList", list);
 
 				WxCategoryQuery query3 = new WxCategoryQuery();
@@ -331,6 +344,19 @@ public class WxPublicContentController {
 					query2.categoryId(categoryId);
 					query2.type("PPT");
 					List<WxContent> list = wxContentService.list(query2);
+					if (list != null && !list.isEmpty()) {
+						for (WxContent c : list) {
+							if (StringUtils.isNotEmpty(c.getUrl())) {
+								if (StringUtils.startsWith(c.getUrl(), "/mx/wx/")) {
+									c.setUrl(serviceUrl + c.getUrl());
+								}
+								if (StringUtils.startsWith(c.getUrl(),
+										"/website/wx/")) {
+									c.setUrl(serviceUrl + c.getUrl());
+								}
+							}
+						}
+					}
 					context.put("pptList", list);
 					context.put("category", category);
 

@@ -30,6 +30,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.glaf.core.cache.CacheFactory;
 import com.glaf.core.dao.EntityDAO;
 import com.glaf.core.id.IdGenerator;
 import com.glaf.core.util.UUID32;
@@ -37,6 +40,7 @@ import com.glaf.wechat.domain.WxConfig;
 import com.glaf.wechat.mapper.WxConfigMapper;
 import com.glaf.wechat.query.WxConfigQuery;
 import com.glaf.wechat.service.*;
+import com.glaf.wechat.util.WxConfigJsonFactory;
 
 @Service("wxConfigService")
 @Transactional(readOnly = true)
@@ -85,11 +89,23 @@ public class WxConfigServiceImpl implements WxConfigService {
 	}
 
 	public WxConfig getWxConfigByUser(String createBy) {
+		String cacheKey = "wx_cfg_" + createBy;
+		if (CacheFactory.getString(cacheKey) != null) {
+			String text = CacheFactory.getString(cacheKey);
+			JSONObject json = JSON.parseObject(text);
+			WxConfig cfg = WxConfigJsonFactory.jsonToObject(json);
+			return cfg;
+		}
 		WxConfigQuery query = new WxConfigQuery();
 		query.createBy(createBy);
 		List<WxConfig> list = wxConfigMapper.getWxConfigs(query);
 		if (list != null && !list.isEmpty()) {
-			return list.get(0);
+			WxConfig cfg = list.get(0);
+			if (cfg != null) {
+				JSONObject json = WxConfigJsonFactory.toJsonObject(cfg);
+				CacheFactory.put(cacheKey, json.toJSONString());
+				return cfg;
+			}
 		}
 		return null;
 	}
@@ -121,6 +137,8 @@ public class WxConfigServiceImpl implements WxConfigService {
 		} else {
 			wxConfig.setLastUpdateDate(new Date());
 			wxConfigMapper.updateWxConfig(wxConfig);
+			String cacheKey = "wx_cfg_" + wxConfig.getCreateBy();
+			CacheFactory.remove(cacheKey);
 		}
 	}
 
