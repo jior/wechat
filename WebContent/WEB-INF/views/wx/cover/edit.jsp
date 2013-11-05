@@ -30,8 +30,6 @@ limitations under the License.
      return this.replace(/(^\s*)|(\s*$)/g, "");
   }
 
- 
-
  function submitRequest(form){
 	form.submit();
  }
