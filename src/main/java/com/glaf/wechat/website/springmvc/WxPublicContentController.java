@@ -200,6 +200,8 @@ public class WxPublicContentController {
 			logger.debug("templateId:" + templateId);
 			WxTemplate template = wxTemplateService.getWxTemplate(templateId,
 					cache);
+			logger.debug("cache:" + cache);
+			logger.debug("template:" + template);
 			if (template != null && template.getContent() != null) {
 				String serviceUrl = WechatUtils.getServiceUrl(request);
 				Map<String, Object> context = RequestUtils

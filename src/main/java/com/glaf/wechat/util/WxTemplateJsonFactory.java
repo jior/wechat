@@ -48,6 +48,11 @@ public class WxTemplateJsonFactory {
 		if (jsonObject.containsKey("name")) {
 			model.setName(jsonObject.getString("name"));
 		}
+
+		if (jsonObject.containsKey("content")) {
+			model.setContent(jsonObject.getString("content"));
+		}
+
 		if (jsonObject.containsKey("desc")) {
 			model.setDesc(jsonObject.getString("desc"));
 		}
@@ -102,12 +107,16 @@ public class WxTemplateJsonFactory {
 
 		if (model.getName() != null) {
 			jsonObject.put("name", model.getName());
-			jsonObject.put("text", model.getName());
+		}
+
+		if (model.getContent() != null) {
+			jsonObject.put("content", model.getContent());
 		}
 
 		if (model.getDesc() != null) {
 			jsonObject.put("desc", model.getDesc());
 		}
+
 		if (model.getSkinImage() != null) {
 			jsonObject.put("skinImage", model.getSkinImage());
 		}
@@ -159,7 +168,10 @@ public class WxTemplateJsonFactory {
 
 		if (model.getName() != null) {
 			jsonObject.put("name", model.getName());
-			jsonObject.put("text", model.getName());
+		}
+
+		if (model.getContent() != null) {
+			jsonObject.put("content", model.getContent());
 		}
 
 		if (model.getDesc() != null) {

@@ -3,9 +3,8 @@
 <configuration>
 
 	<property>
-		<name>i18n.messages_key</name>
-		<value>ApplicationStrings</value>
+		<name>wx_template_cache</name>
+		<value>true</value>
 	</property>
- 
 
 </configuration>
