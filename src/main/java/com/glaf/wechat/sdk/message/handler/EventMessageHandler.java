@@ -41,6 +41,8 @@ public class EventMessageHandler extends AbstractMessageHandler {
 	public Message handleSpecialMessage(Message message) {
 		MessageFilterChain filterChain = new MessageFilterChain();
 		EventMessage msg = (EventMessage) message;
+		logger.debug("event:" + msg.getEvent());
+		logger.debug("eventKey:" + msg.getEventKey());
 		if (StringUtils.equalsIgnoreCase(msg.getEvent(), "subscribe")) {
 			// ¶©ÔÄÊÂ¼ş
 			filterChain.addFilter(new SubscribeMessageFilter());

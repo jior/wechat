@@ -215,7 +215,13 @@ public class WeixinExecutor implements IMessage {
 					responseMessageHandler = new MusicResponseMessageHandler();
 				} else if (StringUtils.equalsIgnoreCase(message.getMsgType(),
 						"event")) {
-					responseMessageHandler = new MenuResponseMessageHandler();
+					EventMessage msg = (EventMessage) message;
+					if (StringUtils.equalsIgnoreCase(msg.getEvent(),
+							"subscribe")) {
+						responseMessageHandler = new NewsResponseMessageHandler();
+					} else {
+						responseMessageHandler = new MenuResponseMessageHandler();
+					}
 					responseMsgType = "news";
 				} else {
 					if (responseMessage instanceof ResponseNewsMessage) {
