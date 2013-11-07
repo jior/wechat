@@ -7,4 +7,9 @@
 		<value>true</value>
 	</property>
 
+	<property>
+		<name>wx_log_step</name>
+		<value>100</value>
+	</property>
+
 </configuration>

@@ -30,8 +30,10 @@ import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.glaf.core.config.Configuration;
 import com.glaf.core.id.*;
 import com.glaf.core.util.DateUtils;
+import com.glaf.wechat.config.WechatConfiguration;
 import com.glaf.wechat.domain.*;
 import com.glaf.wechat.mapper.*;
 import com.glaf.wechat.query.*;
@@ -43,7 +45,9 @@ public class WxLogServiceImpl implements WxLogService {
 	protected final static Log logger = LogFactory
 			.getLog(WxLogServiceImpl.class);
 
-	protected static List<WxLog> wxLogs = new LinkedList<WxLog>();
+	protected static  Configuration conf = WechatConfiguration.create();
+	
+	protected static Stack<WxLog> wxLogs = new Stack<WxLog>();
 
 	protected IdGenerator idGenerator;
 
@@ -91,13 +95,13 @@ public class WxLogServiceImpl implements WxLogService {
 	@Transactional
 	public void save(WxLog sysLog) {
 		sysLog.setId(idGenerator.nextId());
-		wxLogs.add(sysLog);
-		if (wxLogs.size() >= 100) {
+		sysLog.setCreateTime(new Date());
+		sysLog.setSuffix("_" + DateUtils.getNowYearMonthDay());
+		wxLogs.push(sysLog);
+		if (wxLogs.size() >= conf.getInt("wx_log_step", 100)) {
 			while (!wxLogs.isEmpty()) {
-				WxLog bean = wxLogs.get(0);
-				bean.setSuffix("_" + DateUtils.getNowYearMonthDay());
+				WxLog bean = wxLogs.pop();
 				sysLogMapper.insertWxLog(bean);
-				wxLogs.remove(bean);
 			}
 		}
 	}
