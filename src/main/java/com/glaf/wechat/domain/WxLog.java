@@ -34,6 +34,7 @@ public class WxLog implements Serializable, JSONable {
 	private Date createTime;
 	private String operate;
 	private int flag;
+	private String suffix;
 
 	public WxLog() {
 
@@ -77,6 +78,10 @@ public class WxLog implements Serializable, JSONable {
 		return operate;
 	}
 
+	public String getSuffix() {
+		return suffix;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -111,6 +116,10 @@ public class WxLog implements Serializable, JSONable {
 
 	public void setOperate(String operate) {
 		this.operate = operate;
+	}
+
+	public void setSuffix(String suffix) {
+		this.suffix = suffix;
 	}
 
 	public JSONObject toJsonObject() {

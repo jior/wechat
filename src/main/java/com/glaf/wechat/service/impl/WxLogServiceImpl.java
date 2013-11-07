@@ -31,7 +31,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.core.id.*;
-
+import com.glaf.core.util.DateUtils;
 import com.glaf.wechat.domain.*;
 import com.glaf.wechat.mapper.*;
 import com.glaf.wechat.query.*;
@@ -43,7 +43,7 @@ public class WxLogServiceImpl implements WxLogService {
 	protected final static Log logger = LogFactory
 			.getLog(WxLogServiceImpl.class);
 
-	protected static List<WxLog> logs = new ArrayList<WxLog>();
+	protected static List<WxLog> wxLogs = new LinkedList<WxLog>();
 
 	protected IdGenerator idGenerator;
 
@@ -90,15 +90,15 @@ public class WxLogServiceImpl implements WxLogService {
 
 	@Transactional
 	public void save(WxLog sysLog) {
-		if (logs.size() >= 100) {
-			for (int i = 0; i < logs.size(); i++) {
-				WxLog bean = logs.get(i);
+		sysLog.setId(idGenerator.nextId());
+		wxLogs.add(sysLog);
+		if (wxLogs.size() >= 100) {
+			while (!wxLogs.isEmpty()) {
+				WxLog bean = wxLogs.get(0);
+				bean.setSuffix("_" + DateUtils.getNowYearMonthDay());
 				sysLogMapper.insertWxLog(bean);
+				wxLogs.remove(bean);
 			}
-			logs.clear();
-		} else {
-			sysLog.setId(idGenerator.nextId());
-			logs.add(sysLog);
 		}
 	}
 
