@@ -35,6 +35,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.glaf.core.cache.CacheFactory;
 import com.glaf.core.config.Configuration;
 import com.glaf.core.freemarker.TemplateUtils;
 import com.glaf.core.identity.User;
@@ -43,7 +44,6 @@ import com.glaf.core.util.IOUtils;
 import com.glaf.core.util.Paging;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
-
 import com.glaf.wechat.config.WechatConfiguration;
 import com.glaf.wechat.domain.WxCategory;
 import com.glaf.wechat.domain.WxContent;
@@ -105,6 +105,15 @@ public class WxPublicContentController {
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
+		String cacheKey = "website_detail_" + uuid;
+		if (CacheFactory.getString(cacheKey) != null) {
+			String content = CacheFactory.getString(cacheKey);
+			PrintWriter out = response.getWriter();
+			out.write(content);
+			out.flush();
+			IOUtils.closeStream(out);
+			return;
+		}
 		WxContent wxContent = null;
 		if (StringUtils.isNotEmpty(uuid)) {
 			wxContent = wxContentService.getWxContentByUUIDWithRefs(uuid);
@@ -201,6 +210,15 @@ public class WxPublicContentController {
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
+		String cacheKey = "website_index_" + userId;
+		if (CacheFactory.getString(cacheKey) != null) {
+			String content = CacheFactory.getString(cacheKey);
+			PrintWriter out = response.getWriter();
+			out.write(content);
+			out.flush();
+			IOUtils.closeStream(out);
+			return;
+		}
 		Long categoryId = RequestUtils.getLong(request, "categoryId", 0);
 		User user = IdentityFactory.getUserByUserId(userId);
 		String actorId = user.getActorId();
@@ -302,6 +320,15 @@ public class WxPublicContentController {
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
+		String cacheKey = "website_list_" + categoryId;
+		if (CacheFactory.getString(cacheKey) != null) {
+			String content = CacheFactory.getString(cacheKey);
+			PrintWriter out = response.getWriter();
+			out.write(content);
+			out.flush();
+			IOUtils.closeStream(out);
+			return;
+		}
 		WxCategory category = wxCategoryService.getWxCategory(categoryId);
 		if (category != null) {
 			WxUserTemplate wxUserTemplate = wxUserTemplateService
@@ -515,6 +542,15 @@ public class WxPublicContentController {
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
+		String cacheKey = "website_detail_" + id;
+		if (CacheFactory.getString(cacheKey) != null) {
+			String content = CacheFactory.getString(cacheKey);
+			PrintWriter out = response.getWriter();
+			out.write(content);
+			out.flush();
+			IOUtils.closeStream(out);
+			return;
+		}
 		WxContent wxContent = null;
 		if (id != null && id > 0) {
 			wxContent = wxContentService.getWxContentWithRefs(id);
