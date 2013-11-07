@@ -18,6 +18,7 @@
 package com.glaf.wechat.sdk.message.filter;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -27,6 +28,7 @@ import org.apache.commons.logging.LogFactory;
 import com.glaf.core.context.ContextFactory;
 import com.glaf.wechat.domain.WxContent;
 import com.glaf.wechat.domain.WxKeywords;
+import com.glaf.wechat.domain.WxLog;
 import com.glaf.wechat.query.WxContentQuery;
 import com.glaf.wechat.query.WxKeywordsQuery;
 import com.glaf.wechat.sdk.message.ItemArticle;
@@ -35,6 +37,7 @@ import com.glaf.wechat.sdk.message.ResponseNewsMessage;
 import com.glaf.wechat.sdk.message.TextMessage;
 import com.glaf.wechat.service.WxContentService;
 import com.glaf.wechat.service.WxKeywordsService;
+import com.glaf.wechat.service.WxLogService;
 
 /**
  * 关键字回复
@@ -116,6 +119,20 @@ public class KeywordsMessageFilter extends AbstractMessageFilter implements
 					}
 					logger.debug(msg.getContent() + " reply content:"
 							+ newsMessage.getArticleItems().size());
+
+					try {
+						WxLog bean = new WxLog();
+						bean.setAccount(message.getCustomer());
+						bean.setCreateTime(new Date());
+						bean.setFlag(100);// 关键字回复
+						bean.setIp(message.getRemoteIPAddr());
+						bean.setOperate(content);
+						WxLogService wxLogService = ContextFactory
+								.getBean("wxLogService");
+						wxLogService.create(bean);
+					} catch (Exception ex) {
+					}
+
 					return newsMessage;
 				}
 			}

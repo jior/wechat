@@ -37,6 +37,7 @@ public class Message implements IMessage, java.io.Serializable {
 	protected String contextPath;
 	protected String customer;// 客户编号
 	protected String serviceUrl;
+	protected String remoteIPAddr;// 访问者IP地址
 	protected Element root;
 	protected Map<String, Object> requestParameters;
 
@@ -66,6 +67,10 @@ public class Message implements IMessage, java.io.Serializable {
 
 	public String getMsgType() {
 		return msgType;
+	}
+
+	public String getRemoteIPAddr() {
+		return remoteIPAddr;
 	}
 
 	public Map<String, Object> getRequestParameters() {
@@ -106,6 +111,10 @@ public class Message implements IMessage, java.io.Serializable {
 
 	public void setMsgType(String msgType) {
 		this.msgType = msgType;
+	}
+
+	public void setRemoteIPAddr(String remoteIPAddr) {
+		this.remoteIPAddr = remoteIPAddr;
 	}
 
 	public void setRequestParameters(Map<String, Object> requestParameters) {

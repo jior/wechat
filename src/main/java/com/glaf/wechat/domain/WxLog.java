@@ -20,9 +20,9 @@ package com.glaf.wechat.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+
 import com.alibaba.fastjson.*;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-
 import com.glaf.core.base.JSONable;
 import com.glaf.wechat.util.*;
 
@@ -34,10 +34,23 @@ public class WxLog implements Serializable, JSONable {
 	private Date createTime;
 	private String operate;
 	private int flag;
-	private String suffix;
 
 	public WxLog() {
 
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		WxLog other = (WxLog) obj;
+		if (id != other.id)
+			return false;
+		return true;
 	}
 
 	public String getAccount() {
@@ -64,8 +77,12 @@ public class WxLog implements Serializable, JSONable {
 		return operate;
 	}
 
-	public String getSuffix() {
-		return suffix;
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (id ^ (id >>> 32));
+		return result;
 	}
 
 	public WxLog jsonToObject(JSONObject jsonObject) {
@@ -94,10 +111,6 @@ public class WxLog implements Serializable, JSONable {
 
 	public void setOperate(String operate) {
 		this.operate = operate;
-	}
-
-	public void setSuffix(String suffix) {
-		this.suffix = suffix;
 	}
 
 	public JSONObject toJsonObject() {

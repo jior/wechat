@@ -18,9 +18,13 @@
 package com.glaf.wechat.sdk.message.filter;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import com.glaf.core.context.ContextFactory;
+import com.glaf.wechat.domain.WxLog;
 import com.glaf.wechat.sdk.message.Message;
+import com.glaf.wechat.service.WxLogService;
 
 /**
  * message filter chain
@@ -43,6 +47,18 @@ public class MessageFilterChain {
 			if (msg != null) {
 				// if one filter can deal the message,then do it!so,it can be
 				// returned!
+				try {
+					WxLog bean = new WxLog();
+					bean.setAccount(message.getCustomer());
+					bean.setCreateTime(new Date());
+					bean.setFlag(0);
+					bean.setIp(message.getRemoteIPAddr());
+					bean.setOperate(message.getMsgType());
+					WxLogService wxLogService = ContextFactory
+							.getBean("wxLogService");
+					wxLogService.create(bean);
+				} catch (Exception ex) {
+				}
 				return msg;
 			}
 		}

@@ -99,7 +99,6 @@ limitations under the License.
 
 </script>
 </head>
-
 <body>
 <div style="margin:0;"></div>  
 
@@ -114,7 +113,7 @@ limitations under the License.
   <div data-options="region:'center',border:false,cache:true">
   <form id="iForm" name="iForm" method="post">
   <input type="hidden" id="id" name="id" value="${wxVote.id}"/>
-  <table class="easyui-form" style="width:600px;" align="center">
+  <table class="easyui-form" style="width:98%;" align="center">
     <tbody>
 	<tr>
 		<td width="20%" align="left">主题</td>
@@ -132,7 +131,7 @@ limitations under the License.
 		</td>
 	</tr>
 	<tr>
-		<td width="15%" align="left" valign="middle">主题图片(720X400)</td>
+		<td width="20%" align="left" valign="middle">主题图片(720X400)</td>
 		<td align="left" valign="top">
 		     <c:if test="${not empty wxVote.icon }">
 			     <img src="<%=request.getContextPath()%>/${wxVote.icon}" width="60" height="60" border="0"/>
@@ -218,11 +217,11 @@ limitations under the License.
 		<td width="20%" align="left">投票项目</td>
 		<td align="left">
 		     <input type="button" id="vtype" class="btnGreen" value="添加选项"> <br>
-			 <table id="listTable"  style="width: 580px"> 
+			 <table id="listTable"  style="width: 100%"> 
 			   <thead>
 	            <tr>
                    <th align="left" width="50%">选项标题</th>
-                   <th align="left" width="30%">显示顺序</th>
+                   <th align="left" width="20%">显示顺序</th>
                    <th align="left" width="20%"></th>
                </tr>
                </thead>

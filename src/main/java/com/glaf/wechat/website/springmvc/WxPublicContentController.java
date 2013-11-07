@@ -19,6 +19,7 @@ package com.glaf.wechat.website.springmvc;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -42,9 +43,11 @@ import com.glaf.core.util.IOUtils;
 import com.glaf.core.util.Paging;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
+
 import com.glaf.wechat.config.WechatConfiguration;
 import com.glaf.wechat.domain.WxCategory;
 import com.glaf.wechat.domain.WxContent;
+import com.glaf.wechat.domain.WxLog;
 import com.glaf.wechat.domain.WxTemplate;
 import com.glaf.wechat.domain.WxUserTemplate;
 import com.glaf.wechat.query.WxCategoryQuery;
@@ -54,6 +57,7 @@ import com.glaf.wechat.service.WxConfigService;
 import com.glaf.wechat.service.WxContentService;
 import com.glaf.wechat.service.WxCoverService;
 import com.glaf.wechat.service.WxFileService;
+import com.glaf.wechat.service.WxLogService;
 import com.glaf.wechat.service.WxMenuService;
 import com.glaf.wechat.service.WxSiteInfoService;
 import com.glaf.wechat.service.WxTemplateService;
@@ -86,6 +90,8 @@ public class WxPublicContentController {
 	protected WxConfigService wxConfigService;
 
 	protected WxSiteInfoService wxSiteInfoService;
+
+	protected WxLogService wxLogService;
 
 	public WxPublicContentController() {
 
@@ -172,6 +178,17 @@ public class WxPublicContentController {
 				out.write(content);
 				out.flush();
 				IOUtils.closeStream(out);
+
+				try {
+					WxLog bean = new WxLog();
+					bean.setAccount(actorId);
+					bean.setCreateTime(new Date());
+					bean.setFlag(1001);
+					bean.setIp(RequestUtils.getIPAddress(request));
+					bean.setOperate(uuid);
+					wxLogService.create(bean);
+				} catch (Exception ex) {
+				}
 			}
 		}
 	}
@@ -264,6 +281,15 @@ public class WxPublicContentController {
 				out.write(content);
 				out.flush();
 				IOUtils.closeStream(out);
+				try {
+					WxLog bean = new WxLog();
+					bean.setAccount(actorId);
+					bean.setCreateTime(new Date());
+					bean.setFlag(10000);
+					bean.setIp(RequestUtils.getIPAddress(request));
+					wxLogService.create(bean);
+				} catch (Exception ex) {
+				}
 			}
 		}
 	}
@@ -349,7 +375,8 @@ public class WxPublicContentController {
 					if (list != null && !list.isEmpty()) {
 						for (WxContent c : list) {
 							if (StringUtils.isNotEmpty(c.getUrl())) {
-								if (StringUtils.startsWith(c.getUrl(), "/mx/wx/")) {
+								if (StringUtils.startsWith(c.getUrl(),
+										"/mx/wx/")) {
 									c.setUrl(serviceUrl + c.getUrl());
 								}
 								if (StringUtils.startsWith(c.getUrl(),
@@ -414,6 +441,17 @@ public class WxPublicContentController {
 					out.write(content);
 					out.flush();
 					IOUtils.closeStream(out);
+
+					try {
+						WxLog bean = new WxLog();
+						bean.setAccount(actorId);
+						bean.setCreateTime(new Date());
+						bean.setFlag(2001);
+						bean.setIp(RequestUtils.getIPAddress(request));
+						bean.setOperate(String.valueOf(categoryId));
+						wxLogService.create(bean);
+					} catch (Exception ex) {
+					}
 				}
 			}
 		}
@@ -457,6 +495,11 @@ public class WxPublicContentController {
 	@javax.annotation.Resource
 	public void setWxTemplateService(WxTemplateService wxTemplateService) {
 		this.wxTemplateService = wxTemplateService;
+	}
+
+	@javax.annotation.Resource
+	public void setWxLogService(WxLogService wxLogService) {
+		this.wxLogService = wxLogService;
 	}
 
 	@javax.annotation.Resource
@@ -545,6 +588,17 @@ public class WxPublicContentController {
 				out.write(content);
 				out.flush();
 				IOUtils.closeStream(out);
+
+				try {
+					WxLog bean = new WxLog();
+					bean.setAccount(actorId);
+					bean.setCreateTime(new Date());
+					bean.setFlag(1002);
+					bean.setIp(RequestUtils.getIPAddress(request));
+					bean.setOperate(String.valueOf(id));
+					wxLogService.create(bean);
+				} catch (Exception ex) {
+				}
 			}
 		}
 	}

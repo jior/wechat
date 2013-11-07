@@ -160,6 +160,8 @@ public class WeixinExecutor implements IMessage {
 		message.setRequestParameters(RequestUtils.getParameterMap(request));
 		String serviceUrl = WechatUtils.getServiceUrl(request);
 		message.setServiceUrl(serviceUrl);
+		message.setRemoteIPAddr(RequestUtils.getIPAddress(request));
+		
 		// do the default/common parse!
 		messageHandler.parseMessage(message, root);
 	}
