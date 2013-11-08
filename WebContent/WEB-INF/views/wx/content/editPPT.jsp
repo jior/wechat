@@ -179,8 +179,8 @@ limitations under the License.
 		<td width="20%" align="left">是否发布</td>
 		<td align="left">
 			 <select  id="status" name="status">
+			    <option value="1" selected>发布
 				<option value="0" >未发布
-				<option value="1" selected>发布
 		    </select>
 			 <script type="text/javascript">
 			    jQuery("#status").val("${wxContent.status}");

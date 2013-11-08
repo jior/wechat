@@ -1,15 +1,14 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>主页</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="format-detection" content="telephone=no">
     <link href="${serviceUrl}/templates/01/css/news4.css" rel="stylesheet" type="text/css">
     <script src="${serviceUrl}/scripts/iscroll.js" type="text/javascript"></script>
-
     <script type="text/javascript">
         var myScroll;
         function loaded() {
@@ -22,39 +21,10 @@
                     document.querySelector('#indicator > li:nth-child(' + (this.currPageX + 1) + ')').className = 'active';
                 }
             });
-            <#if pptList?exists>
-            setInterval(function() {
-                myScroll.scrollToPage('next', 0, 400, ${pptList?size});
-            }, 3500);
-			</#if>
         }
 
         document.addEventListener('DOMContentLoaded', loaded, false);
     </script>
-
-    <script>
-        window.onload = function() {
-            var oWin = document.getElementById("win");
-            var oLay = document.getElementById("overlay");
-            var oBtn = document.getElementById("popmenu");
-            var oClose = document.getElementById("close");
-            oBtn.onclick = function() {
-                oLay.style.display = "block";
-                oWin.style.display = "block"
-            };
-            oLay.onclick = function() {
-                oLay.style.display = "none";
-                oWin.style.display = "none"
-            }
-        };
-    </script>
-
-    <style type="text/css">
-        #scroller
-        {
-            width: 960px;
-        }
-    </style>
 </head>
 <body id="cate7">
     <div id="ui-header">
@@ -125,6 +95,28 @@
         <div class="clr">
         </div>
     </div>
+	<script>
+    var count = document.getElementById("thelist").getElementsByTagName("img").length;	
+
+    var count2 = document.getElementsByClassName("menuimg").length;
+    for(i=0;i<count;i++){
+       document.getElementById("thelist").getElementsByTagName("img").item(i).style.cssText = " width:"+document.body.clientWidth+"px";
+    }
+    document.getElementById("scroller").style.cssText = " width:"+document.body.clientWidth*count+"px";
+
+    setInterval(function(){
+        myScroll.scrollToPage('next', 0, 400, ${pptList?size});
+    },3500 );
+
+	window.onresize = function(){ 
+	for(i=0;i<count;i++){
+	document.getElementById("thelist").getElementsByTagName("img").item(i).style.cssText = " width:"+document.body.clientWidth+"px";
+	}
+    document.getElementById("scroller").style.cssText = " width:"+document.body.clientWidth*count+"px";
+} 
+
+</script>
+
    </#if>
 
     <ul class="cateul">
