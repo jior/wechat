@@ -112,6 +112,15 @@ public class WxPublicContentController {
 			out.write(content);
 			out.flush();
 			IOUtils.closeStream(out);
+			try {
+				WxLog bean = new WxLog();
+				bean.setCreateTime(new Date());
+				bean.setFlag(1001);
+				bean.setIp(RequestUtils.getIPAddress(request));
+				bean.setOperate(uuid);
+				wxLogService.create(bean);
+			} catch (Exception ex) {
+			}
 			return;
 		}
 		WxContent wxContent = null;
@@ -182,6 +191,7 @@ public class WxPublicContentController {
 
 				String content = TemplateUtils.process(context,
 						template.getContent());
+				CacheFactory.put(cacheKey, content);
 
 				PrintWriter out = response.getWriter();
 				out.write(content);
@@ -192,7 +202,7 @@ public class WxPublicContentController {
 					WxLog bean = new WxLog();
 					bean.setAccount(actorId);
 					bean.setCreateTime(new Date());
-					bean.setFlag(1001);
+					bean.setFlag(1002);
 					bean.setIp(RequestUtils.getIPAddress(request));
 					bean.setOperate(uuid);
 					wxLogService.create(bean);
@@ -211,16 +221,26 @@ public class WxPublicContentController {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
 		String cacheKey = "website_index_" + userId;
+		User user = IdentityFactory.getUserByUserId(userId);
 		if (CacheFactory.getString(cacheKey) != null) {
 			String content = CacheFactory.getString(cacheKey);
 			PrintWriter out = response.getWriter();
 			out.write(content);
 			out.flush();
 			IOUtils.closeStream(out);
+			try {
+				WxLog bean = new WxLog();
+				bean.setAccount(user.getActorId());
+				bean.setCreateTime(new Date());
+				bean.setFlag(10001);
+				bean.setIp(RequestUtils.getIPAddress(request));
+				wxLogService.create(bean);
+			} catch (Exception ex) {
+			}
 			return;
 		}
+
 		Long categoryId = RequestUtils.getLong(request, "categoryId", 0);
-		User user = IdentityFactory.getUserByUserId(userId);
 		String actorId = user.getActorId();
 		WxUserTemplate wxUserTemplate = wxUserTemplateService
 				.getWxUserTemplate(actorId, "0", categoryId);
@@ -295,6 +315,7 @@ public class WxPublicContentController {
 
 				String content = TemplateUtils.process(context,
 						template.getContent());
+				CacheFactory.put(cacheKey, content);
 				PrintWriter out = response.getWriter();
 				out.write(content);
 				out.flush();
@@ -303,7 +324,7 @@ public class WxPublicContentController {
 					WxLog bean = new WxLog();
 					bean.setAccount(actorId);
 					bean.setCreateTime(new Date());
-					bean.setFlag(10000);
+					bean.setFlag(10002);
 					bean.setIp(RequestUtils.getIPAddress(request));
 					wxLogService.create(bean);
 				} catch (Exception ex) {
@@ -321,15 +342,30 @@ public class WxPublicContentController {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
 		String cacheKey = "website_list_" + categoryId;
+		WxCategory category = wxCategoryService.getWxCategory(categoryId);
 		if (CacheFactory.getString(cacheKey) != null) {
 			String content = CacheFactory.getString(cacheKey);
 			PrintWriter out = response.getWriter();
 			out.write(content);
 			out.flush();
 			IOUtils.closeStream(out);
+
+			try {
+				WxLog bean = new WxLog();
+				if (category != null) {
+					bean.setAccount(category.getCreateBy());
+				}
+				bean.setCreateTime(new Date());
+				bean.setFlag(5001);
+				bean.setIp(RequestUtils.getIPAddress(request));
+				bean.setOperate(String.valueOf(categoryId));
+				wxLogService.create(bean);
+			} catch (Exception ex) {
+			}
+
 			return;
 		}
-		WxCategory category = wxCategoryService.getWxCategory(categoryId);
+
 		if (category != null) {
 			WxUserTemplate wxUserTemplate = wxUserTemplateService
 					.getWxUserTemplate(categoryId, "1");
@@ -464,6 +500,7 @@ public class WxPublicContentController {
 
 					String content = TemplateUtils.process(context,
 							template.getContent());
+					CacheFactory.put(cacheKey, content);
 					PrintWriter out = response.getWriter();
 					out.write(content);
 					out.flush();
@@ -473,7 +510,7 @@ public class WxPublicContentController {
 						WxLog bean = new WxLog();
 						bean.setAccount(actorId);
 						bean.setCreateTime(new Date());
-						bean.setFlag(2001);
+						bean.setFlag(5002);
 						bean.setIp(RequestUtils.getIPAddress(request));
 						bean.setOperate(String.valueOf(categoryId));
 						wxLogService.create(bean);
@@ -510,6 +547,11 @@ public class WxPublicContentController {
 	}
 
 	@javax.annotation.Resource
+	public void setWxLogService(WxLogService wxLogService) {
+		this.wxLogService = wxLogService;
+	}
+
+	@javax.annotation.Resource
 	public void setWxMenuService(WxMenuService wxMenuService) {
 		this.wxMenuService = wxMenuService;
 	}
@@ -522,11 +564,6 @@ public class WxPublicContentController {
 	@javax.annotation.Resource
 	public void setWxTemplateService(WxTemplateService wxTemplateService) {
 		this.wxTemplateService = wxTemplateService;
-	}
-
-	@javax.annotation.Resource
-	public void setWxLogService(WxLogService wxLogService) {
-		this.wxLogService = wxLogService;
 	}
 
 	@javax.annotation.Resource
@@ -549,6 +586,15 @@ public class WxPublicContentController {
 			out.write(content);
 			out.flush();
 			IOUtils.closeStream(out);
+			try {
+				WxLog bean = new WxLog();
+				bean.setCreateTime(new Date());
+				bean.setFlag(2001);
+				bean.setIp(RequestUtils.getIPAddress(request));
+				bean.setOperate(String.valueOf(id));
+				wxLogService.create(bean);
+			} catch (Exception ex) {
+			}
 			return;
 		}
 		WxContent wxContent = null;
@@ -619,6 +665,7 @@ public class WxPublicContentController {
 
 				String content = TemplateUtils.process(context,
 						template.getContent());
+				CacheFactory.put(cacheKey, content);
 
 				PrintWriter out = response.getWriter();
 				out.write(content);
@@ -629,7 +676,7 @@ public class WxPublicContentController {
 					WxLog bean = new WxLog();
 					bean.setAccount(actorId);
 					bean.setCreateTime(new Date());
-					bean.setFlag(1002);
+					bean.setFlag(2002);
 					bean.setIp(RequestUtils.getIPAddress(request));
 					bean.setOperate(String.valueOf(id));
 					wxLogService.create(bean);
