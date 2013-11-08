@@ -67,9 +67,9 @@ limitations under the License.
     function getUrl(treeId, treeNode) {
 		if(treeNode != null){
 		    var param = "parentId="+treeNode.id;
-		    return "<%=request.getContextPath()%>/mx/wx/wxCategory/treeJson?"+param;
+		    return "<%=request.getContextPath()%>/rs/wx/category/treeJson?"+param;
 		}
-		return "<%=request.getContextPath()%>/mx/wx/wxCategory/treeJson?type=category";
+		return "<%=request.getContextPath()%>/rs/wx/category/treeJson?type=category";
 	}
 
 

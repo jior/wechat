@@ -45,7 +45,7 @@ limitations under the License.
     var setting = {
 			async: {
 				enable: true,
-				url: '<%=request.getContextPath()%>/mx/wx/wxCategory/treeJson?type=${type}',
+				url: '<%=request.getContextPath()%>/rs/wx/category/treeJson?type=${type}',
 				dataFilter: filter
 			},
 			callback: {

@@ -2,116 +2,157 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>微信首页</title>
-<meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
-<meta name="format-detection" content="telephone=no">
-<meta charset="utf-8">
-<link href="${serviceUrl}/templates/01/css/news4.css" rel="stylesheet" type="text/css" />
-<script src="${serviceUrl}/scripts/iscroll.js" type="text/javascript"></script>
-<script type="text/javascript">
-var myScroll;
+    <title>主页</title>
+    <meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <link href="${serviceUrl}/templates/01/css/news4.css" rel="stylesheet" type="text/css">
+    <script src="${serviceUrl}/scripts/iscroll.js" type="text/javascript"></script>
 
-function loaded() {
-myScroll = new iScroll('wrapper', {
-snap: true,
-momentum: false,
-hScrollbar: false,
-onScrollEnd: function () {
-document.querySelector('#indicator > li.active').className = '';
-document.querySelector('#indicator > li:nth-child(' + (this.currPageX+1) + ')').className = 'active';
-}
- });
- 
- setInterval(function(){
-     myScroll.scrollToPage('next', 0, 400, 3);
-   },3500 );
-}
+    <script type="text/javascript">
+        var myScroll;
+        function loaded() {
+            myScroll = new iScroll('wrapper', {
+                snap: true,
+                momentum: false,
+                hScrollbar: false,
+                onScrollEnd: function() {
+                    document.querySelector('#indicator > li.active').className = '';
+                    document.querySelector('#indicator > li:nth-child(' + (this.currPageX + 1) + ')').className = 'active';
+                }
+            });
+            <#if pptList?exists>
+            setInterval(function() {
+                myScroll.scrollToPage('next', 0, 400, ${pptList?size});
+            }, 3500);
+			</#if>
+        }
 
-document.addEventListener('DOMContentLoaded', loaded, false);
-</script>
-<script>
-window.onload = function ()
-{
-var oWin = document.getElementById("win");
-var oLay = document.getElementById("overlay");	
-var oBtn = document.getElementById("popmenu");
-var oClose = document.getElementById("close");
-oBtn.onclick = function ()
-{
-oLay.style.display = "block";
-oWin.style.display = "block"	
-};
-oLay.onclick = function ()
-{
-oLay.style.display = "none";
-oWin.style.display = "none"	
-}
-};
-</script>
-<style type="text/css">
-#scroller {
-width:960px;
-}
-</style>
+        document.addEventListener('DOMContentLoaded', loaded, false);
+    </script>
+
+    <script>
+        window.onload = function() {
+            var oWin = document.getElementById("win");
+            var oLay = document.getElementById("overlay");
+            var oBtn = document.getElementById("popmenu");
+            var oClose = document.getElementById("close");
+            oBtn.onclick = function() {
+                oLay.style.display = "block";
+                oWin.style.display = "block"
+            };
+            oLay.onclick = function() {
+                oLay.style.display = "none";
+                oWin.style.display = "none"
+            }
+        };
+    </script>
+
+    <style type="text/css">
+        #scroller
+        {
+            width: 960px;
+        }
+    </style>
 </head>
-
 <body id="cate7">
-<div id="ui-header">
-<div class="fixed">
-<a class="ui-title" id="popmenu">选择分类</a>
-<a class="ui-btn-left_pre" href="#"></a> 
-<!-- <a class="ui-btn-left_pre1" href="#"></a> 
-<a class="ui-btn-right2" href="#"></a> -->
-<a class="ui-btn-right" href="${serviceUrl}/website/wx/content/index/${userId}"></a>
-</div>
-</div>
-<div id="overlay"></div>
-<div id="win">
-<ul class="dropdown"> 
-<#if categories?exists>
-<#list categories as category>
-<#if category.url?exists && category.url != ''>
-<li><a href="${category.url}"><span>${category.name}</span></a></li>
-<#else>
-<li><a href="${serviceUrl}/website/wx/content/list/${category.stringId}"><span>${category.name}</span></a></li>
-</#if>
-</#list> 
-</#if> 
-<div class="clr"></div>
-</ul>
-</div> 
- 
-<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
-  <tr>
-    <td height="60"> </td>
-  </tr>
-</table>
+    <div id="ui-header">
+        <div class="fixed">
+            <a class="ui-title" id="popmenu">选择分类</a> 
+              <a class="ui-btn-left_pre" href="javascript:history.back(-1)"></a>
+              <a class="ui-btn-right" href="#"></a>
+            
+        </div>
+    </div>
+    <div id="overlay">
+    </div>
+    <div id="win">
+        <ul class="dropdown">
+             
+        <#if categories?exists>
+			<#list categories as category>
+			<#if category.url?exists && category.url != ''>
+			<li><a href="${category.url}"><span>${category.name}</span></a></li>
+			<#else>
+			<li><a href="${serviceUrl}/website/wx/content/list/${category.stringId}"><span>${category.name}</span></a></li>
+			</#if>
+			</#list> 
+		</#if> 
+            
+            <div class="clr">
+            </div>
+        </ul>
+    </div>
 
-<ul class="cateul">
-<#if categories?exists>
-<#list categories as item>  
-<li class="li${item_index%3} ">
-<#if item.url?exists && item.url != ''>
-<a href="${item.url}">
-<#else>
-<a href="${serviceUrl}/website/wx/content/list/${item.stringId}">
-</#if>
-<div class="menubtn">
-<#if item.coverIcon?exists>
-<div class="menuimg"><img src="${serviceUrl}/${item.coverIcon}" /></div>
-</#if>
-<div class="menutitle">${item.name}</div>
-</div>
-</a>
-</li>
-</#list> 
-</#if> 
-<div class="clr"></div>
-</ul>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+      <tbody>
+	  <tr>
+        <td width="100%" height="46" align="center"> </td>
+      </tr>
+      </tbody>
+	</table>
 
-<div style="display:none"> </div>
+   <#if pptList?exists>
+    <div class="banner">
+        <div id="wrapper">
+            <div id="scroller">
+                <ul id="thelist">
+                    
+					  <#list pptList as ppt>  
+					  <li>
+					    <p></p>
+						<a href="${ppt.url?if_exists}">
+							<img src="${serviceUrl}${ppt.icon}" alt="${ppt.title}" style="width:100%;">
+						</a>
+					  </li>
+					  </#list> 
+                    
+                </ul>
+            </div>
+        </div>
+        <div id="nav">
+            <div id="prev" onclick="myScroll.scrollToPage(&#39;prev&#39;, 0, 400, ${pptList?size});return false">
+                ← prev</div>
+            <ul id="indicator">
+             <#list pptList as ppt>  
+				<li <#if ppt_index==0> class="active"</#if>>${ppt_index+1}</li>
+			 </#list> 
+            </ul>
+            <div id="next" onclick="myScroll.scrollToPage(&#39;next&#39;, 0);return false">
+                next →</div>
+        </div>
+        <div class="clr">
+        </div>
+    </div>
+   </#if>
 
-</body>
-</html>
+    <ul class="cateul">
+        
+        <#if categories?exists>
+			<#list categories as item>  
+			<li class="li${item_index%3} ">
+			<#if item.url?exists && item.url != ''>
+			<a href="${item.url}">
+			<#else>
+			<a href="${serviceUrl}/website/wx/content/list/${item.stringId}">
+			</#if>
+			  <div class="menubtn">
+			  <#if item.coverIcon?exists>
+			    <div class="menuimg"><img src="${serviceUrl}/${item.coverIcon}" /></div>
+			  </#if>
+			  <div class="menutitle">${item.name}</div>
+			</div>
+			</a>
+			</li>
+			</#list> 
+		</#if> 
+        
+        <div class="clr">
+        </div>
+    </ul>
+    <div style="display: none">
+    </div>
+
+
+</body></html>

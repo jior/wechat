@@ -5,7 +5,7 @@
 <%
     String context = request.getContextPath();
 	com.glaf.base.utils.ContextUtil.getInstance().setContextPath(context);
-	pageContext.setAttribute("contextPath", context);
+	request.setAttribute("contextPath", context);
 	boolean debug = false;
 	String host = com.glaf.core.util.RequestUtils.getIPAddress(request);
 	//System.out.println("host:"+host);

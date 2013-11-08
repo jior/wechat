@@ -19,6 +19,8 @@
 package com.glaf.wechat.web.rest;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -38,8 +40,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.glaf.core.base.BaseTree;
+import com.glaf.core.base.TreeModel;
 import com.glaf.core.identity.User;
 import com.glaf.core.security.IdentityFactory;
+import com.glaf.core.security.LoginContext;
+import com.glaf.core.tree.helper.TreeHelper;
 import com.glaf.core.util.PageResult;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
@@ -140,6 +146,55 @@ public class WxCategoryResourceRest {
 	@javax.annotation.Resource
 	public void setWxCategoryService(WxCategoryService wxCategoryService) {
 		this.wxCategoryService = wxCategoryService;
+	}
+
+	@GET
+	@POST
+	@Path("/treeJson")
+	@ResponseBody
+	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
+	public byte[] treeJson(@Context HttpServletRequest request)
+			throws IOException {
+		JSONArray array = new JSONArray();
+		LoginContext loginContext = RequestUtils.getLoginContext(request);
+		String type = request.getParameter("type");
+		Long parentId = RequestUtils.getLong(request, "parentId", 0);
+		List<WxCategory> categories = null;
+		if (parentId != null && parentId > 0) {
+			categories = wxCategoryService.getCategoryList(
+					loginContext.getActorId(), parentId);
+		} else if (StringUtils.isNotEmpty(type)) {
+			categories = wxCategoryService.getCategoryList(
+					loginContext.getActorId(), type);
+		}
+
+		if (categories != null && !categories.isEmpty()) {
+			Map<Long, TreeModel> treeMap = new HashMap<Long, TreeModel>();
+			List<TreeModel> treeModels = new ArrayList<TreeModel>();
+			List<Long> categoryIds = new ArrayList<Long>();
+			for (WxCategory category : categories) {
+				TreeModel tree = new BaseTree();
+				tree.setId(category.getId());
+				tree.setParentId(category.getParentId());
+				tree.setCode(category.getCode());
+				tree.setName(category.getName());
+				tree.setSortNo(category.getSort());
+				tree.setDescription(category.getDesc());
+				tree.setCreateBy(category.getCreateBy());
+				tree.setIconCls("tree_folder");
+				tree.setTreeId(category.getTreeId());
+				tree.setUrl(category.getUrl());
+				treeModels.add(tree);
+				categoryIds.add(category.getId());
+				treeMap.put(category.getId(), tree);
+			}
+			logger.debug("treeModels:" + treeModels.size());
+			TreeHelper treeHelper = new TreeHelper();
+			JSONArray jsonArray = treeHelper.getTreeJSONArray(treeModels);
+			logger.debug(jsonArray.toJSONString());
+			return jsonArray.toJSONString().getBytes("UTF-8");
+		}
+		return array.toJSONString().getBytes("UTF-8");
 	}
 
 	@GET

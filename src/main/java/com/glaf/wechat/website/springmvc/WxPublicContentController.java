@@ -184,14 +184,16 @@ public class WxPublicContentController {
 							}
 						}
 					}
+					context.put("categories", list3);
 				}
-				context.put("categories", list3);
 
 				context.put("category", category);
 
 				String content = TemplateUtils.process(context,
 						template.getContent());
-				CacheFactory.put(cacheKey, content);
+				if (cache) {
+					CacheFactory.put(cacheKey, content);
+				}
 
 				PrintWriter out = response.getWriter();
 				out.write(content);
@@ -252,11 +254,10 @@ public class WxPublicContentController {
 		if (wxUserTemplate != null) {
 			Long templateId = wxUserTemplate.getTemplateId();
 			boolean cache = conf.getBoolean("wx_template_cache", true);
-			logger.debug("templateId:" + templateId);
 			WxTemplate template = wxTemplateService.getWxTemplate(templateId,
 					cache);
 			logger.debug("cache:" + cache);
-			logger.debug("template:" + template);
+			logger.debug("templateId:" + templateId);
 			if (template != null && template.getContent() != null) {
 				String serviceUrl = WechatUtils.getServiceUrl(request);
 				Map<String, Object> context = RequestUtils
@@ -275,8 +276,10 @@ public class WxPublicContentController {
 				query.createBy(actorId);
 				query.categoryId(0L);
 				query.type("PPT");
+				query.status(1);
 				List<WxContent> list = wxContentService.list(query);
 				if (list != null && !list.isEmpty()) {
+					logger.debug("index ppt size:" + list.size());
 					for (WxContent c : list) {
 						if (StringUtils.isNotEmpty(c.getUrl())) {
 							if (StringUtils.startsWith(c.getUrl(), "/mx/wx/")) {
@@ -288,8 +291,8 @@ public class WxPublicContentController {
 							}
 						}
 					}
+					context.put("pptList", list);
 				}
-				context.put("pptList", list);
 
 				WxCategoryQuery query3 = new WxCategoryQuery();
 				query3.createBy(actorId);
@@ -298,7 +301,7 @@ public class WxPublicContentController {
 				query3.locked(0);
 				query3.indexShow(1);
 				List<WxCategory> list3 = wxCategoryService.list(query3);
-				context.put("categories", list3);
+
 				if (list3 != null && !list3.isEmpty()) {
 					for (WxCategory cat : list3) {
 						if (StringUtils.isNotEmpty(cat.getUrl())) {
@@ -311,11 +314,14 @@ public class WxPublicContentController {
 							}
 						}
 					}
+					context.put("categories", list3);
 				}
 
 				String content = TemplateUtils.process(context,
 						template.getContent());
-				CacheFactory.put(cacheKey, content);
+				if (cache) {
+					CacheFactory.put(cacheKey, content);
+				}
 				PrintWriter out = response.getWriter();
 				out.write(content);
 				out.flush();
@@ -419,6 +425,7 @@ public class WxPublicContentController {
 					WxContentQuery query = new WxContentQuery();
 					query.categoryId(categoryId);
 					query.status(1);
+					query.type("P");
 
 					int total = wxContentService
 							.getWxContentCountByQueryCriteria(query);
@@ -434,8 +441,11 @@ public class WxPublicContentController {
 					query2.createBy(category.getCreateBy());
 					query2.categoryId(categoryId);
 					query2.type("PPT");
+					query2.status(1);
+
 					List<WxContent> list = wxContentService.list(query2);
 					if (list != null && !list.isEmpty()) {
+						logger.debug(" ppt size:" + list.size());
 						for (WxContent c : list) {
 							if (StringUtils.isNotEmpty(c.getUrl())) {
 								if (StringUtils.startsWith(c.getUrl(),
@@ -448,8 +458,9 @@ public class WxPublicContentController {
 								}
 							}
 						}
+						context.put("pptList", list);
 					}
-					context.put("pptList", list);
+
 					context.put("category", category);
 
 					WxCategoryQuery query3 = new WxCategoryQuery();
@@ -459,7 +470,6 @@ public class WxPublicContentController {
 					query3.locked(0);
 					query3.indexShow(1);
 					List<WxCategory> list3 = wxCategoryService.list(query3);
-					context.put("categories", list3);
 					if (list3 != null && !list3.isEmpty()) {
 						for (WxCategory cat : list3) {
 							if (StringUtils.isNotEmpty(cat.getUrl())) {
@@ -473,6 +483,7 @@ public class WxPublicContentController {
 								}
 							}
 						}
+						context.put("categories", list3);
 					}
 
 					WxCategoryQuery query4 = new WxCategoryQuery();
@@ -482,7 +493,6 @@ public class WxPublicContentController {
 					query4.locked(0);
 					query4.indexShow(1);
 					List<WxCategory> list4 = wxCategoryService.list(query4);
-					context.put("subCategories", list4);
 					if (list4 != null && !list4.isEmpty()) {
 						for (WxCategory cat : list4) {
 							if (StringUtils.isNotEmpty(cat.getUrl())) {
@@ -496,11 +506,14 @@ public class WxPublicContentController {
 								}
 							}
 						}
+						context.put("subCategories", list4);
 					}
 
 					String content = TemplateUtils.process(context,
 							template.getContent());
-					CacheFactory.put(cacheKey, content);
+					if (cache) {
+						CacheFactory.put(cacheKey, content);
+					}
 					PrintWriter out = response.getWriter();
 					out.write(content);
 					out.flush();
@@ -665,7 +678,9 @@ public class WxPublicContentController {
 
 				String content = TemplateUtils.process(context,
 						template.getContent());
-				CacheFactory.put(cacheKey, content);
+				if (cache) {
+					CacheFactory.put(cacheKey, content);
+				}
 
 				PrintWriter out = response.getWriter();
 				out.write(content);

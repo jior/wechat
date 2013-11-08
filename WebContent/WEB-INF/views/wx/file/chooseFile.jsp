@@ -66,9 +66,9 @@ limitations under the License.
 	function getUrl(treeId, treeNode) {
 		if(treeNode != null){
 		    var param = "parentId="+treeNode.id;
-		    return "<%=request.getContextPath()%>/mx/wx/wxCategory/treeJson?"+param;
+		    return "<%=request.getContextPath()%>/rs/wx/category/treeJson?"+param;
 		}
-		return "<%=request.getContextPath()%>/mx/wx/wxCategory/treeJson?type=category";
+		return "<%=request.getContextPath()%>/rs/wx/category/treeJson?type=category";
 	}
 
 
@@ -109,7 +109,10 @@ limitations under the License.
 					{title:'文件名',field:'filename', align:'center', valign:'middle', width:380,sortable:false, formatter:formatterUrl},
 					{title:'路径',field:'path',width:180,sortable:false}
 				]],
-				rownumbers:false
+				rownumbers:false,
+				pagination:true,
+				pageSize:15,
+				pageList: [10,15,20,25,30,40,50,100]
 			});
 
 			var p = jQuery('#easyui_data_grid').datagrid('getPager');

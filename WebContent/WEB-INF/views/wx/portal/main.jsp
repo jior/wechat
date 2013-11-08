@@ -55,19 +55,19 @@
 	  if(!jQuery('#tabs').tabs('exists',subtitle)){
 		//alert(menuId);
 		openTabSize = openTabSize + 1;
-		if(openTabSize > 10){
+		if(openTabSize > 1){
 			jQuery('#tabs').tabs('close', 1);//关闭第二个,第一个为我的桌面，不能关闭
 		}
 		var url = "${contextPath}/my/menu.do?method=jump&id="+menuId;
-		jQuery('#cc').attr('src', url);
-		/**
+		//jQuery('#cc').attr('src', url);
+		
 		jQuery('#tabs').tabs('add',{
 			title:subtitle,
 			content:createFrame(url),
 			closable:true,
 			icon:"icon-gears"
 		});
-		**/
+		
 	  }else{
 		jQuery('#tabs').tabs('select',subtitle);
 		jQuery('#mm-tabupdate').click();
