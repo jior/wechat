@@ -42,6 +42,9 @@ public class WxSiteInfoJsonFactory {
 		if (jsonObject.containsKey("id")) {
 			model.setId(jsonObject.getLong("id"));
 		}
+		if (jsonObject.containsKey("appId")) {
+			model.setAppId(jsonObject.getLong("appId"));
+		}
 		if (jsonObject.containsKey("linkman")) {
 			model.setLinkman(jsonObject.getString("linkman"));
 		}
@@ -65,9 +68,6 @@ public class WxSiteInfoJsonFactory {
 		}
 		if (jsonObject.containsKey("remark")) {
 			model.setRemark(jsonObject.getString("remark"));
-		}
-		if (jsonObject.containsKey("uuid")) {
-			model.setUuid(jsonObject.getString("uuid"));
 		}
 		if (jsonObject.containsKey("createBy")) {
 			model.setCreateBy(jsonObject.getString("createBy"));
@@ -95,6 +95,9 @@ public class WxSiteInfoJsonFactory {
 		jsonObject.put("id", model.getId());
 		jsonObject.put("_id_", model.getId());
 		jsonObject.put("_oid_", model.getId());
+		if (model.getAppId() != null) {
+			jsonObject.put("appId", model.getAppId());
+		}
 		if (model.getLinkman() != null) {
 			jsonObject.put("linkman", model.getLinkman());
 		}
@@ -118,9 +121,6 @@ public class WxSiteInfoJsonFactory {
 		}
 		if (model.getRemark() != null) {
 			jsonObject.put("remark", model.getRemark());
-		}
-		if (model.getUuid() != null) {
-			jsonObject.put("uuid", model.getUuid());
 		}
 		if (model.getCreateBy() != null) {
 			jsonObject.put("createBy", model.getCreateBy());
@@ -152,6 +152,9 @@ public class WxSiteInfoJsonFactory {
 		jsonObject.put("id", model.getId());
 		jsonObject.put("_id_", model.getId());
 		jsonObject.put("_oid_", model.getId());
+		if (model.getAppId() != null) {
+			jsonObject.put("appId", model.getAppId());
+		}
 		if (model.getLinkman() != null) {
 			jsonObject.put("linkman", model.getLinkman());
 		}
@@ -175,9 +178,6 @@ public class WxSiteInfoJsonFactory {
 		}
 		if (model.getRemark() != null) {
 			jsonObject.put("remark", model.getRemark());
-		}
-		if (model.getUuid() != null) {
-			jsonObject.put("uuid", model.getUuid());
 		}
 		if (model.getCreateBy() != null) {
 			jsonObject.put("createBy", model.getCreateBy());

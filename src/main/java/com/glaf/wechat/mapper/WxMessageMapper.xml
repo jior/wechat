@@ -6,11 +6,11 @@
 
 	<resultMap id="wxMessageResultMap" type="com.glaf.wechat.domain.WxMessage">
 		<id property="id" column="ID_" jdbcType="BIGINT" />
+		<result property="appId" column="APPID" jdbcType="BIGINT" />
 		<result property="name" column="NAME_" jdbcType="VARCHAR" />
 		<result property="mobile" column="MOBILE_" jdbcType="VARCHAR" />
 		<result property="title" column="TITLE_" jdbcType="VARCHAR" />
 		<result property="content" column="CONTENT_" jdbcType="VARCHAR" />
-		<result property="uuid" column="UUID_" jdbcType="VARCHAR" />
 		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
 		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP" />
 		<result property="lastUpdateDate" column="LASTUPDATEDATE_"
@@ -24,6 +24,9 @@
 		insert into WX_MESSAGE
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			ID_
+			<if test="appId != null">
+				,APPID
+			</if>
 			<if test="name != null">
 				,NAME_
 			</if>
@@ -36,9 +39,6 @@
 			<if test="content != null">
 				,CONTENT_
 			</if>
-			<if test="uuid != null">
-				,UUID_
-			</if>
 			<if test="createBy != null">
 				,CREATEBY_
 			</if>
@@ -49,7 +49,9 @@
 
 		<trim prefix=" values (" suffix=")" suffixOverrides=",">
 			#{id, jdbcType=BIGINT}
-
+			<if test="appId != null">
+				,#{appId, jdbcType=BIGINT}
+			</if>
 			<if test="name != null">
 				,#{name, jdbcType=VARCHAR}
 			</if>
@@ -61,9 +63,6 @@
 			</if>
 			<if test="content != null">
 				,#{content, jdbcType=VARCHAR}
-			</if>
-			<if test="uuid != null">
-				,#{uuid, jdbcType=VARCHAR}
 			</if>
 			<if test="createBy != null">
 				,#{createBy, jdbcType=VARCHAR}
@@ -127,13 +126,6 @@
 		select * from WX_MESSAGE where ID_ = #{id}
 	</select>
 
-
-	<select id="getWxMessageByUUID" parameterType="string"
-		resultMap="wxMessageResultMap">
-		select * from WX_MESSAGE where UUID_ = #{uuid}
-	</select>
-
-
 	<select id="getWxMessages" parameterType="com.glaf.wechat.query.WxMessageQuery"
 		resultMap="wxMessageResultMap">
 		select distinct E.*
@@ -162,6 +154,18 @@
 
 		<where>
 			1 = 1
+
+			<if test="appId != null">
+				and E.APPID = #{appId}
+            </if>
+
+			<if test="appIds != null and appIds.size !=0">
+			    and E.APPID IN
+                <foreach item="x_appId" index="index" collection="appIds" 
+                     open="(" separator="," close=")">
+                  #{x_appId}
+                </foreach>
+			</if>
 
 			<if test="name != null and name != '' ">
 				and E.NAME_ = #{name}
@@ -193,18 +197,6 @@
 
 			<if test="contentLike != null and contentLike != '' ">
 				and E.CONTENT_ like #{contentLike}
-			</if>
-
-			<if test="uuid != null and uuid != '' ">
-				and E.UUID_ = #{uuid}
-			</if>
-
-			<if test="uuids != null and uuids.size !=0">
-				and E.UUID_ IN
-				<foreach item="x_uuid" index="index" collection="uuids"
-					open="(" separator="," close=")">
-					#{x_uuid}
-				</foreach>
 			</if>
 
 			<if test="createBy != null and createBy != '' ">

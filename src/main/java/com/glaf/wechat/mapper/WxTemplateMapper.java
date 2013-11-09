@@ -31,8 +31,6 @@ public interface WxTemplateMapper {
 	void deleteWxTemplateById(Long id);
 
 	WxTemplate getWxTemplateById(Long id);
-	
-	WxTemplate getWxTemplateByUUID(String uuid);
 
 	int getWxTemplateCount(WxTemplateQuery query);
 

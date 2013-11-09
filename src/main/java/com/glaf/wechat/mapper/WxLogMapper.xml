@@ -6,6 +6,7 @@
 
 	<resultMap id="wxLogResultMap" type="com.glaf.wechat.domain.WxLog">
 		<id property="id" column="ID_" jdbcType="BIGINT" />
+		<result property="appId" column="APPID" jdbcType="BIGINT" />
 		<result property="account" column="ACCOUNT_" jdbcType="VARCHAR" />
 		<result property="ip" column="IP_" jdbcType="VARCHAR" />
 		<result property="createTime" column="CREATETIME_" jdbcType="TIMESTAMP" />
@@ -18,6 +19,9 @@
 		insert into wx_log${suffix}
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			ID_
+			<if test="appId != null">
+				,APPID
+			</if>
 			<if test="account != null">
 				,ACCOUNT_
 			</if>
@@ -37,7 +41,9 @@
 
 		<trim prefix=" values (" suffix=")" suffixOverrides=",">
 			#{id, jdbcType=BIGINT}
-
+			<if test="appId != null">
+				,#{appId, jdbcType=BIGINT}
+			</if>
 			<if test="account != null">
 				,#{account, jdbcType=VARCHAR}
 			</if>
@@ -110,6 +116,18 @@
 
 		<where>
 			1 = 1
+
+			<if test="appId != null">
+				and E.APPID = #{appId}
+            </if>
+
+			<if test="appIds != null and appIds.size !=0">
+			    and E.APPID IN
+                <foreach item="x_appId" index="index" collection="appIds" 
+                     open="(" separator="," close=")">
+                  #{x_appId}
+                </foreach>
+			</if>
 
 			<if test="account != null and account != '' ">
 				and E.ACCOUNT_ = #{account}

@@ -51,6 +51,12 @@ public class WxMessage implements java.io.Serializable, JSONable {
 	protected long id;
 
 	/**
+	 * 微站公众号应用ID
+	 */
+	@Column(name = "APPID_")
+	protected Long appId;
+
+	/**
 	 * 联系人
 	 */
 	@Column(name = "NAME_", length = 50)
@@ -73,12 +79,6 @@ public class WxMessage implements java.io.Serializable, JSONable {
 	 */
 	@Column(name = "CONTENT_", length = 2048)
 	protected String content;
-
-	/**
-	 * UUID
-	 */
-	@Column(name = "UUID_", length = 50)
-	protected String uuid;
 
 	/**
 	 * 创建人
@@ -108,6 +108,10 @@ public class WxMessage implements java.io.Serializable, JSONable {
 
 	public WxMessage() {
 
+	}
+
+	public Long getAppId() {
+		return appId;
 	}
 
 	public String getContent() {
@@ -146,12 +150,13 @@ public class WxMessage implements java.io.Serializable, JSONable {
 		return title;
 	}
 
-	public String getUuid() {
-		return uuid;
-	}
 
 	public WxMessage jsonToObject(JSONObject jsonObject) {
 		return WxMessageJsonFactory.jsonToObject(jsonObject);
+	}
+
+	public void setAppId(Long appId) {
+		this.appId = appId;
 	}
 
 	public void setContent(String content) {
@@ -188,10 +193,6 @@ public class WxMessage implements java.io.Serializable, JSONable {
 
 	public void setTitle(String title) {
 		this.title = title;
-	}
-
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
 	}
 
 	public JSONObject toJsonObject() {

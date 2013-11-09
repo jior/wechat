@@ -35,7 +35,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.cache.CacheFactory;
 import com.glaf.core.dao.EntityDAO;
 import com.glaf.core.id.IdGenerator;
-import com.glaf.core.util.UUID32;
+
 import com.glaf.wechat.domain.WxConfig;
 import com.glaf.wechat.mapper.WxConfigMapper;
 import com.glaf.wechat.query.WxConfigQuery;
@@ -132,7 +132,6 @@ public class WxConfigServiceImpl implements WxConfigService {
 		if (wxConfig.getId() == 0) {
 			wxConfig.setId(idGenerator.nextId());
 			wxConfig.setCreateDate(new Date());
-			wxConfig.setUuid(UUID32.getUUID());
 			wxConfigMapper.insertWxConfig(wxConfig);
 		} else {
 			wxConfig.setLastUpdateDate(new Date());

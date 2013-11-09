@@ -6,6 +6,8 @@ import com.glaf.core.query.DataQuery;
 
 public class WxKeywordsQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
+	protected Long appId;
+	protected List<Long> appIds;
 	protected List<Long> ids;
 	protected Long categoryId;
 	protected List<Long> categoryIds;
@@ -86,6 +88,14 @@ public class WxKeywordsQuery extends DataQuery {
 		}
 		this.createDateLessThanOrEqual = createDateLessThanOrEqual;
 		return this;
+	}
+
+	public Long getAppId() {
+		return appId;
+	}
+
+	public List<Long> getAppIds() {
+		return appIds;
 	}
 
 	public Long getCategoryId() {
@@ -213,6 +223,14 @@ public class WxKeywordsQuery extends DataQuery {
 		}
 		this.keywordsMatchType = keywordsMatchType;
 		return this;
+	}
+
+	public void setAppId(Long appId) {
+		this.appId = appId;
+	}
+
+	public void setAppIds(List<Long> appIds) {
+		this.appIds = appIds;
 	}
 
 	public void setCategoryId(Long categoryId) {

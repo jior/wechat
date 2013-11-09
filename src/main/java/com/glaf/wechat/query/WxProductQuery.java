@@ -19,10 +19,13 @@
 package com.glaf.wechat.query;
 
 import java.util.*;
+
 import com.glaf.core.query.DataQuery;
 
 public class WxProductQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
+	protected Long appId;
+	protected List<Long> appIds;
 	protected List<Long> ids;
 	protected String name;
 	protected String nameLike;

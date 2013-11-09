@@ -24,13 +24,13 @@ import com.glaf.core.query.DataQuery;
 
 public class WxTemplateQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
+	protected Long appId;
+	protected List<Long> appIds;
 	protected List<Long> ids;
 	protected Long categoryId;
 	protected List<Long> categoryIds;
 	protected String type;
 	protected Integer defaultFlag;
-	protected String uuid;
-	protected List<String> uuids;
 	protected Date createDateGreaterThanOrEqual;
 	protected Date createDateLessThanOrEqual;
 
@@ -80,6 +80,14 @@ public class WxTemplateQuery extends DataQuery {
 		return this;
 	}
 
+	public Long getAppId() {
+		return appId;
+	}
+
+	public List<Long> getAppIds() {
+		return appIds;
+	}
+
 	public Long getCategoryId() {
 		return categoryId;
 	}
@@ -123,10 +131,6 @@ public class WxTemplateQuery extends DataQuery {
 				orderBy = "E.DEFAULTFLAG_" + a_x;
 			}
 
-			if ("uuid".equals(sortColumn)) {
-				orderBy = "E.UUID_" + a_x;
-			}
-
 			if ("createBy".equals(sortColumn)) {
 				orderBy = "E.CREATEBY_" + a_x;
 			}
@@ -143,14 +147,6 @@ public class WxTemplateQuery extends DataQuery {
 		return type;
 	}
 
-	public String getUuid() {
-		return uuid;
-	}
-
-	public List<String> getUuids() {
-		return uuids;
-	}
-
 	@Override
 	public void initQueryColumns() {
 		super.initQueryColumns();
@@ -160,9 +156,16 @@ public class WxTemplateQuery extends DataQuery {
 		addColumn("type", "TYPE_");
 		addColumn("path", "PATH_");
 		addColumn("defaultFlag", "DEFAULTFLAG_");
-		addColumn("uuid", "UUID_");
 		addColumn("createBy", "CREATEBY_");
 		addColumn("createDate", "CREATEDATE_");
+	}
+
+	public void setAppId(Long appId) {
+		this.appId = appId;
+	}
+
+	public void setAppIds(List<Long> appIds) {
+		this.appIds = appIds;
 	}
 
 	public void setCategoryId(Long categoryId) {
@@ -190,35 +193,11 @@ public class WxTemplateQuery extends DataQuery {
 		this.type = type;
 	}
 
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
-	}
-
-	public void setUuids(List<String> uuids) {
-		this.uuids = uuids;
-	}
-
 	public WxTemplateQuery type(String type) {
 		if (type == null) {
 			throw new RuntimeException("type is null");
 		}
 		this.type = type;
-		return this;
-	}
-
-	public WxTemplateQuery uuid(String uuid) {
-		if (uuid == null) {
-			throw new RuntimeException("uuid is null");
-		}
-		this.uuid = uuid;
-		return this;
-	}
-
-	public WxTemplateQuery uuids(List<String> uuids) {
-		if (uuids == null) {
-			throw new RuntimeException("uuids is empty ");
-		}
-		this.uuids = uuids;
 		return this;
 	}
 

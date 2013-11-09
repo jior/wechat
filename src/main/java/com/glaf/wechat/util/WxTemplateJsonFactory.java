@@ -42,6 +42,9 @@ public class WxTemplateJsonFactory {
 		if (jsonObject.containsKey("id")) {
 			model.setId(jsonObject.getLong("id"));
 		}
+		if (jsonObject.containsKey("appId")) {
+			model.setAppId(jsonObject.getLong("appId"));
+		}
 		if (jsonObject.containsKey("categoryId")) {
 			model.setCategoryId(jsonObject.getLong("categoryId"));
 		}
@@ -74,9 +77,6 @@ public class WxTemplateJsonFactory {
 		if (jsonObject.containsKey("locked")) {
 			model.setLocked(jsonObject.getInteger("locked"));
 		}
-		if (jsonObject.containsKey("uuid")) {
-			model.setUuid(jsonObject.getString("uuid"));
-		}
 		if (jsonObject.containsKey("createBy")) {
 			model.setCreateBy(jsonObject.getString("createBy"));
 		}
@@ -104,7 +104,9 @@ public class WxTemplateJsonFactory {
 		jsonObject.put("_id_", model.getId());
 		jsonObject.put("_oid_", model.getId());
 		jsonObject.put("categoryId", model.getCategoryId());
-
+		if (model.getAppId() != null) {
+			jsonObject.put("appId", model.getAppId());
+		}
 		if (model.getName() != null) {
 			jsonObject.put("name", model.getName());
 		}
@@ -131,9 +133,7 @@ public class WxTemplateJsonFactory {
 		}
 		jsonObject.put("defaultFlag", model.getDefaultFlag());
 		jsonObject.put("locked", model.getLocked());
-		if (model.getUuid() != null) {
-			jsonObject.put("uuid", model.getUuid());
-		}
+
 		if (model.getCreateBy() != null) {
 			jsonObject.put("createBy", model.getCreateBy());
 		}
@@ -165,7 +165,9 @@ public class WxTemplateJsonFactory {
 		jsonObject.put("_id_", model.getId());
 		jsonObject.put("_oid_", model.getId());
 		jsonObject.put("categoryId", model.getCategoryId());
-
+		if (model.getAppId() != null) {
+			jsonObject.put("appId", model.getAppId());
+		}
 		if (model.getName() != null) {
 			jsonObject.put("name", model.getName());
 		}
@@ -191,9 +193,7 @@ public class WxTemplateJsonFactory {
 		}
 		jsonObject.put("defaultFlag", model.getDefaultFlag());
 		jsonObject.put("locked", model.getLocked());
-		if (model.getUuid() != null) {
-			jsonObject.put("uuid", model.getUuid());
-		}
+
 		if (model.getCreateBy() != null) {
 			jsonObject.put("createBy", model.getCreateBy());
 		}

@@ -43,6 +43,9 @@ public class WxContentJsonFactory {
 		if (jsonObject.containsKey("id")) {
 			model.setId(jsonObject.getLong("id"));
 		}
+		if (jsonObject.containsKey("appId")) {
+			model.setAppId(jsonObject.getLong("appId"));
+		}
 		if (jsonObject.containsKey("categoryId")) {
 			model.setCategoryId(jsonObject.getLong("categoryId"));
 		}
@@ -149,6 +152,10 @@ public class WxContentJsonFactory {
 		jsonObject.put("categoryId", model.getCategoryId());
 		jsonObject.put("sort", model.getSort());
 
+		if (model.getAppId() != null) {
+			jsonObject.put("appId", model.getAppId());
+		}
+		
 		if (model.getTitle() != null) {
 			jsonObject.put("title", model.getTitle());
 		}
@@ -269,6 +276,9 @@ public class WxContentJsonFactory {
 		jsonObject.put("categoryId", model.getCategoryId());
 		jsonObject.put("sort", model.getSort());
 
+		if (model.getAppId() != null) {
+			jsonObject.put("appId", model.getAppId());
+		}
 		if (model.getTitle() != null) {
 			jsonObject.put("title", model.getTitle());
 		}

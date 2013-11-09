@@ -19,10 +19,13 @@
 package com.glaf.wechat.query;
 
 import java.util.*;
+
 import com.glaf.core.query.DataQuery;
 
 public class WxCategoryQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
+	protected Long appId;
+	protected List<Long> appIds;
 	protected List<Long> ids;
 	protected List<String> treeIds;
 	protected Integer sortGreaterThanOrEqual;
@@ -129,6 +132,14 @@ public class WxCategoryQuery extends DataQuery {
 		}
 		this.eventTypes = eventTypes;
 		return this;
+	}
+
+	public Long getAppId() {
+		return appId;
+	}
+
+	public List<Long> getAppIds() {
+		return appIds;
 	}
 
 	public String getCode() {
@@ -322,10 +333,6 @@ public class WxCategoryQuery extends DataQuery {
 				orderBy = "E.URL_" + a_x;
 			}
 
-			if ("uuid".equals(sortColumn)) {
-				orderBy = "E.UUID_" + a_x;
-			}
-
 			if ("createBy".equals(sortColumn)) {
 				orderBy = "E.CREATEBY_" + a_x;
 			}
@@ -463,7 +470,6 @@ public class WxCategoryQuery extends DataQuery {
 		addColumn("desc", "DESC_");
 		addColumn("eventType", "EVENTTYPE_");
 		addColumn("url", "URL_");
-		addColumn("uuid", "UUID_");
 		addColumn("createBy", "CREATEBY_");
 		addColumn("createDate", "CREATEDATE_");
 	}
@@ -490,6 +496,14 @@ public class WxCategoryQuery extends DataQuery {
 		}
 		this.names = names;
 		return this;
+	}
+
+	public void setAppId(Long appId) {
+		this.appId = appId;
+	}
+
+	public void setAppIds(List<Long> appIds) {
+		this.appIds = appIds;
 	}
 
 	public void setCode(String code) {

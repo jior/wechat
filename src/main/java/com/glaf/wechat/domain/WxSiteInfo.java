@@ -51,6 +51,12 @@ public class WxSiteInfo implements java.io.Serializable, JSONable {
 	protected long id;
 
 	/**
+	 * 微站公众号应用ID
+	 */
+	@Column(name = "APPID_")
+	protected Long appId;
+
+	/**
 	 * 联系人
 	 */
 	@Column(name = "LINKMAN_", length = 50)
@@ -98,11 +104,6 @@ public class WxSiteInfo implements java.io.Serializable, JSONable {
 	@Column(name = "REMARK_", length = 2000)
 	protected String remark;
 
-	/**
-	 * UUID
-	 */
-	@Column(name = "UUID_", length = 50)
-	protected String uuid;
 
 	/**
 	 * 创建人
@@ -136,6 +137,10 @@ public class WxSiteInfo implements java.io.Serializable, JSONable {
 
 	public String getAddress() {
 		return address;
+	}
+
+	public Long getAppId() {
+		return appId;
 	}
 
 	public String getCreateBy() {
@@ -186,16 +191,16 @@ public class WxSiteInfo implements java.io.Serializable, JSONable {
 		return telephone;
 	}
 
-	public String getUuid() {
-		return uuid;
-	}
-
 	public WxSiteInfo jsonToObject(JSONObject jsonObject) {
 		return WxSiteInfoJsonFactory.jsonToObject(jsonObject);
 	}
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	public void setAppId(Long appId) {
+		this.appId = appId;
 	}
 
 	public void setCreateBy(String createBy) {
@@ -244,10 +249,6 @@ public class WxSiteInfo implements java.io.Serializable, JSONable {
 
 	public void setTelephone(String telephone) {
 		this.telephone = telephone;
-	}
-
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
 	}
 
 	public JSONObject toJsonObject() {

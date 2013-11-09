@@ -52,6 +52,12 @@ public class WxTemplate implements java.io.Serializable, JSONable {
 	protected long id;
 
 	/**
+	 * 微站公众号应用ID
+	 */
+	@Column(name = "APPID_")
+	protected Long appId;
+
+	/**
 	 * 栏目编号
 	 */
 	@Column(name = "CATEGORYID_")
@@ -110,12 +116,6 @@ public class WxTemplate implements java.io.Serializable, JSONable {
 	protected int locked;
 
 	/**
-	 * UUID
-	 */
-	@Column(name = "UUID_", length = 50)
-	protected String uuid;
-
-	/**
 	 * 创建人
 	 */
 	@Column(name = "CREATEBY_", length = 50)
@@ -143,6 +143,10 @@ public class WxTemplate implements java.io.Serializable, JSONable {
 
 	public WxTemplate() {
 
+	}
+
+	public Long getAppId() {
+		return appId;
 	}
 
 	public long getCategoryId() {
@@ -189,6 +193,10 @@ public class WxTemplate implements java.io.Serializable, JSONable {
 		return name;
 	}
 
+	public String getPath() {
+		return path;
+	}
+
 	public String getSkinImage() {
 		return skinImage;
 	}
@@ -201,14 +209,14 @@ public class WxTemplate implements java.io.Serializable, JSONable {
 		return type;
 	}
 
- 
 
-	public String getUuid() {
-		return uuid;
-	}
 
 	public WxTemplate jsonToObject(JSONObject jsonObject) {
 		return WxTemplateJsonFactory.jsonToObject(jsonObject);
+	}
+
+	public void setAppId(Long appId) {
+		this.appId = appId;
 	}
 
 	public void setCategoryId(long categoryId) {
@@ -255,6 +263,10 @@ public class WxTemplate implements java.io.Serializable, JSONable {
 		this.name = name;
 	}
 
+	public void setPath(String path) {
+		this.path = path;
+	}
+
 	public void setSkinImage(String skinImage) {
 		this.skinImage = skinImage;
 	}
@@ -267,19 +279,6 @@ public class WxTemplate implements java.io.Serializable, JSONable {
 		this.type = type;
 	}
 
-	 
-
-	public String getPath() {
-		return path;
-	}
-
-	public void setPath(String path) {
-		this.path = path;
-	}
-
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
-	}
 
 	public JSONObject toJsonObject() {
 		return WxTemplateJsonFactory.toJsonObject(this);

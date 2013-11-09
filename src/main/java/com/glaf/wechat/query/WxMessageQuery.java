@@ -19,10 +19,13 @@
 package com.glaf.wechat.query;
 
 import java.util.*;
+
 import com.glaf.core.query.DataQuery;
 
 public class WxMessageQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
+	protected Long appId;
+	protected List<Long> appIds;
 	protected List<Long> ids;
 	protected String name;
 	protected String nameLike;
@@ -31,13 +34,81 @@ public class WxMessageQuery extends DataQuery {
 	protected String mobileLike;
 	protected String titleLike;
 	protected String contentLike;
-	protected String uuid;
-	protected List<String> uuids;
 	protected Date createDateGreaterThanOrEqual;
 	protected Date createDateLessThanOrEqual;
 
 	public WxMessageQuery() {
 
+	}
+
+	public WxMessageQuery contentLike(String contentLike) {
+		if (contentLike == null) {
+			throw new RuntimeException("content is null");
+		}
+		this.contentLike = contentLike;
+		return this;
+	}
+
+	public WxMessageQuery createDateGreaterThanOrEqual(
+			Date createDateGreaterThanOrEqual) {
+		if (createDateGreaterThanOrEqual == null) {
+			throw new RuntimeException("createDate is null");
+		}
+		this.createDateGreaterThanOrEqual = createDateGreaterThanOrEqual;
+		return this;
+	}
+
+	public WxMessageQuery createDateLessThanOrEqual(
+			Date createDateLessThanOrEqual) {
+		if (createDateLessThanOrEqual == null) {
+			throw new RuntimeException("createDate is null");
+		}
+		this.createDateLessThanOrEqual = createDateLessThanOrEqual;
+		return this;
+	}
+
+	public Long getAppId() {
+		return appId;
+	}
+
+	public List<Long> getAppIds() {
+		return appIds;
+	}
+
+	public String getContentLike() {
+		if (contentLike != null && contentLike.trim().length() > 0) {
+			if (!contentLike.startsWith("%")) {
+				contentLike = "%" + contentLike;
+			}
+			if (!contentLike.endsWith("%")) {
+				contentLike = contentLike + "%";
+			}
+		}
+		return contentLike;
+	}
+
+	public Date getCreateDateGreaterThanOrEqual() {
+		return createDateGreaterThanOrEqual;
+	}
+
+	public Date getCreateDateLessThanOrEqual() {
+		return createDateLessThanOrEqual;
+	}
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public String getMobileLike() {
+		if (mobileLike != null && mobileLike.trim().length() > 0) {
+			if (!mobileLike.startsWith("%")) {
+				mobileLike = "%" + mobileLike;
+			}
+			if (!mobileLike.endsWith("%")) {
+				mobileLike = mobileLike + "%";
+			}
+		}
+		return mobileLike;
 	}
 
 	public String getName() {
@@ -60,20 +131,39 @@ public class WxMessageQuery extends DataQuery {
 		return names;
 	}
 
-	public String getMobile() {
-		return mobile;
-	}
+	public String getOrderBy() {
+		if (sortColumn != null) {
+			String a_x = " asc ";
+			if (sortOrder != null) {
+				a_x = sortOrder;
+			}
 
-	public String getMobileLike() {
-		if (mobileLike != null && mobileLike.trim().length() > 0) {
-			if (!mobileLike.startsWith("%")) {
-				mobileLike = "%" + mobileLike;
+			if ("name".equals(sortColumn)) {
+				orderBy = "E.NAME_" + a_x;
 			}
-			if (!mobileLike.endsWith("%")) {
-				mobileLike = mobileLike + "%";
+
+			if ("mobile".equals(sortColumn)) {
+				orderBy = "E.MOBILE_" + a_x;
 			}
+
+			if ("title".equals(sortColumn)) {
+				orderBy = "E.TITLE_" + a_x;
+			}
+
+			if ("content".equals(sortColumn)) {
+				orderBy = "E.CONTENT_" + a_x;
+			}
+
+			if ("createBy".equals(sortColumn)) {
+				orderBy = "E.CREATEBY_" + a_x;
+			}
+
+			if ("createDate".equals(sortColumn)) {
+				orderBy = "E.CREATEDATE_" + a_x;
+			}
+
 		}
-		return mobileLike;
+		return orderBy;
 	}
 
 	public String getTitleLike() {
@@ -88,77 +178,34 @@ public class WxMessageQuery extends DataQuery {
 		return titleLike;
 	}
 
-	public String getContentLike() {
-		if (contentLike != null && contentLike.trim().length() > 0) {
-			if (!contentLike.startsWith("%")) {
-				contentLike = "%" + contentLike;
-			}
-			if (!contentLike.endsWith("%")) {
-				contentLike = contentLike + "%";
-			}
+
+
+	@Override
+	public void initQueryColumns() {
+		super.initQueryColumns();
+		addColumn("id", "ID_");
+		addColumn("name", "NAME_");
+		addColumn("mobile", "MOBILE_");
+		addColumn("title", "TITLE_");
+		addColumn("content", "CONTENT_");
+		addColumn("createBy", "CREATEBY_");
+		addColumn("createDate", "CREATEDATE_");
+	}
+
+	public WxMessageQuery mobile(String mobile) {
+		if (mobile == null) {
+			throw new RuntimeException("mobile is null");
 		}
-		return contentLike;
-	}
-
-	public String getUuid() {
-		return uuid;
-	}
-
-	public List<String> getUuids() {
-		return uuids;
-	}
-
-	public Date getCreateDateGreaterThanOrEqual() {
-		return createDateGreaterThanOrEqual;
-	}
-
-	public Date getCreateDateLessThanOrEqual() {
-		return createDateLessThanOrEqual;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public void setNameLike(String nameLike) {
-		this.nameLike = nameLike;
-	}
-
-	public void setNames(List<String> names) {
-		this.names = names;
-	}
-
-	public void setMobile(String mobile) {
 		this.mobile = mobile;
+		return this;
 	}
 
-	public void setMobileLike(String mobileLike) {
+	public WxMessageQuery mobileLike(String mobileLike) {
+		if (mobileLike == null) {
+			throw new RuntimeException("mobile is null");
+		}
 		this.mobileLike = mobileLike;
-	}
-
-	public void setTitleLike(String titleLike) {
-		this.titleLike = titleLike;
-	}
-
-	public void setContentLike(String contentLike) {
-		this.contentLike = contentLike;
-	}
-
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
-	}
-
-	public void setUuids(List<String> uuids) {
-		this.uuids = uuids;
-	}
-
-	public void setCreateDateGreaterThanOrEqual(
-			Date createDateGreaterThanOrEqual) {
-		this.createDateGreaterThanOrEqual = createDateGreaterThanOrEqual;
-	}
-
-	public void setCreateDateLessThanOrEqual(Date createDateLessThanOrEqual) {
-		this.createDateLessThanOrEqual = createDateLessThanOrEqual;
+		return this;
 	}
 
 	public WxMessageQuery name(String name) {
@@ -185,21 +232,52 @@ public class WxMessageQuery extends DataQuery {
 		return this;
 	}
 
-	public WxMessageQuery mobile(String mobile) {
-		if (mobile == null) {
-			throw new RuntimeException("mobile is null");
-		}
-		this.mobile = mobile;
-		return this;
+	public void setAppId(Long appId) {
+		this.appId = appId;
 	}
 
-	public WxMessageQuery mobileLike(String mobileLike) {
-		if (mobileLike == null) {
-			throw new RuntimeException("mobile is null");
-		}
-		this.mobileLike = mobileLike;
-		return this;
+	public void setAppIds(List<Long> appIds) {
+		this.appIds = appIds;
 	}
+
+	public void setContentLike(String contentLike) {
+		this.contentLike = contentLike;
+	}
+
+	public void setCreateDateGreaterThanOrEqual(
+			Date createDateGreaterThanOrEqual) {
+		this.createDateGreaterThanOrEqual = createDateGreaterThanOrEqual;
+	}
+
+	public void setCreateDateLessThanOrEqual(Date createDateLessThanOrEqual) {
+		this.createDateLessThanOrEqual = createDateLessThanOrEqual;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+	public void setMobileLike(String mobileLike) {
+		this.mobileLike = mobileLike;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setNameLike(String nameLike) {
+		this.nameLike = nameLike;
+	}
+
+	public void setNames(List<String> names) {
+		this.names = names;
+	}
+
+	public void setTitleLike(String titleLike) {
+		this.titleLike = titleLike;
+	}
+
+
 
 	public WxMessageQuery titleLike(String titleLike) {
 		if (titleLike == null) {
@@ -209,98 +287,6 @@ public class WxMessageQuery extends DataQuery {
 		return this;
 	}
 
-	public WxMessageQuery contentLike(String contentLike) {
-		if (contentLike == null) {
-			throw new RuntimeException("content is null");
-		}
-		this.contentLike = contentLike;
-		return this;
-	}
-
-	public WxMessageQuery uuid(String uuid) {
-		if (uuid == null) {
-			throw new RuntimeException("uuid is null");
-		}
-		this.uuid = uuid;
-		return this;
-	}
-
-	public WxMessageQuery uuids(List<String> uuids) {
-		if (uuids == null) {
-			throw new RuntimeException("uuids is empty ");
-		}
-		this.uuids = uuids;
-		return this;
-	}
-
-	public WxMessageQuery createDateGreaterThanOrEqual(
-			Date createDateGreaterThanOrEqual) {
-		if (createDateGreaterThanOrEqual == null) {
-			throw new RuntimeException("createDate is null");
-		}
-		this.createDateGreaterThanOrEqual = createDateGreaterThanOrEqual;
-		return this;
-	}
-
-	public WxMessageQuery createDateLessThanOrEqual(
-			Date createDateLessThanOrEqual) {
-		if (createDateLessThanOrEqual == null) {
-			throw new RuntimeException("createDate is null");
-		}
-		this.createDateLessThanOrEqual = createDateLessThanOrEqual;
-		return this;
-	}
-
-	public String getOrderBy() {
-		if (sortColumn != null) {
-			String a_x = " asc ";
-			if (sortOrder != null) {
-				a_x = sortOrder;
-			}
-
-			if ("name".equals(sortColumn)) {
-				orderBy = "E.NAME_" + a_x;
-			}
-
-			if ("mobile".equals(sortColumn)) {
-				orderBy = "E.MOBILE_" + a_x;
-			}
-
-			if ("title".equals(sortColumn)) {
-				orderBy = "E.TITLE_" + a_x;
-			}
-
-			if ("content".equals(sortColumn)) {
-				orderBy = "E.CONTENT_" + a_x;
-			}
-
-			if ("uuid".equals(sortColumn)) {
-				orderBy = "E.UUID_" + a_x;
-			}
-
-			if ("createBy".equals(sortColumn)) {
-				orderBy = "E.CREATEBY_" + a_x;
-			}
-
-			if ("createDate".equals(sortColumn)) {
-				orderBy = "E.CREATEDATE_" + a_x;
-			}
-
-		}
-		return orderBy;
-	}
-
-	@Override
-	public void initQueryColumns() {
-		super.initQueryColumns();
-		addColumn("id", "ID_");
-		addColumn("name", "NAME_");
-		addColumn("mobile", "MOBILE_");
-		addColumn("title", "TITLE_");
-		addColumn("content", "CONTENT_");
-		addColumn("uuid", "UUID_");
-		addColumn("createBy", "CREATEBY_");
-		addColumn("createDate", "CREATEDATE_");
-	}
+	
 
 }

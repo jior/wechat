@@ -23,11 +23,10 @@ public class WxConfigTest extends AbstractTest {
 			WxConfig wxConfig = new WxConfig();
 			wxConfig.setCallBackUrl("CallBackUrl");
 			wxConfig.setToken("Token");
-			wxConfig.setAppId("AppId");
-			wxConfig.setAppSecret("AppSecret");
+			wxConfig.setWxAppId("AppId");
+			wxConfig.setWxAppSecret("AppSecret");
 			wxConfig.setApiStatus("ApiStatus");
 			wxConfig.setDefaultReply("DefaultReply");
-			wxConfig.setUuid("Uuid");
 			wxConfig.setCreateBy("CreateBy");
 			wxConfig.setCreateDate(new Date());
 

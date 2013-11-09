@@ -8,19 +8,21 @@
 		<id property="id" column="ID_" jdbcType="BIGINT" />
 		<result property="callBackUrl" column="CALLBACKURL_" jdbcType="VARCHAR" />
 		<result property="token" column="TOKEN_" jdbcType="VARCHAR" />
-		<result property="appId" column="APPID_" jdbcType="VARCHAR" />
-		<result property="appSecret" column="APPSECRET_" jdbcType="VARCHAR" />
+		<result property="appId" column="APPID_" jdbcType="BIGINT" />
+		<result property="wxAppId" column="WXAPPID_" jdbcType="VARCHAR" />
+		<result property="wxAppSecret" column="WXAPPSECRET_" jdbcType="VARCHAR" />
+		<result property="yxAppId" column="YXAPPID_" jdbcType="VARCHAR" />
+		<result property="yxAppSecret" column="YXAPPSECRET_" jdbcType="VARCHAR" />
 		<result property="apiStatus" column="APISTATUS_" jdbcType="VARCHAR" />
 		<result property="defaultReply" column="DEFAULTREPLY_"
 			jdbcType="VARCHAR" />
 		<result property="lbsPosition" column="LBSPOSITION_" jdbcType="INTEGER" />
-		<result property="uuid" column="UUID_" jdbcType="VARCHAR" />
 		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
 		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP" />
-		<result property="lastUpdateDate" column="LASTUPDATEDATE_"
-			jdbcType="TIMESTAMP" />
 		<result property="lastUpdateBy" column="LASTUPDATEBY_"
 			jdbcType="VARCHAR" />
+		<result property="lastUpdateDate" column="LASTUPDATEDATE_"
+			jdbcType="TIMESTAMP" />
 	</resultMap>
 
 
@@ -37,8 +39,17 @@
 			<if test="appId != null">
 				,APPID_
 			</if>
-			<if test="appSecret != null">
-				,APPSECRET_
+			<if test="wxAppId != null">
+				,WXAPPID_
+			</if>
+			<if test="wxAppSecret != null">
+				,WXAPPSECRET_
+			</if>
+			<if test="yxAppId != null">
+				,YXAPPID_
+			</if>
+			<if test="yxAppSecret != null">
+				,YXAPPSECRET_
 			</if>
 			<if test="apiStatus != null">
 				,APISTATUS_
@@ -48,9 +59,6 @@
 			</if>
 			<if test="lbsPosition != null">
 				,LBSPOSITION_
-			</if>
-			<if test="uuid != null">
-				,UUID_
 			</if>
 			<if test="createBy != null">
 				,CREATEBY_
@@ -70,10 +78,19 @@
 				,#{token, jdbcType=VARCHAR}
 			</if>
 			<if test="appId != null">
-				,#{appId, jdbcType=VARCHAR}
+				,#{appId, jdbcType=BIGINT}
 			</if>
-			<if test="appSecret != null">
-				,#{appSecret, jdbcType=VARCHAR}
+			<if test="wxAppId != null">
+				,#{wxAppId, jdbcType=VARCHAR}
+			</if>
+			<if test="wxAppSecret != null">
+				,#{wxAppSecret, jdbcType=VARCHAR}
+			</if>
+			<if test="yxAppId != null">
+				,#{yxAppId, jdbcType=VARCHAR}
+			</if>
+			<if test="yxAppSecret != null">
+				,#{yxAppSecret, jdbcType=VARCHAR}
 			</if>
 			<if test="apiStatus != null">
 				,#{apiStatus, jdbcType=VARCHAR}
@@ -83,9 +100,6 @@
 			</if>
 			<if test="lbsPosition != null">
 				,#{lbsPosition, jdbcType=INTEGER}
-			</if>
-			<if test="uuid != null">
-				,#{uuid, jdbcType=VARCHAR}
 			</if>
 			<if test="createBy != null">
 				,#{createBy, jdbcType=VARCHAR}
@@ -107,11 +121,17 @@
 			<if test="token != null">
 				TOKEN_ = #{token, jdbcType=VARCHAR},
 			</if>
-			<if test="appId != null">
-				APPID_ = #{appId, jdbcType=VARCHAR},
+			<if test="wxAppId != null">
+				WXAPPID_ = #{wxAppId, jdbcType=VARCHAR},
 			</if>
-			<if test="appSecret != null">
-				APPSECRET_ = #{appSecret, jdbcType=VARCHAR},
+			<if test="wxAppSecret != null">
+				WXAPPSECRET_ = #{wxAppSecret, jdbcType=VARCHAR},
+			</if>
+			<if test="yxAppId != null">
+				YXAPPID_ = #{yxAppId, jdbcType=VARCHAR},
+			</if>
+			<if test="yxAppSecret != null">
+				YXAPPSECRET_ = #{yxAppSecret, jdbcType=VARCHAR},
 			</if>
 			<if test="apiStatus != null">
 				APISTATUS_ = #{apiStatus, jdbcType=VARCHAR},
@@ -157,8 +177,8 @@
 	<select id="getWxConfigById" parameterType="long" resultMap="wxConfigResultMap">
 		select * from WX_CONFIG where ID_ = #{id}
 	</select>
-	
-	
+
+
 	<select id="getWxConfigByUUID" parameterType="string" resultMap="wxConfigResultMap">
 		select * from WX_CONFIG where UUID_ = #{uuid}
 	</select>
@@ -193,16 +213,20 @@
 		<where>
 			1 = 1
 
+			<if test="appId != null">
+				and E.APPID = #{appId}
+			</if>
+
+			<if test="appIds != null and appIds.size !=0">
+				and E.APPID IN
+				<foreach item="x_appId" index="index" collection="appIds"
+					open="(" separator="," close=")">
+					#{x_appId}
+				</foreach>
+			</if>
+
 			<if test="callBackUrlLike != null and callBackUrlLike != '' ">
 				and E.CALLBACKURL_ like #{callBackUrlLike}
-			</if>
-
-			<if test="token != null and token != '' ">
-				and E.TOKEN_ = #{token}
-			</if>
-
-			<if test="appId != null and appId != '' ">
-				and E.APPID_ = #{appId}
 			</if>
 
 			<if test="apiStatus != null and apiStatus != '' ">
@@ -211,18 +235,6 @@
 
 			<if test="defaultReplyLike != null and defaultReplyLike != '' ">
 				and E.DEFAULTREPLY_ like #{defaultReplyLike}
-			</if>
-
-			<if test="uuid != null and uuid != '' ">
-				and E.UUID_ = #{uuid}
-			</if>
-
-			<if test="uuids != null and uuids.size !=0">
-				and E.UUID_ IN
-				<foreach item="x_uuid" index="index" collection="uuids"
-					open="(" separator="," close=")">
-					#{x_uuid}
-				</foreach>
 			</if>
 
 			<if test="createBy != null and createBy != '' ">

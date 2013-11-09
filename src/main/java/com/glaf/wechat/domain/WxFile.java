@@ -52,6 +52,12 @@ public class WxFile implements java.io.Serializable, JSONable {
 	protected long id;
 
 	/**
+	 * 微站公众号应用ID
+	 */
+	@Column(name = "APPID_")
+	protected Long appId;
+
+	/**
 	 * 栏目编号
 	 */
 	@Column(name = "CATEGORYID_")
@@ -142,6 +148,10 @@ public class WxFile implements java.io.Serializable, JSONable {
 
 	}
 
+	public Long getAppId() {
+		return appId;
+	}
+
 	public long getCategoryId() {
 		return categoryId;
 	}
@@ -208,6 +218,10 @@ public class WxFile implements java.io.Serializable, JSONable {
 
 	public WxFile jsonToObject(JSONObject jsonObject) {
 		return WxFileJsonFactory.jsonToObject(jsonObject);
+	}
+
+	public void setAppId(Long appId) {
+		this.appId = appId;
 	}
 
 	public void setCategoryId(long categoryId) {

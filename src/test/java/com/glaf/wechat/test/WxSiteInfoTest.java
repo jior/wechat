@@ -29,7 +29,6 @@ public class WxSiteInfoTest extends AbstractTest {
 			wxSiteInfo.setAddress("Address");
 			wxSiteInfo.setSiteUrl("SiteUrl");
 			wxSiteInfo.setRemark("Remark");
-			wxSiteInfo.setUuid("Uuid");
 			wxSiteInfo.setCreateBy("CreateBy");
 			wxSiteInfo.setCreateDate(new Date());
 

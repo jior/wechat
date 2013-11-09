@@ -58,12 +58,6 @@ public interface WxTemplateService {
 	 */
 	WxTemplate getWxTemplate(Long id, boolean cache);
 	
-	/**
-	 * 根据uuid获取一条记录
-	 * 
-	 * @return
-	 */
-	WxTemplate getWxTemplateByUUID(String uuid);
 	
 	
 	/**

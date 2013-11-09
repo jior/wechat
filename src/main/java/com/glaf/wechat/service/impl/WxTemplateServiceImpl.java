@@ -39,7 +39,7 @@ import com.glaf.core.config.SystemProperties;
 import com.glaf.core.dao.EntityDAO;
 import com.glaf.core.id.IdGenerator;
 import com.glaf.core.util.FileUtils;
-import com.glaf.core.util.UUID32;
+
 import com.glaf.wechat.domain.WxTemplate;
 import com.glaf.wechat.mapper.WxTemplateMapper;
 import com.glaf.wechat.query.WxTemplateQuery;
@@ -143,10 +143,6 @@ public class WxTemplateServiceImpl implements WxTemplateService {
 		return wxTemplate;
 	}
 
-	public WxTemplate getWxTemplateByUUID(String uuid) {
-		return wxTemplateMapper.getWxTemplateByUUID(uuid);
-	}
-
 	public int getWxTemplateCountByQueryCriteria(WxTemplateQuery query) {
 		return wxTemplateMapper.getWxTemplateCount(query);
 	}
@@ -170,7 +166,6 @@ public class WxTemplateServiceImpl implements WxTemplateService {
 		if (wxTemplate.getId() == 0) {
 			wxTemplate.setId(idGenerator.nextId());
 			wxTemplate.setCreateDate(new Date());
-			wxTemplate.setUuid(UUID32.getUUID());
 			wxTemplateMapper.insertWxTemplate(wxTemplate);
 		} else {
 			wxTemplate.setLastUpdateDate(new Date());

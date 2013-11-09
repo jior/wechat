@@ -42,6 +42,9 @@ public class WxFileJsonFactory {
 		if (jsonObject.containsKey("id")) {
 			model.setId(jsonObject.getLong("id"));
 		}
+		if (jsonObject.containsKey("appId")) {
+			model.setAppId(jsonObject.getLong("appId"));
+		}
 		if (jsonObject.containsKey("categoryId")) {
 			model.setCategoryId(jsonObject.getLong("categoryId"));
 		}
@@ -93,6 +96,9 @@ public class WxFileJsonFactory {
 		jsonObject.put("_id_", model.getId());
 		jsonObject.put("_oid_", model.getId());
 		jsonObject.put("categoryId", model.getCategoryId());
+		if (model.getAppId() != null) {
+			jsonObject.put("appId", model.getAppId());
+		}
 		if (model.getTitle() != null) {
 			jsonObject.put("title", model.getTitle());
 		}
@@ -156,6 +162,9 @@ public class WxFileJsonFactory {
 		jsonObject.put("_id_", model.getId());
 		jsonObject.put("_oid_", model.getId());
 		jsonObject.put("categoryId", model.getCategoryId());
+		if (model.getAppId() != null) {
+			jsonObject.put("appId", model.getAppId());
+		}
 		if (model.getTitle() != null) {
 			jsonObject.put("title", model.getTitle());
 		}

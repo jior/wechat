@@ -32,7 +32,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.core.dao.EntityDAO;
 import com.glaf.core.id.IdGenerator;
-import com.glaf.core.util.UUID32;
+
 import com.glaf.wechat.domain.WxMessage;
 import com.glaf.wechat.mapper.WxMessageMapper;
 import com.glaf.wechat.query.WxMessageQuery;
@@ -84,9 +84,7 @@ public class WxMessageServiceImpl implements WxMessageService {
 		return wxMessage;
 	}
 	
-	public WxMessage getWxMessageByUUID(String uuid){
-		return wxMessageMapper.getWxMessageByUUID(uuid);
-	}
+
 
 	public int getWxMessageCountByQueryCriteria(WxMessageQuery query) {
 		return wxMessageMapper.getWxMessageCount(query);
@@ -111,7 +109,6 @@ public class WxMessageServiceImpl implements WxMessageService {
 		if (wxMessage.getId() == 0) {
 			wxMessage.setId(idGenerator.nextId());
 			wxMessage.setCreateDate(new Date());
-			wxMessage.setUuid(UUID32.getUUID());
 			wxMessageMapper.insertWxMessage(wxMessage);
 		} else {
 			wxMessage.setLastUpdateDate(new Date());

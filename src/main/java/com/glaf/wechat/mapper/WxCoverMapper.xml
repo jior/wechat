@@ -6,9 +6,9 @@
 
 	<resultMap id="wxCoverResultMap" type="com.glaf.wechat.domain.WxCover">
 		<id property="id" column="ID_" jdbcType="BIGINT" />
+		<result property="appId" column="APPID" jdbcType="BIGINT" />
 		<result property="bigIcon" column="BIGICON_" jdbcType="VARCHAR" />
 		<result property="smallIcon" column="SMALLICON_" jdbcType="VARCHAR" />
-		<result property="uuid" column="UUID_" jdbcType="VARCHAR" />
 		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
 		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP" />
 		<result property="lastUpdateDate" column="LASTUPDATEDATE_"
@@ -22,14 +22,14 @@
 		insert into WX_COVER
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			ID_
+			<if test="appId != null">
+				,APPID
+			</if>
 			<if test="bigIcon != null">
 				,BIGICON_
 			</if>
 			<if test="smallIcon != null">
 				,SMALLICON_
-			</if>
-			<if test="uuid != null">
-				,UUID_
 			</if>
 			<if test="createBy != null">
 				,CREATEBY_
@@ -41,15 +41,14 @@
 
 		<trim prefix=" values (" suffix=")" suffixOverrides=",">
 			#{id, jdbcType=BIGINT}
-
+			<if test="appId != null">
+				,#{appId, jdbcType=BIGINT}
+			</if>
 			<if test="bigIcon != null">
 				,#{bigIcon, jdbcType=VARCHAR}
 			</if>
 			<if test="smallIcon != null">
 				,#{smallIcon, jdbcType=VARCHAR}
-			</if>
-			<if test="uuid != null">
-				,#{uuid, jdbcType=VARCHAR}
 			</if>
 			<if test="createBy != null">
 				,#{createBy, jdbcType=VARCHAR}
@@ -107,11 +106,6 @@
 	</select>
 
 
-	<select id="getWxCoverByUUID" parameterType="string" resultMap="wxCoverResultMap">
-		select * from WX_COVER where UUID_ = #{uuid}
-	</select>
-
-
 	<select id="getWxCovers" parameterType="com.glaf.wechat.query.WxCoverQuery"
 		resultMap="wxCoverResultMap">
 		select distinct E.*
@@ -141,16 +135,16 @@
 		<where>
 			1 = 1
 
-			<if test="uuid != null and uuid != '' ">
-				and E.UUID_ = #{uuid}
-			</if>
+			<if test="appId != null">
+				and E.APPID = #{appId}
+            </if>
 
-			<if test="uuids != null and uuids.size !=0">
-				and E.UUID_ IN
-				<foreach item="x_uuid" index="index" collection="uuids"
-					open="(" separator="," close=")">
-					#{x_uuid}
-				</foreach>
+			<if test="appIds != null and appIds.size !=0">
+			    and E.APPID IN
+                <foreach item="x_appId" index="index" collection="appIds" 
+                     open="(" separator="," close=")">
+                  #{x_appId}
+                </foreach>
 			</if>
 
 			<if test="createBy != null and createBy != '' ">

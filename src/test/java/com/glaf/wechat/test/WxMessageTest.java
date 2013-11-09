@@ -25,7 +25,6 @@ public class WxMessageTest extends AbstractTest {
 			wxMessage.setMobile("Mobile");
 			wxMessage.setTitle("Title");
 			wxMessage.setContent("Content");
-			wxMessage.setUuid("Uuid");
 			wxMessage.setCreateBy("CreateBy");
 			wxMessage.setCreateDate(new Date());
 

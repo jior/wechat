@@ -62,6 +62,12 @@ public class WxCategory implements java.io.Serializable, JSONable {
 	protected long parentId;
 
 	/**
+	 * 微站公众号应用ID
+	 */
+	@Column(name = "APPID_")
+	protected Long appId;
+
+	/**
 	 * 树编号
 	 */
 	@Column(name = "TREEID_", length = 500)
@@ -212,6 +218,10 @@ public class WxCategory implements java.io.Serializable, JSONable {
 		return true;
 	}
 
+	public Long getAppId() {
+		return appId;
+	}
+
 	public List<WxCategory> getChildren() {
 		return children;
 	}
@@ -318,6 +328,10 @@ public class WxCategory implements java.io.Serializable, JSONable {
 
 	public WxCategory jsonToObject(JSONObject jsonObject) {
 		return WxCategoryJsonFactory.jsonToObject(jsonObject);
+	}
+
+	public void setAppId(Long appId) {
+		this.appId = appId;
 	}
 
 	public void setChildren(List<WxCategory> children) {

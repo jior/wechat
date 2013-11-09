@@ -156,10 +156,10 @@ public class WxMenuController {
 		WxConfig wxConfig = wxConfigService.getWxConfigByUser(loginContext
 				.getActorId());
 		if (wxConfig != null) {
-			if (StringUtils.isNotEmpty(wxConfig.getAppId())
-					&& StringUtils.isNotEmpty(wxConfig.getAppSecret())) {
+			if (StringUtils.isNotEmpty(wxConfig.getWxAppId())
+					&& StringUtils.isNotEmpty(wxConfig.getWxAppSecret())) {
 				AccessToken accessToken = WechatUtils.getAccessToken(
-						wxConfig.getAppId(), wxConfig.getAppSecret());
+						wxConfig.getWxAppId(), wxConfig.getWxAppSecret());
 				if (accessToken != null && accessToken.getToken() != null) {
 					JSONObject jsonObject = WechatUtils.getMenu(accessToken
 							.getToken());
@@ -423,10 +423,10 @@ public class WxMenuController {
 			WxConfig wxConfig = wxConfigService.getWxConfigByUser(loginContext
 					.getActorId());
 			if (wxConfig != null) {
-				if (StringUtils.isNotEmpty(wxConfig.getAppId())
-						&& StringUtils.isNotEmpty(wxConfig.getAppSecret())) {
+				if (StringUtils.isNotEmpty(wxConfig.getWxAppId())
+						&& StringUtils.isNotEmpty(wxConfig.getWxAppSecret())) {
 					AccessToken accessToken = WechatUtils.getAccessToken(
-							wxConfig.getAppId(), wxConfig.getAppSecret());
+							wxConfig.getWxAppId(), wxConfig.getWxAppSecret());
 					if (accessToken != null && accessToken.getToken() != null) {
 						Menu menu = new Menu();
 						for (int i = 0; i < menus.size(); i++) {

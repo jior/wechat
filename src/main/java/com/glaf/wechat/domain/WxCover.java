@@ -51,6 +51,12 @@ public class WxCover implements java.io.Serializable, JSONable {
 	protected long id;
 
 	/**
+	 * 微站公众号应用ID
+	 */
+	@Column(name = "APPID_")
+	protected Long appId;
+
+	/**
 	 * 大图标
 	 */
 	@Column(name = "BIGICON_", length = 150)
@@ -61,12 +67,6 @@ public class WxCover implements java.io.Serializable, JSONable {
 	 */
 	@Column(name = "SMALLICON_", length = 150)
 	protected String smallIcon;
-
-	/**
-	 * UUID
-	 */
-	@Column(name = "UUID_", length = 50)
-	protected String uuid;
 
 	/**
 	 * 创建人
@@ -98,6 +98,10 @@ public class WxCover implements java.io.Serializable, JSONable {
 
 	}
 
+	public Long getAppId() {
+		return appId;
+	}
+
 	public String getBigIcon() {
 		return bigIcon;
 	}
@@ -126,12 +130,12 @@ public class WxCover implements java.io.Serializable, JSONable {
 		return smallIcon;
 	}
 
-	public String getUuid() {
-		return uuid;
-	}
-
 	public WxCover jsonToObject(JSONObject jsonObject) {
 		return WxCoverJsonFactory.jsonToObject(jsonObject);
+	}
+
+	public void setAppId(Long appId) {
+		this.appId = appId;
 	}
 
 	public void setBigIcon(String bigIcon) {
@@ -160,10 +164,6 @@ public class WxCover implements java.io.Serializable, JSONable {
 
 	public void setSmallIcon(String smallIcon) {
 		this.smallIcon = smallIcon;
-	}
-
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
 	}
 
 	public JSONObject toJsonObject() {

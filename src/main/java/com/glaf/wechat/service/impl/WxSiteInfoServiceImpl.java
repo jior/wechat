@@ -32,7 +32,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.core.dao.EntityDAO;
 import com.glaf.core.id.IdGenerator;
-import com.glaf.core.util.UUID32;
 import com.glaf.wechat.domain.WxSiteInfo;
 import com.glaf.wechat.mapper.WxSiteInfoMapper;
 import com.glaf.wechat.query.WxSiteInfoQuery;
@@ -84,13 +83,7 @@ public class WxSiteInfoServiceImpl implements WxSiteInfoService {
 		return wxSiteInfo;
 	}
 	
-	public WxSiteInfo getWxSiteInfoByUUID(String uuid) {
-		if (uuid == null) {
-			return null;
-		}
-		WxSiteInfo wxSiteInfo = wxSiteInfoMapper.getWxSiteInfoByUUID(uuid);
-		return wxSiteInfo;
-	}
+	
 	
 	/**
 	 * 根据创建人获取一条记录
@@ -129,7 +122,6 @@ public class WxSiteInfoServiceImpl implements WxSiteInfoService {
 		if (wxSiteInfo.getId() == 0) {
 			wxSiteInfo.setId(idGenerator.nextId());
 			wxSiteInfo.setCreateDate(new Date());
-			wxSiteInfo.setUuid(UUID32.getUUID());
 			wxSiteInfoMapper.insertWxSiteInfo(wxSiteInfo);
 		} else {
 			wxSiteInfo.setLastUpdateDate(new Date());

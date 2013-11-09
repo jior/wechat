@@ -32,7 +32,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.core.dao.EntityDAO;
 import com.glaf.core.id.IdGenerator;
-import com.glaf.core.util.UUID32;
+
 import com.glaf.wechat.domain.WxCover;
 import com.glaf.wechat.mapper.WxCoverMapper;
 import com.glaf.wechat.query.WxCoverQuery;
@@ -122,7 +122,6 @@ public class WxCoverServiceImpl implements WxCoverService {
 		if (wxCover.getId() == 0) {
 			wxCover.setId(idGenerator.nextId());
 			wxCover.setCreateDate(new Date());
-			wxCover.setUuid(UUID32.getUUID());
 			wxCoverMapper.insertWxCover(wxCover);
 		} else {
 			wxCover.setLastUpdateDate(new Date());

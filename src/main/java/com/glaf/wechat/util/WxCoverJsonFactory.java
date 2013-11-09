@@ -42,15 +42,16 @@ public class WxCoverJsonFactory {
 		if (jsonObject.containsKey("id")) {
 			model.setId(jsonObject.getLong("id"));
 		}
+		if (jsonObject.containsKey("appId")) {
+			model.setAppId(jsonObject.getLong("appId"));
+		}
 		if (jsonObject.containsKey("bigIcon")) {
 			model.setBigIcon(jsonObject.getString("bigIcon"));
 		}
 		if (jsonObject.containsKey("smallIcon")) {
 			model.setSmallIcon(jsonObject.getString("smallIcon"));
 		}
-		if (jsonObject.containsKey("uuid")) {
-			model.setUuid(jsonObject.getString("uuid"));
-		}
+
 		if (jsonObject.containsKey("createBy")) {
 			model.setCreateBy(jsonObject.getString("createBy"));
 		}
@@ -77,14 +78,14 @@ public class WxCoverJsonFactory {
 		jsonObject.put("id", model.getId());
 		jsonObject.put("_id_", model.getId());
 		jsonObject.put("_oid_", model.getId());
+		if (model.getAppId() != null) {
+			jsonObject.put("appId", model.getAppId());
+		}
 		if (model.getBigIcon() != null) {
 			jsonObject.put("bigIcon", model.getBigIcon());
 		}
 		if (model.getSmallIcon() != null) {
 			jsonObject.put("smallIcon", model.getSmallIcon());
-		}
-		if (model.getUuid() != null) {
-			jsonObject.put("uuid", model.getUuid());
 		}
 		if (model.getCreateBy() != null) {
 			jsonObject.put("createBy", model.getCreateBy());
@@ -116,14 +117,14 @@ public class WxCoverJsonFactory {
 		jsonObject.put("id", model.getId());
 		jsonObject.put("_id_", model.getId());
 		jsonObject.put("_oid_", model.getId());
+		if (model.getAppId() != null) {
+			jsonObject.put("appId", model.getAppId());
+		}
 		if (model.getBigIcon() != null) {
 			jsonObject.put("bigIcon", model.getBigIcon());
 		}
 		if (model.getSmallIcon() != null) {
 			jsonObject.put("smallIcon", model.getSmallIcon());
-		}
-		if (model.getUuid() != null) {
-			jsonObject.put("uuid", model.getUuid());
 		}
 		if (model.getCreateBy() != null) {
 			jsonObject.put("createBy", model.getCreateBy());

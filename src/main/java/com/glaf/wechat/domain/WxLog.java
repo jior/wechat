@@ -29,6 +29,7 @@ import com.glaf.wechat.util.*;
 public class WxLog implements Serializable, JSONable {
 	private static final long serialVersionUID = 3489584842305336744L;
 	private long id;
+	protected Long appId;
 	private String account;
 	private String ip;
 	private Date createTime;
@@ -56,6 +57,10 @@ public class WxLog implements Serializable, JSONable {
 
 	public String getAccount() {
 		return account;
+	}
+
+	public Long getAppId() {
+		return appId;
 	}
 
 	public Date getCreateTime() {
@@ -96,6 +101,10 @@ public class WxLog implements Serializable, JSONable {
 
 	public void setAccount(String account) {
 		this.account = account;
+	}
+
+	public void setAppId(Long appId) {
+		this.appId = appId;
 	}
 
 	public void setCreateTime(Date createTime) {

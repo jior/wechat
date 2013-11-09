@@ -24,6 +24,8 @@ import com.glaf.core.query.DataQuery;
 
 public class WxFileQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
+	protected Long appId;
+	protected List<Long> appIds;
 	protected List<Long> ids;
 	protected Long categoryId;
 	protected List<Long> categoryIds;
@@ -38,121 +40,6 @@ public class WxFileQuery extends DataQuery {
 
 	public WxFileQuery() {
 
-	}
-
-	public Long getCategoryId() {
-		return categoryId;
-	}
-
-	public List<Long> getCategoryIds() {
-		return categoryIds;
-	}
-	
-	
-
-	public String getContentLike() {
-		if (contentLike != null && contentLike.trim().length() > 0) {
-			if (!contentLike.startsWith("%")) {
-				contentLike = "%" + contentLike;
-			}
-			if (!contentLike.endsWith("%")) {
-				contentLike = contentLike + "%";
-			}
-		}
-		return contentLike;
-	}
-
-	public void setContentLike(String contentLike) {
-		this.contentLike = contentLike;
-	}
-
-	public String getTitleLike() {
-		if (titleLike != null && titleLike.trim().length() > 0) {
-			if (!titleLike.startsWith("%")) {
-				titleLike = "%" + titleLike;
-			}
-			if (!titleLike.endsWith("%")) {
-				titleLike = titleLike + "%";
-			}
-		}
-		return titleLike;
-	}
-
-	public String getFilenameLike() {
-		if (filenameLike != null && filenameLike.trim().length() > 0) {
-			if (!filenameLike.startsWith("%")) {
-				filenameLike = "%" + filenameLike;
-			}
-			if (!filenameLike.endsWith("%")) {
-				filenameLike = filenameLike + "%";
-			}
-		}
-		return filenameLike;
-	}
-
-	public String getPathLike() {
-		if (pathLike != null && pathLike.trim().length() > 0) {
-			if (!pathLike.startsWith("%")) {
-				pathLike = "%" + pathLike;
-			}
-			if (!pathLike.endsWith("%")) {
-				pathLike = pathLike + "%";
-			}
-		}
-		return pathLike;
-	}
-
-	public String getUuid() {
-		return uuid;
-	}
-
-	public List<String> getUuids() {
-		return uuids;
-	}
-
-	public Date getCreateDateGreaterThanOrEqual() {
-		return createDateGreaterThanOrEqual;
-	}
-
-	public Date getCreateDateLessThanOrEqual() {
-		return createDateLessThanOrEqual;
-	}
-
-	public void setCategoryId(Long categoryId) {
-		this.categoryId = categoryId;
-	}
-
-	public void setCategoryIds(List<Long> categoryIds) {
-		this.categoryIds = categoryIds;
-	}
-
-	public void setTitleLike(String titleLike) {
-		this.titleLike = titleLike;
-	}
-
-	public void setFilenameLike(String filenameLike) {
-		this.filenameLike = filenameLike;
-	}
-
-	public void setPathLike(String pathLike) {
-		this.pathLike = pathLike;
-	}
-
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
-	}
-
-	public void setUuids(List<String> uuids) {
-		this.uuids = uuids;
-	}
-
-	public void setCreateDateGreaterThanOrEqual(
-			Date createDateGreaterThanOrEqual) {
-		this.createDateGreaterThanOrEqual = createDateGreaterThanOrEqual;
-	}
-
-	public void setCreateDateLessThanOrEqual(Date createDateLessThanOrEqual) {
-		this.createDateLessThanOrEqual = createDateLessThanOrEqual;
 	}
 
 	public WxFileQuery categoryId(Long categoryId) {
@@ -171,51 +58,11 @@ public class WxFileQuery extends DataQuery {
 		return this;
 	}
 
-	public WxFileQuery titleLike(String titleLike) {
-		if (titleLike == null) {
-			throw new RuntimeException("title is null");
-		}
-		this.titleLike = titleLike;
-		return this;
-	}
-	
 	public WxFileQuery contentLike(String contentLike) {
 		if (contentLike == null) {
 			throw new RuntimeException("content is null");
 		}
 		this.contentLike = contentLike;
-		return this;
-	}
-
-	public WxFileQuery filenameLike(String filenameLike) {
-		if (filenameLike == null) {
-			throw new RuntimeException("filename is null");
-		}
-		this.filenameLike = filenameLike;
-		return this;
-	}
-
-	public WxFileQuery pathLike(String pathLike) {
-		if (pathLike == null) {
-			throw new RuntimeException("path is null");
-		}
-		this.pathLike = pathLike;
-		return this;
-	}
-
-	public WxFileQuery uuid(String uuid) {
-		if (uuid == null) {
-			throw new RuntimeException("uuid is null");
-		}
-		this.uuid = uuid;
-		return this;
-	}
-
-	public WxFileQuery uuids(List<String> uuids) {
-		if (uuids == null) {
-			throw new RuntimeException("uuids is empty ");
-		}
-		this.uuids = uuids;
 		return this;
 	}
 
@@ -234,6 +81,62 @@ public class WxFileQuery extends DataQuery {
 		}
 		this.createDateLessThanOrEqual = createDateLessThanOrEqual;
 		return this;
+	}
+
+	public WxFileQuery filenameLike(String filenameLike) {
+		if (filenameLike == null) {
+			throw new RuntimeException("filename is null");
+		}
+		this.filenameLike = filenameLike;
+		return this;
+	}
+
+	public Long getAppId() {
+		return appId;
+	}
+
+	public List<Long> getAppIds() {
+		return appIds;
+	}
+
+	public Long getCategoryId() {
+		return categoryId;
+	}
+
+	public List<Long> getCategoryIds() {
+		return categoryIds;
+	}
+
+	public String getContentLike() {
+		if (contentLike != null && contentLike.trim().length() > 0) {
+			if (!contentLike.startsWith("%")) {
+				contentLike = "%" + contentLike;
+			}
+			if (!contentLike.endsWith("%")) {
+				contentLike = contentLike + "%";
+			}
+		}
+		return contentLike;
+	}
+
+	public Date getCreateDateGreaterThanOrEqual() {
+		return createDateGreaterThanOrEqual;
+	}
+
+	public Date getCreateDateLessThanOrEqual() {
+		return createDateLessThanOrEqual;
+	}
+
+	public String getFilenameLike() {
+		if (filenameLike != null && filenameLike.trim().length() > 0) {
+			if (!filenameLike.startsWith("%")) {
+				filenameLike = "%" + filenameLike;
+			}
+			if (!filenameLike.endsWith("%")) {
+				filenameLike = filenameLike + "%";
+			}
+		}
+		return filenameLike;
 	}
 
 	public String getOrderBy() {
@@ -287,6 +190,38 @@ public class WxFileQuery extends DataQuery {
 		return orderBy;
 	}
 
+	public String getPathLike() {
+		if (pathLike != null && pathLike.trim().length() > 0) {
+			if (!pathLike.startsWith("%")) {
+				pathLike = "%" + pathLike;
+			}
+			if (!pathLike.endsWith("%")) {
+				pathLike = pathLike + "%";
+			}
+		}
+		return pathLike;
+	}
+
+	public String getTitleLike() {
+		if (titleLike != null && titleLike.trim().length() > 0) {
+			if (!titleLike.startsWith("%")) {
+				titleLike = "%" + titleLike;
+			}
+			if (!titleLike.endsWith("%")) {
+				titleLike = titleLike + "%";
+			}
+		}
+		return titleLike;
+	}
+
+	public String getUuid() {
+		return uuid;
+	}
+
+	public List<String> getUuids() {
+		return uuids;
+	}
+
 	@Override
 	public void initQueryColumns() {
 		super.initQueryColumns();
@@ -303,6 +238,87 @@ public class WxFileQuery extends DataQuery {
 		addColumn("uuid", "UUID_");
 		addColumn("createBy", "CREATEBY_");
 		addColumn("createDate", "CREATEDATE_");
+	}
+
+	public WxFileQuery pathLike(String pathLike) {
+		if (pathLike == null) {
+			throw new RuntimeException("path is null");
+		}
+		this.pathLike = pathLike;
+		return this;
+	}
+
+	public void setAppId(Long appId) {
+		this.appId = appId;
+	}
+
+	public void setAppIds(List<Long> appIds) {
+		this.appIds = appIds;
+	}
+
+	public void setCategoryId(Long categoryId) {
+		this.categoryId = categoryId;
+	}
+
+	public void setCategoryIds(List<Long> categoryIds) {
+		this.categoryIds = categoryIds;
+	}
+
+	public void setContentLike(String contentLike) {
+		this.contentLike = contentLike;
+	}
+
+	public void setCreateDateGreaterThanOrEqual(
+			Date createDateGreaterThanOrEqual) {
+		this.createDateGreaterThanOrEqual = createDateGreaterThanOrEqual;
+	}
+
+	public void setCreateDateLessThanOrEqual(Date createDateLessThanOrEqual) {
+		this.createDateLessThanOrEqual = createDateLessThanOrEqual;
+	}
+
+	public void setFilenameLike(String filenameLike) {
+		this.filenameLike = filenameLike;
+	}
+
+	public void setPathLike(String pathLike) {
+		this.pathLike = pathLike;
+	}
+
+	public void setTitleLike(String titleLike) {
+		this.titleLike = titleLike;
+	}
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
+	}
+
+	public void setUuids(List<String> uuids) {
+		this.uuids = uuids;
+	}
+
+	public WxFileQuery titleLike(String titleLike) {
+		if (titleLike == null) {
+			throw new RuntimeException("title is null");
+		}
+		this.titleLike = titleLike;
+		return this;
+	}
+
+	public WxFileQuery uuid(String uuid) {
+		if (uuid == null) {
+			throw new RuntimeException("uuid is null");
+		}
+		this.uuid = uuid;
+		return this;
+	}
+
+	public WxFileQuery uuids(List<String> uuids) {
+		if (uuids == null) {
+			throw new RuntimeException("uuids is empty ");
+		}
+		this.uuids = uuids;
+		return this;
 	}
 
 }

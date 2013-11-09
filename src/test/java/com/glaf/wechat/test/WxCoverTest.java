@@ -23,7 +23,6 @@ public class WxCoverTest extends AbstractTest {
 			WxCover wxCover = new WxCover();
 			wxCover.setBigIcon("BigIcon");
 			wxCover.setSmallIcon("SmallIcon");
-			wxCover.setUuid("Uuid");
 			wxCover.setCreateBy("CreateBy");
 			wxCover.setCreateDate(new Date());
 

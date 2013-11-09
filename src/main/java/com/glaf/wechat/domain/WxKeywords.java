@@ -2,11 +2,15 @@ package com.glaf.wechat.domain;
 
 import java.io.*;
 import java.util.*;
+
 import javax.persistence.*;
+
 import com.alibaba.fastjson.*;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
+
 import com.glaf.core.base.*;
 import com.glaf.wechat.util.*;
 
@@ -18,6 +22,12 @@ public class WxKeywords implements Serializable, JSONable {
 	@Id
 	@Column(name = "ID_", nullable = false)
 	protected Long id;
+
+	/**
+	 * 微站公众号应用ID
+	 */
+	@Column(name = "APPID_")
+	protected Long appId;
 
 	@Column(name = "CATEGORYID_")
 	protected Long categoryId;
@@ -42,62 +52,6 @@ public class WxKeywords implements Serializable, JSONable {
 
 	}
 
-	public Long getId() {
-		return this.id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Long getCategoryId() {
-		return this.categoryId;
-	}
-
-	public Long getContentId() {
-		return this.contentId;
-	}
-
-	public String getKeywords() {
-		return this.keywords;
-	}
-
-	public String getKeywordsMatchType() {
-		return this.keywordsMatchType;
-	}
-
-	public String getCreateBy() {
-		return this.createBy;
-	}
-
-	public Date getCreateDate() {
-		return this.createDate;
-	}
-
-	public void setCategoryId(Long categoryId) {
-		this.categoryId = categoryId;
-	}
-
-	public void setContentId(Long contentId) {
-		this.contentId = contentId;
-	}
-
-	public void setKeywords(String keywords) {
-		this.keywords = keywords;
-	}
-
-	public void setKeywordsMatchType(String keywordsMatchType) {
-		this.keywordsMatchType = keywordsMatchType;
-	}
-
-	public void setCreateBy(String createBy) {
-		this.createBy = createBy;
-	}
-
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -115,6 +69,38 @@ public class WxKeywords implements Serializable, JSONable {
 		return true;
 	}
 
+	public Long getAppId() {
+		return appId;
+	}
+
+	public Long getCategoryId() {
+		return this.categoryId;
+	}
+
+	public Long getContentId() {
+		return this.contentId;
+	}
+
+	public String getCreateBy() {
+		return this.createBy;
+	}
+
+	public Date getCreateDate() {
+		return this.createDate;
+	}
+
+	public Long getId() {
+		return this.id;
+	}
+
+	public String getKeywords() {
+		return this.keywords;
+	}
+
+	public String getKeywordsMatchType() {
+		return this.keywordsMatchType;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -125,6 +111,38 @@ public class WxKeywords implements Serializable, JSONable {
 
 	public WxKeywords jsonToObject(JSONObject jsonObject) {
 		return WxKeywordsJsonFactory.jsonToObject(jsonObject);
+	}
+
+	public void setAppId(Long appId) {
+		this.appId = appId;
+	}
+
+	public void setCategoryId(Long categoryId) {
+		this.categoryId = categoryId;
+	}
+
+	public void setContentId(Long contentId) {
+		this.contentId = contentId;
+	}
+
+	public void setCreateBy(String createBy) {
+		this.createBy = createBy;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public void setKeywords(String keywords) {
+		this.keywords = keywords;
+	}
+
+	public void setKeywordsMatchType(String keywordsMatchType) {
+		this.keywordsMatchType = keywordsMatchType;
 	}
 
 	public JSONObject toJsonObject() {

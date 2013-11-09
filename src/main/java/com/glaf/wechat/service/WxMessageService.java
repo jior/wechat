@@ -50,13 +50,6 @@ public interface WxMessageService {
 	 * @return
 	 */
 	WxMessage getWxMessage(Long id);
-	
-	/**
-	 * 根据uuid获取一条记录
-	 * 
-	 * @return
-	 */
-	WxMessage getWxMessageByUUID(String uuid);
 
 	/**
 	 * 根据查询参数获取记录总数

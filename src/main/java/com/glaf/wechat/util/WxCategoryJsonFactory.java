@@ -42,6 +42,9 @@ public class WxCategoryJsonFactory {
 		if (jsonObject.containsKey("id")) {
 			model.setId(jsonObject.getLong("id"));
 		}
+		if (jsonObject.containsKey("appId")) {
+			model.setAppId(jsonObject.getLong("appId"));
+		}
 		if (jsonObject.containsKey("parentId")) {
 			model.setParentId(jsonObject.getLong("parentId"));
 		}
@@ -112,6 +115,9 @@ public class WxCategoryJsonFactory {
 		jsonObject.put("_oid_", model.getId());
 		jsonObject.put("pId", model.getParentId());
 		jsonObject.put("parentId", model.getParentId());
+		if (model.getAppId() != null) {
+			jsonObject.put("appId", model.getAppId());
+		}
 		if (model.getTreeId() != null) {
 			jsonObject.put("treeId", model.getTreeId());
 		}
@@ -178,6 +184,9 @@ public class WxCategoryJsonFactory {
 		jsonObject.put("_oid_", model.getId());
 		jsonObject.put("pId", model.getParentId());
 		jsonObject.put("parentId", model.getParentId());
+		if (model.getAppId() != null) {
+			jsonObject.put("appId", model.getAppId());
+		}
 		if (model.getTreeId() != null) {
 			jsonObject.put("treeId", model.getTreeId());
 		}

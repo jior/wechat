@@ -42,6 +42,9 @@ public class WxMessageJsonFactory {
 		if (jsonObject.containsKey("id")) {
 			model.setId(jsonObject.getLong("id"));
 		}
+		if (jsonObject.containsKey("appId")) {
+			model.setAppId(jsonObject.getLong("appId"));
+		}
 		if (jsonObject.containsKey("name")) {
 			model.setName(jsonObject.getString("name"));
 		}
@@ -53,9 +56,6 @@ public class WxMessageJsonFactory {
 		}
 		if (jsonObject.containsKey("content")) {
 			model.setContent(jsonObject.getString("content"));
-		}
-		if (jsonObject.containsKey("uuid")) {
-			model.setUuid(jsonObject.getString("uuid"));
 		}
 		if (jsonObject.containsKey("createBy")) {
 			model.setCreateBy(jsonObject.getString("createBy"));
@@ -83,6 +83,9 @@ public class WxMessageJsonFactory {
 		jsonObject.put("id", model.getId());
 		jsonObject.put("_id_", model.getId());
 		jsonObject.put("_oid_", model.getId());
+		if (model.getAppId() != null) {
+			jsonObject.put("appId", model.getAppId());
+		}
 		if (model.getName() != null) {
 			jsonObject.put("name", model.getName());
 		}
@@ -94,9 +97,6 @@ public class WxMessageJsonFactory {
 		}
 		if (model.getContent() != null) {
 			jsonObject.put("content", model.getContent());
-		}
-		if (model.getUuid() != null) {
-			jsonObject.put("uuid", model.getUuid());
 		}
 		if (model.getCreateBy() != null) {
 			jsonObject.put("createBy", model.getCreateBy());
@@ -128,6 +128,9 @@ public class WxMessageJsonFactory {
 		jsonObject.put("id", model.getId());
 		jsonObject.put("_id_", model.getId());
 		jsonObject.put("_oid_", model.getId());
+		if (model.getAppId() != null) {
+			jsonObject.put("appId", model.getAppId());
+		}
 		if (model.getName() != null) {
 			jsonObject.put("name", model.getName());
 		}
@@ -139,9 +142,6 @@ public class WxMessageJsonFactory {
 		}
 		if (model.getContent() != null) {
 			jsonObject.put("content", model.getContent());
-		}
-		if (model.getUuid() != null) {
-			jsonObject.put("uuid", model.getUuid());
 		}
 		if (model.getCreateBy() != null) {
 			jsonObject.put("createBy", model.getCreateBy());

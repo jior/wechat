@@ -19,67 +19,20 @@
 package com.glaf.wechat.query;
 
 import java.util.*;
+
 import com.glaf.core.query.DataQuery;
 
 public class WxCoverQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
+	protected Long appId;
+	protected List<Long> appIds;
 	protected List<Long> ids;
-	protected String uuid;
 	protected List<String> uuids;
 	protected Date createDateGreaterThanOrEqual;
 	protected Date createDateLessThanOrEqual;
 
 	public WxCoverQuery() {
 
-	}
-
-	public String getUuid() {
-		return uuid;
-	}
-
-	public List<String> getUuids() {
-		return uuids;
-	}
-
-	public Date getCreateDateGreaterThanOrEqual() {
-		return createDateGreaterThanOrEqual;
-	}
-
-	public Date getCreateDateLessThanOrEqual() {
-		return createDateLessThanOrEqual;
-	}
-
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
-	}
-
-	public void setUuids(List<String> uuids) {
-		this.uuids = uuids;
-	}
-
-	public void setCreateDateGreaterThanOrEqual(
-			Date createDateGreaterThanOrEqual) {
-		this.createDateGreaterThanOrEqual = createDateGreaterThanOrEqual;
-	}
-
-	public void setCreateDateLessThanOrEqual(Date createDateLessThanOrEqual) {
-		this.createDateLessThanOrEqual = createDateLessThanOrEqual;
-	}
-
-	public WxCoverQuery uuid(String uuid) {
-		if (uuid == null) {
-			throw new RuntimeException("uuid is null");
-		}
-		this.uuid = uuid;
-		return this;
-	}
-
-	public WxCoverQuery uuids(List<String> uuids) {
-		if (uuids == null) {
-			throw new RuntimeException("uuids is empty ");
-		}
-		this.uuids = uuids;
-		return this;
 	}
 
 	public WxCoverQuery createDateGreaterThanOrEqual(
@@ -99,6 +52,22 @@ public class WxCoverQuery extends DataQuery {
 		return this;
 	}
 
+	public Long getAppId() {
+		return appId;
+	}
+
+	public List<Long> getAppIds() {
+		return appIds;
+	}
+
+	public Date getCreateDateGreaterThanOrEqual() {
+		return createDateGreaterThanOrEqual;
+	}
+
+	public Date getCreateDateLessThanOrEqual() {
+		return createDateLessThanOrEqual;
+	}
+
 	public String getOrderBy() {
 		if (sortColumn != null) {
 			String a_x = " asc ";
@@ -114,10 +83,6 @@ public class WxCoverQuery extends DataQuery {
 				orderBy = "E.SMALLICON_" + a_x;
 			}
 
-			if ("uuid".equals(sortColumn)) {
-				orderBy = "E.UUID_" + a_x;
-			}
-
 			if ("createBy".equals(sortColumn)) {
 				orderBy = "E.CREATEBY_" + a_x;
 			}
@@ -130,15 +95,50 @@ public class WxCoverQuery extends DataQuery {
 		return orderBy;
 	}
 
+
+
+	public List<String> getUuids() {
+		return uuids;
+	}
+
 	@Override
 	public void initQueryColumns() {
 		super.initQueryColumns();
 		addColumn("id", "ID_");
 		addColumn("bigIcon", "BIGICON_");
 		addColumn("smallIcon", "SMALLICON_");
-		addColumn("uuid", "UUID_");
 		addColumn("createBy", "CREATEBY_");
 		addColumn("createDate", "CREATEDATE_");
+	}
+
+	public void setAppId(Long appId) {
+		this.appId = appId;
+	}
+
+	public void setAppIds(List<Long> appIds) {
+		this.appIds = appIds;
+	}
+
+	public void setCreateDateGreaterThanOrEqual(
+			Date createDateGreaterThanOrEqual) {
+		this.createDateGreaterThanOrEqual = createDateGreaterThanOrEqual;
+	}
+
+	public void setCreateDateLessThanOrEqual(Date createDateLessThanOrEqual) {
+		this.createDateLessThanOrEqual = createDateLessThanOrEqual;
+	}
+
+	public void setUuids(List<String> uuids) {
+		this.uuids = uuids;
+	}
+
+
+	public WxCoverQuery uuids(List<String> uuids) {
+		if (uuids == null) {
+			throw new RuntimeException("uuids is empty ");
+		}
+		this.uuids = uuids;
+		return this;
 	}
 
 }

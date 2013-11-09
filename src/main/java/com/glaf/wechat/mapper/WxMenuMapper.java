@@ -31,8 +31,6 @@ public interface WxMenuMapper {
 	void deleteWxMenuById(Long id);
 
 	WxMenu getWxMenuById(Long id);
-	
-	WxMenu getWxMenuByUUID(String uuid);
 
 	int getWxMenuCount(WxMenuQuery query);
 

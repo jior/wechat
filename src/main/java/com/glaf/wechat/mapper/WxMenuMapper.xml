@@ -7,6 +7,7 @@
 	<resultMap id="wxMenuResultMap" type="com.glaf.wechat.domain.WxMenu">
 		<id property="id" column="ID_" jdbcType="BIGINT" />
 		<result property="parentId" column="PARENT_" jdbcType="BIGINT" />
+		<result property="appId" column="APPID" jdbcType="BIGINT" />
 		<result property="name" column="NAME_" jdbcType="VARCHAR" />
 		<result property="type" column="TYPE_" jdbcType="VARCHAR" />
 		<result property="key" column="KEY_" jdbcType="VARCHAR" />
@@ -19,7 +20,6 @@
 		<result property="desc" column="DESC_" jdbcType="VARCHAR" />
 		<result property="icon" column="ICON_" jdbcType="VARCHAR" />
 		<result property="iconCls" column="ICONCLS_" jdbcType="VARCHAR" />
-		<result property="uuid" column="UUID_" jdbcType="VARCHAR" />
 		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
 		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP" />
 		<result property="lastUpdateDate" column="LASTUPDATEDATE_"
@@ -33,6 +33,9 @@
 		insert into WX_MENU
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			ID_
+			<if test="appId != null">
+				,APPID
+			</if>
 			<if test="parentId != null">
 				,PARENT_
 			</if>
@@ -72,9 +75,6 @@
 			<if test="iconCls != null">
 				,ICONCLS_
 			</if>
-			<if test="uuid != null">
-				,UUID_
-			</if>
 			<if test="createBy != null">
 				,CREATEBY_
 			</if>
@@ -85,7 +85,9 @@
 
 		<trim prefix=" values (" suffix=")" suffixOverrides=",">
 			#{id, jdbcType=BIGINT}
-
+			<if test="appId != null">
+				,#{appId, jdbcType=BIGINT}
+			</if>
 			<if test="parentId != null">
 				,#{parentId, jdbcType=BIGINT}
 			</if>
@@ -124,9 +126,6 @@
 			</if>
 			<if test="iconCls != null">
 				,#{iconCls, jdbcType=VARCHAR}
-			</if>
-			<if test="uuid != null">
-				,#{uuid, jdbcType=VARCHAR}
 			</if>
 			<if test="createBy != null">
 				,#{createBy, jdbcType=VARCHAR}
@@ -206,12 +205,7 @@
 	<select id="getWxMenuById" parameterType="long" resultMap="wxMenuResultMap">
 		select * from WX_MENU where ID_ = #{id}
 	</select>
-
-
-	<select id="getWxMenuByUUID" parameterType="string" resultMap="wxMenuResultMap">
-		select * from WX_MENU where UUID_ = #{uuid}
-	</select>
-
+	
 
 	<select id="getWxMenus" parameterType="com.glaf.wechat.query.WxMenuQuery"
 		resultMap="wxMenuResultMap">
@@ -241,6 +235,18 @@
 
 		<where>
 			1 = 1
+
+			<if test="appId != null">
+				and E.APPID = #{appId}
+            </if>
+
+			<if test="appIds != null and appIds.size !=0">
+			    and E.APPID IN
+                <foreach item="x_appId" index="index" collection="appIds" 
+                     open="(" separator="," close=")">
+                  #{x_appId}
+                </foreach>
+			</if>
 
 			<if test="parentId != null">
 				and E.PARENT_ = #{parentId}
@@ -304,18 +310,6 @@
 
 			<if test="locked != null">
 				and E.LOCKED_ = #{locked}
-			</if>
-
-			<if test="uuid != null and uuid != '' ">
-				and E.UUID_ = #{uuid}
-			</if>
-
-			<if test="uuids != null and uuids.size !=0">
-				and E.UUID_ IN
-				<foreach item="x_uuid" index="index" collection="uuids"
-					open="(" separator="," close=")">
-					#{x_uuid}
-				</foreach>
 			</if>
 
 			<if test="createBy != null and createBy != '' ">

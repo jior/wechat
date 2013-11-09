@@ -27,7 +27,6 @@ public class WxMenuTest extends AbstractTest {
 			wxMenu.setKey("Key");
 			wxMenu.setUrl("Url");
 			wxMenu.setSort(1);
-			wxMenu.setUuid("Uuid");
 			wxMenu.setCreateBy("CreateBy");
 			wxMenu.setCreateDate(new Date());
 

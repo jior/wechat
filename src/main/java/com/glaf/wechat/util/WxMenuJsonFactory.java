@@ -42,6 +42,9 @@ public class WxMenuJsonFactory {
 		if (jsonObject.containsKey("id")) {
 			model.setId(jsonObject.getLong("id"));
 		}
+		if (jsonObject.containsKey("appId")) {
+			model.setAppId(jsonObject.getLong("appId"));
+		}
 		if (jsonObject.containsKey("parentId")) {
 			model.setParentId(jsonObject.getLong("parentId"));
 		}
@@ -81,9 +84,6 @@ public class WxMenuJsonFactory {
 		if (jsonObject.containsKey("desc")) {
 			model.setDesc(jsonObject.getString("desc"));
 		}
-		if (jsonObject.containsKey("uuid")) {
-			model.setUuid(jsonObject.getString("uuid"));
-		}
 		if (jsonObject.containsKey("createBy")) {
 			model.setCreateBy(jsonObject.getString("createBy"));
 		}
@@ -111,6 +111,9 @@ public class WxMenuJsonFactory {
 		jsonObject.put("_id_", model.getId());
 		jsonObject.put("_oid_", model.getId());
 		jsonObject.put("parentId", model.getParentId());
+		if (model.getAppId() != null) {
+			jsonObject.put("appId", model.getAppId());
+		}
 		if (model.getName() != null) {
 			jsonObject.put("name", model.getName());
 		}
@@ -148,9 +151,6 @@ public class WxMenuJsonFactory {
 			jsonObject.put("desc", model.getDesc());
 		}
 
-		if (model.getUuid() != null) {
-			jsonObject.put("uuid", model.getUuid());
-		}
 		if (model.getCreateBy() != null) {
 			jsonObject.put("createBy", model.getCreateBy());
 		}
@@ -182,6 +182,9 @@ public class WxMenuJsonFactory {
 		jsonObject.put("_id_", model.getId());
 		jsonObject.put("_oid_", model.getId());
 		jsonObject.put("parentId", model.getParentId());
+		if (model.getAppId() != null) {
+			jsonObject.put("appId", model.getAppId());
+		}
 		if (model.getName() != null) {
 			jsonObject.put("name", model.getName());
 		}
@@ -218,9 +221,6 @@ public class WxMenuJsonFactory {
 			jsonObject.put("desc", model.getDesc());
 		}
 
-		if (model.getUuid() != null) {
-			jsonObject.put("uuid", model.getUuid());
-		}
 		if (model.getCreateBy() != null) {
 			jsonObject.put("createBy", model.getCreateBy());
 		}

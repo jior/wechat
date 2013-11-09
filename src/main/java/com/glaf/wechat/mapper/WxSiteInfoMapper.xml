@@ -6,6 +6,7 @@
 
 	<resultMap id="wxSiteInfoResultMap" type="com.glaf.wechat.domain.WxSiteInfo">
 		<id property="id" column="ID_" jdbcType="BIGINT" />
+		<result property="appId" column="APPID" jdbcType="BIGINT" />
 		<result property="linkman" column="LINKMAN_" jdbcType="VARCHAR" />
 		<result property="telephone" column="TELEPHONE_" jdbcType="VARCHAR" />
 		<result property="mobile" column="MOBILE_" jdbcType="VARCHAR" />
@@ -14,7 +15,6 @@
 		<result property="address" column="ADDRESS_" jdbcType="VARCHAR" />
 		<result property="siteUrl" column="SITEURL_" jdbcType="VARCHAR" />
 		<result property="remark" column="REMARK_" jdbcType="VARCHAR" />
-		<result property="uuid" column="UUID_" jdbcType="VARCHAR" />
 		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
 		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP" />
 		<result property="lastUpdateDate" column="LASTUPDATEDATE_"
@@ -28,6 +28,9 @@
 		insert into WX_SITE_INFO
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			ID_
+			<if test="appId != null">
+				,APPID
+			</if>
 			<if test="linkman != null">
 				,LINKMAN_
 			</if>
@@ -52,9 +55,6 @@
 			<if test="remark != null">
 				,REMARK_
 			</if>
-			<if test="uuid != null">
-				,UUID_
-			</if>
 			<if test="createBy != null">
 				,CREATEBY_
 			</if>
@@ -65,7 +65,9 @@
 
 		<trim prefix=" values (" suffix=")" suffixOverrides=",">
 			#{id, jdbcType=BIGINT}
-
+			<if test="appId != null">
+				,#{appId, jdbcType=BIGINT}
+			</if>
 			<if test="linkman != null">
 				,#{linkman, jdbcType=VARCHAR}
 			</if>
@@ -89,9 +91,6 @@
 			</if>
 			<if test="remark != null">
 				,#{remark, jdbcType=VARCHAR}
-			</if>
-			<if test="uuid != null">
-				,#{uuid, jdbcType=VARCHAR}
 			</if>
 			<if test="createBy != null">
 				,#{createBy, jdbcType=VARCHAR}
@@ -169,11 +168,6 @@
 	</select>
 
 
-	<select id="getWxSiteInfoByUUID" parameterType="string"
-		resultMap="wxSiteInfoResultMap">
-		select * from WX_SITE_INFO where UUID_ = #{uuid}
-	</select>
-
 	<select id="getWxSiteInfos" parameterType="com.glaf.wechat.query.WxSiteInfoQuery"
 		resultMap="wxSiteInfoResultMap">
 		select distinct E.*
@@ -202,6 +196,18 @@
 
 		<where>
 			1 = 1
+
+			<if test="appId != null">
+				and E.APPID = #{appId}
+            </if>
+
+			<if test="appIds != null and appIds.size !=0">
+			    and E.APPID IN
+                <foreach item="x_appId" index="index" collection="appIds" 
+                     open="(" separator="," close=")">
+                  #{x_appId}
+                </foreach>
+			</if>
 
 			<if test="linkman != null and linkman != '' ">
 				and E.LINKMAN_ = #{linkman}
@@ -250,18 +256,6 @@
 
 			<if test="remarkLike != null and remarkLike != '' ">
 				and E.REMARK_ like #{remarkLike}
-			</if>
-
-			<if test="uuid != null and uuid != '' ">
-				and E.UUID_ = #{uuid}
-			</if>
-
-			<if test="uuids != null and uuids.size !=0">
-				and E.UUID_ IN
-				<foreach item="x_uuid" index="index" collection="uuids"
-					open="(" separator="," close=")">
-					#{x_uuid}
-				</foreach>
 			</if>
 
 			<if test="createBy != null and createBy != '' ">

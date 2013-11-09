@@ -31,8 +31,6 @@ public interface WxCoverMapper {
 	void deleteWxCoverById(Long id);
 
 	WxCover getWxCoverById(Long id);
-	
-	WxCover getWxCoverByUUID(String uuid);
 
 	int getWxCoverCount(WxCoverQuery query);
 

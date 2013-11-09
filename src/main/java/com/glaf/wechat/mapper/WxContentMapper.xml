@@ -6,6 +6,7 @@
 
 	<resultMap id="wxContentResultMap" type="com.glaf.wechat.domain.WxContent">
 		<id property="id" column="ID_" jdbcType="BIGINT" />
+		<result property="appId" column="APPID" jdbcType="BIGINT" />
 		<result property="categoryId" column="CATEGORYID_" jdbcType="BIGINT" />
 		<result property="title" column="TITLE_" jdbcType="VARCHAR" />
 		<result property="content" column="CONTENT_" jdbcType="VARCHAR" />
@@ -49,6 +50,9 @@
 		insert into WX_CONTENT
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			ID_
+			<if test="appId != null">
+				,APPID
+			</if>
 			<if test="categoryId != null">
 				,CATEGORYID_
 			</if>
@@ -137,7 +141,9 @@
 
 		<trim prefix=" values (" suffix=")" suffixOverrides=",">
 			#{id, jdbcType=BIGINT}
-
+			<if test="appId != null">
+				,#{appId, jdbcType=BIGINT}
+			</if>
 			<if test="categoryId != null">
 				,#{categoryId, jdbcType=BIGINT}
 			</if>
@@ -387,6 +393,18 @@
 		<where>
 			1 = 1
 
+			<if test="appId != null">
+				and E.APPID = #{appId}
+            </if>
+
+			<if test="appIds != null and appIds.size !=0">
+			    and E.APPID IN
+                <foreach item="x_appId" index="index" collection="appIds" 
+                     open="(" separator="," close=")">
+                  #{x_appId}
+                </foreach>
+			</if>
+
 			<if test="contentIds != null and contentIds.size !=0">
 				and E.ID_ IN
 				<foreach item="x_nodeId" index="index" collection="contentIds"
@@ -438,10 +456,6 @@
 			<if test="msgType != null and msgType != '' ">
 				and E.MSGTYPE_ = #{msgType}
             </if>
-
-			<if test="uuid != null and uuid != '' ">
-				and E.UUID_ = #{uuid}
-			</if>
 
 			<if test="uuids != null and uuids.size !=0">
 				and E.UUID_ IN

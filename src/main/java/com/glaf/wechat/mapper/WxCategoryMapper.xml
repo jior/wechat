@@ -6,6 +6,7 @@
 
 	<resultMap id="wxCategoryResultMap" type="com.glaf.wechat.domain.WxCategory">
 		<id property="id" column="ID_" jdbcType="BIGINT" />
+		<result property="appId" column="APPID" jdbcType="BIGINT" />
 		<result property="parentId" column="PARENT_" jdbcType="BIGINT" />
 		<result property="treeId" column="TREEID_" jdbcType="VARCHAR" />
 		<result property="sort" column="SORT_" jdbcType="INTEGER" />
@@ -34,6 +35,9 @@
 		insert into WX_CATEGORY
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			ID_
+			<if test="appId != null">
+				,APPID
+			</if>
 			<if test="parentId != null">
 				,PARENT_
 			</if>
@@ -89,7 +93,9 @@
 
 		<trim prefix=" values (" suffix=")" suffixOverrides=",">
 			#{id, jdbcType=BIGINT}
-
+			<if test="appId != null">
+				,#{appId, jdbcType=BIGINT}
+			</if>
 			<if test="parentId != null">
 				,#{parentId, jdbcType=BIGINT}
 			</if>
@@ -258,6 +264,18 @@
 		<where>
 			1 = 1
 
+			<if test="appId != null">
+				and E.APPID = #{appId}
+            </if>
+
+			<if test="appIds != null and appIds.size !=0">
+			    and E.APPID IN
+                <foreach item="x_appId" index="index" collection="appIds" 
+                     open="(" separator="," close=")">
+                  #{x_appId}
+                </foreach>
+			</if>
+
 			<if test="parentId != null">
 				and E.PARENT_ = #{parentId}
 			</if>
@@ -384,10 +402,6 @@
 
 			<if test="urlLike != null and urlLike != '' ">
 				and E.URL_ like #{urlLike}
-			</if>
-
-			<if test="uuid != null and uuid != '' ">
-				and E.UUID_ = #{uuid}
 			</if>
 
 			<if test="uuids != null and uuids.size !=0">

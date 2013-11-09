@@ -53,6 +53,12 @@ public class WxMenu implements java.io.Serializable, JSONable {
 	protected long id;
 
 	/**
+	 * 微站公众号应用ID
+	 */
+	@Column(name = "APPID_")
+	protected Long appId;
+
+	/**
 	 * 父节点编号
 	 */
 	@Column(name = "PARENT_")
@@ -131,12 +137,6 @@ public class WxMenu implements java.io.Serializable, JSONable {
 	protected int locked;
 
 	/**
-	 * UUID
-	 */
-	@Column(name = "UUID_", length = 50)
-	protected String uuid;
-
-	/**
 	 * 创建人
 	 */
 	@Column(name = "CREATEBY_", length = 50)
@@ -174,6 +174,10 @@ public class WxMenu implements java.io.Serializable, JSONable {
 			children = new ArrayList<WxMenu>();
 		}
 		children.add(menu);
+	}
+
+	public Long getAppId() {
+		return appId;
 	}
 
 	public List<WxMenu> getChildren() {
@@ -252,12 +256,12 @@ public class WxMenu implements java.io.Serializable, JSONable {
 		return url;
 	}
 
-	public String getUuid() {
-		return uuid;
-	}
-
 	public WxMenu jsonToObject(JSONObject jsonObject) {
 		return WxMenuJsonFactory.jsonToObject(jsonObject);
+	}
+
+	public void setAppId(Long appId) {
+		this.appId = appId;
 	}
 
 	public void setChildren(List<WxMenu> children) {
@@ -334,10 +338,6 @@ public class WxMenu implements java.io.Serializable, JSONable {
 
 	public void setUrl(String url) {
 		this.url = url;
-	}
-
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
 	}
 
 	public JSONObject toJsonObject() {

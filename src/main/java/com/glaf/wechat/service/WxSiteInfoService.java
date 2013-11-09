@@ -51,7 +51,6 @@ public interface WxSiteInfoService {
 	 */
 	WxSiteInfo getWxSiteInfo(Long id);
 
-	WxSiteInfo getWxSiteInfoByUUID(String uuid);
 
 	/**
 	 * 根据创建人获取一条记录

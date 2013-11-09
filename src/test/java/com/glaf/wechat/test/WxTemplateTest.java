@@ -25,7 +25,6 @@ public class WxTemplateTest extends AbstractTest {
 			wxTemplate.setType("Type");
 			wxTemplate.setPath("path");
 			wxTemplate.setDefaultFlag(1);
-			wxTemplate.setUuid("Uuid");
 			wxTemplate.setCreateBy("CreateBy");
 			wxTemplate.setCreateDate(new Date());
 

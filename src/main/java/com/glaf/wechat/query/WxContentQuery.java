@@ -24,6 +24,8 @@ import com.glaf.core.query.DataQuery;
 
 public class WxContentQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
+	protected Long appId;
+	protected List<Long> appIds;
 	protected List<Long> ids;
 	protected Long categoryId;
 	protected List<Long> categoryIds;
@@ -96,6 +98,14 @@ public class WxContentQuery extends DataQuery {
 		}
 		this.createDateLessThanOrEqual = createDateLessThanOrEqual;
 		return this;
+	}
+
+	public Long getAppId() {
+		return appId;
+	}
+
+	public List<Long> getAppIds() {
+		return appIds;
 	}
 
 	public Long getCategoryId() {
@@ -183,10 +193,6 @@ public class WxContentQuery extends DataQuery {
 
 			if ("type".equals(sortColumn)) {
 				orderBy = "E.TYPE_" + a_x;
-			}
-
-			if ("uuid".equals(sortColumn)) {
-				orderBy = "E.UUID_" + a_x;
 			}
 
 			if ("keywords".equals(sortColumn)) {
@@ -311,7 +317,6 @@ public class WxContentQuery extends DataQuery {
 		addColumn("status", "STATUS_");
 		addColumn("priority", "PRIORTY_");
 		addColumn("type", "TYPE_");
-		addColumn("uuid", "UUID_");
 		addColumn("keywords", "KEYWORDS_");
 		addColumn("keywordsCount", "KEYWORDSCOUNT_");
 		addColumn("summary", "SUMMARY_");
@@ -371,6 +376,14 @@ public class WxContentQuery extends DataQuery {
 		}
 		this.priorityLessThanOrEqual = priorityLessThanOrEqual;
 		return this;
+	}
+
+	public void setAppId(Long appId) {
+		this.appId = appId;
+	}
+
+	public void setAppIds(List<Long> appIds) {
+		this.appIds = appIds;
 	}
 
 	public void setCategoryId(Long categoryId) {

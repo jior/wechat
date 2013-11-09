@@ -72,7 +72,7 @@ public class WxUserTemplateQuery extends DataQuery {
 			if (sortOrder != null) {
 				a_x = sortOrder;
 			}
-			
+
 			if ("categoryId".equals(sortColumn)) {
 				orderBy = "E.CATEGORYID_" + a_x;
 			}

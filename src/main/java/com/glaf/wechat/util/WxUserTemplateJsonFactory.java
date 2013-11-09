@@ -14,6 +14,9 @@ public class WxUserTemplateJsonFactory {
 		if (jsonObject.containsKey("id")) {
 			model.setId(jsonObject.getLong("id"));
 		}
+		if (jsonObject.containsKey("appId")) {
+			model.setAppId(jsonObject.getLong("appId"));
+		}
 		if (jsonObject.containsKey("categoryId")) {
 			model.setCategoryId(jsonObject.getLong("categoryId"));
 		}
@@ -40,7 +43,9 @@ public class WxUserTemplateJsonFactory {
 		jsonObject.put("_oid_", model.getId());
 		jsonObject.put("categoryId", model.getCategoryId());
 		jsonObject.put("templateId", model.getTemplateId());
-
+		if (model.getAppId() != null) {
+			jsonObject.put("appId", model.getAppId());
+		}
 		if (model.getType() != null) {
 			jsonObject.put("type", model.getType());
 		}
@@ -65,7 +70,9 @@ public class WxUserTemplateJsonFactory {
 		jsonObject.put("_oid_", model.getId());
 		jsonObject.put("categoryId", model.getCategoryId());
 		jsonObject.put("templateId", model.getTemplateId());
-
+		if (model.getAppId() != null) {
+			jsonObject.put("appId", model.getAppId());
+		}
 		if (model.getType() != null) {
 			jsonObject.put("type", model.getType());
 		}

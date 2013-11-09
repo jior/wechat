@@ -19,145 +19,23 @@
 package com.glaf.wechat.query;
 
 import java.util.*;
+
 import com.glaf.core.query.DataQuery;
 
 public class WxConfigQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
+	protected Long appId;
+	protected List<Long> appIds;
 	protected List<Long> ids;
 	protected String callBackUrlLike;
-	protected String token;
-	protected String appId;
 	protected String apiStatus;
 	protected String defaultReplyLike;
-	protected String uuid;
-	protected List<String> uuids;
 	protected List<String> createBys;
 	protected Date createDateGreaterThanOrEqual;
 	protected Date createDateLessThanOrEqual;
 
 	public WxConfigQuery() {
 
-	}
-
-	public String getCallBackUrlLike() {
-		if (callBackUrlLike != null && callBackUrlLike.trim().length() > 0) {
-			if (!callBackUrlLike.startsWith("%")) {
-				callBackUrlLike = "%" + callBackUrlLike;
-			}
-			if (!callBackUrlLike.endsWith("%")) {
-				callBackUrlLike = callBackUrlLike + "%";
-			}
-		}
-		return callBackUrlLike;
-	}
-
-	public String getToken() {
-		return token;
-	}
-
-	public String getAppId() {
-		return appId;
-	}
-
-	public String getApiStatus() {
-		return apiStatus;
-	}
-
-	public String getDefaultReplyLike() {
-		if (defaultReplyLike != null && defaultReplyLike.trim().length() > 0) {
-			if (!defaultReplyLike.startsWith("%")) {
-				defaultReplyLike = "%" + defaultReplyLike;
-			}
-			if (!defaultReplyLike.endsWith("%")) {
-				defaultReplyLike = defaultReplyLike + "%";
-			}
-		}
-		return defaultReplyLike;
-	}
-
-	public String getUuid() {
-		return uuid;
-	}
-
-	public List<String> getUuids() {
-		return uuids;
-	}
-
-	public List<String> getCreateBys() {
-		return createBys;
-	}
-
-	public Date getCreateDateGreaterThanOrEqual() {
-		return createDateGreaterThanOrEqual;
-	}
-
-	public Date getCreateDateLessThanOrEqual() {
-		return createDateLessThanOrEqual;
-	}
-
-	public void setCallBackUrlLike(String callBackUrlLike) {
-		this.callBackUrlLike = callBackUrlLike;
-	}
-
-	public void setToken(String token) {
-		this.token = token;
-	}
-
-	public void setAppId(String appId) {
-		this.appId = appId;
-	}
-
-	public void setApiStatus(String apiStatus) {
-		this.apiStatus = apiStatus;
-	}
-
-	public void setDefaultReplyLike(String defaultReplyLike) {
-		this.defaultReplyLike = defaultReplyLike;
-	}
-
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
-	}
-
-	public void setUuids(List<String> uuids) {
-		this.uuids = uuids;
-	}
-
-	public void setCreateBys(List<String> createBys) {
-		this.createBys = createBys;
-	}
-
-	public void setCreateDateGreaterThanOrEqual(
-			Date createDateGreaterThanOrEqual) {
-		this.createDateGreaterThanOrEqual = createDateGreaterThanOrEqual;
-	}
-
-	public void setCreateDateLessThanOrEqual(Date createDateLessThanOrEqual) {
-		this.createDateLessThanOrEqual = createDateLessThanOrEqual;
-	}
-
-	public WxConfigQuery callBackUrlLike(String callBackUrlLike) {
-		if (callBackUrlLike == null) {
-			throw new RuntimeException("callBackUrl is null");
-		}
-		this.callBackUrlLike = callBackUrlLike;
-		return this;
-	}
-
-	public WxConfigQuery token(String token) {
-		if (token == null) {
-			throw new RuntimeException("token is null");
-		}
-		this.token = token;
-		return this;
-	}
-
-	public WxConfigQuery appId(String appId) {
-		if (appId == null) {
-			throw new RuntimeException("appId is null");
-		}
-		this.appId = appId;
-		return this;
 	}
 
 	public WxConfigQuery apiStatus(String apiStatus) {
@@ -168,27 +46,19 @@ public class WxConfigQuery extends DataQuery {
 		return this;
 	}
 
-	public WxConfigQuery defaultReplyLike(String defaultReplyLike) {
-		if (defaultReplyLike == null) {
-			throw new RuntimeException("defaultReply is null");
+	public WxConfigQuery appId(Long appId) {
+		if (appId == null) {
+			throw new RuntimeException("appId is null");
 		}
-		this.defaultReplyLike = defaultReplyLike;
+		this.appId = appId;
 		return this;
 	}
 
-	public WxConfigQuery uuid(String uuid) {
-		if (uuid == null) {
-			throw new RuntimeException("uuid is null");
+	public WxConfigQuery callBackUrlLike(String callBackUrlLike) {
+		if (callBackUrlLike == null) {
+			throw new RuntimeException("callBackUrl is null");
 		}
-		this.uuid = uuid;
-		return this;
-	}
-
-	public WxConfigQuery uuids(List<String> uuids) {
-		if (uuids == null) {
-			throw new RuntimeException("uuids is empty ");
-		}
-		this.uuids = uuids;
+		this.callBackUrlLike = callBackUrlLike;
 		return this;
 	}
 
@@ -218,6 +88,62 @@ public class WxConfigQuery extends DataQuery {
 		return this;
 	}
 
+	public WxConfigQuery defaultReplyLike(String defaultReplyLike) {
+		if (defaultReplyLike == null) {
+			throw new RuntimeException("defaultReply is null");
+		}
+		this.defaultReplyLike = defaultReplyLike;
+		return this;
+	}
+
+	public String getApiStatus() {
+		return apiStatus;
+	}
+
+	public Long getAppId() {
+		return appId;
+	}
+
+	public List<Long> getAppIds() {
+		return appIds;
+	}
+
+	public String getCallBackUrlLike() {
+		if (callBackUrlLike != null && callBackUrlLike.trim().length() > 0) {
+			if (!callBackUrlLike.startsWith("%")) {
+				callBackUrlLike = "%" + callBackUrlLike;
+			}
+			if (!callBackUrlLike.endsWith("%")) {
+				callBackUrlLike = callBackUrlLike + "%";
+			}
+		}
+		return callBackUrlLike;
+	}
+
+	public List<String> getCreateBys() {
+		return createBys;
+	}
+
+	public Date getCreateDateGreaterThanOrEqual() {
+		return createDateGreaterThanOrEqual;
+	}
+
+	public Date getCreateDateLessThanOrEqual() {
+		return createDateLessThanOrEqual;
+	}
+
+	public String getDefaultReplyLike() {
+		if (defaultReplyLike != null && defaultReplyLike.trim().length() > 0) {
+			if (!defaultReplyLike.startsWith("%")) {
+				defaultReplyLike = "%" + defaultReplyLike;
+			}
+			if (!defaultReplyLike.endsWith("%")) {
+				defaultReplyLike = defaultReplyLike + "%";
+			}
+		}
+		return defaultReplyLike;
+	}
+
 	public String getOrderBy() {
 		if (sortColumn != null) {
 			String a_x = " asc ";
@@ -229,16 +155,8 @@ public class WxConfigQuery extends DataQuery {
 				orderBy = "E.CALLBACKURL_" + a_x;
 			}
 
-			if ("token".equals(sortColumn)) {
-				orderBy = "E.TOKEN_" + a_x;
-			}
-
 			if ("appId".equals(sortColumn)) {
 				orderBy = "E.APPID_" + a_x;
-			}
-
-			if ("appSecret".equals(sortColumn)) {
-				orderBy = "E.APPSECRET_" + a_x;
 			}
 
 			if ("apiStatus".equals(sortColumn)) {
@@ -247,10 +165,6 @@ public class WxConfigQuery extends DataQuery {
 
 			if ("defaultReply".equals(sortColumn)) {
 				orderBy = "E.DEFAULTREPLY_" + a_x;
-			}
-
-			if ("uuid".equals(sortColumn)) {
-				orderBy = "E.UUID_" + a_x;
 			}
 
 			if ("createBy".equals(sortColumn)) {
@@ -272,12 +186,47 @@ public class WxConfigQuery extends DataQuery {
 		addColumn("callBackUrl", "CALLBACKURL_");
 		addColumn("token", "TOKEN_");
 		addColumn("appId", "APPID_");
-		addColumn("appSecret", "APPSECRET_");
+		addColumn("wxAppId", "WXAPPID_");
+		addColumn("wxAppSecret", "WXAPPSECRET_");
+		addColumn("yxAppId", "YXAPPID_");
+		addColumn("yxAppSecret", "YXAPPSECRET_");
 		addColumn("apiStatus", "APISTATUS_");
 		addColumn("defaultReply", "DEFAULTREPLY_");
-		addColumn("uuid", "UUID_");
 		addColumn("createBy", "CREATEBY_");
 		addColumn("createDate", "CREATEDATE_");
+	}
+
+	public void setApiStatus(String apiStatus) {
+		this.apiStatus = apiStatus;
+	}
+
+	public void setAppId(Long appId) {
+		this.appId = appId;
+	}
+
+	public void setAppIds(List<Long> appIds) {
+		this.appIds = appIds;
+	}
+
+	public void setCallBackUrlLike(String callBackUrlLike) {
+		this.callBackUrlLike = callBackUrlLike;
+	}
+
+	public void setCreateBys(List<String> createBys) {
+		this.createBys = createBys;
+	}
+
+	public void setCreateDateGreaterThanOrEqual(
+			Date createDateGreaterThanOrEqual) {
+		this.createDateGreaterThanOrEqual = createDateGreaterThanOrEqual;
+	}
+
+	public void setCreateDateLessThanOrEqual(Date createDateLessThanOrEqual) {
+		this.createDateLessThanOrEqual = createDateLessThanOrEqual;
+	}
+
+	public void setDefaultReplyLike(String defaultReplyLike) {
+		this.defaultReplyLike = defaultReplyLike;
 	}
 
 }

@@ -51,6 +51,12 @@ public class WxConfig implements java.io.Serializable, JSONable {
 	protected long id;
 
 	/**
+	 * 微站公众号应用ID
+	 */
+	@Column(name = "APPID_")
+	protected Long appId;
+
+	/**
 	 * 回调地址
 	 */
 	@Column(name = "CALLBACKURL_", length = 500)
@@ -65,14 +71,26 @@ public class WxConfig implements java.io.Serializable, JSONable {
 	/**
 	 * 应用编号
 	 */
-	@Column(name = "APPID_", length = 100)
-	protected String appId;
+	@Column(name = "WXAPPID_", length = 100)
+	protected String wxAppId;
 
 	/**
 	 * 应用密锁
 	 */
-	@Column(name = "APPSECRET_", length = 100)
-	protected String appSecret;
+	@Column(name = "WXAPPSECRET_", length = 100)
+	protected String wxAppSecret;
+
+	/**
+	 * 应用编号
+	 */
+	@Column(name = "YXAPPID_", length = 100)
+	protected String yxAppId;
+
+	/**
+	 * 应用密锁
+	 */
+	@Column(name = "YXAPPSECRET_", length = 100)
+	protected String yxAppSecret;
 
 	/**
 	 * 应用状态
@@ -91,12 +109,6 @@ public class WxConfig implements java.io.Serializable, JSONable {
 	 */
 	@Column(name = "LBSPOSITION_")
 	protected Integer lbsPosition;
-
-	/**
-	 * UUID
-	 */
-	@Column(name = "UUID_", length = 50)
-	protected String uuid;
 
 	/**
 	 * 创建人
@@ -132,12 +144,8 @@ public class WxConfig implements java.io.Serializable, JSONable {
 		return apiStatus;
 	}
 
-	public String getAppId() {
+	public Long getAppId() {
 		return appId;
-	}
-
-	public String getAppSecret() {
-		return appSecret;
 	}
 
 	public String getCallBackUrl() {
@@ -176,8 +184,20 @@ public class WxConfig implements java.io.Serializable, JSONable {
 		return token;
 	}
 
-	public String getUuid() {
-		return uuid;
+	public String getWxAppId() {
+		return wxAppId;
+	}
+
+	public String getWxAppSecret() {
+		return wxAppSecret;
+	}
+
+	public String getYxAppId() {
+		return yxAppId;
+	}
+
+	public String getYxAppSecret() {
+		return yxAppSecret;
 	}
 
 	public WxConfig jsonToObject(JSONObject jsonObject) {
@@ -188,12 +208,8 @@ public class WxConfig implements java.io.Serializable, JSONable {
 		this.apiStatus = apiStatus;
 	}
 
-	public void setAppId(String appId) {
+	public void setAppId(Long appId) {
 		this.appId = appId;
-	}
-
-	public void setAppSecret(String appSecret) {
-		this.appSecret = appSecret;
 	}
 
 	public void setCallBackUrl(String callBackUrl) {
@@ -232,8 +248,20 @@ public class WxConfig implements java.io.Serializable, JSONable {
 		this.token = token;
 	}
 
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
+	public void setWxAppId(String wxAppId) {
+		this.wxAppId = wxAppId;
+	}
+
+	public void setWxAppSecret(String wxAppSecret) {
+		this.wxAppSecret = wxAppSecret;
+	}
+
+	public void setYxAppId(String yxAppId) {
+		this.yxAppId = yxAppId;
+	}
+
+	public void setYxAppSecret(String yxAppSecret) {
+		this.yxAppSecret = yxAppSecret;
 	}
 
 	public JSONObject toJsonObject() {

@@ -32,7 +32,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.core.dao.EntityDAO;
 import com.glaf.core.id.IdGenerator;
-import com.glaf.core.util.UUID32;
 import com.glaf.wechat.domain.WxMenu;
 import com.glaf.wechat.mapper.WxMenuMapper;
 import com.glaf.wechat.query.WxMenuQuery;
@@ -148,7 +147,6 @@ public class WxMenuServiceImpl implements WxMenuService {
 		for (WxMenu wxMenu : rows) {
 			wxMenu.setId(idGenerator.nextId());
 			wxMenu.setCreateDate(new Date());
-			wxMenu.setUuid(UUID32.getUUID());
 			wxMenu.setTreeId(wxMenu.getId() + "|");
 			wxMenu.setKey("wx_" + wxMenu.getId());
 			wxMenuMapper.insertWxMenu(wxMenu);
@@ -157,7 +155,6 @@ public class WxMenuServiceImpl implements WxMenuService {
 					child.setId(idGenerator.nextId());
 					child.setKey("wx_" + child.getId());
 					child.setCreateDate(new Date());
-					child.setUuid(UUID32.getUUID());
 					child.setParentId(wxMenu.getId());
 					child.setTreeId(wxMenu.getTreeId() + child.getId() + "|");
 					wxMenuMapper.insertWxMenu(child);
@@ -172,7 +169,6 @@ public class WxMenuServiceImpl implements WxMenuService {
 			wxMenu.setId(idGenerator.nextId());
 			wxMenu.setKey("wx_" + wxMenu.getId());
 			wxMenu.setCreateDate(new Date());
-			wxMenu.setUuid(UUID32.getUUID());
 			if (wxMenu.getParentId() > 0) {
 				WxMenu parent = this.getWxMenu(wxMenu.getParentId());
 				if (parent != null && parent.getTreeId() != null) {

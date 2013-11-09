@@ -19,10 +19,13 @@
 package com.glaf.wechat.query;
 
 import java.util.*;
+
 import com.glaf.core.query.DataQuery;
 
 public class WxSiteInfoQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
+	protected Long appId;
+	protected List<Long> appIds;
 	protected List<Long> ids;
 	protected String linkman;
 	protected String linkmanLike;
@@ -36,8 +39,6 @@ public class WxSiteInfoQuery extends DataQuery {
 	protected String addressLike;
 	protected String siteUrlLike;
 	protected String remarkLike;
-	protected String uuid;
-	protected List<String> uuids;
 	protected Date createDateGreaterThanOrEqual;
 	protected Date createDateLessThanOrEqual;
 
@@ -45,308 +46,11 @@ public class WxSiteInfoQuery extends DataQuery {
 
 	}
 
-	public String getLinkman() {
-		return linkman;
-	}
-
-	public String getLinkmanLike() {
-		if (linkmanLike != null && linkmanLike.trim().length() > 0) {
-			if (!linkmanLike.startsWith("%")) {
-				linkmanLike = "%" + linkmanLike;
-			}
-			if (!linkmanLike.endsWith("%")) {
-				linkmanLike = linkmanLike + "%";
-			}
-		}
-		return linkmanLike;
-	}
-
-	public String getTelephoneLike() {
-		if (telephoneLike != null && telephoneLike.trim().length() > 0) {
-			if (!telephoneLike.startsWith("%")) {
-				telephoneLike = "%" + telephoneLike;
-			}
-			if (!telephoneLike.endsWith("%")) {
-				telephoneLike = telephoneLike + "%";
-			}
-		}
-		return telephoneLike;
-	}
-
-	public String getMobile() {
-		return mobile;
-	}
-
-	public String getMobileLike() {
-		if (mobileLike != null && mobileLike.trim().length() > 0) {
-			if (!mobileLike.startsWith("%")) {
-				mobileLike = "%" + mobileLike;
-			}
-			if (!mobileLike.endsWith("%")) {
-				mobileLike = mobileLike + "%";
-			}
-		}
-		return mobileLike;
-	}
-
-	public String getMail() {
-		return mail;
-	}
-
-	public String getMailLike() {
-		if (mailLike != null && mailLike.trim().length() > 0) {
-			if (!mailLike.startsWith("%")) {
-				mailLike = "%" + mailLike;
-			}
-			if (!mailLike.endsWith("%")) {
-				mailLike = mailLike + "%";
-			}
-		}
-		return mailLike;
-	}
-
-	public String getQq() {
-		return qq;
-	}
-
-	public String getQqLike() {
-		if (qqLike != null && qqLike.trim().length() > 0) {
-			if (!qqLike.startsWith("%")) {
-				qqLike = "%" + qqLike;
-			}
-			if (!qqLike.endsWith("%")) {
-				qqLike = qqLike + "%";
-			}
-		}
-		return qqLike;
-	}
-
-	public String getAddressLike() {
-		if (addressLike != null && addressLike.trim().length() > 0) {
-			if (!addressLike.startsWith("%")) {
-				addressLike = "%" + addressLike;
-			}
-			if (!addressLike.endsWith("%")) {
-				addressLike = addressLike + "%";
-			}
-		}
-		return addressLike;
-	}
-
-	public String getSiteUrlLike() {
-		if (siteUrlLike != null && siteUrlLike.trim().length() > 0) {
-			if (!siteUrlLike.startsWith("%")) {
-				siteUrlLike = "%" + siteUrlLike;
-			}
-			if (!siteUrlLike.endsWith("%")) {
-				siteUrlLike = siteUrlLike + "%";
-			}
-		}
-		return siteUrlLike;
-	}
-
-	public String getRemarkLike() {
-		if (remarkLike != null && remarkLike.trim().length() > 0) {
-			if (!remarkLike.startsWith("%")) {
-				remarkLike = "%" + remarkLike;
-			}
-			if (!remarkLike.endsWith("%")) {
-				remarkLike = remarkLike + "%";
-			}
-		}
-		return remarkLike;
-	}
-
-	public String getUuid() {
-		return uuid;
-	}
-
-	public List<String> getUuids() {
-		return uuids;
-	}
-
-	public Date getCreateDateGreaterThanOrEqual() {
-		return createDateGreaterThanOrEqual;
-	}
-
-	public Date getCreateDateLessThanOrEqual() {
-		return createDateLessThanOrEqual;
-	}
-
-	public void setLinkman(String linkman) {
-		this.linkman = linkman;
-	}
-
-	public void setLinkmanLike(String linkmanLike) {
-		this.linkmanLike = linkmanLike;
-	}
-
-	public void setTelephoneLike(String telephoneLike) {
-		this.telephoneLike = telephoneLike;
-	}
-
-	public void setMobile(String mobile) {
-		this.mobile = mobile;
-	}
-
-	public void setMobileLike(String mobileLike) {
-		this.mobileLike = mobileLike;
-	}
-
-	public void setMail(String mail) {
-		this.mail = mail;
-	}
-
-	public void setMailLike(String mailLike) {
-		this.mailLike = mailLike;
-	}
-
-	public void setQq(String qq) {
-		this.qq = qq;
-	}
-
-	public void setQqLike(String qqLike) {
-		this.qqLike = qqLike;
-	}
-
-	public void setAddressLike(String addressLike) {
-		this.addressLike = addressLike;
-	}
-
-	public void setSiteUrlLike(String siteUrlLike) {
-		this.siteUrlLike = siteUrlLike;
-	}
-
-	public void setRemarkLike(String remarkLike) {
-		this.remarkLike = remarkLike;
-	}
-
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
-	}
-
-	public void setUuids(List<String> uuids) {
-		this.uuids = uuids;
-	}
-
-	public void setCreateDateGreaterThanOrEqual(
-			Date createDateGreaterThanOrEqual) {
-		this.createDateGreaterThanOrEqual = createDateGreaterThanOrEqual;
-	}
-
-	public void setCreateDateLessThanOrEqual(Date createDateLessThanOrEqual) {
-		this.createDateLessThanOrEqual = createDateLessThanOrEqual;
-	}
-
-	public WxSiteInfoQuery linkman(String linkman) {
-		if (linkman == null) {
-			throw new RuntimeException("linkman is null");
-		}
-		this.linkman = linkman;
-		return this;
-	}
-
-	public WxSiteInfoQuery linkmanLike(String linkmanLike) {
-		if (linkmanLike == null) {
-			throw new RuntimeException("linkman is null");
-		}
-		this.linkmanLike = linkmanLike;
-		return this;
-	}
-
-	public WxSiteInfoQuery telephoneLike(String telephoneLike) {
-		if (telephoneLike == null) {
-			throw new RuntimeException("telephone is null");
-		}
-		this.telephoneLike = telephoneLike;
-		return this;
-	}
-
-	public WxSiteInfoQuery mobile(String mobile) {
-		if (mobile == null) {
-			throw new RuntimeException("mobile is null");
-		}
-		this.mobile = mobile;
-		return this;
-	}
-
-	public WxSiteInfoQuery mobileLike(String mobileLike) {
-		if (mobileLike == null) {
-			throw new RuntimeException("mobile is null");
-		}
-		this.mobileLike = mobileLike;
-		return this;
-	}
-
-	public WxSiteInfoQuery mail(String mail) {
-		if (mail == null) {
-			throw new RuntimeException("mail is null");
-		}
-		this.mail = mail;
-		return this;
-	}
-
-	public WxSiteInfoQuery mailLike(String mailLike) {
-		if (mailLike == null) {
-			throw new RuntimeException("mail is null");
-		}
-		this.mailLike = mailLike;
-		return this;
-	}
-
-	public WxSiteInfoQuery qq(String qq) {
-		if (qq == null) {
-			throw new RuntimeException("qq is null");
-		}
-		this.qq = qq;
-		return this;
-	}
-
-	public WxSiteInfoQuery qqLike(String qqLike) {
-		if (qqLike == null) {
-			throw new RuntimeException("qq is null");
-		}
-		this.qqLike = qqLike;
-		return this;
-	}
-
 	public WxSiteInfoQuery addressLike(String addressLike) {
 		if (addressLike == null) {
 			throw new RuntimeException("address is null");
 		}
 		this.addressLike = addressLike;
-		return this;
-	}
-
-	public WxSiteInfoQuery siteUrlLike(String siteUrlLike) {
-		if (siteUrlLike == null) {
-			throw new RuntimeException("siteUrl is null");
-		}
-		this.siteUrlLike = siteUrlLike;
-		return this;
-	}
-
-	public WxSiteInfoQuery remarkLike(String remarkLike) {
-		if (remarkLike == null) {
-			throw new RuntimeException("remark is null");
-		}
-		this.remarkLike = remarkLike;
-		return this;
-	}
-
-	public WxSiteInfoQuery uuid(String uuid) {
-		if (uuid == null) {
-			throw new RuntimeException("uuid is null");
-		}
-		this.uuid = uuid;
-		return this;
-	}
-
-	public WxSiteInfoQuery uuids(List<String> uuids) {
-		if (uuids == null) {
-			throw new RuntimeException("uuids is empty ");
-		}
-		this.uuids = uuids;
 		return this;
 	}
 
@@ -366,6 +70,82 @@ public class WxSiteInfoQuery extends DataQuery {
 		}
 		this.createDateLessThanOrEqual = createDateLessThanOrEqual;
 		return this;
+	}
+
+	public String getAddressLike() {
+		if (addressLike != null && addressLike.trim().length() > 0) {
+			if (!addressLike.startsWith("%")) {
+				addressLike = "%" + addressLike;
+			}
+			if (!addressLike.endsWith("%")) {
+				addressLike = addressLike + "%";
+			}
+		}
+		return addressLike;
+	}
+
+	public Long getAppId() {
+		return appId;
+	}
+
+	public List<Long> getAppIds() {
+		return appIds;
+	}
+
+	public Date getCreateDateGreaterThanOrEqual() {
+		return createDateGreaterThanOrEqual;
+	}
+
+	public Date getCreateDateLessThanOrEqual() {
+		return createDateLessThanOrEqual;
+	}
+
+	public String getLinkman() {
+		return linkman;
+	}
+
+	public String getLinkmanLike() {
+		if (linkmanLike != null && linkmanLike.trim().length() > 0) {
+			if (!linkmanLike.startsWith("%")) {
+				linkmanLike = "%" + linkmanLike;
+			}
+			if (!linkmanLike.endsWith("%")) {
+				linkmanLike = linkmanLike + "%";
+			}
+		}
+		return linkmanLike;
+	}
+
+	public String getMail() {
+		return mail;
+	}
+
+	public String getMailLike() {
+		if (mailLike != null && mailLike.trim().length() > 0) {
+			if (!mailLike.startsWith("%")) {
+				mailLike = "%" + mailLike;
+			}
+			if (!mailLike.endsWith("%")) {
+				mailLike = mailLike + "%";
+			}
+		}
+		return mailLike;
+	}
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public String getMobileLike() {
+		if (mobileLike != null && mobileLike.trim().length() > 0) {
+			if (!mobileLike.startsWith("%")) {
+				mobileLike = "%" + mobileLike;
+			}
+			if (!mobileLike.endsWith("%")) {
+				mobileLike = mobileLike + "%";
+			}
+		}
+		return mobileLike;
 	}
 
 	public String getOrderBy() {
@@ -407,10 +187,6 @@ public class WxSiteInfoQuery extends DataQuery {
 				orderBy = "E.REMARK_" + a_x;
 			}
 
-			if ("uuid".equals(sortColumn)) {
-				orderBy = "E.UUID_" + a_x;
-			}
-
 			if ("createBy".equals(sortColumn)) {
 				orderBy = "E.CREATEBY_" + a_x;
 			}
@@ -421,6 +197,58 @@ public class WxSiteInfoQuery extends DataQuery {
 
 		}
 		return orderBy;
+	}
+
+	public String getQq() {
+		return qq;
+	}
+
+	public String getQqLike() {
+		if (qqLike != null && qqLike.trim().length() > 0) {
+			if (!qqLike.startsWith("%")) {
+				qqLike = "%" + qqLike;
+			}
+			if (!qqLike.endsWith("%")) {
+				qqLike = qqLike + "%";
+			}
+		}
+		return qqLike;
+	}
+
+	public String getRemarkLike() {
+		if (remarkLike != null && remarkLike.trim().length() > 0) {
+			if (!remarkLike.startsWith("%")) {
+				remarkLike = "%" + remarkLike;
+			}
+			if (!remarkLike.endsWith("%")) {
+				remarkLike = remarkLike + "%";
+			}
+		}
+		return remarkLike;
+	}
+
+	public String getSiteUrlLike() {
+		if (siteUrlLike != null && siteUrlLike.trim().length() > 0) {
+			if (!siteUrlLike.startsWith("%")) {
+				siteUrlLike = "%" + siteUrlLike;
+			}
+			if (!siteUrlLike.endsWith("%")) {
+				siteUrlLike = siteUrlLike + "%";
+			}
+		}
+		return siteUrlLike;
+	}
+
+	public String getTelephoneLike() {
+		if (telephoneLike != null && telephoneLike.trim().length() > 0) {
+			if (!telephoneLike.startsWith("%")) {
+				telephoneLike = "%" + telephoneLike;
+			}
+			if (!telephoneLike.endsWith("%")) {
+				telephoneLike = telephoneLike + "%";
+			}
+		}
+		return telephoneLike;
 	}
 
 	@Override
@@ -435,9 +263,161 @@ public class WxSiteInfoQuery extends DataQuery {
 		addColumn("address", "ADDRESS_");
 		addColumn("siteUrl", "SITEURL_");
 		addColumn("remark", "REMARK_");
-		addColumn("uuid", "UUID_");
 		addColumn("createBy", "CREATEBY_");
 		addColumn("createDate", "CREATEDATE_");
+	}
+
+	public WxSiteInfoQuery linkman(String linkman) {
+		if (linkman == null) {
+			throw new RuntimeException("linkman is null");
+		}
+		this.linkman = linkman;
+		return this;
+	}
+
+	public WxSiteInfoQuery linkmanLike(String linkmanLike) {
+		if (linkmanLike == null) {
+			throw new RuntimeException("linkman is null");
+		}
+		this.linkmanLike = linkmanLike;
+		return this;
+	}
+
+	public WxSiteInfoQuery mail(String mail) {
+		if (mail == null) {
+			throw new RuntimeException("mail is null");
+		}
+		this.mail = mail;
+		return this;
+	}
+
+	public WxSiteInfoQuery mailLike(String mailLike) {
+		if (mailLike == null) {
+			throw new RuntimeException("mail is null");
+		}
+		this.mailLike = mailLike;
+		return this;
+	}
+
+	public WxSiteInfoQuery mobile(String mobile) {
+		if (mobile == null) {
+			throw new RuntimeException("mobile is null");
+		}
+		this.mobile = mobile;
+		return this;
+	}
+
+	public WxSiteInfoQuery mobileLike(String mobileLike) {
+		if (mobileLike == null) {
+			throw new RuntimeException("mobile is null");
+		}
+		this.mobileLike = mobileLike;
+		return this;
+	}
+
+	public WxSiteInfoQuery qq(String qq) {
+		if (qq == null) {
+			throw new RuntimeException("qq is null");
+		}
+		this.qq = qq;
+		return this;
+	}
+
+	public WxSiteInfoQuery qqLike(String qqLike) {
+		if (qqLike == null) {
+			throw new RuntimeException("qq is null");
+		}
+		this.qqLike = qqLike;
+		return this;
+	}
+
+	public WxSiteInfoQuery remarkLike(String remarkLike) {
+		if (remarkLike == null) {
+			throw new RuntimeException("remark is null");
+		}
+		this.remarkLike = remarkLike;
+		return this;
+	}
+
+	public void setAddressLike(String addressLike) {
+		this.addressLike = addressLike;
+	}
+
+	public void setAppId(Long appId) {
+		this.appId = appId;
+	}
+
+	public void setAppIds(List<Long> appIds) {
+		this.appIds = appIds;
+	}
+
+	public void setCreateDateGreaterThanOrEqual(
+			Date createDateGreaterThanOrEqual) {
+		this.createDateGreaterThanOrEqual = createDateGreaterThanOrEqual;
+	}
+
+	public void setCreateDateLessThanOrEqual(Date createDateLessThanOrEqual) {
+		this.createDateLessThanOrEqual = createDateLessThanOrEqual;
+	}
+
+	public void setLinkman(String linkman) {
+		this.linkman = linkman;
+	}
+
+	public void setLinkmanLike(String linkmanLike) {
+		this.linkmanLike = linkmanLike;
+	}
+
+	public void setMail(String mail) {
+		this.mail = mail;
+	}
+
+	public void setMailLike(String mailLike) {
+		this.mailLike = mailLike;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+	public void setMobileLike(String mobileLike) {
+		this.mobileLike = mobileLike;
+	}
+
+	public void setQq(String qq) {
+		this.qq = qq;
+	}
+
+	public void setQqLike(String qqLike) {
+		this.qqLike = qqLike;
+	}
+
+	public void setRemarkLike(String remarkLike) {
+		this.remarkLike = remarkLike;
+	}
+
+	public void setSiteUrlLike(String siteUrlLike) {
+		this.siteUrlLike = siteUrlLike;
+	}
+
+	public void setTelephoneLike(String telephoneLike) {
+		this.telephoneLike = telephoneLike;
+	}
+
+	public WxSiteInfoQuery siteUrlLike(String siteUrlLike) {
+		if (siteUrlLike == null) {
+			throw new RuntimeException("siteUrl is null");
+		}
+		this.siteUrlLike = siteUrlLike;
+		return this;
+	}
+
+	public WxSiteInfoQuery telephoneLike(String telephoneLike) {
+		if (telephoneLike == null) {
+			throw new RuntimeException("telephone is null");
+		}
+		this.telephoneLike = telephoneLike;
+		return this;
 	}
 
 }
