@@ -16,6 +16,7 @@ import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.service.SysUserService;
 import com.glaf.base.utils.ParamUtil;
 import com.glaf.base.utils.RequestUtil;
+import com.glaf.core.cache.CacheUtils;
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
@@ -39,6 +40,29 @@ public class WxUserController {
 	 * @param modelMap
 	 * @return
 	 */
+	@RequestMapping("/prepareModifyInfo")
+	public ModelAndView prepareModifyInfo(HttpServletRequest request,
+			ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		SysUser user = RequestUtil.getLoginUser(request);
+		SysUser bean = sysUserService.findByAccount(user.getAccount());
+		request.setAttribute("bean", bean);
+
+		String x_view = ViewProperties.getString("wx.user.prepareModifyInfo");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
+		return new ModelAndView("/wx/user/user_change_info", modelMap);
+	}
+
+	/**
+	 * 显示修改页面
+	 * 
+	 * @param request
+	 * @param modelMap
+	 * @return
+	 */
 	@RequestMapping("/prepareModifyPwd")
 	public ModelAndView prepareModifyPwd(HttpServletRequest request,
 			ModelMap modelMap) {
@@ -46,12 +70,47 @@ public class WxUserController {
 		SysUser bean = RequestUtil.getLoginUser(request);
 		request.setAttribute("bean", bean);
 
-		String x_view = ViewProperties.getString("user.prepareModifyPwd");
+		String x_view = ViewProperties.getString("wx.user.prepareModifyPwd");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
 		}
 
 		return new ModelAndView("/wx/user/user_modify_pwd", modelMap);
+	}
+
+	/**
+	 * 提交修改信息
+	 * 
+	 * @param request
+	 * @param modelMap
+	 * @return
+	 */
+	@RequestMapping("/saveModifyInfo")
+	public ModelAndView saveModifyInfo(HttpServletRequest request,
+			ModelMap modelMap) {
+		SysUser bean = RequestUtil.getLoginUser(request);
+		boolean ret = false;
+		if (bean != null) {
+			SysUser user = sysUserService.findById(bean.getId());
+			user.setName(ParamUtil.getParameter(request, "name"));
+			user.setMobile(ParamUtil.getParameter(request, "mobile"));
+			user.setEmail(ParamUtil.getParameter(request, "email"));
+			user.setTelephone(ParamUtil.getParameter(request, "telephone"));
+			user.setUpdateBy(RequestUtils.getActorId(request));
+			ret = sysUserService.update(user);
+			CacheUtils.clearUserCache(user.getAccount());
+		}
+
+		ViewMessages messages = new ViewMessages();
+		if (ret) {// 保存成功
+			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
+					"user.modify_success"));
+		} else {// 保存失败
+			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
+					"user.modify_failure"));
+		}
+		MessageUtils.addMessages(request, messages);
+		return new ModelAndView("show_msg", modelMap);
 	}
 
 	/**
