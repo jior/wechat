@@ -33,10 +33,12 @@ import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
+import com.glaf.core.config.Configuration;
 import com.glaf.core.identity.User;
 import com.glaf.core.security.IdentityFactory;
 import com.glaf.core.util.IOUtils;
 import com.glaf.core.util.RequestUtils;
+import com.glaf.wechat.config.WechatConfiguration;
 import com.glaf.wechat.sdk.message.IMessage;
 import com.glaf.wechat.sdk.message.Message;
 import com.glaf.wechat.sdk.message.EventMessage;
@@ -70,7 +72,7 @@ import com.glaf.wechat.util.WechatUtils;
  */
 public class WeixinExecutor implements IMessage {
 	protected static final Log logger = LogFactory.getLog(WeixinExecutor.class);
-
+	protected static Configuration conf = WechatConfiguration.create();
 	private HttpServletRequest request;// request
 	private HttpServletResponse response;// response
 	private Message message;// message comes from

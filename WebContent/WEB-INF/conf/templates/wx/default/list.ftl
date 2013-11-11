@@ -173,8 +173,8 @@
 		<#list  contents as content>      
 			<li>
 				<a href="${serviceUrl}/website/wx/content/detail/${content.uuid}">
-					<#if content.icon?exists>
-					<div class="img"><img src="${serviceUrl}/${content.icon}"></div>
+					<#if content.smallIcon?exists>
+					<div class="img"><img src="${serviceUrl}/${content.smallIcon}"></div>
 					</#if>
 				<h2>${content.title}</h2>
 				<p class="onlyheight">

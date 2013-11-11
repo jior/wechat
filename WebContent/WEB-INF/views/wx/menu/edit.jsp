@@ -56,10 +56,13 @@ limitations under the License.
 						 alert('操作成功完成！');
 					   }
 					   if (window.opener) {
-						window.opener.location.reload();
+						  //window.opener.location.reload();
+						  window.opener.reloadGrid();
 					   } else if (window.parent) {
-						window.parent.location.reload();
+						  //window.parent.location.reload();
+						  window.parent.reloadGrid();
 					   }
+					   window.close();
 				   }
 			 });
 	}

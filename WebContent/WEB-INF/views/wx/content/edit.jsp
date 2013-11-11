@@ -64,10 +64,13 @@ limitations under the License.
 						 alert('操作成功完成！');
 					   }
 					   if (window.opener) {
-						window.opener.location.reload();
+						  //window.opener.location.reload();
+						  window.opener.reloadGrid();
 					   } else if (window.parent) {
-						window.parent.location.reload();
+						  //window.parent.location.reload();
+						  window.parent.reloadGrid();
 					   }
+					   window.close();
 				   }
 			 });
 	}
@@ -96,6 +99,28 @@ limitations under the License.
 
 	function chooseImage(){
 		var link = '<%=request.getContextPath()%>/mx/wx/wxFile/chooseFile?elementId=icon&elementName=icon';
+		var x=100;
+		var y=100;
+		if(is_ie) {
+			x=document.body.scrollLeft+event.clientX-event.offsetX-200;
+			y=document.body.scrollTop+event.clientY-event.offsetY-200;
+		}
+		openWindow(link,self,x, y, 745, 580);
+	}
+
+	function chooseBigImage(){
+		var link = '<%=request.getContextPath()%>/mx/wx/wxFile/chooseFile?elementId=bigIcon&elementName=bigIcon';
+		var x=100;
+		var y=100;
+		if(is_ie) {
+			x=document.body.scrollLeft+event.clientX-event.offsetX-200;
+			y=document.body.scrollTop+event.clientY-event.offsetY-200;
+		}
+		openWindow(link,self,x, y, 745, 580);
+	}
+
+	function chooseSmallImage(){
+		var link = '<%=request.getContextPath()%>/mx/wx/wxFile/chooseFile?elementId=smallIcon&elementName=smallIcon';
 		var x=100;
 		var y=100;
 		if(is_ie) {
@@ -203,6 +228,24 @@ limitations under the License.
 				   value="${wxContent.icon}" onclick="javascript:chooseImage();"/>
 			&nbsp; <img src="<%=request.getContextPath()%>/images/icon.gif" border="0" onclick="javascript:chooseImage();"/>
 			
+		</td>
+	</tr>
+
+	<tr>
+		<td width="15%" align="left" valign="middle">图标</td>
+		<td align="left" valign="middle">
+		    <c:if test="${not empty wxContent.smallIcon }">
+			<img src="<%=request.getContextPath()%>/${wxContent.smallIcon}" width="60" height="60" border="0"/>&nbsp; 
+			</c:if>
+			<br>建议图片大小24*24像素（即宽度24，高度24）
+			<br>
+			<input id="smallIcon" name="smallIcon" type="text" 
+			       class="easyui-validatebox x-text"  
+				   size="80"
+			       data-options="required:false"
+				   value="${wxContent.smallIcon}" onclick="javascript:chooseSmallImage();"/>
+			&nbsp; <img src="<%=request.getContextPath()%>/images/icon.gif" border="0" onclick="javascript:chooseSmallImage();"/>
+			<br> 用于二级栏目的小图标
 		</td>
 	</tr>
 

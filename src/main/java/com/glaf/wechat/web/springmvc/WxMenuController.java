@@ -34,6 +34,7 @@ import org.springframework.ui.ModelMap;
 import com.alibaba.fastjson.*;
 import com.glaf.core.base.BaseTree;
 import com.glaf.core.base.TreeModel;
+import com.glaf.core.config.Configuration;
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.identity.*;
 import com.glaf.core.security.*;
@@ -42,6 +43,7 @@ import com.glaf.core.util.*;
 import com.glaf.wechat.component.Button;
 import com.glaf.wechat.component.Menu;
 import com.glaf.wechat.config.WechatCodeProperties;
+import com.glaf.wechat.config.WechatConfiguration;
 import com.glaf.wechat.domain.*;
 import com.glaf.wechat.model.AccessToken;
 import com.glaf.wechat.query.*;
@@ -51,6 +53,8 @@ import com.glaf.wechat.util.WechatUtils;
 @Controller("/wx/wxMenu")
 @RequestMapping("/wx/wxMenu")
 public class WxMenuController {
+	protected static Configuration conf = WechatConfiguration.create();
+
 	protected static final Log logger = LogFactory
 			.getLog(WxMenuController.class);
 
@@ -150,19 +154,38 @@ public class WxMenuController {
 	}
 
 	@ResponseBody
-	@RequestMapping("/fetchMenuFromWxServer")
-	public byte[] fetchMenuFromWxServer(HttpServletRequest request) {
+	@RequestMapping("/fetchMenuFromServer")
+	public byte[] fetchMenuFromServer(HttpServletRequest request) {
+		String type = request.getParameter("type");
+		String access_token_url = null;
+		String menu_get_url = null;
+		if (StringUtils.equals("weixin", type)) {
+			access_token_url = conf.get("weixin_access_token_url");
+			menu_get_url = conf.get("weixin_menu_get_url");
+		} else if (StringUtils.equals("yixin", type)) {
+			access_token_url = conf.get("yixin_access_token_url");
+			menu_get_url = conf.get("yixin_menu_get_url");
+		}
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		WxConfig wxConfig = wxConfigService.getWxConfigByUser(loginContext
 				.getActorId());
 		if (wxConfig != null) {
-			if (StringUtils.isNotEmpty(wxConfig.getWxAppId())
-					&& StringUtils.isNotEmpty(wxConfig.getWxAppSecret())) {
+			String appId = null;
+			String appSecret = null;
+			if (StringUtils.equals("weixin", type)) {
+				appId = wxConfig.getWxAppId();
+				appSecret = wxConfig.getWxAppSecret();
+			} else if (StringUtils.equals("yixin", type)) {
+				appId = wxConfig.getYxAppId();
+				appSecret = wxConfig.getYxAppSecret();
+			}
+			if (StringUtils.isNotEmpty(appId)
+					&& StringUtils.isNotEmpty(appSecret)) {
 				AccessToken accessToken = WechatUtils.getAccessToken(
-						wxConfig.getWxAppId(), wxConfig.getWxAppSecret());
+						access_token_url, appId, appSecret);
 				if (accessToken != null && accessToken.getToken() != null) {
-					JSONObject jsonObject = WechatUtils.getMenu(accessToken
-							.getToken());
+					JSONObject jsonObject = WechatUtils.getMenu(menu_get_url,
+							accessToken.getToken());
 					if (jsonObject != null) {
 						if (jsonObject.containsKey("menu")) {
 							JSONObject menuJson = jsonObject
@@ -412,9 +435,19 @@ public class WxMenuController {
 	}
 
 	@ResponseBody
-	@RequestMapping("/syncWxServer")
-	public byte[] syncWxServer(HttpServletRequest request) {
+	@RequestMapping("/syncServer")
+	public byte[] syncServer(HttpServletRequest request) {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
+		String type = request.getParameter("type");
+		String access_token_url = null;
+		String menu_create_url = null;
+		if (StringUtils.equals("weixin", type)) {
+			access_token_url = conf.get("weixin_access_token_url");
+			menu_create_url = conf.get("weixin_menu_create_url");
+		} else if (StringUtils.equals("yixin", type)) {
+			access_token_url = conf.get("yixin_access_token_url");
+			menu_create_url = conf.get("yixin_menu_create_url");
+		}
 
 		List<WxMenu> menus = wxMenuService.getMenuList(
 				loginContext.getActorId(), "menu", 0L);
@@ -423,10 +456,19 @@ public class WxMenuController {
 			WxConfig wxConfig = wxConfigService.getWxConfigByUser(loginContext
 					.getActorId());
 			if (wxConfig != null) {
-				if (StringUtils.isNotEmpty(wxConfig.getWxAppId())
-						&& StringUtils.isNotEmpty(wxConfig.getWxAppSecret())) {
+				String appId = null;
+				String appSecret = null;
+				if (StringUtils.equals("weixin", type)) {
+					appId = wxConfig.getWxAppId();
+					appSecret = wxConfig.getWxAppSecret();
+				} else if (StringUtils.equals("yixin", type)) {
+					appId = wxConfig.getYxAppId();
+					appSecret = wxConfig.getYxAppSecret();
+				}
+				if (StringUtils.isNotEmpty(appId)
+						&& StringUtils.isNotEmpty(appSecret)) {
 					AccessToken accessToken = WechatUtils.getAccessToken(
-							wxConfig.getWxAppId(), wxConfig.getWxAppSecret());
+							access_token_url, appId, appSecret);
 					if (accessToken != null && accessToken.getToken() != null) {
 						Menu menu = new Menu();
 						for (int i = 0; i < menus.size(); i++) {
@@ -491,8 +533,8 @@ public class WxMenuController {
 						String jsonMenu = menu.toJSONObject().toJSONString();
 						logger.debug(jsonMenu);
 
-						int result = WechatUtils.createMenu(menu,
-								accessToken.getToken());
+						int result = WechatUtils.createMenu(menu_create_url,
+								menu, accessToken.getToken());
 						logger.debug("result=" + result);
 						if (result == 0) {
 							logger.debug("成功同步菜单到微信服务器。");

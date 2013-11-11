@@ -33,11 +33,8 @@ public class WxContentQuery extends DataQuery {
 	protected String titleLike;
 	protected String contentLike;
 	protected Integer priority;
-	protected Integer priorityGreaterThanOrEqual;
-	protected Integer priorityLessThanOrEqual;
 	protected String type;
 	protected String msgType;
-	protected String uuid;
 	protected List<String> uuids;
 	protected String keywordsLike;
 	protected String keywordsMatchType;
@@ -239,14 +236,6 @@ public class WxContentQuery extends DataQuery {
 		return priority;
 	}
 
-	public Integer getPriorityGreaterThanOrEqual() {
-		return priorityGreaterThanOrEqual;
-	}
-
-	public Integer getPriorityLessThanOrEqual() {
-		return priorityLessThanOrEqual;
-	}
-
 	public Integer getStatus() {
 		return status;
 	}
@@ -297,10 +286,6 @@ public class WxContentQuery extends DataQuery {
 			}
 		}
 		return urlLike;
-	}
-
-	public String getUuid() {
-		return uuid;
 	}
 
 	public List<String> getUuids() {
@@ -360,24 +345,6 @@ public class WxContentQuery extends DataQuery {
 		return this;
 	}
 
-	public WxContentQuery priorityGreaterThanOrEqual(
-			Integer priorityGreaterThanOrEqual) {
-		if (priorityGreaterThanOrEqual == null) {
-			throw new RuntimeException("priority is null");
-		}
-		this.priorityGreaterThanOrEqual = priorityGreaterThanOrEqual;
-		return this;
-	}
-
-	public WxContentQuery priorityLessThanOrEqual(
-			Integer priorityLessThanOrEqual) {
-		if (priorityLessThanOrEqual == null) {
-			throw new RuntimeException("priority is null");
-		}
-		this.priorityLessThanOrEqual = priorityLessThanOrEqual;
-		return this;
-	}
-
 	public void setAppId(Long appId) {
 		this.appId = appId;
 	}
@@ -431,14 +398,6 @@ public class WxContentQuery extends DataQuery {
 		this.priority = priority;
 	}
 
-	public void setPriorityGreaterThanOrEqual(Integer priorityGreaterThanOrEqual) {
-		this.priorityGreaterThanOrEqual = priorityGreaterThanOrEqual;
-	}
-
-	public void setPriorityLessThanOrEqual(Integer priorityLessThanOrEqual) {
-		this.priorityLessThanOrEqual = priorityLessThanOrEqual;
-	}
-
 	public void setSummaryLike(String summaryLike) {
 		this.summaryLike = summaryLike;
 	}
@@ -453,10 +412,6 @@ public class WxContentQuery extends DataQuery {
 
 	public void setUrlLike(String urlLike) {
 		this.urlLike = urlLike;
-	}
-
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
 	}
 
 	public void setUuids(List<String> uuids) {
@@ -492,14 +447,6 @@ public class WxContentQuery extends DataQuery {
 			throw new RuntimeException("url is null");
 		}
 		this.urlLike = urlLike;
-		return this;
-	}
-
-	public WxContentQuery uuid(String uuid) {
-		if (uuid == null) {
-			throw new RuntimeException("uuid is null");
-		}
-		this.uuid = uuid;
 		return this;
 	}
 

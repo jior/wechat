@@ -43,15 +43,12 @@ public class WxCategoryQuery extends DataQuery {
 	protected String code;
 	protected String codeLike;
 	protected List<String> codes;
-
 	protected String descLike;
 	protected String type;
-
 	protected String eventType;
 	protected String eventTypeLike;
 	protected List<String> eventTypes;
 	protected String urlLike;
-	protected String uuid;
 	protected List<String> uuids;
 	protected Date createDateGreaterThanOrEqual;
 	protected Date createDateLessThanOrEqual;
@@ -389,10 +386,6 @@ public class WxCategoryQuery extends DataQuery {
 		return urlLike;
 	}
 
-	public String getUuid() {
-		return uuid;
-	}
-
 	public List<String> getUuids() {
 		return uuids;
 	}
@@ -611,10 +604,6 @@ public class WxCategoryQuery extends DataQuery {
 		this.urlLike = urlLike;
 	}
 
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
-	}
-
 	public void setUuids(List<String> uuids) {
 		this.uuids = uuids;
 	}
@@ -672,14 +661,6 @@ public class WxCategoryQuery extends DataQuery {
 			throw new RuntimeException("url is null");
 		}
 		this.urlLike = urlLike;
-		return this;
-	}
-
-	public WxCategoryQuery uuid(String uuid) {
-		if (uuid == null) {
-			throw new RuntimeException("uuid is null");
-		}
-		this.uuid = uuid;
 		return this;
 	}
 

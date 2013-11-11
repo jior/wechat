@@ -276,6 +276,9 @@ limitations under the License.
 	}
 
 	function reloadGrid(){
+		var queryParams = $('#mydatagrid').datagrid('options').queryParams; 
+		queryParams.parentId=jQuery("#nodeId").val();
+		//alert(queryParams.parentId);
 	    jQuery('#mydatagrid').datagrid('reload');
 	}
 

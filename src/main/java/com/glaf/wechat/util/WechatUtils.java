@@ -51,15 +51,6 @@ public class WechatUtils {
 	private static final Logger log = LoggerFactory
 			.getLogger(WechatUtils.class);
 
-	// 获取access_token的接口地址（GET） 限200（次/天）
-	public final static String access_token_url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET";
-
-	// 菜单创建（POST） 限100（次/天）
-	public static String menu_create_url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=ACCESS_TOKEN";
-
-	// 菜单获取
-	public static String menu_get_url = "https://api.weixin.qq.com/cgi-bin/menu/get?access_token=ACCESS_TOKEN";
-
 	/**
 	 * 创建菜单
 	 * 
@@ -69,7 +60,8 @@ public class WechatUtils {
 	 *            有效的access_token
 	 * @return 0表示成功，其他值表示失败
 	 */
-	public static int createMenu(Menu menu, String accessToken) {
+	public static int createMenu(String menu_create_url, Menu menu,
+			String accessToken) {
 		int result = 0;
 
 		// 拼装创建菜单的url
@@ -100,7 +92,8 @@ public class WechatUtils {
 	 *            密钥
 	 * @return
 	 */
-	public static AccessToken getAccessToken(String appId, String appSecret) {
+	public static AccessToken getAccessToken(String access_token_url,
+			String appId, String appSecret) {
 		AccessToken accessToken = null;
 
 		String requestUrl = access_token_url.replace("APPID", appId).replace(
@@ -124,6 +117,16 @@ public class WechatUtils {
 		return accessToken;
 	}
 
+	public static String getCategoryJsonSavePath(String userId) {
+		String path = Constants.PUBLISH_JSON_PATH + getHashedPath(userId);
+		return path;
+	}
+
+	public static String getContentJsonSavePath(String userId) {
+		String path = Constants.PUBLISH_JSON_PATH + getHashedPath(userId);
+		return path;
+	}
+
 	/**
 	 * 获取哈希分区后的路径
 	 * 
@@ -136,16 +139,6 @@ public class WechatUtils {
 		return path;
 	}
 
-	public static String getCategoryJsonSavePath(String userId) {
-		String path = Constants.PUBLISH_JSON_PATH + getHashedPath(userId);
-		return path;
-	}
-
-	public static String getContentJsonSavePath(String userId) {
-		String path = Constants.PUBLISH_JSON_PATH + getHashedPath(userId);
-		return path;
-	}
-
 	/**
 	 * 获取菜单
 	 * 
@@ -153,7 +146,7 @@ public class WechatUtils {
 	 *            有效的access_token
 	 * @return 菜单实例JSON
 	 */
-	public static JSONObject getMenu(String accessToken) {
+	public static JSONObject getMenu(String menu_get_url, String accessToken) {
 		String url = menu_get_url.replace("ACCESS_TOKEN", accessToken);
 		// 调用接口创建菜单
 		JSONObject jsonObject = httpRequest(url, "GET", null);

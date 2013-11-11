@@ -128,21 +128,39 @@ limitations under the License.
 		</td>
 	</tr>
 	<tr>
-		<td width="20%" align="left">应用编号AppId</td>
+		<td width="20%" align="left">微信应用编号AppId</td>
 		<td align="left">
-            <input id="appId" name="appId" type="text" 
+            <input id="wxAppId" name="wxAppId" type="text" 
 			       class="easyui-validatebox x-text"  size="80" 
-				   value="${wxConfig.appId}"
+				   value="${wxConfig.wxAppId}"
 				   data-options="required:true"/>
 		</td>
 	</tr>
 	<tr>
-		<td width="20%" align="left">应用密码AppSecret</td>
+		<td width="20%" align="left">微信应用密码AppSecret</td>
 		<td align="left">
-            <input id="appSecret" name="appSecret" type="text" 
+            <input id="wxAppSecret" name="wxAppSecret" type="text" 
 			       class="easyui-validatebox x-text"  size="80" 
-				   value="${wxConfig.appSecret}"
+				   value="${wxConfig.wxAppSecret}"
 				   data-options="required:true"/>
+		</td>
+	</tr>
+		<tr>
+		<td width="20%" align="left">易信应用编号AppId</td>
+		<td align="left">
+            <input id="yxAppId" name="yxAppId" type="text" 
+			       class="easyui-validatebox x-text"  size="80" 
+				   value="${wxConfig.yxAppId}"
+				   data-options="required:false"/> （如果需要支持易信请填写）
+		</td>
+	</tr>
+	<tr>
+		<td width="20%" align="left">易信应用密码AppSecret</td>
+		<td align="left">
+            <input id="yxAppSecret" name="yxAppSecret" type="text" 
+			       class="easyui-validatebox x-text"  size="80" 
+				   value="${wxConfig.yxAppSecret}"
+				   data-options="required:false"/> （如果需要支持易信请填写）
 		</td>
 	</tr>
 	<tr>

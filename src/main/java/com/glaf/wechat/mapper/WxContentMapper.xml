@@ -254,9 +254,6 @@
 			<if test="priority != null">
 				PRIORTY_ = #{priority, jdbcType=INTEGER},
 			</if>
-			<if test="type != null">
-				TYPE_ = #{type, jdbcType=VARCHAR},
-			</if>
 			<if test="msgType != null">
 				MSGTYPE_ = #{msgType, jdbcType=VARCHAR},
 			</if>
@@ -395,14 +392,14 @@
 
 			<if test="appId != null">
 				and E.APPID = #{appId}
-            </if>
+			</if>
 
 			<if test="appIds != null and appIds.size !=0">
-			    and E.APPID IN
-                <foreach item="x_appId" index="index" collection="appIds" 
-                     open="(" separator="," close=")">
-                  #{x_appId}
-                </foreach>
+				and E.APPID IN
+				<foreach item="x_appId" index="index" collection="appIds"
+					open="(" separator="," close=")">
+					#{x_appId}
+				</foreach>
 			</if>
 
 			<if test="contentIds != null and contentIds.size !=0">
@@ -441,21 +438,13 @@
 				and E.PRIORTY_ = #{priority}
 			</if>
 
-			<if test="priorityGreaterThanOrEqual != null">
-				and E.PRIORTY_ &gt;= #{priorityGreaterThanOrEqual}
-			</if>
-
-			<if test="priorityLessThanOrEqual != null">
-				and E.PRIORTY_ &lt;= #{priorityLessThanOrEqual}
-			</if>
-
 			<if test="type != null and type != '' ">
 				and E.TYPE_ = #{type}
 			</if>
 
 			<if test="msgType != null and msgType != '' ">
 				and E.MSGTYPE_ = #{msgType}
-            </if>
+			</if>
 
 			<if test="uuids != null and uuids.size !=0">
 				and E.UUID_ IN

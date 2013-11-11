@@ -106,9 +106,8 @@ limitations under the License.
 				columns:[[
 	                {title:'序号',field:'startIndex',width:80,sortable:false},
 					{title:'名称',field:'title', width:120},
-					{title:'文件名',field:'filename', width:120,formatter:formatterUrl},
+					{title:'文件名',field:'filename', width:360,formatter:formatterUrl},
 					{title:'描述',field:'desc', width:180},
-					{title:'链接',field:'path', width:320},
 					{title:'是否有效',field:'locked', width:90, formatter:formatterStatus},
 					{title:'功能键', field:'functionKey', width:90, formatter:formatterKeys}
 				]],

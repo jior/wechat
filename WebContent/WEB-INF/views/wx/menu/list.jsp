@@ -105,7 +105,6 @@ limitations under the License.
 				columns:[[
 	                {title:'序号',field:'startIndex',width:80,sortable:false},
 					{title:'名称',field:'name', width:120},
-					{title:'代码',field:'key', width:120},
 					{title:'描述',field:'desc', width:180},
 					{title:'顺序',field:'sort', width:90},
 					{title:'链接',field:'url', width:320},
@@ -241,6 +240,8 @@ limitations under the License.
 	}
 
 	function reloadGrid(){
+		var queryParams = $('#mydatagrid').datagrid('options').queryParams; 
+		queryParams.parentId=jQuery("#nodeId").val();
 	    jQuery('#mydatagrid').datagrid('reload');
 	}
 
@@ -271,11 +272,11 @@ limitations under the License.
 	    jQuery('#dlg').dialog('close');
 	}
 
-	function syncWxServer(){
-		if(confirm("因微信服务器缓存原因更新菜单需要24小时后才能生效，确定重新同步吗？")){
+	function syncServer(type){
+		if(confirm("因服务器缓存原因更新菜单需要24小时后才能生效，确定重新同步吗？")){
             jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/mx/wx/wxMenu/syncWxServer',
+				   url: '<%=request.getContextPath()%>/mx/wx/wxMenu/syncServer?type='+type,
 				   dataType:  'json',
 				   error: function(data){
 					   alert('服务器处理错误！');
@@ -292,11 +293,11 @@ limitations under the License.
 		}
 	}
 
-	function fetchMenuFromWxServer(){
-		if(confirm("确定从微信服务器获取菜单吗？")){
+	function fetchMenuFromServer(type){
+		if(confirm("确定从服务器获取菜单吗？")){
             jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/mx/wx/wxMenu/fetchMenuFromWxServer',
+				   url: '<%=request.getContextPath()%>/mx/wx/wxMenu/fetchMenuFromServer?type='+type,
 				   dataType:  'json',
 				   error: function(data){
 					   alert('服务器处理错误！');
@@ -340,9 +341,13 @@ limitations under the License.
 			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-remove'"
 			   onclick="javascript:deleteSelections();">删除</a> 
 			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-reload'"
-			   onclick="javascript:syncWxServer();">同步到微信服务器</a> 
+			   onclick="javascript:syncServer('weixin');">同步到微信服务器</a> 
 			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-reload'"
-			   onclick="javascript:fetchMenuFromWxServer();">从微信服务器获取菜单</a> 
+			   onclick="javascript:fetchMenuFromServer('weixin');">从微信服务器获取菜单</a> 
+			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-reload'"
+			   onclick="javascript:syncServer('yixin');">同步到易信服务器</a> 
+			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-reload'"
+			   onclick="javascript:fetchMenuFromServer('yixin');">从易信服务器获取菜单</a> 
 		   </div> 
 		  </div> 
 		  <div data-options="region:'center',border:true">

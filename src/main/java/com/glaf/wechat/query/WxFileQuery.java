@@ -33,7 +33,6 @@ public class WxFileQuery extends DataQuery {
 	protected String contentLike;
 	protected String filenameLike;
 	protected String pathLike;
-	protected String uuid;
 	protected List<String> uuids;
 	protected Date createDateGreaterThanOrEqual;
 	protected Date createDateLessThanOrEqual;
@@ -174,10 +173,6 @@ public class WxFileQuery extends DataQuery {
 				orderBy = "E.PATH_" + a_x;
 			}
 
-			if ("uuid".equals(sortColumn)) {
-				orderBy = "E.UUID_" + a_x;
-			}
-
 			if ("createBy".equals(sortColumn)) {
 				orderBy = "E.CREATEBY_" + a_x;
 			}
@@ -214,10 +209,6 @@ public class WxFileQuery extends DataQuery {
 		return titleLike;
 	}
 
-	public String getUuid() {
-		return uuid;
-	}
-
 	public List<String> getUuids() {
 		return uuids;
 	}
@@ -235,7 +226,6 @@ public class WxFileQuery extends DataQuery {
 		addColumn("desc", "DESC_");
 		addColumn("locked", "LOCKED_");
 		addColumn("path", "PATH_");
-		addColumn("uuid", "UUID_");
 		addColumn("createBy", "CREATEBY_");
 		addColumn("createDate", "CREATEDATE_");
 	}
@@ -289,10 +279,6 @@ public class WxFileQuery extends DataQuery {
 		this.titleLike = titleLike;
 	}
 
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
-	}
-
 	public void setUuids(List<String> uuids) {
 		this.uuids = uuids;
 	}
@@ -302,14 +288,6 @@ public class WxFileQuery extends DataQuery {
 			throw new RuntimeException("title is null");
 		}
 		this.titleLike = titleLike;
-		return this;
-	}
-
-	public WxFileQuery uuid(String uuid) {
-		if (uuid == null) {
-			throw new RuntimeException("uuid is null");
-		}
-		this.uuid = uuid;
 		return this;
 	}
 

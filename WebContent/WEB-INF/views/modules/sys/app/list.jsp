@@ -206,6 +206,8 @@
 	}
 
 	function reloadGrid(){
+		var queryParams = $('#mydatagrid').datagrid('options').queryParams; 
+		queryParams.parentId=jQuery("#nodeId").val();
 	    jQuery('#mydatagrid').datagrid('reload');
 	}
 

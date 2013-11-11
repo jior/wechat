@@ -128,9 +128,6 @@
 		update WX_FILE
 		set
 		<trim prefix="" suffix="" suffixOverrides=",">
-			<if test="categoryId != null">
-				CATEGORYID_ = #{categoryId, jdbcType=BIGINT},
-			</if>
 			<if test="title != null">
 				TITLE_ = #{title, jdbcType=VARCHAR},
 			</if>
@@ -221,14 +218,14 @@
 
 			<if test="appId != null">
 				and E.APPID = #{appId}
-            </if>
+			</if>
 
 			<if test="appIds != null and appIds.size !=0">
-			    and E.APPID IN
-                <foreach item="x_appId" index="index" collection="appIds" 
-                     open="(" separator="," close=")">
-                  #{x_appId}
-                </foreach>
+				and E.APPID IN
+				<foreach item="x_appId" index="index" collection="appIds"
+					open="(" separator="," close=")">
+					#{x_appId}
+				</foreach>
 			</if>
 
 			<if test="categoryId != null">

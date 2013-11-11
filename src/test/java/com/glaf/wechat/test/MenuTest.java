@@ -21,8 +21,10 @@ package com.glaf.wechat.test;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.glaf.core.config.Configuration;
 import com.glaf.wechat.component.Button;
 import com.glaf.wechat.component.Menu;
+import com.glaf.wechat.config.WechatConfiguration;
 import com.glaf.wechat.model.AccessToken;
 import com.glaf.wechat.util.WechatUtils;
 
@@ -36,6 +38,8 @@ import org.slf4j.LoggerFactory;
  */
 public class MenuTest {
 	private static Logger log = LoggerFactory.getLogger(MenuTest.class);
+
+	protected static Configuration conf = WechatConfiguration.create();
 
 	/**
 	 * 组装菜单数据
@@ -141,11 +145,13 @@ public class MenuTest {
 		String appSecret = "00000000000000000000";
 
 		// 调用接口获取access_token
-		AccessToken at = WechatUtils.getAccessToken(appId, appSecret);
+		AccessToken at = WechatUtils.getAccessToken(
+				conf.get("weixin_access_token_url"), appId, appSecret);
 
 		if (null != at) {
 			// 调用接口创建菜单
-			int result = WechatUtils.createMenu(menu, at.getToken());
+			int result = WechatUtils.createMenu(
+					conf.get("weixin_menu_create_url"), menu, at.getToken());
 
 			// 判断菜单创建结果
 			if (0 == result) {
