@@ -32,6 +32,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.glaf.core.cache.CacheFactory;
 import com.glaf.core.dao.EntityDAO;
 import com.glaf.core.id.IdGenerator;
 import com.glaf.core.util.StringTools;
@@ -92,6 +93,31 @@ public class WxContentServiceImpl implements WxContentService {
 		return wxContentMapper.getWxContentByUUID(uuid);
 	}
 
+	public WxContent getWxContentByUUIDWithRefs(String uuid) {
+		if (uuid == null) {
+			return null;
+		}
+		WxContent wxContent = wxContentMapper.getWxContentByUUID(uuid);
+		if (wxContent != null
+				&& StringUtils.isNotEmpty(wxContent.getRelationIds())) {
+			List<Long> relationIds = StringTools.splitToLong(wxContent
+					.getRelationIds());
+			logger.debug("relationIds:" + relationIds);
+			List<WxContent> relations = wxContentMapper
+					.getWxContentsByIds(relationIds);
+			wxContent.setRelations(relations);
+		}
+		if (wxContent != null
+				&& StringUtils.isNotEmpty(wxContent.getRecommendationIds())) {
+			List<Long> recommendationIds = StringTools.splitToLong(wxContent
+					.getRecommendationIds());
+			List<WxContent> recommendations = wxContentMapper
+					.getWxContentsByIds(recommendationIds);
+			wxContent.setRecommendations(recommendations);
+		}
+		return wxContent;
+	}
+
 	public int getWxContentCountByQueryCriteria(WxContentQuery query) {
 		return wxContentMapper.getWxContentCount(query);
 	}
@@ -146,31 +172,6 @@ public class WxContentServiceImpl implements WxContentService {
 		return wxContent;
 	}
 
-	public WxContent getWxContentByUUIDWithRefs(String uuid) {
-		if (uuid == null) {
-			return null;
-		}
-		WxContent wxContent = wxContentMapper.getWxContentByUUID(uuid);
-		if (wxContent != null
-				&& StringUtils.isNotEmpty(wxContent.getRelationIds())) {
-			List<Long> relationIds = StringTools.splitToLong(wxContent
-					.getRelationIds());
-			logger.debug("relationIds:" + relationIds);
-			List<WxContent> relations = wxContentMapper
-					.getWxContentsByIds(relationIds);
-			wxContent.setRelations(relations);
-		}
-		if (wxContent != null
-				&& StringUtils.isNotEmpty(wxContent.getRecommendationIds())) {
-			List<Long> recommendationIds = StringTools.splitToLong(wxContent
-					.getRecommendationIds());
-			List<WxContent> recommendations = wxContentMapper
-					.getWxContentsByIds(recommendationIds);
-			wxContent.setRecommendations(recommendations);
-		}
-		return wxContent;
-	}
-
 	public List<WxContent> list(WxContentQuery query) {
 		List<WxContent> list = wxContentMapper.getWxContents(query);
 		return list;
@@ -191,6 +192,12 @@ public class WxContentServiceImpl implements WxContentService {
 		} else {
 			wxContent.setLastUpdateDate(new Date());
 			wxContentMapper.updateWxContent(wxContent);
+			String cacheKey = "website_detail_" + wxContent.getId();
+			CacheFactory.remove(cacheKey);
+			cacheKey = "website_detail_" + wxContent.getUuid();
+			CacheFactory.remove(cacheKey);
+			cacheKey = "website_list_" + wxContent.getCategoryId();
+			CacheFactory.remove(cacheKey);
 		}
 		wxKeywordsService.saveAll(wxContent.getCategoryId(), wxContent);
 	}

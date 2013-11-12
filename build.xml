@@ -64,7 +64,7 @@
         </jar>
 
 		<jar jarfile="glaf-wechat-min-web.zip">
-			<fileset dir="WebContent" includes="**/*.*" excludes="**/*.jar,**/*.class,**/archives/*.*,**/*.ttc,**/*.lib,**/*.dll,**/*.so, **/data/index/**/*.*,**/examples/**/*.*, **/locks" casesensitive="yes" />
+			<fileset dir="WebContent" includes="**/*.*" excludes="**/*.jar,**/*.class,**/archives/*.*,**/*.ttc,**/*.lib,**/*.dll,**/*.so, **/data/index/**/*.*,**/examples/**/*.*, **/locks, wx/images/*.*" casesensitive="yes" />
 		</jar> 
 	</target>
 

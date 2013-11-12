@@ -118,5 +118,11 @@
 	<classpathentry kind="lib" path="lib/postgresql.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/httpclient.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/httpcore.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-compress.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-pool2.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/metrics-core.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/metrics-spring.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/netty.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/resteasy-jackson2-provider.jar"/>
 	<classpathentry kind="output" path="WebContent/WEB-INF/classes"/>
 </classpath>

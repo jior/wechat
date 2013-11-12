@@ -131,11 +131,15 @@
                 }
             })
 	});
+
+	function register(){
+		location.href="${contextPath}/website/wx/register";
+	}
 </script>
 </head>
 <body>
     <div id="loginWindow" class="easyui-window" title="Login Form" iconcls="icon-login"
-        style="width: 300px; height: 180px; padding: 5px; background: #fafafa;">
+        style="width: 380px; height: 180px; padding: 5px; background: #fafafa;">
         <div border="false" style="padding-left: 30px;  border: 1px solid #ccc;">
             <html:form method="post" action="${contextPath}/login.do?method=login" onsubmit="return verifyAll(this);" > 
             <table>
@@ -160,7 +164,9 @@
 				<tr>
 				  <td>&nbsp;</td>
 				  <td>
-				  <input type="submit" value=" 登 录 " onclick="javascript:doLogin();" class="btnGreen">
+				  <input type="submit" value=" 登录 " onclick="javascript:doLogin();" class="btnGreen">
+				  &nbsp;&nbsp;
+				  <input type="button" value=" 注册 " onclick="javascript:register();" class="btnGreen">
 				  </td>
 				</tr>
             </table>

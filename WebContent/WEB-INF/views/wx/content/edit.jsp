@@ -232,12 +232,12 @@ limitations under the License.
 	</tr>
 
 	<tr>
-		<td width="15%" align="left" valign="middle">图标</td>
+		<td width="15%" align="left" valign="middle">小图标</td>
 		<td align="left" valign="middle">
 		    <c:if test="${not empty wxContent.smallIcon }">
-			<img src="<%=request.getContextPath()%>/${wxContent.smallIcon}" width="60" height="60" border="0"/>&nbsp; 
+			<img src="<%=request.getContextPath()%>/${wxContent.smallIcon}"  border="0"/>&nbsp; 
 			</c:if>
-			<br>建议图片大小24*24像素（即宽度24，高度24）
+			<br>建议图片大小75*40像素（即宽度75，高度40）
 			<br>
 			<input id="smallIcon" name="smallIcon" type="text" 
 			       class="easyui-validatebox x-text"  

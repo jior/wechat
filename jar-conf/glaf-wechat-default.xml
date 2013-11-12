@@ -19,7 +19,7 @@
 
 	<property>
 		<name>weixin_access_token_url</name>
-		<value>https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET</value>
+		<value>https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&amp;appid=APPID&amp;secret=APPSECRET</value>
 	</property>
 
 	<property>
@@ -39,7 +39,7 @@
 
 	<property>
 		<name>yixin_access_token_url</name>
-		<value>https://api.yixin.im/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET</value>
+		<value>https://api.yixin.im/cgi-bin/token?grant_type=client_credential&amp;appid=APPID&amp;secret=APPSECRET</value>
 	</property>
 
 	<property>

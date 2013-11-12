@@ -54,9 +54,10 @@ limitations under the License.
 				//sortName: 'id',
 				//sortOrder: 'desc',
 				remoteSort: false,
-				singleSelect: true,
+				singleSelect: false,
 				idField: 'id',
 				columns:[[
+					    {title:'ck', field:'ck', width:60, checkbox:true},
 				        {title:'序号', field:'startIndex', width:80, sortable:false},
 					    {title:'姓名',field:'name', width:120},
 					    {title:'手机',field:'mobile', width:120},

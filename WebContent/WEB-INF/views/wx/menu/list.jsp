@@ -145,7 +145,7 @@ limitations under the License.
 	}
 
 	function formatterKeys(val, row){
-		return "<a href='javascript:editRow("+row.id+");'>修改</a>&nbsp;";
+		return "<a href='javascript:editRow("+row.id+");'>修改</a>&nbsp;<a href='javascript:deleteRow("+row.id+");'>删除</a>&nbsp;";
 	}
 
 	function editPPT(rowId){
@@ -157,6 +157,27 @@ limitations under the License.
 	function editRow(rowId){
 	    var link = '<%=request.getContextPath()%>/mx/wx/wxMenu/edit?group=${group}&id='+rowId;
 	    art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"no" }, false);
+	}
+
+	function deleteRow(rowId){
+		if(confirm("数据删除后不能恢复，确定删除吗？")){
+			jQuery.ajax({
+				   type: "POST",
+				   url: '<%=request.getContextPath()%>/mx/wx/wxMenu/delete?ids='+rowId,
+				   dataType:  'json',
+				   error: function(data){
+					   alert('服务器处理错误！');
+				   },
+				   success: function(data){
+					   if(data != null && data.message != null){
+						   alert(data.message);
+					   } else {
+						   alert('操作成功完成！');
+					   }
+					   reloadGrid();
+				   }
+			 });
+		} 
 	}
 
 
@@ -229,9 +250,9 @@ limitations under the License.
 					   if(data != null && data.message != null){
 						   alert(data.message);
 					   } else {
-						 alert('操作成功完成！');
+						   alert('操作成功完成！');
 					   }
-					   jQuery('#mydatagrid').datagrid('reload');
+					   reloadGrid();
 				   }
 			 });
 		} else {
@@ -285,7 +306,7 @@ limitations under the License.
 					   if(data != null && data.message != null){
 						   alert(data.message);
 					   } else {
-						 alert('操作成功完成！');
+						   alert('操作成功完成！');
 					   }
 					   jQuery('#mydatagrid').datagrid('reload');
 				   }
