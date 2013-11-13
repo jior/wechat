@@ -70,6 +70,15 @@ public class SubscribeMessageFilter extends AbstractMessageFilter implements
 					} else {
 						art.setPicUrl(c.getPicUrl());
 					}
+				} else {
+					if (StringUtils.isNotEmpty(c.getIcon())) {
+						if (StringUtils.startsWith(c.getIcon(), "/wx/upload/")) {
+							String url = message.getServiceUrl() + c.getIcon();
+							art.setPicUrl(url);
+						} else {
+							art.setPicUrl(c.getIcon());
+						}
+					}
 				}
 				newsMessage.addItemArticle(art);
 			}
