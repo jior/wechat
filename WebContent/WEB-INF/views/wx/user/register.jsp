@@ -51,6 +51,12 @@ function checkForm(form){
        return false;
    }
 
+   if(jQuery("#name").val()==""){
+       alert("请输入姓名");
+	   document.getElementById("name").focus();
+       return false;
+   }
+
    if(jQuery("#password").val()==""){
        alert("请输入密码");
 	   document.getElementById("password").focus();
@@ -100,8 +106,16 @@ function setValue(obj){
 		       nullable="no" maxsize="50" chname="用户名">（只能包含数字，大小写字母及下划线）   
 		</td>
       </tr>
+	  <tr>
+        <td height="40">姓　名*</td>
+        <td>
+		<input id="name" name="name" type="text" size="20" class="easyui-validatebox x-text" style="width:180px"  
+		       data-options="required:true" datatype="string"  maxlength="20"
+		       nullable="no" maxsize="50" chname="姓名">（可以包含数字，大小写字母及汉字）   
+		</td>
+      </tr>
       <tr>
-        <td class="input-box2"  height="40">密　　码*</td>
+        <td class="input-box2"  height="40">密　码*</td>
         <td align="left">
 		<input id="password" name="password" type="password" size="20" datatype="string" nullable="no" 
 		       minsize="6" maxsize="20" chname="密码" class="easyui-validatebox x-text" style="width:180px"   
@@ -117,15 +131,7 @@ function setValue(obj){
 		</td>
       </tr>
       <tr>
-        <td height="40">手　　机</td>
-        <td>
-          <input id="mobile" name="mobile" type="text" size="20" class="easyui-validatebox x-text" style="width:180px"
-		         data-options="required:false" datatype="string" 
-		         nullable="yes" maxsize="50" chname="手机"  maxlength="20">（用于接收消息）         
-		</td>
-      </tr>
-      <tr>
-        <td height="40">邮　　件*</td>
+        <td height="40">邮　件*</td>
         <td>
           <input id="email" name="email" type="text" size="20" class="easyui-validatebox x-text" style="width:180px"
 		         data-options="required:true" datatype="email" 
@@ -133,7 +139,15 @@ function setValue(obj){
 		</td>
       </tr>
 	  <tr>
-        <td class="input-box">类　　型</td>
+        <td height="40">手　机</td>
+        <td>
+          <input id="mobile" name="mobile" type="text" size="20" class="easyui-validatebox x-text" style="width:180px"
+		         data-options="required:false" datatype="string" 
+		         nullable="yes" maxsize="50" chname="手机"  maxlength="20">（用于接收消息）         
+		</td>
+      </tr>
+	  <tr>
+        <td class="input-box">类　型</td>
         <td><select name="deptId" onChange="javascript:setValue(this);" class="input">
           <%
 			if(list!=null){

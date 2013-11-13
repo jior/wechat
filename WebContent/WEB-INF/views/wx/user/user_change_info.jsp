@@ -89,10 +89,10 @@ function setValue(obj){
 		</td>
       </tr>
       <tr>
-        <td height="40">办公电话*</td>
+        <td height="40">办公电话</td>
         <td>
-          <input name="telephone" type="text" size="50" class="easyui-validatebox x-text" data-options="required:true" datatype="string" 
-		  value="<%=bean.getTelephone() != null ? bean.getTelephone() :""%>" nullable="no" maxsize="50" chname="办公电话">       
+          <input name="telephone" type="text" size="50" class="easyui-validatebox x-text" data-options="required:false" datatype="string" 
+		  value="<%=bean.getTelephone() != null ? bean.getTelephone() :""%>" nullable="yes" maxsize="50" chname="办公电话">       
 		</td>
       </tr>
       <tr>
