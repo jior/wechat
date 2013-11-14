@@ -45,9 +45,11 @@ public class WxLogServiceImpl implements WxLogService {
 	protected final static Log logger = LogFactory
 			.getLog(WxLogServiceImpl.class);
 
-	protected static  Configuration conf = WechatConfiguration.create();
-	
+	protected static Configuration conf = WechatConfiguration.create();
+
 	protected static Stack<WxLog> wxLogs = new Stack<WxLog>();
+
+	protected static long lastUpdate = System.currentTimeMillis();
 
 	protected IdGenerator idGenerator;
 
@@ -66,12 +68,6 @@ public class WxLogServiceImpl implements WxLogService {
 	@Transactional
 	public boolean create(WxLog bean) {
 		this.save(bean);
-		return true;
-	}
-
-	@Transactional
-	public boolean delete(WxLog bean) {
-		sysLogMapper.deleteWxLog(bean);
 		return true;
 	}
 
@@ -98,11 +94,16 @@ public class WxLogServiceImpl implements WxLogService {
 		sysLog.setCreateTime(new Date());
 		sysLog.setSuffix("_" + DateUtils.getNowYearMonthDay());
 		wxLogs.push(sysLog);
-		if (wxLogs.size() >= conf.getInt("wx_log_step", 100)) {
+		/**
+		 * 当记录数达到写数据库的条数或时间超过1分钟，写日志到数据库
+		 */
+		if (wxLogs.size() >= conf.getInt("wx_log_step", 100)
+				|| ((System.currentTimeMillis() - lastUpdate) / 60000 > 0)) {
 			while (!wxLogs.isEmpty()) {
 				WxLog bean = wxLogs.pop();
 				sysLogMapper.insertWxLog(bean);
 			}
+			lastUpdate = System.currentTimeMillis();
 		}
 	}
 

@@ -21,10 +21,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.glaf.core.context.ContextFactory;
 import com.glaf.wechat.domain.WxLog;
 import com.glaf.wechat.sdk.message.Message;
-import com.glaf.wechat.service.WxLogService;
+import com.glaf.wechat.util.WxLogFactory;
 
 /**
  * message filter chain
@@ -54,9 +53,7 @@ public class MessageFilterChain {
 					bean.setFlag(0);
 					bean.setIp(message.getRemoteIPAddr());
 					bean.setOperate(message.getMsgType());
-					WxLogService wxLogService = ContextFactory
-							.getBean("wxLogService");
-					wxLogService.create(bean);
+					WxLogFactory.create(bean);
 				} catch (Exception ex) {
 				}
 				return msg;

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="GBK"?>
+
+<configuration>
+
+	<property>
+		<name>wx_template_cache</name>
+		<value>false</value>
+	</property>
+
+	<property>
+		<name>wx_log_step</name>
+		<value>100</value>
+	</property>
+
+	<property>
+		<name>weixin_server_ip_list</name>
+		<value>101.226.89.83,140.206.160.101</value>
+	</property>
+
+	<property>
+		<name>weixin_access_token_url</name>
+		<value>https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&amp;appid=APPID&amp;secret=APPSECRET</value>
+	</property>
+
+	<property>
+		<name>weixin_menu_create_url</name>
+		<value>https://api.weixin.qq.com/cgi-bin/menu/create?access_token=ACCESS_TOKEN</value>
+	</property>
+
+	<property>
+		<name>weixin_menu_get_url</name>
+		<value>https://api.weixin.qq.com/cgi-bin/menu/get?access_token=ACCESS_TOKEN</value>
+	</property>
+
+	<property>
+		<name>yixin_server_ip_list</name>
+		<value>223.252.198.110,223.252.198.111</value>
+	</property>
+
+	<property>
+		<name>yixin_access_token_url</name>
+		<value>https://api.yixin.im/cgi-bin/token?grant_type=client_credential&amp;appid=APPID&amp;secret=APPSECRET</value>
+	</property>
+
+	<property>
+		<name>yixin_menu_create_url</name>
+		<value>https://api.yixin.im/cgi-bin/menu/create?access_token=ACCESS_TOKEN</value>
+	</property>
+
+	<property>
+		<name>yixin_menu_get_url</name>
+		<value>https://api.yixin.im/cgi-bin/menu/get?access_token=ACCESS_TOKEN</value>
+	</property>
+
+</configuration>

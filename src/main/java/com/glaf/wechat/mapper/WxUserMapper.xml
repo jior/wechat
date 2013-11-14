@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.wechat.mapper.WxUserMapper">
+
+	<resultMap id="wxUserResultMap" type="com.glaf.wechat.domain.WxUser">
+		<id property="id" column="ID" jdbcType="BIGINT" />
+		<result property="appId" column="APPID" jdbcType="BIGINT" />
+		<result property="actorId" column="ACTORID" jdbcType="VARCHAR" />
+		<result property="wxid" column="WXID" jdbcType="VARCHAR" />
+		<result property="wxSourceId" column="WXSOURCEID" jdbcType="VARCHAR" />
+		<result property="wxname" column="WXNAME" jdbcType="VARCHAR" />
+		<result property="wxHeadImage" column="WXHEADIMAGE" jdbcType="VARCHAR" />
+		<result property="yxid" column="YXID" jdbcType="VARCHAR" />
+		<result property="yxSourceId" column="YXSOURCEID" jdbcType="VARCHAR" />
+		<result property="yxname" column="YXName" jdbcType="VARCHAR" />
+		<result property="yxHeadImage" column="YXHEADIMAGE" jdbcType="VARCHAR" />
+		<result property="token" column="TOKEN" jdbcType="VARCHAR" />
+		<result property="province" column="PROVINCE" jdbcType="VARCHAR" />
+		<result property="city" column="CITY" jdbcType="VARCHAR" />
+		<result property="area" column="AREA" jdbcType="VARCHAR" />
+		<result property="name" column="NAME" jdbcType="VARCHAR" />
+		<result property="mobile" column="MOBILE" jdbcType="VARCHAR" />
+		<result property="mail" column="MAIL" jdbcType="VARCHAR" />
+		<result property="telephone" column="TELEPHONE" jdbcType="VARCHAR" />
+		<result property="userType" column="USERTYPE" jdbcType="INTEGER" />
+		<result property="accountType" column="ACCOUNTTYPE" jdbcType="INTEGER" />
+		<result property="deptId" column="DEPTID" jdbcType="BIGINT" />
+		<result property="type" column="TYPE" jdbcType="VARCHAR" />
+		<result property="locked" column="LOCKED" jdbcType="INTEGER" />
+		<result property="remark" column="REMARK" jdbcType="VARCHAR" />
+		<result property="createDate" column="CREATEDATE" jdbcType="TIMESTAMP" />
+		<result property="endDate" column="ENDDATE" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+
+	<insert id="insertWxUser" parameterType="com.glaf.wechat.domain.WxUser">
+		insert into WX_USER
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ID
+			<if test="appId != null">
+				,APPID
+			</if>
+			<if test="actorId != null">
+				,ACTORID
+			</if>
+			<if test="wxid != null">
+				,WXID
+			</if>
+			<if test="wxSourceId != null">
+				,WXSOURCEID
+			</if>
+			<if test="wxname != null">
+				,WXNAME
+			</if>
+			<if test="wxHeadImage != null">
+				,WXHEADIMAGE
+			</if>
+			<if test="yxid != null">
+				,YXID
+			</if>
+			<if test="yxSourceId != null">
+				,YXSOURCEID
+			</if>
+			<if test="yxname != null">
+				,YXName
+			</if>
+			<if test="yxHeadImage != null">
+				,YXHEADIMAGE
+			</if>
+			<if test="token != null">
+				,TOKEN
+			</if>
+			<if test="province != null">
+				,PROVINCE
+			</if>
+			<if test="city != null">
+				,CITY
+			</if>
+			<if test="area != null">
+				,AREA
+			</if>
+			<if test="name != null">
+				,NAME
+			</if>
+			<if test="mobile != null">
+				,MOBILE
+			</if>
+			<if test="mail != null">
+				,MAIL
+			</if>
+			<if test="telephone != null">
+				,TELEPHONE
+			</if>
+			<if test="userType != null">
+				,USERTYPE
+			</if>
+			<if test="accountType != null">
+				,ACCOUNTTYPE
+			</if>
+			<if test="deptId != null">
+				,DEPTID
+			</if>
+			<if test="type != null">
+				,TYPE
+			</if>
+			<if test="locked != null">
+				,LOCKED
+			</if>
+			<if test="remark != null">
+				,REMARK
+			</if>
+			<if test="createDate != null">
+				,CREATEDATE
+			</if>
+			<if test="endDate != null">
+				,ENDDATE
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			#{id, jdbcType=BIGINT}
+
+			<if test="appId != null">
+				,#{appId, jdbcType=BIGINT}
+			</if>
+			<if test="actorId != null">
+				,#{actorId, jdbcType=VARCHAR}
+			</if>
+			<if test="wxid != null">
+				,#{wxid, jdbcType=VARCHAR}
+			</if>
+			<if test="wxSourceId != null">
+				,#{wxSourceId, jdbcType=VARCHAR}
+			</if>
+			<if test="wxname != null">
+				,#{wxname, jdbcType=VARCHAR}
+			</if>
+			<if test="wxHeadImage != null">
+				,#{wxHeadImage, jdbcType=VARCHAR}
+			</if>
+			<if test="yxid != null">
+				,#{yxid, jdbcType=VARCHAR}
+			</if>
+			<if test="yxSourceId != null">
+				,#{yxSourceId, jdbcType=VARCHAR}
+			</if>
+			<if test="yxname != null">
+				,#{yxname, jdbcType=VARCHAR}
+			</if>
+			<if test="yxHeadImage != null">
+				,#{yxHeadImage, jdbcType=VARCHAR}
+			</if>
+			<if test="token != null">
+				,#{token, jdbcType=VARCHAR}
+			</if>
+			<if test="province != null">
+				,#{province, jdbcType=VARCHAR}
+			</if>
+			<if test="city != null">
+				,#{city, jdbcType=VARCHAR}
+			</if>
+			<if test="area != null">
+				,#{area, jdbcType=VARCHAR}
+			</if>
+			<if test="name != null">
+				,#{name, jdbcType=VARCHAR}
+			</if>
+			<if test="mobile != null">
+				,#{mobile, jdbcType=VARCHAR}
+			</if>
+			<if test="mail != null">
+				,#{mail, jdbcType=VARCHAR}
+			</if>
+			<if test="telephone != null">
+				,#{telephone, jdbcType=VARCHAR}
+			</if>
+			<if test="userType != null">
+				,#{userType, jdbcType=INTEGER}
+			</if>
+			<if test="accountType != null">
+				,#{accountType, jdbcType=INTEGER}
+			</if>
+			<if test="deptId != null">
+				,#{deptId, jdbcType=BIGINT}
+			</if>
+			<if test="type != null">
+				,#{type, jdbcType=VARCHAR}
+			</if>
+			<if test="locked != null">
+				,#{locked, jdbcType=INTEGER}
+			</if>
+			<if test="remark != null">
+				,#{remark, jdbcType=VARCHAR}
+			</if>
+			<if test="createDate != null">
+				,#{createDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="endDate != null">
+				,#{endDate, jdbcType=TIMESTAMP}
+			</if>
+		</trim>
+	</insert>
+
+
+	<update id="updateWxUser" parameterType="com.glaf.wechat.domain.WxUser">
+		update WX_USER
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">
+			<if test="wxid != null">
+				WXID = #{wxid, jdbcType=VARCHAR},
+			</if>
+			<if test="wxSourceId != null">
+				WXSOURCEID = #{wxSourceId, jdbcType=VARCHAR},
+			</if>
+			<if test="wxname != null">
+				WXNAME = #{wxname, jdbcType=VARCHAR},
+			</if>
+			<if test="wxHeadImage != null">
+				WXHEADIMAGE = #{wxHeadImage, jdbcType=VARCHAR},
+			</if>
+			<if test="yxid != null">
+				YXID = #{yxid, jdbcType=VARCHAR},
+			</if>
+			<if test="yxSourceId != null">
+				YXSOURCEID = #{yxSourceId, jdbcType=VARCHAR},
+			</if>
+			<if test="yxname != null">
+				YXName = #{yxname, jdbcType=VARCHAR},
+			</if>
+			<if test="yxHeadImage != null">
+				YXHEADIMAGE = #{yxHeadImage, jdbcType=VARCHAR},
+			</if>
+			<if test="token != null">
+				TOKEN = #{token, jdbcType=VARCHAR},
+			</if>
+			<if test="province != null">
+				PROVINCE = #{province, jdbcType=VARCHAR},
+			</if>
+			<if test="city != null">
+				CITY = #{city, jdbcType=VARCHAR},
+			</if>
+			<if test="area != null">
+				AREA = #{area, jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				NAME = #{name, jdbcType=VARCHAR},
+			</if>
+			<if test="mobile != null">
+				MOBILE = #{mobile, jdbcType=VARCHAR},
+			</if>
+			<if test="mail != null">
+				MAIL = #{mail, jdbcType=VARCHAR},
+			</if>
+			<if test="telephone != null">
+				TELEPHONE = #{telephone, jdbcType=VARCHAR},
+			</if>
+			<if test="userType != null">
+				USERTYPE = #{userType, jdbcType=INTEGER},
+			</if>
+			<if test="accountType != null">
+				ACCOUNTTYPE = #{accountType, jdbcType=INTEGER},
+			</if>
+			<if test="deptId != null">
+				DEPTID = #{deptId, jdbcType=BIGINT},
+			</if>
+			<if test="type != null">
+				TYPE = #{type, jdbcType=VARCHAR},
+			</if>
+			<if test="locked != null">
+				LOCKED = #{locked, jdbcType=INTEGER},
+			</if>
+			<if test="remark != null">
+				REMARK = #{remark, jdbcType=VARCHAR},
+			</if>
+		</trim>
+		where
+		ID = #{id, jdbcType=BIGINT}
+
+	</update>
+
+
+	<delete id="deleteWxUserById" parameterType="long">
+		delete from WX_USER
+		where ID = #{id}
+	</delete>
+
+
+	<delete id="deleteWxUsers" parameterType="com.glaf.wechat.query.WxUserQuery">
+		delete from WX_USER
+		where (
+		ID IN
+		<foreach item="x_id" index="index" collection="ids" open="("
+			separator="," close=")">
+			#{x_id}
+		</foreach>
+		)
+	</delete>
+
+
+	<select id="getWxUserById" parameterType="long" resultMap="wxUserResultMap">
+		select * from WX_USER where ID = #{id}
+	</select>
+
+
+	<select id="getWxUsers" parameterType="com.glaf.wechat.query.WxUserQuery"
+		resultMap="wxUserResultMap">
+		select distinct E.*
+		<include refid="selectWxUsersSql" />
+		<choose>
+			<when test="orderBy != null">
+				order by ${orderBy}
+			</when>
+			<otherwise>
+				order by E.ID desc
+			</otherwise>
+		</choose>
+	</select>
+
+
+	<select id="getWxUserCount" parameterType="com.glaf.wechat.query.WxUserQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectWxUsersSql" />
+	</select>
+
+
+	<sql id="selectWxUsersSql">
+
+		from WX_USER E
+
+		<where>
+			1 = 1
+
+			<if test="appIds != null and appIds.size !=0">
+				and E.APPID IN
+				<foreach item="x_appId" index="index" collection="appIds"
+					open="(" separator="," close=")">
+					#{x_appId}
+				</foreach>
+			</if>
+
+			<if test="actorId != null and actorId != '' ">
+				and E.ACTORID = #{actorId}
+			</if>
+
+			<if test="actorIds != null and actorIds.size !=0">
+				and E.ACTORID IN
+				<foreach item="x_actorId" index="index" collection="actorIds"
+					open="(" separator="," close=")">
+					#{x_actorId}
+				</foreach>
+			</if>
+
+			<if test="userType != null">
+				and E.USERTYPE = #{userType}
+			</if>
+
+			<if test="accountType != null">
+				and E.ACCOUNTTYPE = #{accountType}
+			</if>
+
+			<if test="deptId != null">
+				and E.DEPTID = #{deptId}
+			</if>
+
+			<if test="deptIds != null and deptIds.size !=0">
+				and E.DEPTID IN
+				<foreach item="x_deptId" index="index" collection="deptIds"
+					open="(" separator="," close=")">
+					#{x_deptId}
+				</foreach>
+			</if>
+
+			<if test="type != null and type != '' ">
+				and E.TYPE = #{type}
+			</if>
+
+			<if test="locked != null">
+				and E.LOCKED = #{locked}
+			</if>
+
+			<if test="createDateGreaterThanOrEqual != null">
+				and E.CREATEDATE &gt;= #{createDateGreaterThanOrEqual}
+			</if>
+
+			<if test="createDateLessThanOrEqual != null">
+				and E.CREATEDATE &lt;= #{createDateLessThanOrEqual}
+			</if>
+
+			<if test="endDateGreaterThanOrEqual != null">
+				and E.ENDDATE &gt;= #{endDateGreaterThanOrEqual}
+			</if>
+
+			<if test="endDateLessThanOrEqual != null">
+				and E.ENDDATE &lt;= #{endDateLessThanOrEqual}
+			</if>
+
+		</where>
+	</sql>
+
+</mapper>

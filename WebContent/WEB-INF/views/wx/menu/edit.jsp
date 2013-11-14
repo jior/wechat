@@ -147,6 +147,7 @@ limitations under the License.
 		<td width="20%" align="left">上级菜单</td>
 		<td align="left">
              <select id="parentId" name="parentId">
+			    <option value="0">/</option>
 			   <c:forEach items="${topMenus}" var="menu">
 				<option value="${menu.id}">${menu.name}</option>
 			   </c:forEach>

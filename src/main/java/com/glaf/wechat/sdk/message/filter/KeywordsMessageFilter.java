@@ -37,7 +37,7 @@ import com.glaf.wechat.sdk.message.ResponseNewsMessage;
 import com.glaf.wechat.sdk.message.TextMessage;
 import com.glaf.wechat.service.WxContentService;
 import com.glaf.wechat.service.WxKeywordsService;
-import com.glaf.wechat.service.WxLogService;
+import com.glaf.wechat.util.WxLogFactory;
 
 /**
  * 关键字回复
@@ -127,9 +127,7 @@ public class KeywordsMessageFilter extends AbstractMessageFilter implements
 						bean.setFlag(100);// 关键字回复
 						bean.setIp(message.getRemoteIPAddr());
 						bean.setOperate(content);
-						WxLogService wxLogService = ContextFactory
-								.getBean("wxLogService");
-						wxLogService.create(bean);
+						WxLogFactory.create(bean);
 					} catch (Exception ex) {
 					}
 

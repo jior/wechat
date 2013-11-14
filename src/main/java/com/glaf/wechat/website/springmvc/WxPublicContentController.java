@@ -63,6 +63,7 @@ import com.glaf.wechat.service.WxSiteInfoService;
 import com.glaf.wechat.service.WxTemplateService;
 import com.glaf.wechat.service.WxUserTemplateService;
 import com.glaf.wechat.util.WechatUtils;
+import com.glaf.wechat.util.WxLogFactory;
 
 @Controller("/wx/content")
 @RequestMapping("/wx/content")
@@ -118,7 +119,7 @@ public class WxPublicContentController {
 				bean.setFlag(1001);
 				bean.setIp(RequestUtils.getIPAddress(request));
 				bean.setOperate(uuid);
-				wxLogService.create(bean);
+				WxLogFactory.create(bean);
 			} catch (Exception ex) {
 			}
 			return;
@@ -207,7 +208,7 @@ public class WxPublicContentController {
 					bean.setFlag(1002);
 					bean.setIp(RequestUtils.getIPAddress(request));
 					bean.setOperate(uuid);
-					wxLogService.create(bean);
+					WxLogFactory.create(bean);
 				} catch (Exception ex) {
 				}
 			}
@@ -236,7 +237,7 @@ public class WxPublicContentController {
 				bean.setCreateTime(new Date());
 				bean.setFlag(10001);
 				bean.setIp(RequestUtils.getIPAddress(request));
-				wxLogService.create(bean);
+				WxLogFactory.create(bean);
 			} catch (Exception ex) {
 			}
 			return;
@@ -332,7 +333,7 @@ public class WxPublicContentController {
 					bean.setCreateTime(new Date());
 					bean.setFlag(10002);
 					bean.setIp(RequestUtils.getIPAddress(request));
-					wxLogService.create(bean);
+					WxLogFactory.create(bean);
 				} catch (Exception ex) {
 				}
 			}
@@ -365,7 +366,7 @@ public class WxPublicContentController {
 				bean.setFlag(5001);
 				bean.setIp(RequestUtils.getIPAddress(request));
 				bean.setOperate(String.valueOf(categoryId));
-				wxLogService.create(bean);
+				WxLogFactory.create(bean);
 			} catch (Exception ex) {
 			}
 
@@ -526,7 +527,7 @@ public class WxPublicContentController {
 						bean.setFlag(5002);
 						bean.setIp(RequestUtils.getIPAddress(request));
 						bean.setOperate(String.valueOf(categoryId));
-						wxLogService.create(bean);
+						WxLogFactory.create(bean);
 					} catch (Exception ex) {
 					}
 				}
@@ -605,7 +606,7 @@ public class WxPublicContentController {
 				bean.setFlag(2001);
 				bean.setIp(RequestUtils.getIPAddress(request));
 				bean.setOperate(String.valueOf(id));
-				wxLogService.create(bean);
+				WxLogFactory.create(bean);
 			} catch (Exception ex) {
 			}
 			return;
@@ -694,7 +695,7 @@ public class WxPublicContentController {
 					bean.setFlag(2002);
 					bean.setIp(RequestUtils.getIPAddress(request));
 					bean.setOperate(String.valueOf(id));
-					wxLogService.create(bean);
+					WxLogFactory.create(bean);
 				} catch (Exception ex) {
 				}
 			}
