@@ -35,8 +35,6 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/ezmorph.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/fastjson.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/freemarker.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/glaf-base.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/glaf-cms.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/glaf-core.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/glaf-jbpm.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/glaf-mail.jar"/>
@@ -131,5 +129,7 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spymemcached.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-data-commons.RELEASE.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/ehcache.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/glaf-base.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/glaf-cms.jar"/>
 	<classpathentry kind="output" path="WebContent/WEB-INF/classes"/>
 </classpath>

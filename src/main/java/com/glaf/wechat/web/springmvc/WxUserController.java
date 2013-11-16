@@ -1,7 +1,5 @@
 package com.glaf.wechat.web.springmvc;
 
-import java.util.Date;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
@@ -91,7 +89,7 @@ public class WxUserController {
 		SysUser bean = RequestUtil.getLoginUser(request);
 		boolean ret = false;
 		if (bean != null) {
-			SysUser user = sysUserService.findById(bean.getId());
+			SysUser user = sysUserService.findByAccount(bean.getActorId());
 			user.setName(ParamUtil.getParameter(request, "name"));
 			user.setMobile(ParamUtil.getParameter(request, "mobile"));
 			user.setEmail(ParamUtil.getParameter(request, "email"));
@@ -128,14 +126,14 @@ public class WxUserController {
 		String newPwd = ParamUtil.getParameter(request, "newPwd");
 		if (bean != null && StringUtils.isNotEmpty(oldPwd)
 				&& StringUtils.isNotEmpty(newPwd)) {
-			SysUser user = sysUserService.findById(bean.getId());
+			SysUser user = sysUserService.findByAccount(bean.getActorId());
 			try {
 				String encPwd = DigestUtil.digestString(oldPwd, "MD5");
 				if (StringUtils.equals(encPwd, user.getPassword())) {
 					user.setPassword(DigestUtil.digestString(newPwd, "MD5"));
 					user.setUpdateBy(RequestUtils.getActorId(request));
-					user.setLastChangePasswordDate(new Date());
-					user.setIsChangePassword(2);
+					// user.setLastChangePasswordDate(new Date());
+					// user.setIsChangePassword(2);
 					ret = sysUserService.update(user);
 				}
 			} catch (Exception ex) {

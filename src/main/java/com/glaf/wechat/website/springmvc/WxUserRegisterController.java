@@ -19,7 +19,9 @@ package com.glaf.wechat.website.springmvc;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -52,6 +54,7 @@ import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
 import com.glaf.core.security.DigestUtil;
 import com.glaf.core.util.RequestUtils;
+import com.glaf.core.util.Tools;
 import com.glaf.wechat.config.WechatConfiguration;
 
 @Controller("/wx/register")
@@ -97,7 +100,7 @@ public class WxUserRegisterController {
 		}
 
 		bean.setAccount(ParamUtil.getParameter(request, "actorId"));
-		bean.setCode(bean.getAccount());
+		// bean.setCode(bean.getAccount());
 		bean.setName(ParamUtil.getParameter(request, "name"));
 		String password = ParamUtil.getParameter(request, "password");
 		try {
@@ -108,7 +111,7 @@ public class WxUserRegisterController {
 		}
 		bean.setMobile(ParamUtil.getParameter(request, "mobile"));
 		bean.setEmail(ParamUtil.getParameter(request, "email"));
-		bean.setBlocked(0);
+		// bean.setBlocked(0);
 		bean.setUserType(0);
 		bean.setAccountType(2);
 		bean.setEvection(0);
@@ -116,8 +119,8 @@ public class WxUserRegisterController {
 		bean.setLastLoginTime(new Date());
 		bean.setCreateBy("website");
 		bean.setUpdateBy("website");
-		bean.setLastChangePasswordDate(new Date());
-		bean.setIsChangePassword(0);
+		// bean.setLastChangePasswordDate(new Date());
+		// bean.setIsChangePassword(0);
 
 		int ret = 0;
 		if (sysUserService.findByAccount(bean.getAccount()) == null) {
@@ -126,18 +129,33 @@ public class WxUserRegisterController {
 				try {
 					SysRole role = sysRoleService.findByCode("WX_ROLE");
 					if (role != null) {
-						SysDeptRole deptRole = sysDeptRoleService.find(
-								bean.getDeptId(), role.getId());
-						if (deptRole != null) {
+						if (conf.getBoolean("isIsdpIdentity", false)) {
+							Map<String, Object> dataMap = new HashMap<String, Object>();
+							dataMap.put("authorizeFrom", 0);
+							dataMap.put("userId", bean.getAccount());
+							dataMap.put("roleId", String.valueOf(role.getId()));
 							SysUserRole userRole = new SysUserRole();
+							Tools.populate(userRole, dataMap);
 							userRole.setAuthorized(0);
-							userRole.setAuthorizeFrom(0);
 							userRole.setCreateBy("website");
-							userRole.setDeptRole(deptRole);
-							userRole.setDeptRoleId(deptRole.getId());
 							userRole.setUser(bean);
-							userRole.setUserId(bean.getId());
 							sysUserRoleService.create(userRole);
+						} else {
+							SysDeptRole deptRole = sysDeptRoleService.find(
+									bean.getDeptId(), role.getId());
+							if (deptRole != null) {
+								Map<String, Object> dataMap = new HashMap<String, Object>();
+								dataMap.put("authorizeFrom", "0");
+								dataMap.put("userId", bean.getId());
+								dataMap.put("deptRoleId", deptRole.getId());
+								SysUserRole userRole = new SysUserRole();
+								Tools.populate(userRole, dataMap);
+								userRole.setAuthorized(0);
+								userRole.setCreateBy("website");
+								userRole.setDeptRole(deptRole);
+								userRole.setUser(bean);
+								sysUserRoleService.create(userRole);
+							}
 						}
 					}
 				} catch (Exception ex) {
