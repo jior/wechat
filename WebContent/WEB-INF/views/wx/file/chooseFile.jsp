@@ -20,6 +20,7 @@ limitations under the License.
 <%
     String theme = com.glaf.core.util.RequestUtils.getTheme(request);
     request.setAttribute("theme", theme);
+	int index = 0;
 %>
 <!DOCTYPE html>
 <html>
@@ -82,7 +83,7 @@ limitations under the License.
 		  jQuery.get(url+'&randnum='+Math.floor(Math.random()*1000000),{qq:'xx'},function(data){
 		      //var text = JSON.stringify(data); 
               //alert(text);
-			  jQuery('#easyui_data_grid').datagrid('loadData', data);
+			  jQuery('#mydatagrid').datagrid('loadData', data);
 		  },'json');
 	}
 
@@ -91,7 +92,7 @@ limitations under the License.
 	});
 
     jQuery(function(){
-		jQuery('#easyui_data_grid').datagrid({
+		jQuery('#mydatagrid').datagrid({
 				width:1000,
 				height:480,
 				fit:true,
@@ -115,7 +116,7 @@ limitations under the License.
 				pageList: [10,15,20,25,30,40,50,100]
 			});
 
-			var p = jQuery('#easyui_data_grid').datagrid('getPager');
+			var p = jQuery('#mydatagrid').datagrid('getPager');
 			jQuery(p).pagination({
 				onBeforeRefresh:function(){
 					//alert('before refresh');
@@ -144,18 +145,18 @@ limitations under the License.
 
  
 	function resize(){
-		jQuery('#easyui_data_grid').datagrid('resize', {
+		jQuery('#mydatagrid').datagrid('resize', {
 			width:800,
 			height:400
 		});
 	}
 
 	function reloadGrid(){
-	    jQuery('#easyui_data_grid').datagrid('reload');
+	    jQuery('#mydatagrid').datagrid('reload');
 	}
 
 	function selectedFile(){
-	    var selected = jQuery('#easyui_data_grid').datagrid('getSelected');
+	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
 	    if (selected){
 		    //alert(selected.code+":"+selected.name+":"+selected.addr+":"+selected.col4);
 			var parent_window = getOpener();
@@ -172,46 +173,122 @@ limitations under the License.
 		var link = "<%=request.getContextPath()%>/mx/wx/wxFile/edit?type=category&categoryId="+nodeId;
 		window.location.href=link;
 	}
+
+	function selectPic(type, index){
+		var filename="";
+		if(type == "orgi"){
+           filename="/wx/images/pic"+index+".jpg";
+		} if(type == "big"){
+           filename="/wx/big/big.pic"+index+".jpg";
+		} else if(type == "medium"){
+           filename="/wx/medium/medium.pic"+index+".jpg";
+		} else if(type == "small"){
+           filename="/wx/small/small.pic"+index+".jpg";
+		}
+		//alert(filename);
+		var parent_window = getOpener();
+        var x_elementId = parent_window.document.getElementById("${elementId}");
+        var x_element_name = parent_window.document.getElementById("${elementName}");
+	    x_elementId.value=filename;
+		x_element_name.value=filename;
+		window.close();
+	}
  
 </script>
 </head>
 <body style="margin:1px;">  
 
 <div style="margin:0;"></div>  
-<div class="easyui-layout" data-options="fit:true">  
-    <div data-options="region:'west',split:true" style="width:180px;">
-	  <div class="easyui-layout" data-options="fit:true">  
-           
-			 <div data-options="region:'center',border:false">
-			    <ul id="myTree" class="ztree"></ul>  
-			 </div> 
-			 
-        </div>  
-	</div> 
-   <div data-options="region:'center'">  
-     <div class="easyui-layout" data-options="fit:true"> 
-	   <div data-options="region:'north',split:true,border:true" style="height:40px"> 
-	   <form id="iForm" name="iForm" method="post">
-	    <input type="hidden" id="path" name="path" value="" >
-		<input type="hidden" id="nodeId" name="nodeId" value="" >
-		<div class="toolbar-backgroud"  > 
-		<img src="<%=request.getContextPath()%>/images/window.png">
-		&nbsp;<span class="x_content_title">文件列表</span>
-		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-ok'"
-		   onclick="javascript:selectedFile();">选择</a> 
-		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-reload'"
-			   onclick="javascript:reloadGrid();">重载</a> 
-		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-upload'"
-		   onclick="javascript:uploadFile();">上传</a> 
-	   </div> 
-	   </form>
-	  </div> 
-	  <div data-options="region:'center',border:true">
-		 <table id="easyui_data_grid"></table>
-	  </div>  
-    </div>
-  </div>
-</div>
+<div class="easyui-tabs" style="width:740px;height:580px;">
+	<div title="我的素材库" data-options="closable:false" style="padding:1px">
+		<div class="easyui-layout" data-options="fit:true"> 
+		    <div data-options="region:'north',split:true,border:true" style="height:40px"> 
+			<div class="toolbar-backgroud"  > 
+			    <img src="<%=request.getContextPath()%>/images/window.png">
+				&nbsp;<span class="x_content_title">文件列表</span>
+				<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-ok'"
+				   onclick="javascript:selectedFile();">选择</a> 
+				<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-reload'"
+					   onclick="javascript:reloadGrid();">重载</a> 
+				<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-upload'"
+				   onclick="javascript:uploadFile();">上传</a> 
+			</div> 
+		</div> 
+		   
+		<div data-options="region:'west',split:true" style="width:195px;">
+			<ul id="myTree" class="ztree"></ul>  
+		</div>  
 
+		<div data-options="region:'center',border:true">
+			<table id="mydatagrid"></table>
+		</div>  
+			 
+		</div>
+    </div>
+
+	<div title="原始图片(960*640)" data-options="closable:false" style="padding:1px">
+	     <%
+		   index = 0;
+		   for(int i=1;i<=50;i++){
+			   out.println("<br>");
+			   for(int j=0;j<4;j++){
+				 index++;  
+		  %>
+		     <img src="<%=request.getContextPath()%>/wx/small/small.pic<%=index%>.jpg" width="160" height="240"
+			      onclick="javascript:selectPic('orgi', <%=index%>);">
+		  <%
+			   }
+	        }
+		 %>
+    </div>
+
+	<div title="较大图片(720*400)" data-options="closable:false" style="padding:1px">
+	     <%
+		   index = 0;
+		   for(int i=1;i<=50;i++){
+			   out.println("<br>");
+			   for(int j=0;j<4;j++){
+				 index++;  
+		  %>
+		     <img src="<%=request.getContextPath()%>/wx/small/small.pic<%=index%>.jpg" width="160" height="240"
+			      onclick="javascript:selectPic('big', <%=index%>);">
+		  <%
+			   }
+	        }
+		 %>
+    </div>
+
+    <div title="中等图片(480*320)" data-options="closable:false" style="padding:1px">
+	    <%
+		   index = 0;
+		   for(int i=1;i<=50;i++){
+			   out.println("<br>");
+			   for(int j=0;j<4;j++){
+				 index++;  
+		  %>
+		     <img src="<%=request.getContextPath()%>/wx/small/small.pic<%=index%>.jpg" width="160" height="240"
+			      onclick="javascript:selectPic('medium', <%=index%>);">
+		  <%
+			   }
+	        }
+		 %>
+    </div>
+
+    <div title="较小图片(240*160)" data-options="closable:false" style="padding:1px">
+	    <%
+		   index = 0;
+		   for(int i=1;i<=50;i++){
+			   out.println("<br>");
+			   for(int j=0;j<4;j++){
+				 index++;  
+		  %>
+		     <img src="<%=request.getContextPath()%>/wx/small/small.pic<%=index%>.jpg" width="160" height="240"
+			      onclick="javascript:selectPic('small', <%=index%>);">
+		  <%
+			   }
+	        }
+		 %>
+    </div>
+</div>
 </body>
 </html>
