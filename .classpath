@@ -131,5 +131,6 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/ehcache.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/glaf-base.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/glaf-cms.jar"/>
+	<classpathentry kind="lib" path="lib/thumbnailator-all.jar"/>
 	<classpathentry kind="output" path="WebContent/WEB-INF/classes"/>
 </classpath>
