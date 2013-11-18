@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<link rel="stylesheet" type="text/css" href="./scripts/bootstrap2/css/bootstrap.min.css" media="all">
+<link rel="stylesheet" type="text/css" href="./scripts/bootstrap2/css/bootstrap-responsive.min.css" media="all">
+<link rel="stylesheet" type="text/css" href="./styles/style.css" media="all">
+<link rel="stylesheet" type="text/css" href="./scripts/bootstrap2/css/todc_bootstrap.css" media="all">
+<link rel="stylesheet" type="text/css" href="./styles/themes.css" media="all">
+<link rel="stylesheet" type="text/css" href="./styles/webside.css" media="all">
+<script type="text/javascript" src="./scripts/jquery.min.js"></script>
+<script type="text/javascript" src="./scripts/bootstrap2/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="./scripts/jquery.form.js"></script>
+<script type="text/javascript" src="./scripts/jquery.validate.min.js"></script>
+<script type="text/javascript" src="./scripts/jquery.validate.methods.js"></script>
+<script type="text/javascript" src="./scripts/glaf-site.js"></script>
+<title>edit</title>
+</head>
+<body>
+    <div id="main">
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="box">
+                        <div class="box-title">
+                            <div class="span12">
+                                <h3><i class="icon-cog"></i>修改分类</h3>
+                            </div>
+                        </div>
+                        <form action="edit.html" method="post" class="form-horizontal form-validate" novalidate="novalidate">
+                            <div class="box-content">
+                                <div class="control-group">
+                                    <label for="classname" class="control-label">分类名称：</label>
+                                    <div class="controls">
+                                        <input type="text" id="classname" name="classname" value="" class="input-medium" data-rule-required="true">
+                                        <span class="maroon">*</span><span class="help-inline"></span>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label for="description" class="control-label">分类描述：</label>
+                                    <div class="controls">
+                                        <input type="text" id="description" name="description" value="" class="input-medium" data-rule-required="true">
+                                        <span class="maroon">*</span><span class="help-inline"></span>
+                                    </div>
+                                </div>
+								<div class="control-group">
+									<label for="category_id" class="control-label">所属分类：</label>
+									<div class="controls">
+										<select id="category_id" name="category_id" class="input-medium valid"><option value="0">根分类</option><option value="36899" disabled="disabled">&nbsp;&nbsp;&nbsp;&nbsp;栏目1</option><option value="36900">&nbsp;&nbsp;&nbsp;&nbsp;栏目2</option><option value="36901">&nbsp;&nbsp;&nbsp;&nbsp;栏目3</option><option value="36902">&nbsp;&nbsp;&nbsp;&nbsp;栏目4</option><option value="36904">&nbsp;&nbsp;&nbsp;&nbsp;栏目5</option><option value="36907">&nbsp;&nbsp;&nbsp;&nbsp;栏目6</option></select>
+									</div>
+								</div>
+                                <div class="control-group">
+                                    <label for="sort" class="control-label">显示顺序：</label>
+                                    <div class="controls">
+                                        <input type="text" id="sort" name="sort" value="0" class="input-mini" data-rule-required="true" data-rule-number="true">
+                                    </div>
+                                </div>
+                                
+                                <div class="control-group">
+                                    <label class="control-label">是否官网显示：</label>
+                                    <div class="controls">
+                                       <label class="radio inline">
+									   <input type="radio" value="1" name="is_home" checked="checked">显示
+									   </label>
+                                       <label class="radio inline">
+									   <input type="radio" value="0" name="is_home">隐藏</label>
+                                     </div>
+                                </div>
+                                 
+                                    <div class="control-group">
+                                        <label for="type" class="control-label">回复类型：</label>
+                                        <div class="controls">
+                                            <select id="type" name="type" class="input-medium">
+                                                <option value="article" selected="selected">图文</option>
+                                                <option value="link">链接</option>
+                                                <option value="tel">电话</option>
+                                                <option value="map">导航</option>
+                                                <option value="activity">活动</option>
+                                                <option value="business">业务模块</option>										
+											</select>
+                                        </div>
+                                    </div>
+                                     
+	                             <div class="form-actions">
+                                    <button type="submit" class="btn btn-primary">保存</button>
+                                    <button type="button" class="btn" onclick="window.history.go(-1);">取消</button>
+                                </div>
+                            </div>
+                        
+                    </div>
+					</form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div id="fallr-overlay"></div>
+</body>
+</html>

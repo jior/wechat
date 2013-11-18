@@ -116,8 +116,8 @@ limitations under the License.
 
 	function editRow(rowId){
 	    var link = '<%=request.getContextPath()%>/mx/wx/wxContent/edit?type=${type}&id='+rowId;
-	    art.dialog.open(link, { height: 420, width: 880, title: "修改记录", lock: true, scrollbars:"no" }, false);
-		//location.href=link;
+	    //art.dialog.open(link, { height: 420, width: 880, title: "修改记录", lock: true, scrollbars:"no" }, false);
+		location.href=link;
 	}
 
 	function deleteRow(rowId){
@@ -143,20 +143,23 @@ limitations under the License.
 
 	function addNew(){
 		var nodeId = jQuery("#nodeId").val();
-		var link = "<%=request.getContextPath()%>/mx/wx/wxContent/edit?type=P&categoryId=${categoryId}";
-	    art.dialog.open(link, { height: 420, width: 880, title: "添加记录", lock: true, scrollbars:"yes" }, false);
+		var link = "<%=request.getContextPath()%>/mx/wx/wxContent/edit?type=P&categoryId=${categoryId}&fromUrl=${fromUrl}";
+	    //art.dialog.open(link, { height: 420, width: 880, title: "添加记录", lock: true, scrollbars:"yes" }, false);
+		location.href=link;
 	}
 
 
 	function addMedia(){
 		var nodeId = jQuery("#nodeId").val();
-		var link = "<%=request.getContextPath()%>/mx/wx/wxContent/editMedia?type=P&categoryId="+nodeId;
-	    art.dialog.open(link, { height: 420, width: 880, title: "添加记录", lock: true, scrollbars:"yes" }, false);
+		var link = "<%=request.getContextPath()%>/mx/wx/wxContent/editMedia?type=P&fromUrl=${fromUrl}&categoryId="+nodeId;
+	    //art.dialog.open(link, { height: 420, width: 880, title: "添加记录", lock: true, scrollbars:"yes" }, false);
+		location.href=link;
 	}
 
 	function onRowClick(rowIndex, row){
-	    var link = '<%=request.getContextPath()%>/mx/wx/wxContent/edit?type=P&id='+row.id;
-	    art.dialog.open(link, { height: 420, width: 880, title: "修改记录", lock: true, scrollbars:"yes" }, false);
+	    var link = '<%=request.getContextPath()%>/mx/wx/wxContent/edit?type=P&fromUrl=${fromUrl}&id='+row.id;
+	    //art.dialog.open(link, { height: 420, width: 880, title: "修改记录", lock: true, scrollbars:"yes" }, false);
+		location.href=link;
 	}
 
 	function searchWin(){
@@ -174,14 +177,15 @@ limitations under the License.
 	function editSelected(){
 	    var rows = jQuery('#mydatagrid').datagrid('getSelections');
 	    if(rows == null || rows.length !=1){
-		alert("请选择其中一条记录。");
-		return;
+		  alert("请选择其中一条记录。");
+		  return;
 	    }
 	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
 	    if (selected ){
-		//location.href="<%=request.getContextPath()%>/mx/wx/wxContent?method=edit&rowId="+selected.id;
-		var link = "<%=request.getContextPath()%>/mx/wx/wxContent/edit?type=P&id="+selected.id;
-		art.dialog.open(link, { height: 420, width: 780, title: "修改记录", lock: true, scrollbars:"yes" }, false);
+		  //location.href="<%=request.getContextPath()%>/mx/wx/wxContent?method=edit&rowId="+selected.id;
+		  var link = "<%=request.getContextPath()%>/mx/wx/wxContent/edit?type=P&fromUrl=${fromUrl}&id="+selected.id;
+		  //art.dialog.open(link, { height: 420, width: 780, title: "修改记录", lock: true, scrollbars:"yes" }, false);
+		  location.href=link;
 	    }
 	}
 
@@ -205,7 +209,7 @@ limitations under the License.
 		}
 		var selected = jQuery('#mydatagrid').datagrid('getSelected');
 		if (selected ){
-		    location.href="<%=request.getContextPath()%>/mx/wx/wxContent/edit?type=P&id="+selected.id;
+		    location.href="<%=request.getContextPath()%>/mx/wx/wxContent/edit?type=P&fromUrl=${fromUrl}&id="+selected.id;
 		}
 	}
 
@@ -245,7 +249,7 @@ limitations under the License.
 	function getSelected(){
 	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
 	    if (selected){
-		alert(selected.code+":"+selected.name+":"+selected.addr+":"+selected.col4);
+		  alert(selected.code+":"+selected.name+":"+selected.addr+":"+selected.col4);
 	    }
 	}
 
@@ -253,7 +257,7 @@ limitations under the License.
 	    var ids = [];
 	    var rows = jQuery('#mydatagrid').datagrid('getSelections');
 	    for(var i=0;i<rows.length;i++){
-		ids.push(rows[i].code);
+		  ids.push(rows[i].code);
 	    }
 	    alert(ids.join(':'));
 	}
@@ -305,7 +309,7 @@ limitations under the License.
 			   onclick="javascript:viewSite();">预览我的微网站</a> 
 			<c:if test="${from eq 'category' }">
 			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-back'"
-			   onclick="javascript:history.back();">返回</a>    
+			   onclick="javascript:window.history.go(-1);">返回</a>    
 			</c:if>
 		   </div> 
 		  </div> 

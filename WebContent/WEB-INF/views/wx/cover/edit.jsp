@@ -56,7 +56,7 @@ limitations under the License.
 	</c:otherwise>
 </c:choose>
 
-<div class="content-block" style="width: 80%;"><br>
+<div class="content-block" style="width: 96%;"><br>
 <div class="x_content_title"><img
 	src="<%=request.getContextPath()%>/images/window.png"
 	alt="设置默认封面信息">&nbsp;设置默认封面信息
@@ -67,25 +67,21 @@ limitations under the License.
 <table border=0 cellspacing=0 cellpadding=2>
 	<tbody>
 		<tr class="x-content-hight">
-			<td align="left" width="50%" align="left">
+			<td align="left" width="70%" align="left" valign="bottom">
 			<span>720*400图片</span>
 			<br>
 			<c:if test="${not empty wxCover.bigIcon }">
-			   <br>
-			   <br>
 			   <img src="<%=request.getContextPath()%>/${wxCover.bigIcon}" border="0"/>
 			   <br>
 			   <br>
 			</c:if>
 			<input type="file" id="bigIcon" name="bigIcon" size="50" class="input-file x-text">
             </td>
-            <td align="left" width="10%" align="left">&nbsp;</td>
-			<td align="left" width="40%" align="left">
+            <td align="left" width="10%" align="left" valign="bottom">&nbsp;</td>
+			<td align="left" width="20%" align="left" valign="bottom">
 			<span>400*400图片</span>
             <br>
 			<c:if test="${not empty wxCover.smallIcon }">
-			   <br>
-			   <br>
 			   <img src="<%=request.getContextPath()%>/${wxCover.smallIcon}" border="0"/>
 			   <br>
 			   <br>

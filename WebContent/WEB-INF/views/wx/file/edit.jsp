@@ -81,9 +81,9 @@ limitations under the License.
 	 }
     
 	form.submit();
-	window.parent.reload();
-	window.close();
-
+	//window.parent.reload();
+	//window.close();
+    location.href='<%=com.glaf.core.util.RequestUtils.decodeURL(request.getParameter("fromUrl"))%>';
  }
 
 </script>
@@ -169,6 +169,8 @@ limitations under the License.
 <br />
 <input type="button" class="btnGreen" value="确定"
 	onclick="javascript:submitRequest(this.form);" /> 
+<input type="button" class="btnGreen" value="返回"
+	onclick="javascript:window.history.go(-1);" /> 
 <br />
 <br />
 </div>

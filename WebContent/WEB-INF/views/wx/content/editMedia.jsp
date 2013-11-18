@@ -41,13 +41,7 @@ limitations under the License.
 <script type="text/javascript">
     var contextPath="<%=request.getContextPath()%>";
 
-	KE.show({  id : 'content'
-	           ,allowFileManager : true
-	           ,imageUploadJson : '<%=request.getContextPath()%>/mx/wx/uploadJson'
-			   ,fileManagerJson : '<%=request.getContextPath()%>/mx/wx/fileManagerJson' });
-
 	function saveData(){
-		document.getElementById("content").value=KE.html('content');
 		var params = jQuery("#iForm").formSerialize();
 		jQuery.ajax({
 				   type: "POST",
@@ -63,18 +57,20 @@ limitations under the License.
 					   } else {
 						 alert('操作成功完成！');
 					   }
+					   /**
 					   if (window.opener) {
 						window.opener.location.reload();
 					   } else if (window.parent) {
 						window.parent.location.reload();
-					   }
+					   }**/
+					  //history.back();
+					  location.href='<%=com.glaf.core.util.RequestUtils.decodeURL(request.getParameter("fromUrl"))%>';
 				   }
 			 });
 	}
 
 	function saveAsData(){
 		document.getElementById("id").value="";
-		document.getElementById("content").value=KE.html('content');
 		var params = jQuery("#iForm").formSerialize();
 		jQuery.ajax({
 				   type: "POST",
@@ -159,8 +155,10 @@ limitations under the License.
   <div data-options="region:'north',split:true,border:true" style="height:40px"> 
     <div class="toolbar-backgroud"> 
 	<span class="x_content_title">编辑内容</span>
-	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-save'" onclick="javascript:saveData();" >保存</a> 
-	
+	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-save'" 
+	   onclick="javascript:saveData();" >保存</a> 
+	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-back'"
+	   onclick="javascript:window.history.go(-1);">返回</a>    
     </div> 
   </div>
 

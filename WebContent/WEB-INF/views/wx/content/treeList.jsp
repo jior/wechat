@@ -156,9 +156,9 @@ limitations under the License.
 	}
 
 	function editRow(rowId){
-	    var link = '<%=request.getContextPath()%>/mx/wx/wxContent/edit?type=${type}&id='+rowId;
-	    art.dialog.open(link, { height: 420, width: 880, title: "修改记录", lock: true, scrollbars:"no" }, false);
-		//location.href=link;
+	    var link = '<%=request.getContextPath()%>/mx/wx/wxContent/edit?type=${type}&fromUrl=${fromUrl}&id='+rowId;
+	    //art.dialog.open(link, { height: 420, width: 880, title: "修改记录", lock: true, scrollbars:"no" }, false);
+		location.href=link;
 	}
 
 	function deleteRow(rowId){
@@ -184,19 +184,22 @@ limitations under the License.
 
 	function addNew(){
 		var nodeId = jQuery("#nodeId").val();
-		var link = "<%=request.getContextPath()%>/mx/wx/wxContent/edit?type=P&categoryId="+nodeId;
-	    art.dialog.open(link, { height: 420, width: 880, title: "添加记录", lock: true, scrollbars:"yes" }, false);
+		var link = "<%=request.getContextPath()%>/mx/wx/wxContent/edit?type=P&fromUrl=${fromUrl}&categoryId="+nodeId;
+		location.href=link;
+	    //art.dialog.open(link, { height: 420, width: 880, title: "添加记录", lock: true, scrollbars:"yes" }, false);
 	}
 
 	function addMedia(){
 		var nodeId = jQuery("#nodeId").val();
-		var link = "<%=request.getContextPath()%>/mx/wx/wxContent/editMedia?type=P&categoryId="+nodeId;
-	    art.dialog.open(link, { height: 420, width: 880, title: "添加记录", lock: true, scrollbars:"yes" }, false);
+		var link = "<%=request.getContextPath()%>/mx/wx/wxContent/editMedia?type=P&fromUrl=${fromUrl}&categoryId="+nodeId;
+		location.href=link;
+	    //art.dialog.open(link, { height: 420, width: 880, title: "添加记录", lock: true, scrollbars:"yes" }, false);
 	}
 
 	function onRowClick(rowIndex, row){
-	    var link = '<%=request.getContextPath()%>/mx/wx/wxContent/edit?type=P&id='+row.id;
-	    art.dialog.open(link, { height: 420, width: 880, title: "修改记录", lock: true, scrollbars:"yes" }, false);
+	    var link = '<%=request.getContextPath()%>/mx/wx/wxContent/edit?type=P&fromUrl=${fromUrl}&id='+row.id;
+		location.href=link;
+	    //art.dialog.open(link, { height: 420, width: 880, title: "修改记录", lock: true, scrollbars:"yes" }, false);
 	}
 
 	function searchWin(){
@@ -219,9 +222,10 @@ limitations under the License.
 	    }
 	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
 	    if (selected ){
-		//location.href="<%=request.getContextPath()%>/mx/wx/wxContent?method=edit&rowId="+selected.id;
-		var link = "<%=request.getContextPath()%>/mx/wx/wxContent/edit?type=P&id="+selected.id;
-		art.dialog.open(link, { height: 420, width: 880, title: "修改记录", lock: true, scrollbars:"yes" }, false);
+		  //location.href="<%=request.getContextPath()%>/mx/wx/wxContent?method=edit&rowId="+selected.id;
+		  var link = "<%=request.getContextPath()%>/mx/wx/wxContent/edit?type=P&fromUrl=${fromUrl}&id="+selected.id;
+		  location.href=link;
+		  //art.dialog.open(link, { height: 420, width: 880, title: "修改记录", lock: true, scrollbars:"yes" }, false);
 	    }
 	}
 
@@ -245,7 +249,7 @@ limitations under the License.
 		}
 		var selected = jQuery('#mydatagrid').datagrid('getSelected');
 		if (selected ){
-		    location.href="<%=request.getContextPath()%>/mx/wx/wxContent/edit?type=P&id="+selected.id;
+		    location.href="<%=request.getContextPath()%>/mx/wx/wxContent/edit?type=P&fromUrl=${fromUrl}&id="+selected.id;
 		}
 	}
 
@@ -287,7 +291,7 @@ limitations under the License.
 	function getSelected(){
 	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
 	    if (selected){
-		alert(selected.code+":"+selected.name+":"+selected.addr+":"+selected.col4);
+		  alert(selected.code+":"+selected.name+":"+selected.addr+":"+selected.col4);
 	    }
 	}
 
@@ -295,7 +299,7 @@ limitations under the License.
 	    var ids = [];
 	    var rows = jQuery('#mydatagrid').datagrid('getSelections');
 	    for(var i=0;i<rows.length;i++){
-		ids.push(rows[i].code);
+		  ids.push(rows[i].code);
 	    }
 	    alert(ids.join(':'));
 	}
@@ -328,20 +332,9 @@ limitations under the License.
 </head>
 <body style="margin:1px;">  
 <input type="hidden" id="nodeId" name="nodeId" value="" >
-<div class="easyui-layout" data-options="fit:true">  
-    <div data-options="region:'west',split:true" style="width:195px;">
-	  <div class="easyui-layout" data-options="fit:true">  
-           
-			 <div data-options="region:'center',border:false">
-			    <ul id="myTree" class="ztree"></ul>  
-			 </div> 
-			 
-        </div>  
-	</div> 
-   <div data-options="region:'center'">   
-		<div class="easyui-layout" data-options="fit:true">  
-		   <div data-options="region:'north',split:true,border:true" style="height:40px"> 
-			<div class="toolbar-backgroud"  > 
+<div class="easyui-layout" data-options="fit:true">   
+   	<div data-options="region:'north',split:true,border:true" style="height:40px"> 
+		<div class="toolbar-backgroud"  > 
 			<img src="<%=request.getContextPath()%>/images/window.png">
 			&nbsp;<span class="x_content_title">内容列表</span>
 			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-add'" 
@@ -354,13 +347,17 @@ limitations under the License.
 			   onclick="javascript:deleteSelections();">删除</a>  
 			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-view'"
 			   onclick="javascript:viewSite();">预览我的微网站</a>  
-		   </div> 
-		  </div> 
-		  <div data-options="region:'center',border:true">
-			 <table id="mydatagrid"></table>
-		  </div>  
-      </div>
-	</div>
+		</div> 
+	</div> 
+       
+	<div data-options="region:'west',split:true" style="width:195px;">
+		<ul id="myTree" class="ztree"></ul>  
+    </div>  
+
+	<div data-options="region:'center',border:true">
+		<table id="mydatagrid"></table>
+	</div>  
+
 </div>
 </body>
 </html>

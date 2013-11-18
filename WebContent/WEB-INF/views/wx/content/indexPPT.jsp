@@ -105,8 +105,9 @@ limitations under the License.
 
 
 	function editRow(rowId){
-	    var link = '<%=request.getContextPath()%>/mx/wx/wxContent/editPPT?type=${type}&id='+rowId;
-	    art.dialog.open(link, { height: 420, width: 780, title: "修改记录", lock: true, scrollbars:"no" }, false);
+	    var link = '<%=request.getContextPath()%>/mx/wx/wxContent/editPPT?type=${type}&fromUrl=${fromUrl}&id='+rowId;
+		location.href=link;
+	    //art.dialog.open(link, { height: 420, width: 780, title: "修改记录", lock: true, scrollbars:"no" }, false);
 	}
 
 	function deleteRow(rowId){
@@ -132,14 +133,16 @@ limitations under the License.
 		 
 	function addNew(){
 	    //location.href="<%=request.getContextPath()%>/wx/wxContent/edit";
-	    var link="<%=request.getContextPath()%>/mx/wx/wxContent/editPPT?type=${type}";
-	    art.dialog.open(link, { height: 420, width: 780, title: "添加记录", lock: true, scrollbars:"no" }, false);
+	    var link="<%=request.getContextPath()%>/mx/wx/wxContent/editPPT?type=${type}&fromUrl=${fromUrl}";
+		location.href=link;
+	    //art.dialog.open(link, { height: 420, width: 780, title: "添加记录", lock: true, scrollbars:"no" }, false);
 	}
 
 	function onRowClick(rowIndex, row){
             //window.open('<%=request.getContextPath()%>/wx/wxContent/edit?id='+row.id);
-	    var link = '<%=request.getContextPath()%>/mx/wx/wxContent/editPPT?type=${type}&id='+row.id;
-	    art.dialog.open(link, { height: 420, width: 780, title: "修改记录", lock: true, scrollbars:"no" }, false);
+	    var link = '<%=request.getContextPath()%>/mx/wx/wxContent/editPPT?type=${type}&fromUrl=${fromUrl}&id='+row.id;
+		location.href=link;
+	    //art.dialog.open(link, { height: 420, width: 780, title: "修改记录", lock: true, scrollbars:"no" }, false);
 	}
 
 	function searchWin(){
@@ -163,8 +166,9 @@ limitations under the License.
 	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
 	    if (selected ){
 		//location.href="<%=request.getContextPath()%>/wx/wxContent/edit?id="+selected.id;
-		var link = "<%=request.getContextPath()%>/mx/wx/wxContent/editPPT?type=${type}&id="+selected.id;
-		  art.dialog.open(link, { height: 420, width: 780, title: "修改记录", lock: true, scrollbars:"no" }, false);
+		  var link = "<%=request.getContextPath()%>/mx/wx/wxContent/editPPT?type=${type}&fromUrl=${fromUrl}&id="+selected.id;
+		  //art.dialog.open(link, { height: 420, width: 780, title: "修改记录", lock: true, scrollbars:"no" }, false);
+		  location.href=link;
 	    }
 	}
 
@@ -176,7 +180,7 @@ limitations under the License.
 		}
 		var selected = jQuery('#mydatagrid').datagrid('getSelected');
 		if (selected ){
-		    location.href="<%=request.getContextPath()%>/mx/wx/wxContent/edit?type=${type}&id="+selected.id;
+		    location.href="<%=request.getContextPath()%>/mx/wx/wxContent/edit?type=${type}&fromUrl=${fromUrl}&id="+selected.id;
 		}
 	}
 
@@ -216,7 +220,7 @@ limitations under the License.
 	function getSelected(){
 	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
 	    if (selected){
-		alert(selected.code+":"+selected.name+":"+selected.addr+":"+selected.col4);
+		  alert(selected.code+":"+selected.name+":"+selected.addr+":"+selected.col4);
 	    }
 	}
 
@@ -224,7 +228,7 @@ limitations under the License.
 	    var ids = [];
 	    var rows = jQuery('#mydatagrid').datagrid('getSelections');
 	    for(var i=0;i<rows.length;i++){
-		ids.push(rows[i].code);
+		  ids.push(rows[i].code);
 	    }
 	    alert(ids.join(':'));
 	}

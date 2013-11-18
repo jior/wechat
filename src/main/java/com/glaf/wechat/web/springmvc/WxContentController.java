@@ -72,6 +72,14 @@ public class WxContentController {
 			request.setAttribute("x_complex_query", "");
 		}
 
+		String requestURI = request.getRequestURI();
+		logger.debug("requestURI:" + requestURI);
+		logger.debug("queryString:" + request.getQueryString());
+		request.setAttribute(
+				"fromUrl",
+				RequestUtils.encodeURL(requestURI + "?"
+						+ request.getQueryString()));
+
 		Long categoryId = RequestUtils.getLong(request, "categoryId");
 		if (categoryId != null && categoryId > 0) {
 			WxCategory category = wxCategoryService.getWxCategory(categoryId);
@@ -280,6 +288,15 @@ public class WxContentController {
 		} else {
 			request.setAttribute("x_complex_query", "");
 		}
+
+		String requestURI = request.getRequestURI();
+		logger.debug("requestURI:" + requestURI);
+		logger.debug("queryString:" + request.getQueryString());
+		request.setAttribute(
+				"fromUrl",
+				RequestUtils.encodeURL(requestURI + "?"
+						+ request.getQueryString()));
+
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {
 			return new ModelAndView(view, modelMap);
@@ -387,6 +404,15 @@ public class WxContentController {
 		} else {
 			request.setAttribute("x_complex_query", "");
 		}
+
+		String requestURI = request.getRequestURI();
+		logger.debug("requestURI:" + requestURI);
+		logger.debug("queryString:" + request.getQueryString());
+		request.setAttribute(
+				"fromUrl",
+				RequestUtils.encodeURL(requestURI + "?"
+						+ request.getQueryString()));
+
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {
 			return new ModelAndView(view, modelMap);
@@ -610,6 +636,15 @@ public class WxContentController {
 		} else {
 			request.setAttribute("x_complex_query", "");
 		}
+		
+		String requestURI = request.getRequestURI();
+		logger.debug("requestURI:" + requestURI);
+		logger.debug("queryString:" + request.getQueryString());
+		request.setAttribute(
+				"fromUrl",
+				RequestUtils.encodeURL(requestURI + "?"
+						+ request.getQueryString()));
+		
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {
 			return new ModelAndView(view, modelMap);

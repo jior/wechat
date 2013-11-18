@@ -10,7 +10,6 @@
 <title>邮件服务配置</title>
 <%@ include file="/WEB-INF/views/tm/mx_header.jsp"%>
 
-
 <script language="javascript">
   String.prototype.trim = function() {
      return this.replace(/(^\s*)|(\s*$)/g, "");
@@ -50,7 +49,7 @@
 
 </script>
 </head>
-<body>
+<body >
 <center> 
 
 <form name="dataItemForm" method="post"

@@ -25,7 +25,6 @@ import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 
- 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -41,7 +40,6 @@ import com.glaf.core.config.SystemProperties;
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.security.*;
 import com.glaf.core.util.*;
-
 import com.glaf.wechat.domain.*;
 import com.glaf.wechat.query.*;
 import com.glaf.wechat.service.*;
@@ -251,6 +249,15 @@ public class WxFileController {
 		} else {
 			request.setAttribute("x_complex_query", "");
 		}
+
+		String requestURI = request.getRequestURI();
+		logger.debug("requestURI:" + requestURI);
+		logger.debug("queryString:" + request.getQueryString());
+		request.setAttribute(
+				"fromUrl",
+				RequestUtils.encodeURL(requestURI + "?"
+						+ request.getQueryString()));
+
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {
 			return new ModelAndView(view, modelMap);
@@ -295,7 +302,8 @@ public class WxFileController {
 		for (Entry<String, MultipartFile> entry : entrySet) {
 			MultipartFile mFile = entry.getValue();
 			if (mFile.getSize() > 0) {
-				String rand = WechatUtils.getHashedPath(loginContext.getActorId());
+				String rand = WechatUtils.getHashedPath(loginContext
+						.getActorId());
 				String path = com.glaf.wechat.util.Constants.UPLOAD_PATH + rand;
 				try {
 					FileUtils.mkdirs(SystemProperties.getAppPath() + path);

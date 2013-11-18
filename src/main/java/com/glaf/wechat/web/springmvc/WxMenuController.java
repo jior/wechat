@@ -105,22 +105,6 @@ public class WxMenuController {
 		}
 	}
 
-	@ResponseBody
-	@RequestMapping("/detail")
-	public byte[] detail(HttpServletRequest request) throws IOException {
-		LoginContext loginContext = RequestUtils.getLoginContext(request);
-		WxMenu wxMenu = wxMenuService.getWxMenu(RequestUtils.getLong(request,
-				"id"));
-		if (wxMenu != null
-				&& (StringUtils.equals(wxMenu.getCreateBy(),
-						loginContext.getActorId()) || loginContext
-						.isSystemAdministrator())) {
-			JSONObject rowJSON = wxMenu.toJsonObject();
-			return rowJSON.toJSONString().getBytes("UTF-8");
-		}
-		return null;
-	}
-
 	@RequestMapping("/edit")
 	public ModelAndView edit(HttpServletRequest request, ModelMap modelMap) {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
@@ -340,6 +324,17 @@ public class WxMenuController {
 		} else {
 			request.setAttribute("x_complex_query", "");
 		}
+
+		String requestURI = request.getRequestURI();
+		if (request.getQueryString() != null) {
+			request.setAttribute(
+					"fromUrl",
+					RequestUtils.encodeURL(requestURI + "?"
+							+ request.getQueryString()));
+		} else {
+			request.setAttribute("fromUrl", RequestUtils.encodeURL(requestURI));
+		}
+
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {
 			return new ModelAndView(view, modelMap);

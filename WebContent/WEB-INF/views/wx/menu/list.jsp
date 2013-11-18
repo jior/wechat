@@ -149,14 +149,16 @@ limitations under the License.
 	}
 
 	function editPPT(rowId){
-		var link='<%=request.getContextPath()%>/mx/wx/wxContent/ppt?categoryId='+rowId;
-        art.dialog.open(link, { height: 420, width: 880, title: "菜单幻灯片", lock: true, scrollbars:"no" }, false);
+		var link='<%=request.getContextPath()%>/mx/wx/wxContent/ppt?categoryId='+rowId+'&fromUrl=${fromUrl}';
+		location.href=link;
+        //art.dialog.open(link, { height: 420, width: 880, title: "菜单幻灯片", lock: true, scrollbars:"no" }, false);
 	}
 
 
 	function editRow(rowId){
-	    var link = '<%=request.getContextPath()%>/mx/wx/wxMenu/edit?group=${group}&id='+rowId;
-	    art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"no" }, false);
+	    var link = '<%=request.getContextPath()%>/mx/wx/wxMenu/edit?group=${group}&id='+rowId+'&fromUrl=${fromUrl}';
+		location.href=link;
+	    //art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"no" }, false);
 	}
 
 	function deleteRow(rowId){
@@ -183,13 +185,15 @@ limitations under the License.
 
 	function addNew(){
 		var nodeId = jQuery("#nodeId").val();
-		var link = "<%=request.getContextPath()%>/mx/wx/wxMenu/edit?group=${group}&parentId="+nodeId;
-	    art.dialog.open(link, { height: 420, width: 680, title: "添加记录", lock: true, scrollbars:"yes" }, false);
+		var link = '<%=request.getContextPath()%>/mx/wx/wxMenu/edit?group=${group}&parentId='+nodeId+'&fromUrl=${fromUrl}';
+		location.href=link;
+	    //art.dialog.open(link, { height: 420, width: 680, title: "添加记录", lock: true, scrollbars:"yes" }, false);
 	}
 
 	function onRowClick(rowIndex, row){
-	    var link = '<%=request.getContextPath()%>/mx/wx/wxMenu/edit?group=${group}&id='+row.id;
-	    art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"yes" }, false);
+	    var link = '<%=request.getContextPath()%>/mx/wx/wxMenu/edit?group=${group}&id='+row.id+'&fromUrl=${fromUrl}';
+		location.href=link;
+	    //art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"yes" }, false);
 	}
 
 	function searchWin(){
@@ -207,14 +211,15 @@ limitations under the License.
 	function editSelected(){
 	    var rows = jQuery('#mydatagrid').datagrid('getSelections');
 	    if(rows == null || rows.length !=1){
-		alert("请选择其中一条记录。");
-		return;
+		  alert("请选择其中一条记录。");
+		  return;
 	    }
 	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
 	    if (selected ){
-		//location.href="<%=request.getContextPath()%>/mx/wx/wxMenu?method=edit&rowId="+selected.id;
-		var link = "<%=request.getContextPath()%>/mx/wx/wxMenu/edit?group=${group}&id="+selected.id;
-		art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"yes" }, false);
+		  //location.href="<%=request.getContextPath()%>/mx/wx/wxMenu?method=edit&rowId="+selected.id;
+		  var link = '<%=request.getContextPath()%>/mx/wx/wxMenu/edit?group=${group}&id='+selected.id+'&fromUrl=${fromUrl}';
+		  //art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"yes" }, false);
+		  location.href=link;
 	    }
 	}
 
@@ -227,7 +232,7 @@ limitations under the License.
 		}
 		var selected = jQuery('#mydatagrid').datagrid('getSelected');
 		if (selected ){
-		    location.href="<%=request.getContextPath()%>/mx/wx/wxMenu/edit?group=${group}&id="+selected.id;
+		    location.href='<%=request.getContextPath()%>/mx/wx/wxMenu/edit?group=${group}&id='+selected.id+'&fromUrl=${fromUrl}';
 		}
 	}
 
@@ -269,7 +274,7 @@ limitations under the License.
 	function getSelected(){
 	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
 	    if (selected){
-		alert(selected.code+":"+selected.name+":"+selected.addr+":"+selected.col4);
+		  alert(selected.code+":"+selected.name+":"+selected.addr+":"+selected.col4);
 	    }
 	}
 
@@ -277,7 +282,7 @@ limitations under the License.
 	    var ids = [];
 	    var rows = jQuery('#mydatagrid').datagrid('getSelections');
 	    for(var i=0;i<rows.length;i++){
-		ids.push(rows[i].code);
+		  ids.push(rows[i].code);
 	    }
 	    alert(ids.join(':'));
 	}
@@ -339,20 +344,9 @@ limitations under the License.
 </head>
 <body style="margin:1px;">  
 <input type="hidden" id="nodeId" name="nodeId" value="" >
-<div class="easyui-layout" data-options="fit:true">  
-    <div data-options="region:'west',split:true" style="width:195px;">
-	  <div class="easyui-layout" data-options="fit:true">  
-           
-			 <div data-options="region:'center',border:false">
-			    <ul id="myTree" class="ztree"></ul>  
-			 </div> 
-			 
-        </div>  
-	</div> 
-   <div data-options="region:'center'">   
-		<div class="easyui-layout" data-options="fit:true">  
-		   <div data-options="region:'north',split:true,border:true" style="height:40px"> 
-			<div class="toolbar-backgroud"  > 
+<div class="easyui-layout" data-options="fit:true">   
+   	<div data-options="region:'north',split:true,border:true" style="height:40px"> 
+		<div class="toolbar-backgroud"  > 
 			<img src="<%=request.getContextPath()%>/images/window.png">
 			&nbsp;<span class="x_content_title">菜单列表</span>
 			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-add'" 
@@ -369,32 +363,18 @@ limitations under the License.
 			   onclick="javascript:syncServer('yixin');">同步到易信服务器</a> 
 			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-reload'"
 			   onclick="javascript:fetchMenuFromServer('yixin');">从易信服务器获取菜单</a> 
-		   </div> 
-		  </div> 
-		  <div data-options="region:'center',border:true">
-			 <table id="mydatagrid"></table>
-		  </div>  
-      </div>
-	</div>
+		</div> 
+	</div> 
+       
+	<div data-options="region:'west',split:true" style="width:195px;">
+		<ul id="myTree" class="ztree"></ul>  
+    </div>  
+
+	<div data-options="region:'center',border:true">
+		<table id="mydatagrid"></table>
+	</div>  
+
 </div>
-<div id="edit_dlg" class="easyui-dialog" style="width:400px;height:280px;padding:10px 20px"
-	closed="true" buttons="#dlg-buttons">
-    <form id="editForm" name="editForm" method="post">
-         
-    </form>
-</div>
-<div id="dlg" class="easyui-dialog" style="width:400px;height:280px;padding:10px 20px"
-	closed="true" buttons="#dlg-buttons">
-    <form id="searchForm" name="searchForm" method="post">
-	<table class="easyui-form" >
-            <tbody>
-	    </tbody>
-        </table>
-    </form>
-</div>
-<div id="dlg-buttons">
-	<a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="javascript:searchData()">查询</a>
-	<a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:jQuery('#dlg').dialog('close')">取消</a>
-</div>
+
 </body>
 </html>
