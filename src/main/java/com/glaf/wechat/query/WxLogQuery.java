@@ -23,8 +23,8 @@ import com.glaf.core.query.DataQuery;
 
 public class WxLogQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
-	protected Long appId;
-	protected List<Long> appIds;
+	protected Long accountId;
+	protected List<Long> accountIds;
 	protected String account;
 	protected String accountLike;
 	protected List<String> accounts;
@@ -111,12 +111,12 @@ public class WxLogQuery extends DataQuery {
 		return accounts;
 	}
 
-	public Long getAppId() {
-		return appId;
+	public Long getAccountId() {
+		return accountId;
 	}
 
-	public List<Long> getAppIds() {
-		return appIds;
+	public List<Long> getAccountIds() {
+		return accountIds;
 	}
 
 	public Date getCreateTimeGreaterThanOrEqual() {
@@ -265,12 +265,12 @@ public class WxLogQuery extends DataQuery {
 		this.accounts = accounts;
 	}
 
-	public void setAppId(Long appId) {
-		this.appId = appId;
+	public void setAccountId(Long accountId) {
+		this.accountId = accountId;
 	}
 
-	public void setAppIds(List<Long> appIds) {
-		this.appIds = appIds;
+	public void setAccountIds(List<Long> accountIds) {
+		this.accountIds = accountIds;
 	}
 
 	public void setCreateTimeGreaterThanOrEqual(

@@ -111,11 +111,20 @@ public class WxFileServiceImpl implements WxFileService {
 		if (wxFile.getId() == 0) {
 			wxFile.setId(idGenerator.nextId());
 			wxFile.setCreateDate(new Date());
-			wxFile.setUuid(UUID32.getUUID());
+			if (wxFile.getUuid() == null) {
+				wxFile.setUuid(UUID32.getUUID());
+			}
 			wxFileMapper.insertWxFile(wxFile);
 		} else {
 			wxFile.setLastUpdateDate(new Date());
 			wxFileMapper.updateWxFile(wxFile);
+		}
+	}
+
+	@Transactional
+	public void saveAll(List<WxFile> files) {
+		for (WxFile file : files) {
+			this.save(file);
 		}
 	}
 

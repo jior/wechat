@@ -53,8 +53,8 @@ public class WxCover implements java.io.Serializable, JSONable {
 	/**
 	 * 微站公众号应用ID
 	 */
-	@Column(name = "APPID_")
-	protected Long appId;
+	@Column(name = "ACCOUNTID_")
+	protected Long accountId;
 
 	/**
 	 * 大图标
@@ -98,8 +98,8 @@ public class WxCover implements java.io.Serializable, JSONable {
 
 	}
 
-	public Long getAppId() {
-		return appId;
+	public Long getAccountId() {
+		return accountId;
 	}
 
 	public String getBigIcon() {
@@ -134,8 +134,8 @@ public class WxCover implements java.io.Serializable, JSONable {
 		return WxCoverJsonFactory.jsonToObject(jsonObject);
 	}
 
-	public void setAppId(Long appId) {
-		this.appId = appId;
+	public void setAccountId(Long accountId) {
+		this.accountId = accountId;
 	}
 
 	public void setBigIcon(String bigIcon) {

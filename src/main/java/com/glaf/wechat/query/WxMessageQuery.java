@@ -24,8 +24,8 @@ import com.glaf.core.query.DataQuery;
 
 public class WxMessageQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
-	protected Long appId;
-	protected List<Long> appIds;
+	protected Long accountId;
+	protected List<Long> accountIds;
 	protected List<Long> ids;
 	protected String name;
 	protected String nameLike;
@@ -67,12 +67,12 @@ public class WxMessageQuery extends DataQuery {
 		return this;
 	}
 
-	public Long getAppId() {
-		return appId;
+	public Long getAccountId() {
+		return accountId;
 	}
 
-	public List<Long> getAppIds() {
-		return appIds;
+	public List<Long> getAccountIds() {
+		return accountIds;
 	}
 
 	public String getContentLike() {
@@ -232,12 +232,12 @@ public class WxMessageQuery extends DataQuery {
 		return this;
 	}
 
-	public void setAppId(Long appId) {
-		this.appId = appId;
+	public void setAccountId(Long accountId) {
+		this.accountId = accountId;
 	}
 
-	public void setAppIds(List<Long> appIds) {
-		this.appIds = appIds;
+	public void setAccountIds(List<Long> accountIds) {
+		this.accountIds = accountIds;
 	}
 
 	public void setContentLike(String contentLike) {

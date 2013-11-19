@@ -42,8 +42,8 @@ public class WxMessageJsonFactory {
 		if (jsonObject.containsKey("id")) {
 			model.setId(jsonObject.getLong("id"));
 		}
-		if (jsonObject.containsKey("appId")) {
-			model.setAppId(jsonObject.getLong("appId"));
+		if (jsonObject.containsKey("accountId")) {
+			model.setAccountId(jsonObject.getLong("accountId"));
 		}
 		if (jsonObject.containsKey("name")) {
 			model.setName(jsonObject.getString("name"));
@@ -83,8 +83,8 @@ public class WxMessageJsonFactory {
 		jsonObject.put("id", model.getId());
 		jsonObject.put("_id_", model.getId());
 		jsonObject.put("_oid_", model.getId());
-		if (model.getAppId() != null) {
-			jsonObject.put("appId", model.getAppId());
+		if (model.getAccountId() != null) {
+			jsonObject.put("accountId", model.getAccountId());
 		}
 		if (model.getName() != null) {
 			jsonObject.put("name", model.getName());
@@ -128,8 +128,8 @@ public class WxMessageJsonFactory {
 		jsonObject.put("id", model.getId());
 		jsonObject.put("_id_", model.getId());
 		jsonObject.put("_oid_", model.getId());
-		if (model.getAppId() != null) {
-			jsonObject.put("appId", model.getAppId());
+		if (model.getAccountId() != null) {
+			jsonObject.put("accountId", model.getAccountId());
 		}
 		if (model.getName() != null) {
 			jsonObject.put("name", model.getName());

@@ -42,8 +42,8 @@ public class WxCoverJsonFactory {
 		if (jsonObject.containsKey("id")) {
 			model.setId(jsonObject.getLong("id"));
 		}
-		if (jsonObject.containsKey("appId")) {
-			model.setAppId(jsonObject.getLong("appId"));
+		if (jsonObject.containsKey("accountId")) {
+			model.setAccountId(jsonObject.getLong("accountId"));
 		}
 		if (jsonObject.containsKey("bigIcon")) {
 			model.setBigIcon(jsonObject.getString("bigIcon"));
@@ -78,8 +78,8 @@ public class WxCoverJsonFactory {
 		jsonObject.put("id", model.getId());
 		jsonObject.put("_id_", model.getId());
 		jsonObject.put("_oid_", model.getId());
-		if (model.getAppId() != null) {
-			jsonObject.put("appId", model.getAppId());
+		if (model.getAccountId() != null) {
+			jsonObject.put("accountId", model.getAccountId());
 		}
 		if (model.getBigIcon() != null) {
 			jsonObject.put("bigIcon", model.getBigIcon());
@@ -117,8 +117,8 @@ public class WxCoverJsonFactory {
 		jsonObject.put("id", model.getId());
 		jsonObject.put("_id_", model.getId());
 		jsonObject.put("_oid_", model.getId());
-		if (model.getAppId() != null) {
-			jsonObject.put("appId", model.getAppId());
+		if (model.getAccountId() != null) {
+			jsonObject.put("accountId", model.getAccountId());
 		}
 		if (model.getBigIcon() != null) {
 			jsonObject.put("bigIcon", model.getBigIcon());

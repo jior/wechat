@@ -101,8 +101,14 @@ public class WxUserServiceImpl implements WxUserService {
 
 	@Transactional
 	public void save(WxUser wxUser) {
+		WxUser model = null;
+		if (wxUser.getId() > 0) {
+			model = this.getWxUser(wxUser.getId());
+		}
 		if (wxUser.getId() == 0) {
 			wxUser.setId(idGenerator.nextId());
+		}
+		if (model == null) {
 			wxUserMapper.insertWxUser(wxUser);
 		} else {
 			wxUserMapper.updateWxUser(wxUser);

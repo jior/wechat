@@ -6,7 +6,6 @@
 
 	<resultMap id="wxUserResultMap" type="com.glaf.wechat.domain.WxUser">
 		<id property="id" column="ID" jdbcType="BIGINT" />
-		<result property="appId" column="APPID" jdbcType="BIGINT" />
 		<result property="actorId" column="ACTORID" jdbcType="VARCHAR" />
 		<result property="wxid" column="WXID" jdbcType="VARCHAR" />
 		<result property="wxSourceId" column="WXSOURCEID" jdbcType="VARCHAR" />
@@ -39,9 +38,6 @@
 		insert into WX_USER
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			ID
-			<if test="appId != null">
-				,APPID
-			</if>
 			<if test="actorId != null">
 				,ACTORID
 			</if>
@@ -121,10 +117,7 @@
 
 		<trim prefix=" values (" suffix=")" suffixOverrides=",">
 			#{id, jdbcType=BIGINT}
-
-			<if test="appId != null">
-				,#{appId, jdbcType=BIGINT}
-			</if>
+			
 			<if test="actorId != null">
 				,#{actorId, jdbcType=VARCHAR}
 			</if>
@@ -333,11 +326,11 @@
 		<where>
 			1 = 1
 
-			<if test="appIds != null and appIds.size !=0">
-				and E.APPID IN
-				<foreach item="x_appId" index="index" collection="appIds"
+			<if test="accountIds != null and accountIds.size !=0">
+				and E.ID IN
+				<foreach item="x_accountId" index="index" collection="accountIds"
 					open="(" separator="," close=")">
-					#{x_appId}
+					#{x_accountId}
 				</foreach>
 			</if>
 

@@ -6,7 +6,7 @@
 
 	<resultMap id="wxFileResultMap" type="com.glaf.wechat.domain.WxFile">
 		<id property="id" column="ID_" jdbcType="BIGINT" />
-		<result property="appId" column="APPID" jdbcType="BIGINT" />
+		<result property="accountId" column="ACCOUNTID" jdbcType="BIGINT" />
 		<result property="categoryId" column="CATEGORYID_" jdbcType="BIGINT" />
 		<result property="title" column="TITLE_" jdbcType="VARCHAR" />
 		<result property="desc" column="DESC_" jdbcType="VARCHAR" />
@@ -32,8 +32,8 @@
 		insert into WX_FILE
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			ID_
-			<if test="appId != null">
-				,APPID
+			<if test="accountId != null">
+				,ACCOUNTID
 			</if>
 			<if test="categoryId != null">
 				,CATEGORYID_
@@ -78,8 +78,8 @@
 
 		<trim prefix=" values (" suffix=")" suffixOverrides=",">
 			#{id, jdbcType=BIGINT}
-			<if test="appId != null">
-				,#{appId, jdbcType=BIGINT}
+			<if test="accountId != null">
+				,#{accountId, jdbcType=BIGINT}
 			</if>
 			<if test="categoryId != null">
 				,#{categoryId, jdbcType=BIGINT}
@@ -139,6 +139,10 @@
 			</if>
 			<if test="filename != null">
 				FILENAME_ = #{filename, jdbcType=VARCHAR},
+			</if>
+			<if test="originalFilename != null">
+				ORIGINALFILENAME_ = #{originalFilename,
+				jdbcType=VARCHAR},
 			</if>
 			<if test="path != null">
 				PATH_ = #{path, jdbcType=VARCHAR},
@@ -216,15 +220,15 @@
 		<where>
 			1 = 1
 
-			<if test="appId != null">
-				and E.APPID = #{appId}
+			<if test="accountId != null">
+				and E.ACCOUNTID = #{accountId}
 			</if>
 
-			<if test="appIds != null and appIds.size !=0">
-				and E.APPID IN
-				<foreach item="x_appId" index="index" collection="appIds"
+			<if test="accountIds != null and accountIds.size !=0">
+				and E.ACCOUNTID IN
+				<foreach item="x_accountId" index="index" collection="accountIds"
 					open="(" separator="," close=")">
-					#{x_appId}
+					#{x_accountId}
 				</foreach>
 			</if>
 
@@ -238,6 +242,10 @@
 					open="(" separator="," close=")">
 					#{x_categoryId}
 				</foreach>
+			</if>
+
+			<if test="type != null">
+				and E.TYPE_ = #{type}
 			</if>
 
 			<if test="titleLike != null and titleLike != '' ">
@@ -254,14 +262,6 @@
 
 			<if test="locked != null">
 				and E.LOCKED_ = #{locked}
-			</if>
-
-			<if test="uuids != null and uuids.size !=0">
-				and E.UUID_ IN
-				<foreach item="x_uuid" index="index" collection="uuids"
-					open="(" separator="," close=")">
-					#{x_uuid}
-				</foreach>
 			</if>
 
 			<if test="createBy != null and createBy != '' ">

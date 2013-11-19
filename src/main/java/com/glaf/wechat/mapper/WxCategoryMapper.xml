@@ -6,7 +6,7 @@
 
 	<resultMap id="wxCategoryResultMap" type="com.glaf.wechat.domain.WxCategory">
 		<id property="id" column="ID_" jdbcType="BIGINT" />
-		<result property="appId" column="APPID" jdbcType="BIGINT" />
+		<result property="accountId" column="ACCOUNTID" jdbcType="BIGINT" />
 		<result property="parentId" column="PARENT_" jdbcType="BIGINT" />
 		<result property="treeId" column="TREEID_" jdbcType="VARCHAR" />
 		<result property="sort" column="SORT_" jdbcType="INTEGER" />
@@ -35,8 +35,8 @@
 		insert into WX_CATEGORY
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			ID_
-			<if test="appId != null">
-				,APPID
+			<if test="accountId != null">
+				,ACCOUNTID
 			</if>
 			<if test="parentId != null">
 				,PARENT_
@@ -93,8 +93,8 @@
 
 		<trim prefix=" values (" suffix=")" suffixOverrides=",">
 			#{id, jdbcType=BIGINT}
-			<if test="appId != null">
-				,#{appId, jdbcType=BIGINT}
+			<if test="accountId != null">
+				,#{accountId, jdbcType=BIGINT}
 			</if>
 			<if test="parentId != null">
 				,#{parentId, jdbcType=BIGINT}
@@ -264,15 +264,15 @@
 		<where>
 			1 = 1
 
-			<if test="appId != null">
-				and E.APPID = #{appId}
+			<if test="accountId != null">
+				and E.ACCOUNTID = #{accountId}
             </if>
 
-			<if test="appIds != null and appIds.size !=0">
-			    and E.APPID IN
-                <foreach item="x_appId" index="index" collection="appIds" 
+			<if test="accountIds != null and accountIds.size !=0">
+			    and E.ACCOUNTID IN
+                <foreach item="x_accountId" index="index" collection="accountIds" 
                      open="(" separator="," close=")">
-                  #{x_appId}
+                  #{x_accountId}
                 </foreach>
 			</if>
 

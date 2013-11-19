@@ -6,7 +6,7 @@
 
 	<resultMap id="wxSiteInfoResultMap" type="com.glaf.wechat.domain.WxSiteInfo">
 		<id property="id" column="ID_" jdbcType="BIGINT" />
-		<result property="appId" column="APPID" jdbcType="BIGINT" />
+		<result property="accountId" column="ACCOUNTID" jdbcType="BIGINT" />
 		<result property="linkman" column="LINKMAN_" jdbcType="VARCHAR" />
 		<result property="telephone" column="TELEPHONE_" jdbcType="VARCHAR" />
 		<result property="mobile" column="MOBILE_" jdbcType="VARCHAR" />
@@ -28,8 +28,8 @@
 		insert into WX_SITE_INFO
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			ID_
-			<if test="appId != null">
-				,APPID
+			<if test="accountId != null">
+				,ACCOUNTID
 			</if>
 			<if test="linkman != null">
 				,LINKMAN_
@@ -65,8 +65,8 @@
 
 		<trim prefix=" values (" suffix=")" suffixOverrides=",">
 			#{id, jdbcType=BIGINT}
-			<if test="appId != null">
-				,#{appId, jdbcType=BIGINT}
+			<if test="accountId != null">
+				,#{accountId, jdbcType=BIGINT}
 			</if>
 			<if test="linkman != null">
 				,#{linkman, jdbcType=VARCHAR}
@@ -197,15 +197,15 @@
 		<where>
 			1 = 1
 
-			<if test="appId != null">
-				and E.APPID = #{appId}
+			<if test="accountId != null">
+				and E.ACCOUNTID = #{accountId}
             </if>
 
-			<if test="appIds != null and appIds.size !=0">
-			    and E.APPID IN
-                <foreach item="x_appId" index="index" collection="appIds" 
+			<if test="accountIds != null and accountIds.size !=0">
+			    and E.ACCOUNTID IN
+                <foreach item="x_accountId" index="index" collection="accountIds" 
                      open="(" separator="," close=")">
-                  #{x_appId}
+                  #{x_accountId}
                 </foreach>
 			</if>
 

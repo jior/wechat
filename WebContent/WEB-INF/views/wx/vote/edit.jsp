@@ -94,7 +94,7 @@ limitations under the License.
 			x=document.body.scrollLeft+event.clientX-event.offsetX-200;
 			y=document.body.scrollTop+event.clientY-event.offsetY-200;
 		}
-		openWindow(link,self,x, y, 745, 480);
+		openWindow(link,self,x, y, 745, 580);
 	}
 
 </script>

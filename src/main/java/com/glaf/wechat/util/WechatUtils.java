@@ -86,17 +86,17 @@ public class WechatUtils {
 	/**
 	 * 获取access_token
 	 * 
-	 * @param appId
+	 * @param accountId
 	 *            凭证
 	 * @param appSecret
 	 *            密钥
 	 * @return
 	 */
 	public static AccessToken getAccessToken(String access_token_url,
-			String appId, String appSecret) {
+			String accountId, String appSecret) {
 		AccessToken accessToken = null;
 
-		String requestUrl = access_token_url.replace("APPID", appId).replace(
+		String requestUrl = access_token_url.replace("ACCOUNTID", accountId).replace(
 				"APPSECRET", appSecret);
 		JSONObject jsonObject = httpRequest(requestUrl, "GET", null);
 		// 如果请求成功

@@ -24,8 +24,8 @@ import com.glaf.core.query.DataQuery;
 
 public class WxFileQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
-	protected Long appId;
-	protected List<Long> appIds;
+	protected Long accountId;
+	protected List<Long> accountIds;
 	protected List<Long> ids;
 	protected Long categoryId;
 	protected List<Long> categoryIds;
@@ -33,7 +33,8 @@ public class WxFileQuery extends DataQuery {
 	protected String contentLike;
 	protected String filenameLike;
 	protected String pathLike;
-	protected List<String> uuids;
+	protected String type;
+
 	protected Date createDateGreaterThanOrEqual;
 	protected Date createDateLessThanOrEqual;
 
@@ -90,12 +91,12 @@ public class WxFileQuery extends DataQuery {
 		return this;
 	}
 
-	public Long getAppId() {
-		return appId;
+	public Long getAccountId() {
+		return accountId;
 	}
 
-	public List<Long> getAppIds() {
-		return appIds;
+	public List<Long> getAccountIds() {
+		return accountIds;
 	}
 
 	public Long getCategoryId() {
@@ -209,8 +210,8 @@ public class WxFileQuery extends DataQuery {
 		return titleLike;
 	}
 
-	public List<String> getUuids() {
-		return uuids;
+	public String getType() {
+		return type;
 	}
 
 	@Override
@@ -238,12 +239,12 @@ public class WxFileQuery extends DataQuery {
 		return this;
 	}
 
-	public void setAppId(Long appId) {
-		this.appId = appId;
+	public void setAccountId(Long accountId) {
+		this.accountId = accountId;
 	}
 
-	public void setAppIds(List<Long> appIds) {
-		this.appIds = appIds;
+	public void setAccountIds(List<Long> accountIds) {
+		this.accountIds = accountIds;
 	}
 
 	public void setCategoryId(Long categoryId) {
@@ -279,8 +280,8 @@ public class WxFileQuery extends DataQuery {
 		this.titleLike = titleLike;
 	}
 
-	public void setUuids(List<String> uuids) {
-		this.uuids = uuids;
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public WxFileQuery titleLike(String titleLike) {
@@ -291,11 +292,11 @@ public class WxFileQuery extends DataQuery {
 		return this;
 	}
 
-	public WxFileQuery uuids(List<String> uuids) {
-		if (uuids == null) {
-			throw new RuntimeException("uuids is empty ");
+	public WxFileQuery type(String type) {
+		if (type == null) {
+			throw new RuntimeException("type is null");
 		}
-		this.uuids = uuids;
+		this.type = type;
 		return this;
 	}
 

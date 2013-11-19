@@ -42,8 +42,8 @@ public class WxConfigJsonFactory {
 		if (jsonObject.containsKey("id")) {
 			model.setId(jsonObject.getLong("id"));
 		}
-		if (jsonObject.containsKey("appId")) {
-			model.setAppId(jsonObject.getLong("appId"));
+		if (jsonObject.containsKey("accountId")) {
+			model.setAccountId(jsonObject.getLong("accountId"));
 		}
 		if (jsonObject.containsKey("callBackUrl")) {
 			model.setCallBackUrl(jsonObject.getString("callBackUrl"));
@@ -51,8 +51,8 @@ public class WxConfigJsonFactory {
 		if (jsonObject.containsKey("token")) {
 			model.setToken(jsonObject.getString("token"));
 		}
-		if (jsonObject.containsKey("appId")) {
-			model.setAppId(jsonObject.getLong("appId"));
+		if (jsonObject.containsKey("accountId")) {
+			model.setAccountId(jsonObject.getLong("accountId"));
 		}
 		if (jsonObject.containsKey("wxAppId")) {
 			model.setWxAppId(jsonObject.getString("wxAppId"));
@@ -107,8 +107,8 @@ public class WxConfigJsonFactory {
 		if (model.getToken() != null) {
 			jsonObject.put("token", model.getToken());
 		}
-		if (model.getAppId() != null) {
-			jsonObject.put("appId", model.getAppId());
+		if (model.getAccountId() != null) {
+			jsonObject.put("accountId", model.getAccountId());
 		}
 		if (model.getWxAppId() != null) {
 			jsonObject.put("wxAppId", model.getWxAppId());
@@ -167,8 +167,8 @@ public class WxConfigJsonFactory {
 		if (model.getToken() != null) {
 			jsonObject.put("token", model.getToken());
 		}
-		if (model.getAppId() != null) {
-			jsonObject.put("appId", model.getAppId());
+		if (model.getAccountId() != null) {
+			jsonObject.put("accountId", model.getAccountId());
 		}
 		if (model.getWxAppId() != null) {
 			jsonObject.put("wxAppId", model.getWxAppId());

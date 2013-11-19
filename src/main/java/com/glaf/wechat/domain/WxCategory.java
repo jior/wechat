@@ -62,10 +62,10 @@ public class WxCategory implements java.io.Serializable, JSONable {
 	protected long parentId;
 
 	/**
-	 * Î¢Õ¾¹«ÖÚºÅÓ¦ÓÃID
+	 * Î¢Õ¾¹«ÖÚºÅÕËºÅID
 	 */
-	@Column(name = "APPID_")
-	protected Long appId;
+	@Column(name = "ACCOUNTID_")
+	protected Long accountId;
 
 	/**
 	 * Ê÷±àºÅ
@@ -218,8 +218,8 @@ public class WxCategory implements java.io.Serializable, JSONable {
 		return true;
 	}
 
-	public Long getAppId() {
-		return appId;
+	public Long getAccountId() {
+		return accountId;
 	}
 
 	public List<WxCategory> getChildren() {
@@ -330,8 +330,8 @@ public class WxCategory implements java.io.Serializable, JSONable {
 		return WxCategoryJsonFactory.jsonToObject(jsonObject);
 	}
 
-	public void setAppId(Long appId) {
-		this.appId = appId;
+	public void setAccountId(Long accountId) {
+		this.accountId = accountId;
 	}
 
 	public void setChildren(List<WxCategory> children) {

@@ -42,9 +42,6 @@ public class WxUser implements Serializable, JSONable, User {
 	@Column(name = "ID", nullable = false)
 	protected long id;
 
-	@Column(name = "APPID")
-	protected long appId;
-
 	@Column(name = "ACTORID", length = 50)
 	protected String actorId;
 
@@ -136,10 +133,6 @@ public class WxUser implements Serializable, JSONable, User {
 
 	public String getAdminFlag() {
 		return null;
-	}
-
-	public long getAppId() {
-		return appId;
 	}
 
 	public String getArea() {
@@ -275,10 +268,6 @@ public class WxUser implements Serializable, JSONable, User {
 	}
 
 	public void setAdminFlag(String adminFlag) {
-	}
-
-	public void setAppId(long appId) {
-		this.appId = appId;
 	}
 
 	public void setArea(String area) {

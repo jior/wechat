@@ -55,8 +55,8 @@ public class WxMenu implements java.io.Serializable, JSONable {
 	/**
 	 * 微站公众号应用ID
 	 */
-	@Column(name = "APPID_")
-	protected Long appId;
+	@Column(name = "ACCOUNTID_")
+	protected Long accountId;
 
 	/**
 	 * 父节点编号
@@ -176,8 +176,8 @@ public class WxMenu implements java.io.Serializable, JSONable {
 		children.add(menu);
 	}
 
-	public Long getAppId() {
-		return appId;
+	public Long getAccountId() {
+		return accountId;
 	}
 
 	public List<WxMenu> getChildren() {
@@ -260,8 +260,8 @@ public class WxMenu implements java.io.Serializable, JSONable {
 		return WxMenuJsonFactory.jsonToObject(jsonObject);
 	}
 
-	public void setAppId(Long appId) {
-		this.appId = appId;
+	public void setAccountId(Long accountId) {
+		this.accountId = accountId;
 	}
 
 	public void setChildren(List<WxMenu> children) {

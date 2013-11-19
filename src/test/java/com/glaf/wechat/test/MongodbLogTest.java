@@ -21,7 +21,7 @@ public class MongodbLogTest {
 		for (int i = 0; i < 100; i++) {
 			WxLog log = new WxLog();
 			log.setAccount("root");
-			log.setAppId(1L);
+			log.setAccountId(1L);
 			log.setFlag(1);
 			log.setIp("127.0.0.1");
 			log.setOperate("add");

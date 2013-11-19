@@ -2,12 +2,13 @@ package com.glaf.wechat.test;
 
 import java.util.*;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.junit.Test;
 
+import com.glaf.test.AbstractTest;
 import com.glaf.wechat.domain.WxFile;
 import com.glaf.wechat.query.WxFileQuery;
 import com.glaf.wechat.service.WxFileService;
-import com.glaf.test.AbstractTest;
 
 public class WxFileTest extends AbstractTest {
 
@@ -19,18 +20,64 @@ public class WxFileTest extends AbstractTest {
 
 	@Test
 	public void insertWxFile() {
-		for (int i = 0; i < 10; i++) {
+		List<WxFile> files = new ArrayList<WxFile>();
+		for (int i = 1; i <= 200; i++) {
 			WxFile wxFile = new WxFile();
-			wxFile.setCategoryId(100L);
-			wxFile.setTitle("Title");
-			wxFile.setFilename("Filename");
-			wxFile.setPath("Path");
-			wxFile.setUuid("Uuid");
-			wxFile.setCreateBy("CreateBy");
+			wxFile.setCategoryId(0L);
+			wxFile.setTitle("原始大图片" + i);
+			wxFile.setFilename("/wx/small/small.pic" + i + ".jpg");
+			wxFile.setOriginalFilename("/wx/images/pic" + i + ".jpg");
+			wxFile.setUuid(DigestUtils.md5Hex(wxFile.getOriginalFilename()));
+			wxFile.setType("sys_images");
+			wxFile.setCreateBy("system");
 			wxFile.setCreateDate(new Date());
 
-			wxFileService.save(wxFile);
+			files.add(wxFile);
 		}
+
+		for (int i = 1; i <= 200; i++) {
+			WxFile wxFile = new WxFile();
+			wxFile.setCategoryId(0L);
+			wxFile.setTitle("大图片" + i);
+			wxFile.setFilename("/wx/small/small.pic" + i + ".jpg");
+			wxFile.setOriginalFilename("/wx/big/big.pic" + i + ".jpg");
+			wxFile.setUuid(DigestUtils.md5Hex(wxFile.getOriginalFilename()));
+			wxFile.setType("sys_big_images");
+			wxFile.setCreateBy("system");
+			wxFile.setCreateDate(new Date());
+
+			files.add(wxFile);
+		}
+
+		for (int i = 1; i <= 200; i++) {
+			WxFile wxFile = new WxFile();
+			wxFile.setCategoryId(0L);
+			wxFile.setTitle("中等图片" + i);
+			wxFile.setFilename("/wx/small/small.pic" + i + ".jpg");
+			wxFile.setOriginalFilename("/wx/medium/medium.pic" + i + ".jpg");
+			wxFile.setUuid(DigestUtils.md5Hex(wxFile.getOriginalFilename()));
+			wxFile.setType("sys_medium_images");
+			wxFile.setCreateBy("system");
+			wxFile.setCreateDate(new Date());
+
+			files.add(wxFile);
+		}
+
+		for (int i = 1; i <= 200; i++) {
+			WxFile wxFile = new WxFile();
+			wxFile.setCategoryId(0L);
+			wxFile.setTitle("小图片" + i);
+			wxFile.setFilename("/wx/small/small.pic" + i + ".jpg");
+			wxFile.setOriginalFilename("/wx/small/small.pic" + i + ".jpg");
+			wxFile.setUuid(DigestUtils.md5Hex(wxFile.getOriginalFilename()));
+			wxFile.setType("sys_small_images");
+			wxFile.setCreateBy("system");
+			wxFile.setCreateDate(new Date());
+
+			files.add(wxFile);
+		}
+
+		wxFileService.saveAll(files);
 	}
 
 	@Test

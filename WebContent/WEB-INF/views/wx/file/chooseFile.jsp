@@ -42,6 +42,8 @@ limitations under the License.
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/glaf-base.js"></script>
 <script type="text/javascript">
 
+    var contextPath="<%=request.getContextPath()%>";
+
     var setting = {
 		async: {
 			enable: true,
@@ -174,6 +176,34 @@ limitations under the License.
 		window.location.href=link;
 	}
 
+	function reloadPic(){
+		var type = jQuery('#type').val();
+		$.getJSON("<%=request.getContextPath()%>/mx/wx/wxFile/jsonArray?type="+type, function(data) {
+                $("#pic_layer").empty(); //先清空标记中的内容
+                var strHTML = ""; //初始化保存内容变量
+				var i=0;
+                $.each(data, function(InfoIndex, Info) { //遍历获取的数据
+                    strHTML += "<img src='" +contextPath+ Info["filename"] + "' border='0' width='160' height='240' ";
+                    strHTML += " onclick=javascript:chooseSysPic('"+Info["originalFilename"]+"'); >";
+					i++;
+					if(i%4 == 0){
+						strHTML +="<br>";
+					}
+                });
+				//alert(strHTML);
+                $("#pic_layer").html(strHTML); //显示处理后的数据
+          });
+	}
+
+	function chooseSysPic(filename){
+        var parent_window = getOpener();
+        var x_elementId = parent_window.document.getElementById("${elementId}");
+        var x_element_name = parent_window.document.getElementById("${elementName}");
+	    x_elementId.value=filename;
+		x_element_name.value=filename;
+		window.close();
+	}
+
 	function selectPic(type, index){
 		var filename="";
 		if(type == "orgi"){
@@ -226,69 +256,22 @@ limitations under the License.
 		</div>
     </div>
 
-	<div title="原始图片(960*640)" data-options="closable:false" style="padding:1px">
-	     <%
-		   index = 0;
-		   for(int i=1;i<=50;i++){
-			   out.println("<br>");
-			   for(int j=0;j<4;j++){
-				 index++;  
-		  %>
-		     <img src="<%=request.getContextPath()%>/wx/small/small.pic<%=index%>.jpg" width="160" height="240"
-			      onclick="javascript:selectPic('orgi', <%=index%>);">
-		  <%
-			   }
-	        }
-		 %>
+	<div title="系统内置图片" data-options="closable:false" style="padding:2px">
+	    <select id="type" name="type" onchange="javascript:reloadPic();">
+			<option value="sys_images">原始图片(960*640)</option>
+			<option value="sys_big_images">较大图片(720*400)</option>
+			<option value="sys_medium_images">中等图片(480*320)</option>
+			<option value="sys_small_images">较小图片(240*160)</option>
+	    </select>
+		<div id="pic_layer" >
+	      
+		</div>
+
     </div>
 
-	<div title="较大图片(720*400)" data-options="closable:false" style="padding:1px">
-	     <%
-		   index = 0;
-		   for(int i=1;i<=50;i++){
-			   out.println("<br>");
-			   for(int j=0;j<4;j++){
-				 index++;  
-		  %>
-		     <img src="<%=request.getContextPath()%>/wx/small/small.pic<%=index%>.jpg" width="160" height="240"
-			      onclick="javascript:selectPic('big', <%=index%>);">
-		  <%
-			   }
-	        }
-		 %>
-    </div>
-
-    <div title="中等图片(480*320)" data-options="closable:false" style="padding:1px">
-	    <%
-		   index = 0;
-		   for(int i=1;i<=50;i++){
-			   out.println("<br>");
-			   for(int j=0;j<4;j++){
-				 index++;  
-		  %>
-		     <img src="<%=request.getContextPath()%>/wx/small/small.pic<%=index%>.jpg" width="160" height="240"
-			      onclick="javascript:selectPic('medium', <%=index%>);">
-		  <%
-			   }
-	        }
-		 %>
-    </div>
-
-    <div title="较小图片(240*160)" data-options="closable:false" style="padding:1px">
-	    <%
-		   index = 0;
-		   for(int i=1;i<=50;i++){
-			   out.println("<br>");
-			   for(int j=0;j<4;j++){
-				 index++;  
-		  %>
-		     <img src="<%=request.getContextPath()%>/wx/small/small.pic<%=index%>.jpg" width="160" height="240"
-			      onclick="javascript:selectPic('small', <%=index%>);">
-		  <%
-			   }
-	        }
-		 %>
-    </div>
 </div>
+<script type="text/javascript">
+    reloadPic();
+</script>
 </body>
 </html>

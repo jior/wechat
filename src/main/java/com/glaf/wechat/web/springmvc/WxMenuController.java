@@ -154,19 +154,19 @@ public class WxMenuController {
 		WxConfig wxConfig = wxConfigService.getWxConfigByUser(loginContext
 				.getActorId());
 		if (wxConfig != null) {
-			String appId = null;
+			String accountId = null;
 			String appSecret = null;
 			if (StringUtils.equals("weixin", type)) {
-				appId = wxConfig.getWxAppId();
+				accountId = wxConfig.getWxAppId();
 				appSecret = wxConfig.getWxAppSecret();
 			} else if (StringUtils.equals("yixin", type)) {
-				appId = wxConfig.getYxAppId();
+				accountId = wxConfig.getYxAppId();
 				appSecret = wxConfig.getYxAppSecret();
 			}
-			if (StringUtils.isNotEmpty(appId)
+			if (StringUtils.isNotEmpty(accountId)
 					&& StringUtils.isNotEmpty(appSecret)) {
 				AccessToken accessToken = WechatUtils.getAccessToken(
-						access_token_url, appId, appSecret);
+						access_token_url, accountId, appSecret);
 				if (accessToken != null && accessToken.getToken() != null) {
 					JSONObject jsonObject = WechatUtils.getMenu(menu_get_url,
 							accessToken.getToken());
@@ -451,19 +451,19 @@ public class WxMenuController {
 			WxConfig wxConfig = wxConfigService.getWxConfigByUser(loginContext
 					.getActorId());
 			if (wxConfig != null) {
-				String appId = null;
+				String accountId = null;
 				String appSecret = null;
 				if (StringUtils.equals("weixin", type)) {
-					appId = wxConfig.getWxAppId();
+					accountId = wxConfig.getWxAppId();
 					appSecret = wxConfig.getWxAppSecret();
 				} else if (StringUtils.equals("yixin", type)) {
-					appId = wxConfig.getYxAppId();
+					accountId = wxConfig.getYxAppId();
 					appSecret = wxConfig.getYxAppSecret();
 				}
-				if (StringUtils.isNotEmpty(appId)
+				if (StringUtils.isNotEmpty(accountId)
 						&& StringUtils.isNotEmpty(appSecret)) {
 					AccessToken accessToken = WechatUtils.getAccessToken(
-							access_token_url, appId, appSecret);
+							access_token_url, accountId, appSecret);
 					if (accessToken != null && accessToken.getToken() != null) {
 						Menu menu = new Menu();
 						for (int i = 0; i < menus.size(); i++) {

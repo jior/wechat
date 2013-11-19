@@ -236,6 +236,109 @@ public class WxFileController {
 		return result.toJSONString().getBytes("UTF-8");
 	}
 
+	@RequestMapping("/json2")
+	@ResponseBody
+	public byte[] json2(HttpServletRequest request, ModelMap modelMap)
+			throws IOException {
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		WxFileQuery query = new WxFileQuery();
+		Tools.populate(query, params);
+
+		query.createBy("system");
+
+		String gridType = ParamUtils.getString(params, "gridType");
+		if (gridType == null) {
+			gridType = "easyui";
+		}
+		int start = 0;
+		int limit = 10;
+		String orderName = null;
+		String order = null;
+
+		int pageNo = ParamUtils.getInt(params, "page");
+		limit = ParamUtils.getInt(params, "rows");
+		start = (pageNo - 1) * limit;
+		orderName = ParamUtils.getString(params, "sortName");
+		order = ParamUtils.getString(params, "sortOrder");
+
+		if (start < 0) {
+			start = 0;
+		}
+
+		if (limit <= 0) {
+			limit = Paging.DEFAULT_PAGE_SIZE;
+		}
+
+		JSONObject result = new JSONObject();
+		int total = wxFileService.getWxFileCountByQueryCriteria(query);
+		if (total > 0) {
+			result.put("total", total);
+			result.put("totalCount", total);
+			result.put("totalRecords", total);
+			result.put("start", start);
+			result.put("startIndex", start);
+			result.put("limit", limit);
+			result.put("pageSize", limit);
+
+			if (StringUtils.isNotEmpty(orderName)) {
+				query.setSortOrder(orderName);
+				if (StringUtils.equals(order, "desc")) {
+					query.setSortOrder(" desc ");
+				}
+			}
+
+			List<WxFile> list = wxFileService.getWxFilesByQueryCriteria(start,
+					limit, query);
+
+			if (list != null && !list.isEmpty()) {
+				JSONArray rowsJSON = new JSONArray();
+
+				result.put("rows", rowsJSON);
+
+				for (WxFile wxFile : list) {
+					JSONObject rowJSON = wxFile.toJsonObject();
+					rowJSON.put("id", wxFile.getId());
+					rowJSON.put("fileId", wxFile.getId());
+					rowJSON.put("startIndex", ++start);
+					rowsJSON.add(rowJSON);
+				}
+
+			}
+		} else {
+			JSONArray rowsJSON = new JSONArray();
+			result.put("rows", rowsJSON);
+			result.put("total", total);
+		}
+		return result.toJSONString().getBytes("UTF-8");
+	}
+
+	@RequestMapping("/jsonArray")
+	@ResponseBody
+	public byte[] jsonArray(HttpServletRequest request, ModelMap modelMap)
+			throws IOException {
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		WxFileQuery query = new WxFileQuery();
+		Tools.populate(query, params);
+
+		query.createBy("system");
+
+		JSONArray result = new JSONArray();
+		int total = wxFileService.getWxFileCountByQueryCriteria(query);
+		if (total > 0) {
+			List<WxFile> list = wxFileService.list(query);
+			if (list != null && !list.isEmpty()) {
+				for (WxFile wxFile : list) {
+					JSONObject rowJSON = wxFile.toJsonObject();
+					rowJSON.put("id", wxFile.getId());
+					rowJSON.put("fileId", wxFile.getId());
+					result.add(rowJSON);
+				}
+			}
+		}
+
+		return result.toJSONString().getBytes("UTF-8");
+	}
+
 	@RequestMapping
 	public ModelAndView list(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);

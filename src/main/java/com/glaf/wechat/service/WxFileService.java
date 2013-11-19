@@ -82,5 +82,9 @@ public interface WxFileService {
 	 */
 	@Transactional
 	void save(WxFile wxFile);
+	
+	
+	@Transactional
+	void saveAll(List<WxFile> files);
 
 }

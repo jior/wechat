@@ -71,7 +71,7 @@ public class WxMongoDBLogServiceImpl implements WxLogService {
 				if (coll != null) {
 					BasicDBObject row = new BasicDBObject();
 					row.put("id", model.getId());
-					row.put("appId", model.getAppId());
+					row.put("accountId", model.getAccountId());
 					row.put("account", model.getAccount());
 					row.put("flag", Integer.valueOf(model.getFlag()));
 					row.put("ip", model.getIp());
@@ -100,8 +100,8 @@ public class WxMongoDBLogServiceImpl implements WxLogService {
 					.getCreateTimeGreaterThanOrEqual().getTime()));
 		}
 
-		if (query.getAppId() != null && query.getAppId() != 0) {
-			q.put("appId", query.getAppId());
+		if (query.getAccountId() != null && query.getAccountId() != 0) {
+			q.put("accountId", query.getAccountId());
 		}
 
 		if (query.getFlag() != null && query.getFlag() != 0) {
@@ -181,8 +181,8 @@ public class WxMongoDBLogServiceImpl implements WxLogService {
 				log.setIp((String) object.get("ip"));
 				log.setAccount((String) object.get("account"));
 				log.setOperate((String) object.get("operate"));
-				if (object.containsField("appId")) {
-					log.setAppId((Long) object.get("appId"));
+				if (object.containsField("accountId")) {
+					log.setAccountId((Long) object.get("accountId"));
 				}
 				if (object.containsField("flag")) {
 					log.setFlag((Integer) object.get("flag"));
@@ -212,8 +212,8 @@ public class WxMongoDBLogServiceImpl implements WxLogService {
 			log.setIp((String) object.get("ip"));
 			log.setAccount((String) object.get("account"));
 			log.setOperate((String) object.get("operate"));
-			if (object.containsField("appId")) {
-				log.setAppId((Long) object.get("appId"));
+			if (object.containsField("accountId")) {
+				log.setAccountId((Long) object.get("accountId"));
 			}
 			if (object.containsField("flag")) {
 				log.setFlag((Integer) object.get("flag"));

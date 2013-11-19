@@ -24,8 +24,8 @@ import com.glaf.core.query.DataQuery;
 
 public class WxConfigQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
-	protected Long appId;
-	protected List<Long> appIds;
+	protected Long accountId;
+	protected List<Long> accountIds;
 	protected List<Long> ids;
 	protected String callBackUrlLike;
 	protected String apiStatus;
@@ -46,11 +46,11 @@ public class WxConfigQuery extends DataQuery {
 		return this;
 	}
 
-	public WxConfigQuery appId(Long appId) {
-		if (appId == null) {
-			throw new RuntimeException("appId is null");
+	public WxConfigQuery accountId(Long accountId) {
+		if (accountId == null) {
+			throw new RuntimeException("accountId is null");
 		}
-		this.appId = appId;
+		this.accountId = accountId;
 		return this;
 	}
 
@@ -100,12 +100,12 @@ public class WxConfigQuery extends DataQuery {
 		return apiStatus;
 	}
 
-	public Long getAppId() {
-		return appId;
+	public Long getAccountId() {
+		return accountId;
 	}
 
-	public List<Long> getAppIds() {
-		return appIds;
+	public List<Long> getAccountIds() {
+		return accountIds;
 	}
 
 	public String getCallBackUrlLike() {
@@ -155,8 +155,8 @@ public class WxConfigQuery extends DataQuery {
 				orderBy = "E.CALLBACKURL_" + a_x;
 			}
 
-			if ("appId".equals(sortColumn)) {
-				orderBy = "E.APPID_" + a_x;
+			if ("accountId".equals(sortColumn)) {
+				orderBy = "E.ACCOUNTID_" + a_x;
 			}
 
 			if ("apiStatus".equals(sortColumn)) {
@@ -185,7 +185,7 @@ public class WxConfigQuery extends DataQuery {
 		addColumn("id", "ID_");
 		addColumn("callBackUrl", "CALLBACKURL_");
 		addColumn("token", "TOKEN_");
-		addColumn("appId", "APPID_");
+		addColumn("accountId", "ACCOUNTID_");
 		addColumn("wxAppId", "WXAPPID_");
 		addColumn("wxAppSecret", "WXAPPSECRET_");
 		addColumn("yxAppId", "YXAPPID_");
@@ -200,12 +200,12 @@ public class WxConfigQuery extends DataQuery {
 		this.apiStatus = apiStatus;
 	}
 
-	public void setAppId(Long appId) {
-		this.appId = appId;
+	public void setAccountId(Long accountId) {
+		this.accountId = accountId;
 	}
 
-	public void setAppIds(List<Long> appIds) {
-		this.appIds = appIds;
+	public void setAccountIds(List<Long> accountIds) {
+		this.accountIds = accountIds;
 	}
 
 	public void setCallBackUrlLike(String callBackUrlLike) {

@@ -23,7 +23,7 @@ import com.glaf.core.query.DataQuery;
 
 public class WxUserQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
-	protected List<Long> appIds;
+	protected List<Long> accountIds;
 	protected Integer userType;
 	protected Long deptId;
 	protected List<Long> deptIds;
@@ -54,11 +54,11 @@ public class WxUserQuery extends DataQuery {
 		return this;
 	}
 
-	public WxUserQuery appIds(List<Long> appIds) {
-		if (appIds == null) {
-			throw new RuntimeException("appIds is empty ");
+	public WxUserQuery accountIds(List<Long> accountIds) {
+		if (accountIds == null) {
+			throw new RuntimeException("accountIds is empty ");
 		}
-		this.appIds = appIds;
+		this.accountIds = accountIds;
 		return this;
 	}
 
@@ -107,8 +107,8 @@ public class WxUserQuery extends DataQuery {
 		return actorIds;
 	}
 
-	public List<Long> getAppIds() {
-		return appIds;
+	public List<Long> getAccountIds() {
+		return accountIds;
 	}
 
 	public Date getCreateDateGreaterThanOrEqual() {
@@ -142,8 +142,8 @@ public class WxUserQuery extends DataQuery {
 				a_x = sortOrder;
 			}
 
-			if ("appId".equals(sortColumn)) {
-				orderBy = "E.APPID" + a_x;
+			if ("accountId".equals(sortColumn)) {
+				orderBy = "E.ACCOUNTID" + a_x;
 			}
 
 			if ("actorId".equals(sortColumn)) {
@@ -270,7 +270,7 @@ public class WxUserQuery extends DataQuery {
 	public void initQueryColumns() {
 		super.initQueryColumns();
 		addColumn("id", "ID");
-		addColumn("appId", "APPID");
+		addColumn("accountId", "ACCOUNTID");
 		addColumn("actorId", "ACTORID");
 		addColumn("wxid", "WXID");
 		addColumn("wxSourceId", "WXSOURCEID");
@@ -320,8 +320,8 @@ public class WxUserQuery extends DataQuery {
 		this.actorIds = actorIds;
 	}
 
-	public void setAppIds(List<Long> appIds) {
-		this.appIds = appIds;
+	public void setAccountIds(List<Long> accountIds) {
+		this.accountIds = accountIds;
 	}
 
 	public void setCreateDateGreaterThanOrEqual(

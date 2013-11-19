@@ -56,8 +56,8 @@ public class WxContent implements java.io.Serializable, JSONable {
 	/**
 	 * 微站公众号应用ID
 	 */
-	@Column(name = "APPID_")
-	protected Long appId;
+	@Column(name = "ACCOUNTID_")
+	protected Long accountId;
 
 	/**
 	 * 栏目编号
@@ -237,8 +237,8 @@ public class WxContent implements java.io.Serializable, JSONable {
 
 	}
 
-	public Long getAppId() {
-		return appId;
+	public Long getAccountId() {
+		return accountId;
 	}
 
 	public String getAuthor() {
@@ -377,8 +377,8 @@ public class WxContent implements java.io.Serializable, JSONable {
 		return WxContentJsonFactory.jsonToObject(jsonObject);
 	}
 
-	public void setAppId(Long appId) {
-		this.appId = appId;
+	public void setAccountId(Long accountId) {
+		this.accountId = accountId;
 	}
 
 	public void setAuthor(String author) {

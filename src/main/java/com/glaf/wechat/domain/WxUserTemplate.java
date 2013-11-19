@@ -32,8 +32,8 @@ public class WxUserTemplate implements Serializable, JSONable {
 	/**
 	 * 微站公众号应用ID
 	 */
-	@Column(name = "APPID_")
-	protected Long appId;
+	@Column(name = "ACCOUNTID_")
+	protected Long accountId;
 
 	/**
 	 * 栏目编号
@@ -87,8 +87,8 @@ public class WxUserTemplate implements Serializable, JSONable {
 		return true;
 	}
 
-	public Long getAppId() {
-		return appId;
+	public Long getAccountId() {
+		return accountId;
 	}
 
 	public Long getCategoryId() {
@@ -127,8 +127,8 @@ public class WxUserTemplate implements Serializable, JSONable {
 		return WxUserTemplateJsonFactory.jsonToObject(jsonObject);
 	}
 
-	public void setAppId(Long appId) {
-		this.appId = appId;
+	public void setAccountId(Long accountId) {
+		this.accountId = accountId;
 	}
 
 	public void setCategoryId(Long categoryId) {

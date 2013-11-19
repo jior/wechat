@@ -274,7 +274,7 @@ public class WxConfigController {
 
 		wxConfig.setCallBackUrl(request.getParameter("callBackUrl"));
 		wxConfig.setToken(request.getParameter("token"));
-		wxConfig.setAppId(RequestUtils.getLong(request, "appId"));
+		wxConfig.setAccountId(RequestUtils.getLong(request, "accountId"));
 		wxConfig.setWxAppId(request.getParameter("wxAppId"));
 		wxConfig.setWxAppSecret(request.getParameter("wxAppSecret"));
 		wxConfig.setApiStatus(request.getParameter("apiStatus"));
@@ -298,7 +298,7 @@ public class WxConfigController {
 			Tools.populate(wxConfig, params);
 			wxConfig.setCallBackUrl(request.getParameter("callBackUrl"));
 			wxConfig.setToken(request.getParameter("token"));
-			wxConfig.setAppId(RequestUtils.getLong(request, "appId"));
+			wxConfig.setAccountId(RequestUtils.getLong(request, "accountId"));
 			wxConfig.setWxAppId(request.getParameter("wxAppId"));
 			wxConfig.setWxAppSecret(request.getParameter("wxAppSecret"));
 			wxConfig.setApiStatus(request.getParameter("apiStatus"));
@@ -334,7 +334,7 @@ public class WxConfigController {
 						.isSystemAdministrator())) {
 			wxConfig.setCallBackUrl(request.getParameter("callBackUrl"));
 			wxConfig.setToken(request.getParameter("token"));
-			wxConfig.setAppId(RequestUtils.getLong(request, "appId"));
+			wxConfig.setAccountId(RequestUtils.getLong(request, "accountId"));
 			wxConfig.setWxAppId(request.getParameter("wxAppId"));
 			wxConfig.setWxAppSecret(request.getParameter("wxAppSecret"));
 			wxConfig.setApiStatus(request.getParameter("apiStatus"));

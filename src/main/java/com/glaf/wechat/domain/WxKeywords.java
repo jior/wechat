@@ -26,8 +26,8 @@ public class WxKeywords implements Serializable, JSONable {
 	/**
 	 * 微站公众号应用ID
 	 */
-	@Column(name = "APPID_")
-	protected Long appId;
+	@Column(name = "ACCOUNTID_")
+	protected Long accountId;
 
 	@Column(name = "CATEGORYID_")
 	protected Long categoryId;
@@ -69,8 +69,8 @@ public class WxKeywords implements Serializable, JSONable {
 		return true;
 	}
 
-	public Long getAppId() {
-		return appId;
+	public Long getAccountId() {
+		return accountId;
 	}
 
 	public Long getCategoryId() {
@@ -113,8 +113,8 @@ public class WxKeywords implements Serializable, JSONable {
 		return WxKeywordsJsonFactory.jsonToObject(jsonObject);
 	}
 
-	public void setAppId(Long appId) {
-		this.appId = appId;
+	public void setAccountId(Long accountId) {
+		this.accountId = accountId;
 	}
 
 	public void setCategoryId(Long categoryId) {

@@ -8,7 +8,7 @@
 		<id property="id" column="ID_" jdbcType="BIGINT" />
 		<result property="callBackUrl" column="CALLBACKURL_" jdbcType="VARCHAR" />
 		<result property="token" column="TOKEN_" jdbcType="VARCHAR" />
-		<result property="appId" column="APPID_" jdbcType="BIGINT" />
+		<result property="accountId" column="ACCOUNTID_" jdbcType="BIGINT" />
 		<result property="wxAppId" column="WXAPPID_" jdbcType="VARCHAR" />
 		<result property="wxAppSecret" column="WXAPPSECRET_" jdbcType="VARCHAR" />
 		<result property="yxAppId" column="YXAPPID_" jdbcType="VARCHAR" />
@@ -36,8 +36,8 @@
 			<if test="token != null">
 				,TOKEN_
 			</if>
-			<if test="appId != null">
-				,APPID_
+			<if test="accountId != null">
+				,ACCOUNTID_
 			</if>
 			<if test="wxAppId != null">
 				,WXAPPID_
@@ -77,8 +77,8 @@
 			<if test="token != null">
 				,#{token, jdbcType=VARCHAR}
 			</if>
-			<if test="appId != null">
-				,#{appId, jdbcType=BIGINT}
+			<if test="accountId != null">
+				,#{accountId, jdbcType=BIGINT}
 			</if>
 			<if test="wxAppId != null">
 				,#{wxAppId, jdbcType=VARCHAR}
@@ -213,15 +213,15 @@
 		<where>
 			1 = 1
 
-			<if test="appId != null">
-				and E.APPID = #{appId}
+			<if test="accountId != null">
+				and E.ACCOUNTID = #{accountId}
 			</if>
 
-			<if test="appIds != null and appIds.size !=0">
-				and E.APPID IN
-				<foreach item="x_appId" index="index" collection="appIds"
+			<if test="accountIds != null and accountIds.size !=0">
+				and E.ACCOUNTID IN
+				<foreach item="x_accountId" index="index" collection="accountIds"
 					open="(" separator="," close=")">
-					#{x_appId}
+					#{x_accountId}
 				</foreach>
 			</if>
 

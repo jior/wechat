@@ -32,9 +32,7 @@ public class WxUserJsonFactory {
 		if (jsonObject.containsKey("id")) {
 			model.setId(jsonObject.getLong("id"));
 		}
-		if (jsonObject.containsKey("appId")) {
-			model.setAppId(jsonObject.getLong("appId"));
-		}
+		 
 		if (jsonObject.containsKey("actorId")) {
 			model.setActorId(jsonObject.getString("actorId"));
 		}
@@ -120,7 +118,7 @@ public class WxUserJsonFactory {
 		jsonObject.put("id", model.getId());
 		jsonObject.put("_id_", model.getId());
 		jsonObject.put("_oid_", model.getId());
-		jsonObject.put("appId", model.getAppId());
+	 
 		
 		if (model.getActorId() != null) {
 			jsonObject.put("actorId", model.getActorId());
@@ -207,7 +205,7 @@ public class WxUserJsonFactory {
 		jsonObject.put("id", model.getId());
 		jsonObject.put("_id_", model.getId());
 		jsonObject.put("_oid_", model.getId());
-		jsonObject.put("appId", model.getAppId());
+	 
 		if (model.getActorId() != null) {
 			jsonObject.put("actorId", model.getActorId());
 		}

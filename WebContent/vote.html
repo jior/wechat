@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<link rel="stylesheet" type="text/css" href="./scripts/bootstrap2/css/bootstrap.min.css" media="all">
+<link rel="stylesheet" type="text/css" href="./scripts/bootstrap2/css/bootstrap-responsive.min.css" media="all">
+<link rel="stylesheet" type="text/css" href="./styles/style.css" media="all">
+<link rel="stylesheet" type="text/css" href="./scripts/bootstrap2/css/todc_bootstrap.css" media="all">
+<link rel="stylesheet" type="text/css" href="./styles/themes.css" media="all">
+<link rel="stylesheet" type="text/css" href="./styles/webside.css" media="all">
+<script type="text/javascript" src="./scripts/jquery.min.js"></script>
+<script type="text/javascript" src="./scripts/bootstrap2/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="./scripts/jquery.form.js"></script>
+<script type="text/javascript" src="./scripts/jquery.validate.min.js"></script>
+<script type="text/javascript" src="./scripts/jquery.validate.methods.js"></script>
+<script type="text/javascript" src="./scripts/glaf-site.js"></script>
+<title>vote</title>
+</head>
+<body>
+	
+    <div id="main">
+        <div class="container-fluid">
+
+            <div class="row-fluid">
+                <div class="span12">
+
+                    <div class="box">
+                        <div class="box-title">
+                            <div class="span10">
+                                <h3><i class="icon-edit"></i>文本投票设置</h3>
+                            </div>
+                            <div class="span2"><a class="btn" href="javascript:window.history.go(-1);">返回</a></div>
+                        </div>
+
+                        <div class="box-content">
+                            <form action="" method="post" class="form-horizontal form-validate" novalidate="novalidate">
+                              <input type="hidden" name="pid" value="19345">
+                              <input type="hidden" name="type" value="1">
+                                <div class="control-group">
+                                    <label for="keyword" class="control-label">关键词：</label>
+                                    <div class="controls">
+                                        <input type="text" name="keyword" id="keyword" class="input-large" data-rule-required="true" data-rule-maxlength="30"><span class="help-inline">多个关键字请用空格隔开，用户输入此关键词将会触发此活动。</span>
+                                    </div>
+                                </div>
+
+                                <div class="control-group">
+                                    <label class="control-label" for="title">投票标题</label>
+                                    <div class="controls">
+                                        <input type="text" name="vtitle" id="title" class="input-large" data-rule-required="true" data-rule-maxlength="60">
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label" for="picurl">投票图片</label>
+                                    <div class="controls">
+
+                                        <div class="input-append">
+                                            <input class="input-xlarge" type="text" name="vpicurl" id="picurl" readonly="">
+                                            <span class="help-inline"><a class="btn insertimage">选择图片</a></span>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="control-group">
+                                    <label for="third" class="control-label">图片显示：</label>
+                                    <div class="controls">
+                                        <label class="radio inline">
+                                            <input type="radio" name="pic_show" value="1" checked="checked">
+                                            显示在投票页面  
+                                        </label>
+                                        <label class="radio inline ">
+                                            <input type="radio" name="pic_show" value="2">
+                                            不显示在投票页面
+                                        </label>
+
+                                    </div>
+                                </div>
+
+                                <div class="control-group">
+                                    <label for="sttxt" class="control-label">投票说明：</label>
+                                    <div class="controls">
+                                        <textarea name="instructions" data-rule-required="true"></textarea>
+                                        
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label for="third" class="control-label">投票选项：</label>
+                                    <div class="controls">
+                                        <a id="vtype" class="btn" href="javascript:void(0)">添加选项</a>
+                                        <table id="listTable" class="table table-bordered table-hover  dataTable" style="width: 750px">
+                                            <!-- 文字投票为500大小-->
+	                                                                                    <tbody><tr>
+                                                <th>选项标题</th>
+                                                <th>排序</th>
+                                                <th></th>
+                                            </tr>
+                                           
+
+                                        </tbody></table>
+                                       
+ 
+                                        <script type="text/javascript">
+                                            var text_tmp = '<tr><td><input type="text" name="title[]" class="input-large"></td> <td><input type="text" name="sort[]"  class="input-mini"></td> <td><a class="del" href="javascript:void(0)">删除</a></td> </tr>';
+                                            var img_tmp = '<tr> <td><input type="text" name="title[]" class="input-medium" /></td><td><input type="text" name="sort[]" class="input-mini" /></td>' +
+                                                '<td><div class="input-append"> <input type="text" name="picurl[]" class="input-medium" readonly /> <span class="help-inline"><a class="btn insertimage">选择图片</a></span></div></td>' +
+                                                '<td><input type="text" name="piclink[]" class="input-medium" /></td><td><a class="del" href="javascript:void(0)">删除</a></td></tr>';
+                                            $("#vtype").click(function () {
+                                                                                               var ty = true;//true是文字投票 fa是图文投票
+                                                                                              $("#listTable").append(ty ? text_tmp : img_tmp);
+                                            });
+                                            $("#listTable .del").live("click", (function () {
+                                                $(this).parents("tr").remove();
+                                            }))
+
+                                            
+                                        </script>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label for="third" class="control-label">单选/多选：</label>
+                                    <div class="controls">
+                                        <label class="radio inline">
+                                            <input type="radio" name="is_radio" value="1" checked="checked" onclick="$(&#39;#collapse_div&#39;).collapse(&#39;hide&#39;)">
+                                            单选   
+                                        </label>
+                                        <label class="radio inline">
+                                            <input type="radio" name="is_radio" value="2" onclick="$(&#39;#collapse_div&#39;).collapse(&#39;show&#39;)">
+                                            多选
+                                        </label>
+
+                                    </div>
+                                </div>
+                                <div id="collapse_div" class="collapse">
+                                    <div class="control-group">
+                                        <label for="jp4" class="control-label">多选数量：</label>
+                                        <div class="controls">
+                                            <input name="select_num" class="input-mini" size="4" type="text" value="2" data-rule-number="true">
+                                        </div>
+                                    </div>
+
+                                </div>
+                                 
+                                <div class="control-group">
+                                    <label for="third" class="control-label">投票结果：</label>
+                                    <div class="controls">
+                                        <label class="radio inline">
+                                            <input type="radio" value="1" name="result">
+                                            投票前可见   
+                                        </label>
+                                        <label class="radio inline">
+                                            <input type="radio" value="2" name="result">
+                                            投票后可见
+                                        </label>
+                                        <label class="radio inline">
+                                            <input type="radio" value="3" name="result">
+                                            投票结束可见
+                                        </label>
+
+                                    </div>
+                                </div>
+                                <div class="form-actions">
+                                    <button id="bsubmit" type="submit" data-loading-text="提交中..." class="btn btn-primary">保存</button>
+                                    <button class="btn">取消</button>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+<div id="fallr-overlay"> </body></html>
