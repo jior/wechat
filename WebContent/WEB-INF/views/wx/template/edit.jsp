@@ -107,6 +107,7 @@ limitations under the License.
   <div data-options="region:'center',border:false,cache:true">
   <form id="iForm" name="iForm" method="post">
   <input type="hidden" id="id" name="id" value="${wxTemplate.id}"/>
+  <input type="hidden" id="accountId" name="accountId" value="${accountId}"/>
   <c:if test="${not empty categoryId}">
   <input type="hidden" name="nodeId" value="${categoryId}">
   <input type="hidden" name="categoryId" value="${categoryId}">

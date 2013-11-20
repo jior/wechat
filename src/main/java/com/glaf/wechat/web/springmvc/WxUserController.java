@@ -3,6 +3,7 @@ package com.glaf.wechat.web.springmvc;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,6 +13,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.glaf.base.modules.Constants;
@@ -28,11 +30,14 @@ import com.glaf.base.utils.ParamUtil;
 import com.glaf.base.utils.RequestUtil;
 import com.glaf.core.cache.CacheUtils;
 import com.glaf.core.config.ViewProperties;
+import com.glaf.core.identity.User;
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
 import com.glaf.core.security.DigestUtil;
 import com.glaf.core.util.RequestUtils;
+import com.glaf.core.util.ResponseUtils;
+import com.glaf.core.util.Tools;
 import com.glaf.wechat.domain.WxUser;
 import com.glaf.wechat.query.WxUserQuery;
 import com.glaf.wechat.service.WxUserService;
@@ -71,7 +76,7 @@ public class WxUserController {
 		SysUser user = RequestUtil.getLoginUser(request);
 
 		WxUserQuery query = new WxUserQuery();
-		query.createBy(user.getAccount());
+		query.actorId(user.getAccount());
 		List<WxUser> list = wxUserService.list(query);
 		if (list == null || list.isEmpty()) {
 			WxUser wxUser = new WxUser();
@@ -141,7 +146,7 @@ public class WxUserController {
 	public ModelAndView editAccount(HttpServletRequest request,
 			ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
-		SysUser user = RequestUtil.getLoginUser(request);
+		User user = RequestUtil.getLoginUser(request);
 		Long id = RequestUtils.getLong(request, "id");
 		WxUser wxUser = null;
 		if (id != null && id > 0) {
@@ -259,6 +264,46 @@ public class WxUserController {
 		return new ModelAndView("/wx/user/user_modify_pwd", modelMap);
 	}
 
+	@RequestMapping("/save")
+	public ModelAndView save(HttpServletRequest request, ModelMap modelMap) {
+		User user = RequestUtils.getUser(request);
+		String actorId = user.getActorId();
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		params.remove("status");
+		params.remove("wfStatus");
+
+		WxUser wxUser = new WxUser();
+		Tools.populate(wxUser, params);
+		wxUser.setId(RequestUtils.getLong(request, "id"));
+
+		wxUser.setWxid(request.getParameter("wxid"));
+		wxUser.setWxSourceId(request.getParameter("wxSourceId"));
+		wxUser.setWxname(request.getParameter("wxname"));
+		wxUser.setWxHeadImage(request.getParameter("wxHeadImage"));
+		wxUser.setYxid(request.getParameter("yxid"));
+		wxUser.setYxSourceId(request.getParameter("yxSourceId"));
+		wxUser.setYxname(request.getParameter("yxname"));
+		wxUser.setYxHeadImage(request.getParameter("yxHeadImage"));
+		wxUser.setToken(request.getParameter("token"));
+		wxUser.setProvince(request.getParameter("province"));
+		wxUser.setCity(request.getParameter("city"));
+		wxUser.setArea(request.getParameter("area"));
+		wxUser.setName(request.getParameter("name"));
+		wxUser.setMobile(request.getParameter("mobile"));
+		wxUser.setMail(request.getParameter("mail"));
+		wxUser.setTelephone(request.getParameter("telephone"));
+		wxUser.setDeptId(RequestUtils.getLong(request, "deptId"));
+		wxUser.setType(request.getParameter("type"));
+		wxUser.setLocked(RequestUtils.getInt(request, "locked"));
+		wxUser.setRemark(request.getParameter("remark"));
+
+		wxUser.setActorId(actorId);
+
+		wxUserService.save(wxUser);
+
+		return this.account(request, modelMap);
+	}
+
 	/**
 	 * 提交修改信息
 	 * 
@@ -334,6 +379,47 @@ public class WxUserController {
 		}
 		MessageUtils.addMessages(request, messages);
 		return new ModelAndView("show_msg", modelMap);
+	}
+
+	@ResponseBody
+	@RequestMapping("/saveWxUser")
+	public byte[] saveWxUser(HttpServletRequest request) {
+		User user = RequestUtils.getUser(request);
+		String actorId = user.getActorId();
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		WxUser wxUser = new WxUser();
+		try {
+			Tools.populate(wxUser, params);
+			wxUser.setId(RequestUtils.getLong(request, "id"));
+			wxUser.setWxid(request.getParameter("wxid"));
+			wxUser.setWxSourceId(request.getParameter("wxSourceId"));
+			wxUser.setWxname(request.getParameter("wxname"));
+			wxUser.setWxHeadImage(request.getParameter("wxHeadImage"));
+			wxUser.setYxid(request.getParameter("yxid"));
+			wxUser.setYxSourceId(request.getParameter("yxSourceId"));
+			wxUser.setYxname(request.getParameter("yxname"));
+			wxUser.setYxHeadImage(request.getParameter("yxHeadImage"));
+			wxUser.setToken(request.getParameter("token"));
+			wxUser.setProvince(request.getParameter("province"));
+			wxUser.setCity(request.getParameter("city"));
+			wxUser.setArea(request.getParameter("area"));
+			wxUser.setName(request.getParameter("name"));
+			wxUser.setMobile(request.getParameter("mobile"));
+			wxUser.setMail(request.getParameter("mail"));
+			wxUser.setTelephone(request.getParameter("telephone"));
+			wxUser.setDeptId(RequestUtils.getLong(request, "deptId"));
+			wxUser.setType(request.getParameter("type"));
+			wxUser.setLocked(RequestUtils.getInt(request, "locked"));
+
+			wxUser.setActorId(actorId);
+			this.wxUserService.save(wxUser);
+
+			return ResponseUtils.responseJsonResult(true);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			logger.error(ex);
+		}
+		return ResponseUtils.responseJsonResult(false);
 	}
 
 	@javax.annotation.Resource

@@ -69,16 +69,16 @@ limitations under the License.
 	function getUrl(treeId, treeNode) {
 		if(treeNode != null){
 		    var param = "parentId="+treeNode.id;
-		    return "<%=request.getContextPath()%>/rs/wx/category/treeJson?"+param;
+		    return "<%=request.getContextPath()%>/rs/wx/category/treeJson/${accountId}?"+param;
 		}
-		return "<%=request.getContextPath()%>/rs/wx/category/treeJson?type=category";
+		return "<%=request.getContextPath()%>/rs/wx/category/treeJson/${accountId}?type=category";
 	}
 
 
     function zTreeOnClick(event, treeId, treeNode, clickFlag) {
 		jQuery("#path").val(treeNode.path);
 		jQuery("#nodeId").val(treeNode.id);
-		loadMxData('<%=request.getContextPath()%>/mx/wx/wxFile/json?categoryId='+treeNode.id);
+		loadMxData('<%=request.getContextPath()%>/mx/wx/wxFile/json/${accountId}?categoryId='+treeNode.id);
 	}
 
 	function loadMxData(url){
@@ -102,7 +102,7 @@ limitations under the License.
 				nowrap: false,
 				striped: true,
 				collapsible:true,
-				url:'<%=request.getContextPath()%>/mx/wx/wxFile/json',
+				url:'<%=request.getContextPath()%>/mx/wx/wxFile/json/${accountId}',
 				remoteSort: false,
 				singleSelect:true,
 				idField:'id',
@@ -172,13 +172,13 @@ limitations under the License.
 
 	function uploadFile(){
         var nodeId = jQuery("#nodeId").val();
-		var link = "<%=request.getContextPath()%>/mx/wx/wxFile/edit?type=category&categoryId="+nodeId;
+		var link = "<%=request.getContextPath()%>/mx/wx/wxFile/edit?accountId=${accountId}&type=category&categoryId="+nodeId;
 		window.location.href=link;
 	}
 
 	function reloadPic(){
 		var type = jQuery('#type').val();
-		$.getJSON("<%=request.getContextPath()%>/mx/wx/wxFile/jsonArray?type="+type, function(data) {
+		$.getJSON("<%=request.getContextPath()%>/mx/wx/wxFile/jsonArray/${accountId}?type="+type, function(data) {
                 $("#pic_layer").empty(); //先清空标记中的内容
                 var strHTML = ""; //初始化保存内容变量
 				var i=0;

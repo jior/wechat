@@ -101,6 +101,7 @@ limitations under the License.
   <div data-options="region:'center',border:false,cache:true">
   <form id="iForm" name="iForm" method="post">
   <input type="hidden" id="id" name="id" value="${wxMember.id}"/>
+  <input type="hidden" id="accountId" name="accountId" value="${accountId}"/>
   <table class="easyui-form" style="width:600px;" align="center">
     <tbody>
 	<tr>

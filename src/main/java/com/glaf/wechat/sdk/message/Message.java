@@ -35,6 +35,7 @@ public class Message implements IMessage, java.io.Serializable {
 	protected long msgId;// 消息id（64位长整型）
 	protected long createTime;// 消息创建时间 （64位长整型）
 	protected String contextPath;
+	protected Long accountId;// 客户账号
 	protected String customer;// 客户编号
 	protected String serviceUrl;
 	protected String remoteIPAddr;// 访问者IP地址
@@ -43,6 +44,10 @@ public class Message implements IMessage, java.io.Serializable {
 
 	public Message() {
 
+	}
+
+	public Long getAccountId() {
+		return accountId;
 	}
 
 	public String getContextPath() {
@@ -87,6 +92,10 @@ public class Message implements IMessage, java.io.Serializable {
 
 	public String getToUserName() {
 		return toUserName;
+	}
+
+	public void setAccountId(Long accountId) {
+		this.accountId = accountId;
 	}
 
 	public void setContextPath(String contextPath) {

@@ -19,12 +19,13 @@
 package com.glaf.wechat.service.impl;
 
 import java.util.*;
+
 import javax.annotation.Resource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -69,12 +70,10 @@ public class WxUserServiceImpl implements WxUserService {
 	}
 
 	public int count(WxUserQuery query) {
-		query.ensureInitialized();
 		return wxUserMapper.getWxUserCount(query);
 	}
 
 	public List<WxUser> list(WxUserQuery query) {
-		query.ensureInitialized();
 		List<WxUser> list = wxUserMapper.getWxUsers(query);
 		return list;
 	}
@@ -97,6 +96,16 @@ public class WxUserServiceImpl implements WxUserService {
 		}
 		WxUser wxUser = wxUserMapper.getWxUserById(id);
 		return wxUser;
+	}
+	
+	public WxUser getWxUserByActorId(String actorId){
+		WxUserQuery query = new WxUserQuery();
+		query.actorId(actorId);
+		List<WxUser> rows =this.list(query);
+		if(rows != null && !rows.isEmpty()){
+			return rows.get(0);
+		}
+		return null;
 	}
 
 	@Transactional

@@ -22,21 +22,20 @@ import java.io.IOException;
 import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import com.alibaba.fastjson.*;
 
+import com.alibaba.fastjson.*;
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.identity.*;
 import com.glaf.core.security.*;
 import com.glaf.core.util.*;
-
 import com.glaf.wechat.domain.*;
 import com.glaf.wechat.query.*;
 import com.glaf.wechat.service.*;
@@ -92,24 +91,9 @@ public class WxConfigController {
 		}
 	}
 
-	@ResponseBody
-	@RequestMapping("/detail")
-	public byte[] detail(HttpServletRequest request) throws IOException {
-		LoginContext loginContext = RequestUtils.getLoginContext(request);
-		WxConfig wxConfig = wxConfigService.getWxConfig(RequestUtils.getLong(
-				request, "id"));
-		if (wxConfig != null
-				&& (StringUtils.equals(wxConfig.getCreateBy(),
-						loginContext.getActorId()) || loginContext
-						.isSystemAdministrator())) {
-			JSONObject rowJSON = wxConfig.toJsonObject();
-			return rowJSON.toJSONString().getBytes("UTF-8");
-		}
-		return null;
-	}
-
 	@RequestMapping("/edit")
-	public ModelAndView edit(HttpServletRequest request, ModelMap modelMap) {
+	public ModelAndView edit(
+			HttpServletRequest request, ModelMap modelMap) {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		RequestUtils.setRequestParameterToAttribute(request);
 		request.removeAttribute("canSubmit");
@@ -123,8 +107,8 @@ public class WxConfigController {
 			JSONObject rowJSON = wxConfig.toJsonObject();
 			request.setAttribute("x_json", rowJSON.toJSONString());
 		} else {
-			wxConfig = wxConfigService.getWxConfigByUser(loginContext
-					.getActorId());
+			Long accountId = RequestUtils.getLong(request, "accountId");
+			wxConfig = wxConfigService.getWxConfigByAccountId(accountId);
 			if (wxConfig != null) {
 				request.setAttribute("wxConfig", wxConfig);
 				JSONObject rowJSON = wxConfig.toJsonObject();
@@ -145,10 +129,10 @@ public class WxConfigController {
 		return new ModelAndView("/wx/config/edit", modelMap);
 	}
 
-	@RequestMapping("/json")
+	@RequestMapping("/json/{accountId}")
 	@ResponseBody
-	public byte[] json(HttpServletRequest request, ModelMap modelMap)
-			throws IOException {
+	public byte[] json(@PathVariable("accountId") Long accountId,
+			HttpServletRequest request, ModelMap modelMap) throws IOException {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		WxConfigQuery query = new WxConfigQuery();
@@ -156,7 +140,7 @@ public class WxConfigController {
 		query.deleteFlag(0);
 		query.setActorId(loginContext.getActorId());
 		query.setLoginContext(loginContext);
-
+		query.setAccountId(accountId);
 		String actorId = loginContext.getActorId();
 		query.createBy(actorId);
 
@@ -247,8 +231,9 @@ public class WxConfigController {
 		return new ModelAndView("/wx/config/list", modelMap);
 	}
 
-	@RequestMapping("/query")
-	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
+	@RequestMapping("/query/{accountId}")
+	public ModelAndView query(@PathVariable("accountId") Long accountId,
+			HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {
@@ -262,7 +247,8 @@ public class WxConfigController {
 	}
 
 	@RequestMapping("/save")
-	public ModelAndView save(HttpServletRequest request, ModelMap modelMap) {
+	public ModelAndView save(
+			HttpServletRequest request, ModelMap modelMap) {
 		User user = RequestUtils.getUser(request);
 		String actorId = user.getActorId();
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
@@ -271,7 +257,7 @@ public class WxConfigController {
 
 		WxConfig wxConfig = new WxConfig();
 		Tools.populate(wxConfig, params);
-
+		Long accountId = RequestUtils.getLong(request, "accountId");
 		wxConfig.setCallBackUrl(request.getParameter("callBackUrl"));
 		wxConfig.setToken(request.getParameter("token"));
 		wxConfig.setAccountId(RequestUtils.getLong(request, "accountId"));
@@ -279,6 +265,7 @@ public class WxConfigController {
 		wxConfig.setWxAppSecret(request.getParameter("wxAppSecret"));
 		wxConfig.setApiStatus(request.getParameter("apiStatus"));
 		wxConfig.setDefaultReply(request.getParameter("defaultReply"));
+		wxConfig.setAccountId(accountId);
 
 		wxConfig.setCreateBy(actorId);
 
@@ -289,13 +276,15 @@ public class WxConfigController {
 
 	@ResponseBody
 	@RequestMapping("/saveWxConfig")
-	public byte[] saveWxConfig(HttpServletRequest request) {
+	public byte[] saveWxConfig(
+			HttpServletRequest request) {
 		User user = RequestUtils.getUser(request);
 		String actorId = user.getActorId();
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		WxConfig wxConfig = new WxConfig();
 		try {
 			Tools.populate(wxConfig, params);
+			Long accountId = RequestUtils.getLong(request, "accountId");
 			wxConfig.setCallBackUrl(request.getParameter("callBackUrl"));
 			wxConfig.setToken(request.getParameter("token"));
 			wxConfig.setAccountId(RequestUtils.getLong(request, "accountId"));
@@ -304,6 +293,7 @@ public class WxConfigController {
 			wxConfig.setApiStatus(request.getParameter("apiStatus"));
 			wxConfig.setDefaultReply(request.getParameter("defaultReply"));
 			wxConfig.setCreateBy(actorId);
+			wxConfig.setAccountId(accountId);
 			this.wxConfigService.save(wxConfig);
 
 			return ResponseUtils.responseJsonResult(true);
@@ -319,15 +309,15 @@ public class WxConfigController {
 		this.wxConfigService = wxConfigService;
 	}
 
-	@RequestMapping("/update")
-	public ModelAndView update(HttpServletRequest request, ModelMap modelMap) {
+	@RequestMapping("/update/{id}")
+	public ModelAndView update(@PathVariable("id") Long id,
+			HttpServletRequest request, ModelMap modelMap) {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		params.remove("status");
 		params.remove("wfStatus");
 
-		WxConfig wxConfig = wxConfigService.getWxConfig(RequestUtils.getLong(
-				request, "id"));
+		WxConfig wxConfig = wxConfigService.getWxConfig(id);
 		if (wxConfig != null
 				&& (StringUtils.equals(wxConfig.getCreateBy(),
 						loginContext.getActorId()) || loginContext
@@ -347,14 +337,12 @@ public class WxConfigController {
 		return this.list(request, modelMap);
 	}
 
-	@RequestMapping("/view")
-	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
+	@RequestMapping("/view/{id}")
+	public ModelAndView view(@PathVariable("id") Long id,
+			HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
-		WxConfig wxConfig = wxConfigService.getWxConfig(RequestUtils.getLong(
-				request, "id"));
+		WxConfig wxConfig = wxConfigService.getWxConfig(id);
 		request.setAttribute("wxConfig", wxConfig);
-		JSONObject rowJSON = wxConfig.toJsonObject();
-		request.setAttribute("x_json", rowJSON.toJSONString());
 
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {

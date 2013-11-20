@@ -48,7 +48,7 @@ limitations under the License.
 				nowrap: false,
 				striped: true,
 				collapsible: true,
-				url: '<%=request.getContextPath()%>/mx/wx/wxContent/json?type=PPT&categoryId=${categoryId}',
+				url: '<%=request.getContextPath()%>/mx/wx/wxContent/json/${accountId}?type=PPT&categoryId=${categoryId}',
 				remoteSort: false,
 				singleSelect: true,
 				idField: 'id',
@@ -105,7 +105,7 @@ limitations under the License.
 
 
 	function editRow(rowId){
-	    var link = '<%=request.getContextPath()%>/mx/wx/wxContent/editPPT?type=${type}&categoryId=${categoryId}&id='+rowId;
+	    var link = '<%=request.getContextPath()%>/mx/wx/wxContent/editPPT?accountId=${accountId}&type=${type}&categoryId=${categoryId}&id='+rowId;
 	    art.dialog.open(link, { height: 420, width: 780, title: "修改记录", lock: true, scrollbars:"no" }, false);
 	}
 
@@ -132,13 +132,13 @@ limitations under the License.
 		 
 	function addNew(){
 	    //location.href="<%=request.getContextPath()%>/wx/wxContent/edit";
-	    var link="<%=request.getContextPath()%>/mx/wx/wxContent/editPPT?type=${type}&categoryId=${categoryId}";
+	    var link="<%=request.getContextPath()%>/mx/wx/wxContent/editPPT?accountId=${accountId}&type=${type}&categoryId=${categoryId}";
 	    art.dialog.open(link, { height: 420, width: 780, title: "添加记录", lock: true, scrollbars:"no" }, false);
 	}
 
 	function onRowClick(rowIndex, row){
             //window.open('<%=request.getContextPath()%>/wx/wxContent/edit?id='+row.id);
-	    var link = '<%=request.getContextPath()%>/mx/wx/wxContent/editPPT?type=${type}&categoryId=${categoryId}&id='+row.id;
+	    var link = '<%=request.getContextPath()%>/mx/wx/wxContent/editPPT?accountId=${accountId}&type=${type}&categoryId=${categoryId}&id='+row.id;
 	    art.dialog.open(link, { height: 420, width: 780, title: "修改记录", lock: true, scrollbars:"no" }, false);
 	}
 
@@ -163,7 +163,7 @@ limitations under the License.
 	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
 	    if (selected ){
 		//location.href="<%=request.getContextPath()%>/wx/wxContent/edit?id="+selected.id;
-		var link = "<%=request.getContextPath()%>/mx/wx/wxContent/editPPT?type=${type}&categoryId=${categoryId}&id="+selected.id;
+		var link = "<%=request.getContextPath()%>/mx/wx/wxContent/editPPT?accountId=${accountId}&type=${type}&categoryId=${categoryId}&id="+selected.id;
 		art.dialog.open(link, { height: 420, width: 780, title: "修改记录", lock: true, scrollbars:"no" }, false);
 	    }
 	}
@@ -176,7 +176,7 @@ limitations under the License.
 		}
 		var selected = jQuery('#mydatagrid').datagrid('getSelected');
 		if (selected ){
-		    location.href="<%=request.getContextPath()%>/mx/wx/wxContent/edit?type=${type}&categoryId=${categoryId}&id="+selected.id;
+		    location.href="<%=request.getContextPath()%>/mx/wx/wxContent/edit?accountId=${accountId}&type=${type}&categoryId=${categoryId}&id="+selected.id;
 		}
 	}
 
@@ -245,7 +245,7 @@ limitations under the License.
             var params = jQuery("#searchForm").formSerialize();
             jQuery.ajax({
                         type: "POST",
-                        url: '<%=request.getContextPath()%>/mx/wx/wxContent/json?categoryId=${categoryId}',
+                        url: '<%=request.getContextPath()%>/mx/wx/wxContent/json/${accountId}?categoryId=${categoryId}',
                         dataType:  'json',
                         data: params,
                         error: function(data){

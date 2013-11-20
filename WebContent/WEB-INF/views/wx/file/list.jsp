@@ -67,15 +67,15 @@ limitations under the License.
     function getUrl(treeId, treeNode) {
 		if(treeNode != null){
 		    var param = "parentId="+treeNode.id;
-		    return "<%=request.getContextPath()%>/rs/wx/category/treeJson?"+param;
+		    return "<%=request.getContextPath()%>/rs/wx/category/treeJson/${accountId}?"+param;
 		}
-		return "<%=request.getContextPath()%>/rs/wx/category/treeJson?type=category";
+		return "<%=request.getContextPath()%>/rs/wx/category/treeJson/${accountId}?type=category";
 	}
 
 
     function zTreeOnClick(event, treeId, treeNode, clickFlag) {
 		jQuery("#nodeId").val(treeNode.id);
-		loadData('<%=request.getContextPath()%>/mx/wx/wxFile/json?categoryId='+treeNode.id);
+		loadData('<%=request.getContextPath()%>/mx/wx/wxFile/json/${accountId}?categoryId='+treeNode.id);
 	}
 
 	function loadData(url){
@@ -99,7 +99,7 @@ limitations under the License.
 				nowrap: false,
 				striped: true,
 				collapsible:true,
-				url:'<%=request.getContextPath()%>/mx/wx/wxFile/json',
+				url:'<%=request.getContextPath()%>/mx/wx/wxFile/json/${accountId}',
 				remoteSort: false,
 				singleSelect:true,
 				idField:'id',
@@ -157,7 +157,7 @@ limitations under the License.
 
 	function addNew(){
 		var nodeId = jQuery("#nodeId").val();
-		var link = "<%=request.getContextPath()%>/mx/wx/wxFile/edit?type=category&fromUrl=${fromUrl}&categoryId="+nodeId;
+		var link = "<%=request.getContextPath()%>/mx/wx/wxFile/edit?accountId=${accountId}&type=category&fromUrl=${fromUrl}&categoryId="+nodeId;
 	    //art.dialog.open(link, { height: 420, width: 600, title: "添加记录", lock: true, scrollbars:"yes" }, false);
 		location.href=link;
 	}
@@ -173,7 +173,7 @@ limitations under the License.
 
 
 	function editRow(rowId){
-	    var link = '<%=request.getContextPath()%>/mx/wx/wxFile/edit?type=${type}&fromUrl=${fromUrl}&id='+rowId;
+	    var link = '<%=request.getContextPath()%>/mx/wx/wxFile/edit?accountId=${accountId}&type=${type}&fromUrl=${fromUrl}&id='+rowId;
 	    //art.dialog.open(link, { height: 420, width: 600, title: "修改记录", lock: true, scrollbars:"no" }, false);
 		location.href=link;
 	}
@@ -221,7 +221,7 @@ limitations under the License.
 	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
 	    if (selected ){
 		  //location.href="<%=request.getContextPath()%>/mx/wx/wxFile?method=edit&rowId="+selected.id;
-		  var link = "<%=request.getContextPath()%>/mx/wx/wxFile/edit?type=category&fromUrl=${fromUrl}&id="+selected.id;
+		  var link = "<%=request.getContextPath()%>/mx/wx/wxFile/edit?accountId=${accountId}&type=category&fromUrl=${fromUrl}&id="+selected.id;
 		  //art.dialog.open(link, { height: 480, width: 600, title: "修改记录", lock: true, scrollbars:"yes" }, false);
 		  location.href=link;
 	    }
@@ -247,7 +247,7 @@ limitations under the License.
 		}
 		var selected = jQuery('#mydatagrid').datagrid('getSelected');
 		if (selected ){
-		    location.href="<%=request.getContextPath()%>/mx/wx/wxFile/edit?type=category&fromUrl=${fromUrl}&id="+selected.id;
+		    location.href="<%=request.getContextPath()%>/mx/wx/wxFile/edit?accountId=${accountId}&type=category&fromUrl=${fromUrl}&id="+selected.id;
 		}
 	}
 

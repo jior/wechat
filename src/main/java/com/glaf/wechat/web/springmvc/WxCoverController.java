@@ -40,7 +40,6 @@ import com.glaf.core.config.SystemProperties;
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.security.*;
 import com.glaf.core.util.*;
-
 import com.glaf.wechat.domain.*;
 import com.glaf.wechat.query.*;
 import com.glaf.wechat.service.*;
@@ -99,35 +98,18 @@ public class WxCoverController {
 		}
 	}
 
-	@ResponseBody
-	@RequestMapping("/detail")
-	public byte[] detail(HttpServletRequest request) throws IOException {
-		LoginContext loginContext = RequestUtils.getLoginContext(request);
-		WxCover wxCover = wxCoverService.getWxCover(RequestUtils.getLong(
-				request, "id"));
-		if (wxCover != null
-				&& (StringUtils.equals(wxCover.getCreateBy(),
-						loginContext.getActorId()) || loginContext
-						.isSystemAdministrator())) {
-			JSONObject rowJSON = wxCover.toJsonObject();
-			return rowJSON.toJSONString().getBytes("UTF-8");
-		}
-		return null;
-	}
-
 	@RequestMapping("/edit")
-	public ModelAndView edit(HttpServletRequest request, ModelMap modelMap) {
+	public ModelAndView edit(
+			HttpServletRequest request, ModelMap modelMap) {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		RequestUtils.setRequestParameterToAttribute(request);
-		WxCover wxCover = wxCoverService.getWxCoverByUser(loginContext
-				.getActorId());
+		Long accountId = RequestUtils.getLong(request, "accountId");
+		WxCover wxCover = wxCoverService.getWxCoverByAccountId(accountId);
 		if (wxCover != null
 				&& (StringUtils.equals(wxCover.getCreateBy(),
 						loginContext.getActorId()) || loginContext
 						.isSystemAdministrator())) {
 			request.setAttribute("wxCover", wxCover);
-			JSONObject rowJSON = wxCover.toJsonObject();
-			request.setAttribute("x_json", rowJSON.toJSONString());
 		}
 
 		String view = request.getParameter("view");
@@ -143,10 +125,10 @@ public class WxCoverController {
 		return new ModelAndView("/wx/cover/edit", modelMap);
 	}
 
-	@RequestMapping("/json")
+	@RequestMapping("/json/{accountId}")
 	@ResponseBody
-	public byte[] json(HttpServletRequest request, ModelMap modelMap)
-			throws IOException {
+	public byte[] json(@PathVariable("accountId") Long accountId,
+			HttpServletRequest request, ModelMap modelMap) throws IOException {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		WxCoverQuery query = new WxCoverQuery();
@@ -154,6 +136,7 @@ public class WxCoverController {
 		query.deleteFlag(0);
 		query.setActorId(loginContext.getActorId());
 		query.setLoginContext(loginContext);
+		query.setAccountId(accountId);
 
 		String actorId = loginContext.getActorId();
 		query.createBy(actorId);
@@ -245,9 +228,11 @@ public class WxCoverController {
 		return new ModelAndView("/wx/cover/list", modelMap);
 	}
 
-	@RequestMapping("/query")
-	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
+	@RequestMapping("/query/{accountId}")
+	public ModelAndView query(@PathVariable("accountId") Long accountId,
+			HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
+		request.setAttribute("accountId", accountId);
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {
 			return new ModelAndView(view, modelMap);
@@ -260,19 +245,21 @@ public class WxCoverController {
 	}
 
 	@RequestMapping("/save")
-	public ModelAndView save(HttpServletRequest request, ModelMap modelMap) {
+	public ModelAndView save(
+			HttpServletRequest request, ModelMap modelMap) {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		String actorId = loginContext.getActorId();
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		params.remove("status");
 		params.remove("wfStatus");
-
+		Long accountId = RequestUtils.getLong(request, "accountId");
 		MultipartHttpServletRequest req = (MultipartHttpServletRequest) request;
 		Map<String, MultipartFile> fileMap = req.getFileMap();
-		WxCover wxCover = wxCoverService.getWxCoverByUser(actorId);
+		WxCover wxCover = wxCoverService.getWxCoverByAccountId(accountId);
 		if (wxCover == null) {
 			wxCover = new WxCover();
 			wxCover.setCreateBy(actorId);
+			wxCover.setAccountId(accountId);
 		}
 		boolean save = false;
 		Set<Entry<String, MultipartFile>> entrySet = fileMap.entrySet();
@@ -302,6 +289,7 @@ public class WxCoverController {
 					wxFile.setPath(path + "/" + newFilename);
 					wxFile.setCreateBy(actorId);
 					wxFile.setSize(mFile.getSize());
+					wxFile.setAccountId(accountId);
 
 					if (StringUtils.equals(mFile.getName(), "bigIcon")) {
 						wxCover.setBigIcon(wxFile.getPath());
@@ -344,15 +332,15 @@ public class WxCoverController {
 		this.wxFileService = wxFileService;
 	}
 
-	@RequestMapping("/update")
-	public ModelAndView update(HttpServletRequest request, ModelMap modelMap) {
+	@RequestMapping("/update/{id}")
+	public ModelAndView update(@PathVariable("id") Long id,
+			HttpServletRequest request, ModelMap modelMap) {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		params.remove("status");
 		params.remove("wfStatus");
 
-		WxCover wxCover = wxCoverService.getWxCover(RequestUtils.getLong(
-				request, "id"));
+		WxCover wxCover = wxCoverService.getWxCover(id);
 		if (wxCover != null
 				&& (StringUtils.equals(wxCover.getCreateBy(),
 						loginContext.getActorId()) || loginContext
@@ -367,14 +355,12 @@ public class WxCoverController {
 		return this.list(request, modelMap);
 	}
 
-	@RequestMapping("/view")
-	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
+	@RequestMapping("/view/{id}")
+	public ModelAndView view(@PathVariable("id") Long id,
+			HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
-		WxCover wxCover = wxCoverService.getWxCover(RequestUtils.getLong(
-				request, "id"));
+		WxCover wxCover = wxCoverService.getWxCover(id);
 		request.setAttribute("wxCover", wxCover);
-		JSONObject rowJSON = wxCover.toJsonObject();
-		request.setAttribute("x_json", rowJSON.toJSONString());
 
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {

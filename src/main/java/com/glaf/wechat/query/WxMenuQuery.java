@@ -44,6 +44,14 @@ public class WxMenuQuery extends DataQuery {
 
 	}
 
+	public WxMenuQuery accountId(Long accountId) {
+		if (accountId == null) {
+			throw new RuntimeException("accountId is null");
+		}
+		this.accountId = accountId;
+		return this;
+	}
+
 	public WxMenuQuery createDateGreaterThanOrEqual(
 			Date createDateGreaterThanOrEqual) {
 		if (createDateGreaterThanOrEqual == null) {

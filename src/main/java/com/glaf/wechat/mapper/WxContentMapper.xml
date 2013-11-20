@@ -6,7 +6,7 @@
 
 	<resultMap id="wxContentResultMap" type="com.glaf.wechat.domain.WxContent">
 		<id property="id" column="ID_" jdbcType="BIGINT" />
-		<result property="accountId" column="ACCOUNTID" jdbcType="BIGINT" />
+		<result property="accountId" column="ACCOUNTID_" jdbcType="BIGINT" />
 		<result property="categoryId" column="CATEGORYID_" jdbcType="BIGINT" />
 		<result property="title" column="TITLE_" jdbcType="VARCHAR" />
 		<result property="content" column="CONTENT_" jdbcType="VARCHAR" />
@@ -51,7 +51,7 @@
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			ID_
 			<if test="accountId != null">
-				,ACCOUNTID
+				,ACCOUNTID_
 			</if>
 			<if test="categoryId != null">
 				,CATEGORYID_
@@ -391,11 +391,11 @@
 			1 = 1
 
 			<if test="accountId != null">
-				and E.ACCOUNTID = #{accountId}
+				and E.ACCOUNTID_ = #{accountId}
 			</if>
 
 			<if test="accountIds != null and accountIds.size !=0">
-				and E.ACCOUNTID IN
+				and E.ACCOUNTID_ IN
 				<foreach item="x_accountId" index="index" collection="accountIds"
 					open="(" separator="," close=")">
 					#{x_accountId}

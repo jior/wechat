@@ -125,16 +125,16 @@ public class WxContentServiceImpl implements WxContentService {
 	/**
 	 * 获取某个用户某个栏目指定类型的内容
 	 * 
-	 * @param createBy
+	 * @param accountId
 	 * @param categoryId
 	 * @param type
 	 * @return
 	 */
-	public List<WxContent> getWxContents(String createBy, Long categoryId,
+	public List<WxContent> getWxContents(Long accountId, Long categoryId,
 			String type) {
 		WxContentQuery query = new WxContentQuery();
 		query.categoryId(categoryId);
-		query.createBy(createBy);
+		query.accountId(accountId);
 		query.type(type);
 		return this.list(query);
 	}

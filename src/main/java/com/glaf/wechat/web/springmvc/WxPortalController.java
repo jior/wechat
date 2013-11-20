@@ -19,6 +19,7 @@
 package com.glaf.wechat.web.springmvc;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -34,17 +35,18 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-
 import com.glaf.core.base.TreeModel;
 import com.glaf.core.config.Environment;
 import com.glaf.core.config.ViewProperties;
+import com.glaf.core.identity.User;
 import com.glaf.core.security.LoginContext;
 import com.glaf.core.tree.helper.TreeHelper;
 import com.glaf.core.util.RequestUtils;
-
 import com.glaf.ui.service.LayoutService;
 import com.glaf.ui.service.PanelService;
 import com.glaf.ui.service.UserPortalService;
+import com.glaf.wechat.domain.WxUser;
+import com.glaf.wechat.service.WxUserService;
 import com.glaf.base.modules.sys.model.SysApplication;
 import com.glaf.base.modules.sys.service.SysApplicationService;
 
@@ -60,6 +62,8 @@ public class WxPortalController {
 	protected SysApplicationService sysApplicationService;
 
 	protected UserPortalService userPortalService;
+
+	protected WxUserService wxUserService;
 
 	protected void fill(JSONObject jsonObject, StringBuffer buffer) {
 		String text = jsonObject.getString("text");
@@ -125,6 +129,7 @@ public class WxPortalController {
 	public ModelAndView main(HttpServletRequest request, ModelMap modelMap) {
 		logger.debug("#######################################################");
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
+		User user = RequestUtils.getUser(request);
 
 		RequestUtils.setRequestParameterToAttribute(request);
 
@@ -146,6 +151,39 @@ public class WxPortalController {
 
 		List<TreeModel> treeNodes = sysApplicationService.getTreeModels(
 				root.getId(), loginContext.getActorId());
+
+		long accountId = RequestUtils.getLong(request, "accountId", 0);
+
+		if (accountId == 0) {
+			WxUser wxUser = wxUserService.getWxUserByActorId(loginContext
+					.getActorId());
+			if (wxUser == null) {
+				wxUser = new WxUser();
+				wxUser.setActorId(user.getActorId());
+				wxUser.setAccountType(2);
+				wxUser.setCreateDate(new Date());
+				wxUser.setDeptId(user.getDeptId());
+				wxUser.setLocked(0);
+				wxUser.setUserType(1);
+				wxUser.setId(user.getId());
+				wxUserService.save(wxUser);
+				accountId = user.getId();
+			} else {
+				accountId = wxUser.getId();
+			}
+		}
+
+		for (TreeModel treeModel : treeNodes) {
+			if (StringUtils.isNotEmpty(treeModel.getUrl())) {
+				if (StringUtils.contains(treeModel.getUrl(), "?")) {
+					treeModel.setUrl(treeModel.getUrl() + "&accountId="
+							+ accountId);
+				} else {
+					treeModel.setUrl(treeModel.getUrl() + "?accountId="
+							+ accountId);
+				}
+			}
+		}
 
 		Collections.sort(treeNodes);
 
@@ -219,6 +257,11 @@ public class WxPortalController {
 	@javax.annotation.Resource
 	public void setUserPortalService(UserPortalService userPortalService) {
 		this.userPortalService = userPortalService;
+	}
+
+	@javax.annotation.Resource
+	public void setWxUserService(WxUserService wxUserService) {
+		this.wxUserService = wxUserService;
 	}
 
 }

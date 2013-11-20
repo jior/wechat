@@ -59,7 +59,7 @@ limitations under the License.
 				nowrap: false,
 				striped: true,
 				collapsible:true,
-				url:'<%=request.getContextPath()%>/mx/wx/wxContent/json?type=P&categoryId=${categoryId}',
+				url:'<%=request.getContextPath()%>/mx/wx/wxContent/json/${accountId}?type=P&categoryId=${categoryId}',
 				remoteSort: false,
 				singleSelect:true,
 				idField:'id',
@@ -115,7 +115,7 @@ limitations under the License.
 	}
 
 	function editRow(rowId){
-	    var link = '<%=request.getContextPath()%>/mx/wx/wxContent/edit?type=${type}&id='+rowId;
+	    var link = '<%=request.getContextPath()%>/mx/wx/wxContent/edit?accountId=${accountId}&type=${type}&id='+rowId;
 	    //art.dialog.open(link, { height: 420, width: 880, title: "修改记录", lock: true, scrollbars:"no" }, false);
 		location.href=link;
 	}
@@ -143,7 +143,7 @@ limitations under the License.
 
 	function addNew(){
 		var nodeId = jQuery("#nodeId").val();
-		var link = "<%=request.getContextPath()%>/mx/wx/wxContent/edit?type=P&categoryId=${categoryId}&fromUrl=${fromUrl}";
+		var link = "<%=request.getContextPath()%>/mx/wx/wxContent/edit?accountId=${accountId}&type=P&categoryId=${categoryId}&fromUrl=${fromUrl}";
 	    //art.dialog.open(link, { height: 420, width: 880, title: "添加记录", lock: true, scrollbars:"yes" }, false);
 		location.href=link;
 	}
@@ -151,13 +151,13 @@ limitations under the License.
 
 	function addMedia(){
 		var nodeId = jQuery("#nodeId").val();
-		var link = "<%=request.getContextPath()%>/mx/wx/wxContent/editMedia?type=P&fromUrl=${fromUrl}&categoryId="+nodeId;
+		var link = "<%=request.getContextPath()%>/mx/wx/wxContent/editMedia?accountId=${accountId}&type=P&fromUrl=${fromUrl}&categoryId="+nodeId;
 	    //art.dialog.open(link, { height: 420, width: 880, title: "添加记录", lock: true, scrollbars:"yes" }, false);
 		location.href=link;
 	}
 
 	function onRowClick(rowIndex, row){
-	    var link = '<%=request.getContextPath()%>/mx/wx/wxContent/edit?type=P&fromUrl=${fromUrl}&id='+row.id;
+	    var link = '<%=request.getContextPath()%>/mx/wx/wxContent/edit?accountId=${accountId}&type=P&fromUrl=${fromUrl}&id='+row.id;
 	    //art.dialog.open(link, { height: 420, width: 880, title: "修改记录", lock: true, scrollbars:"yes" }, false);
 		location.href=link;
 	}
@@ -183,7 +183,7 @@ limitations under the License.
 	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
 	    if (selected ){
 		  //location.href="<%=request.getContextPath()%>/mx/wx/wxContent?method=edit&rowId="+selected.id;
-		  var link = "<%=request.getContextPath()%>/mx/wx/wxContent/edit?type=P&fromUrl=${fromUrl}&id="+selected.id;
+		  var link = "<%=request.getContextPath()%>/mx/wx/wxContent/edit?accountId=${accountId}&type=P&fromUrl=${fromUrl}&id="+selected.id;
 		  //art.dialog.open(link, { height: 420, width: 780, title: "修改记录", lock: true, scrollbars:"yes" }, false);
 		  location.href=link;
 	    }
@@ -209,7 +209,7 @@ limitations under the License.
 		}
 		var selected = jQuery('#mydatagrid').datagrid('getSelected');
 		if (selected ){
-		    location.href="<%=request.getContextPath()%>/mx/wx/wxContent/edit?type=P&fromUrl=${fromUrl}&id="+selected.id;
+		    location.href="<%=request.getContextPath()%>/mx/wx/wxContent/edit?accountId=${accountId}&type=P&fromUrl=${fromUrl}&id="+selected.id;
 		}
 	}
 
@@ -274,7 +274,7 @@ limitations under the License.
 	}
 
 	function viewSite(rowId){
-	    var link = '<%=request.getContextPath()%>/website/wx/content/index/<%=user.getId()%>';
+	    var link = '<%=request.getContextPath()%>/website/wx/content/index/${accountId}';
 	    //art.dialog.open(link, { height: 720, width: 400, title: "预览效果", lock: true, scrollbars:"no" }, false);
 		var x=200;
 		var y=150;

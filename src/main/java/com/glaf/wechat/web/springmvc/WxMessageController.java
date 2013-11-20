@@ -22,21 +22,20 @@ import java.io.IOException;
 import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import com.alibaba.fastjson.*;
 
+import com.alibaba.fastjson.*;
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.identity.*;
 import com.glaf.core.security.*;
 import com.glaf.core.util.*;
-
 import com.glaf.wechat.domain.*;
 import com.glaf.wechat.query.*;
 import com.glaf.wechat.service.*;
@@ -86,22 +85,6 @@ public class WxMessageController {
 		}
 	}
 
-	@ResponseBody
-	@RequestMapping("/detail")
-	public byte[] detail(HttpServletRequest request) throws IOException {
-		LoginContext loginContext = RequestUtils.getLoginContext(request);
-		WxMessage wxMessage = wxMessageService.getWxMessage(RequestUtils
-				.getLong(request, "id"));
-		if (wxMessage != null
-				&& (StringUtils.equals(wxMessage.getCreateBy(),
-						loginContext.getActorId()) || loginContext
-						.isSystemAdministrator())) {
-			JSONObject rowJSON = wxMessage.toJsonObject();
-			return rowJSON.toJSONString().getBytes("UTF-8");
-		}
-		return null;
-	}
-
 	@RequestMapping("/edit")
 	public ModelAndView edit(HttpServletRequest request, ModelMap modelMap) {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
@@ -114,8 +97,6 @@ public class WxMessageController {
 						loginContext.getActorId()) || loginContext
 						.isSystemAdministrator())) {
 			request.setAttribute("wxMessage", wxMessage);
-			JSONObject rowJSON = wxMessage.toJsonObject();
-			request.setAttribute("x_json", rowJSON.toJSONString());
 		}
 
 		String view = request.getParameter("view");
@@ -131,10 +112,10 @@ public class WxMessageController {
 		return new ModelAndView("/wx/message/edit", modelMap);
 	}
 
-	@RequestMapping("/json")
+	@RequestMapping("/json/{accountId}")
 	@ResponseBody
-	public byte[] json(HttpServletRequest request, ModelMap modelMap)
-			throws IOException {
+	public byte[] json(@PathVariable("accountId") Long accountId,
+			HttpServletRequest request, ModelMap modelMap) throws IOException {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		WxMessageQuery query = new WxMessageQuery();
@@ -145,6 +126,7 @@ public class WxMessageController {
 
 		String actorId = loginContext.getActorId();
 		query.createBy(actorId);
+		query.setAccountId(accountId);
 
 		String gridType = ParamUtils.getString(params, "gridType");
 		if (gridType == null) {
@@ -233,9 +215,11 @@ public class WxMessageController {
 		return new ModelAndView("/wx/message/list", modelMap);
 	}
 
-	@RequestMapping("/query")
-	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
+	@RequestMapping("/query/{accountId}")
+	public ModelAndView query(@PathVariable("accountId") Long accountId,
+			HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
+		request.setAttribute("accountId", accountId);
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {
 			return new ModelAndView(view, modelMap);
@@ -257,12 +241,13 @@ public class WxMessageController {
 
 		WxMessage wxMessage = new WxMessage();
 		Tools.populate(wxMessage, params);
-
+		Long accountId = RequestUtils.getLong(request, "accountId");
 		wxMessage.setName(request.getParameter("name"));
 		wxMessage.setMobile(request.getParameter("mobile"));
 		wxMessage.setTitle(request.getParameter("title"));
 		wxMessage.setContent(request.getParameter("content"));
 		wxMessage.setCreateBy(actorId);
+		wxMessage.setAccountId(accountId);
 
 		wxMessageService.save(wxMessage);
 
@@ -275,6 +260,7 @@ public class WxMessageController {
 		User user = RequestUtils.getUser(request);
 		String actorId = user.getActorId();
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		Long accountId = RequestUtils.getLong(request, "accountId");
 		WxMessage wxMessage = new WxMessage();
 		try {
 			Tools.populate(wxMessage, params);
@@ -283,6 +269,7 @@ public class WxMessageController {
 			wxMessage.setTitle(request.getParameter("title"));
 			wxMessage.setContent(request.getParameter("content"));
 			wxMessage.setCreateBy(actorId);
+			wxMessage.setAccountId(accountId);
 			this.wxMessageService.save(wxMessage);
 
 			return ResponseUtils.responseJsonResult(true);
@@ -298,15 +285,15 @@ public class WxMessageController {
 		this.wxMessageService = wxMessageService;
 	}
 
-	@RequestMapping("/update")
-	public ModelAndView update(HttpServletRequest request, ModelMap modelMap) {
+	@RequestMapping("/update/{id}")
+	public ModelAndView update(@PathVariable("id") Long id,
+			HttpServletRequest request, ModelMap modelMap) {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		params.remove("status");
 		params.remove("wfStatus");
 
-		WxMessage wxMessage = wxMessageService.getWxMessage(RequestUtils
-				.getLong(request, "id"));
+		WxMessage wxMessage = wxMessageService.getWxMessage(id);
 		if (wxMessage != null
 				&& (StringUtils.equals(wxMessage.getCreateBy(),
 						loginContext.getActorId()) || loginContext
@@ -323,15 +310,13 @@ public class WxMessageController {
 		return this.list(request, modelMap);
 	}
 
-	@RequestMapping("/view")
-	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
+	@RequestMapping("/view/{id}")
+	public ModelAndView view(@PathVariable("id") Long id,
+			HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 
-		WxMessage wxMessage = wxMessageService.getWxMessage(RequestUtils
-				.getLong(request, "id"));
+		WxMessage wxMessage = wxMessageService.getWxMessage(id);
 		request.setAttribute("wxMessage", wxMessage);
-		JSONObject rowJSON = wxMessage.toJsonObject();
-		request.setAttribute("x_json", rowJSON.toJSONString());
 
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {

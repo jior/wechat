@@ -57,9 +57,9 @@ public class WxContentController {
 
 	}
 
-	@RequestMapping("/articleList")
-	public ModelAndView articleList(HttpServletRequest request,
-			ModelMap modelMap) {
+	@RequestMapping("/articleList/{accountId}")
+	public ModelAndView articleList(@PathVariable("accountId") Long accountId,
+			HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		String x_query = request.getParameter("x_query");
 		if (StringUtils.equals(x_query, "true")) {
@@ -168,22 +168,6 @@ public class WxContentController {
 		}
 	}
 
-	@ResponseBody
-	@RequestMapping("/detail")
-	public byte[] detail(HttpServletRequest request) throws IOException {
-		LoginContext loginContext = RequestUtils.getLoginContext(request);
-		WxContent wxContent = wxContentService.getWxContent(RequestUtils
-				.getLong(request, "id"));
-		if (wxContent != null
-				&& (StringUtils.equals(wxContent.getCreateBy(),
-						loginContext.getActorId()) || loginContext
-						.isSystemAdministrator())) {
-			JSONObject rowJSON = wxContent.toJsonObject();
-			return rowJSON.toJSONString().getBytes("UTF-8");
-		}
-		return null;
-	}
-
 	@RequestMapping("/edit")
 	public ModelAndView edit(HttpServletRequest request, ModelMap modelMap) {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
@@ -196,8 +180,6 @@ public class WxContentController {
 						loginContext.getActorId()) || loginContext
 						.isSystemAdministrator())) {
 			request.setAttribute("wxContent", wxContent);
-			JSONObject rowJSON = wxContent.toJsonObject();
-			request.setAttribute("x_json", rowJSON.toJSONString());
 		}
 
 		if (wxContent != null && StringUtils.isNotEmpty(wxContent.getMsgType())) {
@@ -229,8 +211,6 @@ public class WxContentController {
 						loginContext.getActorId()) || loginContext
 						.isSystemAdministrator())) {
 			request.setAttribute("wxContent", wxContent);
-			JSONObject rowJSON = wxContent.toJsonObject();
-			request.setAttribute("x_json", rowJSON.toJSONString());
 		}
 
 		String view = request.getParameter("view");
@@ -258,8 +238,6 @@ public class WxContentController {
 						loginContext.getActorId()) || loginContext
 						.isSystemAdministrator())) {
 			request.setAttribute("wxContent", wxContent);
-			JSONObject rowJSON = wxContent.toJsonObject();
-			request.setAttribute("x_json", rowJSON.toJSONString());
 		}
 
 		String view = request.getParameter("view");
@@ -305,10 +283,10 @@ public class WxContentController {
 		return new ModelAndView("/wx/content/indexPPT", modelMap);
 	}
 
-	@RequestMapping("/json")
+	@RequestMapping("/json/{accountId}")
 	@ResponseBody
-	public byte[] json(HttpServletRequest request, ModelMap modelMap)
-			throws IOException {
+	public byte[] json(@PathVariable("accountId") Long accountId,
+			HttpServletRequest request, ModelMap modelMap) throws IOException {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		WxContentQuery query = new WxContentQuery();
@@ -316,6 +294,7 @@ public class WxContentController {
 		query.deleteFlag(0);
 		query.setActorId(loginContext.getActorId());
 		query.setLoginContext(loginContext);
+		query.setAccountId(accountId);
 
 		Long categoryId = RequestUtils.getLong(request, "categoryId", 0);
 		if (categoryId > 0) {
@@ -421,9 +400,11 @@ public class WxContentController {
 		return new ModelAndView("/wx/content/list", modelMap);
 	}
 
-	@RequestMapping("/ppt")
-	public ModelAndView ppt(HttpServletRequest request, ModelMap modelMap) {
+	@RequestMapping("/ppt/{accountId}")
+	public ModelAndView ppt(@PathVariable("accountId") Long accountId,
+			HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
+		request.setAttribute("accountId", accountId);
 		String x_query = request.getParameter("x_query");
 		if (StringUtils.equals(x_query, "true")) {
 			Map<String, Object> paramMap = RequestUtils
@@ -442,9 +423,11 @@ public class WxContentController {
 		return new ModelAndView("/wx/content/ppt", modelMap);
 	}
 
-	@RequestMapping("/query")
-	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
+	@RequestMapping("/query/{accountId}")
+	public ModelAndView query(@PathVariable("accountId") Long accountId,
+			HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
+		request.setAttribute("accountId", accountId);
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {
 			return new ModelAndView(view, modelMap);
@@ -466,7 +449,7 @@ public class WxContentController {
 
 		WxContent wxContent = new WxContent();
 		Tools.populate(wxContent, params);
-
+		Long accountId = RequestUtils.getLong(request, "accountId");
 		wxContent.setCategoryId(RequestUtils.getLong(request, "categoryId"));
 		wxContent.setTitle(request.getParameter("title"));
 		wxContent.setContent(request.getParameter("content"));
@@ -494,6 +477,7 @@ public class WxContentController {
 		wxContent.setScale(request.getParameter("scale"));
 		wxContent.setLabel(request.getParameter("label"));
 		wxContent.setCreateBy(actorId);
+		wxContent.setAccountId(accountId);
 
 		wxContentService.save(wxContent);
 
@@ -506,6 +490,7 @@ public class WxContentController {
 		User user = RequestUtils.getUser(request);
 		String actorId = user.getActorId();
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		Long accountId = RequestUtils.getLong(request, "accountId");
 		WxContent wxContent = new WxContent();
 		try {
 			Tools.populate(wxContent, params);
@@ -539,6 +524,7 @@ public class WxContentController {
 			wxContent.setScale(request.getParameter("scale"));
 			wxContent.setLabel(request.getParameter("label"));
 			wxContent.setCreateBy(actorId);
+			wxContent.setAccountId(accountId);
 			this.wxContentService.save(wxContent);
 
 			return ResponseUtils.responseJsonResult(true);
@@ -560,8 +546,9 @@ public class WxContentController {
 	}
 
 	@ResponseBody
-	@RequestMapping("/treeJson")
-	public byte[] treeJson(HttpServletRequest request) throws IOException {
+	@RequestMapping("/treeJson/{accountId}")
+	public byte[] treeJson(@PathVariable("accountId") Long accountId,
+			HttpServletRequest request) throws IOException {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		String selecteds = request.getParameter("selecteds");
 		List<String> checkIds = new ArrayList<String>();
@@ -572,7 +559,7 @@ public class WxContentController {
 		String type = request.getParameter("type");
 		JSONObject result = new JSONObject();
 		List<WxCategory> categories = wxCategoryService.getCategoryList(
-				loginContext.getActorId(), type);
+				accountId, type);
 		if (categories != null && !categories.isEmpty()) {
 			Map<Long, TreeModel> treeMap = new HashMap<Long, TreeModel>();
 			List<TreeModel> treeModels = new ArrayList<TreeModel>();
@@ -626,6 +613,7 @@ public class WxContentController {
 	@RequestMapping("/treeList")
 	public ModelAndView treeList(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
+
 		String x_query = request.getParameter("x_query");
 		if (StringUtils.equals(x_query, "true")) {
 			Map<String, Object> paramMap = RequestUtils
@@ -636,7 +624,7 @@ public class WxContentController {
 		} else {
 			request.setAttribute("x_complex_query", "");
 		}
-		
+
 		String requestURI = request.getRequestURI();
 		logger.debug("requestURI:" + requestURI);
 		logger.debug("queryString:" + request.getQueryString());
@@ -644,7 +632,7 @@ public class WxContentController {
 				"fromUrl",
 				RequestUtils.encodeURL(requestURI + "?"
 						+ request.getQueryString()));
-		
+
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {
 			return new ModelAndView(view, modelMap);
@@ -653,15 +641,15 @@ public class WxContentController {
 		return new ModelAndView("/wx/content/treeList", modelMap);
 	}
 
-	@RequestMapping("/update")
-	public ModelAndView update(HttpServletRequest request, ModelMap modelMap) {
+	@RequestMapping("/update/{id}")
+	public ModelAndView update(@PathVariable("id") Long id,
+			HttpServletRequest request, ModelMap modelMap) {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		params.remove("status");
 		params.remove("wfStatus");
 
-		WxContent wxContent = wxContentService.getWxContent(RequestUtils
-				.getLong(request, "id"));
+		WxContent wxContent = wxContentService.getWxContent(id);
 		if (wxContent != null
 				&& (StringUtils.equals(wxContent.getCreateBy(),
 						loginContext.getActorId()) || loginContext
@@ -703,15 +691,13 @@ public class WxContentController {
 		return this.list(request, modelMap);
 	}
 
-	@RequestMapping("/view")
-	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
+	@RequestMapping("/view/{id}")
+	public ModelAndView view(@PathVariable("id") Long id,
+			HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 
-		WxContent wxContent = wxContentService.getWxContent(RequestUtils
-				.getLong(request, "id"));
+		WxContent wxContent = wxContentService.getWxContent(id);
 		request.setAttribute("wxContent", wxContent);
-		JSONObject rowJSON = wxContent.toJsonObject();
-		request.setAttribute("x_json", rowJSON.toJSONString());
 
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {

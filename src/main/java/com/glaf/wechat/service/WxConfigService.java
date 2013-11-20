@@ -52,7 +52,7 @@ public interface WxConfigService {
 	WxConfig getWxConfig(Long id);
 	
 	
-	WxConfig getWxConfigByUser(String createBy);
+	WxConfig getWxConfigByAccountId(Long accountId);
 
 	/**
 	 * 根据查询参数获取记录总数

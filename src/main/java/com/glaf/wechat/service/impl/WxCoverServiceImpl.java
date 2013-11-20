@@ -87,12 +87,12 @@ public class WxCoverServiceImpl implements WxCoverService {
 	/**
 	 * 获取用户封面信息
 	 * 
-	 * @param createBy
+	 * @param accountId
 	 * @return
 	 */
-	public WxCover getWxCoverByUser(String createBy) {
+	public WxCover getWxCoverByAccountId(Long accountId) {
 		WxCoverQuery query = new WxCoverQuery();
-		query.createBy(createBy);
+		query.accountId(accountId);
 		List<WxCover> list = wxCoverMapper.getWxCovers(query);
 		if (list != null && !list.isEmpty()) {
 			return list.get(0);

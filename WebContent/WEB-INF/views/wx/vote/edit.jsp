@@ -112,6 +112,7 @@ limitations under the License.
 
   <div data-options="region:'center',border:false,cache:true">
   <form id="iForm" name="iForm" method="post">
+  <input type="hidden" id="accountId" name="accountId" value="${accountId}"/>
   <input type="hidden" id="id" name="id" value="${wxVote.id}"/>
   <table class="easyui-form" style="width:98%;" align="center">
     <tbody>

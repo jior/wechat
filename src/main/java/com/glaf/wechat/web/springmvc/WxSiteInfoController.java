@@ -22,21 +22,20 @@ import java.io.IOException;
 import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import com.alibaba.fastjson.*;
 
+import com.alibaba.fastjson.*;
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.identity.*;
 import com.glaf.core.security.*;
 import com.glaf.core.util.*;
-
 import com.glaf.wechat.domain.*;
 import com.glaf.wechat.query.*;
 import com.glaf.wechat.service.*;
@@ -92,22 +91,6 @@ public class WxSiteInfoController {
 		}
 	}
 
-	@ResponseBody
-	@RequestMapping("/detail")
-	public byte[] detail(HttpServletRequest request) throws IOException {
-		LoginContext loginContext = RequestUtils.getLoginContext(request);
-		WxSiteInfo wxSiteInfo = wxSiteInfoService.getWxSiteInfo(RequestUtils
-				.getLong(request, "id"));
-		if (wxSiteInfo != null
-				&& (StringUtils.equals(wxSiteInfo.getCreateBy(),
-						loginContext.getActorId()) || loginContext
-						.isSystemAdministrator())) {
-			JSONObject rowJSON = wxSiteInfo.toJsonObject();
-			return rowJSON.toJSONString().getBytes("UTF-8");
-		}
-		return null;
-	}
-
 	@RequestMapping("/edit")
 	public ModelAndView edit(HttpServletRequest request, ModelMap modelMap) {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
@@ -124,8 +107,8 @@ public class WxSiteInfoController {
 			JSONObject rowJSON = wxSiteInfo.toJsonObject();
 			request.setAttribute("x_json", rowJSON.toJSONString());
 		} else {
-			wxSiteInfo = wxSiteInfoService.getWxSiteInfoByUser(loginContext
-					.getActorId());
+			Long accountId = RequestUtils.getLong(request, "accountId");
+			wxSiteInfo = wxSiteInfoService.getWxSiteInfoByAccountId(accountId);
 			request.setAttribute("wxSiteInfo", wxSiteInfo);
 		}
 
@@ -142,10 +125,10 @@ public class WxSiteInfoController {
 		return new ModelAndView("/wx/siteInfo/edit", modelMap);
 	}
 
-	@RequestMapping("/json")
+	@RequestMapping("/json/{accountId}")
 	@ResponseBody
-	public byte[] json(HttpServletRequest request, ModelMap modelMap)
-			throws IOException {
+	public byte[] json(@PathVariable("accountId") Long accountId,
+			HttpServletRequest request, ModelMap modelMap) throws IOException {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		WxSiteInfoQuery query = new WxSiteInfoQuery();
@@ -156,6 +139,7 @@ public class WxSiteInfoController {
 
 		String actorId = loginContext.getActorId();
 		query.createBy(actorId);
+		query.setAccountId(accountId);
 
 		String gridType = ParamUtils.getString(params, "gridType");
 		if (gridType == null) {
@@ -244,9 +228,11 @@ public class WxSiteInfoController {
 		return new ModelAndView("/wx/siteInfo/list", modelMap);
 	}
 
-	@RequestMapping("/query")
-	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
+	@RequestMapping("/query/{accountId}")
+	public ModelAndView query(@PathVariable("accountId") Long accountId,
+			HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
+		request.setAttribute("accountId", accountId);
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {
 			return new ModelAndView(view, modelMap);
@@ -268,7 +254,7 @@ public class WxSiteInfoController {
 
 		WxSiteInfo wxSiteInfo = new WxSiteInfo();
 		Tools.populate(wxSiteInfo, params);
-
+		Long accountId = RequestUtils.getLong(request, "accountId");
 		wxSiteInfo.setLinkman(request.getParameter("linkman"));
 		wxSiteInfo.setTelephone(request.getParameter("telephone"));
 		wxSiteInfo.setMobile(request.getParameter("mobile"));
@@ -278,6 +264,7 @@ public class WxSiteInfoController {
 		wxSiteInfo.setSiteUrl(request.getParameter("siteUrl"));
 		wxSiteInfo.setRemark(request.getParameter("remark"));
 		wxSiteInfo.setCreateBy(actorId);
+		wxSiteInfo.setAccountId(accountId);
 
 		wxSiteInfoService.save(wxSiteInfo);
 
@@ -293,6 +280,7 @@ public class WxSiteInfoController {
 		WxSiteInfo wxSiteInfo = new WxSiteInfo();
 		try {
 			Tools.populate(wxSiteInfo, params);
+			Long accountId = RequestUtils.getLong(request, "accountId");
 			wxSiteInfo.setLinkman(request.getParameter("linkman"));
 			wxSiteInfo.setTelephone(request.getParameter("telephone"));
 			wxSiteInfo.setMobile(request.getParameter("mobile"));
@@ -302,6 +290,7 @@ public class WxSiteInfoController {
 			wxSiteInfo.setSiteUrl(request.getParameter("siteUrl"));
 			wxSiteInfo.setRemark(request.getParameter("remark"));
 			wxSiteInfo.setCreateBy(actorId);
+			wxSiteInfo.setAccountId(accountId);
 			this.wxSiteInfoService.save(wxSiteInfo);
 
 			return ResponseUtils.responseJsonResult(true);
@@ -317,15 +306,15 @@ public class WxSiteInfoController {
 		this.wxSiteInfoService = wxSiteInfoService;
 	}
 
-	@RequestMapping("/update")
-	public ModelAndView update(HttpServletRequest request, ModelMap modelMap) {
+	@RequestMapping("/update/{id}")
+	public ModelAndView update(@PathVariable("id") Long id,
+			HttpServletRequest request, ModelMap modelMap) {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		params.remove("status");
 		params.remove("wfStatus");
 
-		WxSiteInfo wxSiteInfo = wxSiteInfoService.getWxSiteInfo(RequestUtils
-				.getLong(request, "id"));
+		WxSiteInfo wxSiteInfo = wxSiteInfoService.getWxSiteInfo(id);
 		if (wxSiteInfo != null
 				&& (StringUtils.equals(wxSiteInfo.getCreateBy(),
 						loginContext.getActorId()) || loginContext
@@ -346,14 +335,12 @@ public class WxSiteInfoController {
 		return this.list(request, modelMap);
 	}
 
-	@RequestMapping("/view")
-	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
+	@RequestMapping("/view/{id}")
+	public ModelAndView view(@PathVariable("id") Long id,
+			HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
-		WxSiteInfo wxSiteInfo = wxSiteInfoService.getWxSiteInfo(RequestUtils
-				.getLong(request, "id"));
+		WxSiteInfo wxSiteInfo = wxSiteInfoService.getWxSiteInfo(id);
 		request.setAttribute("wxSiteInfo", wxSiteInfo);
-		JSONObject rowJSON = wxSiteInfo.toJsonObject();
-		request.setAttribute("x_json", rowJSON.toJSONString());
 
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {

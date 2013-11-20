@@ -71,12 +71,12 @@ public interface WxContentService {
 	
 	/**
 	 * 获取某个用户某个栏目指定类型的内容
-	 * @param createBy
+	 * @param accountId
 	 * @param categoryId
 	 * @param type
 	 * @return
 	 */
-	List<WxContent> getWxContents(String createBy, Long categoryId, String type);
+	List<WxContent> getWxContents(Long accountId, Long categoryId, String type);
 
 	/**
 	 * 根据查询参数获取记录总数

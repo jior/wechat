@@ -152,6 +152,7 @@ limitations under the License.
   <div data-options="region:'center',border:false,cache:true">
   <form id="iForm" name="iForm" method="post">
   <input type="hidden" id="id" name="id" value="${wxCategory.id}"/>
+  <input type="hidden" id="accountId" name="accountId" value="${accountId}"/>
   <c:choose>
 	<c:when test="${!empty wxCategory }">
        <input type="hidden" id="parentId" name="parentId" value="${wxCategory.parentId}"/>

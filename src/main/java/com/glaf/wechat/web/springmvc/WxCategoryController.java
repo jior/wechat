@@ -96,22 +96,6 @@ public class WxCategoryController {
 		}
 	}
 
-	@ResponseBody
-	@RequestMapping("/detail")
-	public byte[] detail(HttpServletRequest request) throws IOException {
-		LoginContext loginContext = RequestUtils.getLoginContext(request);
-		WxCategory wxCategory = wxCategoryService.getWxCategory(RequestUtils
-				.getLong(request, "id"));
-		if (wxCategory != null
-				&& (StringUtils.equals(wxCategory.getCreateBy(),
-						loginContext.getActorId()) || loginContext
-						.isSystemAdministrator())) {
-			JSONObject rowJSON = wxCategory.toJsonObject();
-			return rowJSON.toJSONString().getBytes("UTF-8");
-		}
-		return null;
-	}
-
 	@RequestMapping("/edit")
 	public ModelAndView edit(HttpServletRequest request, ModelMap modelMap) {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
@@ -131,8 +115,9 @@ public class WxCategoryController {
 			request.setAttribute("wxCategory", wxCategory);
 		}
 
+		Long accountId = RequestUtils.getLong(request, "accountId");
 		List<WxCategory> categories = wxCategoryService.getCategoryList(
-				loginContext.getActorId(), type);
+				accountId, type);
 		if (wxCategory != null) {
 			List<WxCategory> subCategories = wxCategoryService
 					.getCategoryList(wxCategory.getId());
@@ -166,10 +151,10 @@ public class WxCategoryController {
 		return new ModelAndView("/wx/category/edit", modelMap);
 	}
 
-	@RequestMapping("/json")
+	@RequestMapping("/json/{accountId}")
 	@ResponseBody
-	public byte[] json(HttpServletRequest request, ModelMap modelMap)
-			throws IOException {
+	public byte[] json(@PathVariable("accountId") Long accountId,
+			HttpServletRequest request, ModelMap modelMap) throws IOException {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		WxCategoryQuery query = new WxCategoryQuery();
@@ -179,6 +164,7 @@ public class WxCategoryController {
 		query.setLoginContext(loginContext);
 		String actorId = loginContext.getActorId();
 		query.createBy(actorId);
+		query.setAccountId(accountId);
 
 		Long parentId = RequestUtils.getLong(request, "parentId", 0);
 		query.parentId(parentId);
@@ -264,7 +250,7 @@ public class WxCategoryController {
 		} else {
 			request.setAttribute("x_complex_query", "");
 		}
-		
+
 		String requestURI = request.getRequestURI();
 		logger.debug("requestURI:" + requestURI);
 		logger.debug("queryString:" + request.getQueryString());
@@ -272,7 +258,7 @@ public class WxCategoryController {
 				"fromUrl",
 				RequestUtils.encodeURL(requestURI + "?"
 						+ request.getQueryString()));
-		
+
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {
 			return new ModelAndView(view, modelMap);
@@ -281,8 +267,9 @@ public class WxCategoryController {
 		return new ModelAndView("/wx/category/list", modelMap);
 	}
 
-	@RequestMapping("/query")
-	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
+	@RequestMapping("/query/{accountId}")
+	public ModelAndView query(@PathVariable("accountId") Long accountId,
+			HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {
@@ -305,7 +292,7 @@ public class WxCategoryController {
 
 		WxCategory wxCategory = new WxCategory();
 		Tools.populate(wxCategory, params);
-
+		Long accountId = RequestUtils.getLong(request, "accountId");
 		wxCategory.setParentId(RequestUtils.getLong(request, "parentId"));
 		wxCategory.setSort(RequestUtils.getInt(request, "sort"));
 		wxCategory.setIcon(request.getParameter("icon"));
@@ -320,6 +307,7 @@ public class WxCategoryController {
 		wxCategory.setUrl(request.getParameter("url"));
 		wxCategory.setCreateBy(actorId);
 		wxCategory.setLastUpdateBy(actorId);
+		wxCategory.setAccountId(accountId);
 
 		wxCategoryService.save(wxCategory);
 
@@ -335,6 +323,7 @@ public class WxCategoryController {
 		WxCategory wxCategory = new WxCategory();
 		try {
 			Tools.populate(wxCategory, params);
+			Long accountId = RequestUtils.getLong(request, "accountId");
 			wxCategory.setParentId(RequestUtils.getLong(request, "parentId"));
 			wxCategory.setSort(RequestUtils.getInt(request, "sort"));
 			wxCategory.setIcon(request.getParameter("icon"));
@@ -349,6 +338,7 @@ public class WxCategoryController {
 			wxCategory.setUrl(request.getParameter("url"));
 			wxCategory.setCreateBy(actorId);
 			wxCategory.setLastUpdateBy(actorId);
+			wxCategory.setAccountId(accountId);
 			this.wxCategoryService.save(wxCategory);
 
 			return ResponseUtils.responseJsonResult(true);
@@ -365,19 +355,17 @@ public class WxCategoryController {
 	}
 
 	@ResponseBody
-	@RequestMapping("/treeJson")
-	public byte[] treeJson(HttpServletRequest request) throws IOException {
+	@RequestMapping("/treeJson/{accountId}")
+	public byte[] treeJson(@PathVariable("accountId") Long accountId,
+			HttpServletRequest request) throws IOException {
 		JSONArray array = new JSONArray();
-		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		String type = request.getParameter("type");
 		Long parentId = RequestUtils.getLong(request, "parentId", 0);
 		List<WxCategory> categories = null;
 		if (parentId != null && parentId > 0) {
-			categories = wxCategoryService.getCategoryList(
-					loginContext.getActorId(), parentId);
+			categories = wxCategoryService.getCategoryList(accountId, parentId);
 		} else if (StringUtils.isNotEmpty(type)) {
-			categories = wxCategoryService.getCategoryList(
-					loginContext.getActorId(), type);
+			categories = wxCategoryService.getCategoryList(accountId, type);
 		}
 
 		if (categories != null && !categories.isEmpty()) {
@@ -409,15 +397,15 @@ public class WxCategoryController {
 		return array.toJSONString().getBytes("UTF-8");
 	}
 
-	@RequestMapping("/update")
-	public ModelAndView update(HttpServletRequest request, ModelMap modelMap) {
+	@RequestMapping("/update/{id}")
+	public ModelAndView update(@PathVariable("id") Long id,
+			HttpServletRequest request, ModelMap modelMap) {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		params.remove("status");
 		params.remove("wfStatus");
 
-		WxCategory wxCategory = wxCategoryService.getWxCategory(RequestUtils
-				.getLong(request, "id"));
+		WxCategory wxCategory = wxCategoryService.getWxCategory(id);
 		if (wxCategory != null
 				&& (StringUtils.equals(wxCategory.getCreateBy(),
 						loginContext.getActorId()) || loginContext
@@ -441,14 +429,12 @@ public class WxCategoryController {
 		return this.list(request, modelMap);
 	}
 
-	@RequestMapping("/view")
-	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
+	@RequestMapping("/view/{id}")
+	public ModelAndView view(@PathVariable("id") Long id,
+			HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
-		WxCategory wxCategory = wxCategoryService.getWxCategory(RequestUtils
-				.getLong(request, "id"));
+		WxCategory wxCategory = wxCategoryService.getWxCategory(id);
 		request.setAttribute("wxCategory", wxCategory);
-		JSONObject rowJSON = wxCategory.toJsonObject();
-		request.setAttribute("x_json", rowJSON.toJSONString());
 
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {

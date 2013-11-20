@@ -146,6 +146,7 @@ limitations under the License.
   <form id="iForm" name="iForm" method="post">
   <input type="hidden" id="id" name="id" value="${wxMenu.id}"/>
   <input type="hidden" id="group" name="group" value="${group}"/>
+  <input type="hidden" id="accountId" name="accountId" value="${accountId}"/>
   <table class="easyui-form" style="width:600px;" align="left">
     <tbody>
 	<c:choose>

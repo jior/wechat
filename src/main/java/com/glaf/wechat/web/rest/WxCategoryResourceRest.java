@@ -28,6 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -44,7 +45,6 @@ import com.glaf.core.base.BaseTree;
 import com.glaf.core.base.TreeModel;
 import com.glaf.core.identity.User;
 import com.glaf.core.security.IdentityFactory;
-import com.glaf.core.security.LoginContext;
 import com.glaf.core.tree.helper.TreeHelper;
 import com.glaf.core.util.PageResult;
 import com.glaf.core.util.ParamUtils;
@@ -150,22 +150,19 @@ public class WxCategoryResourceRest {
 
 	@GET
 	@POST
-	@Path("/treeJson")
+	@Path("/treeJson/{accountId}")
 	@ResponseBody
 	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
-	public byte[] treeJson(@Context HttpServletRequest request)
-			throws IOException {
+	public byte[] treeJson(@PathParam("accountId") Long accountId,
+			@Context HttpServletRequest request) throws IOException {
 		JSONArray array = new JSONArray();
-		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		String type = request.getParameter("type");
 		Long parentId = RequestUtils.getLong(request, "parentId", 0);
 		List<WxCategory> categories = null;
 		if (parentId != null && parentId > 0) {
-			categories = wxCategoryService.getCategoryList(
-					loginContext.getActorId(), parentId);
+			categories = wxCategoryService.getCategoryList(accountId, parentId);
 		} else if (StringUtils.isNotEmpty(type)) {
-			categories = wxCategoryService.getCategoryList(
-					loginContext.getActorId(), type);
+			categories = wxCategoryService.getCategoryList(accountId, type);
 		}
 
 		if (categories != null && !categories.isEmpty()) {
@@ -183,7 +180,7 @@ public class WxCategoryResourceRest {
 				tree.setCreateBy(category.getCreateBy());
 				tree.setIconCls("tree_folder");
 				tree.setTreeId(category.getTreeId());
-				tree.setUrl(category.getUrl());
+				//tree.setUrl(category.getUrl());
 				treeModels.add(tree);
 				categoryIds.add(category.getId());
 				treeMap.put(category.getId(), tree);

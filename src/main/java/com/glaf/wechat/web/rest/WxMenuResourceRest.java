@@ -28,6 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -36,7 +37,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
-
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONArray;
@@ -45,7 +45,6 @@ import com.glaf.core.base.BaseTree;
 import com.glaf.core.base.TreeModel;
 import com.glaf.core.identity.User;
 import com.glaf.core.security.IdentityFactory;
-import com.glaf.core.security.LoginContext;
 import com.glaf.core.tree.helper.TreeHelper;
 import com.glaf.core.util.PageResult;
 import com.glaf.core.util.ParamUtils;
@@ -151,21 +150,19 @@ public class WxMenuResourceRest {
 
 	@GET
 	@POST
-	@Path("/treeJson")
+	@Path("/treeJson/{accountId}")
 	@ResponseBody
 	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
-	public byte[] treeJson(@Context HttpServletRequest request)
-			throws IOException {
+	public byte[] treeJson(@PathParam("accountId") Long accountId,
+			@Context HttpServletRequest request) throws IOException {
 		JSONArray array = new JSONArray();
-		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		String group = request.getParameter("group");
 		Long parentId = RequestUtils.getLong(request, "parentId", 0);
 		List<WxMenu> menus = null;
 		if (parentId != null && parentId > 0) {
-			menus = wxMenuService.getMenuList(loginContext.getActorId(),
-					parentId);
+			menus = wxMenuService.getMenuList(accountId, parentId);
 		} else if (StringUtils.isNotEmpty(group)) {
-			menus = wxMenuService.getMenuList(loginContext.getActorId(), group);
+			menus = wxMenuService.getMenuList(accountId, group);
 		}
 
 		if (menus != null && !menus.isEmpty()) {
@@ -183,7 +180,7 @@ public class WxMenuResourceRest {
 				tree.setCreateBy(menu.getCreateBy());
 				tree.setIconCls("tree_folder");
 				tree.setTreeId(menu.getTreeId());
-				tree.setUrl(menu.getUrl());
+				//tree.setUrl(menu.getUrl());
 				treeModels.add(tree);
 				menuIds.add(menu.getId());
 				treeMap.put(menu.getId(), tree);

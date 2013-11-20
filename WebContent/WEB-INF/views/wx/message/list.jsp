@@ -50,7 +50,7 @@ limitations under the License.
 				nowrap: false,
 				striped: true,
 				collapsible: true,
-				url: '<%=request.getContextPath()%>/mx/wx/wxMessage/json',
+				url: '<%=request.getContextPath()%>/mx/wx/wxMessage/json/${accountId}',
 				//sortName: 'id',
 				//sortOrder: 'desc',
 				remoteSort: false,
@@ -110,13 +110,13 @@ limitations under the License.
 		 
 	function addNew(){
 	    //location.href="<%=request.getContextPath()%>/wx/wxMessage/edit";
-	    var link="<%=request.getContextPath()%>/mx/wx/wxMessage/edit";
+	    var link="<%=request.getContextPath()%>/mx/wx/wxMessage/edit?accountId=${accountId}";
 	    art.dialog.open(link, { height: 420, width: 680, title: "添加记录", lock: true, scrollbars:"no" }, false);
 	}
 
 	function onRowClick(rowIndex, row){
             //window.open('<%=request.getContextPath()%>/wx/wxMessage/edit?id='+row.id);
-	    var link = '<%=request.getContextPath()%>/mx/wx/wxMessage/edit?id='+row.id;
+	    var link = '<%=request.getContextPath()%>/mx/wx/wxMessage/edit?accountId=${accountId}&id='+row.id;
 	    art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"no" }, false);
 	}
 
@@ -141,7 +141,7 @@ limitations under the License.
 	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
 	    if (selected ){
 		//location.href="<%=request.getContextPath()%>/wx/wxMessage/edit?id="+selected.id;
-		var link = "<%=request.getContextPath()%>/mx/wx/wxMessage/edit?id="+selected.id;
+		var link = "<%=request.getContextPath()%>/mx/wx/wxMessage/edit?accountId=${accountId}&id="+selected.id;
 		art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"no" }, false);
 	    }
 	}
@@ -154,7 +154,7 @@ limitations under the License.
 		}
 		var selected = jQuery('#mydatagrid').datagrid('getSelected');
 		if (selected ){
-		    location.href="<%=request.getContextPath()%>/mx/wx/wxMessage/edit?readonly=true&id="+selected.id;
+		    location.href="<%=request.getContextPath()%>/mx/wx/wxMessage/edit?accountId=${accountId}&readonly=true&id="+selected.id;
 		}
 	}
 
@@ -223,7 +223,7 @@ limitations under the License.
             var params = jQuery("#searchForm").formSerialize();
             jQuery.ajax({
                         type: "POST",
-                        url: '<%=request.getContextPath()%>/mx/wx/wxMessage/json',
+                        url: '<%=request.getContextPath()%>/mx/wx/wxMessage/json/${accountId}',
                         dataType:  'json',
                         data: params,
                         error: function(data){
@@ -239,7 +239,7 @@ limitations under the License.
 
 
 	function viewSite(){
-			var link = '<%=request.getContextPath()%>/website/wx/message/mobile/<%=user.getId()%>';
+			var link = '<%=request.getContextPath()%>/website/wx/message/mobile/${accountId}';
 			//art.dialog.open(link, { height: 720, width: 400, title: "预览效果", lock: true, scrollbars:"no" }, false);
 			var x=200;
 			var y=150;

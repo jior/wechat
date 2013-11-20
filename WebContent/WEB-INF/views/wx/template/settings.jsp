@@ -53,6 +53,7 @@ limitations under the License.
 	action="<%=request.getContextPath()%>/mx/wx/wxTemplate/saveUserTemplate"
 	onsubmit="return checkForm();">
     <input type="hidden" id="templateId" name="templateId" >
+	<input type="hidden" id="accountId" name="accountId" value="${accountId}"/>
 <c:if test="${not empty categoryId}">
 	<input type="hidden" name="nodeId" value="${categoryId}">
 	<input type="hidden" name="categoryId" value="${categoryId}">

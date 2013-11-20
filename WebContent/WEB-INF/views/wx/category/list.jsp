@@ -45,7 +45,7 @@ limitations under the License.
     var setting = {
 			async: {
 				enable: true,
-				url: '<%=request.getContextPath()%>/rs/wx/category/treeJson?type=${type}',
+				url: '<%=request.getContextPath()%>/rs/wx/category/treeJson/${accountId}?type=${type}',
 				dataFilter: filter
 			},
 			callback: {
@@ -66,15 +66,15 @@ limitations under the License.
     function getUrl(treeId, treeNode) {
 		if(treeNode != null){
 		    var param = "parentId="+treeNode.id;
-		    return "<%=request.getContextPath()%>/mx/wx/wxCategory/treeJson?type=${type}&"+param;
+		    return "<%=request.getContextPath()%>/mx/wx/wxCategory/treeJson/${accountId}?type=${type}&"+param;
 		}
-		return "<%=request.getContextPath()%>/mx/wx/wxCategory/treeJson?type=${type}";
+		return "<%=request.getContextPath()%>/mx/wx/wxCategory/treeJson/${accountId}?type=${type}";
 	}
 
 
     function zTreeOnClick(event, treeId, treeNode, clickFlag) {
 		jQuery("#nodeId").val(treeNode.id);
-		loadData('<%=request.getContextPath()%>/mx/wx/wxCategory/json?parentId='+treeNode.id);
+		loadData('<%=request.getContextPath()%>/mx/wx/wxCategory/json/${accountId}?parentId='+treeNode.id);
 	}
 
 	function loadData(url){
@@ -98,7 +98,7 @@ limitations under the License.
 				nowrap: false,
 				striped: true,
 				collapsible:true,
-				url:'<%=request.getContextPath()%>/mx/wx/wxCategory/json',
+				url:'<%=request.getContextPath()%>/mx/wx/wxCategory/json/${accountId}',
 				remoteSort: false,
 				singleSelect:true,
 				idField:'id',
@@ -157,33 +157,33 @@ limitations under the License.
 	}
 
 	function editPPT(rowId){
-		var link='<%=request.getContextPath()%>/mx/wx/wxContent/ppt?categoryId='+rowId+'&fromUrl=${fromUrl}';
+		var link='<%=request.getContextPath()%>/mx/wx/wxContent/ppt/${accountId}?categoryId='+rowId+'&fromUrl=${fromUrl}';
         //art.dialog.open(link, { height: 420, width: 880, title: "栏目幻灯片", lock: true, scrollbars:"no" }, false);
 		location.href=link;
 	}
 
 
 	function editRow(rowId){
-	    var link = '<%=request.getContextPath()%>/mx/wx/wxCategory/edit?type=${type}&fromUrl=${fromUrl}&id='+rowId;
+	    var link = '<%=request.getContextPath()%>/mx/wx/wxCategory/edit?accountId=${accountId}&type=${type}&fromUrl=${fromUrl}&id='+rowId;
 	    //art.dialog.open(link, { height: 420, width: 780, title: "修改记录", lock: true, scrollbars:"no" }, false);
 		location.href=link;
 	}
 
 
 	function articleList(categoryId){
-        location.href="<%=request.getContextPath()%>/mx/wx/wxContent/articleList?from=category&fromUrl=${fromUrl}&categoryId="+categoryId;
+        location.href="<%=request.getContextPath()%>/mx/wx/wxContent/articleList/${accountId}?from=category&fromUrl=${fromUrl}&categoryId="+categoryId;
 	}
 
 
 	function addNew(){
 		var nodeId = jQuery("#nodeId").val();
-		var link = "<%=request.getContextPath()%>/mx/wx/wxCategory/edit?type=${type}&fromUrl=${fromUrl}&parentId="+nodeId;
+		var link = "<%=request.getContextPath()%>/mx/wx/wxCategory/edit?accountId=${accountId}&type=${type}&fromUrl=${fromUrl}&parentId="+nodeId;
 	    //art.dialog.open(link, { height: 420, width: 780, title: "添加记录", lock: true, scrollbars:"yes" }, false);
 		location.href=link;
 	}
 
 	function onRowClick(rowIndex, row){
-	    var link = '<%=request.getContextPath()%>/mx/wx/wxCategory/edit?type=${type}&fromUrl=${fromUrl}&id='+row.id;
+	    var link = '<%=request.getContextPath()%>/mx/wx/wxCategory/edit?accountId=${accountId}&type=${type}&fromUrl=${fromUrl}&id='+row.id;
 	    //art.dialog.open(link, { height: 480, width: 780, title: "修改记录", lock: true, scrollbars:"yes" }, false);
 		location.href=link;
 	}
@@ -209,7 +209,7 @@ limitations under the License.
 	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
 	    if (selected ){
 		  //location.href="<%=request.getContextPath()%>/mx/wx/wxCategory?method=edit&rowId="+selected.id;
-		  var link = "<%=request.getContextPath()%>/mx/wx/wxCategory/edit?type=${type}&fromUrl=${fromUrl}&id="+selected.id;
+		  var link = "<%=request.getContextPath()%>/mx/wx/wxCategory/edit?accountId=${accountId}&type=${type}&fromUrl=${fromUrl}&id="+selected.id;
 		  //art.dialog.open(link, { height: 480, width: 780, title: "修改记录", lock: true, scrollbars:"yes" }, false);
 		  location.href=link;
 	    }
@@ -223,7 +223,7 @@ limitations under the License.
 	    }
 	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
 	    if (selected ){
-		   location.href="${contextPath}/mx/wx/wxTemplate/settings?type=1&categoryId="+selected.id;
+		   location.href="${contextPath}/mx/wx/wxTemplate/settings/${accountId}?type=1&categoryId="+selected.id;
 	    }
 	}
 
@@ -235,7 +235,7 @@ limitations under the License.
 	    }
 	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
 	    if (selected ){
-		    location.href="${contextPath}/mx/wx/wxTemplate/settings?type=2&categoryId="+selected.id;
+		    location.href="${contextPath}/mx/wx/wxTemplate/settings/${accountId}?type=2&categoryId="+selected.id;
 	    }
 	}
 
@@ -247,7 +247,7 @@ limitations under the License.
 		}
 		var selected = jQuery('#mydatagrid').datagrid('getSelected');
 		if (selected ){
-		    location.href="<%=request.getContextPath()%>/mx/wx/wxCategory/edit?type=${type}&id="+selected.id;
+		    location.href="<%=request.getContextPath()%>/mx/wx/wxCategory/edit?accountId=${accountId}&type=${type}&id="+selected.id;
 		}
 	}
 

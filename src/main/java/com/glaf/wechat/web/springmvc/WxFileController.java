@@ -109,24 +109,9 @@ public class WxFileController {
 		}
 	}
 
-	@ResponseBody
-	@RequestMapping("/detail")
-	public byte[] detail(HttpServletRequest request) throws IOException {
-		LoginContext loginContext = RequestUtils.getLoginContext(request);
-		WxFile wxFile = wxFileService.getWxFile(RequestUtils.getLong(request,
-				"id"));
-		if (wxFile != null
-				&& (StringUtils.equals(wxFile.getCreateBy(),
-						loginContext.getActorId()) || loginContext
-						.isSystemAdministrator())) {
-			JSONObject rowJSON = wxFile.toJsonObject();
-			return rowJSON.toJSONString().getBytes("UTF-8");
-		}
-		return null;
-	}
-
 	@RequestMapping("/edit")
-	public ModelAndView edit(HttpServletRequest request, ModelMap modelMap) {
+	public ModelAndView edit(
+			HttpServletRequest request, ModelMap modelMap) {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		RequestUtils.setRequestParameterToAttribute(request);
 		request.removeAttribute("canSubmit");
@@ -155,10 +140,10 @@ public class WxFileController {
 		return new ModelAndView("/wx/file/edit", modelMap);
 	}
 
-	@RequestMapping("/json")
+	@RequestMapping("/json/{accountId}")
 	@ResponseBody
-	public byte[] json(HttpServletRequest request, ModelMap modelMap)
-			throws IOException {
+	public byte[] json(@PathVariable("accountId") Long accountId,
+			HttpServletRequest request, ModelMap modelMap) throws IOException {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		WxFileQuery query = new WxFileQuery();
@@ -166,6 +151,7 @@ public class WxFileController {
 		query.deleteFlag(0);
 		query.setActorId(loginContext.getActorId());
 		query.setLoginContext(loginContext);
+		query.setAccountId(accountId);
 
 		String actorId = loginContext.getActorId();
 		query.createBy(actorId);
@@ -236,15 +222,16 @@ public class WxFileController {
 		return result.toJSONString().getBytes("UTF-8");
 	}
 
-	@RequestMapping("/json2")
+	@RequestMapping("/json2/{accountId}")
 	@ResponseBody
-	public byte[] json2(HttpServletRequest request, ModelMap modelMap)
-			throws IOException {
+	public byte[] json2(@PathVariable("accountId") Long accountId,
+			HttpServletRequest request, ModelMap modelMap) throws IOException {
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		WxFileQuery query = new WxFileQuery();
 		Tools.populate(query, params);
 
 		query.createBy("system");
+		query.setAccountId(accountId);
 
 		String gridType = ParamUtils.getString(params, "gridType");
 		if (gridType == null) {
@@ -312,15 +299,16 @@ public class WxFileController {
 		return result.toJSONString().getBytes("UTF-8");
 	}
 
-	@RequestMapping("/jsonArray")
+	@RequestMapping("/jsonArray/{accountId}")
 	@ResponseBody
-	public byte[] jsonArray(HttpServletRequest request, ModelMap modelMap)
-			throws IOException {
+	public byte[] jsonArray(@PathVariable("accountId") Long accountId,
+			HttpServletRequest request, ModelMap modelMap) throws IOException {
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		WxFileQuery query = new WxFileQuery();
 		Tools.populate(query, params);
 
 		query.createBy("system");
+		query.setAccountId(accountId);
 
 		JSONArray result = new JSONArray();
 		int total = wxFileService.getWxFileCountByQueryCriteria(query);
@@ -369,9 +357,11 @@ public class WxFileController {
 		return new ModelAndView("/wx/file/list", modelMap);
 	}
 
-	@RequestMapping("/query")
-	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
+	@RequestMapping("/query/{accountId}")
+	public ModelAndView query(@PathVariable("accountId") Long accountId,
+			HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
+		request.setAttribute("accountId", accountId);
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {
 			return new ModelAndView(view, modelMap);
@@ -384,7 +374,8 @@ public class WxFileController {
 	}
 
 	@RequestMapping("/save")
-	public ModelAndView save(HttpServletRequest request, ModelMap modelMap) {
+	public ModelAndView save(
+			HttpServletRequest request, ModelMap modelMap) {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		String actorId = loginContext.getActorId();
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
@@ -392,6 +383,7 @@ public class WxFileController {
 		params.remove("wfStatus");
 
 		MultipartHttpServletRequest req = (MultipartHttpServletRequest) request;
+		Long accountId = RequestUtils.getLong(req, "accountId");
 		Map<String, MultipartFile> fileMap = req.getFileMap();
 		WxFile wxFile = new WxFile();
 		wxFile.setId(RequestUtils.getLong(req, "id"));
@@ -399,6 +391,7 @@ public class WxFileController {
 		wxFile.setDesc(req.getParameter("desc"));
 		wxFile.setContent(req.getParameter("content"));
 		wxFile.setCategoryId(RequestUtils.getLong(req, "categoryId"));
+		wxFile.setAccountId(accountId);
 
 		boolean update = true;
 		Set<Entry<String, MultipartFile>> entrySet = fileMap.entrySet();
@@ -451,15 +444,15 @@ public class WxFileController {
 		this.wxFileService = wxFileService;
 	}
 
-	@RequestMapping("/update")
-	public ModelAndView update(HttpServletRequest request, ModelMap modelMap) {
+	@RequestMapping("/update/{id}")
+	public ModelAndView update(@PathVariable("id") Long id,
+			HttpServletRequest request, ModelMap modelMap) {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		params.remove("status");
 		params.remove("wfStatus");
 
-		WxFile wxFile = wxFileService.getWxFile(RequestUtils.getLong(request,
-				"id"));
+		WxFile wxFile = wxFileService.getWxFile(id);
 		if (wxFile != null
 				&& (StringUtils.equals(wxFile.getCreateBy(),
 						loginContext.getActorId()) || loginContext
@@ -476,14 +469,12 @@ public class WxFileController {
 		return new ModelAndView("/wx/file/saveOK");
 	}
 
-	@RequestMapping("/view")
-	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
+	@RequestMapping("/view/{id}")
+	public ModelAndView view(@PathVariable("id") Long id,
+			HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
-		WxFile wxFile = wxFileService.getWxFile(RequestUtils.getLong(request,
-				"id"));
+		WxFile wxFile = wxFileService.getWxFile(id);
 		request.setAttribute("wxFile", wxFile);
-		JSONObject rowJSON = wxFile.toJsonObject();
-		request.setAttribute("x_json", rowJSON.toJSONString());
 
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {

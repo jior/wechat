@@ -45,7 +45,7 @@ limitations under the License.
     var setting = {
 			async: {
 				enable: true,
-				url: '<%=request.getContextPath()%>/rs/wx/menu/treeJson?group=${group}',
+				url: '<%=request.getContextPath()%>/rs/wx/menu/treeJson/${accountId}?group=${group}',
 				dataFilter: filter
 			},
 			callback: {
@@ -66,15 +66,15 @@ limitations under the License.
     function getUrl(treeId, treeNode) {
 		if(treeNode != null){
 		    var param = "parentId="+treeNode.id;
-		    return "<%=request.getContextPath()%>/mx/wx/wxMenu/treeJson?group=${group}&"+param;
+		    return "<%=request.getContextPath()%>/mx/wx/wxMenu/treeJson/${accountId}?group=${group}&"+param;
 		}
-		return "<%=request.getContextPath()%>/mx/wx/wxMenu/treeJson?group=${group}";
+		return "<%=request.getContextPath()%>/mx/wx/wxMenu/treeJson/${accountId}?group=${group}";
 	}
 
 
     function zTreeOnClick(event, treeId, treeNode, clickFlag) {
 		jQuery("#nodeId").val(treeNode.id);
-		loadData('<%=request.getContextPath()%>/mx/wx/wxMenu/json?parentId='+treeNode.id);
+		loadData('<%=request.getContextPath()%>/mx/wx/wxMenu/json/${accountId}?parentId='+treeNode.id);
 	}
 
 	function loadData(url){
@@ -98,7 +98,7 @@ limitations under the License.
 				nowrap: false,
 				striped: true,
 				collapsible:true,
-				url:'<%=request.getContextPath()%>/mx/wx/wxMenu/json',
+				url:'<%=request.getContextPath()%>/mx/wx/wxMenu/json/${accountId}',
 				remoteSort: false,
 				singleSelect:true,
 				idField:'id',
@@ -149,14 +149,14 @@ limitations under the License.
 	}
 
 	function editPPT(rowId){
-		var link='<%=request.getContextPath()%>/mx/wx/wxContent/ppt?categoryId='+rowId+'&fromUrl=${fromUrl}';
+		var link='<%=request.getContextPath()%>/mx/wx/wxContent/ppt/${accountId}?categoryId='+rowId+'&fromUrl=${fromUrl}';
 		location.href=link;
         //art.dialog.open(link, { height: 420, width: 880, title: "菜单幻灯片", lock: true, scrollbars:"no" }, false);
 	}
 
 
 	function editRow(rowId){
-	    var link = '<%=request.getContextPath()%>/mx/wx/wxMenu/edit?group=${group}&id='+rowId+'&fromUrl=${fromUrl}';
+	    var link = '<%=request.getContextPath()%>/mx/wx/wxMenu/edit?accountId=${accountId}&group=${group}&id='+rowId+'&fromUrl=${fromUrl}';
 		location.href=link;
 	    //art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"no" }, false);
 	}
@@ -185,13 +185,13 @@ limitations under the License.
 
 	function addNew(){
 		var nodeId = jQuery("#nodeId").val();
-		var link = '<%=request.getContextPath()%>/mx/wx/wxMenu/edit?group=${group}&parentId='+nodeId+'&fromUrl=${fromUrl}';
+		var link = '<%=request.getContextPath()%>/mx/wx/wxMenu/edit?accountId=${accountId}&group=${group}&parentId='+nodeId+'&fromUrl=${fromUrl}';
 		location.href=link;
 	    //art.dialog.open(link, { height: 420, width: 680, title: "添加记录", lock: true, scrollbars:"yes" }, false);
 	}
 
 	function onRowClick(rowIndex, row){
-	    var link = '<%=request.getContextPath()%>/mx/wx/wxMenu/edit?group=${group}&id='+row.id+'&fromUrl=${fromUrl}';
+	    var link = '<%=request.getContextPath()%>/mx/wx/wxMenu/edit?accountId=${accountId}&group=${group}&id='+row.id+'&fromUrl=${fromUrl}';
 		location.href=link;
 	    //art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"yes" }, false);
 	}
@@ -217,7 +217,7 @@ limitations under the License.
 	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
 	    if (selected ){
 		  //location.href="<%=request.getContextPath()%>/mx/wx/wxMenu?method=edit&rowId="+selected.id;
-		  var link = '<%=request.getContextPath()%>/mx/wx/wxMenu/edit?group=${group}&id='+selected.id+'&fromUrl=${fromUrl}';
+		  var link = '<%=request.getContextPath()%>/mx/wx/wxMenu/edit?accountId=${accountId}&group=${group}&id='+selected.id+'&fromUrl=${fromUrl}';
 		  //art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"yes" }, false);
 		  location.href=link;
 	    }
@@ -232,7 +232,7 @@ limitations under the License.
 		}
 		var selected = jQuery('#mydatagrid').datagrid('getSelected');
 		if (selected ){
-		    location.href='<%=request.getContextPath()%>/mx/wx/wxMenu/edit?group=${group}&id='+selected.id+'&fromUrl=${fromUrl}';
+		    location.href='<%=request.getContextPath()%>/mx/wx/wxMenu/edit?accountId=${accountId}&group=${group}&id='+selected.id+'&fromUrl=${fromUrl}';
 		}
 	}
 
@@ -302,7 +302,7 @@ limitations under the License.
 		if(confirm("因服务器缓存原因更新菜单需要24小时后才能生效，确定重新同步吗？")){
             jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/mx/wx/wxMenu/syncServer?type='+type,
+				   url: '<%=request.getContextPath()%>/mx/wx/wxMenu/syncServer/${accountId}?type='+type,
 				   dataType:  'json',
 				   error: function(data){
 					   alert('服务器处理错误！');
@@ -323,7 +323,7 @@ limitations under the License.
 		if(confirm("确定从服务器获取菜单吗？")){
             jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/mx/wx/wxMenu/fetchMenuFromServer?type='+type,
+				   url: '<%=request.getContextPath()%>/mx/wx/wxMenu/fetchMenuFromServer/${accountId}?type='+type,
 				   dataType:  'json',
 				   error: function(data){
 					   alert('服务器处理错误！');

@@ -6,6 +6,7 @@
 
 	<resultMap id="wxUserTemplateResultMap" type="com.glaf.wechat.domain.WxUserTemplate">
 		<id property="id" column="ID_" jdbcType="BIGINT" />
+		<result property="accountId" column="ACCOUNTID_" jdbcType="BIGINT" />
 		<result property="categoryId" column="CATEGORYID_" jdbcType="BIGINT" />
 		<result property="templateId" column="TEMPLATEID_" jdbcType="BIGINT" />
 		<result property="type" column="TYPE_" jdbcType="VARCHAR" />
@@ -18,6 +19,9 @@
 		insert into WX_USER_TEMPLATE
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			ID_
+			<if test="accountId != null">
+				,ACCOUNTID_
+			</if>
 			<if test="categoryId != null">
 				,CATEGORYID_
 			</if>
@@ -37,7 +41,9 @@
 
 		<trim prefix=" values (" suffix=")" suffixOverrides=",">
 			#{id, jdbcType=BIGINT}
-
+			<if test="accountId != null">
+				,#{accountId, jdbcType=BIGINT}
+			</if>
 			<if test="categoryId != null">
 				,#{categoryId, jdbcType=BIGINT}
 			</if>
@@ -133,6 +139,10 @@
 
 		<where>
 			1 = 1
+
+			<if test="accountId != null">
+				and E.ACCOUNTID_ = #{accountId}
+			</if>
 
 			<if test="categoryId != null">
 				and E.CATEGORYID_ = #{categoryId}

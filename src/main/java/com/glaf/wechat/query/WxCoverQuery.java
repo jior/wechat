@@ -34,6 +34,15 @@ public class WxCoverQuery extends DataQuery {
 	public WxCoverQuery() {
 
 	}
+	
+	public WxCoverQuery accountId(
+			Long accountId) {
+		if (accountId == null) {
+			throw new RuntimeException("accountId is null");
+		}
+		this.accountId = accountId;
+		return this;
+	}
 
 	public WxCoverQuery createDateGreaterThanOrEqual(
 			Date createDateGreaterThanOrEqual) {

@@ -77,10 +77,10 @@ public interface WxCategoryService {
 	/**
 	 * 获取某个用户创建的全部分类列表
 	 * 
-	 * @param createBy
+	 * @param accountId
 	 * @return
 	 */
-	List<WxCategory> getCategoryList(String createBy);
+	List<WxCategory> getCategoryList(Long accountId);
 
 	/**
 	 * 获取某个用户创建的某个分类的子分类列表
@@ -89,7 +89,7 @@ public interface WxCategoryService {
 	 * @param parentId
 	 * @return
 	 */
-	List<WxCategory> getCategoryList(String createBy, long parentId);
+	List<WxCategory> getCategoryList(Long accountId, long parentId);
 	
 	/**
 	 * 获取某个用户创建的某类型的子分类列表
@@ -98,7 +98,7 @@ public interface WxCategoryService {
 	 * @param type
 	 * @return
 	 */
-	List<WxCategory> getCategoryList(String createBy, String type);
+	List<WxCategory> getCategoryList(Long accountId, String type);
 
 	/**
 	 * 根据查询参数获取一页的数据

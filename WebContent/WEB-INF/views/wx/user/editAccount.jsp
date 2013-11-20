@@ -66,7 +66,8 @@ limitations under the License.
 
                         <div class="box-content">
                              
-                            <form action="<%=request.getContextPath()%>/wx/wxUser/saveAccount" method="POST" class="form-horizontal form-validate" novalidate="novalidate">
+                            <form action="<%=request.getContextPath()%>/wx/wxUser/save" 
+							      method="POST" class="form-horizontal form-validate" novalidate="novalidate">
                                 <div class="control-group">
                                     <label for="plc_name" class="control-label">名称：</label>
                                     <div class="controls">
@@ -89,13 +90,13 @@ limitations under the License.
 								<div class="control-group">
                                     <label for="wxid" class="control-label">易信公众号原始id：</label>
                                     <div class="controls">
-                                        <input type="text" name="yxSourceId" id="yxSourceId" class="input-medium" data-rule-required="true" value="${wxUser.yxSourceId}" ><span class="maroon">*</span><span class="help-inline">  
+                                        <input type="text" name="yxSourceId" id="yxSourceId" class="input-medium" data-rule-required="false" value="${wxUser.yxSourceId}" ><span class="help-inline">  
                                     </span></div>
                                 </div>
                                 <div class="control-group">
                                     <label for="wechat_id" class="control-label">易信号：</label>
                                     <div class="controls">
-                                        <input type="text" name="yxid" id="yxid" class="input-medium" data-rule-required="true" value="${wxUser.yxid}"><span class="maroon">*</span>
+                                        <input type="text" name="yxid" id="yxid" class="input-medium" data-rule-required="false" value="${wxUser.yxid}">
                                     </div>
                                 </div>
                                   

@@ -131,6 +131,7 @@ limitations under the License.
   <div data-options="region:'center',border:false,cache:true">
   <form id="iForm" name="iForm" method="post">
   <input type="hidden" id="id" name="id" value="${wxContent.id}"/>
+  <input type="hidden" id="accountId" name="accountId" value="${accountId}"/>
   <input type="hidden" id="categoryId" name="categoryId" value="${categoryId}"/>
   <input type="hidden" id="type" name="type" value="PPT"/>
   <table class="easyui-form" style="width:96%;" align="left">

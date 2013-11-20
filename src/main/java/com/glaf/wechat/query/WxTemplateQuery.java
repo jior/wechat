@@ -38,6 +38,14 @@ public class WxTemplateQuery extends DataQuery {
 
 	}
 
+	public WxTemplateQuery accountId(Long accountId) {
+		if (accountId == null) {
+			throw new RuntimeException("accountId is null");
+		}
+		this.accountId = accountId;
+		return this;
+	}
+	
 	public WxTemplateQuery categoryId(Long categoryId) {
 		if (categoryId == null) {
 			throw new RuntimeException("categoryId is null");

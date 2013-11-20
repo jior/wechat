@@ -35,8 +35,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.base.BaseTree;
 import com.glaf.core.base.TreeModel;
-import com.glaf.core.identity.User;
-import com.glaf.core.security.IdentityFactory;
+ 
 import com.glaf.core.tree.helper.TreeHelper;
 import com.glaf.wechat.domain.WxCategory;
 import com.glaf.wechat.domain.WxContent;
@@ -50,6 +49,7 @@ import com.glaf.wechat.service.WxSiteInfoService;
 import com.glaf.wechat.service.WxTemplateService;
 import com.glaf.wechat.service.WxUserTemplateService;
 import com.glaf.wechat.util.WxContentJsonFactory;
+
 
 @Controller("/wx/json")
 @RequestMapping("/wx/json")
@@ -81,18 +81,17 @@ public class WxPublicJsonController {
 	}
 
 	@ResponseBody
-	@RequestMapping("/category/{userId}")
-	public byte[] category(@PathVariable("userId") Long userId,
+	@RequestMapping("/category/{accountId}")
+	public byte[] category(@PathVariable("accountId") Long accountId,
 			HttpServletRequest request) throws IOException {
 		JSONArray result = new JSONArray();
 		String type = request.getParameter("type");
 		if (StringUtils.isEmpty(type)) {
 			type = "category";
 		}
-		User user = IdentityFactory.getUserByUserId(userId);
-		String actorId = user.getActorId();
+		 
 		List<WxCategory> categories = wxCategoryService.getCategoryList(
-				actorId, type);
+				accountId, type);
 		if (categories != null && !categories.isEmpty()) {
 			List<TreeModel> treeModels = new ArrayList<TreeModel>();
 			for (WxCategory category : categories) {
@@ -134,8 +133,8 @@ public class WxPublicJsonController {
 	}
 
 	@ResponseBody
-	@RequestMapping("/list/{userId}/{categoryId}")
-	public byte[] list(@PathVariable("userId") Long userId,
+	@RequestMapping("/list/{accountId}/{categoryId}")
+	public byte[] list(@PathVariable("accountId") Long accountId,
 			@PathVariable("categoryId") Long categoryId,
 			HttpServletRequest request) throws IOException {
 		JSONArray result = null;
@@ -143,17 +142,15 @@ public class WxPublicJsonController {
 		if (StringUtils.isEmpty(type)) {
 			type = "P";
 		}
-		User user = IdentityFactory.getUserByUserId(userId);
-		String actorId = user.getActorId();
-		List<WxContent> list = wxContentService.getWxContents(actorId,
+		List<WxContent> list = wxContentService.getWxContents(accountId,
 				categoryId, type);
 		result = WxContentJsonFactory.listToArray(list);
 		return result.toJSONString().getBytes("UTF-8");
 	}
 
 	@ResponseBody
-	@RequestMapping("/ppt/{userId}/{categoryId}")
-	public byte[] ppt(@PathVariable("userId") Long userId,
+	@RequestMapping("/ppt/{accountId}/{categoryId}")
+	public byte[] ppt(@PathVariable("accountId") Long accountId,
 			@PathVariable("categoryId") Long categoryId,
 			HttpServletRequest request) throws IOException {
 		JSONArray result = null;
@@ -161,9 +158,7 @@ public class WxPublicJsonController {
 		if (StringUtils.isEmpty(type)) {
 			type = "PPT";
 		}
-		User user = IdentityFactory.getUserByUserId(userId);
-		String actorId = user.getActorId();
-		List<WxContent> list = wxContentService.getWxContents(actorId,
+		List<WxContent> list = wxContentService.getWxContents(accountId,
 				categoryId, type);
 		result = WxContentJsonFactory.listToArray(list);
 		return result.toJSONString().getBytes("UTF-8");

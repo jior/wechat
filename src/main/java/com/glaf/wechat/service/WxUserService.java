@@ -71,6 +71,8 @@ public interface WxUserService {
 	 * @return
 	 */
 	WxUser getWxUser(Long id);
+	
+	WxUser getWxUserByActorId(String actorId);
 
 	/**
 	 * 保存一条记录

@@ -43,7 +43,6 @@ import com.glaf.core.config.ViewProperties;
 import com.glaf.core.identity.*;
 import com.glaf.core.security.*;
 import com.glaf.core.util.*;
-
 import com.glaf.wechat.domain.*;
 import com.glaf.wechat.query.*;
 import com.glaf.wechat.service.*;
@@ -96,22 +95,6 @@ public class WxTemplateController {
 		}
 	}
 
-	@ResponseBody
-	@RequestMapping("/detail")
-	public byte[] detail(HttpServletRequest request) throws IOException {
-		LoginContext loginContext = RequestUtils.getLoginContext(request);
-		WxTemplate wxTemplate = wxTemplateService.getWxTemplate(RequestUtils
-				.getLong(request, "id"));
-		if (wxTemplate != null
-				&& (StringUtils.equals(wxTemplate.getCreateBy(),
-						loginContext.getActorId()) || loginContext
-						.isSystemAdministrator())) {
-			JSONObject rowJSON = wxTemplate.toJsonObject();
-			return rowJSON.toJSONString().getBytes("UTF-8");
-		}
-		return null;
-	}
-
 	@RequestMapping("/edit")
 	public ModelAndView edit(HttpServletRequest request, ModelMap modelMap) {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
@@ -142,10 +125,10 @@ public class WxTemplateController {
 		return new ModelAndView("/wx/template/edit", modelMap);
 	}
 
-	@RequestMapping("/json")
+	@RequestMapping("/json/{accountId}")
 	@ResponseBody
-	public byte[] json(HttpServletRequest request, ModelMap modelMap)
-			throws IOException {
+	public byte[] json(@PathVariable("accountId") Long accountId,
+			HttpServletRequest request, ModelMap modelMap) throws IOException {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		WxTemplateQuery query = new WxTemplateQuery();
@@ -156,6 +139,7 @@ public class WxTemplateController {
 
 		String actorId = loginContext.getActorId();
 		query.createBy(actorId);
+		query.setAccountId(accountId);
 
 		String gridType = ParamUtils.getString(params, "gridType");
 		if (gridType == null) {
@@ -244,9 +228,11 @@ public class WxTemplateController {
 		return new ModelAndView("/wx/template/list", modelMap);
 	}
 
-	@RequestMapping("/query")
-	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
+	@RequestMapping("/query/{accountId}")
+	public ModelAndView query(@PathVariable("accountId") Long accountId,
+			HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
+		request.setAttribute("accountId", accountId);
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {
 			return new ModelAndView(view, modelMap);
@@ -268,13 +254,14 @@ public class WxTemplateController {
 
 		WxTemplate wxTemplate = new WxTemplate();
 		Tools.populate(wxTemplate, params);
-
+		Long accountId = RequestUtils.getLong(request, "accountId");
 		wxTemplate.setTemplateType(request.getParameter("templateType"));
 		wxTemplate.setSkinImage(request.getParameter("skinImage"));
 		wxTemplate.setType(request.getParameter("type"));
 		wxTemplate.setPath(request.getParameter("path"));
 		wxTemplate.setDefaultFlag(RequestUtils.getInt(request, "defaultFlag"));
 		wxTemplate.setCreateBy(actorId);
+		wxTemplate.setAccountId(accountId);
 
 		wxTemplateService.save(wxTemplate);
 
@@ -290,7 +277,7 @@ public class WxTemplateController {
 		if (StringUtils.isEmpty(type)) {
 			type = "0";
 		}
-
+		Long accountId = RequestUtils.getLong(request, "accountId");
 		Long categoryId = RequestUtils.getLong(request, "categoryId", 0);
 		Long templateId = RequestUtils.getLong(request, "templateId");
 		WxUserTemplate wxUserTemplate = new WxUserTemplate();
@@ -298,6 +285,7 @@ public class WxTemplateController {
 		wxUserTemplate.setTemplateId(templateId);
 		wxUserTemplate.setType(type);
 		wxUserTemplate.setCreateBy(loginContext.getActorId());
+		wxUserTemplate.setAccountId(accountId);
 		wxUserTemplateService.save(wxUserTemplate);
 
 		return this.settings(request, modelMap);
@@ -308,6 +296,7 @@ public class WxTemplateController {
 	public byte[] saveWxTemplate(HttpServletRequest request) {
 		User user = RequestUtils.getUser(request);
 		String actorId = user.getActorId();
+		Long accountId = RequestUtils.getLong(request, "accountId");
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		WxTemplate wxTemplate = new WxTemplate();
 		try {
@@ -319,6 +308,7 @@ public class WxTemplateController {
 			wxTemplate.setDefaultFlag(RequestUtils.getInt(request,
 					"defaultFlag"));
 			wxTemplate.setCreateBy(actorId);
+			wxTemplate.setAccountId(accountId);
 			this.wxTemplateService.save(wxTemplate);
 
 			return ResponseUtils.responseJsonResult(true);
@@ -331,25 +321,25 @@ public class WxTemplateController {
 
 	@RequestMapping("/settings")
 	public ModelAndView settings(HttpServletRequest request, ModelMap modelMap) {
-		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		RequestUtils.setRequestParameterToAttribute(request);
 		String type = request.getParameter("type");
 		if (StringUtils.isEmpty(type)) {
 			type = "0";
 		}
 
+		Long accountId = RequestUtils.getLong(request, "accountId");
 		Long categoryId = RequestUtils.getLong(request, "categoryId", 0);
 
-		List<WxTemplate> templates = wxTemplateService.getTemplates(
-				loginContext.getActorId(), type, categoryId);
+		List<WxTemplate> templates = wxTemplateService.getTemplates(accountId,
+				categoryId, type);
 		if (templates == null || templates.isEmpty()) {
-			templates = wxTemplateService.getTemplates("system", type, 0L);
+			templates = wxTemplateService.getTemplates(0L, 0L, type);
 		}
 
 		request.setAttribute("templates", templates);
 
 		WxUserTemplate wxUserTemplate = wxUserTemplateService
-				.getWxUserTemplate(loginContext.getActorId(), type, categoryId);
+				.getWxUserTemplate(accountId, categoryId, type);
 		request.setAttribute("wxUserTemplate", wxUserTemplate);
 
 		String x_view = ViewProperties.getString("wxTemplate.settings");
@@ -376,10 +366,11 @@ public class WxTemplateController {
 		this.wxUserTemplateService = wxUserTemplateService;
 	}
 
-	@RequestMapping("/showUpload")
-	public ModelAndView showUpload(HttpServletRequest request, ModelMap modelMap) {
+	@RequestMapping("/showUpload/{accountId}")
+	public ModelAndView showUpload(@PathVariable("accountId") Long accountId,
+			HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
-
+		request.setAttribute("accountId", accountId);
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {
 			return new ModelAndView(view, modelMap);
@@ -393,15 +384,15 @@ public class WxTemplateController {
 		return new ModelAndView("/wx/template/showUpload", modelMap);
 	}
 
-	@RequestMapping("/update")
-	public ModelAndView update(HttpServletRequest request, ModelMap modelMap) {
+	@RequestMapping("/update/{id}")
+	public ModelAndView update(@PathVariable("id") Long id,
+			HttpServletRequest request, ModelMap modelMap) {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		params.remove("status");
 		params.remove("wfStatus");
 
-		WxTemplate wxTemplate = wxTemplateService.getWxTemplate(RequestUtils
-				.getLong(request, "id"));
+		WxTemplate wxTemplate = wxTemplateService.getWxTemplate(id);
 		if (wxTemplate != null
 				&& (StringUtils.equals(wxTemplate.getCreateBy(),
 						loginContext.getActorId()) || loginContext
@@ -419,8 +410,9 @@ public class WxTemplateController {
 		return this.list(request, modelMap);
 	}
 
-	@RequestMapping("/upload")
-	public ModelAndView upload(HttpServletRequest request, ModelMap modelMap) {
+	@RequestMapping("/upload/{accountId}")
+	public ModelAndView upload(@PathVariable("accountId") Long accountId,
+			HttpServletRequest request, ModelMap modelMap) {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		String actorId = loginContext.getActorId();
 		MultipartHttpServletRequest req = (MultipartHttpServletRequest) request;
@@ -474,6 +466,7 @@ public class WxTemplateController {
 						byte[] bytes = entry2.getValue();
 						if (name != null && bytes != null) {
 							WxTemplate wxTemplate = new WxTemplate();
+							wxTemplate.setAccountId(accountId);
 							wxTemplate.setCategoryId(categoryId);
 							wxTemplate.setCreateBy(actorId);
 							wxTemplate.setPath(path + "/" + categoryId + "/"
@@ -514,15 +507,13 @@ public class WxTemplateController {
 		return this.list(request, modelMap);
 	}
 
-	@RequestMapping("/view")
-	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
+	@RequestMapping("/view/{id}")
+	public ModelAndView view(@PathVariable("id") Long id,
+			HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 
-		WxTemplate wxTemplate = wxTemplateService.getWxTemplate(RequestUtils
-				.getLong(request, "id"));
+		WxTemplate wxTemplate = wxTemplateService.getWxTemplate(id);
 		request.setAttribute("wxTemplate", wxTemplate);
-		JSONObject rowJSON = wxTemplate.toJsonObject();
-		request.setAttribute("x_json", rowJSON.toJSONString());
 
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {

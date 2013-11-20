@@ -57,6 +57,14 @@ public class WxCategoryQuery extends DataQuery {
 
 	}
 
+	public WxCategoryQuery accountId(Long accountId) {
+		if (accountId == null) {
+			throw new RuntimeException("accountId is null");
+		}
+		this.accountId = accountId;
+		return this;
+	}
+
 	public WxCategoryQuery code(String code) {
 		if (code == null) {
 			throw new RuntimeException("code is null");

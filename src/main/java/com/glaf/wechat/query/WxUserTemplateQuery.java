@@ -6,6 +6,7 @@ import com.glaf.core.query.DataQuery;
 
 public class WxUserTemplateQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
+	protected Long accountId;
 	protected List<Long> ids;
 	protected Long categoryId;
 	protected List<Long> categoryIds;
@@ -16,6 +17,14 @@ public class WxUserTemplateQuery extends DataQuery {
 
 	public WxUserTemplateQuery() {
 
+	}
+
+	public WxUserTemplateQuery accountId(Long accountId) {
+		if (accountId == null) {
+			throw new RuntimeException("accountId is null");
+		}
+		this.accountId = accountId;
+		return this;
 	}
 
 	public WxUserTemplateQuery categoryId(Long categoryId) {
@@ -40,6 +49,10 @@ public class WxUserTemplateQuery extends DataQuery {
 		}
 		this.createBys = createBys;
 		return this;
+	}
+
+	public Long getAccountId() {
+		return accountId;
 	}
 
 	public Long getCategoryId() {
@@ -118,6 +131,10 @@ public class WxUserTemplateQuery extends DataQuery {
 		addColumn("type", "TYPE_");
 		addColumn("createBy", "CREATEBY_");
 		addColumn("createDate", "CREATEDATE_");
+	}
+
+	public void setAccountId(Long accountId) {
+		this.accountId = accountId;
 	}
 
 	public void setCategoryId(Long categoryId) {

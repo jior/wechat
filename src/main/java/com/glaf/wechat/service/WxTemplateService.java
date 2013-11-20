@@ -43,7 +43,7 @@ public interface WxTemplateService {
 	 */
 	@Transactional
 	void deleteByIds(List<Long> ids);
-	
+
 	/**
 	 * 根据主键获取一条记录
 	 * 
@@ -57,17 +57,16 @@ public interface WxTemplateService {
 	 * @return
 	 */
 	WxTemplate getWxTemplate(Long id, boolean cache);
-	
-	
-	
+
 	/**
 	 * 获取某个栏目指定类型的模板
-	 * @param createBy
-	 * @param type
+	 * 
+	 * @param accountId
 	 * @param categoryId
+	 * @param type
 	 * @return
 	 */
-	List<WxTemplate> getTemplates(String createBy, String type, Long categoryId);
+	List<WxTemplate> getTemplates(Long accountId, Long categoryId, String type);
 
 	/**
 	 * 根据查询参数获取记录总数

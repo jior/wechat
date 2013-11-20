@@ -49,6 +49,7 @@ import com.glaf.wechat.domain.WxCategory;
 import com.glaf.wechat.domain.WxContent;
 import com.glaf.wechat.domain.WxLog;
 import com.glaf.wechat.domain.WxTemplate;
+import com.glaf.wechat.domain.WxUser;
 import com.glaf.wechat.domain.WxUserTemplate;
 import com.glaf.wechat.query.WxCategoryQuery;
 import com.glaf.wechat.query.WxContentQuery;
@@ -63,6 +64,7 @@ import com.glaf.wechat.service.WxSiteInfoService;
 import com.glaf.wechat.service.WxTemplateService;
 import com.glaf.wechat.service.WxUserTemplateService;
 import com.glaf.wechat.util.WechatUtils;
+import com.glaf.wechat.util.WxIdentityFactory;
 import com.glaf.wechat.util.WxLogFactory;
 
 @Controller("/wx/content")
@@ -129,19 +131,20 @@ public class WxPublicContentController {
 			wxContent = wxContentService.getWxContentByUUIDWithRefs(uuid);
 		}
 		if (wxContent != null) {
-			String actorId = wxContent.getCreateBy();
+			Long accountId = wxContent.getAccountId();
 			Long categoryId = wxContent.getCategoryId();
+			String actorId = wxContent.getCreateBy();
 			WxUserTemplate wxUserTemplate = wxUserTemplateService
-					.getWxUserTemplate(actorId, "2", categoryId);
+					.getWxUserTemplate(accountId, categoryId, "2");
 			if (wxUserTemplate == null) {
 				wxUserTemplate = wxUserTemplateService.getWxUserTemplate(
-						actorId, "2", 0L);
+						accountId, 0L, "2");
 			}
 			if (wxUserTemplate == null
 					|| wxUserTemplate.getTemplateId() == null
 					|| wxUserTemplate.getTemplateId() == 0) {
-				wxUserTemplate = wxUserTemplateService.getWxUserTemplate(
-						"system", "2", 0L);
+				wxUserTemplate = wxUserTemplateService.getWxUserTemplate(0L,
+						0L, "2");
 			}
 
 			// categoryId == 0 为回复内容或ppt
@@ -159,6 +162,7 @@ public class WxPublicContentController {
 				context.put("hashedPath", hashedPath);
 				context.put("userId", String.valueOf(user.getId()));
 				context.put("actorId", actorId);
+				context.put("accountId", accountId);
 				context.put("actorIdMD5Hex", DigestUtils.md5Hex(actorId));
 				context.put("content", wxContent);
 				context.put("template", template);
@@ -168,6 +172,7 @@ public class WxPublicContentController {
 
 				WxCategoryQuery query3 = new WxCategoryQuery();
 				query3.createBy(actorId);
+				query3.accountId(accountId);
 				query3.parentId(0L);
 				query3.type("category");
 				query3.locked(0);
@@ -204,6 +209,7 @@ public class WxPublicContentController {
 				try {
 					WxLog bean = new WxLog();
 					bean.setAccount(actorId);
+					bean.setAccountId(accountId);
 					bean.setCreateTime(new Date());
 					bean.setFlag(1002);
 					bean.setIp(RequestUtils.getIPAddress(request));
@@ -216,15 +222,15 @@ public class WxPublicContentController {
 	}
 
 	@ResponseBody
-	@RequestMapping("/index/{userId}")
-	public void index(@PathVariable("userId") Long userId,
+	@RequestMapping("/index/{accountId}")
+	public void index(@PathVariable("accountId") Long accountId,
 			HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
-		String cacheKey = "website_index_" + userId;
-		User user = IdentityFactory.getUserByUserId(userId);
+		String cacheKey = "website_index_" + accountId;
+		WxUser user = WxIdentityFactory.getUserByAccountId(accountId);
 		if (CacheFactory.getString(cacheKey) != null) {
 			String content = CacheFactory.getString(cacheKey);
 			PrintWriter out = response.getWriter();
@@ -234,6 +240,7 @@ public class WxPublicContentController {
 			try {
 				WxLog bean = new WxLog();
 				bean.setAccount(user.getActorId());
+				bean.setAccountId(accountId);
 				bean.setCreateTime(new Date());
 				bean.setFlag(10001);
 				bean.setIp(RequestUtils.getIPAddress(request));
@@ -246,11 +253,11 @@ public class WxPublicContentController {
 		Long categoryId = RequestUtils.getLong(request, "categoryId", 0);
 		String actorId = user.getActorId();
 		WxUserTemplate wxUserTemplate = wxUserTemplateService
-				.getWxUserTemplate(actorId, "0", categoryId);
+				.getWxUserTemplate(accountId, categoryId, "0");
 		if (wxUserTemplate == null || wxUserTemplate.getTemplateId() == null
 				|| wxUserTemplate.getTemplateId() == 0) {
-			wxUserTemplate = wxUserTemplateService.getWxUserTemplate("system",
-					"0", 0L);
+			wxUserTemplate = wxUserTemplateService.getWxUserTemplate(0L, 0L,
+					"0");
 		}
 		if (wxUserTemplate != null) {
 			Long templateId = wxUserTemplate.getTemplateId();
@@ -267,6 +274,7 @@ public class WxPublicContentController {
 				context.put("hashedPath", hashedPath);
 				context.put("userId", String.valueOf(user.getId()));
 				context.put("actorId", actorId);
+				context.put("accountId", accountId);
 				context.put("actorIdMD5Hex", DigestUtils.md5Hex(actorId));
 				context.put("template", template);
 				context.put("contextPath", request.getContextPath());
@@ -274,7 +282,7 @@ public class WxPublicContentController {
 				context.put("serverUrl", serviceUrl);
 
 				WxContentQuery query = new WxContentQuery();
-				query.createBy(actorId);
+				query.accountId(accountId);
 				query.categoryId(0L);
 				query.type("PPT");
 				query.status(1);
@@ -296,6 +304,7 @@ public class WxPublicContentController {
 				}
 
 				WxCategoryQuery query3 = new WxCategoryQuery();
+				query3.setAccountId(accountId);
 				query3.createBy(actorId);
 				query3.parentId(0L);
 				query3.type("category");
@@ -330,6 +339,7 @@ public class WxPublicContentController {
 				try {
 					WxLog bean = new WxLog();
 					bean.setAccount(actorId);
+					bean.setAccountId(accountId);
 					bean.setCreateTime(new Date());
 					bean.setFlag(10002);
 					bean.setIp(RequestUtils.getIPAddress(request));
@@ -361,6 +371,7 @@ public class WxPublicContentController {
 				WxLog bean = new WxLog();
 				if (category != null) {
 					bean.setAccount(category.getCreateBy());
+					bean.setAccountId(category.getAccountId());
 				}
 				bean.setCreateTime(new Date());
 				bean.setFlag(5001);
@@ -379,8 +390,8 @@ public class WxPublicContentController {
 			if (wxUserTemplate == null
 					|| wxUserTemplate.getTemplateId() == null
 					|| wxUserTemplate.getTemplateId() == 0) {
-				wxUserTemplate = wxUserTemplateService.getWxUserTemplate(
-						"system", "1", 0L);
+				wxUserTemplate = wxUserTemplateService.getWxUserTemplate(0L,
+						0L, "1");
 			}
 			if (wxUserTemplate != null) {
 				Long templateId = wxUserTemplate.getTemplateId();
@@ -396,6 +407,7 @@ public class WxPublicContentController {
 					String hashedPath = WechatUtils.getHashedPath(actorId);
 					context.put("hashedPath", hashedPath);
 					context.put("userId", String.valueOf(user.getId()));
+					context.put("accountId", category.getAccountId());
 					context.put("actorId", category.getCreateBy());
 					context.put("actorIdMD5Hex",
 							DigestUtils.md5Hex(category.getCreateBy()));
@@ -424,6 +436,7 @@ public class WxPublicContentController {
 					context.put("pageNo", pageNo);
 
 					WxContentQuery query = new WxContentQuery();
+					query.accountId(category.getAccountId());
 					query.categoryId(categoryId);
 					query.status(1);
 					query.type("P");
@@ -439,7 +452,7 @@ public class WxPublicContentController {
 					}
 
 					WxContentQuery query2 = new WxContentQuery();
-					query2.createBy(category.getCreateBy());
+					query2.accountId(category.getAccountId());
 					query2.categoryId(categoryId);
 					query2.type("PPT");
 					query2.status(1);
@@ -465,7 +478,7 @@ public class WxPublicContentController {
 					context.put("category", category);
 
 					WxCategoryQuery query3 = new WxCategoryQuery();
-					query3.createBy(category.getCreateBy());
+					query3.accountId(category.getAccountId());
 					query3.parentId(0L);
 					query3.type("category");
 					query3.locked(0);
@@ -488,7 +501,7 @@ public class WxPublicContentController {
 					}
 
 					WxCategoryQuery query4 = new WxCategoryQuery();
-					query4.createBy(category.getCreateBy());
+					query4.accountId(category.getAccountId());
 					query4.parentId(category.getId());
 					query4.type("category");
 					query4.locked(0);
@@ -523,6 +536,7 @@ public class WxPublicContentController {
 					try {
 						WxLog bean = new WxLog();
 						bean.setAccount(actorId);
+						bean.setAccountId(category.getAccountId());
 						bean.setCreateTime(new Date());
 						bean.setFlag(5002);
 						bean.setIp(RequestUtils.getIPAddress(request));
@@ -617,18 +631,19 @@ public class WxPublicContentController {
 		}
 		if (wxContent != null) {
 			String actorId = wxContent.getCreateBy();
+			Long accountId = wxContent.getAccountId();
 			Long categoryId = wxContent.getCategoryId();
 			WxUserTemplate wxUserTemplate = wxUserTemplateService
-					.getWxUserTemplate(actorId, "2", categoryId);
+					.getWxUserTemplate(accountId, categoryId, "2");
 			if (wxUserTemplate == null
 					|| wxUserTemplate.getTemplateId() == null
 					|| wxUserTemplate.getTemplateId() == 0) {
 				wxUserTemplate = wxUserTemplateService.getWxUserTemplate(
-						actorId, "2", 0L);
+						accountId, 0L, "2");
 			}
 			if (wxUserTemplate == null) {
-				wxUserTemplate = wxUserTemplateService.getWxUserTemplate(
-						"system", "2", 0L);
+				wxUserTemplate = wxUserTemplateService.getWxUserTemplate(0L,
+						0L, "2");
 			}
 
 			WxCategory category = wxCategoryService.getWxCategory(categoryId);
@@ -645,6 +660,7 @@ public class WxPublicContentController {
 				String hashedPath = WechatUtils.getHashedPath(actorId);
 				context.put("hashedPath", hashedPath);
 				context.put("userId", String.valueOf(user.getId()));
+				context.put("accountId", accountId);
 				context.put("actorId", actorId);
 				context.put("actorIdMD5Hex", DigestUtils.md5Hex(actorId));
 				context.put("content", wxContent);
@@ -654,7 +670,7 @@ public class WxPublicContentController {
 				context.put("serverUrl", serviceUrl);
 
 				WxCategoryQuery query3 = new WxCategoryQuery();
-				query3.createBy(actorId);
+				query3.accountId(accountId);
 				query3.parentId(0L);
 				query3.type("category");
 				query3.locked(0);
@@ -691,6 +707,7 @@ public class WxPublicContentController {
 				try {
 					WxLog bean = new WxLog();
 					bean.setAccount(actorId);
+					bean.setAccountId(accountId);
 					bean.setCreateTime(new Date());
 					bean.setFlag(2002);
 					bean.setIp(RequestUtils.getIPAddress(request));

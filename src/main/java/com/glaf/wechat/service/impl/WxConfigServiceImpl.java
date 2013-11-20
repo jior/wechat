@@ -88,8 +88,8 @@ public class WxConfigServiceImpl implements WxConfigService {
 		return wxConfig;
 	}
 
-	public WxConfig getWxConfigByUser(String createBy) {
-		String cacheKey = "wx_cfg_" + createBy;
+	public WxConfig getWxConfigByAccountId(Long accountId) {
+		String cacheKey = "wx_cfg_" + accountId;
 		if (CacheFactory.getString(cacheKey) != null) {
 			String text = CacheFactory.getString(cacheKey);
 			JSONObject json = JSON.parseObject(text);
@@ -97,7 +97,7 @@ public class WxConfigServiceImpl implements WxConfigService {
 			return cfg;
 		}
 		WxConfigQuery query = new WxConfigQuery();
-		query.createBy(createBy);
+		query.accountId(accountId);
 		List<WxConfig> list = wxConfigMapper.getWxConfigs(query);
 		if (list != null && !list.isEmpty()) {
 			WxConfig cfg = list.get(0);

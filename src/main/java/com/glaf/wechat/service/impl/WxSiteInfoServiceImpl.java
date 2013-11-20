@@ -90,9 +90,9 @@ public class WxSiteInfoServiceImpl implements WxSiteInfoService {
 	 * 
 	 * @return
 	 */
-	public WxSiteInfo getWxSiteInfoByUser(String createBy){
+	public WxSiteInfo getWxSiteInfoByAccountId(Long accountId){
 		WxSiteInfoQuery query = new WxSiteInfoQuery();
-		query.createBy(createBy);
+		query.accountId(accountId);
 		List<WxSiteInfo> list = wxSiteInfoMapper.getWxSiteInfos(query);
 		if(list != null && !list.isEmpty()){
 			return list.get(0);

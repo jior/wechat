@@ -91,8 +91,9 @@ limitations under the License.
 <center>
 <form name="iForm" method="post" ENCTYPE="multipart/form-data"
 	class="x-form"
-	action="<%=request.getContextPath()%>/mx/wx/wxTemplate/upload"
+	action="<%=request.getContextPath()%>/mx/wx/wxTemplate/upload/${accountId}"
 	onsubmit="return checkForm();">
+	<input type="hidden" id="accountId" name="accountId" value="${accountId}"/>
 <c:if test="${not empty categoryId}">
 	<input type="hidden" name="nodeId" value="${categoryId}">
 	<input type="hidden" name="categoryId" value="${categoryId}">

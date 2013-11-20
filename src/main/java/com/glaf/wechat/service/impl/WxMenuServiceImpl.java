@@ -83,17 +83,17 @@ public class WxMenuServiceImpl implements WxMenuService {
 		}
 	}
 
-	public List<WxMenu> getMenuList(String createBy, Long parentId) {
+	public List<WxMenu> getMenuList(Long accountId, Long parentId) {
 		WxMenuQuery query = new WxMenuQuery();
-		query.createBy(createBy);
+		query.accountId(accountId);
 		query.parentId(parentId);
 		List<WxMenu> list = wxMenuMapper.getWxMenus(query);
 		return list;
 	}
 
-	public List<WxMenu> getMenuList(String createBy, String group) {
+	public List<WxMenu> getMenuList(Long accountId, String group) {
 		WxMenuQuery query = new WxMenuQuery();
-		query.createBy(createBy);
+		query.accountId(accountId);
 		query.group(group);
 		List<WxMenu> list = wxMenuMapper.getWxMenus(query);
 		return list;
@@ -102,14 +102,14 @@ public class WxMenuServiceImpl implements WxMenuService {
 	/**
 	 * 获取某个用户的某个分组的全部子菜单
 	 * 
-	 * @param createBy
+	 * @param accountId
 	 * @param group
 	 * @param parentId
 	 * @return
 	 */
-	public List<WxMenu> getMenuList(String createBy, String group, Long parentId) {
+	public List<WxMenu> getMenuList(Long accountId, String group, Long parentId) {
 		WxMenuQuery query = new WxMenuQuery();
-		query.createBy(createBy);
+		query.accountId(accountId);
 		query.parentId(parentId);
 		query.group(group);
 		List<WxMenu> list = wxMenuMapper.getWxMenus(query);

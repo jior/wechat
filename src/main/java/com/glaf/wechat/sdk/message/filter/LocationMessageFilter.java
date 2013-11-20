@@ -30,8 +30,8 @@ public class LocationMessageFilter extends AbstractMessageFilter implements
 			WxContentQuery query = new WxContentQuery();
 			query.createBy(message.getCustomer());
 			query.type("L");
-			WxConfig cfg = wxConfigService.getWxConfigByUser(message
-					.getCustomer());
+			WxConfig cfg = wxConfigService.getWxConfigByAccountId(message
+					.getAccountId());
 			List<WxContent> rows = wxContentService.list(query);
 			if (rows != null && !rows.isEmpty()) {
 				ResponseNewsMessage newsMessage = new ResponseNewsMessage();

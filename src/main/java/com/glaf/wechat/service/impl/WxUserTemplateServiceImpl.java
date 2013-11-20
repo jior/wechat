@@ -91,15 +91,15 @@ public class WxUserTemplateServiceImpl implements WxUserTemplateService {
 	/**
 	 * 获取某个栏目指定类型的模板实例
 	 * 
-	 * @param createBy
-	 * @param type
+	 * @param accountId
 	 * @param categoryId
+	 * @param type
 	 * @return
 	 */
-	public WxUserTemplate getWxUserTemplate(String createBy, String type,
-			Long categoryId) {
-		String cacheKey = "wx_user_tpl_" + createBy + "_" + type + "_"
-				+ categoryId;
+	public WxUserTemplate getWxUserTemplate(Long accountId, Long categoryId,
+			String type) {
+		String cacheKey = "wx_user_tpl_" + accountId + "_" + categoryId + "_"
+				+ type;
 		if (CacheFactory.getString(cacheKey) != null) {
 			String text = CacheFactory.getString(cacheKey);
 			JSONObject json = JSON.parseObject(text);
@@ -108,8 +108,8 @@ public class WxUserTemplateServiceImpl implements WxUserTemplateService {
 		}
 		WxUserTemplate wxUserTemplate = null;
 		WxUserTemplateQuery query = new WxUserTemplateQuery();
-		query.createBy(createBy);
 		query.type(type);
+		query.accountId(accountId);
 		query.categoryId(categoryId);
 		List<WxUserTemplate> list = wxUserTemplateMapper
 				.getWxUserTemplates(query);
@@ -143,17 +143,17 @@ public class WxUserTemplateServiceImpl implements WxUserTemplateService {
 	@Transactional
 	public void save(WxUserTemplate wxUserTemplate) {
 		WxUserTemplate model = this.getWxUserTemplate(
-				wxUserTemplate.getCreateBy(), wxUserTemplate.getType(),
-				wxUserTemplate.getCategoryId());
+				wxUserTemplate.getAccountId(), wxUserTemplate.getCategoryId(),
+				wxUserTemplate.getType());
 		if (model != null) {
 			this.deleteById(model.getId());
 		}
 		wxUserTemplate.setId(idGenerator.nextId());
 		wxUserTemplate.setCreateDate(new Date());
 		wxUserTemplateMapper.insertWxUserTemplate(wxUserTemplate);
-		String cacheKey = "wx_user_tpl_" + wxUserTemplate.getCreateBy() + "_"
-				+ wxUserTemplate.getType() + "_"
-				+ wxUserTemplate.getCategoryId();
+		String cacheKey = "wx_user_tpl_" + wxUserTemplate.getAccountId() + "_"
+				+ wxUserTemplate.getCategoryId() + "_"
+				+ wxUserTemplate.getType();
 		CacheFactory.remove(cacheKey);
 	}
 

@@ -32,10 +32,11 @@ import com.glaf.core.context.ContextFactory;
 import com.glaf.core.tree.helper.TreeHelper;
 import com.glaf.core.util.FileUtils;
 import com.glaf.core.util.StringTools;
-
 import com.glaf.wechat.domain.WxCategory;
+import com.glaf.wechat.domain.WxUser;
 import com.glaf.wechat.query.WxCategoryQuery;
 import com.glaf.wechat.service.WxCategoryService;
+import com.glaf.wechat.service.WxUserService;
 import com.glaf.wechat.util.WechatUtils;
 
 public class CategoryJsonGeneration {
@@ -53,21 +54,26 @@ public class CategoryJsonGeneration {
 		}
 		ContextFactory.setContext(ctx);
 		CategoryJsonGeneration gen = new CategoryJsonGeneration();
-		gen.generateJson("data", "root", "category");
+		gen.generateJson("data", 1L, "category");
 	}
 
-	public void generateJson(String rootDir, String createBy, String type) {
+	public void generateJson(String rootDir, Long accountId, String type) {
 		WxCategoryService wxCategoryService = ContextFactory
 				.getBean("wxCategoryService");
+		WxUserService wxUserService = ContextFactory
+				.getBean("wxUserService");
 		WxCategoryQuery query = new WxCategoryQuery();
-		query.createBy(createBy);
+		query.accountId(accountId);
 		query.type(type);
-
+		
+		WxUser user = wxUserService.getWxUser(accountId);
+        String actorId = user.getActorId();
+        
 		if (StringUtils.isEmpty(type)) {
 			type = "category";
 		}
 		List<WxCategory> categories = wxCategoryService.getCategoryList(
-				createBy, type);
+				accountId, type);
 		if (categories != null && !categories.isEmpty()) {
 			List<TreeModel> treeModels = new ArrayList<TreeModel>();
 			for (WxCategory category : categories) {
@@ -90,7 +96,7 @@ public class CategoryJsonGeneration {
 			}
 			TreeHelper treeHelper = new TreeHelper();
 			JSONArray result = treeHelper.getTreeJSONArray(treeModels);
-			String rand = WechatUtils.getHashedPath(createBy);
+			String rand = WechatUtils.getHashedPath(actorId);
 			String filename = rootDir + rand + "/" + type + ".json";
 			String path = rootDir + rand;
 			boolean success = false;

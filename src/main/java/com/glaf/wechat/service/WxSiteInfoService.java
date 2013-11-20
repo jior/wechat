@@ -57,7 +57,7 @@ public interface WxSiteInfoService {
 	 * 
 	 * @return
 	 */
-	WxSiteInfo getWxSiteInfoByUser(String createBy);
+	WxSiteInfo getWxSiteInfoByAccountId(Long accountId);
 
 	/**
 	 * 根据查询参数获取记录总数

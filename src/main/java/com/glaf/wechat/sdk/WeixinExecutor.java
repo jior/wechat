@@ -34,11 +34,10 @@ import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
 import com.glaf.core.config.Configuration;
-import com.glaf.core.identity.User;
-import com.glaf.core.security.IdentityFactory;
 import com.glaf.core.util.IOUtils;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.wechat.config.WechatConfiguration;
+import com.glaf.wechat.domain.WxUser;
 import com.glaf.wechat.sdk.message.IMessage;
 import com.glaf.wechat.sdk.message.Message;
 import com.glaf.wechat.sdk.message.EventMessage;
@@ -65,6 +64,7 @@ import com.glaf.wechat.sdk.message.response.handler.TextResponseMessageHandler;
 import com.glaf.wechat.util.SignUtils;
 import com.glaf.wechat.util.TimeUtils;
 import com.glaf.wechat.util.WechatUtils;
+import com.glaf.wechat.util.WxIdentityFactory;
 
 /**
  * Weixin executor class
@@ -124,8 +124,8 @@ public class WeixinExecutor implements IMessage {
 
 		String uri = request.getRequestURI();
 		String id = uri.substring(uri.lastIndexOf("/") + 1);
-		Long userId = Long.parseLong(id);
-		User user = IdentityFactory.getUserByUserId(userId);
+		Long accountId = Long.parseLong(id);
+		WxUser user = WxIdentityFactory.getUserByAccountId(accountId);
 
 		Element root = doc.getRootElement();
 		logger.debug(root.asXML());
@@ -157,13 +157,14 @@ public class WeixinExecutor implements IMessage {
 		}
 
 		message.setRoot(root);
+		message.setAccountId(accountId);
 		message.setCustomer(user.getActorId());
 		message.setContextPath(request.getContextPath());
 		message.setRequestParameters(RequestUtils.getParameterMap(request));
 		String serviceUrl = WechatUtils.getServiceUrl(request);
 		message.setServiceUrl(serviceUrl);
 		message.setRemoteIPAddr(RequestUtils.getIPAddress(request));
-		
+
 		// do the default/common parse!
 		messageHandler.parseMessage(message, root);
 	}

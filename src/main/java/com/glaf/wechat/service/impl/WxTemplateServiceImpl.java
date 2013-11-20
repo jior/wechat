@@ -39,7 +39,6 @@ import com.glaf.core.config.SystemProperties;
 import com.glaf.core.dao.EntityDAO;
 import com.glaf.core.id.IdGenerator;
 import com.glaf.core.util.FileUtils;
-
 import com.glaf.wechat.domain.WxTemplate;
 import com.glaf.wechat.mapper.WxTemplateMapper;
 import com.glaf.wechat.query.WxTemplateQuery;
@@ -87,16 +86,15 @@ public class WxTemplateServiceImpl implements WxTemplateService {
 	/**
 	 * 获取某个栏目指定类型的模板
 	 * 
-	 * @param createBy
-	 * @param type
+	 * @param accountId
 	 * @param categoryId
+	 * @param type
 	 * @return
 	 */
-	public List<WxTemplate> getTemplates(String createBy, String type,
-			Long categoryId) {
+	public List<WxTemplate> getTemplates(Long accountId, Long categoryId, String type){
 		WxTemplateQuery query = new WxTemplateQuery();
 		query.categoryId(categoryId);
-		query.createBy(createBy);
+		query.accountId(accountId);
 		query.type(type);
 		return this.list(query);
 	}

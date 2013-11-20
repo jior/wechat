@@ -46,6 +46,14 @@ public class WxSiteInfoQuery extends DataQuery {
 
 	}
 
+	public WxSiteInfoQuery accountId(Long accountId) {
+		if (accountId == null) {
+			throw new RuntimeException("accountId is null");
+		}
+		this.accountId = accountId;
+		return this;
+	}
+	
 	public WxSiteInfoQuery addressLike(String addressLike) {
 		if (addressLike == null) {
 			throw new RuntimeException("address is null");
@@ -72,6 +80,14 @@ public class WxSiteInfoQuery extends DataQuery {
 		return this;
 	}
 
+	public Long getAccountId() {
+		return accountId;
+	}
+
+	public List<Long> getAccountIds() {
+		return accountIds;
+	}
+
 	public String getAddressLike() {
 		if (addressLike != null && addressLike.trim().length() > 0) {
 			if (!addressLike.startsWith("%")) {
@@ -82,14 +98,6 @@ public class WxSiteInfoQuery extends DataQuery {
 			}
 		}
 		return addressLike;
-	}
-
-	public Long getAccountId() {
-		return accountId;
-	}
-
-	public List<Long> getAccountIds() {
-		return accountIds;
 	}
 
 	public Date getCreateDateGreaterThanOrEqual() {
@@ -339,16 +347,16 @@ public class WxSiteInfoQuery extends DataQuery {
 		return this;
 	}
 
-	public void setAddressLike(String addressLike) {
-		this.addressLike = addressLike;
-	}
-
 	public void setAccountId(Long accountId) {
 		this.accountId = accountId;
 	}
 
 	public void setAccountIds(List<Long> accountIds) {
 		this.accountIds = accountIds;
+	}
+
+	public void setAddressLike(String addressLike) {
+		this.addressLike = addressLike;
 	}
 
 	public void setCreateDateGreaterThanOrEqual(

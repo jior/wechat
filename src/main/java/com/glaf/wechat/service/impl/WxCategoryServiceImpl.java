@@ -107,9 +107,9 @@ public class WxCategoryServiceImpl implements WxCategoryService {
 	 * @param createBy
 	 * @return
 	 */
-	public List<WxCategory> getCategoryList(String createBy) {
+	public List<WxCategory> getCategoryList(Long accountId) {
 		WxCategoryQuery query = new WxCategoryQuery();
-		query.createBy(createBy);
+		query.accountId(accountId);
 		query.setOrderBy(" E.TREEID_ asc");
 		List<WxCategory> list = wxCategoryMapper.getWxCategories(query);
 		return list;
@@ -122,9 +122,9 @@ public class WxCategoryServiceImpl implements WxCategoryService {
 	 * @param parentId
 	 * @return
 	 */
-	public List<WxCategory> getCategoryList(String createBy, long parentId) {
+	public List<WxCategory> getCategoryList(Long accountId, long parentId) {
 		WxCategoryQuery query = new WxCategoryQuery();
-		query.createBy(createBy);
+		query.accountId(accountId);
 		query.parentId(parentId);
 		query.setOrderBy(" E.TREEID_ asc");
 		List<WxCategory> list = wxCategoryMapper.getWxCategories(query);
@@ -138,9 +138,9 @@ public class WxCategoryServiceImpl implements WxCategoryService {
 	 * @param type
 	 * @return
 	 */
-	public List<WxCategory> getCategoryList(String createBy, String type) {
+	public List<WxCategory> getCategoryList(Long accountId, String type) {
 		WxCategoryQuery query = new WxCategoryQuery();
-		query.createBy(createBy);
+		query.accountId(accountId);
 		query.type(type);
 		query.setOrderBy(" E.TREEID_ asc");
 		List<WxCategory> list = wxCategoryMapper.getWxCategories(query);

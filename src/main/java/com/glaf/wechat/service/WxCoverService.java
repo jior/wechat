@@ -53,10 +53,10 @@ public interface WxCoverService {
 	
 	/**
 	 * 获取用户封面信息
-	 * @param createBy
+	 * @param accountId
 	 * @return
 	 */
-	WxCover getWxCoverByUser(String createBy);
+	WxCover getWxCoverByAccountId(Long accountId);
 
 	/**
 	 * 根据查询参数获取记录总数
