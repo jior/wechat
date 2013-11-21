@@ -72,6 +72,36 @@ public class WxUser implements Serializable, JSONable, User {
 	@Column(name = "TOKEN", length = 100)
 	protected String token;
 
+	/**
+	 * 微信应用编号
+	 */
+	@Column(name = "WXAPPID", length = 100)
+	protected String wxAppId;
+
+	/**
+	 * 微信应用密锁
+	 */
+	@Column(name = "WXAPPSECRET", length = 100)
+	protected String wxAppSecret;
+
+	/**
+	 * 易信应用编号
+	 */
+	@Column(name = "YXAPPID", length = 100)
+	protected String yxAppId;
+
+	/**
+	 * 易信应用密锁
+	 */
+	@Column(name = "YXAPPSECRET", length = 100)
+	protected String yxAppSecret;
+
+	/**
+	 * LBS信息距离(单位：米)
+	 */
+	@Column(name = "LBSPOSITION")
+	protected Integer lbsPosition;
+
 	@Column(name = "PROVINCE", length = 50)
 	protected String province;
 
@@ -167,6 +197,10 @@ public class WxUser implements Serializable, JSONable, User {
 		return null;
 	}
 
+	public Integer getLbsPosition() {
+		return lbsPosition;
+	}
+
 	public int getLocked() {
 		return locked;
 	}
@@ -219,6 +253,14 @@ public class WxUser implements Serializable, JSONable, User {
 		return userType;
 	}
 
+	public String getWxAppId() {
+		return wxAppId;
+	}
+
+	public String getWxAppSecret() {
+		return wxAppSecret;
+	}
+
 	public String getWxHeadImage() {
 		return wxHeadImage;
 	}
@@ -233,6 +275,14 @@ public class WxUser implements Serializable, JSONable, User {
 
 	public String getWxSourceId() {
 		return wxSourceId;
+	}
+
+	public String getYxAppId() {
+		return yxAppId;
+	}
+
+	public String getYxAppSecret() {
+		return yxAppSecret;
 	}
 
 	public String getYxHeadImage() {
@@ -298,6 +348,10 @@ public class WxUser implements Serializable, JSONable, User {
 
 	}
 
+	public void setLbsPosition(Integer lbsPosition) {
+		this.lbsPosition = lbsPosition;
+	}
+
 	public void setLocked(int locked) {
 		this.locked = locked;
 	}
@@ -348,6 +402,14 @@ public class WxUser implements Serializable, JSONable, User {
 		this.userType = userType;
 	}
 
+	public void setWxAppId(String wxAppId) {
+		this.wxAppId = wxAppId;
+	}
+
+	public void setWxAppSecret(String wxAppSecret) {
+		this.wxAppSecret = wxAppSecret;
+	}
+
 	public void setWxHeadImage(String wxHeadImage) {
 		this.wxHeadImage = wxHeadImage;
 	}
@@ -362,6 +424,14 @@ public class WxUser implements Serializable, JSONable, User {
 
 	public void setWxSourceId(String wxSourceId) {
 		this.wxSourceId = wxSourceId;
+	}
+
+	public void setYxAppId(String yxAppId) {
+		this.yxAppId = yxAppId;
+	}
+
+	public void setYxAppSecret(String yxAppSecret) {
+		this.yxAppSecret = yxAppSecret;
 	}
 
 	public void setYxHeadImage(String yxHeadImage) {

@@ -22,14 +22,16 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
+import org.apache.commons.lang.StringUtils;
+
+import com.glaf.wechat.domain.WxUser;
+
 /**
  * 请求校验工具类
  * 
  * @author jior
  */
 public class SignUtils {
-	// 与接口配置信息中的Token要一致
-	public static String token = "weixinGlaf";
 
 	/**
 	 * 将字节转换为十六进制字符串
@@ -70,8 +72,13 @@ public class SignUtils {
 	 * @param nonce
 	 * @return
 	 */
-	public static boolean checkSignature(String signature, String timestamp,
-			String nonce) {
+	public static boolean checkSignature(long accountId, String signature,
+			String timestamp, String nonce) {
+		WxUser user = WxIdentityFactory.getUserByAccountId(accountId);
+		String token = user.getToken();
+		if (StringUtils.isEmpty(token)) {
+			token = "weixinGlaf";
+		}
 		String[] arr = new String[] { token, timestamp, nonce };
 		// 将token、timestamp、nonce三个参数进行字典序排序
 		Arrays.sort(arr);

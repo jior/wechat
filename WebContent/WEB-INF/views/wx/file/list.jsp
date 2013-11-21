@@ -191,7 +191,7 @@ limitations under the License.
 					   if(data != null && data.message != null){
 						   alert(data.message);
 					   } else {
-						 alert('操作成功完成！');
+						   alert('操作成功完成！');
 					   }
 					   jQuery('#mydatagrid').datagrid('reload');
 				   }

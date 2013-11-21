@@ -35,12 +35,11 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.base.BaseTree;
 import com.glaf.core.base.TreeModel;
- 
+
 import com.glaf.core.tree.helper.TreeHelper;
 import com.glaf.wechat.domain.WxCategory;
 import com.glaf.wechat.domain.WxContent;
 import com.glaf.wechat.service.WxCategoryService;
-import com.glaf.wechat.service.WxConfigService;
 import com.glaf.wechat.service.WxContentService;
 import com.glaf.wechat.service.WxCoverService;
 import com.glaf.wechat.service.WxFileService;
@@ -49,7 +48,6 @@ import com.glaf.wechat.service.WxSiteInfoService;
 import com.glaf.wechat.service.WxTemplateService;
 import com.glaf.wechat.service.WxUserTemplateService;
 import com.glaf.wechat.util.WxContentJsonFactory;
-
 
 @Controller("/wx/json")
 @RequestMapping("/wx/json")
@@ -72,8 +70,6 @@ public class WxPublicJsonController {
 
 	protected WxMenuService wxMenuService;
 
-	protected WxConfigService wxConfigService;
-
 	protected WxSiteInfoService wxSiteInfoService;
 
 	public WxPublicJsonController() {
@@ -89,7 +85,7 @@ public class WxPublicJsonController {
 		if (StringUtils.isEmpty(type)) {
 			type = "category";
 		}
-		 
+
 		List<WxCategory> categories = wxCategoryService.getCategoryList(
 				accountId, type);
 		if (categories != null && !categories.isEmpty()) {
@@ -167,11 +163,6 @@ public class WxPublicJsonController {
 	@javax.annotation.Resource
 	public void setWxCategoryService(WxCategoryService wxCategoryService) {
 		this.wxCategoryService = wxCategoryService;
-	}
-
-	@javax.annotation.Resource
-	public void setWxConfigService(WxConfigService wxConfigService) {
-		this.wxConfigService = wxConfigService;
 	}
 
 	@javax.annotation.Resource

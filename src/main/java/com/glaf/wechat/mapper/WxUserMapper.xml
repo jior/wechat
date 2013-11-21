@@ -16,6 +16,11 @@
 		<result property="yxname" column="YXName" jdbcType="VARCHAR" />
 		<result property="yxHeadImage" column="YXHEADIMAGE" jdbcType="VARCHAR" />
 		<result property="token" column="TOKEN" jdbcType="VARCHAR" />
+		<result property="wxAppId" column="WXAPPID" jdbcType="VARCHAR" />
+		<result property="wxAppSecret" column="WXAPPSECRET" jdbcType="VARCHAR" />
+		<result property="yxAppId" column="YXAPPID" jdbcType="VARCHAR" />
+		<result property="yxAppSecret" column="YXAPPSECRET" jdbcType="VARCHAR" />
+		<result property="lbsPosition" column="LBSPOSITION" jdbcType="INTEGER" />
 		<result property="province" column="PROVINCE" jdbcType="VARCHAR" />
 		<result property="city" column="CITY" jdbcType="VARCHAR" />
 		<result property="area" column="AREA" jdbcType="VARCHAR" />
@@ -68,6 +73,21 @@
 			<if test="token != null">
 				,TOKEN
 			</if>
+			<if test="wxAppId != null">
+				,WXAPPID
+			</if>
+			<if test="wxAppSecret != null">
+				,WXAPPSECRET
+			</if>
+			<if test="yxAppId != null">
+				,YXAPPID
+			</if>
+			<if test="yxAppSecret != null">
+				,YXAPPSECRET
+			</if>
+			<if test="lbsPosition != null">
+				,LBSPOSITION
+			</if>
 			<if test="province != null">
 				,PROVINCE
 			</if>
@@ -117,7 +137,7 @@
 
 		<trim prefix=" values (" suffix=")" suffixOverrides=",">
 			#{id, jdbcType=BIGINT}
-			
+
 			<if test="actorId != null">
 				,#{actorId, jdbcType=VARCHAR}
 			</if>
@@ -147,6 +167,21 @@
 			</if>
 			<if test="token != null">
 				,#{token, jdbcType=VARCHAR}
+			</if>
+			<if test="wxAppId != null">
+				,#{wxAppId, jdbcType=VARCHAR}
+			</if>
+			<if test="wxAppSecret != null">
+				,#{wxAppSecret, jdbcType=VARCHAR}
+			</if>
+			<if test="yxAppId != null">
+				,#{yxAppId, jdbcType=VARCHAR}
+			</if>
+			<if test="yxAppSecret != null">
+				,#{yxAppSecret, jdbcType=VARCHAR}
+			</if>
+			<if test="lbsPosition != null">
+				,#{lbsPosition, jdbcType=INTEGER}
 			</if>
 			<if test="province != null">
 				,#{province, jdbcType=VARCHAR}
@@ -227,6 +262,21 @@
 			</if>
 			<if test="token != null">
 				TOKEN = #{token, jdbcType=VARCHAR},
+			</if>
+			<if test="wxAppId != null">
+				WXAPPID = #{wxAppId, jdbcType=VARCHAR},
+			</if>
+			<if test="wxAppSecret != null">
+				WXAPPSECRET = #{wxAppSecret, jdbcType=VARCHAR},
+			</if>
+			<if test="yxAppId != null">
+				YXAPPID = #{yxAppId, jdbcType=VARCHAR},
+			</if>
+			<if test="yxAppSecret != null">
+				YXAPPSECRET = #{yxAppSecret, jdbcType=VARCHAR},
+			</if>
+			<if test="lbsPosition != null">
+				LBSPOSITION = #{lbsPosition, jdbcType=INTEGER},
 			</if>
 			<if test="province != null">
 				PROVINCE = #{province, jdbcType=VARCHAR},

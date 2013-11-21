@@ -102,7 +102,7 @@ limitations under the License.
 	}
 
 	function chooseImage(){
-		var link = '<%=request.getContextPath()%>/mx/wx/wxFile/chooseFile?elementId=icon&elementName=icon';
+		var link = '<%=request.getContextPath()%>/mx/wx/wxFile/chooseFile?elementId=icon&elementName=icon&accountId=${accountId}';
 		var x=100;
 		var y=100;
 		if(is_ie) {
@@ -113,7 +113,7 @@ limitations under the License.
 	}
 
 	function chooseBigImage(){
-		var link = '<%=request.getContextPath()%>/mx/wx/wxFile/chooseFile?elementId=bigIcon&elementName=bigIcon';
+		var link = '<%=request.getContextPath()%>/mx/wx/wxFile/chooseFile?elementId=bigIcon&elementName=bigIcon&accountId=${accountId}';
 		var x=100;
 		var y=100;
 		if(is_ie) {
@@ -124,7 +124,7 @@ limitations under the License.
 	}
 
 	function chooseSmallImage(){
-		var link = '<%=request.getContextPath()%>/mx/wx/wxFile/chooseFile?elementId=smallIcon&elementName=smallIcon';
+		var link = '<%=request.getContextPath()%>/mx/wx/wxFile/chooseFile?elementId=smallIcon&elementName=smallIcon&accountId=${accountId}';
 		var x=100;
 		var y=100;
 		if(is_ie) {
@@ -135,7 +135,7 @@ limitations under the License.
 	}
 
 	function editRelations(){
-		var link = '<%=request.getContextPath()%>/mx/wx/wxContent/choose?elementId=relationIds&elementName=relations&type=category&selecteds=${wxContent.relationIds}';
+		var link = '<%=request.getContextPath()%>/mx/wx/wxContent/choose?elementId=relationIds&elementName=relations&type=category&selecteds=${wxContent.relationIds}&accountId=${accountId}';
 		var x=100;
 		var y=100;
 		if(is_ie) {
@@ -146,7 +146,7 @@ limitations under the License.
 	}
 
 	function editRecommendations(){
-		var link = '<%=request.getContextPath()%>/mx/wx/wxContent/choose?elementId=recommendationIds&elementName=recommendations&type=category&selecteds=${wxContent.recommendationIds}';
+		var link = '<%=request.getContextPath()%>/mx/wx/wxContent/choose?elementId=recommendationIds&elementName=recommendations&type=category&selecteds=${wxContent.recommendationIds}&accountId=${accountId}';
 		var x=100;
 		var y=100;
 		if(is_ie) {
@@ -157,7 +157,7 @@ limitations under the License.
 	}
 
 	function chooseLink(){
-		var link = '<%=request.getContextPath()%>/mx/wx/wxChoose/chooseOne?elementId=url&elementName=url';
+		var link = '<%=request.getContextPath()%>/mx/wx/wxChoose/chooseOne?elementId=url&elementName=url&accountId=${accountId}';
 		var x=100;
 		var y=100;
 		if(is_ie) {
@@ -410,7 +410,8 @@ limitations under the License.
 	 
   	<tr>
 	    <td width="20%" align="left"></td>
-		<td align="left" ><br>
+		<td align="left" >
+		    <br>
             <input type="button" value=" 保存 " onclick="javascript:saveData();" class="btnGreen">
 		</td>
 	</tr>
@@ -435,5 +436,8 @@ limitations under the License.
      });
 
 </script>
+<br>
+<br>
+<br>
 </body>
 </html>

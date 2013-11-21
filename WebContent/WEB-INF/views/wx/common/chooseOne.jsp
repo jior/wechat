@@ -55,7 +55,7 @@
     var setting = {
 			async: {
 				enable: true,
-				url: "<%=request.getContextPath()%>/mx/wx/wxContent/treeJson?selecteds=${selecteds}&type=${type}",
+				url: "<%=request.getContextPath()%>/mx/wx/wxContent/treeJson/${accountId}?selecteds=${selecteds}&type=${type}&accountId=${accountId}",
                 dataFilter: filter
 			},
 			check: {
@@ -133,8 +133,8 @@
 		var parent_window = getOpener();
 	    var x_elementId = parent_window.document.getElementById("${elementId}");
         var x_element_name = parent_window.document.getElementById("${elementName}");
-		x_elementId.value='/website/wx/content/index/<%=user.getId()%>';
-		x_element_name.value='/website/wx/content/index/<%=user.getId()%>';
+		x_elementId.value='/website/wx/content/index/${accountId}';
+		x_element_name.value='/website/wx/content/index/${accountId}';
 		window.close(); 
 	}
 

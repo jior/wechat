@@ -32,10 +32,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.alibaba.fastjson.JSONObject;
+import com.glaf.core.identity.User;
 import com.glaf.core.security.LoginContext;
 import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.RequestUtils;
-
 import com.glaf.wechat.domain.WxFile;
 import com.glaf.wechat.query.WxFileQuery;
 import com.glaf.wechat.service.WxFileService;
@@ -175,8 +175,9 @@ public class WxFileManagerJsonController {
 			Collections.sort(fileList, new NameComparator());
 		}
 		JSONObject result = new JSONObject();
-
-		String rand = WechatUtils.getHashedPath(loginContext.getActorId());
+		Long accountId = RequestUtils.getLong(request, "accountId");
+		User user = RequestUtils.getUser(request);
+		String rand = WechatUtils.getImagePath(user.getId(), accountId);
 		String path = com.glaf.wechat.util.Constants.UPLOAD_PATH + rand + "/";
 
 		result.put("moveup_dir_path", request.getContextPath() + path);

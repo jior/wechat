@@ -83,7 +83,7 @@ limitations under the License.
 	form.submit();
 	//window.parent.reload();
 	//window.close();
-    location.href='<%=com.glaf.core.util.RequestUtils.decodeURL(request.getParameter("fromUrl"))%>';
+    //location.href='<%=com.glaf.core.util.RequestUtils.decodeURL(request.getParameter("fromUrl"))%>';
  }
 
 </script>
@@ -94,6 +94,7 @@ limitations under the License.
 	class="x-form"
 	action="<%=request.getContextPath()%>/mx/wx/wxFile/save"
 	onsubmit="return checkForm();">
+<input type="hidden" id="locked" name="locked" value="0">
 <input type="hidden" id="accountId" name="accountId" value="${accountId}"/>
 <c:if test="${not empty categoryId}">
 	<input type="hidden" name="nodeId" value="${categoryId}">
@@ -148,20 +149,6 @@ limitations under the License.
 				class="input-file x-text">
             </td>
 		</tr>
-
-		<tr>
-			<td align="left" width="18%" height="32">启用/禁用</td>
-			<td align="left" width="82%" height="27">
-			<input type="hidden" id="locked" name="locked" value="${wxFile.locked}">
-			启用 <input type="radio" id="lockedx" name="lockedx" value="0"
-				<c:if test="${wxFile.locked == 0}">checked</c:if>
-				onclick='javascript:document.getElementById("locked").value="0";'>
-			禁用 <input type="radio" id="lockedx" name="lockedx" value="1"
-				<c:if test="${wxFile.locked == 1}">checked</c:if>
-				onclick='javascript:document.getElementById("locked").value="1";'>
-			</td>
-		</tr>
-
 	</tbody>
 </table>
  

@@ -38,6 +38,7 @@ import org.springframework.ui.ModelMap;
 import com.alibaba.fastjson.*;
 import com.glaf.core.config.SystemProperties;
 import com.glaf.core.config.ViewProperties;
+import com.glaf.core.identity.User;
 import com.glaf.core.security.*;
 import com.glaf.core.util.*;
 import com.glaf.wechat.domain.*;
@@ -99,8 +100,7 @@ public class WxCoverController {
 	}
 
 	@RequestMapping("/edit")
-	public ModelAndView edit(
-			HttpServletRequest request, ModelMap modelMap) {
+	public ModelAndView edit(HttpServletRequest request, ModelMap modelMap) {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		RequestUtils.setRequestParameterToAttribute(request);
 		Long accountId = RequestUtils.getLong(request, "accountId");
@@ -245,10 +245,9 @@ public class WxCoverController {
 	}
 
 	@RequestMapping("/save")
-	public ModelAndView save(
-			HttpServletRequest request, ModelMap modelMap) {
-		LoginContext loginContext = RequestUtils.getLoginContext(request);
-		String actorId = loginContext.getActorId();
+	public ModelAndView save(HttpServletRequest request, ModelMap modelMap) {
+		User user = RequestUtils.getUser(request);
+		String actorId = user.getActorId();
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		params.remove("status");
 		params.remove("wfStatus");
@@ -266,8 +265,8 @@ public class WxCoverController {
 		for (Entry<String, MultipartFile> entry : entrySet) {
 			MultipartFile mFile = entry.getValue();
 			if (mFile.getSize() > 0) {
-				String rand = WechatUtils.getHashedPath(loginContext
-						.getActorId());
+				String rand = WechatUtils
+						.getImagePath(user.getId(), accountId);
 				String path = com.glaf.wechat.util.Constants.UPLOAD_PATH + rand;
 				try {
 					FileUtils.mkdirs(SystemProperties.getAppPath() + path);

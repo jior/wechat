@@ -39,10 +39,10 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.config.CustomProperties;
 import com.glaf.core.config.SystemProperties;
+import com.glaf.core.identity.User;
 import com.glaf.core.security.LoginContext;
 import com.glaf.core.util.FileUtils;
 import com.glaf.core.util.RequestUtils;
-
 import com.glaf.wechat.domain.WxFile;
 import com.glaf.wechat.service.WxFileService;
 import com.glaf.wechat.util.WechatUtils;
@@ -112,8 +112,9 @@ public class WxUploadJsonController {
 					return;
 				}
 
-				String rand = WechatUtils.getHashedPath(loginContext
-						.getActorId());
+				Long accountId = RequestUtils.getLong(request, "accountId");
+				User user = RequestUtils.getUser(request);
+				String rand = WechatUtils.getImagePath(user.getId(), accountId);
 				String path = com.glaf.wechat.util.Constants.UPLOAD_PATH + rand;
 				SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
 				String newFilename = df.format(new Date()) + "_"

@@ -54,7 +54,7 @@ import com.glaf.wechat.domain.WxUserTemplate;
 import com.glaf.wechat.query.WxCategoryQuery;
 import com.glaf.wechat.query.WxContentQuery;
 import com.glaf.wechat.service.WxCategoryService;
-import com.glaf.wechat.service.WxConfigService;
+
 import com.glaf.wechat.service.WxContentService;
 import com.glaf.wechat.service.WxCoverService;
 import com.glaf.wechat.service.WxFileService;
@@ -89,8 +89,6 @@ public class WxPublicContentController {
 	protected WxFileService wxFileService;
 
 	protected WxMenuService wxMenuService;
-
-	protected WxConfigService wxConfigService;
 
 	protected WxSiteInfoService wxSiteInfoService;
 
@@ -158,8 +156,7 @@ public class WxPublicContentController {
 				Map<String, Object> context = RequestUtils
 						.getParameterMap(request);
 				User user = IdentityFactory.getUser(actorId);
-				String hashedPath = WechatUtils.getHashedPath(actorId);
-				context.put("hashedPath", hashedPath);
+
 				context.put("userId", String.valueOf(user.getId()));
 				context.put("actorId", actorId);
 				context.put("accountId", accountId);
@@ -270,8 +267,7 @@ public class WxPublicContentController {
 				String serviceUrl = WechatUtils.getServiceUrl(request);
 				Map<String, Object> context = RequestUtils
 						.getParameterMap(request);
-				String hashedPath = WechatUtils.getHashedPath(actorId);
-				context.put("hashedPath", hashedPath);
+
 				context.put("userId", String.valueOf(user.getId()));
 				context.put("actorId", actorId);
 				context.put("accountId", accountId);
@@ -404,8 +400,7 @@ public class WxPublicContentController {
 							.getParameterMap(request);
 					String actorId = category.getCreateBy();
 					User user = IdentityFactory.getUser(actorId);
-					String hashedPath = WechatUtils.getHashedPath(actorId);
-					context.put("hashedPath", hashedPath);
+
 					context.put("userId", String.valueOf(user.getId()));
 					context.put("accountId", category.getAccountId());
 					context.put("actorId", category.getCreateBy());
@@ -555,11 +550,6 @@ public class WxPublicContentController {
 	}
 
 	@javax.annotation.Resource
-	public void setWxConfigService(WxConfigService wxConfigService) {
-		this.wxConfigService = wxConfigService;
-	}
-
-	@javax.annotation.Resource
 	public void setWxContentService(WxContentService wxContentService) {
 		this.wxContentService = wxContentService;
 	}
@@ -657,8 +647,7 @@ public class WxPublicContentController {
 				Map<String, Object> context = RequestUtils
 						.getParameterMap(request);
 				User user = IdentityFactory.getUser(actorId);
-				String hashedPath = WechatUtils.getHashedPath(actorId);
-				context.put("hashedPath", hashedPath);
+
 				context.put("userId", String.valueOf(user.getId()));
 				context.put("accountId", accountId);
 				context.put("actorId", actorId);

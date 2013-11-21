@@ -60,8 +60,10 @@ public class WxMenuController {
 			.getLog(WxMenuController.class);
 
 	protected WxMenuService wxMenuService;
+	
+	protected WxUserService wxUserService;
 
-	protected WxConfigService wxConfigService;
+ 
 
 	public WxMenuController() {
 
@@ -154,16 +156,16 @@ public class WxMenuController {
 			access_token_url = conf.get("yixin_access_token_url");
 			menu_get_url = conf.get("yixin_menu_get_url");
 		}
-		WxConfig wxConfig = wxConfigService.getWxConfigByAccountId(accountId);
-		if (wxConfig != null) {
+		WxUser wxUser = wxUserService.getWxUser(accountId);
+		if (wxUser != null) {
 			String actId = null;
 			String appSecret = null;
 			if (StringUtils.equals("weixin", type)) {
-				actId = wxConfig.getWxAppId();
-				appSecret = wxConfig.getWxAppSecret();
+				actId = wxUser.getWxAppId();
+				appSecret = wxUser.getWxAppSecret();
 			} else if (StringUtils.equals("yixin", type)) {
-				actId = wxConfig.getYxAppId();
-				appSecret = wxConfig.getYxAppSecret();
+				actId = wxUser.getYxAppId();
+				appSecret = wxUser.getYxAppSecret();
 			}
 			if (StringUtils.isNotEmpty(actId)
 					&& StringUtils.isNotEmpty(appSecret)) {
@@ -427,14 +429,21 @@ public class WxMenuController {
 		return ResponseUtils.responseJsonResult(false);
 	}
 
-	@javax.annotation.Resource
-	public void setWxConfigService(WxConfigService wxConfigService) {
-		this.wxConfigService = wxConfigService;
-	}
+	 
 
 	@javax.annotation.Resource
 	public void setWxMenuService(WxMenuService wxMenuService) {
 		this.wxMenuService = wxMenuService;
+	}
+	
+	
+
+	public WxUserService getWxUserService() {
+		return wxUserService;
+	}
+
+	public void setWxUserService(WxUserService wxUserService) {
+		this.wxUserService = wxUserService;
 	}
 
 	@ResponseBody
@@ -459,17 +468,16 @@ public class WxMenuController {
 					0L);
 
 			if (menus != null && !menus.isEmpty()) {
-				WxConfig wxConfig = wxConfigService
-						.getWxConfigByAccountId(accountId);
-				if (wxConfig != null) {
+				WxUser wxUser = wxUserService.getWxUser(accountId);
+				if (wxUser != null) {
 					String actId = null;
 					String appSecret = null;
 					if (StringUtils.equals("weixin", type)) {
-						actId = wxConfig.getWxAppId();
-						appSecret = wxConfig.getWxAppSecret();
+						actId = wxUser.getWxAppId();
+						appSecret = wxUser.getWxAppSecret();
 					} else if (StringUtils.equals("yixin", type)) {
-						actId = wxConfig.getYxAppId();
-						appSecret = wxConfig.getYxAppSecret();
+						actId = wxUser.getYxAppId();
+						appSecret = wxUser.getYxAppSecret();
 					}
 					if (StringUtils.isNotEmpty(actId)
 							&& StringUtils.isNotEmpty(appSecret)) {

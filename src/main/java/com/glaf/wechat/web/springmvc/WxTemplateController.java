@@ -413,8 +413,8 @@ public class WxTemplateController {
 	@RequestMapping("/upload/{accountId}")
 	public ModelAndView upload(@PathVariable("accountId") Long accountId,
 			HttpServletRequest request, ModelMap modelMap) {
-		LoginContext loginContext = RequestUtils.getLoginContext(request);
-		String actorId = loginContext.getActorId();
+		User user = RequestUtils.getUser(request);
+		String actorId = user.getActorId();
 		MultipartHttpServletRequest req = (MultipartHttpServletRequest) request;
 		Map<String, MultipartFile> fileMap = req.getFileMap();
 		Long categoryId = RequestUtils.getLong(req, "categoryId");
@@ -427,8 +427,7 @@ public class WxTemplateController {
 			MultipartFile mFile = entry.getValue();
 			if (mFile.getOriginalFilename().endsWith(".zip")
 					&& mFile.getSize() > 0) {
-				String rand = WechatUtils.getHashedPath(loginContext
-						.getActorId());
+				String rand = WechatUtils.getImagePath(user.getId(), accountId);
 				String path = "/templates/users/" + rand + "/" + categoryId;
 				try {
 					FileUtils.mkdirs(SystemProperties.getAppPath() + path);

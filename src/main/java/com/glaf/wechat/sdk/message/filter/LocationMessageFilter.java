@@ -5,16 +5,18 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 
 import com.glaf.core.context.ContextFactory;
-import com.glaf.wechat.domain.WxConfig;
+ 
 import com.glaf.wechat.domain.WxContent;
+import com.glaf.wechat.domain.WxUser;
 import com.glaf.wechat.query.WxContentQuery;
 import com.glaf.wechat.sdk.message.ItemArticle;
 import com.glaf.wechat.sdk.message.Message;
 import com.glaf.wechat.sdk.message.ResponseNewsMessage;
 import com.glaf.wechat.sdk.message.LocationMessage;
 import com.glaf.wechat.sdk.util.LocationUtils;
-import com.glaf.wechat.service.WxConfigService;
+ 
 import com.glaf.wechat.service.WxContentService;
+import com.glaf.wechat.util.WxIdentityFactory;
 
 public class LocationMessageFilter extends AbstractMessageFilter implements
 		IMessageFilter {
@@ -23,15 +25,14 @@ public class LocationMessageFilter extends AbstractMessageFilter implements
 	public Message doSpecailMessageFilter(Message message) {
 		if (message instanceof LocationMessage) {
 			LocationMessage msg = (LocationMessage) message;
-			WxConfigService wxConfigService = ContextFactory
-					.getBean("wxConfigService");
+		 
 			WxContentService wxContentService = ContextFactory
 					.getBean("wxContentService");
 			WxContentQuery query = new WxContentQuery();
 			query.createBy(message.getCustomer());
 			query.type("L");
-			WxConfig cfg = wxConfigService.getWxConfigByAccountId(message
-					.getAccountId());
+		 
+			WxUser user = WxIdentityFactory.getUserByAccountId(message.getAccountId());
 			List<WxContent> rows = wxContentService.list(query);
 			if (rows != null && !rows.isEmpty()) {
 				ResponseNewsMessage newsMessage = new ResponseNewsMessage();
@@ -40,8 +41,8 @@ public class LocationMessageFilter extends AbstractMessageFilter implements
 					double distance = LocationUtils.getDistance(
 							msg.getLatitude(), msg.getLongitude(),
 							c.getLatitude(), c.getLongitude());
-					if (cfg != null && cfg.getLbsPosition() != null) {
-						if (distance > cfg.getLbsPosition()) {
+					if (user != null && user.getLbsPosition() != null) {
+						if (distance > user.getLbsPosition()) {
 							continue;
 						}
 					}

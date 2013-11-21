@@ -18,7 +18,11 @@
 
 package com.glaf.wechat.util;
 
+import java.util.Date;
+
 import com.glaf.core.context.ContextFactory;
+import com.glaf.core.identity.User;
+import com.glaf.core.util.UUID32;
 import com.glaf.wechat.domain.WxUser;
 import com.glaf.wechat.service.WxUserService;
 
@@ -28,6 +32,21 @@ public class WxIdentityFactory {
 
 	private WxIdentityFactory() {
 
+	}
+
+	public static void createWxAccount(User user) {
+		if (getUserByAccountId(user.getId()) == null) {
+			WxUser wxUser = new WxUser();
+			wxUser.setToken(UUID32.getUUID());
+			wxUser.setActorId(user.getActorId());
+			wxUser.setAccountType(2);
+			wxUser.setCreateDate(new Date());
+			wxUser.setDeptId(user.getDeptId());
+			wxUser.setLocked(0);
+			wxUser.setUserType(1);
+			wxUser.setId(user.getId());
+			getWxUserService().save(wxUser);
+		}
 	}
 
 	public static WxUser getUserByAccountId(Long accountId) {

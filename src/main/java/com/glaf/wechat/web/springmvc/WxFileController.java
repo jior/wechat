@@ -38,6 +38,7 @@ import org.springframework.ui.ModelMap;
 import com.alibaba.fastjson.*;
 import com.glaf.core.config.SystemProperties;
 import com.glaf.core.config.ViewProperties;
+import com.glaf.core.identity.User;
 import com.glaf.core.security.*;
 import com.glaf.core.util.*;
 import com.glaf.wechat.domain.*;
@@ -90,28 +91,30 @@ public class WxFileController {
 							&& (StringUtils.equals(wxFile.getCreateBy(),
 									loginContext.getActorId()) || loginContext
 									.isSystemAdministrator())) {
-						wxFileService.save(wxFile);
+						String filename = SystemProperties.getAppPath()
+								+ wxFile.getPath();
+						FileUtils.deleteFile(filename);
+						wxFileService.deleteById(wxFile.getId());
 					}
 				}
 			}
 		} else if (id != null) {
 			WxFile wxFile = wxFileService.getWxFile(Long.valueOf(id));
-			/**
-			 * 此处业务逻辑需自行调整
-			 */
 
 			if (wxFile != null
 					&& (StringUtils.equals(wxFile.getCreateBy(),
 							loginContext.getActorId()) || loginContext
 							.isSystemAdministrator())) {
-				wxFileService.save(wxFile);
+				String filename = SystemProperties.getAppPath()
+						+ wxFile.getPath();
+				FileUtils.deleteFile(filename);
+				wxFileService.deleteById(id);
 			}
 		}
 	}
 
 	@RequestMapping("/edit")
-	public ModelAndView edit(
-			HttpServletRequest request, ModelMap modelMap) {
+	public ModelAndView edit(HttpServletRequest request, ModelMap modelMap) {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		RequestUtils.setRequestParameterToAttribute(request);
 		request.removeAttribute("canSubmit");
@@ -299,16 +302,15 @@ public class WxFileController {
 		return result.toJSONString().getBytes("UTF-8");
 	}
 
-	@RequestMapping("/jsonArray/{accountId}")
+	@RequestMapping("/jsonArray")
 	@ResponseBody
-	public byte[] jsonArray(@PathVariable("accountId") Long accountId,
-			HttpServletRequest request, ModelMap modelMap) throws IOException {
+	public byte[] jsonArray(HttpServletRequest request, ModelMap modelMap)
+			throws IOException {
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		WxFileQuery query = new WxFileQuery();
 		Tools.populate(query, params);
 
 		query.createBy("system");
-		query.setAccountId(accountId);
 
 		JSONArray result = new JSONArray();
 		int total = wxFileService.getWxFileCountByQueryCriteria(query);
@@ -374,10 +376,9 @@ public class WxFileController {
 	}
 
 	@RequestMapping("/save")
-	public ModelAndView save(
-			HttpServletRequest request, ModelMap modelMap) {
-		LoginContext loginContext = RequestUtils.getLoginContext(request);
-		String actorId = loginContext.getActorId();
+	public ModelAndView save(HttpServletRequest request, ModelMap modelMap) {
+		User user = RequestUtils.getUser(request);
+		String actorId = user.getActorId();
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		params.remove("status");
 		params.remove("wfStatus");
@@ -390,7 +391,11 @@ public class WxFileController {
 		wxFile.setTitle(req.getParameter("title"));
 		wxFile.setDesc(req.getParameter("desc"));
 		wxFile.setContent(req.getParameter("content"));
-		wxFile.setCategoryId(RequestUtils.getLong(req, "categoryId"));
+		if (StringUtils.isNotEmpty(request.getParameter("categoryId"))
+				&& !StringUtils.equals(request.getParameter("categoryId"),
+						"undefined")) {
+			wxFile.setCategoryId(RequestUtils.getLong(req, "categoryId"));
+		}
 		wxFile.setAccountId(accountId);
 
 		boolean update = true;
@@ -398,8 +403,7 @@ public class WxFileController {
 		for (Entry<String, MultipartFile> entry : entrySet) {
 			MultipartFile mFile = entry.getValue();
 			if (mFile.getSize() > 0) {
-				String rand = WechatUtils.getHashedPath(loginContext
-						.getActorId());
+				String rand = WechatUtils.getImagePath(user.getId(), accountId);
 				String path = com.glaf.wechat.util.Constants.UPLOAD_PATH + rand;
 				try {
 					FileUtils.mkdirs(SystemProperties.getAppPath() + path);
@@ -436,7 +440,7 @@ public class WxFileController {
 			wxFileService.save(wxFile);
 		}
 
-		return new ModelAndView("/wx/file/saveOK");
+		return this.list(request, modelMap);
 	}
 
 	@javax.annotation.Resource

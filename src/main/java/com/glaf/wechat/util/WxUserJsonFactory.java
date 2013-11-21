@@ -32,7 +32,7 @@ public class WxUserJsonFactory {
 		if (jsonObject.containsKey("id")) {
 			model.setId(jsonObject.getLong("id"));
 		}
-		 
+
 		if (jsonObject.containsKey("actorId")) {
 			model.setActorId(jsonObject.getString("actorId"));
 		}
@@ -62,6 +62,22 @@ public class WxUserJsonFactory {
 		}
 		if (jsonObject.containsKey("token")) {
 			model.setToken(jsonObject.getString("token"));
+		}
+
+		if (jsonObject.containsKey("wxAppId")) {
+			model.setWxAppId(jsonObject.getString("wxAppId"));
+		}
+		if (jsonObject.containsKey("wxAppSecret")) {
+			model.setWxAppSecret(jsonObject.getString("wxAppSecret"));
+		}
+		if (jsonObject.containsKey("yxAppId")) {
+			model.setYxAppId(jsonObject.getString("yxAppId"));
+		}
+		if (jsonObject.containsKey("yxAppSecret")) {
+			model.setYxAppSecret(jsonObject.getString("yxAppSecret"));
+		}
+		if (jsonObject.containsKey("lbsPosition")) {
+			model.setLbsPosition(jsonObject.getInteger("lbsPosition"));
 		}
 		if (jsonObject.containsKey("province")) {
 			model.setProvince(jsonObject.getString("province"));
@@ -99,7 +115,7 @@ public class WxUserJsonFactory {
 		if (jsonObject.containsKey("locked")) {
 			model.setLocked(jsonObject.getInteger("locked"));
 		}
-		 
+
 		if (jsonObject.containsKey("remark")) {
 			model.setRemark(jsonObject.getString("remark"));
 		}
@@ -118,8 +134,7 @@ public class WxUserJsonFactory {
 		jsonObject.put("id", model.getId());
 		jsonObject.put("_id_", model.getId());
 		jsonObject.put("_oid_", model.getId());
-	 
-		
+
 		if (model.getActorId() != null) {
 			jsonObject.put("actorId", model.getActorId());
 		}
@@ -150,6 +165,21 @@ public class WxUserJsonFactory {
 		if (model.getToken() != null) {
 			jsonObject.put("token", model.getToken());
 		}
+		if (model.getWxAppId() != null) {
+			jsonObject.put("wxAppId", model.getWxAppId());
+		}
+		if (model.getWxAppSecret() != null) {
+			jsonObject.put("wxAppSecret", model.getWxAppSecret());
+		}
+		if (model.getYxAppId() != null) {
+			jsonObject.put("yxAppId", model.getYxAppId());
+		}
+		if (model.getYxAppSecret() != null) {
+			jsonObject.put("yxAppSecret", model.getYxAppSecret());
+		}
+		if (model.getLbsPosition() != null) {
+			jsonObject.put("lbsPosition", model.getLbsPosition());
+		}
 		if (model.getProvince() != null) {
 			jsonObject.put("province", model.getProvince());
 		}
@@ -178,7 +208,7 @@ public class WxUserJsonFactory {
 			jsonObject.put("type", model.getType());
 		}
 		jsonObject.put("locked", model.getLocked());
-		 
+
 		if (model.getRemark() != null) {
 			jsonObject.put("remark", model.getRemark());
 		}
@@ -205,7 +235,7 @@ public class WxUserJsonFactory {
 		jsonObject.put("id", model.getId());
 		jsonObject.put("_id_", model.getId());
 		jsonObject.put("_oid_", model.getId());
-	 
+
 		if (model.getActorId() != null) {
 			jsonObject.put("actorId", model.getActorId());
 		}
@@ -236,6 +266,21 @@ public class WxUserJsonFactory {
 		if (model.getToken() != null) {
 			jsonObject.put("token", model.getToken());
 		}
+		if (model.getWxAppId() != null) {
+			jsonObject.put("wxAppId", model.getWxAppId());
+		}
+		if (model.getWxAppSecret() != null) {
+			jsonObject.put("wxAppSecret", model.getWxAppSecret());
+		}
+		if (model.getYxAppId() != null) {
+			jsonObject.put("yxAppId", model.getYxAppId());
+		}
+		if (model.getYxAppSecret() != null) {
+			jsonObject.put("yxAppSecret", model.getYxAppSecret());
+		}
+		if (model.getLbsPosition() != null) {
+			jsonObject.put("lbsPosition", model.getLbsPosition());
+		}
 		if (model.getProvince() != null) {
 			jsonObject.put("province", model.getProvince());
 		}
@@ -264,7 +309,7 @@ public class WxUserJsonFactory {
 			jsonObject.put("type", model.getType());
 		}
 		jsonObject.put("locked", model.getLocked());
-		 
+
 		if (model.getRemark() != null) {
 			jsonObject.put("remark", model.getRemark());
 		}

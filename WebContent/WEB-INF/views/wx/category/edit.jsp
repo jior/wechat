@@ -95,7 +95,7 @@ limitations under the License.
 	}
 
 	function chooseImage(){
-		var link = '<%=request.getContextPath()%>/mx/wx/wxFile/chooseFile?elementId=icon&elementName=icon';
+		var link = '<%=request.getContextPath()%>/mx/wx/wxFile/chooseFile?elementId=icon&elementName=icon&accountId=${accountId}';
 		var x=100;
 		var y=100;
 		if(is_ie) {
@@ -106,7 +106,7 @@ limitations under the License.
 	}
 
 	function chooseImage2(){
-		var link = '<%=request.getContextPath()%>/mx/wx/wxFile/chooseFile?elementId=coverIcon&elementName=coverIcon';
+		var link = '<%=request.getContextPath()%>/mx/wx/wxFile/chooseFile?elementId=coverIcon&elementName=coverIcon&accountId=${accountId}';
 		var x=100;
 		var y=100;
 		if(is_ie) {
@@ -117,7 +117,7 @@ limitations under the License.
 	}
 
 	function chooseLink(){
-		var link = '<%=request.getContextPath()%>/mx/wx/wxChoose/chooseOne?elementId=url&elementName=url';
+		var link = '<%=request.getContextPath()%>/mx/wx/wxChoose/chooseOne?elementId=url&elementName=url&accountId=${accountId}';
 		var x=100;
 		var y=100;
 		if(is_ie) {

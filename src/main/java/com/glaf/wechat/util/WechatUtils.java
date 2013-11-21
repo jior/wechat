@@ -31,14 +31,13 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
-import com.glaf.core.util.HashUtils;
+
 import com.glaf.wechat.component.Menu;
 import com.glaf.wechat.model.AccessToken;
 
@@ -96,8 +95,8 @@ public class WechatUtils {
 			String accountId, String appSecret) {
 		AccessToken accessToken = null;
 
-		String requestUrl = access_token_url.replace("ACCOUNTID", accountId).replace(
-				"APPSECRET", appSecret);
+		String requestUrl = access_token_url.replace("ACCOUNTID", accountId)
+				.replace("APPSECRET", appSecret);
 		JSONObject jsonObject = httpRequest(requestUrl, "GET", null);
 		// 如果请求成功
 		if (null != jsonObject) {
@@ -117,25 +116,20 @@ public class WechatUtils {
 		return accessToken;
 	}
 
-	public static String getCategoryJsonSavePath(String userId) {
-		String path = Constants.PUBLISH_JSON_PATH + getHashedPath(userId);
+	public static String getCategoryJsonSavePath(Long userId, Long acctountId) {
+		String path = Constants.PUBLISH_JSON_PATH
+				+ getImagePath(userId, acctountId);
 		return path;
 	}
 
-	public static String getContentJsonSavePath(String userId) {
-		String path = Constants.PUBLISH_JSON_PATH + getHashedPath(userId);
+	public static String getContentJsonSavePath(Long userId, Long acctountId) {
+		String path = Constants.PUBLISH_JSON_PATH
+				+ getImagePath(userId, acctountId);
 		return path;
 	}
 
-	/**
-	 * 获取哈希分区后的路径
-	 * 
-	 * @param userId
-	 * @return
-	 */
-	public static String getHashedPath(String userId) {
-		String path = Math.abs(HashUtils.FNVHash1(userId) % 1024) + "/"
-				+ DigestUtils.md5Hex(userId);
+	public static String getImagePath(Long userId, Long acctountId) {
+		String path = String.valueOf(userId) + "/" + String.valueOf(acctountId);
 		return path;
 	}
 

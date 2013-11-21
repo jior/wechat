@@ -28,6 +28,7 @@ import com.glaf.base.modules.sys.service.SysUserRoleService;
 import com.glaf.base.modules.sys.service.SysUserService;
 import com.glaf.base.utils.ParamUtil;
 import com.glaf.base.utils.RequestUtil;
+
 import com.glaf.core.cache.CacheUtils;
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.identity.User;
@@ -38,9 +39,11 @@ import com.glaf.core.security.DigestUtil;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.ResponseUtils;
 import com.glaf.core.util.Tools;
+
 import com.glaf.wechat.domain.WxUser;
 import com.glaf.wechat.query.WxUserQuery;
 import com.glaf.wechat.service.WxUserService;
+import com.glaf.wechat.util.WxIdentityFactory;
 
 @Controller("/wx/wxUser")
 @RequestMapping("/wx/wxUser")
@@ -79,15 +82,7 @@ public class WxUserController {
 		query.actorId(user.getAccount());
 		List<WxUser> list = wxUserService.list(query);
 		if (list == null || list.isEmpty()) {
-			WxUser wxUser = new WxUser();
-			wxUser.setActorId(user.getActorId());
-			wxUser.setAccountType(2);
-			wxUser.setCreateDate(new Date());
-			wxUser.setDeptId(user.getDeptId());
-			wxUser.setLocked(0);
-			wxUser.setUserType(1);
-			wxUser.setId(user.getId());
-			wxUserService.save(wxUser);
+			WxIdentityFactory.createWxAccount(user);
 			list = wxUserService.list(query);
 		}
 		request.setAttribute("users", list);
@@ -119,15 +114,7 @@ public class WxUserController {
 		}
 
 		if (wxUser == null) {
-			wxUser = new WxUser();
-			wxUser.setActorId(user.getActorId());
-			wxUser.setAccountType(2);
-			wxUser.setCreateDate(new Date());
-			wxUser.setDeptId(user.getDeptId());
-			wxUser.setLocked(0);
-			wxUser.setUserType(1);
-			wxUser.setId(user.getId());
-			wxUserService.save(wxUser);
+			WxIdentityFactory.createWxAccount(user);
 		}
 
 		request.setAttribute("wxUser", wxUser);

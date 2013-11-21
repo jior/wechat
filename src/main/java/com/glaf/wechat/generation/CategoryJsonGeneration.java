@@ -29,6 +29,8 @@ import com.alibaba.fastjson.JSONArray;
 import com.glaf.core.base.BaseTree;
 import com.glaf.core.base.TreeModel;
 import com.glaf.core.context.ContextFactory;
+import com.glaf.core.identity.User;
+import com.glaf.core.security.IdentityFactory;
 import com.glaf.core.tree.helper.TreeHelper;
 import com.glaf.core.util.FileUtils;
 import com.glaf.core.util.StringTools;
@@ -60,15 +62,14 @@ public class CategoryJsonGeneration {
 	public void generateJson(String rootDir, Long accountId, String type) {
 		WxCategoryService wxCategoryService = ContextFactory
 				.getBean("wxCategoryService");
-		WxUserService wxUserService = ContextFactory
-				.getBean("wxUserService");
+		WxUserService wxUserService = ContextFactory.getBean("wxUserService");
 		WxCategoryQuery query = new WxCategoryQuery();
 		query.accountId(accountId);
 		query.type(type);
-		
-		WxUser user = wxUserService.getWxUser(accountId);
-        String actorId = user.getActorId();
-        
+
+		WxUser wxUser = wxUserService.getWxUser(accountId);
+		User user = IdentityFactory.getUser(wxUser.getActorId());
+
 		if (StringUtils.isEmpty(type)) {
 			type = "category";
 		}
@@ -96,7 +97,7 @@ public class CategoryJsonGeneration {
 			}
 			TreeHelper treeHelper = new TreeHelper();
 			JSONArray result = treeHelper.getTreeJSONArray(treeModels);
-			String rand = WechatUtils.getHashedPath(actorId);
+			String rand = WechatUtils.getImagePath(user.getId(), accountId);
 			String filename = rootDir + rand + "/" + type + ".json";
 			String path = rootDir + rand;
 			boolean success = false;

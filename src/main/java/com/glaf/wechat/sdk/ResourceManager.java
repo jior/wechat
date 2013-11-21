@@ -27,6 +27,7 @@ import java.util.Properties;
 public class ResourceManager {
 
 	private static final String RESOURCE_FILENAME = "wechat.properties";
+
 	private static Properties props = new Properties();
 
 	static {

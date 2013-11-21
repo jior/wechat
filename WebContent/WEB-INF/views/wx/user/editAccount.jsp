@@ -86,6 +86,18 @@ limitations under the License.
                                         <input type="text" name="wxid" id="wxid" class="input-medium" data-rule-required="true" value="${wxUser.wxid}"><span class="maroon">*</span>
                                     </div>
                                 </div>
+								<div class="control-group">
+                                    <label for="wechat_id" class="control-label">微信应用编号AppId：</label>
+                                    <div class="controls">
+                                        <input type="text" name="wxAppId" id="wxAppId" class="input-medium" data-rule-required="true" value="${wxUser.wxAppId}">
+                                    </div>
+                                </div>
+								<div class="control-group">
+                                    <label for="wechat_id" class="control-label">微信应用密码AppSecret：</label>
+                                    <div class="controls">
+                                        <input type="text" name="wxAppSecret" id="wxAppSecret" class="input-medium" data-rule-required="true" value="${wxUser.wxAppSecret}">
+                                    </div>
+                                </div>
 
 								<div class="control-group">
                                     <label for="wxid" class="control-label">易信公众号原始id：</label>
@@ -97,6 +109,25 @@ limitations under the License.
                                     <label for="wechat_id" class="control-label">易信号：</label>
                                     <div class="controls">
                                         <input type="text" name="yxid" id="yxid" class="input-medium" data-rule-required="false" value="${wxUser.yxid}">
+                                    </div>
+                                </div>
+
+								<div class="control-group">
+                                    <label for="wechat_id" class="control-label">易信应用编号AppId：</label>
+                                    <div class="controls">
+                                        <input type="text" name="yxAppId" id="yxAppId" class="input-medium" data-rule-required="true" value="${wxUser.yxAppId}">
+                                    </div>
+                                </div>
+								<div class="control-group">
+                                    <label for="wechat_id" class="control-label">易信应用密码AppSecret：</label>
+                                    <div class="controls">
+                                        <input type="text" name="yxAppSecret" id="yxAppSecret" class="input-medium" data-rule-required="true" value="${wxUser.yxAppSecret}">
+                                    </div>
+                                </div>
+								<div class="control-group">
+                                    <label for="wechat_id" class="control-label">LBS信息距离：</label>
+                                    <div class="controls">
+                                        <input type="text" name="lbsPosition" id="lbsPosition" class="input-medium" data-rule-required="true" value="${wxUser.lbsPosition}">（米）
                                     </div>
                                 </div>
                                   

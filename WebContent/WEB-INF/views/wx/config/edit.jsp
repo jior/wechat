@@ -115,7 +115,7 @@ limitations under the License.
 		<td align="left">
             <input id="callBackUrl" name="callBackUrl" type="text" 
 			       class="easyui-validatebox x-text" size="80" readonly
-				   value="<%=serviceUrl+"/weixin/"+user.getId()%>"
+				   value="<%=serviceUrl+"/weixin/%>${accountId}"
 				   data-options="required:true"/>
 		</td>
 	</tr>
@@ -124,7 +124,7 @@ limitations under the License.
 		<td align="left">
             <input id="token" name="token" type="text" 
 			       class="easyui-validatebox x-text" size="80" readonly
-				   value="<%=com.glaf.wechat.util.SignUtils.token%>"
+				   value="${wxConfig.token}"
 				   data-options="required:true"/>
 		</td>
 	</tr>
@@ -134,7 +134,7 @@ limitations under the License.
             <input id="wxAppId" name="wxAppId" type="text" 
 			       class="easyui-validatebox x-text"  size="80" 
 				   value="${wxConfig.wxAppId}"
-				   data-options="required:true"/>
+				   data-options="required:false"/>
 		</td>
 	</tr>
 	<tr>
@@ -143,7 +143,7 @@ limitations under the License.
             <input id="wxAppSecret" name="wxAppSecret" type="text" 
 			       class="easyui-validatebox x-text"  size="80" 
 				   value="${wxConfig.wxAppSecret}"
-				   data-options="required:true"/>
+				   data-options="required:false"/>
 		</td>
 	</tr>
 		<tr>
@@ -170,7 +170,7 @@ limitations under the License.
             <input id="lbsPosition" name="lbsPosition" type="text" 
 			       class="easyui-validatebox x-text"  size="5" 
 				   value="${wxConfig.lbsPosition}"
-				   data-options="required:true"/>（米）
+				   data-options="required:false"/>（米）
 		</td>
 	</tr>
 	<tr>

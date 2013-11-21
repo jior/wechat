@@ -186,9 +186,13 @@ public class WeixinExecutor implements IMessage {
 		String signature = request.getParameter("signature");
 		String nonce = request.getParameter("nonce");
 		String timestamp = request.getParameter("timestamp");
+		String uri = request.getRequestURI();
+		String id = uri.substring(uri.lastIndexOf("/") + 1);
+		Long accountId = Long.parseLong(id);
 		PrintWriter out = response.getWriter();
 		if (signature != null
-				&& SignUtils.checkSignature(signature, timestamp, nonce)) {
+				&& SignUtils.checkSignature(accountId, signature, timestamp,
+						nonce)) {
 			if (echostr != null) {
 				response.setContentType("text/plain");
 				out.write(echostr);
