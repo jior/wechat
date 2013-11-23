@@ -53,7 +53,6 @@ limitations under the License.
 	}
 </script>
 </head>
-
 <body>
    <div id="navigation">
         <div class="container-fluid">
@@ -61,6 +60,7 @@ limitations under the License.
                 <a href="<%=request.getContextPath()%>/mx/wechat/index" target="_self" id="brand"></a>
                 <a href="<%=request.getContextPath()%>/mx/wechat/index" target="_self" class="toggle-nav" rel="tooltip" data-placement="bottom" title="Toggle navigation"><i class="icon-reorder"></i></a>
             </div>
+
             <ul class="main-nav">
                 <li class="active">
                     <a href="<%=request.getContextPath()%>/mx/wechat/main" target="_self">
@@ -68,13 +68,12 @@ limitations under the License.
                     </a>
                 </li>
 				<li><a href="<%=request.getContextPath()%>/mx/wechat/main" target="_self">公众帐号管理</a></li>
-   
             </ul>
 
             <div class="user">
                 <ul class="icon-nav">
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="消息" style="display:none;"><i class="icon-envelope"></i><span class="label label-lightred">4</span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="消息" style="display:none;"><i class="icon-envelope"></i><span class="label label-lightred">0</span></a>
                     </li>
                     <li class="dropdown sett" style="display:none;">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="系统设置"><i class="icon-cog"></i></a>
@@ -82,8 +81,7 @@ limitations under the License.
                     <li class="dropdown colo">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="选择颜色"><i class="icon-tint"></i></a>
                         <ul class="dropdown-menu pull-right theme-colors">
-                            <li class="subtitle">选择样式
-                            </li>
+                            <li class="subtitle">选择样式</li>
                             <li>
                                 <span class="red"></span>
                                 <span class="orange"></span>
@@ -106,8 +104,8 @@ limitations under the License.
                     </li>
                 </ul>
                 <div class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="width:127px;">
-					<nobr><span class="caret"></span></nobr></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="width:127px;height:27px;">
+					<nobr><span class="caret">${wxUser.name}</span></nobr></a>
                     <ul class="dropdown-menu pull-right">
                         <li>
                             <a href="<%=request.getContextPath()%>/mx/wechat/main" target="_self">管理帐号</a>
@@ -146,8 +144,8 @@ limitations under the License.
 					    if (obj instanceof JSONObject) {
 							JSONObject jsonObject =(JSONObject)obj;
 			   %>
+
             <div class="subnav">
-			  
                 <div class="subnav-title">
                     <a href="javascript:void(0);" class="toggle-subnav">
 					<i class="icon-angle-right"></i>
@@ -185,19 +183,18 @@ limitations under the License.
         </div>
 
         <div class="right">
-            <div class="main">
+          <div class="main">
 
-                <iframe frameborder="0" id="mainFrame" name="mainFrame" src="<%=request.getContextPath()%>/mx/wx/wxUser/accountInfo" style="center no-repeat"></iframe>
+            <iframe frameborder="0" id="mainFrame" name="mainFrame" 
+			        src="<%=request.getContextPath()%>/mx/wx/wxUser/accountInfo?accountId=${accountId}" 
+			        scrolling="auto" ></iframe>
 
-            </div>
+          </div>
         </div>
 
     </div>
 
 <script type="text/javascript">  P.skn();  </script>
-
-
-
 <div id="ascrail2000" style="width: 7px; z-index: 9002; position: absolute; top: 40px; left: 193px; height: 664px; display: none;"><div style="position: relative; top: 0px; float: right; width: 5px; height: 0px; background-color: rgb(66, 66, 66); border: 1px solid rgb(255, 255, 255); background-clip: padding-box; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px;"></div></div><div id="ascrail2000-hr" style="height: 8px; z-index: 9002; top: 696px; left: 0px; position: absolute; display: none;"><div style="position: relative; top: 0px; height: 5px; width: 0px; background-color: rgb(66, 66, 66); border: 1px solid rgb(255, 255, 255); background-clip: padding-box; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px;"></div>
 </div>
 </body>

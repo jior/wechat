@@ -69,10 +69,10 @@ limitations under the License.
 	<tbody>
 		<tr class="x-content-hight">
 			<td align="left" width="70%" align="left" valign="bottom">
-			<span>720*400图片</span>
+			<span>宽720像素*高400像素图片</span>
 			<br>
 			<c:if test="${not empty wxCover.bigIcon }">
-			   <img src="<%=request.getContextPath()%>/${wxCover.bigIcon}" border="0"/>
+			   <img src="<%=request.getContextPath()%>/${wxCover.bigIcon}" border="0" />
 			   <br>
 			   <br>
 			</c:if>
@@ -80,10 +80,10 @@ limitations under the License.
             </td>
             <td align="left" width="10%" align="left" valign="bottom">&nbsp;</td>
 			<td align="left" width="20%" align="left" valign="bottom">
-			<span>400*400图片</span>
+			<span>60*60图片</span>
             <br>
 			<c:if test="${not empty wxCover.smallIcon }">
-			   <img src="<%=request.getContextPath()%>/${wxCover.smallIcon}" border="0"/>
+			   <img src="<%=request.getContextPath()%>/${wxCover.smallIcon}" border="0" />
 			   <br>
 			   <br>
 			</c:if>

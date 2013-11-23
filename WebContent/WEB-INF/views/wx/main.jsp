@@ -52,7 +52,6 @@ limitations under the License.
 	}
 </script>
 </head>
-
 <body>
     <div id="navigation">
         <div class="container-fluid">
@@ -72,7 +71,7 @@ limitations under the License.
             <div class="user">
                 <ul class="icon-nav">
                     <li class="dropdown">
-                        <a href="<%=request.getContextPath()%>/mx/wechat/main" class="dropdown-toggle" data-toggle="dropdown" title="消息" style="display:none;"><i class="icon-envelope"></i><span class="label label-lightred">4</span></a>
+                        <a href="<%=request.getContextPath()%>/mx/wechat/main" class="dropdown-toggle" data-toggle="dropdown" title="消息" style="display:none;"><i class="icon-envelope"></i><span class="label label-lightred">0</span></a>
                     </li>
                     <li class="dropdown sett" style="display:none;">
                         <a href="<%=request.getContextPath()%>/mx/wechat/main" class="dropdown-toggle" data-toggle="dropdown" title="系统设置"><i class="icon-cog"></i></a>
@@ -80,8 +79,7 @@ limitations under the License.
                     <li class="dropdown colo">
                         <a href="<%=request.getContextPath()%>/mx/wechat/main" class="dropdown-toggle" data-toggle="dropdown" title="选择颜色"><i class="icon-tint"></i></a>
                         <ul class="dropdown-menu pull-right theme-colors">
-                            <li class="subtitle">选择样式
-                            </li>
+                            <li class="subtitle">选择样式</li>
                             <li>
                                 <span class="red"></span>
                                 <span class="orange"></span>
@@ -105,10 +103,7 @@ limitations under the License.
                      <li>
                         <a href="javascript:relogin();" target="_self" title="退出"><i class="icon-signout"></i> 退出</a>
                     </li>
-
                 </ul>
-
-
             </div>
         </div>
     </div>
@@ -133,15 +128,13 @@ limitations under the License.
                     </li>
                 </ul>
             </div>
-
-
-
         </div>
         <div class="right">
             <div class="main">
 
-                <iframe frameborder="0" id="mainFrame" name="mainFrame" 
-				src="<%=request.getContextPath()%>/mx/wx/wxUser/account" style=" center no-repeat"></iframe>
+            <iframe frameborder="0" id="mainFrame" name="mainFrame" 
+				src="<%=request.getContextPath()%>/mx/wx/wxUser/account" 
+				style=" center no-repeat"></iframe>
 
             </div>
         </div>

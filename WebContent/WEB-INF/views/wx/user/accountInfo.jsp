@@ -22,6 +22,9 @@ limitations under the License.
 <%@ page import="com.glaf.base.utils.*"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%
+    String serviceUrl =  com.glaf.wechat.util.WechatUtils.getServiceUrl(request);
+%>
 <!DOCTYPE html>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -54,27 +57,22 @@ limitations under the License.
                             <dt>
                             </dt>
                             <dd>
-                                <p><strong>xx</strong>：<b class="text-warning">试用版(7天)</b>  <a href="#" target="_blank"><i class="icon-arrow-up" title="升级"></i>升级</a></p>
-
-
+                                <p><strong>${wxUser.name}</strong></p>
 
                                 <table class="table noborder">
 								     <tbody><tr>
-                                        <td>套餐有效期：2013-11-23</td>
                                         <td>文本自定义：13/100</td>
                                         <td>图文自定义：0/10</td>
                                         <td>语音自定义：0/0</td>
                                     </tr>
                                     <tr>
-                                        <td>请求数剩余：
-										2000										</td>
                                         <td>总请求数：0</td>
                                         <td>本月请求数：0</td>
                                         <td>每月可请求总数：2000</td>
                                     </tr>
                                 </tbody></table>
-								<p><strong>接口地址：</strong>
-								<strong>TOKEN：</strong></p>
+								<p><strong>接口地址：<%=serviceUrl+"/weixin/"%>${wxUser.id}</strong></p>
+								<p><strong>TOKEN：${wxUser.token}</strong></p>
                             </dd>
                         </dl>
                     </div>

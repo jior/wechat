@@ -148,15 +148,16 @@ limitations under the License.
 	<tr>
 		<td width="15%" align="left">图片</td>
 		<td align="left">
+		     <c:if test="${not empty wxContent.icon }">
+			    <a href="<%=request.getContextPath()%>/${wxContent.icon}" target="_blank"><img src="<%=request.getContextPath()%>/${wxContent.icon}" border="0" width="160" height="105"/></a>
+				<br>
+			 </c:if>
 			 <input id="icon" name="icon" type="text" 
 			       class="easyui-validatebox x-text"  size="60"
 			       data-options="required:true"
 				   value="${wxContent.icon}" onclick="javascript:chooseImage();"/>
 				   &nbsp; <img src="<%=request.getContextPath()%>/images/icon.gif" border="0"  onclick="javascript:chooseImage();"/>
-		    <c:if test="${not empty wxContent.icon }">
-			   <br> <img src="<%=request.getContextPath()%>/${wxContent.icon}" border="0"/>
-			</c:if>
-			<br>建议图片大小：720*400像素
+			<br>建议图片大小：宽640像素，高420像素
 		</td>
 	</tr>
 	 

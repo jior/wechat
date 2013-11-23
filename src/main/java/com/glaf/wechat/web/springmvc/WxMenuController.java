@@ -60,10 +60,8 @@ public class WxMenuController {
 			.getLog(WxMenuController.class);
 
 	protected WxMenuService wxMenuService;
-	
-	protected WxUserService wxUserService;
 
- 
+	protected WxUserService wxUserService;
 
 	public WxMenuController() {
 
@@ -198,6 +196,10 @@ public class WxMenuController {
 			}
 		}
 		return ResponseUtils.responseJsonResult(false);
+	}
+
+	public WxUserService getWxUserService() {
+		return wxUserService;
 	}
 
 	@RequestMapping("/json/{accountId}")
@@ -429,17 +431,9 @@ public class WxMenuController {
 		return ResponseUtils.responseJsonResult(false);
 	}
 
-	 
-
 	@javax.annotation.Resource
 	public void setWxMenuService(WxMenuService wxMenuService) {
 		this.wxMenuService = wxMenuService;
-	}
-	
-	
-
-	public WxUserService getWxUserService() {
-		return wxUserService;
 	}
 
 	public void setWxUserService(WxUserService wxUserService) {

@@ -25,11 +25,11 @@ html, body {
     overflow:hidden;
 }
 
-    .main iframe {
-        height: 100%;
-        width: 99.99%;
-        z-index: 20;
-        border: 0;
-        padding: 0px;
-        margin: 0px;
-    }
+.main iframe {
+    height: 100%;
+    width: 99.99%;
+    z-index: 20;
+    border: 0;
+    padding: 0px;
+    margin: 0px;
+}

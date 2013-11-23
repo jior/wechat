@@ -192,7 +192,7 @@ limitations under the License.
 		<td width="15%" align="left" valign="middle">图文封面</td>
 		<td align="left" valign="middle">
 		    <c:if test="${not empty wxContent.icon }">
-			<img src="<%=request.getContextPath()%>/${wxContent.icon}" width="60" height="60" border="0"/>&nbsp; 
+			<a href="<%=request.getContextPath()%>/${wxContent.icon}" target="_blank"><img src="<%=request.getContextPath()%>/${wxContent.icon}" width="180" height="100" border="0"/></a>&nbsp; 
 			</c:if>
 			<br>建议图片大小720*400像素（即宽度720，高度400）
 			<br>

@@ -22,6 +22,8 @@ import com.glaf.core.config.ViewProperties;
 import com.glaf.core.security.LoginContext;
 import com.glaf.core.tree.helper.TreeHelper;
 import com.glaf.core.util.RequestUtils;
+import com.glaf.wechat.domain.WxUser;
+import com.glaf.wechat.service.WxUserService;
 
 @Controller("/wechat/main")
 public class WxMainController {
@@ -30,6 +32,13 @@ public class WxMainController {
 			.getLog(WxMainController.class);
 
 	protected SysApplicationService sysApplicationService;
+
+	protected WxUserService wxUserService;
+
+	@javax.annotation.Resource
+	public void setWxUserService(WxUserService wxUserService) {
+		this.wxUserService = wxUserService;
+	}
 
 	@RequestMapping("/wechat/index")
 	public ModelAndView index(HttpServletRequest request,
@@ -44,6 +53,13 @@ public class WxMainController {
 		if (StringUtils.isEmpty(appCode)) {
 			appCode = "WeChat";
 		}
+
+		WxUser wxUser = null;
+		if (accountId > 0) {
+			wxUser = wxUserService.getWxUser(accountId);
+		}
+
+		request.setAttribute("wxUser", wxUser);
 
 		SysApplication app = sysApplicationService.findByCode(appCode);
 

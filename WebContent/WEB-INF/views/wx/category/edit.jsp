@@ -224,9 +224,10 @@ limitations under the License.
 		<td align="left" valign="top">
 		     <c:if test="${not empty wxCategory.coverIcon }">
 			     <img src="<%=request.getContextPath()%>/${wxCategory.coverIcon}" width="60" height="60" border="0"/>&nbsp;
+				 <br>
 			</c:if>
 			 <input id="coverIcon" name="coverIcon" type="text" 
-			       class="easyui-validatebox x-text" size="38"
+			       class="easyui-validatebox x-text" size="50"
 			       data-options="required:false"
 				   value="${wxCategory.coverIcon}" onclick="javascript:chooseImage2();"/>
 			&nbsp; <img src="<%=request.getContextPath()%>/images/icon.gif" border="0"  onclick="javascript:chooseImage2();"/>
@@ -237,9 +238,10 @@ limitations under the License.
 		<td align="left" valign="top">
 		     <c:if test="${not empty wxCategory.icon }">
 			     <img src="<%=request.getContextPath()%>/${wxCategory.icon}" width="60" height="60" border="0"/>&nbsp;
+				 <br>
 			</c:if>
 			<input id="icon" name="icon" type="text" 
-			       class="easyui-validatebox x-text" size="38"
+			       class="easyui-validatebox x-text" size="50"
 			       data-options="required:false"
 				   value="${wxCategory.icon}" onclick="javascript:chooseImage();"/>
 			&nbsp; <img src="<%=request.getContextPath()%>/images/icon.gif" border="0"  onclick="javascript:chooseImage();"/>

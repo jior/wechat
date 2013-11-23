@@ -52,8 +52,6 @@ public class WxUserController {
 	protected static final Log logger = LogFactory
 			.getLog(WxUserController.class);
 
-	protected WxUserService wxUserService;
-
 	protected SysUserService sysUserService;
 
 	protected SysUserRoleService sysUserRoleService;
@@ -65,6 +63,8 @@ public class WxUserController {
 	protected SysRoleService sysRoleService;
 
 	protected SysTreeService sysTreeService;
+
+	protected WxUserService wxUserService;
 
 	/**
 	 * œ‘ æ–ﬁ∏ƒ“≥√Ê

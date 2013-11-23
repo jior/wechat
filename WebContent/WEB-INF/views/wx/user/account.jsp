@@ -61,7 +61,7 @@ limitations under the License.
                             <div class="row-fluid">
                                 <div class="span8 control-group">
 
-                                    <a class="btn" href="javascript:location.href='<%=request.getContextPath()%>/mx/wx/wxUser/editAccount';"><i class="icon-plus"></i>添加公众帐号</a>
+                                    <a class="btn " href="javascript:location.href='<%=request.getContextPath()%>/mx/wx/wxUser/editAccount';"><i class="icon-plus"></i>添加公众帐号</a>
                                    
                                 </div>
 
@@ -101,9 +101,9 @@ limitations under the License.
                                                     <p>到期时间:<fmt:formatDate value="${user.endDate}" pattern="yyyy-MM-dd" /></p>
                                                 </td>
                                                 <td>
-                                                    <p>文本：13/100</p>
-                                                    <p>图文：0/10</p>
-                                                    <p>语音：0/0</p>
+                                                    <p>文本：1000</p>
+                                                    <p>图文：100</p>
+                                                    <p>语音：10</p>
                                                 </td>
                                                 <td>
                                                     <p>总请求数:0</p>

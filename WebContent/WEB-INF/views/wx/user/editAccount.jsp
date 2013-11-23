@@ -26,13 +26,12 @@ limitations under the License.
     String theme = com.glaf.core.util.RequestUtils.getTheme(request);
     request.setAttribute("theme", theme);
 	List  list = (List)request.getAttribute("depts");
+	String serviceUrl =  com.glaf.wechat.util.WechatUtils.getServiceUrl(request);
  
 %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/bootstrap2/css/bootstrap.min.css" media="all">
@@ -66,7 +65,7 @@ limitations under the License.
 
                         <div class="box-content">
                              
-                            <form action="<%=request.getContextPath()%>/wx/wxUser/save" 
+                            <form action="<%=request.getContextPath()%>/mx/wx/wxUser/save?id=${wxUser.id}" 
 							      method="POST" class="form-horizontal form-validate" novalidate="novalidate">
                                 <div class="control-group">
                                     <label for="plc_name" class="control-label">名称：</label>
@@ -74,7 +73,7 @@ limitations under the License.
                                         <input type="text" name="name" id="name" class="input-medium valid" data-rule-required="true" value="${wxUser.name}"><span class="maroon">*</span>
                                     <span for="plc_name" class="help-block error valid"></span></div>
                                 </div>
-                                <div class="control-group">
+                                <!-- <div class="control-group">
                                     <label for="wxid" class="control-label">微信公众号原始id：</label>
                                     <div class="controls">
                                         <input type="text" name="wxSourceId" id="wxSourceId" class="input-medium" data-rule-required="true" value="${wxUser.wxSourceId}" ><span class="maroon">*</span><span class="help-inline">  
@@ -85,21 +84,21 @@ limitations under the License.
                                     <div class="controls">
                                         <input type="text" name="wxid" id="wxid" class="input-medium" data-rule-required="true" value="${wxUser.wxid}"><span class="maroon">*</span>
                                     </div>
-                                </div>
+                                </div> -->
 								<div class="control-group">
                                     <label for="wechat_id" class="control-label">微信应用编号AppId：</label>
                                     <div class="controls">
-                                        <input type="text" name="wxAppId" id="wxAppId" class="input-medium" data-rule-required="true" value="${wxUser.wxAppId}">
+                                        <input type="text" name="wxAppId" id="wxAppId" class="input-medium" data-rule-required="false" value="${wxUser.wxAppId}">
                                     </div>
                                 </div>
 								<div class="control-group">
                                     <label for="wechat_id" class="control-label">微信应用密码AppSecret：</label>
                                     <div class="controls">
-                                        <input type="text" name="wxAppSecret" id="wxAppSecret" class="input-medium" data-rule-required="true" value="${wxUser.wxAppSecret}">
+                                        <input type="text" name="wxAppSecret" id="wxAppSecret" class="input-medium" data-rule-required="false" value="${wxUser.wxAppSecret}">
                                     </div>
                                 </div>
 
-								<div class="control-group">
+								<!-- <div class="control-group">
                                     <label for="wxid" class="control-label">易信公众号原始id：</label>
                                     <div class="controls">
                                         <input type="text" name="yxSourceId" id="yxSourceId" class="input-medium" data-rule-required="false" value="${wxUser.yxSourceId}" ><span class="help-inline">  
@@ -110,24 +109,40 @@ limitations under the License.
                                     <div class="controls">
                                         <input type="text" name="yxid" id="yxid" class="input-medium" data-rule-required="false" value="${wxUser.yxid}">
                                     </div>
-                                </div>
+                                </div> -->
 
 								<div class="control-group">
                                     <label for="wechat_id" class="control-label">易信应用编号AppId：</label>
                                     <div class="controls">
-                                        <input type="text" name="yxAppId" id="yxAppId" class="input-medium" data-rule-required="true" value="${wxUser.yxAppId}">
+                                        <input type="text" name="yxAppId" id="yxAppId" class="input-medium" data-rule-required="false" value="${wxUser.yxAppId}">
                                     </div>
                                 </div>
 								<div class="control-group">
                                     <label for="wechat_id" class="control-label">易信应用密码AppSecret：</label>
                                     <div class="controls">
-                                        <input type="text" name="yxAppSecret" id="yxAppSecret" class="input-medium" data-rule-required="true" value="${wxUser.yxAppSecret}">
+                                        <input type="text" name="yxAppSecret" id="yxAppSecret" class="input-medium" data-rule-required="false" value="${wxUser.yxAppSecret}">
+                                    </div>
+                                </div>
+
+                                <c:if test="${!empty wxUser}">
+								<div class="control-group">
+                                    <label for="wechat_url" class="control-label">接口地址：</label>
+                                    <div class="controls">
+                                        <%=serviceUrl+"/weixin/"%>${wxUser.id}
                                     </div>
                                 </div>
 								<div class="control-group">
+                                    <label for="wechat_id" class="control-label">TOKEN：</label>
+                                    <div class="controls">
+                                        ${wxUser.token}
+                                    </div>
+                                </div>
+                                </c:if>
+
+								<div class="control-group">
                                     <label for="wechat_id" class="control-label">LBS信息距离：</label>
                                     <div class="controls">
-                                        <input type="text" name="lbsPosition" id="lbsPosition" class="input-medium" data-rule-required="true" value="${wxUser.lbsPosition}">（米）
+                                        <input type="text" name="lbsPosition" id="lbsPosition" class="input-medium" data-rule-required="false" value="${wxUser.lbsPosition}">（米）
                                     </div>
                                 </div>
                                   

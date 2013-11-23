@@ -111,7 +111,7 @@ limitations under the License.
 					{title:'跳转地址',field:'url', width:280},
 					{title:'前台显示',field:'indexShow', width:80, formatter:formatterShow},
 					{title:'是否有效',field:'locked', width:80, formatter:formatterStatus},
-					{title:'功能键', field:'functionKey', width:150, formatter:formatterKeys}
+					{title:'功能键', field:'functionKey', width:120, formatter:formatterKeys}
 				]],
 				rownumbers:false,
 				pagination:true,
@@ -153,7 +153,7 @@ limitations under the License.
 	}
 
 	function formatterKeys(val, row){
-		return "<a href='javascript:editRow("+row.id+");'>修改</a>&nbsp;<a href='javascript:editPPT("+row.id+");'>幻灯片</a>&nbsp;<a href='javascript:articleList("+row.id+");'>文章列表</a>";
+		return "<a href='javascript:editRow("+row.id+");'>修改</a>&nbsp;<a href='javascript:editPPT("+row.id+");'>幻灯片</a>&nbsp;";
 	}
 
 	function editPPT(rowId){
@@ -327,8 +327,8 @@ limitations under the License.
 			   onclick="javascript:addNew();">新增</a>  
 			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-edit'"
 			   onclick="javascript:editSelected();">修改</a>  
-			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-remove'"
-			   onclick="javascript:deleteSelections();">删除</a> 
+			<!-- <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-remove'"
+			   onclick="javascript:deleteSelections();">删除</a>  -->
 			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-reload'"
 			   onclick="javascript:reloadGrid();">重载</a> 
 			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-sys'"

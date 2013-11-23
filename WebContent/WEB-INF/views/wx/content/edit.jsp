@@ -22,9 +22,10 @@ limitations under the License.
     request.setAttribute("theme", theme);
 %>
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>内容发布</title>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/themes/${theme}/styles.css">
@@ -179,7 +180,6 @@ limitations under the License.
 
 </script>
 </head>
-
 <body>
 <div style="margin:0;"></div>  
 
@@ -224,7 +224,7 @@ limitations under the License.
 		<td width="15%" align="left" valign="middle">图文封面</td>
 		<td align="left" valign="middle">
 		    <c:if test="${not empty wxContent.icon }">
-			<img src="<%=request.getContextPath()%>/${wxContent.icon}" width="60" height="60" border="0"/>&nbsp; 
+			<a href="<%=request.getContextPath()%>/${wxContent.icon}" target="_blank"><img src="<%=request.getContextPath()%>/${wxContent.icon}" width="180" height="100" border="0"/></a>&nbsp; 
 			</c:if>
 			<br>建议图片大小720*400像素（即宽度720，高度400）
 			<br>
@@ -242,7 +242,7 @@ limitations under the License.
 		<td width="15%" align="left" valign="middle">小图标</td>
 		<td align="left" valign="middle">
 		    <c:if test="${not empty wxContent.smallIcon }">
-			<img src="<%=request.getContextPath()%>/${wxContent.smallIcon}"  border="0"/>&nbsp; 
+			<img src="<%=request.getContextPath()%>/${wxContent.smallIcon}"  border="0"  width="75" height="40"/>&nbsp; 
 			</c:if>
 			<br>建议图片大小75*40像素（即宽度75，高度40）
 			<br>
@@ -436,8 +436,8 @@ limitations under the License.
      });
 
 </script>
-<br>
-<br>
-<br>
+<p></p>
+<p></p>
+<p></p>
 </body>
 </html>
