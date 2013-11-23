@@ -156,23 +156,25 @@ public class WxMenuController {
 		}
 		WxUser wxUser = wxUserService.getWxUser(accountId);
 		if (wxUser != null) {
-			String actId = null;
+			String appId = null;
 			String appSecret = null;
 			if (StringUtils.equals("weixin", type)) {
-				actId = wxUser.getWxAppId();
+				appId = wxUser.getWxAppId();
 				appSecret = wxUser.getWxAppSecret();
 			} else if (StringUtils.equals("yixin", type)) {
-				actId = wxUser.getYxAppId();
+				appId = wxUser.getYxAppId();
 				appSecret = wxUser.getYxAppSecret();
 			}
-			if (StringUtils.isNotEmpty(actId)
+			logger.debug("appId:" + appId);
+			if (StringUtils.isNotEmpty(appId)
 					&& StringUtils.isNotEmpty(appSecret)) {
 				AccessToken accessToken = WechatUtils.getAccessToken(
-						access_token_url, actId, appSecret);
+						access_token_url, appId, appSecret);
 				if (accessToken != null && accessToken.getToken() != null) {
 					JSONObject jsonObject = WechatUtils.getMenu(menu_get_url,
 							accessToken.getToken());
 					if (jsonObject != null) {
+						logger.debug(jsonObject.toJSONString());
 						if (jsonObject.containsKey("menu")) {
 							JSONObject menuJson = jsonObject
 									.getJSONObject("menu");
@@ -183,8 +185,13 @@ public class WxMenuController {
 								for (int i = 0; i < buttonArray.size(); i++) {
 									JSONObject buttonJson = buttonArray
 											.getJSONObject(i);
-									WxMenu menu = this.jsonToMenu(buttonJson);
+									WxMenu menu = this.jsonToMenu(
+											wxUser.getActorId(), accountId,
+											buttonJson);
 									menu.setSort(100 - i);
+									menu.setAccountId(accountId);
+									menu.setCreateBy(wxUser.getActorId());
+									menu.setGroup("menu");
 									menus.add(menu);
 								}
 								wxMenuService.saveAll(menus);
@@ -288,7 +295,8 @@ public class WxMenuController {
 		return result.toJSONString().getBytes("UTF-8");
 	}
 
-	protected WxMenu jsonToMenu(JSONObject buttonJson) {
+	protected WxMenu jsonToMenu(String createBy, Long accountId,
+			JSONObject buttonJson) {
 		WxMenu menu = new WxMenu();
 		menu.setName(buttonJson.getString("name"));
 		menu.setType(buttonJson.getString("type"));
@@ -312,6 +320,9 @@ public class WxMenuController {
 					m.setUrl(subButtonJson.getString("url"));
 				}
 				m.setSort(100 - i);
+				m.setAccountId(accountId);
+				m.setCreateBy(createBy);
+				m.setGroup("menu");
 				menu.addChild(m);
 			}
 		}
@@ -436,6 +447,7 @@ public class WxMenuController {
 		this.wxMenuService = wxMenuService;
 	}
 
+	@javax.annotation.Resource
 	public void setWxUserService(WxUserService wxUserService) {
 		this.wxUserService = wxUserService;
 	}
@@ -464,19 +476,20 @@ public class WxMenuController {
 			if (menus != null && !menus.isEmpty()) {
 				WxUser wxUser = wxUserService.getWxUser(accountId);
 				if (wxUser != null) {
-					String actId = null;
+					String appId = null;
 					String appSecret = null;
 					if (StringUtils.equals("weixin", type)) {
-						actId = wxUser.getWxAppId();
+						appId = wxUser.getWxAppId();
 						appSecret = wxUser.getWxAppSecret();
 					} else if (StringUtils.equals("yixin", type)) {
-						actId = wxUser.getYxAppId();
+						appId = wxUser.getYxAppId();
 						appSecret = wxUser.getYxAppSecret();
 					}
-					if (StringUtils.isNotEmpty(actId)
+					logger.debug("appId:" + appId);
+					if (StringUtils.isNotEmpty(appId)
 							&& StringUtils.isNotEmpty(appSecret)) {
 						AccessToken accessToken = WechatUtils.getAccessToken(
-								access_token_url, actId, appSecret);
+								access_token_url, appId, appSecret);
 						if (accessToken != null
 								&& accessToken.getToken() != null) {
 							Menu menu = new Menu();
@@ -572,6 +585,7 @@ public class WxMenuController {
 		JSONArray array = new JSONArray();
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		WxUser user = WxIdentityFactory.getUserByAccountId(accountId);
+		logger.debug("accountId:"+accountId);
 		if (StringUtils.equals(loginContext.getActorId(), user.getActorId())) {
 			String group = request.getParameter("group");
 			Long parentId = RequestUtils.getLong(request, "parentId", 0);

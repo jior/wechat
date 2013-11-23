@@ -95,7 +95,7 @@ public class WechatUtils {
 			String accountId, String appSecret) {
 		AccessToken accessToken = null;
 
-		String requestUrl = access_token_url.replace("ACCOUNTID", accountId)
+		String requestUrl = access_token_url.replace("APPID", accountId)
 				.replace("APPSECRET", appSecret);
 		JSONObject jsonObject = httpRequest(requestUrl, "GET", null);
 		// 如果请求成功

@@ -334,7 +334,7 @@ limitations under the License.
 					   } else {
 						   alert('操作成功完成，请刷新左边菜单分类树！');
 					   }
-					   jQuery('#mydatagrid').datagrid('reload');
+					   window.location.reload();
 				   }
 			 });
 		}

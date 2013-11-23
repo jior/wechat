@@ -158,6 +158,7 @@ public class WxMenuResourceRest {
 		JSONArray array = new JSONArray();
 		String group = request.getParameter("group");
 		Long parentId = RequestUtils.getLong(request, "parentId", 0);
+		logger.debug("accountId:"+accountId);
 		List<WxMenu> menus = null;
 		if (parentId != null && parentId > 0) {
 			menus = wxMenuService.getMenuList(accountId, parentId);
