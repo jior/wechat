@@ -97,7 +97,10 @@ limitations under the License.
   <div data-options="region:'north',split:true,border:true" style="height:40px"> 
     <div class="toolbar-backgroud"> 
 	<span class="x_content_title">编辑微会员</span>
-	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-save'" onclick="javascript:saveData();" >保存</a> 
+	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-save'" 
+	   onclick="javascript:saveData();" >保存</a> 
+	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-back'"
+	   onclick="javascript:window.history.go(-1);">返回</a> 
     </div> 
   </div>
 

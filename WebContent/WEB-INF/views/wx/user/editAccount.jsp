@@ -47,6 +47,28 @@ limitations under the License.
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.validate.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.validate.methods.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/glaf-site.js"></script>
+<script type="text/javascript">
+    function saveData(){
+		var params = jQuery("#iForm").formSerialize();
+		jQuery.ajax({
+				   type: "POST",
+				   url: '<%=request.getContextPath()%>/mx/wx/wxUser/saveWxUser?id=${wxUser.id}',
+				   data: params,
+				   dataType:  'json',
+				   error: function(data){
+					   alert('服务器处理错误！');
+				   },
+				   success: function(data){
+					   if(data != null && data.message != null){
+						 alert(data.message);
+					   } else {
+						 alert('操作成功完成！');
+					   }
+					   location.href='<%=request.getContextPath()%>/mx/wx/wxUser/account';
+				   }
+			 });
+	}
+</script>
 <title>添加公众帐号</title>
 </head>
 <body>
@@ -65,7 +87,8 @@ limitations under the License.
 
                         <div class="box-content">
                              
-                            <form action="<%=request.getContextPath()%>/mx/wx/wxUser/save?id=${wxUser.id}" 
+                            <form id="iForm" name="iForm" 
+							      action="<%=request.getContextPath()%>/mx/wx/wxUser/save?id=${wxUser.id}" 
 							      method="POST" class="form-horizontal form-validate" novalidate="novalidate">
                                 <div class="control-group">
                                     <label for="plc_name" class="control-label">名称：</label>
@@ -170,16 +193,11 @@ limitations under the License.
 										</select>
                                     </div>
                                 </div>
-                                <div class="control-group hide">
-                                    <label for="tongji" class="control-label">图文页统计代码：</label>
-                                    <div class="controls">
-                                        <input type="text" name="code_stat" value="" id="code_stat" style="width: 600px; height: 40px;" maxlength="300">
-                                    </div>
-                                </div>
+                                
                                 <div class="form-actions">
 									<input type="hidden" name="aid" id="aid" value="19345">
-                                    <button type="submit" class="btn btn-primary">保存</button>
-                                    <a class="btn" href="Javascript:window.history.go(-1)">取消</a>
+                                    <button type="submit" class="btn btn-primary" onclick="javascript:saveData();">保存</button>
+                                    <a class="btn" href="javascript:window.history.go(-1)">取消</a>
 
                                 </div>
                             </form>

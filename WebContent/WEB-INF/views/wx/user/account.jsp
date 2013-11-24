@@ -114,8 +114,6 @@ limitations under the License.
                                                 </td>                                             
                                                 <td>
                                                     <a href="<%=request.getContextPath()%>/mx/wx/wxUser/editAccount?id=${user.id}" class="btn" rel="tooltip" title="编辑"><i class="icon-edit"></i></a>
-                                                    <a href="javascript:" class="btn" rel="tooltip" title="删除">
-													<i class="icon-remove"></i></a>
                                                     <a href="#" onclick="parent.location.href='<%=request.getContextPath()%>/mx/wechat/index?accountId=${user.id}'" class="btn" rel="tooltip" title="管理"><i class="icon-cog"></i></a>
                                                 </td>
                                             </tr>
