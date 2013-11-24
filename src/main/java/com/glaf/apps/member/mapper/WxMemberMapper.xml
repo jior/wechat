@@ -6,6 +6,7 @@
 
 	<resultMap id="wxMemberResultMap" type="com.glaf.apps.member.domain.WxMember">
 		<id property="id" column="ID_" jdbcType="BIGINT" />
+		<result property="accountId" column="ACCOUNTID_" jdbcType="BIGINT" />
 		<result property="cardNo" column="CARDNO_" jdbcType="VARCHAR" />
 		<result property="name" column="NAME_" jdbcType="VARCHAR" />
 		<result property="telephone" column="TELEPHONE_" jdbcType="VARCHAR" />
@@ -13,9 +14,8 @@
 		<result property="mail" column="MAIL_" jdbcType="VARCHAR" />
 		<result property="qq" column="QQ_" jdbcType="VARCHAR" />
 		<result property="address" column="ADDRESS_" jdbcType="VARCHAR" />
-		<result property="balance" column="BALANCE_" jdbcType="DOUBLE"/>
+		<result property="balance" column="BALANCE_" jdbcType="DOUBLE" />
 		<result property="status" column="STATUS_" jdbcType="INTEGER" />
-		<result property="uuid" column="UUID_" jdbcType="VARCHAR" />
 		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
 		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP" />
 		<result property="lastUpdateDate" column="LASTUPDATEDATE_"
@@ -29,6 +29,9 @@
 		insert into WX_MEMBER
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			ID_
+			<if test="accountId != null">
+				,ACCOUNTID_
+			</if>
 			<if test="cardNo != null">
 				,CARDNO_
 			</if>
@@ -51,13 +54,10 @@
 				,ADDRESS_
 			</if>
 			<if test="balance != null">
-				,BALANCE_ 
+				,BALANCE_
 			</if>
 			<if test="status != null">
 				,STATUS_
-			</if>
-			<if test="uuid != null">
-				,UUID_
 			</if>
 			<if test="createBy != null">
 				,CREATEBY_
@@ -69,7 +69,13 @@
 
 		<trim prefix=" values (" suffix=")" suffixOverrides=",">
 			#{id, jdbcType=BIGINT}
-
+			
+			<if test="accountId != null">
+				,#{accountId, jdbcType=BIGINT}
+			</if>
+			<if test="cardNo != null">
+				,#{cardNo, jdbcType=VARCHAR}
+			</if>
 			<if test="name != null">
 				,#{name, jdbcType=VARCHAR}
 			</if>
@@ -93,9 +99,6 @@
 			</if>
 			<if test="status != null">
 				,#{status, jdbcType=INTEGER}
-			</if>
-			<if test="uuid != null">
-				,#{uuid, jdbcType=VARCHAR}
 			</if>
 			<if test="createBy != null">
 				,#{createBy, jdbcType=VARCHAR}
@@ -207,6 +210,10 @@
 
 		<where>
 			1 = 1
+
+			<if test="accountId != null">
+				and E.ACCOUNTID_ = #{accountId}
+			</if>
 
 			<if test="cardNo != null and cardNo != '' ">
 				and E.CARDNO_ = #{cardNo}

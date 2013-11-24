@@ -19,10 +19,12 @@
 package com.glaf.apps.vote.query;
 
 import java.util.*;
+
 import com.glaf.core.query.DataQuery;
 
 public class WxVoteQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
+	protected Long accountId;
 	protected String titleLike;
 	protected String contentLike;
 	protected Integer signFlag;
@@ -40,221 +42,11 @@ public class WxVoteQuery extends DataQuery {
 
 	}
 
-	public String getTitleLike() {
-		if (titleLike != null && titleLike.trim().length() > 0) {
-			if (!titleLike.startsWith("%")) {
-				titleLike = "%" + titleLike;
-			}
-			if (!titleLike.endsWith("%")) {
-				titleLike = titleLike + "%";
-			}
-		}
-		return titleLike;
-	}
-
-	public String getContentLike() {
-		if (contentLike != null && contentLike.trim().length() > 0) {
-			if (!contentLike.startsWith("%")) {
-				contentLike = "%" + contentLike;
-			}
-			if (!contentLike.endsWith("%")) {
-				contentLike = contentLike + "%";
-			}
-		}
-		return contentLike;
-	}
-
-	public Integer getStatus() {
-		return status;
-	}
-
-	public Integer getStatusGreaterThanOrEqual() {
-		return statusGreaterThanOrEqual;
-	}
-
-	public Integer getStatusLessThanOrEqual() {
-		return statusLessThanOrEqual;
-	}
-
-	public Integer getSignFlag() {
-		return signFlag;
-	}
-
-	public Integer getMultiFlag() {
-		return multiFlag;
-	}
-
-	public Integer getLimitFlag() {
-		return limitFlag;
-	}
-
-	public Date getStartDateGreaterThanOrEqual() {
-		return startDateGreaterThanOrEqual;
-	}
-
-	public Date getStartDateLessThanOrEqual() {
-		return startDateLessThanOrEqual;
-	}
-
-	public Date getEndDateGreaterThanOrEqual() {
-		return endDateGreaterThanOrEqual;
-	}
-
-	public Date getEndDateLessThanOrEqual() {
-		return endDateLessThanOrEqual;
-	}
-
-	public List<String> getCreateBys() {
-		return createBys;
-	}
-
-	public Date getCreateDateGreaterThanOrEqual() {
-		return createDateGreaterThanOrEqual;
-	}
-
-	public Date getCreateDateLessThanOrEqual() {
-		return createDateLessThanOrEqual;
-	}
-
-	public void setTitleLike(String titleLike) {
-		this.titleLike = titleLike;
-	}
-
-	public void setContentLike(String contentLike) {
-		this.contentLike = contentLike;
-	}
-
-	public void setStatus(Integer status) {
-		this.status = status;
-	}
-
-	public void setStatusGreaterThanOrEqual(Integer statusGreaterThanOrEqual) {
-		this.statusGreaterThanOrEqual = statusGreaterThanOrEqual;
-	}
-
-	public void setStatusLessThanOrEqual(Integer statusLessThanOrEqual) {
-		this.statusLessThanOrEqual = statusLessThanOrEqual;
-	}
-
-	public void setSignFlag(Integer signFlag) {
-		this.signFlag = signFlag;
-	}
-
-	public void setMultiFlag(Integer multiFlag) {
-		this.multiFlag = multiFlag;
-	}
-
-	public void setLimitFlag(Integer limitFlag) {
-		this.limitFlag = limitFlag;
-	}
-
-	public void setStartDateGreaterThanOrEqual(Date startDateGreaterThanOrEqual) {
-		this.startDateGreaterThanOrEqual = startDateGreaterThanOrEqual;
-	}
-
-	public void setStartDateLessThanOrEqual(Date startDateLessThanOrEqual) {
-		this.startDateLessThanOrEqual = startDateLessThanOrEqual;
-	}
-
-	public void setEndDateGreaterThanOrEqual(Date endDateGreaterThanOrEqual) {
-		this.endDateGreaterThanOrEqual = endDateGreaterThanOrEqual;
-	}
-
-	public void setEndDateLessThanOrEqual(Date endDateLessThanOrEqual) {
-		this.endDateLessThanOrEqual = endDateLessThanOrEqual;
-	}
-
-	public void setCreateBy(String createBy) {
-		this.createBy = createBy;
-	}
-
-	public void setCreateBys(List<String> createBys) {
-		this.createBys = createBys;
-	}
-
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
-
-	public void setCreateDateGreaterThanOrEqual(
-			Date createDateGreaterThanOrEqual) {
-		this.createDateGreaterThanOrEqual = createDateGreaterThanOrEqual;
-	}
-
-	public void setCreateDateLessThanOrEqual(Date createDateLessThanOrEqual) {
-		this.createDateLessThanOrEqual = createDateLessThanOrEqual;
-	}
-
-	public WxVoteQuery titleLike(String titleLike) {
-		if (titleLike == null) {
-			throw new RuntimeException("title is null");
-		}
-		this.titleLike = titleLike;
-		return this;
-	}
-
 	public WxVoteQuery contentLike(String contentLike) {
 		if (contentLike == null) {
 			throw new RuntimeException("content is null");
 		}
 		this.contentLike = contentLike;
-		return this;
-	}
-
-	public WxVoteQuery signFlag(Integer signFlag) {
-		if (signFlag == null) {
-			throw new RuntimeException("signFlag is null");
-		}
-		this.signFlag = signFlag;
-		return this;
-	}
-
-	public WxVoteQuery multiFlag(Integer multiFlag) {
-		if (multiFlag == null) {
-			throw new RuntimeException("multiFlag is null");
-		}
-		this.multiFlag = multiFlag;
-		return this;
-	}
-
-	public WxVoteQuery limitFlag(Integer limitFlag) {
-		if (limitFlag == null) {
-			throw new RuntimeException("limitFlag is null");
-		}
-		this.limitFlag = limitFlag;
-		return this;
-	}
-
-	public WxVoteQuery startDateGreaterThanOrEqual(
-			Date startDateGreaterThanOrEqual) {
-		if (startDateGreaterThanOrEqual == null) {
-			throw new RuntimeException("startDate is null");
-		}
-		this.startDateGreaterThanOrEqual = startDateGreaterThanOrEqual;
-		return this;
-	}
-
-	public WxVoteQuery startDateLessThanOrEqual(Date startDateLessThanOrEqual) {
-		if (startDateLessThanOrEqual == null) {
-			throw new RuntimeException("startDate is null");
-		}
-		this.startDateLessThanOrEqual = startDateLessThanOrEqual;
-		return this;
-	}
-
-	public WxVoteQuery endDateGreaterThanOrEqual(Date endDateGreaterThanOrEqual) {
-		if (endDateGreaterThanOrEqual == null) {
-			throw new RuntimeException("endDate is null");
-		}
-		this.endDateGreaterThanOrEqual = endDateGreaterThanOrEqual;
-		return this;
-	}
-
-	public WxVoteQuery endDateLessThanOrEqual(Date endDateLessThanOrEqual) {
-		if (endDateLessThanOrEqual == null) {
-			throw new RuntimeException("endDate is null");
-		}
-		this.endDateLessThanOrEqual = endDateLessThanOrEqual;
 		return this;
 	}
 
@@ -281,6 +73,66 @@ public class WxVoteQuery extends DataQuery {
 		}
 		this.createDateLessThanOrEqual = createDateLessThanOrEqual;
 		return this;
+	}
+
+	public WxVoteQuery endDateGreaterThanOrEqual(Date endDateGreaterThanOrEqual) {
+		if (endDateGreaterThanOrEqual == null) {
+			throw new RuntimeException("endDate is null");
+		}
+		this.endDateGreaterThanOrEqual = endDateGreaterThanOrEqual;
+		return this;
+	}
+
+	public WxVoteQuery endDateLessThanOrEqual(Date endDateLessThanOrEqual) {
+		if (endDateLessThanOrEqual == null) {
+			throw new RuntimeException("endDate is null");
+		}
+		this.endDateLessThanOrEqual = endDateLessThanOrEqual;
+		return this;
+	}
+
+	public Long getAccountId() {
+		return accountId;
+	}
+
+	public String getContentLike() {
+		if (contentLike != null && contentLike.trim().length() > 0) {
+			if (!contentLike.startsWith("%")) {
+				contentLike = "%" + contentLike;
+			}
+			if (!contentLike.endsWith("%")) {
+				contentLike = contentLike + "%";
+			}
+		}
+		return contentLike;
+	}
+
+	public List<String> getCreateBys() {
+		return createBys;
+	}
+
+	public Date getCreateDateGreaterThanOrEqual() {
+		return createDateGreaterThanOrEqual;
+	}
+
+	public Date getCreateDateLessThanOrEqual() {
+		return createDateLessThanOrEqual;
+	}
+
+	public Date getEndDateGreaterThanOrEqual() {
+		return endDateGreaterThanOrEqual;
+	}
+
+	public Date getEndDateLessThanOrEqual() {
+		return endDateLessThanOrEqual;
+	}
+
+	public Integer getLimitFlag() {
+		return limitFlag;
+	}
+
+	public Integer getMultiFlag() {
+		return multiFlag;
 	}
 
 	public String getOrderBy() {
@@ -342,6 +194,42 @@ public class WxVoteQuery extends DataQuery {
 		return orderBy;
 	}
 
+	public Integer getSignFlag() {
+		return signFlag;
+	}
+
+	public Date getStartDateGreaterThanOrEqual() {
+		return startDateGreaterThanOrEqual;
+	}
+
+	public Date getStartDateLessThanOrEqual() {
+		return startDateLessThanOrEqual;
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public Integer getStatusGreaterThanOrEqual() {
+		return statusGreaterThanOrEqual;
+	}
+
+	public Integer getStatusLessThanOrEqual() {
+		return statusLessThanOrEqual;
+	}
+
+	public String getTitleLike() {
+		if (titleLike != null && titleLike.trim().length() > 0) {
+			if (!titleLike.startsWith("%")) {
+				titleLike = "%" + titleLike;
+			}
+			if (!titleLike.endsWith("%")) {
+				titleLike = titleLike + "%";
+			}
+		}
+		return titleLike;
+	}
+
 	@Override
 	public void initQueryColumns() {
 		super.initQueryColumns();
@@ -358,6 +246,128 @@ public class WxVoteQuery extends DataQuery {
 		addColumn("endDate", "ENDDATE_");
 		addColumn("createBy", "CREATEBY_");
 		addColumn("createDate", "CREATEDATE_");
+	}
+
+	public WxVoteQuery limitFlag(Integer limitFlag) {
+		if (limitFlag == null) {
+			throw new RuntimeException("limitFlag is null");
+		}
+		this.limitFlag = limitFlag;
+		return this;
+	}
+
+	public WxVoteQuery multiFlag(Integer multiFlag) {
+		if (multiFlag == null) {
+			throw new RuntimeException("multiFlag is null");
+		}
+		this.multiFlag = multiFlag;
+		return this;
+	}
+
+	public void setAccountId(Long accountId) {
+		this.accountId = accountId;
+	}
+
+	public void setContentLike(String contentLike) {
+		this.contentLike = contentLike;
+	}
+
+	public void setCreateBy(String createBy) {
+		this.createBy = createBy;
+	}
+
+	public void setCreateBys(List<String> createBys) {
+		this.createBys = createBys;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+
+	public void setCreateDateGreaterThanOrEqual(
+			Date createDateGreaterThanOrEqual) {
+		this.createDateGreaterThanOrEqual = createDateGreaterThanOrEqual;
+	}
+
+	public void setCreateDateLessThanOrEqual(Date createDateLessThanOrEqual) {
+		this.createDateLessThanOrEqual = createDateLessThanOrEqual;
+	}
+
+	public void setEndDateGreaterThanOrEqual(Date endDateGreaterThanOrEqual) {
+		this.endDateGreaterThanOrEqual = endDateGreaterThanOrEqual;
+	}
+
+	public void setEndDateLessThanOrEqual(Date endDateLessThanOrEqual) {
+		this.endDateLessThanOrEqual = endDateLessThanOrEqual;
+	}
+
+	public void setLimitFlag(Integer limitFlag) {
+		this.limitFlag = limitFlag;
+	}
+
+	public void setMultiFlag(Integer multiFlag) {
+		this.multiFlag = multiFlag;
+	}
+
+	public void setSignFlag(Integer signFlag) {
+		this.signFlag = signFlag;
+	}
+
+	public void setStartDateGreaterThanOrEqual(Date startDateGreaterThanOrEqual) {
+		this.startDateGreaterThanOrEqual = startDateGreaterThanOrEqual;
+	}
+
+	public void setStartDateLessThanOrEqual(Date startDateLessThanOrEqual) {
+		this.startDateLessThanOrEqual = startDateLessThanOrEqual;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+	public void setStatusGreaterThanOrEqual(Integer statusGreaterThanOrEqual) {
+		this.statusGreaterThanOrEqual = statusGreaterThanOrEqual;
+	}
+
+	public void setStatusLessThanOrEqual(Integer statusLessThanOrEqual) {
+		this.statusLessThanOrEqual = statusLessThanOrEqual;
+	}
+
+	public void setTitleLike(String titleLike) {
+		this.titleLike = titleLike;
+	}
+
+	public WxVoteQuery signFlag(Integer signFlag) {
+		if (signFlag == null) {
+			throw new RuntimeException("signFlag is null");
+		}
+		this.signFlag = signFlag;
+		return this;
+	}
+
+	public WxVoteQuery startDateGreaterThanOrEqual(
+			Date startDateGreaterThanOrEqual) {
+		if (startDateGreaterThanOrEqual == null) {
+			throw new RuntimeException("startDate is null");
+		}
+		this.startDateGreaterThanOrEqual = startDateGreaterThanOrEqual;
+		return this;
+	}
+
+	public WxVoteQuery startDateLessThanOrEqual(Date startDateLessThanOrEqual) {
+		if (startDateLessThanOrEqual == null) {
+			throw new RuntimeException("startDate is null");
+		}
+		this.startDateLessThanOrEqual = startDateLessThanOrEqual;
+		return this;
+	}
+
+	public WxVoteQuery titleLike(String titleLike) {
+		if (titleLike == null) {
+			throw new RuntimeException("title is null");
+		}
+		this.titleLike = titleLike;
+		return this;
 	}
 
 }

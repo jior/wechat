@@ -42,6 +42,9 @@ public class WxMemberJsonFactory {
 		if (jsonObject.containsKey("id")) {
 			model.setId(jsonObject.getLong("id"));
 		}
+		if (jsonObject.containsKey("accountId")) {
+			model.setAccountId(jsonObject.getLong("accountId"));
+		}
 		if (jsonObject.containsKey("cardNo")) {
 			model.setCardNo(jsonObject.getString("cardNo"));
 		}
@@ -98,6 +101,9 @@ public class WxMemberJsonFactory {
 		jsonObject.put("id", model.getId());
 		jsonObject.put("_id_", model.getId());
 		jsonObject.put("_oid_", model.getId());
+		if (model.getAccountId() != null) {
+			jsonObject.put("accountId", model.getAccountId());
+		}
 		if (model.getCardNo() != null) {
 			jsonObject.put("cardNo", model.getCardNo());
 		}
@@ -154,6 +160,9 @@ public class WxMemberJsonFactory {
 		jsonObject.put("id", model.getId());
 		jsonObject.put("_id_", model.getId());
 		jsonObject.put("_oid_", model.getId());
+		if (model.getAccountId() != null) {
+			jsonObject.put("accountId", model.getAccountId());
+		}
 		if (model.getCardNo() != null) {
 			jsonObject.put("cardNo", model.getCardNo());
 		}

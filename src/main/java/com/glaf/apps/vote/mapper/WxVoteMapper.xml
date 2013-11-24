@@ -6,13 +6,15 @@
 
 	<resultMap id="wxVoteResultMap" type="com.glaf.apps.vote.domain.WxVote">
 		<id property="id" column="ID_" jdbcType="BIGINT" />
+		<result property="accountId" column="ACCOUNTID_" jdbcType="BIGINT" />
 		<result property="title" column="TITLE_" jdbcType="VARCHAR" />
 		<result property="content" column="CONTENT_" jdbcType="VARCHAR" />
 		<result property="desc" column="DESC_" jdbcType="VARCHAR" />
-		<result property="keywords" column="KEYWORDS_" jdbcType="VARCHAR"/>
+		<result property="keywords" column="KEYWORDS_" jdbcType="VARCHAR" />
 		<result property="icon" column="ICON_" jdbcType="VARCHAR" />
 		<result property="status" column="STATUS_" jdbcType="INTEGER" />
-		<result property="showIconFlag" column="SHOWICONFLAG_" jdbcType="INTEGER" />
+		<result property="showIconFlag" column="SHOWICONFLAG_"
+			jdbcType="INTEGER" />
 		<result property="signFlag" column="SIGNFLAG_" jdbcType="INTEGER" />
 		<result property="multiFlag" column="MULTIFLAG_" jdbcType="INTEGER" />
 		<result property="limitFlag" column="LIMITFLAG_" jdbcType="INTEGER" />
@@ -29,6 +31,9 @@
 		insert into wx_vote
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			ID_
+			<if test="accountId != null">
+				,ACCOUNTID_
+			</if>
 			<if test="title != null">
 				,TITLE_
 			</if>
@@ -39,7 +44,7 @@
 				,DESC_
 			</if>
 			<if test="keywords != null">
-				,KEYWORDS_ 
+				,KEYWORDS_
 			</if>
 			<if test="icon != null">
 				,ICON_
@@ -78,7 +83,9 @@
 
 		<trim prefix=" values (" suffix=")" suffixOverrides=",">
 			#{id, jdbcType=BIGINT}
-
+			<if test="accountId != null">
+				,#{accountId, jdbcType=BIGINT}
+			</if>
 			<if test="title != null">
 				,#{title, jdbcType=VARCHAR}
 			</if>
@@ -236,6 +243,10 @@
 
 		<where>
 			1 = 1
+
+			<if test="accountId != null">
+				and E.ACCOUNTID_ = #{accountId}
+			</if>
 
 			<if test="titleLike != null and titleLike != '' ">
 				and E.TITLE_ like #{titleLike}

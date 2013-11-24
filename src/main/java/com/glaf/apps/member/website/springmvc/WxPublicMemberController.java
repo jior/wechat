@@ -33,15 +33,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.glaf.core.config.ViewProperties;
-import com.glaf.core.identity.User;
-import com.glaf.core.security.IdentityFactory;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.ResponseUtils;
 import com.glaf.core.util.Tools;
 
+import com.glaf.wechat.domain.WxUser;
+import com.glaf.wechat.util.WxIdentityFactory;
 import com.glaf.apps.member.domain.WxMember;
 import com.glaf.apps.member.service.WxMemberService;
-
 
 @Controller("/wx/member")
 @RequestMapping("/wx/member")
@@ -53,15 +52,15 @@ public class WxPublicMemberController {
 	protected WxMemberService wxMemberService;
 
 	@ResponseBody
-	@RequestMapping("/post/{userId}")
-	public byte[] post(@PathVariable("userId") Long userId,
+	@RequestMapping("/post/{accountId}")
+	public byte[] post(@PathVariable("accountId") Long accountId,
 			HttpServletRequest request) throws IOException {
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		User user = IdentityFactory.getUserByUserId(userId);
+		WxUser user = WxIdentityFactory.getUserByAccountId(accountId);
 		try {
 			WxMember wxMember = new WxMember();
 			Tools.populate(wxMember, params);
-
+			wxMember.setAccountId(accountId);
 			wxMember.setName(request.getParameter("name"));
 			wxMember.setTelephone(request.getParameter("telephone"));
 			wxMember.setMobile(request.getParameter("mobile"));
@@ -85,13 +84,12 @@ public class WxPublicMemberController {
 		this.wxMemberService = wxMemberService;
 	}
 
-	@RequestMapping("/mobile/{userId}")
-	public ModelAndView mobile(@PathVariable("userId") Long userId,
+	@RequestMapping("/mobile/{accountId}")
+	public ModelAndView mobile(@PathVariable("accountId") Long accountId,
 			HttpServletRequest request, ModelMap modelMap) throws IOException {
 		RequestUtils.setRequestParameterToAttribute(request);
 
-		User user = IdentityFactory.getUserByUserId(userId);
-		request.setAttribute("user", user);
+		request.setAttribute("accountId", accountId);
 
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {

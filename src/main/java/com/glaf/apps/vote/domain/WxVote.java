@@ -41,6 +41,12 @@ public class WxVote implements Serializable, JSONable {
 	@Column(name = "ID_", nullable = false)
 	protected Long id;
 
+	/**
+	 * Î¢Õ¾¹«ÖÚºÅÕËºÅID
+	 */
+	@Column(name = "ACCOUNTID_")
+	protected Long accountId;
+
 	@Column(name = "TITLE_", length = 200)
 	protected String title;
 
@@ -126,6 +132,10 @@ public class WxVote implements Serializable, JSONable {
 		return true;
 	}
 
+	public Long getAccountId() {
+		return accountId;
+	}
+
 	public String getContent() {
 		return this.content;
 	}
@@ -208,6 +218,10 @@ public class WxVote implements Serializable, JSONable {
 
 	public WxVote jsonToObject(JSONObject jsonObject) {
 		return WxVoteJsonFactory.jsonToObject(jsonObject);
+	}
+
+	public void setAccountId(Long accountId) {
+		this.accountId = accountId;
 	}
 
 	public void setContent(String content) {

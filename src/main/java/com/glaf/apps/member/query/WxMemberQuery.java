@@ -19,10 +19,12 @@
 package com.glaf.apps.member.query;
 
 import java.util.*;
+
 import com.glaf.core.query.DataQuery;
 
 public class WxMemberQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
+	protected Long accountId;
 	protected List<Long> ids;
 	protected String cardNo;
 	protected String cardNoLike;
@@ -44,205 +46,12 @@ public class WxMemberQuery extends DataQuery {
 
 	}
 
-	public String getCardNo() {
-		return cardNo;
-	}
-
-	public String getCardNoLike() {
-		if (cardNoLike != null && cardNoLike.trim().length() > 0) {
-			if (!cardNoLike.startsWith("%")) {
-				cardNoLike = "%" + cardNoLike;
-			}
-			if (!cardNoLike.endsWith("%")) {
-				cardNoLike = cardNoLike + "%";
-			}
+	public WxMemberQuery addressLike(String addressLike) {
+		if (addressLike == null) {
+			throw new RuntimeException("address is null");
 		}
-		return cardNoLike;
-	}
-
-	public List<String> getCardNos() {
-		return cardNos;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public String getNameLike() {
-		if (nameLike != null && nameLike.trim().length() > 0) {
-			if (!nameLike.startsWith("%")) {
-				nameLike = "%" + nameLike;
-			}
-			if (!nameLike.endsWith("%")) {
-				nameLike = nameLike + "%";
-			}
-		}
-		return nameLike;
-	}
-
-	public List<String> getNames() {
-		return names;
-	}
-
-	public String getTelephoneLike() {
-		if (telephoneLike != null && telephoneLike.trim().length() > 0) {
-			if (!telephoneLike.startsWith("%")) {
-				telephoneLike = "%" + telephoneLike;
-			}
-			if (!telephoneLike.endsWith("%")) {
-				telephoneLike = telephoneLike + "%";
-			}
-		}
-		return telephoneLike;
-	}
-
-	public String getMobileLike() {
-		if (mobileLike != null && mobileLike.trim().length() > 0) {
-			if (!mobileLike.startsWith("%")) {
-				mobileLike = "%" + mobileLike;
-			}
-			if (!mobileLike.endsWith("%")) {
-				mobileLike = mobileLike + "%";
-			}
-		}
-		return mobileLike;
-	}
-
-	public String getMailLike() {
-		if (mailLike != null && mailLike.trim().length() > 0) {
-			if (!mailLike.startsWith("%")) {
-				mailLike = "%" + mailLike;
-			}
-			if (!mailLike.endsWith("%")) {
-				mailLike = mailLike + "%";
-			}
-		}
-		return mailLike;
-	}
-
-	public String getQqLike() {
-		if (qqLike != null && qqLike.trim().length() > 0) {
-			if (!qqLike.startsWith("%")) {
-				qqLike = "%" + qqLike;
-			}
-			if (!qqLike.endsWith("%")) {
-				qqLike = qqLike + "%";
-			}
-		}
-		return qqLike;
-	}
-
-	public String getAddressLike() {
-		if (addressLike != null && addressLike.trim().length() > 0) {
-			if (!addressLike.startsWith("%")) {
-				addressLike = "%" + addressLike;
-			}
-			if (!addressLike.endsWith("%")) {
-				addressLike = addressLike + "%";
-			}
-		}
-		return addressLike;
-	}
-
-	public Integer getStatus() {
-		return status;
-	}
-
-	public Integer getStatusGreaterThanOrEqual() {
-		return statusGreaterThanOrEqual;
-	}
-
-	public Integer getStatusLessThanOrEqual() {
-		return statusLessThanOrEqual;
-	}
-
-	public String getUuid() {
-		return uuid;
-	}
-
-	public List<String> getUuids() {
-		return uuids;
-	}
-
-	public Date getCreateDateGreaterThanOrEqual() {
-		return createDateGreaterThanOrEqual;
-	}
-
-	public Date getCreateDateLessThanOrEqual() {
-		return createDateLessThanOrEqual;
-	}
-
-	public void setCardNo(String cardNo) {
-		this.cardNo = cardNo;
-	}
-
-	public void setCardNoLike(String cardNoLike) {
-		this.cardNoLike = cardNoLike;
-	}
-
-	public void setCardNos(List<String> cardNos) {
-		this.cardNos = cardNos;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public void setNameLike(String nameLike) {
-		this.nameLike = nameLike;
-	}
-
-	public void setNames(List<String> names) {
-		this.names = names;
-	}
-
-	public void setTelephoneLike(String telephoneLike) {
-		this.telephoneLike = telephoneLike;
-	}
-
-	public void setMobileLike(String mobileLike) {
-		this.mobileLike = mobileLike;
-	}
-
-	public void setMailLike(String mailLike) {
-		this.mailLike = mailLike;
-	}
-
-	public void setQqLike(String qqLike) {
-		this.qqLike = qqLike;
-	}
-
-	public void setAddressLike(String addressLike) {
 		this.addressLike = addressLike;
-	}
-
-	public void setStatus(Integer status) {
-		this.status = status;
-	}
-
-	public void setStatusGreaterThanOrEqual(Integer statusGreaterThanOrEqual) {
-		this.statusGreaterThanOrEqual = statusGreaterThanOrEqual;
-	}
-
-	public void setStatusLessThanOrEqual(Integer statusLessThanOrEqual) {
-		this.statusLessThanOrEqual = statusLessThanOrEqual;
-	}
-
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
-	}
-
-	public void setUuids(List<String> uuids) {
-		this.uuids = uuids;
-	}
-
-	public void setCreateDateGreaterThanOrEqual(
-			Date createDateGreaterThanOrEqual) {
-		this.createDateGreaterThanOrEqual = createDateGreaterThanOrEqual;
-	}
-
-	public void setCreateDateLessThanOrEqual(Date createDateLessThanOrEqual) {
-		this.createDateLessThanOrEqual = createDateLessThanOrEqual;
+		return this;
 	}
 
 	public WxMemberQuery cardNo(String cardNo) {
@@ -269,111 +78,6 @@ public class WxMemberQuery extends DataQuery {
 		return this;
 	}
 
-	public WxMemberQuery name(String name) {
-		if (name == null) {
-			throw new RuntimeException("name is null");
-		}
-		this.name = name;
-		return this;
-	}
-
-	public WxMemberQuery nameLike(String nameLike) {
-		if (nameLike == null) {
-			throw new RuntimeException("name is null");
-		}
-		this.nameLike = nameLike;
-		return this;
-	}
-
-	public WxMemberQuery names(List<String> names) {
-		if (names == null) {
-			throw new RuntimeException("names is empty ");
-		}
-		this.names = names;
-		return this;
-	}
-
-	public WxMemberQuery telephoneLike(String telephoneLike) {
-		if (telephoneLike == null) {
-			throw new RuntimeException("telephone is null");
-		}
-		this.telephoneLike = telephoneLike;
-		return this;
-	}
-
-	public WxMemberQuery mobileLike(String mobileLike) {
-		if (mobileLike == null) {
-			throw new RuntimeException("mobile is null");
-		}
-		this.mobileLike = mobileLike;
-		return this;
-	}
-
-	public WxMemberQuery mailLike(String mailLike) {
-		if (mailLike == null) {
-			throw new RuntimeException("mail is null");
-		}
-		this.mailLike = mailLike;
-		return this;
-	}
-
-	public WxMemberQuery qqLike(String qqLike) {
-		if (qqLike == null) {
-			throw new RuntimeException("qq is null");
-		}
-		this.qqLike = qqLike;
-		return this;
-	}
-
-	public WxMemberQuery addressLike(String addressLike) {
-		if (addressLike == null) {
-			throw new RuntimeException("address is null");
-		}
-		this.addressLike = addressLike;
-		return this;
-	}
-
-	public WxMemberQuery status(Integer status) {
-		if (status == null) {
-			throw new RuntimeException("status is null");
-		}
-		this.status = status;
-		return this;
-	}
-
-	public WxMemberQuery statusGreaterThanOrEqual(
-			Integer statusGreaterThanOrEqual) {
-		if (statusGreaterThanOrEqual == null) {
-			throw new RuntimeException("status is null");
-		}
-		this.statusGreaterThanOrEqual = statusGreaterThanOrEqual;
-		return this;
-	}
-
-	public WxMemberQuery statusLessThanOrEqual(Integer statusLessThanOrEqual) {
-		if (statusLessThanOrEqual == null) {
-			throw new RuntimeException("status is null");
-		}
-		this.statusLessThanOrEqual = statusLessThanOrEqual;
-		return this;
-	}
-
-	public WxMemberQuery uuid(String uuid) {
-		if (uuid == null) {
-			throw new RuntimeException("uuid is null");
-		}
-		this.uuid = uuid;
-		return this;
-	}
-
-	public WxMemberQuery uuids(List<String> uuids) {
-		if (uuids == null) {
-			throw new RuntimeException("uuids is empty ");
-		}
-		this.uuids = uuids;
-		return this;
-	}
-
 	public WxMemberQuery createDateGreaterThanOrEqual(
 			Date createDateGreaterThanOrEqual) {
 		if (createDateGreaterThanOrEqual == null) {
@@ -390,6 +94,94 @@ public class WxMemberQuery extends DataQuery {
 		}
 		this.createDateLessThanOrEqual = createDateLessThanOrEqual;
 		return this;
+	}
+
+	public Long getAccountId() {
+		return accountId;
+	}
+
+	public String getAddressLike() {
+		if (addressLike != null && addressLike.trim().length() > 0) {
+			if (!addressLike.startsWith("%")) {
+				addressLike = "%" + addressLike;
+			}
+			if (!addressLike.endsWith("%")) {
+				addressLike = addressLike + "%";
+			}
+		}
+		return addressLike;
+	}
+
+	public String getCardNo() {
+		return cardNo;
+	}
+
+	public String getCardNoLike() {
+		if (cardNoLike != null && cardNoLike.trim().length() > 0) {
+			if (!cardNoLike.startsWith("%")) {
+				cardNoLike = "%" + cardNoLike;
+			}
+			if (!cardNoLike.endsWith("%")) {
+				cardNoLike = cardNoLike + "%";
+			}
+		}
+		return cardNoLike;
+	}
+
+	public List<String> getCardNos() {
+		return cardNos;
+	}
+
+	public Date getCreateDateGreaterThanOrEqual() {
+		return createDateGreaterThanOrEqual;
+	}
+
+	public Date getCreateDateLessThanOrEqual() {
+		return createDateLessThanOrEqual;
+	}
+
+	public String getMailLike() {
+		if (mailLike != null && mailLike.trim().length() > 0) {
+			if (!mailLike.startsWith("%")) {
+				mailLike = "%" + mailLike;
+			}
+			if (!mailLike.endsWith("%")) {
+				mailLike = mailLike + "%";
+			}
+		}
+		return mailLike;
+	}
+
+	public String getMobileLike() {
+		if (mobileLike != null && mobileLike.trim().length() > 0) {
+			if (!mobileLike.startsWith("%")) {
+				mobileLike = "%" + mobileLike;
+			}
+			if (!mobileLike.endsWith("%")) {
+				mobileLike = mobileLike + "%";
+			}
+		}
+		return mobileLike;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getNameLike() {
+		if (nameLike != null && nameLike.trim().length() > 0) {
+			if (!nameLike.startsWith("%")) {
+				nameLike = "%" + nameLike;
+			}
+			if (!nameLike.endsWith("%")) {
+				nameLike = nameLike + "%";
+			}
+		}
+		return nameLike;
+	}
+
+	public List<String> getNames() {
+		return names;
 	}
 
 	public String getOrderBy() {
@@ -447,6 +239,50 @@ public class WxMemberQuery extends DataQuery {
 		return orderBy;
 	}
 
+	public String getQqLike() {
+		if (qqLike != null && qqLike.trim().length() > 0) {
+			if (!qqLike.startsWith("%")) {
+				qqLike = "%" + qqLike;
+			}
+			if (!qqLike.endsWith("%")) {
+				qqLike = qqLike + "%";
+			}
+		}
+		return qqLike;
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public Integer getStatusGreaterThanOrEqual() {
+		return statusGreaterThanOrEqual;
+	}
+
+	public Integer getStatusLessThanOrEqual() {
+		return statusLessThanOrEqual;
+	}
+
+	public String getTelephoneLike() {
+		if (telephoneLike != null && telephoneLike.trim().length() > 0) {
+			if (!telephoneLike.startsWith("%")) {
+				telephoneLike = "%" + telephoneLike;
+			}
+			if (!telephoneLike.endsWith("%")) {
+				telephoneLike = telephoneLike + "%";
+			}
+		}
+		return telephoneLike;
+	}
+
+	public String getUuid() {
+		return uuid;
+	}
+
+	public List<String> getUuids() {
+		return uuids;
+	}
+
 	@Override
 	public void initQueryColumns() {
 		super.initQueryColumns();
@@ -462,6 +298,180 @@ public class WxMemberQuery extends DataQuery {
 		addColumn("uuid", "UUID_");
 		addColumn("createBy", "CREATEBY_");
 		addColumn("createDate", "CREATEDATE_");
+	}
+
+	public WxMemberQuery mailLike(String mailLike) {
+		if (mailLike == null) {
+			throw new RuntimeException("mail is null");
+		}
+		this.mailLike = mailLike;
+		return this;
+	}
+
+	public WxMemberQuery mobileLike(String mobileLike) {
+		if (mobileLike == null) {
+			throw new RuntimeException("mobile is null");
+		}
+		this.mobileLike = mobileLike;
+		return this;
+	}
+
+	public WxMemberQuery name(String name) {
+		if (name == null) {
+			throw new RuntimeException("name is null");
+		}
+		this.name = name;
+		return this;
+	}
+
+	public WxMemberQuery nameLike(String nameLike) {
+		if (nameLike == null) {
+			throw new RuntimeException("name is null");
+		}
+		this.nameLike = nameLike;
+		return this;
+	}
+
+	public WxMemberQuery names(List<String> names) {
+		if (names == null) {
+			throw new RuntimeException("names is empty ");
+		}
+		this.names = names;
+		return this;
+	}
+
+	public WxMemberQuery qqLike(String qqLike) {
+		if (qqLike == null) {
+			throw new RuntimeException("qq is null");
+		}
+		this.qqLike = qqLike;
+		return this;
+	}
+
+	public void setAccountId(Long accountId) {
+		this.accountId = accountId;
+	}
+
+	public void setAddressLike(String addressLike) {
+		this.addressLike = addressLike;
+	}
+
+	public void setCardNo(String cardNo) {
+		this.cardNo = cardNo;
+	}
+
+	public void setCardNoLike(String cardNoLike) {
+		this.cardNoLike = cardNoLike;
+	}
+
+	public void setCardNos(List<String> cardNos) {
+		this.cardNos = cardNos;
+	}
+
+	public void setCreateDateGreaterThanOrEqual(
+			Date createDateGreaterThanOrEqual) {
+		this.createDateGreaterThanOrEqual = createDateGreaterThanOrEqual;
+	}
+
+	public void setCreateDateLessThanOrEqual(Date createDateLessThanOrEqual) {
+		this.createDateLessThanOrEqual = createDateLessThanOrEqual;
+	}
+
+	public void setMailLike(String mailLike) {
+		this.mailLike = mailLike;
+	}
+
+	public void setMobileLike(String mobileLike) {
+		this.mobileLike = mobileLike;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setNameLike(String nameLike) {
+		this.nameLike = nameLike;
+	}
+
+	public void setNames(List<String> names) {
+		this.names = names;
+	}
+
+	public void setQqLike(String qqLike) {
+		this.qqLike = qqLike;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+	public void setStatusGreaterThanOrEqual(Integer statusGreaterThanOrEqual) {
+		this.statusGreaterThanOrEqual = statusGreaterThanOrEqual;
+	}
+
+	public void setStatusLessThanOrEqual(Integer statusLessThanOrEqual) {
+		this.statusLessThanOrEqual = statusLessThanOrEqual;
+	}
+
+	public void setTelephoneLike(String telephoneLike) {
+		this.telephoneLike = telephoneLike;
+	}
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
+	}
+
+	public void setUuids(List<String> uuids) {
+		this.uuids = uuids;
+	}
+
+	public WxMemberQuery status(Integer status) {
+		if (status == null) {
+			throw new RuntimeException("status is null");
+		}
+		this.status = status;
+		return this;
+	}
+
+	public WxMemberQuery statusGreaterThanOrEqual(
+			Integer statusGreaterThanOrEqual) {
+		if (statusGreaterThanOrEqual == null) {
+			throw new RuntimeException("status is null");
+		}
+		this.statusGreaterThanOrEqual = statusGreaterThanOrEqual;
+		return this;
+	}
+
+	public WxMemberQuery statusLessThanOrEqual(Integer statusLessThanOrEqual) {
+		if (statusLessThanOrEqual == null) {
+			throw new RuntimeException("status is null");
+		}
+		this.statusLessThanOrEqual = statusLessThanOrEqual;
+		return this;
+	}
+
+	public WxMemberQuery telephoneLike(String telephoneLike) {
+		if (telephoneLike == null) {
+			throw new RuntimeException("telephone is null");
+		}
+		this.telephoneLike = telephoneLike;
+		return this;
+	}
+
+	public WxMemberQuery uuid(String uuid) {
+		if (uuid == null) {
+			throw new RuntimeException("uuid is null");
+		}
+		this.uuid = uuid;
+		return this;
+	}
+
+	public WxMemberQuery uuids(List<String> uuids) {
+		if (uuids == null) {
+			throw new RuntimeException("uuids is empty ");
+		}
+		this.uuids = uuids;
+		return this;
 	}
 
 }

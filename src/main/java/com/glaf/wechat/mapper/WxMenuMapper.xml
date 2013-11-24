@@ -33,11 +33,11 @@
 		insert into WX_MENU
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			ID_
-			<if test="accountId != null">
-				,ACCOUNTID_
-			</if>
 			<if test="parentId != null">
 				,PARENT_
+			</if>
+			<if test="accountId != null">
+				,ACCOUNTID_
 			</if>
 			<if test="name != null">
 				,NAME_
@@ -85,11 +85,12 @@
 
 		<trim prefix=" values (" suffix=")" suffixOverrides=",">
 			#{id, jdbcType=BIGINT}
-			<if test="accountId != null">
-				,#{accountId, jdbcType=BIGINT}
-			</if>
+			
 			<if test="parentId != null">
 				,#{parentId, jdbcType=BIGINT}
+			</if>
+			<if test="accountId != null">
+				,#{accountId, jdbcType=BIGINT}
 			</if>
 			<if test="name != null">
 				,#{name, jdbcType=VARCHAR}

@@ -55,11 +55,14 @@ limitations under the License.
 					   } else {
 						 alert('操作成功完成！');
 					   }
+					   /**
 					   if (window.opener) {
 						window.opener.location.reload();
 					   } else if (window.parent) {
 						window.parent.location.reload();
 					   }
+					   */
+					   location.href='<%=com.glaf.core.util.RequestUtils.decodeURL(request.getParameter("fromUrl"))%>';
 				   }
 			 });
 	}

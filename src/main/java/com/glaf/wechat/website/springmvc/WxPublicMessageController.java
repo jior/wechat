@@ -33,13 +33,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.glaf.core.config.ViewProperties;
-import com.glaf.core.identity.User;
-import com.glaf.core.security.IdentityFactory;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.ResponseUtils;
 import com.glaf.core.util.Tools;
+
 import com.glaf.wechat.domain.WxMessage;
+import com.glaf.wechat.domain.WxUser;
 import com.glaf.wechat.service.WxMessageService;
+import com.glaf.wechat.util.WxIdentityFactory;
 
 @Controller("/wx/message")
 @RequestMapping("/wx/message")
@@ -51,11 +52,11 @@ public class WxPublicMessageController {
 	protected WxMessageService wxMessageService;
 
 	@ResponseBody
-	@RequestMapping("/post/{userId}")
-	public byte[] post(@PathVariable("userId") Long userId,
+	@RequestMapping("/post/{accountId}")
+	public byte[] post(@PathVariable("accountId") Long accountId,
 			HttpServletRequest request) throws IOException {
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		User user = IdentityFactory.getUserByUserId(userId);
+		WxUser user = WxIdentityFactory.getUserByAccountId(accountId);
 
 		try {
 			WxMessage wxMessage = new WxMessage();
@@ -65,6 +66,7 @@ public class WxPublicMessageController {
 			wxMessage.setMobile(request.getParameter("mobile"));
 			wxMessage.setTitle(request.getParameter("title"));
 			wxMessage.setContent(request.getParameter("content"));
+			wxMessage.setAccountId(accountId);
 			wxMessage.setCreateBy(user.getActorId());
 
 			wxMessageService.save(wxMessage);
@@ -82,13 +84,12 @@ public class WxPublicMessageController {
 		this.wxMessageService = wxMessageService;
 	}
 
-	@RequestMapping("/mobile/{userId}")
-	public ModelAndView mobile(@PathVariable("userId") Long userId,
+	@RequestMapping("/mobile/{accountId}")
+	public ModelAndView mobile(@PathVariable("accountId") Long accountId,
 			HttpServletRequest request, ModelMap modelMap) throws IOException {
 		RequestUtils.setRequestParameterToAttribute(request);
 
-		User user = IdentityFactory.getUserByUserId(userId);
-		request.setAttribute("user", user);
+		request.setAttribute("accountId", accountId);
 
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {

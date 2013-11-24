@@ -124,6 +124,7 @@ public class WxVoteController {
 		query.deleteFlag(0);
 		query.setActorId(loginContext.getActorId());
 		query.setLoginContext(loginContext);
+		query.setAccountId(accountId);
 
 		/**
 		 * 此处业务逻辑需自行调整
@@ -212,6 +213,15 @@ public class WxVoteController {
 		} else {
 			request.setAttribute("x_complex_query", "");
 		}
+		
+		String requestURI = request.getRequestURI();
+		logger.debug("requestURI:" + requestURI);
+		logger.debug("queryString:" + request.getQueryString());
+		request.setAttribute(
+				"fromUrl",
+				RequestUtils.encodeURL(requestURI + "?"
+						+ request.getQueryString()));
+		
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {
 			return new ModelAndView(view, modelMap);
@@ -244,6 +254,8 @@ public class WxVoteController {
 		WxVote wxVote = new WxVote();
 		Tools.populate(wxVote, params);
 
+		Long accountId = RequestUtils.getLong(request, "accountId");
+		wxVote.setAccountId(accountId);
 		wxVote.setTitle(request.getParameter("title"));
 		wxVote.setContent(request.getParameter("content"));
 		wxVote.setIcon(request.getParameter("icon"));
@@ -276,6 +288,8 @@ public class WxVoteController {
 		WxVote wxVote = new WxVote();
 		try {
 			Tools.populate(wxVote, params);
+			Long accountId = RequestUtils.getLong(request, "accountId");
+			wxVote.setAccountId(accountId);
 			wxVote.setTitle(request.getParameter("title"));
 			wxVote.setContent(request.getParameter("content"));
 			wxVote.setIcon(request.getParameter("icon"));

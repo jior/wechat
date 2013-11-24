@@ -99,6 +99,14 @@ public class WxMessageController {
 			request.setAttribute("wxMessage", wxMessage);
 		}
 
+		String requestURI = request.getRequestURI();
+		logger.debug("requestURI:" + requestURI);
+		logger.debug("queryString:" + request.getQueryString());
+		request.setAttribute(
+				"fromUrl",
+				RequestUtils.encodeURL(requestURI + "?"
+						+ request.getQueryString()));
+		
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {
 			return new ModelAndView(view, modelMap);

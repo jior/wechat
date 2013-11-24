@@ -41,6 +41,9 @@ public class WxVoteJsonFactory {
 		if (jsonObject.containsKey("id")) {
 			model.setId(jsonObject.getLong("id"));
 		}
+		if (jsonObject.containsKey("accountId")) {
+			model.setAccountId(jsonObject.getLong("accountId"));
+		}
 		if (jsonObject.containsKey("title")) {
 			model.setTitle(jsonObject.getString("title"));
 		}
@@ -110,6 +113,9 @@ public class WxVoteJsonFactory {
 		jsonObject.put("id", model.getId());
 		jsonObject.put("_id_", model.getId());
 		jsonObject.put("_oid_", model.getId());
+		if (model.getAccountId() != null) {
+			jsonObject.put("accountId", model.getAccountId());
+		}
 		if (model.getTitle() != null) {
 			jsonObject.put("title", model.getTitle());
 		}
@@ -167,6 +173,9 @@ public class WxVoteJsonFactory {
 		jsonObject.put("id", model.getId());
 		jsonObject.put("_id_", model.getId());
 		jsonObject.put("_oid_", model.getId());
+		if (model.getAccountId() != null) {
+			jsonObject.put("accountId", model.getAccountId());
+		}
 		if (model.getTitle() != null) {
 			jsonObject.put("title", model.getTitle());
 		}

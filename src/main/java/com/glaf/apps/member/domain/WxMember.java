@@ -51,6 +51,12 @@ public class WxMember implements java.io.Serializable, JSONable {
 	protected long id;
 
 	/**
+	 * Î¢Õ¾¹«ÖÚºÅÕËºÅID
+	 */
+	@Column(name = "ACCOUNTID_")
+	protected Long accountId;
+
+	/**
 	 * »áÔ±¿¨ºÅ
 	 */
 	@Column(name = "CARDNO_", length = 50)
@@ -140,6 +146,10 @@ public class WxMember implements java.io.Serializable, JSONable {
 
 	}
 
+	public Long getAccountId() {
+		return accountId;
+	}
+
 	public String getAddress() {
 		return address;
 	}
@@ -202,6 +212,10 @@ public class WxMember implements java.io.Serializable, JSONable {
 
 	public WxMember jsonToObject(JSONObject jsonObject) {
 		return WxMemberJsonFactory.jsonToObject(jsonObject);
+	}
+
+	public void setAccountId(Long accountId) {
+		this.accountId = accountId;
 	}
 
 	public void setAddress(String address) {

@@ -104,8 +104,6 @@ public class WxMemberController {
 						loginContext.getActorId()) || loginContext
 						.isSystemAdministrator())) {
 			request.setAttribute("wxMember", wxMember);
-			JSONObject rowJSON = wxMember.toJsonObject();
-			request.setAttribute("x_json", rowJSON.toJSONString());
 		}
 
 		String view = request.getParameter("view");
@@ -121,10 +119,10 @@ public class WxMemberController {
 		return new ModelAndView("/wx/member/edit", modelMap);
 	}
 
-	@RequestMapping("/json")
+	@RequestMapping("/json/{accountId}")
 	@ResponseBody
-	public byte[] json(HttpServletRequest request, ModelMap modelMap)
-			throws IOException {
+	public byte[] json(@PathVariable("accountId") Long accountId,
+			HttpServletRequest request, ModelMap modelMap) throws IOException {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		WxMemberQuery query = new WxMemberQuery();
@@ -132,7 +130,7 @@ public class WxMemberController {
 		query.deleteFlag(0);
 		query.setActorId(loginContext.getActorId());
 		query.setLoginContext(loginContext);
-
+		query.setAccountId(accountId);
 		String actorId = loginContext.getActorId();
 		query.createBy(actorId);
 
@@ -215,6 +213,15 @@ public class WxMemberController {
 		} else {
 			request.setAttribute("x_complex_query", "");
 		}
+		
+		String requestURI = request.getRequestURI();
+		logger.debug("requestURI:" + requestURI);
+		logger.debug("queryString:" + request.getQueryString());
+		request.setAttribute(
+				"fromUrl",
+				RequestUtils.encodeURL(requestURI + "?"
+						+ request.getQueryString()));
+		
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {
 			return new ModelAndView(view, modelMap);
@@ -247,7 +254,8 @@ public class WxMemberController {
 
 		WxMember wxMember = new WxMember();
 		Tools.populate(wxMember, params);
-
+		Long accountId = RequestUtils.getLong(request, "accountId");
+		wxMember.setAccountId(accountId);
 		wxMember.setCardNo(request.getParameter("cardNo"));
 		wxMember.setName(request.getParameter("name"));
 		wxMember.setTelephone(request.getParameter("telephone"));
@@ -274,6 +282,8 @@ public class WxMemberController {
 		WxMember wxMember = new WxMember();
 		try {
 			Tools.populate(wxMember, params);
+			Long accountId = RequestUtils.getLong(request, "accountId");
+			wxMember.setAccountId(accountId);
 			wxMember.setCardNo(request.getParameter("cardNo"));
 			wxMember.setName(request.getParameter("name"));
 			wxMember.setTelephone(request.getParameter("telephone"));
