@@ -26,8 +26,8 @@ limitations under the License.
 %>
 <!DOCTYPE html>
 <html>
-<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta charset="UTF-8">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -124,7 +124,7 @@ limitations under the License.
                         <a href="<%=request.getContextPath()%>/mx/wx/wxUser/account">公众帐号管理</a>
                     </li>
                     <li>
-                         
+                        <a href="javascript:relogin();" target="_self" title="退出">退出</a>
                     </li>
                 </ul>
             </div>
@@ -140,9 +140,8 @@ limitations under the License.
         </div>
 
     </div>
-<script type="text/javascript">  P.skn();  </script>
 </div>
- 
+<script type="text/javascript">  P.skn();  </script>
 <div id="ascrail2000" style="width: 7px; z-index: 9002; position: absolute; top: 40px; left: 193px; height: 664px; display: none;"><div style="position: relative; top: 0px; float: right; width: 5px; height: 0px; background-color: rgb(66, 66, 66); border: 1px solid rgb(255, 255, 255); background-clip: padding-box; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px;"></div></div><div id="ascrail2000-hr" style="height: 8px; z-index: 9002; top: 696px; left: 0px; position: absolute; display: none;"><div style="position: relative; top: 0px; height: 5px; width: 0px; background-color: rgb(66, 66, 66); border: 1px solid rgb(255, 255, 255); background-clip: padding-box; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px;"></div>
 </div>
 </body>
