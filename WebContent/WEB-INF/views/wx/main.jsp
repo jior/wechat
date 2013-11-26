@@ -57,7 +57,8 @@ limitations under the License.
         <div class="container-fluid">
             <div>
                 <a href="<%=request.getContextPath()%>/mx/wechat/main" target="_self" id="brand"></a>
-                <a href="<%=request.getContextPath()%>/mx/wechat/main" target="_self" class="toggle-nav" rel="tooltip" data-placement="bottom" title="Toggle navigation"><i class="icon-reorder"></i></a>
+                <a href="<%=request.getContextPath()%>/mx/wechat/main" target="_self" class="toggle-nav" rel="tooltip" data-placement="bottom" title="收缩左栏">
+				<i class="icon-sp"><img src="<%=request.getContextPath()%>/images/FIX_legend_box.png"></i></a>
             </div>
             <ul class="main-nav">
                 <li class="active">

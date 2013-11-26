@@ -187,7 +187,7 @@ limitations under the License.
 		<td align="left">
             <input id="microUrl" name="microUrl" type="text" 
 			       class="easyui-validatebox x-text" size="80"
-				   value="<%=com.glaf.wechat.util.WechatUtils.getServiceUrl(request)%>/website/wx/content/index/<%=user.getId()%>"/> 
+				   value="<%=com.glaf.wechat.util.WechatUtils.getServiceUrl(request)%>/website/wx/content/index/${accountId}"/> 
 		</td>
 		<td width="10%" align="left"><a href="#" title="进入微站" onclick="javascript:goMicroSite();">微站</a></td>
 	</tr>

@@ -224,7 +224,7 @@ limitations under the License.
 		<td width="20%" align="left">投票项目</td>
 		<td align="left">
 		     <input type="button" id="vtype" class="btnGreen" value="添加选项"> <br>
-			 <table id="listTable"  style="width: 100%"> 
+			 <table id="listTable"  style="width: 60%"> 
 			   <thead>
 	            <tr>
                    <th align="left" width="50%">选项标题</th>

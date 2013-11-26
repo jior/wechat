@@ -33,3 +33,7 @@ html, body {
     padding: 0px;
     margin: 0px;
 }
+
+.icon-sp {
+   background:url('../images/sp.jpg') no-repeat ;
+}

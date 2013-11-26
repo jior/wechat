@@ -1359,16 +1359,16 @@ label, input, button, select, textarea {
         float: left;
         color: #fff;
         font-size: 20px;
-        margin-top: 5px;
+        margin-top: 3px;
         width: 160px;
         height: 32px;
         padding-bottom: 2px;
-        background: url("../img/logo.png") no-repeat;
+        background: url("../images/blocks.gif") no-repeat;
     }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
     #navigation #brand {
-        background: url("../img/logo.png") no-repeat;
+        background: url("../images/blocks.gif") no-repeat;
         background-size: 22px 22px;
     }
 }
@@ -1470,7 +1470,7 @@ label, input, button, select, textarea {
     }
 
         #navigation .user .icon-nav > li .message-ul {
-            width: 280px;
+            width: 220px;
             padding: 0;
         }
 
