@@ -23,8 +23,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -46,7 +44,7 @@ import com.glaf.core.util.UUID32;
 import com.glaf.wechat.domain.WxCategory;
 import com.glaf.wechat.mapper.WxCategoryMapper;
 import com.glaf.wechat.query.WxCategoryQuery;
-import com.glaf.wechat.service.*;
+import com.glaf.wechat.service.WxCategoryService;
 import com.glaf.wechat.util.WxCategoryJsonFactory;
 
 @Service("wxCategoryService")
@@ -254,27 +252,27 @@ public class WxCategoryServiceImpl implements WxCategoryService {
 		}
 	}
 
-	@Resource(name = "myBatisEntityDAO")
+	@javax.annotation.Resource
 	public void setEntityDAO(EntityDAO entityDAO) {
 		this.entityDAO = entityDAO;
 	}
 
-	@Resource(name = "myBatisDbIdGenerator")
+	@javax.annotation.Resource
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setTableDataService(ITableDataService tableDataService) {
 		this.tableDataService = tableDataService;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setWxCategoryMapper(WxCategoryMapper wxCategoryMapper) {
 		this.wxCategoryMapper = wxCategoryMapper;
 	}

@@ -20,7 +20,7 @@ package com.glaf.apps.vote.service.impl;
 
 import java.util.*;
 
-import javax.annotation.Resource;
+
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -111,22 +111,22 @@ public class WxVoteResultServiceImpl implements WxVoteResultService {
 		}
 	}
 
-	@Resource(name = "myBatisEntityDAO")
+	@javax.annotation.Resource
 	public void setEntityDAO(EntityDAO entityDAO) {
 		this.entityDAO = entityDAO;
 	}
 
-	@Resource(name = "myBatisDbIdGenerator")
+	@javax.annotation.Resource
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setWxVoteResultMapper(WxVoteResultMapper wxVoteResultMapper) {
 		this.wxVoteResultMapper = wxVoteResultMapper;
 	}

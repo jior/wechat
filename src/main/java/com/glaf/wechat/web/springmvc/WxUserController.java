@@ -133,26 +133,13 @@ public class WxUserController {
 	public ModelAndView editAccount(HttpServletRequest request,
 			ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
-		User user = RequestUtil.getLoginUser(request);
+
 		Long id = RequestUtils.getLong(request, "id");
 		WxUser wxUser = null;
 		if (id != null && id > 0) {
 			wxUser = wxUserService.getWxUser(id);
+			request.setAttribute("wxUser", wxUser);
 		}
-
-		if (wxUser == null) {
-			wxUser = new WxUser();
-			wxUser.setActorId(user.getActorId());
-			wxUser.setAccountType(2);
-			wxUser.setCreateDate(new Date());
-			wxUser.setDeptId(user.getDeptId());
-			wxUser.setLocked(0);
-			wxUser.setUserType(1);
-			wxUser.setId(user.getId());
-			wxUserService.save(wxUser);
-		}
-
-		request.setAttribute("wxUser", wxUser);
 
 		SysDepartment department = sysDepartmentService.findByCode("website");
 		if (department != null) {
@@ -271,7 +258,6 @@ public class WxUserController {
 		wxUser.setYxSourceId(request.getParameter("yxSourceId"));
 		wxUser.setYxname(request.getParameter("yxname"));
 		wxUser.setYxHeadImage(request.getParameter("yxHeadImage"));
-		wxUser.setToken(request.getParameter("token"));
 		wxUser.setProvince(request.getParameter("province"));
 		wxUser.setCity(request.getParameter("city"));
 		wxUser.setArea(request.getParameter("area"));
@@ -386,7 +372,6 @@ public class WxUserController {
 			wxUser.setYxSourceId(request.getParameter("yxSourceId"));
 			wxUser.setYxname(request.getParameter("yxname"));
 			wxUser.setYxHeadImage(request.getParameter("yxHeadImage"));
-			wxUser.setToken(request.getParameter("token"));
 			wxUser.setProvince(request.getParameter("province"));
 			wxUser.setCity(request.getParameter("city"));
 			wxUser.setArea(request.getParameter("area"));

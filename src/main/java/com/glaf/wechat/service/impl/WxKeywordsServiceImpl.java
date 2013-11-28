@@ -1,22 +1,23 @@
 package com.glaf.wechat.service.impl;
 
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.StringTokenizer;
 
-import javax.annotation.Resource;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.glaf.core.id.*;
-import com.glaf.core.dao.*;
-import com.glaf.wechat.mapper.*;
-import com.glaf.wechat.domain.*;
-import com.glaf.wechat.query.*;
+import com.glaf.core.dao.EntityDAO;
+import com.glaf.core.id.IdGenerator;
+import com.glaf.wechat.domain.WxContent;
+import com.glaf.wechat.domain.WxKeywords;
+import com.glaf.wechat.mapper.WxKeywordsMapper;
+import com.glaf.wechat.query.WxKeywordsQuery;
 import com.glaf.wechat.service.WxKeywordsService;
 
 @Service("wxKeywordsService")
@@ -128,22 +129,22 @@ public class WxKeywordsServiceImpl implements WxKeywordsService {
 
 	}
 
-	@Resource(name = "myBatisEntityDAO")
+	@javax.annotation.Resource
 	public void setEntityDAO(EntityDAO entityDAO) {
 		this.entityDAO = entityDAO;
 	}
 
-	@Resource(name = "myBatisDbIdGenerator")
+	@javax.annotation.Resource
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setWxKeywordsMapper(WxKeywordsMapper wxKeywordsMapper) {
 		this.wxKeywordsMapper = wxKeywordsMapper;
 	}

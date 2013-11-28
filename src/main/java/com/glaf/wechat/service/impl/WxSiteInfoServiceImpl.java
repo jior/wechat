@@ -21,8 +21,6 @@ package com.glaf.wechat.service.impl;
 import java.util.Date;
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
@@ -35,7 +33,7 @@ import com.glaf.core.id.IdGenerator;
 import com.glaf.wechat.domain.WxSiteInfo;
 import com.glaf.wechat.mapper.WxSiteInfoMapper;
 import com.glaf.wechat.query.WxSiteInfoQuery;
-import com.glaf.wechat.service.*;
+import com.glaf.wechat.service.WxSiteInfoService;
 
 @Service("wxSiteInfoService")
 @Transactional(readOnly = true)
@@ -82,19 +80,17 @@ public class WxSiteInfoServiceImpl implements WxSiteInfoService {
 		WxSiteInfo wxSiteInfo = wxSiteInfoMapper.getWxSiteInfoById(id);
 		return wxSiteInfo;
 	}
-	
-	
-	
+
 	/**
 	 * 根据创建人获取一条记录
 	 * 
 	 * @return
 	 */
-	public WxSiteInfo getWxSiteInfoByAccountId(Long accountId){
+	public WxSiteInfo getWxSiteInfoByAccountId(Long accountId) {
 		WxSiteInfoQuery query = new WxSiteInfoQuery();
 		query.accountId(accountId);
 		List<WxSiteInfo> list = wxSiteInfoMapper.getWxSiteInfos(query);
-		if(list != null && !list.isEmpty()){
+		if (list != null && !list.isEmpty()) {
 			return list.get(0);
 		}
 		return null;
@@ -129,22 +125,22 @@ public class WxSiteInfoServiceImpl implements WxSiteInfoService {
 		}
 	}
 
-	@Resource(name = "myBatisEntityDAO")
+	@javax.annotation.Resource
 	public void setEntityDAO(EntityDAO entityDAO) {
 		this.entityDAO = entityDAO;
 	}
 
-	@Resource(name = "myBatisDbIdGenerator")
+	@javax.annotation.Resource
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setWxSiteInfoMapper(WxSiteInfoMapper wxSiteInfoMapper) {
 		this.wxSiteInfoMapper = wxSiteInfoMapper;
 	}

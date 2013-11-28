@@ -18,23 +18,23 @@
 
 package com.glaf.wechat.service.impl;
 
-import java.util.*;
+import java.util.List;
 
-import javax.annotation.Resource;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.glaf.core.id.*;
-import com.glaf.core.dao.*;
-import com.glaf.wechat.mapper.*;
-import com.glaf.wechat.domain.*;
-import com.glaf.wechat.query.*;
-import com.glaf.wechat.service.*;
+import com.glaf.core.dao.EntityDAO;
+import com.glaf.core.id.IdGenerator;
+import com.glaf.core.util.UUID32;
+import com.glaf.wechat.domain.WxUser;
+import com.glaf.wechat.mapper.WxUserMapper;
+import com.glaf.wechat.query.WxUserQuery;
+import com.glaf.wechat.service.WxUserService;
 
 @Service("wxUserService")
 @Transactional(readOnly = true)
@@ -97,12 +97,12 @@ public class WxUserServiceImpl implements WxUserService {
 		WxUser wxUser = wxUserMapper.getWxUserById(id);
 		return wxUser;
 	}
-	
-	public WxUser getWxUserByActorId(String actorId){
+
+	public WxUser getWxUserByActorId(String actorId) {
 		WxUserQuery query = new WxUserQuery();
 		query.actorId(actorId);
-		List<WxUser> rows =this.list(query);
-		if(rows != null && !rows.isEmpty()){
+		List<WxUser> rows = this.list(query);
+		if (rows != null && !rows.isEmpty()) {
 			return rows.get(0);
 		}
 		return null;
@@ -118,28 +118,31 @@ public class WxUserServiceImpl implements WxUserService {
 			wxUser.setId(idGenerator.nextId());
 		}
 		if (model == null) {
+			if (StringUtils.isEmpty(wxUser.getToken())) {
+				wxUser.setToken(UUID32.getUUID());
+			}
 			wxUserMapper.insertWxUser(wxUser);
 		} else {
 			wxUserMapper.updateWxUser(wxUser);
 		}
 	}
 
-	@Resource(name = "myBatisEntityDAO")
+	@javax.annotation.Resource
 	public void setEntityDAO(EntityDAO entityDAO) {
 		this.entityDAO = entityDAO;
 	}
 
-	@Resource(name = "myBatisDbIdGenerator")
+	@javax.annotation.Resource
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setWxUserMapper(WxUserMapper wxUserMapper) {
 		this.wxUserMapper = wxUserMapper;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}

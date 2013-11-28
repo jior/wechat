@@ -22,8 +22,6 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -42,7 +40,7 @@ import com.glaf.core.util.FileUtils;
 import com.glaf.wechat.domain.WxTemplate;
 import com.glaf.wechat.mapper.WxTemplateMapper;
 import com.glaf.wechat.query.WxTemplateQuery;
-import com.glaf.wechat.service.*;
+import com.glaf.wechat.service.WxTemplateService;
 import com.glaf.wechat.util.WxTemplateJsonFactory;
 
 @Service("wxTemplateService")
@@ -91,7 +89,8 @@ public class WxTemplateServiceImpl implements WxTemplateService {
 	 * @param type
 	 * @return
 	 */
-	public List<WxTemplate> getTemplates(Long accountId, Long categoryId, String type){
+	public List<WxTemplate> getTemplates(Long accountId, Long categoryId,
+			String type) {
 		WxTemplateQuery query = new WxTemplateQuery();
 		query.categoryId(categoryId);
 		query.accountId(accountId);
@@ -178,22 +177,22 @@ public class WxTemplateServiceImpl implements WxTemplateService {
 		}
 	}
 
-	@Resource(name = "myBatisEntityDAO")
+	@javax.annotation.Resource
 	public void setEntityDAO(EntityDAO entityDAO) {
 		this.entityDAO = entityDAO;
 	}
 
-	@Resource(name = "myBatisDbIdGenerator")
+	@javax.annotation.Resource
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setWxTemplateMapper(WxTemplateMapper wxTemplateMapper) {
 		this.wxTemplateMapper = wxTemplateMapper;
 	}

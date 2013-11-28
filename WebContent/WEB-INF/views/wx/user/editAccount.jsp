@@ -196,7 +196,7 @@ limitations under the License.
                                 
                                 <div class="form-actions">
 									<input type="hidden" name="aid" id="aid" value="19345">
-                                    <button type="submit" class="btn btn-primary" onclick="javascript:saveData();">保存</button>
+                                    <button type="button" class="btn btn-primary" onclick="javascript:saveData();">保存</button>
                                     <a class="btn" href="javascript:window.history.go(-1)">取消</a>
 
                                 </div>

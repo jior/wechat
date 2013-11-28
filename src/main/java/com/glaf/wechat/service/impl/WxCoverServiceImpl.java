@@ -21,8 +21,6 @@ package com.glaf.wechat.service.impl;
 import java.util.Date;
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
@@ -32,11 +30,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.core.dao.EntityDAO;
 import com.glaf.core.id.IdGenerator;
-
 import com.glaf.wechat.domain.WxCover;
 import com.glaf.wechat.mapper.WxCoverMapper;
 import com.glaf.wechat.query.WxCoverQuery;
-import com.glaf.wechat.service.*;
+import com.glaf.wechat.service.WxCoverService;
 
 @Service("wxCoverService")
 @Transactional(readOnly = true)
@@ -129,22 +126,22 @@ public class WxCoverServiceImpl implements WxCoverService {
 		}
 	}
 
-	@Resource(name = "myBatisEntityDAO")
+	@javax.annotation.Resource
 	public void setEntityDAO(EntityDAO entityDAO) {
 		this.entityDAO = entityDAO;
 	}
 
-	@Resource(name = "myBatisDbIdGenerator")
+	@javax.annotation.Resource
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setWxCoverMapper(WxCoverMapper wxCoverMapper) {
 		this.wxCoverMapper = wxCoverMapper;
 	}

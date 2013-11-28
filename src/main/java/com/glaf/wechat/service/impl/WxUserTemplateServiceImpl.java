@@ -1,24 +1,23 @@
 package com.glaf.wechat.service.impl;
 
-import java.util.*;
+import java.util.Date;
+import java.util.List;
 
-import javax.annotation.Resource;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.glaf.core.id.*;
 import com.glaf.core.cache.CacheFactory;
-import com.glaf.core.dao.*;
-import com.glaf.wechat.mapper.*;
-import com.glaf.wechat.domain.*;
-import com.glaf.wechat.query.*;
+import com.glaf.core.dao.EntityDAO;
+import com.glaf.core.id.IdGenerator;
+import com.glaf.wechat.domain.WxUserTemplate;
+import com.glaf.wechat.mapper.WxUserTemplateMapper;
+import com.glaf.wechat.query.WxUserTemplateQuery;
 import com.glaf.wechat.service.WxUserTemplateService;
 import com.glaf.wechat.util.WxUserTemplateJsonFactory;
 
@@ -157,22 +156,22 @@ public class WxUserTemplateServiceImpl implements WxUserTemplateService {
 		CacheFactory.remove(cacheKey);
 	}
 
-	@Resource(name = "myBatisEntityDAO")
+	@javax.annotation.Resource
 	public void setEntityDAO(EntityDAO entityDAO) {
 		this.entityDAO = entityDAO;
 	}
 
-	@Resource(name = "myBatisDbIdGenerator")
+	@javax.annotation.Resource
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setWxUserTemplateMapper(
 			WxUserTemplateMapper wxUserTemplateMapper) {
 		this.wxUserTemplateMapper = wxUserTemplateMapper;

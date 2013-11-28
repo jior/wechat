@@ -22,8 +22,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import javax.annotation.Resource;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -40,7 +38,8 @@ import com.glaf.core.util.UUID32;
 import com.glaf.wechat.domain.WxContent;
 import com.glaf.wechat.mapper.WxContentMapper;
 import com.glaf.wechat.query.WxContentQuery;
-import com.glaf.wechat.service.*;
+import com.glaf.wechat.service.WxContentService;
+import com.glaf.wechat.service.WxKeywordsService;
 
 @Service("wxContentService")
 @Transactional(readOnly = true)
@@ -202,27 +201,27 @@ public class WxContentServiceImpl implements WxContentService {
 		wxKeywordsService.saveAll(wxContent.getCategoryId(), wxContent);
 	}
 
-	@Resource(name = "myBatisEntityDAO")
+	@javax.annotation.Resource
 	public void setEntityDAO(EntityDAO entityDAO) {
 		this.entityDAO = entityDAO;
 	}
 
-	@Resource(name = "myBatisDbIdGenerator")
+	@javax.annotation.Resource
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setWxContentMapper(WxContentMapper wxContentMapper) {
 		this.wxContentMapper = wxContentMapper;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setWxKeywordsService(WxKeywordsService wxKeywordsService) {
 		this.wxKeywordsService = wxKeywordsService;
 	}

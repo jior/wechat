@@ -21,8 +21,6 @@ package com.glaf.wechat.service.impl;
 import java.util.Date;
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
@@ -32,11 +30,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.core.dao.EntityDAO;
 import com.glaf.core.id.IdGenerator;
-
 import com.glaf.wechat.domain.WxMessage;
 import com.glaf.wechat.mapper.WxMessageMapper;
 import com.glaf.wechat.query.WxMessageQuery;
-import com.glaf.wechat.service.*;
+import com.glaf.wechat.service.WxMessageService;
 
 @Service("wxMessageService")
 @Transactional(readOnly = true)
@@ -83,8 +80,6 @@ public class WxMessageServiceImpl implements WxMessageService {
 		WxMessage wxMessage = wxMessageMapper.getWxMessageById(id);
 		return wxMessage;
 	}
-	
-
 
 	public int getWxMessageCountByQueryCriteria(WxMessageQuery query) {
 		return wxMessageMapper.getWxMessageCount(query);
@@ -116,22 +111,22 @@ public class WxMessageServiceImpl implements WxMessageService {
 		}
 	}
 
-	@Resource(name = "myBatisEntityDAO")
+	@javax.annotation.Resource
 	public void setEntityDAO(EntityDAO entityDAO) {
 		this.entityDAO = entityDAO;
 	}
 
-	@Resource(name = "myBatisDbIdGenerator")
+	@javax.annotation.Resource
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setWxMessageMapper(WxMessageMapper wxMessageMapper) {
 		this.wxMessageMapper = wxMessageMapper;
 	}

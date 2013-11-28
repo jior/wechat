@@ -18,26 +18,25 @@
 
 package com.glaf.wechat.service.impl;
 
-import java.util.*;
-
-import javax.annotation.Resource;
+import java.util.Date;
+import java.util.List;
+import java.util.Stack;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.core.config.Configuration;
-import com.glaf.core.id.*;
+import com.glaf.core.id.IdGenerator;
 import com.glaf.core.util.DateUtils;
 import com.glaf.wechat.config.WechatConfiguration;
-import com.glaf.wechat.domain.*;
-import com.glaf.wechat.mapper.*;
-import com.glaf.wechat.query.*;
-import com.glaf.wechat.service.*;
+import com.glaf.wechat.domain.WxLog;
+import com.glaf.wechat.mapper.WxLogMapper;
+import com.glaf.wechat.query.WxLogQuery;
+import com.glaf.wechat.service.WxLogService;
 
 @Service("wxLogService")
 @Transactional(readOnly = true)
@@ -107,18 +106,17 @@ public class WxLogServiceImpl implements WxLogService {
 		}
 	}
 
-	@Resource
-	@Qualifier("myBatisDbIdGenerator")
+	@javax.annotation.Resource
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setWxLogMapper(WxLogMapper sysLogMapper) {
 		this.sysLogMapper = sysLogMapper;
 	}

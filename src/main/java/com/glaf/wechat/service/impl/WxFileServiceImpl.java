@@ -21,8 +21,6 @@ package com.glaf.wechat.service.impl;
 import java.util.Date;
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
@@ -36,7 +34,7 @@ import com.glaf.core.util.UUID32;
 import com.glaf.wechat.domain.WxFile;
 import com.glaf.wechat.mapper.WxFileMapper;
 import com.glaf.wechat.query.WxFileQuery;
-import com.glaf.wechat.service.*;
+import com.glaf.wechat.service.WxFileService;
 
 @Service("wxFileService")
 @Transactional(readOnly = true)
@@ -128,22 +126,22 @@ public class WxFileServiceImpl implements WxFileService {
 		}
 	}
 
-	@Resource(name = "myBatisEntityDAO")
+	@javax.annotation.Resource
 	public void setEntityDAO(EntityDAO entityDAO) {
 		this.entityDAO = entityDAO;
 	}
 
-	@Resource(name = "myBatisDbIdGenerator")
+	@javax.annotation.Resource
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setWxFileMapper(WxFileMapper wxFileMapper) {
 		this.wxFileMapper = wxFileMapper;
 	}
