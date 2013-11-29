@@ -58,9 +58,13 @@
 			<fileset dir="." includes="*.bat,*.xml, src/**/*.*,mapping/**/*.xml,jar-conf/**/*.*," excludes="**/*.cvs,**/*.bak,**/*.tmp,**/*.scc,**/*.svn" />
 		</jar>
 
-		<jar jarfile="${jarfile}">
-		    <fileset dir="bin" includes="com/glaf/**/*.class,com/glaf/**/*.xml,com/glaf/**/*.properties" excludes="**/test/**"/>
+		<jar jarfile="glaf-wechat.jar">
+		    <fileset dir="bin" includes="com/glaf/wechat/**/*.class,com/glaf/wechat/**/*.xml,com/glaf/wechat/**/*.properties" excludes="**/test/**"/>
 		    <fileset dir="jar-conf" includes="**/*.xml,**/*.properties"/>
+        </jar>
+
+		<jar jarfile="glaf-apps.jar">
+		    <fileset dir="bin" includes="com/glaf/apps/**/*.class,com/glaf/apps/**/*.xml,com/glaf/apps/**/*.properties" excludes="**/test/**"/>
         </jar>
 
 		<jar jarfile="glaf-wechat-min-web.zip">
