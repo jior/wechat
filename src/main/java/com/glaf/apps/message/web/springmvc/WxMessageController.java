@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.glaf.wechat.web.springmvc;
+package com.glaf.apps.message.web.springmvc;
 
 import java.io.IOException;
 import java.util.*;
@@ -36,9 +36,12 @@ import com.glaf.core.config.ViewProperties;
 import com.glaf.core.identity.*;
 import com.glaf.core.security.*;
 import com.glaf.core.util.*;
-import com.glaf.wechat.domain.*;
-import com.glaf.wechat.query.*;
-import com.glaf.wechat.service.*;
+
+import com.glaf.apps.message.domain.WxMessage;
+import com.glaf.apps.message.query.WxMessageQuery;
+import com.glaf.apps.message.service.WxMessageService;
+
+ 
 
 @Controller("/wx/wxMessage")
 @RequestMapping("/wx/wxMessage")

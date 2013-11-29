@@ -269,7 +269,7 @@ public class WxUserController {
 		wxUser.setType(request.getParameter("type"));
 		wxUser.setLocked(RequestUtils.getInt(request, "locked"));
 		wxUser.setRemark(request.getParameter("remark"));
-
+		wxUser.setCreateDate(new Date());
 		wxUser.setActorId(actorId);
 
 		wxUserService.save(wxUser);
@@ -382,7 +382,7 @@ public class WxUserController {
 			wxUser.setDeptId(RequestUtils.getLong(request, "deptId"));
 			wxUser.setType(request.getParameter("type"));
 			wxUser.setLocked(RequestUtils.getInt(request, "locked"));
-
+			wxUser.setCreateDate(new Date());
 			wxUser.setActorId(actorId);
 			this.wxUserService.save(wxUser);
 

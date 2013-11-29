@@ -16,12 +16,15 @@
  * limitations under the License.
  */
 
-package com.glaf.wechat.mapper;
+package com.glaf.apps.message.mapper;
 
 import java.util.*;
+
 import org.springframework.stereotype.Component;
-import com.glaf.wechat.domain.*;
-import com.glaf.wechat.query.*;
+
+import com.glaf.apps.message.domain.WxMessage;
+import com.glaf.apps.message.query.WxMessageQuery;
+ 
 
 @Component
 public interface WxMessageMapper {

@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.glaf.wechat.service.impl;
+package com.glaf.apps.message.service.impl;
 
 import java.util.Date;
 import java.util.List;
@@ -28,12 +28,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.glaf.apps.message.domain.WxMessage;
+import com.glaf.apps.message.mapper.WxMessageMapper;
+import com.glaf.apps.message.query.WxMessageQuery;
+import com.glaf.apps.message.service.WxMessageService;
 import com.glaf.core.dao.EntityDAO;
 import com.glaf.core.id.IdGenerator;
-import com.glaf.wechat.domain.WxMessage;
-import com.glaf.wechat.mapper.WxMessageMapper;
-import com.glaf.wechat.query.WxMessageQuery;
-import com.glaf.wechat.service.WxMessageService;
 
 @Service("wxMessageService")
 @Transactional(readOnly = true)

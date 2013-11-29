@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.glaf.wechat.query;
+package com.glaf.apps.message.query;
 
 import java.util.*;
 

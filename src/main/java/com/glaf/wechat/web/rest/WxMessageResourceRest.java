@@ -38,15 +38,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.glaf.apps.message.domain.WxMessage;
+import com.glaf.apps.message.query.WxMessageQuery;
+import com.glaf.apps.message.service.WxMessageService;
 import com.glaf.core.identity.User;
 import com.glaf.core.security.IdentityFactory;
 import com.glaf.core.util.PageResult;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.Tools;
-import com.glaf.wechat.domain.WxMessage;
-import com.glaf.wechat.query.WxMessageQuery;
-import com.glaf.wechat.service.WxMessageService;
 
 @Controller
 @Path("/rs/wx/message")

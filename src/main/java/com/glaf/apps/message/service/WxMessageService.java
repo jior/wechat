@@ -16,14 +16,14 @@
  * limitations under the License.
  */
 
-package com.glaf.wechat.service;
+package com.glaf.apps.message.service;
 
 import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import com.glaf.wechat.domain.WxMessage;
-import com.glaf.wechat.query.WxMessageQuery;
+import com.glaf.apps.message.domain.WxMessage;
+import com.glaf.apps.message.query.WxMessageQuery;
 
 @Transactional(readOnly = true)
 public interface WxMessageService {
