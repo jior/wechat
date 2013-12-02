@@ -116,7 +116,7 @@ limitations under the License.
                 </div>
                 <ul class="subnav-menu" style="display: block">
                     <li>
-                        <a href="<%=request.getContextPath()%>/mx/wx/wxUser/prepareModifyInfo">商户信息</a>
+                        <a href="<%=request.getContextPath()%>/mx/wx/wxUser/prepareModifyInfo">用户信息</a>
                     </li>
                     <li>
                         <a href="<%=request.getContextPath()%>/mx/wx/wxUser/prepareModifyPwd">修改密码</a>

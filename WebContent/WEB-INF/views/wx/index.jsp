@@ -125,7 +125,7 @@ limitations under the License.
         <div id="left" style="overflow: hidden; outline: none;" tabindex="5000">
 			<div class="subnav">
                 <div class="subnav-title">
-                    <a href="javascript:void(0);" class="toggle-subnav"><i class="icon-angle-right"></i><span>我的微商</span></a>
+                    <a href="javascript:void(0);" class="toggle-subnav"><i class="icon-angle-right"></i><span>我的微站</span></a>
                 </div>
                 <ul class="subnav-menu" style="display: block">
                     <li class="active">
