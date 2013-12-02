@@ -35,12 +35,6 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/ezmorph.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/fastjson.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/freemarker.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/glaf-core.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/glaf-jbpm.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/glaf-mail.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/glaf-setup.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/glaf-shiro.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/glaf-ui.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/guava.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/hamcrest-core.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/hibernate-validator-4.2.0.Final.jar"/>
@@ -110,7 +104,6 @@
 	<classpathentry kind="lib" path="lib/junit.jar"/>
 	<classpathentry kind="lib" path="lib/servlet-api.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/xmlpull.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/glaf-test.jar"/>
 	<classpathentry kind="lib" path="conf"/>
 	<classpathentry kind="lib" path="lib/postgresql.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/httpclient.jar"/>
@@ -129,8 +122,10 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spymemcached.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-data-commons.RELEASE.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/ehcache.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/glaf-base.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/glaf-cms.jar"/>
 	<classpathentry kind="lib" path="lib/thumbnailator-all.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/glaf-base.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/glaf-core.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/glaf-test.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/glaf-ui.jar"/>
 	<classpathentry kind="output" path="WebContent/WEB-INF/classes"/>
 </classpath>

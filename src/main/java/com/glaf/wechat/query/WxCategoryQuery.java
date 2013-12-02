@@ -362,18 +362,6 @@ public class WxCategoryQuery extends DataQuery {
 		return treeId;
 	}
 
-	public String getTreeIdLike() {
-		if (treeIdLike != null && treeIdLike.trim().length() > 0) {
-			if (!treeIdLike.startsWith("%")) {
-				treeIdLike = "%" + treeIdLike;
-			}
-			if (!treeIdLike.endsWith("%")) {
-				treeIdLike = treeIdLike + "%";
-			}
-		}
-		return treeIdLike;
-	}
-
 	public List<String> getTreeIds() {
 		return treeIds;
 	}
@@ -596,10 +584,6 @@ public class WxCategoryQuery extends DataQuery {
 		this.treeId = treeId;
 	}
 
-	public void setTreeIdLike(String treeIdLike) {
-		this.treeIdLike = treeIdLike;
-	}
-
 	public void setTreeIds(List<String> treeIds) {
 		this.treeIds = treeIds;
 	}
@@ -637,14 +621,6 @@ public class WxCategoryQuery extends DataQuery {
 			throw new RuntimeException("treeId is null");
 		}
 		this.treeId = treeId;
-		return this;
-	}
-
-	public WxCategoryQuery treeIdLike(String treeIdLike) {
-		if (treeIdLike == null) {
-			throw new RuntimeException("treeId is null");
-		}
-		this.treeIdLike = treeIdLike;
 		return this;
 	}
 
