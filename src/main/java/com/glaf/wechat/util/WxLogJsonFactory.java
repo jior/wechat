@@ -29,7 +29,7 @@ public class WxLogJsonFactory {
 
 	public static java.util.List<WxLog> arrayToList(JSONArray array) {
 		java.util.List<WxLog> list = new java.util.ArrayList<WxLog>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			WxLog model = jsonToObject(jsonObject);
 			list.add(model);

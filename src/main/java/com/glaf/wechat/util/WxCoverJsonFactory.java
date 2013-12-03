@@ -29,7 +29,7 @@ public class WxCoverJsonFactory {
 
 	public static java.util.List<WxCover> arrayToList(JSONArray array) {
 		java.util.List<WxCover> list = new java.util.ArrayList<WxCover>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			WxCover model = jsonToObject(jsonObject);
 			list.add(model);

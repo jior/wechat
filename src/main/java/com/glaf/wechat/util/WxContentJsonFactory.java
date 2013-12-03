@@ -30,7 +30,7 @@ public class WxContentJsonFactory {
 
 	public static java.util.List<WxContent> arrayToList(JSONArray array) {
 		java.util.List<WxContent> list = new java.util.ArrayList<WxContent>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			WxContent model = jsonToObject(jsonObject);
 			list.add(model);

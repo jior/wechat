@@ -29,7 +29,7 @@ public class WxCategoryJsonFactory {
 
 	public static java.util.List<WxCategory> arrayToList(JSONArray array) {
 		java.util.List<WxCategory> list = new java.util.ArrayList<WxCategory>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			WxCategory model = jsonToObject(jsonObject);
 			list.add(model);

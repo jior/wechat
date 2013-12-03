@@ -11,7 +11,7 @@ public class WxKeywordsJsonFactory {
 
 	public static java.util.List<WxKeywords> arrayToList(JSONArray array) {
 		java.util.List<WxKeywords> list = new java.util.ArrayList<WxKeywords>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			WxKeywords model = jsonToObject(jsonObject);
 			list.add(model);

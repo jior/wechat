@@ -29,7 +29,7 @@ public class WxSiteInfoJsonFactory {
 
 	public static java.util.List<WxSiteInfo> arrayToList(JSONArray array) {
 		java.util.List<WxSiteInfo> list = new java.util.ArrayList<WxSiteInfo>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			WxSiteInfo model = jsonToObject(jsonObject);
 			list.add(model);

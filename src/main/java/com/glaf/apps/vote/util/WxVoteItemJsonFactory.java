@@ -27,7 +27,7 @@ public class WxVoteItemJsonFactory {
 
 	public static java.util.List<WxVoteItem> arrayToList(JSONArray array) {
 		java.util.List<WxVoteItem> list = new java.util.ArrayList<WxVoteItem>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			WxVoteItem model = jsonToObject(jsonObject);
 			list.add(model);

@@ -29,7 +29,7 @@ public class WxMemberJsonFactory {
 
 	public static java.util.List<WxMember> arrayToList(JSONArray array) {
 		java.util.List<WxMember> list = new java.util.ArrayList<WxMember>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			WxMember model = jsonToObject(jsonObject);
 			list.add(model);

@@ -29,7 +29,7 @@ public class WxTemplateJsonFactory {
 
 	public static java.util.List<WxTemplate> arrayToList(JSONArray array) {
 		java.util.List<WxTemplate> list = new java.util.ArrayList<WxTemplate>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			WxTemplate model = jsonToObject(jsonObject);
 			list.add(model);

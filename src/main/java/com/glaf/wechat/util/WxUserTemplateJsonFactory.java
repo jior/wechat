@@ -103,7 +103,7 @@ public class WxUserTemplateJsonFactory {
 
 	public static java.util.List<WxUserTemplate> arrayToList(JSONArray array) {
 		java.util.List<WxUserTemplate> list = new java.util.ArrayList<WxUserTemplate>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			WxUserTemplate model = jsonToObject(jsonObject);
 			list.add(model);

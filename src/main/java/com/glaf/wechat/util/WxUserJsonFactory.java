@@ -344,7 +344,7 @@ public class WxUserJsonFactory {
 
 	public static java.util.List<WxUser> arrayToList(JSONArray array) {
 		java.util.List<WxUser> list = new java.util.ArrayList<WxUser>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			WxUser model = jsonToObject(jsonObject);
 			list.add(model);
