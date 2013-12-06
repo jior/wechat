@@ -185,6 +185,9 @@
 			<if test="desc != null">
 				DESC_ = #{desc, jdbcType=VARCHAR},
 			</if>
+			<if test="treeId != null">
+				TREEID = #{treeId, jdbcType=VARCHAR},
+			</if>
 			<if test="eventType != null">
 				EVENTTYPE_ = #{eventType, jdbcType=VARCHAR},
 			</if>
