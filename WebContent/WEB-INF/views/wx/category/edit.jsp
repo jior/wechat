@@ -88,7 +88,7 @@ limitations under the License.
 					   if(data != null && data.message != null){
 						   alert(data.message);
 					   } else {
-						 alert('操作成功完成！');
+						   alert('操作成功完成！');
 					   }
 				   }
 			 });
@@ -189,7 +189,14 @@ limitations under the License.
 			%>
 			</select>
 			<script language="javascript">
-			  document.all.parent.value="${wxCategory.parentId}";	
+			  <c:choose>
+				<c:when test="${!empty wxCategory }">
+				    document.all.parent.value="${wxCategory.parentId}";	
+				</c:when>
+				<c:otherwise>
+				   document.all.parent.value="${parentId}";	
+				</c:otherwise>
+			  </c:choose>
 			</script>
 		</td>
 	</tr>

@@ -86,7 +86,7 @@ limitations under the License.
 					   if(data != null && data.message != null){
 						   alert(data.message);
 					   } else {
-						 alert('操作成功完成！');
+						   alert('操作成功完成！');
 					   }
 				   }
 			 });
@@ -176,10 +176,14 @@ limitations under the License.
 			   </c:forEach>
              </select>
              <script type="text/javascript">
-                 document.getElementById("parentId").value="${parentId}";
-				 <c:if test="${!empty wxMenu }">
-				 document.getElementById("parentId").value="${wxMenu.parentId}";
-				 </c:if>
+               <c:choose>
+				<c:when test="${!empty wxMenu }">
+				    document.all.parentId.value="${wxMenu.parentId}";	
+				</c:when>
+				<c:otherwise>
+				   document.all.parentId.value="${parentId}";	
+				</c:otherwise>
+			  </c:choose>
              </script>
 		</td>
 	</tr>

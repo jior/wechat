@@ -89,7 +89,17 @@ limitations under the License.
 			jQuery.fn.zTree.init(jQuery("#myTree"), setting);
 	});
 
-   jQuery(function(){
+
+	function loadMyData(url){
+		  //alert(url);
+		  jQuery.get(url,{qq:'xx'},function(data){
+		      //var text = JSON.stringify(data); 
+              //alert(text);
+			  $('#mydatagrid').datagrid('loadData',data);
+		  },'json');
+	  }
+
+    jQuery(function(){
 		jQuery('#mydatagrid').datagrid({
 				width:1000,
 				height:480,
@@ -114,15 +124,18 @@ limitations under the License.
 				]],
 				rownumbers:false,
 				pagination:true,
-				pageSize:15,
+				pageSize:10,
 				pageList: [10,15,20,25,30,40,50,100],
 				onDblClickRow: onRowClick 
 			});
 
 			var p = jQuery('#mydatagrid').datagrid('getPager');
 			jQuery(p).pagination({
-				onBeforeRefresh:function(){
-					//alert('before refresh');
+				onSelectPage:function(pageNumber, pageSize){
+					 var nodeId = jQuery("#nodeId").val();
+                     var link = '<%=request.getContextPath()%>/mx/wx/wxMenu/json/${accountId}?parentId='+nodeId+'&page='+pageNumber+'&rows='+pageSize;
+                     //alert(link);
+					 loadMyData(link);
 				}
 		    });
 	});
