@@ -31,13 +31,14 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
-
+import com.glaf.core.util.StringTools;
 import com.glaf.wechat.component.Menu;
 import com.glaf.wechat.model.AccessToken;
 
@@ -128,6 +129,40 @@ public class WechatUtils {
 		return path;
 	}
 
+	/**
+	 * 获取关注者
+	 * 
+	 * @param accessToken
+	 *            有效的access_token
+	 * @return 关注者JSON
+	 */
+	public static JSONObject getFollower(String orgi_url, String accessToken,
+			String openid) {
+		String url = orgi_url.replace("ACCESS_TOKEN", accessToken);
+		url = url.replace("OPENID", openid);
+		JSONObject jsonObject = httpRequest(url, "GET", null);
+		return jsonObject;
+	}
+
+	/**
+	 * 获取关注者列表
+	 * 
+	 * @param accessToken
+	 *            有效的access_token
+	 * @return 关注者列表JSON
+	 */
+	public static JSONObject getFollowers(String orgi_url, String accessToken,
+			String next_openid) {
+		String url = orgi_url.replace("ACCESS_TOKEN", accessToken);
+		if (StringUtils.isNotEmpty(next_openid)) {
+			url = url.replace("NEXT_OPENID", next_openid);
+		} else {
+			url = StringTools.replace(url, "&next_openid=NEXT_OPENID", "");
+		}
+		JSONObject jsonObject = httpRequest(url, "GET", null);
+		return jsonObject;
+	}
+
 	public static String getImagePath(Long userId, Long acctountId) {
 		String path = String.valueOf(userId) + "/" + String.valueOf(acctountId);
 		return path;
@@ -140,8 +175,8 @@ public class WechatUtils {
 	 *            有效的access_token
 	 * @return 菜单实例JSON
 	 */
-	public static JSONObject getMenu(String menu_get_url, String accessToken) {
-		String url = menu_get_url.replace("ACCESS_TOKEN", accessToken);
+	public static JSONObject getMenu(String orgi_url, String accessToken) {
+		String url = orgi_url.replace("ACCESS_TOKEN", accessToken);
 		// 调用接口创建菜单
 		JSONObject jsonObject = httpRequest(url, "GET", null);
 		return jsonObject;

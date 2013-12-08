@@ -33,6 +33,16 @@
 	</property>
 
 	<property>
+		<name>weixin_subscribe_list_get_url</name>
+		<value>https://api.weixin.qq.com/cgi-bin/user/get?access_token=ACCESS_TOKEN&amp;next_openid=NEXT_OPENID</value>
+	</property>
+
+	<property>
+		<name>weixin_subscribe_get_url</name>
+		<value>https://api.weixin.qq.com/cgi-bin/user/info?access_token=ACCESS_TOKEN&amp;openid=OPENID</value>
+	</property>
+
+	<property>
 		<name>yixin_server_ip_list</name>
 		<value>223.252.198.110,223.252.198.111</value>
 	</property>

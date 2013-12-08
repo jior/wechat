@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.wechat.mapper.WxFollowerMapper">
+
+	<resultMap id="wxFollowerResultMap" type="com.glaf.wechat.domain.WxFollower">
+		<id property="id" column="ID_" jdbcType="BIGINT" />
+		<result property="accountId" column="ACCOUNTID_" jdbcType="BIGINT" />
+		<result property="actorId" column="ACTORID_" jdbcType="VARCHAR" />
+		<result property="openId" column="OPENID_" jdbcType="VARCHAR" />
+		<result property="nickName" column="NICKNAME_" jdbcType="VARCHAR" />
+		<result property="sex" column="SEX_" jdbcType="VARCHAR" />
+		<result property="mobile" column="MOBILE_" jdbcType="VARCHAR" />
+		<result property="mail" column="MAIL_" jdbcType="VARCHAR" />
+		<result property="telephone" column="TELEPHONE_" jdbcType="VARCHAR" />
+		<result property="headimgurl" column="HEADIMGURL_" jdbcType="VARCHAR" />
+		<result property="province" column="PROVINCE_" jdbcType="VARCHAR" />
+		<result property="city" column="CITY_" jdbcType="VARCHAR" />
+		<result property="country" column="COUNTRY_" jdbcType="VARCHAR" />
+		<result property="language" column="LANGUAGE_" jdbcType="VARCHAR" />
+		<result property="locked" column="LOCKED_" jdbcType="INTEGER" />
+		<result property="remark" column="REMARK" jdbcType="VARCHAR" />
+		<result property="subscribeTime" column="SUBSCRIBETIME_"
+			jdbcType="BIGINT" />
+		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+
+	<insert id="insertWxFollower" parameterType="com.glaf.wechat.domain.WxFollower">
+		insert into WX_FOLLOWER
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ID_
+			<if test="accountId != null">
+				,ACCOUNTID_
+			</if>
+			<if test="actorId != null">
+				,ACTORID_
+			</if>
+			<if test="openId != null">
+				,OPENID_
+			</if>
+			<if test="nickName != null">
+				,NICKNAME_
+			</if>
+			<if test="sex != null">
+				,SEX_
+			</if>
+			<if test="mobile != null">
+				,MOBILE_
+			</if>
+			<if test="mail != null">
+				,MAIL_
+			</if>
+			<if test="telephone != null">
+				,TELEPHONE_
+			</if>
+			<if test="headimgurl != null">
+				,HEADIMGURL_
+			</if>
+			<if test="province != null">
+				,PROVINCE_
+			</if>
+			<if test="city != null">
+				,CITY_
+			</if>
+			<if test="country != null">
+				,COUNTRY_
+			</if>
+			<if test="language != null">
+				,LANGUAGE_
+			</if>
+			<if test="locked != null">
+				,LOCKED_
+			</if>
+			<if test="remark != null">
+				,REMARK
+			</if>
+			<if test="subscribeTime != null">
+				,SUBSCRIBETIME_
+			</if>
+			<if test="createDate != null">
+				,CREATEDATE_
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			#{id, jdbcType=BIGINT}
+
+			<if test="accountId != null">
+				,#{accountId, jdbcType=BIGINT}
+			</if>
+			<if test="actorId != null">
+				,#{actorId, jdbcType=VARCHAR}
+			</if>
+			<if test="openId != null">
+				,#{openId, jdbcType=VARCHAR}
+			</if>
+			<if test="nickName != null">
+				,#{nickName, jdbcType=VARCHAR}
+			</if>
+			<if test="sex != null">
+				,#{sex, jdbcType=VARCHAR}
+			</if>
+			<if test="mobile != null">
+				,#{mobile, jdbcType=VARCHAR}
+			</if>
+			<if test="mail != null">
+				,#{mail, jdbcType=VARCHAR}
+			</if>
+			<if test="telephone != null">
+				,#{telephone, jdbcType=VARCHAR}
+			</if>
+			<if test="headimgurl != null">
+				,#{headimgurl, jdbcType=VARCHAR}
+			</if>
+			<if test="province != null">
+				,#{province, jdbcType=VARCHAR}
+			</if>
+			<if test="city != null">
+				,#{city, jdbcType=VARCHAR}
+			</if>
+			<if test="country != null">
+				,#{country, jdbcType=VARCHAR}
+			</if>
+			<if test="language != null">
+				,#{language, jdbcType=VARCHAR}
+			</if>
+			<if test="locked != null">
+				,#{locked, jdbcType=INTEGER}
+			</if>
+			<if test="remark != null">
+				,#{remark, jdbcType=VARCHAR}
+			</if>
+			<if test="subscribeTime != null">
+				,#{subscribeTime, jdbcType=BIGINT}
+			</if>
+			<if test="createDate != null">
+				,#{createDate, jdbcType=TIMESTAMP}
+			</if>
+		</trim>
+	</insert>
+
+
+	<update id="updateWxFollower" parameterType="com.glaf.wechat.domain.WxFollower">
+		update WX_FOLLOWER
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">
+			<if test="accountId != null">
+				ACCOUNTID_ = #{accountId, jdbcType=BIGINT},
+			</if>
+			<if test="actorId != null">
+				ACTORID_ = #{actorId, jdbcType=VARCHAR},
+			</if>
+			<if test="openId != null">
+				OPENID_ = #{openId, jdbcType=VARCHAR},
+			</if>
+			<if test="nickName != null">
+				NICKNAME_ = #{nickName, jdbcType=VARCHAR},
+			</if>
+			<if test="sex != null">
+				SEX_ = #{sex, jdbcType=VARCHAR},
+			</if>
+			<if test="mobile != null">
+				MOBILE_ = #{mobile, jdbcType=VARCHAR},
+			</if>
+			<if test="mail != null">
+				MAIL_ = #{mail, jdbcType=VARCHAR},
+			</if>
+			<if test="telephone != null">
+				TELEPHONE_ = #{telephone, jdbcType=VARCHAR},
+			</if>
+			<if test="headimgurl != null">
+				HEADIMGURL_ = #{headimgurl, jdbcType=VARCHAR},
+			</if>
+			<if test="province != null">
+				PROVINCE_ = #{province, jdbcType=VARCHAR},
+			</if>
+			<if test="city != null">
+				CITY_ = #{city, jdbcType=VARCHAR},
+			</if>
+			<if test="country != null">
+				COUNTRY_ = #{country, jdbcType=VARCHAR},
+			</if>
+			<if test="language != null">
+				LANGUAGE_ = #{language, jdbcType=VARCHAR},
+			</if>
+			<if test="locked != null">
+				LOCKED_ = #{locked, jdbcType=INTEGER},
+			</if>
+			<if test="remark != null">
+				REMARK = #{remark, jdbcType=VARCHAR},
+			</if>
+			<if test="subscribeTime != null">
+				SUBSCRIBETIME_ = #{subscribeTime, jdbcType=BIGINT},
+			</if>
+			<if test="createDate != null">
+				CREATEDATE_ = #{createDate, jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+		where
+		ID_ = #{id, jdbcType=BIGINT}
+
+	</update>
+
+
+	<delete id="deleteWxFollowerById" parameterType="long">
+		delete from
+		WX_FOLLOWER
+		where ID_ = #{id}
+	</delete>
+
+
+	<delete id="deleteWxFollowers" parameterType="com.glaf.wechat.query.WxFollowerQuery">
+		delete from WX_FOLLOWER
+		where (
+		ID_ IN
+		<foreach item="x_id" index="index" collection="ids" open="("
+			separator="," close=")">
+			#{x_id}
+		</foreach>
+		)
+	</delete>
+
+
+	<select id="getWxFollowerById" parameterType="long"
+		resultMap="wxFollowerResultMap">
+		select * from WX_FOLLOWER where ID_ = #{id}
+	</select>
+
+
+	<select id="getWxFollowers" parameterType="com.glaf.wechat.query.WxFollowerQuery"
+		resultMap="wxFollowerResultMap">
+		select distinct E.*
+		<include refid="selectWxFollowersSql" />
+		<choose>
+			<when test="orderBy != null">
+				order by ${orderBy}
+			</when>
+			<otherwise>
+				order by E.ID_ desc
+			</otherwise>
+		</choose>
+	</select>
+
+
+	<select id="getWxFollowerCount" parameterType="com.glaf.wechat.query.WxFollowerQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectWxFollowersSql" />
+	</select>
+
+
+	<sql id="selectWxFollowersSql">
+
+		from WX_FOLLOWER E
+
+		<where>
+			1 = 1
+
+			<if test="accountId != null">
+				and E.ACCOUNTID_ = #{accountId}
+			</if>
+
+			<if test="accountIds != null and accountIds.size !=0">
+				and E.ACCOUNTID_ IN
+				<foreach item="x_accountId" index="index" collection="accountIds"
+					open="(" separator="," close=")">
+					#{x_accountId}
+				</foreach>
+			</if>
+
+			<if test="actorId != null and actorId != '' ">
+				and E.ACTORID_ = #{actorId}
+			</if>
+
+			<if test="actorIds != null and actorIds.size !=0">
+				and E.ACTORID_ IN
+				<foreach item="x_actorId" index="index" collection="actorIds"
+					open="(" separator="," close=")">
+					#{x_actorId}
+				</foreach>
+			</if>
+
+			<if test="openId != null and openId != '' ">
+				and E.OPENID_ = #{openId}
+			</if>
+
+			<if test="openIds != null and openIds.size !=0">
+				and E.OPENID_ IN
+				<foreach item="x_openId" index="index" collection="openIds"
+					open="(" separator="," close=")">
+					#{x_openId}
+				</foreach>
+			</if>
+
+			<if test="nickNameLike != null and nickNameLike != '' ">
+				and E.NICKNAME_ like #{nickNameLike}
+			</if>
+
+			<if test="sex != null and sex != '' ">
+				and E.SEX_ = #{sex}
+			</if>
+
+			<if test="mobile != null and mobile != '' ">
+				and E.MOBILE_ = #{mobile}
+			</if>
+
+			<if test="mobileLike != null and mobileLike != '' ">
+				and E.MOBILE_ like #{mobileLike}
+			</if>
+
+			<if test="mail != null and mail != '' ">
+				and E.MAIL_ = #{mail}
+			</if>
+
+			<if test="mailLike != null and mailLike != '' ">
+				and E.MAIL_ like #{mailLike}
+			</if>
+
+			<if test="telephoneLike != null and telephoneLike != '' ">
+				and E.TELEPHONE_ like #{telephoneLike}
+			</if>
+
+			<if test="province != null and province != '' ">
+				and E.PROVINCE_ = #{province}
+			</if>
+
+			<if test="city != null and city != '' ">
+				and E.CITY_ = #{city}
+			</if>
+
+			<if test="country != null and country != '' ">
+				and E.COUNTRY_ = #{country}
+			</if>
+
+			<if test="language != null and language != '' ">
+				and E.LANGUAGE_ = #{language}
+			</if>
+
+			<if test="locked != null">
+				and E.LOCKED_ = #{locked}
+			</if>
+
+			<if test="subscribeTimeGreaterThanOrEqual != null">
+				and E.SUBSCRIBETIME_ &gt;=
+				#{subscribeTimeGreaterThanOrEqual}
+			</if>
+
+			<if test="subscribeTimeLessThanOrEqual != null">
+				and E.SUBSCRIBETIME_ &lt;=
+				#{subscribeTimeLessThanOrEqual}
+			</if>
+
+			<if test="createDateGreaterThanOrEqual != null">
+				and E.CREATEDATE_ &gt;= #{createDateGreaterThanOrEqual}
+			</if>
+
+			<if test="createDateLessThanOrEqual != null">
+				and E.CREATEDATE_ &lt;= #{createDateLessThanOrEqual}
+			</if>
+
+		</where>
+	</sql>
+
+</mapper>

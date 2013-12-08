@@ -11,10 +11,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>${classDefinition.title}</title>
+<title>å…³æ³¨ç”¨æˆ·</title>
 <link href="<%=request.getContextPath()%>/scripts/artDialog/skins/default.css" rel="stylesheet" />
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/#F{theme}/easyui.css">
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/themes/#F{theme}/styles.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/themes/${theme}/styles.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/icons/styles.css">
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script>
@@ -34,20 +34,14 @@
 				nowrap: false,
 				striped: true,
 				collapsible: true,
-				url: '<%=request.getContextPath()%>/mx/${classDefinition.moduleName}/${modelName}/json',
+				url: '<%=request.getContextPath()%>/mx/wx/wxFollower/json?accountId=${accountId}',
 				remoteSort: false,
 				singleSelect: true,
-				idField: '${idField.name}',
+				idField: 'id',
 				columns:[[
-				        {title:'ĞòºÅ', field:'startIndex', width:80, sortable:false},
-					<#if pojo_fields?exists>
-					<#list  pojo_fields as field>
-					 <#if field.displayType == 4>
-					{title:'${field.title?if_exists}',field:'${field.name}', width:120},
-					 </#if>
-					</#list>
-					</#if>	 
-					{field:'functionKey',title:'¹¦ÄÜ¼ü',width:120}
+				        {title:'åºå·', field:'startIndex', width:80, sortable:false},
+					    {title:'æ˜µç§°', field:'nickName', width:150, sortable:false},
+					    {field:'functionKey',title:'åŠŸèƒ½é”®',width:120}
 				]],
 				rownumbers: false,
 				pagination: true,
@@ -66,19 +60,19 @@
 
 		 
 	function addNew(){
-	    var link="<%=request.getContextPath()%>/mx/${classDefinition.moduleName}/${modelName}/edit?fromUrl=#F{fromUrl}";
-	    //art.dialog.open(link, { height: 420, width: 680, title: "Ìí¼Ó¼ÇÂ¼", lock: true, scrollbars:"no" }, false);
+	    var link="<%=request.getContextPath()%>/mx/wx/wxFollower/edit?fromUrl=${fromUrl}";
+	    //art.dialog.open(link, { height: 420, width: 680, title: "æ·»åŠ è®°å½•", lock: true, scrollbars:"no" }, false);
 		location.href=link;
 	}
 
 	function onRowClick(rowIndex, row){
-	    var link = '<%=request.getContextPath()%>/mx/${classDefinition.moduleName}/${modelName}/edit?${idField.name}='+row.id+'&fromUrl=#F{fromUrl}';
-	    //art.dialog.open(link, { height: 420, width: 680, title: "ĞŞ¸Ä¼ÇÂ¼", lock: true, scrollbars:"no" }, false);
+	    var link = '<%=request.getContextPath()%>/mx/wx/wxFollower/edit?id='+row.id+'&fromUrl=${fromUrl}';
+	    //art.dialog.open(link, { height: 420, width: 680, title: "ä¿®æ”¹è®°å½•", lock: true, scrollbars:"no" }, false);
 		location.href=link;
 	}
 
 	function searchWin(){
-	    jQuery('#dlg').dialog('open').dialog('setTitle','${classDefinition.title}²éÑ¯');
+	    jQuery('#dlg').dialog('open').dialog('setTitle','å…³æ³¨ç”¨æˆ·æŸ¥è¯¢');
 	    //jQuery('#searchForm').form('clear');
 	}
 
@@ -92,13 +86,13 @@
 	function editSelected(){
 	    var rows = jQuery('#mydatagrid').datagrid('getSelections');
 	    if(rows == null || rows.length !=1){
-		  alert("ÇëÑ¡ÔñÆäÖĞÒ»Ìõ¼ÇÂ¼¡£");
+		  alert("è¯·é€‰æ‹©å…¶ä¸­ä¸€æ¡è®°å½•ã€‚");
 		  return;
 	    }
 	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
 	    if (selected ){
-		  var link = '<%=request.getContextPath()%>/mx/${classDefinition.moduleName}/${modelName}/edit?${idField.name}='+selected.id+'&fromUrl=#F{fromUrl}';
-		  //art.dialog.open(link, { height: 420, width: 680, title: "ĞŞ¸Ä¼ÇÂ¼", lock: true, scrollbars:"no" }, false);
+		  var link = '<%=request.getContextPath()%>/mx/wx/wxFollower/edit?id='+selected.id+'&fromUrl=${fromUrl}';
+		  //art.dialog.open(link, { height: 420, width: 680, title: "ä¿®æ”¹è®°å½•", lock: true, scrollbars:"no" }, false);
 		  location.href=link;
 	    }
 	}
@@ -106,12 +100,12 @@
 	function viewSelected(){
 		var rows = jQuery('#mydatagrid').datagrid('getSelections');
 		if(rows == null || rows.length !=1){
-			alert("ÇëÑ¡ÔñÆäÖĞÒ»Ìõ¼ÇÂ¼¡£");
+			alert("è¯·é€‰æ‹©å…¶ä¸­ä¸€æ¡è®°å½•ã€‚");
 			return;
 		}
 		var selected = jQuery('#mydatagrid').datagrid('getSelected');
 		if (selected ){
-		    location.href='<%=request.getContextPath()%>/mx/${classDefinition.moduleName}/${modelName}/edit?readonly=true&${idField.name}='+selected.id+'&fromUrl=#F{fromUrl}';
+		    location.href='<%=request.getContextPath()%>/mx/wx/wxFollower/edit?readonly=true&id='+selected.id+'&fromUrl=${fromUrl}';
 		}
 	}
 
@@ -121,26 +115,26 @@
 		for(var i=0;i<rows.length;i++){
 			ids.push(rows[i].id);
 		}
-		if(ids.length > 0 && confirm("Êı¾İÉ¾³ıºó²»ÄÜ»Ö¸´£¬È·¶¨É¾³ıÂğ£¿")){
+		if(ids.length > 0 && confirm("æ•°æ®åˆ é™¤åä¸èƒ½æ¢å¤ï¼Œç¡®å®šåˆ é™¤å—ï¼Ÿ")){
 		    var str = ids.join(',');
 			jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/mx/${classDefinition.moduleName}/${modelName}/delete?${idField.name}s='+str,
+				   url: '<%=request.getContextPath()%>/mx/wx/wxFollower/delete?ids='+str,
 				   dataType:  'json',
 				   error: function(data){
-					   alert('·şÎñÆ÷´¦Àí´íÎó£¡');
+					   alert('æœåŠ¡å™¨å¤„ç†é”™è¯¯ï¼');
 				   },
 				   success: function(data){
 					   if(data != null && data.message != null){
 						   alert(data.message);
 					   } else {
-						   alert('²Ù×÷³É¹¦Íê³É£¡');
+						   alert('æ“ä½œæˆåŠŸå®Œæˆï¼');
 					   }
 					   jQuery('#mydatagrid').datagrid('reload');
 				   }
 			 });
 		} else {
-			alert("ÇëÑ¡ÔñÖÁÉÙÒ»Ìõ¼ÇÂ¼¡£");
+			alert("è¯·é€‰æ‹©è‡³å°‘ä¸€æ¡è®°å½•ã€‚");
 		}
 	}
 
@@ -180,11 +174,11 @@
         var params = jQuery("#searchForm").formSerialize();
         jQuery.ajax({
                     type: "POST",
-                    url: '<%=request.getContextPath()%>/mx/${classDefinition.moduleName}/${modelName}/json',
+                    url: '<%=request.getContextPath()%>/mx/wx/wxFollower/json',
                     dataType:  'json',
                     data: params,
                     error: function(data){
-                              alert('·şÎñÆ÷´¦Àí´íÎó£¡');
+                              alert('æœåŠ¡å™¨å¤„ç†é”™è¯¯ï¼');
                     },
                     success: function(data){
                               jQuery('#mydatagrid').datagrid('loadData', data);
@@ -192,6 +186,27 @@
                   });
 
 	    jQuery('#dlg').dialog('close');
+	}
+
+	function fetchFollower(type){
+		if(confirm("ç¡®å®šä»æœåŠ¡å™¨è·å–å…³æ³¨è€…åˆ—è¡¨å—ï¼Ÿ")){
+            jQuery.ajax({
+				   type: "POST",
+				   url: '<%=request.getContextPath()%>/mx/wx/wxFollower/fetchFollower?accountId=${accountId}&type='+type,
+				   dataType:  'json',
+				   error: function(data){
+					   alert('æœåŠ¡å™¨å¤„ç†é”™è¯¯ï¼');
+				   },
+				   success: function(data){
+					   if(data != null && data.message != null){
+						   alert(data.message);
+					   } else {
+						   alert('æ“ä½œæˆåŠŸå®Œæˆï¼');
+					   }
+					   window.location.reload();
+				   }
+			 });
+		}
 	}
 		 
 </script>
@@ -202,15 +217,15 @@
    <div data-options="region:'north',split:true,border:true" style="height:40px"> 
     <div class="toolbar-backgroud"  > 
 	<img src="<%=request.getContextPath()%>/images/window.png">
-	&nbsp;<span class="x_content_title">${classDefinition.title}ÁĞ±í</span>
+	&nbsp;<span class="x_content_title">å…³æ³¨ç”¨æˆ·åˆ—è¡¨</span>
     <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-add'" 
-	   onclick="javascript:addNew();">ĞÂÔö</a>  
+	   onclick="javascript:fetchFollower('weixin');">ä»å¾®ä¿¡æœåŠ¡å™¨åŒæ­¥</a>  
     <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-edit'"
-	   onclick="javascript:editSelected();">ĞŞ¸Ä</a>  
+	   onclick="javascript:editSelected();">ä¿®æ”¹</a>  
 	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-remove'"
-	   onclick="javascript:deleteSelections();">É¾³ı</a> 
+	   onclick="javascript:deleteSelections();">åˆ é™¤</a> 
 	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-search'"
-	   onclick="javascript:searchWin();">²éÕÒ</a>
+	   onclick="javascript:searchWin();">æŸ¥æ‰¾</a>
    </div> 
   </div> 
   <div data-options="region:'center',border:true">
@@ -223,36 +238,43 @@
   <form id="searchForm" name="searchForm" method="post">
   <table class="easyui-form" >
     <tbody>
-<#if pojo_fields?exists>
-  <#list  pojo_fields as field>	
-    <#if field.editable>
     <tr>
-	<td>${field.title}</td>
+	<td>çœä»½</td>
 	<td>
-    <#if field.javaType?exists && field.javaType== 'Date'>
-	<input id="${field.name}LessThanOrEqual" name="${field.name}LessThanOrEqual" class="easyui-datebox"></input>
-    <#elseif field.javaType?exists && field.javaType== 'Integer'>
-	<input id="${field.name}" name="${field.name}" class="easyui-numberbox" precision="0" ></input>
-    <#elseif field.javaType?exists && field.javaType== 'Long'>
-	<input id="${field.name}" name="${field.name}" class="easyui-numberbox" precision="0" ></input>
-    <#elseif field.javaType?exists && field.javaType== 'Double'>
-	<input id="${field.name}" name="${field.name}" class="easyui-numberbox" ></input>
-    <#elseif field.javaType?exists && field.javaType== 'String'>
-        <input id="${field.name}Like" name="${field.name}Like" class="easyui-validatebox" type="text"></input>
-    </#if>
+        <input id="provinceLike" name="provinceLike" class="easyui-validatebox" type="text"></input>
        </td>
      </tr>
-    </#if>	 
-  </#list>
-</#if>
+    <tr>
+	<td>åŸå¸‚</td>
+	<td>
+        <input id="cityLike" name="cityLike" class="easyui-validatebox" type="text"></input>
+       </td>
+     </tr>
+    <tr>
+	<td>å›½å®¶</td>
+	<td>
+        <input id="countryLike" name="countryLike" class="easyui-validatebox" type="text"></input>
+       </td>
+     </tr>
+    <tr>
+	<td>è¯­è¨€</td>
+	<td>
+        <input id="languageLike" name="languageLike" class="easyui-validatebox" type="text"></input>
+       </td>
+     </tr>
+    <tr>
+	<td>å¤‡æ³¨</td>
+	<td>
+        <input id="remarkLike" name="remarkLike" class="easyui-validatebox" type="text"></input>
+       </td>
+     </tr>
       </tbody>
     </table>
   </form>
 </div>
 <div id="dlg-buttons">
-	<a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="javascript:searchData()">²éÑ¯</a>
-	<a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:jQuery('#dlg').dialog('close')">È¡Ïû</a>
+	<a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="javascript:searchData()">æŸ¥è¯¢</a>
+	<a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:jQuery('#dlg').dialog('close')">å–æ¶ˆ</a>
 </div>
 </body>
 </html>
- 
