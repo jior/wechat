@@ -24,6 +24,7 @@ import com.glaf.wechat.model.AccessToken;
 import com.glaf.wechat.query.*;
 import com.glaf.wechat.service.*;
 import com.glaf.wechat.util.WechatUtils;
+import com.glaf.wechat.util.WxFollowerThread;
 import com.glaf.wechat.util.WxIdentityFactory;
 
 @Controller("/wx/wxFollower")
@@ -40,6 +41,34 @@ public class WxFollowerController {
 
 	public WxFollowerController() {
 
+	}
+
+	protected void addFollower(Long accountId, String actorId,
+			String subscribe_list_get_url, String subscribe_get_url,
+			String token, JSONObject jsonObject) {
+		JSONObject json = jsonObject.getJSONObject("data");
+		if (json.containsKey("openid")) {
+			JSONArray array = json.getJSONArray("openid");
+			if (array != null && array.size() > 0) {
+				for (int i = 0, len = array.size(); i < len; i++) {
+					JSONObject o = array.getJSONObject(i);
+					String openid = o.toString();
+					logger.debug("openid:" + openid);
+					WxFollowerThread thread = new WxFollowerThread(accountId,
+							actorId, subscribe_get_url, token, openid);
+					com.glaf.core.util.threads.ThreadFactory.run(thread);
+				}
+			}
+		}
+		if (jsonObject.containsKey("next_openid")) {
+			String next_openid = jsonObject.getString("next_openid");
+			JSONObject next_jsonObject = WechatUtils.getFollowers(
+					subscribe_list_get_url, token, next_openid);
+			if (next_jsonObject.containsKey("data")) {
+				this.addFollower(accountId, actorId, subscribe_list_get_url,
+						subscribe_get_url, token, next_jsonObject);
+			}
+		}
 	}
 
 	@ResponseBody
@@ -106,6 +135,7 @@ public class WxFollowerController {
 	@RequestMapping("/fetchFollower")
 	public byte[] fetchFollower(HttpServletRequest request) {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
+		String actorId = loginContext.getActorId();
 		Long accountId = RequestUtils.getLong(request, "accountId");
 		WxUser user = WxIdentityFactory.getUserByAccountId(accountId);
 		if (StringUtils.equals(loginContext.getActorId(), user.getActorId())) {
@@ -149,20 +179,10 @@ public class WxFollowerController {
 									subscribe_list_get_url,
 									accessToken.getToken(), "");
 							if (jsonObject.containsKey("data")) {
-								JSONObject json = jsonObject
-										.getJSONObject("data");
-								if (json.containsKey("openid")) {
-									JSONArray array = json
-											.getJSONArray("openid");
-									if (array != null && array.size() > 0) {
-										for (int i = 0, len = array.size(); i < len; i++) {
-											JSONObject o = array
-													.getJSONObject(i);
-											String openid = o.toString();
-											logger.debug("openid:" + openid);
-										}
-									}
-								}
+								this.addFollower(accountId, actorId,
+										subscribe_list_get_url,
+										subscribe_get_url,
+										accessToken.getToken(), jsonObject);
 							}
 						}
 					}

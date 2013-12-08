@@ -146,15 +146,6 @@
 		update WX_FOLLOWER
 		set
 		<trim prefix="" suffix="" suffixOverrides=",">
-			<if test="accountId != null">
-				ACCOUNTID_ = #{accountId, jdbcType=BIGINT},
-			</if>
-			<if test="actorId != null">
-				ACTORID_ = #{actorId, jdbcType=VARCHAR},
-			</if>
-			<if test="openId != null">
-				OPENID_ = #{openId, jdbcType=VARCHAR},
-			</if>
 			<if test="nickName != null">
 				NICKNAME_ = #{nickName, jdbcType=VARCHAR},
 			</if>
@@ -194,9 +185,6 @@
 			<if test="subscribeTime != null">
 				SUBSCRIBETIME_ = #{subscribeTime, jdbcType=BIGINT},
 			</if>
-			<if test="createDate != null">
-				CREATEDATE_ = #{createDate, jdbcType=TIMESTAMP},
-			</if>
 		</trim>
 		where
 		ID_ = #{id, jdbcType=BIGINT}
@@ -226,6 +214,12 @@
 	<select id="getWxFollowerById" parameterType="long"
 		resultMap="wxFollowerResultMap">
 		select * from WX_FOLLOWER where ID_ = #{id}
+	</select>
+
+
+	<select id="getWxFollowerByOpenId" parameterType="string"
+		resultMap="wxFollowerResultMap">
+		select * from WX_FOLLOWER where OPENID_ = #{openid}
 	</select>
 
 

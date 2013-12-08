@@ -50,12 +50,10 @@ public class WxFollowerServiceImpl implements WxFollowerService {
 	}
 
 	public int count(WxFollowerQuery query) {
-		query.ensureInitialized();
 		return wxFollowerMapper.getWxFollowerCount(query);
 	}
 
 	public List<WxFollower> list(WxFollowerQuery query) {
-		query.ensureInitialized();
 		List<WxFollower> list = wxFollowerMapper.getWxFollowers(query);
 		return list;
 	}
@@ -82,12 +80,20 @@ public class WxFollowerServiceImpl implements WxFollowerService {
 
 	@Transactional
 	public void save(WxFollower wxFollower) {
-		if (wxFollower.getId() == null) {
-			wxFollower.setId(idGenerator.nextId());
-			wxFollower.setCreateDate(new Date());
-			wxFollowerMapper.insertWxFollower(wxFollower);
-		} else {
+		WxFollower bean = wxFollowerMapper.getWxFollowerByOpenId(wxFollower
+				.getOpenId());
+		if (bean != null) {
+			wxFollower.setMail(bean.getMail());
+			wxFollower.setMobile(bean.getMobile());
+			wxFollower.setRemark(bean.getRemark());
+			wxFollower.setTelephone(bean.getTelephone());
 			wxFollowerMapper.updateWxFollower(wxFollower);
+		} else {
+			if (wxFollower.getId() == null) {
+				wxFollower.setId(idGenerator.nextId());
+				wxFollower.setCreateDate(new Date());
+			}
+			wxFollowerMapper.insertWxFollower(wxFollower);
 		}
 	}
 
@@ -95,9 +101,7 @@ public class WxFollowerServiceImpl implements WxFollowerService {
 	public void insertAll(List<WxFollower> followers) {
 		if (followers != null && !followers.isEmpty()) {
 			for (WxFollower follower : followers) {
-				follower.setId(idGenerator.nextId());
-				follower.setCreateDate(new Date());
-				wxFollowerMapper.insertWxFollower(follower);
+				this.save(follower);
 			}
 		}
 	}
