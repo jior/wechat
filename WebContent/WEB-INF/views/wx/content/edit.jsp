@@ -17,27 +17,14 @@ limitations under the License.
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%
-    String theme = com.glaf.core.util.RequestUtils.getTheme(request);
-    request.setAttribute("theme", theme);
-%>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>内容发布</title>
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css">
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/themes/${theme}/styles.css">
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/icons/styles.css">
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/core.css">
-<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/jquery.easyui.min.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/locale/easyui-lang-zh_CN.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/kindeditor/kindeditor-min.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/glaf-base.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/glaf-core.js"></script>
+<%@ include file="/WEB-INF/views/wx/inc/wx_styles.jsp"%>
+<%@ include file="/WEB-INF/views/wx/inc/wx_scripts.jsp"%>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/baidumap.js"></script>
 <script type="text/javascript">
     var contextPath="<%=request.getContextPath()%>";

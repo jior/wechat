@@ -24,7 +24,8 @@ limitations under the License.
 <html>
 <head>
 <title>上传模板信息</title>
-<%@ include file="/WEB-INF/views/tm/mx_header.jsp"%>
+<%@ include file="/WEB-INF/views/wx/inc/wx_styles.jsp"%>
+<%@ include file="/WEB-INF/views/wx/inc/wx_scripts.jsp"%>
  <script language="javascript">
   String.prototype.trim = function() {
      return this.replace(/(^\s*)|(\s*$)/g, "");

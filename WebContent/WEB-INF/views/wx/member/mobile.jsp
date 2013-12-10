@@ -18,8 +18,6 @@ limitations under the License.
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%
-    String theme = com.glaf.core.util.RequestUtils.getTheme(request);
-    request.setAttribute("theme", theme);
 	int index = 0;
 %>
 <!DOCTYPE html>
@@ -27,7 +25,7 @@ limitations under the License.
 <head>
 <title>会员信息</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<%@ include file="/WEB-INF/views/wx/common/wx_mobile_include.jsp" %>
+<%@ include file="/WEB-INF/views/wx/inc/wx_mobile_include.jsp" %>
 <script type="text/javascript">
      var contextPath="<%=request.getContextPath()%>";
 

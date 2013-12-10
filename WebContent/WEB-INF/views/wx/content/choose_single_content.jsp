@@ -2,8 +2,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%
-    String theme = com.glaf.core.util.RequestUtils.getTheme(request);
-    request.setAttribute("theme", theme);
 	request.setAttribute("contextPath", request.getContextPath());
 %>
 <!DOCTYPE html>
@@ -11,17 +9,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>微站内容</title>
-<link href="<%=request.getContextPath()%>/css/site.css" type="text/css" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css">
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/ztree/css/zTreeStyle/zTreeStyle.css"/>
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/icons/styles.css">
-<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/json2.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/jquery.easyui.min.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/locale/easyui-lang-zh_CN.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/ztree/js/jquery.ztree.all.min.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/glaf-base.js"></script>
+<%@ include file="/WEB-INF/views/wx/inc/wx_styles.jsp"%>
+<%@ include file="/WEB-INF/views/wx/inc/wx_scripts.jsp"%>
 <script type="text/javascript">
 
     var setting = {

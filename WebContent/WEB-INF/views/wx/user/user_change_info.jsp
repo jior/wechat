@@ -24,22 +24,15 @@ limitations under the License.
     String context = request.getContextPath();
     SysUser bean=(SysUser)request.getAttribute("bean");
     pageContext.setAttribute("contextPath", context); 
-    String theme = com.glaf.core.util.RequestUtils.getTheme(request);
-    request.setAttribute("theme", theme);
+ 
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>修改用户信息</title>
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css">
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/themes/${theme}/styles.css">
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/icons/styles.css">
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/core.css">
-<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/jquery.easyui.min.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/locale/easyui-lang-zh_CN.js"></script>
+<%@ include file="/WEB-INF/views/wx/inc/wx_styles.jsp"%>
+<%@ include file="/WEB-INF/views/wx/inc/wx_scripts.jsp"%>
 <script language="javascript" src='<%=context%>/scripts/main.js'></script>
 <script language="javascript" src='<%=context%>/scripts/verify.js'></script></head>
 <script language="javascript">
