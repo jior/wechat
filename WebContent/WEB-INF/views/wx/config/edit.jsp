@@ -29,6 +29,7 @@ limitations under the License.
 <title>接口设置</title>
 <%@ include file="/WEB-INF/views/wx/inc/wx_styles.jsp"%>
 <%@ include file="/WEB-INF/views/wx/inc/wx_scripts.jsp"%>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/kindeditor/kindeditor-min.js"></script>
 <script type="text/javascript">
     var contextPath="<%=request.getContextPath()%>";
 

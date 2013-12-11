@@ -24,6 +24,7 @@ limitations under the License.
 <title>编辑模板</title>
 <%@ include file="/WEB-INF/views/wx/inc/wx_styles.jsp"%>
 <%@ include file="/WEB-INF/views/wx/inc/wx_scripts.jsp"%>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/kindeditor/kindeditor-min.js"></script>
 <script type="text/javascript">
     var contextPath="<%=request.getContextPath()%>";
 
@@ -49,9 +50,9 @@ limitations under the License.
 						 alert('操作成功完成！');
 					   }
 					   if (window.opener) {
-						window.opener.location.reload();
+						  window.opener.location.reload();
 					   } else if (window.parent) {
-						window.parent.location.reload();
+						  window.parent.location.reload();
 					   }
 				   }
 			 });
@@ -73,7 +74,7 @@ limitations under the License.
 					   if(data != null && data.message != null){
 						   alert(data.message);
 					   } else {
-						 alert('操作成功完成！');
+						   alert('操作成功完成！');
 					   }
 				   }
 			 });

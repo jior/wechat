@@ -17,10 +17,14 @@
  */
 package com.glaf.wechat.sdk.message.handler;
 
+import java.util.StringTokenizer;
+
+import org.apache.commons.lang.StringUtils;
 import org.dom4j.Element;
 
 import com.glaf.wechat.sdk.message.Message;
 import com.glaf.wechat.sdk.message.TextMessage;
+import com.glaf.wechat.sdk.message.filter.IMessageFilter;
 import com.glaf.wechat.sdk.message.filter.KeywordsMessageFilter;
 import com.glaf.wechat.sdk.message.filter.MessageFilterChain;
 import com.glaf.wechat.sdk.message.filter.DefaultResponseMessageFilter;
@@ -36,6 +40,19 @@ public class TextMessageHandler extends AbstractMessageHandler {
 	@Override
 	public Message handleSpecialMessage(Message message) {
 		MessageFilterChain filterChain = new MessageFilterChain();
+		if (StringUtils.isNotEmpty(conf.get("text.messageFilter"))) {
+			String str = conf.get("text.messageFilter");
+			StringTokenizer token = new StringTokenizer(str);
+			while (token.hasMoreTokens()) {
+				String className = token.nextToken();
+				Object object = com.glaf.core.util.ReflectUtils
+						.instantiate(className);
+				if (object instanceof IMessageFilter) {
+					IMessageFilter filter = (IMessageFilter) object;
+					filterChain.addFilter(filter);
+				}
+			}
+		}
 		filterChain.addFilter(new KeywordsMessageFilter());
 		// 加入默认的响应处理类
 		filterChain.addFilter(new DefaultResponseMessageFilter());

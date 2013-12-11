@@ -22,6 +22,8 @@ import java.util.List;
 
 import org.dom4j.Element;
 
+import com.glaf.core.config.Configuration;
+import com.glaf.wechat.config.WechatConfiguration;
 import com.glaf.wechat.sdk.message.IMessage;
 import com.glaf.wechat.sdk.message.ItemArticle;
 import com.glaf.wechat.sdk.message.ItemMusic;
@@ -36,6 +38,8 @@ import com.glaf.wechat.sdk.message.ResponseTextMessage;
  */
 public abstract class AbstractMessageHandler implements IMessageHandler,
 		IMessage {
+	
+	protected static Configuration conf = WechatConfiguration.create();
 
 	protected Message message;
 

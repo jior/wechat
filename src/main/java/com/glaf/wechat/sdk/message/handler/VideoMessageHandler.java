@@ -17,13 +17,17 @@
  */
 package com.glaf.wechat.sdk.message.handler;
 
+import java.util.StringTokenizer;
+
+import org.apache.commons.lang.StringUtils;
 import org.dom4j.Element;
 
 import com.glaf.wechat.sdk.message.Message;
 import com.glaf.wechat.sdk.message.VideoMessage;
+import com.glaf.wechat.sdk.message.filter.IMessageFilter;
 import com.glaf.wechat.sdk.message.filter.MessageFilterChain;
 import com.glaf.wechat.sdk.message.filter.DefaultResponseMessageFilter;
-import com.glaf.wechat.sdk.message.filter.HelpMessageFilter;
+import com.glaf.wechat.sdk.message.filter.VideoMessageFilter;
 
 /**
  * handle text message <br>
@@ -36,7 +40,20 @@ public class VideoMessageHandler extends AbstractMessageHandler {
 	@Override
 	public Message handleSpecialMessage(Message message) {
 		MessageFilterChain filterChain = new MessageFilterChain();
-		filterChain.addFilter(new HelpMessageFilter());
+		if (StringUtils.isNotEmpty(conf.get("video.messageFilter"))) {
+			String str = conf.get("video.messageFilter");
+			StringTokenizer token = new StringTokenizer(str);
+			while (token.hasMoreTokens()) {
+				String className = token.nextToken();
+				Object object = com.glaf.core.util.ReflectUtils
+						.instantiate(className);
+				if (object instanceof IMessageFilter) {
+					IMessageFilter filter = (IMessageFilter) object;
+					filterChain.addFilter(filter);
+				}
+			}
+		}
+		filterChain.addFilter(new VideoMessageFilter());
 		// 加入默认的响应处理类
 		filterChain.addFilter(new DefaultResponseMessageFilter());
 		return filterChain.doFilterChain(message);
