@@ -260,7 +260,7 @@ limitations under the License.
 			       class="easyui-validatebox x-text"  size="80"
 				   value="${wxContent.keywords}"/>
 		<br/>(多个关键词之间用空格隔开)
-		<br/>最多只能加10个关键词且每关键词不能超过10个字符(超过10个字符，系统会自动过滤掉)
+		<br/>最多只能加10个关键词且每关键词不能超过50个字符(超过50个字符，系统会自动过滤掉)
         <br/>“subscribe”为粉丝关注反馈信息的关键词 
 		</td>
 	</tr>

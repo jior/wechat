@@ -111,7 +111,7 @@ public class WxKeywordsServiceImpl implements WxKeywordsService {
 			StringTokenizer token = new StringTokenizer(keywords);
 			while (i < 10 && token.hasMoreTokens()) {
 				String str = token.nextToken();
-				if (str.length() <= 10) {
+				if (str.length() <= 50) {
 					i++;
 					WxKeywords wxKeywords = new WxKeywords();
 					wxKeywords.setId(idGenerator.nextId());

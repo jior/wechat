@@ -32,13 +32,13 @@ public class WxKeywords implements Serializable, JSONable {
 	@Column(name = "CATEGORYID_")
 	protected Long categoryId;
 
-	@Column(name = "CONTENTID_", length = 250)
+	@Column(name = "CONTENTID_")
 	protected Long contentId;
 
-	@Column(name = "KEYWORDS_", length = 250)
+	@Column(name = "KEYWORDS_", length = 200)
 	protected String keywords;
 
-	@Column(name = "KEYWORDSMATCHTYPE_", length = 250)
+	@Column(name = "KEYWORDSMATCHTYPE_", length = 20)
 	protected String keywordsMatchType;
 
 	@Column(name = "CREATEBY_", length = 50)
