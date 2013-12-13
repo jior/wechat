@@ -88,6 +88,18 @@ limitations under the License.
 		openWindow(link,self,x, y, 745, 580);
 	}
 
+	function editRelations(){
+		var link = '<%=request.getContextPath()%>/mx/wx/wxVote/choose?elementId=relationIds&elementName=relations&type=vote&selecteds=${wxVote.relationIds}&accountId=${accountId}';
+		var x=100;
+		var y=100;
+		if(is_ie) {
+			x=document.body.scrollLeft+event.clientX-event.offsetX-200;
+			y=document.body.scrollTop+event.clientY-event.offsetY-200;
+		}
+		openWindow(link,self,x, y, 745, 480);
+	}
+
+
 </script>
 </head>
 <body>
@@ -209,6 +221,15 @@ limitations under the License.
 		</td>
 	</tr>
 	<tr>
+		<td width="15%" align="left">顺序号</td>
+		<td align="left">
+			<input id="sort" name="sort" type="text" 
+			       class="easyui-numberspinner" size="5"
+				   increment="1"  
+				   value="${wxVote.sort}"/>&nbsp;(顺序越大越靠前)
+		</td>
+	</tr>
+	<tr>
 		<td width="20%" align="left">投票项目</td>
 		<td align="left">
 		     <input type="button" id="vtype" class="btnGreen" value="添加选项"> <br>
@@ -259,6 +280,18 @@ limitations under the License.
                    jQuery("#"+obj).remove();
 			    }
             </script>
+		</td>
+	</tr>
+	<tr>
+	    <td width="20%" align="left">选择关联项</td>
+		<td align="left" > 
+		    <c:forEach items="${wxVote.relations}" var="relation">
+			<br><a href="<%=request.getContextPath()%>/mx/wx/wxVote/edit?id=${relation.id}">${relation.title}</a>
+			</c:forEach>
+			<br>
+		    <input type="hidden" id="relationIds" name="relationIds" value="${wxVote.relationIds}"> 
+		    <input type="hidden" id="relations" name="relations"> 
+			<input type="button" value=" 添加 " onclick="javascript:editRelations();" class="btnGreen">
 		</td>
 	</tr>
 	<tr>

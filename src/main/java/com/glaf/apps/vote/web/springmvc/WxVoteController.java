@@ -52,6 +52,23 @@ public class WxVoteController {
 
 	}
 
+	@RequestMapping("/choose")
+	public ModelAndView choose(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view, modelMap);
+		}
+
+		String x_view = ViewProperties.getString("wxVote.choose");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
+		return new ModelAndView("/wx/vote/choose_votes", modelMap);
+	}
+
 	@ResponseBody
 	@RequestMapping("/delete")
 	public void delete(HttpServletRequest request, ModelMap modelMap) {
@@ -96,8 +113,6 @@ public class WxVoteController {
 						loginContext.getActorId()) || loginContext
 						.isSystemAdministrator())) {
 			request.setAttribute("wxVote", wxVote);
-			JSONObject rowJSON = wxVote.toJsonObject();
-			request.setAttribute("x_json", rowJSON.toJSONString());
 		}
 
 		String view = request.getParameter("view");
@@ -213,7 +228,7 @@ public class WxVoteController {
 		} else {
 			request.setAttribute("x_complex_query", "");
 		}
-		
+
 		String requestURI = request.getRequestURI();
 		logger.debug("requestURI:" + requestURI);
 		logger.debug("queryString:" + request.getQueryString());
@@ -221,7 +236,7 @@ public class WxVoteController {
 				"fromUrl",
 				RequestUtils.encodeURL(requestURI + "?"
 						+ request.getQueryString()));
-		
+
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {
 			return new ModelAndView(view, modelMap);
@@ -270,7 +285,7 @@ public class WxVoteController {
 		wxVote.setResultFlag(RequestUtils.getInt(request, "resultFlag"));
 		wxVote.setStartDate(RequestUtils.getDate(request, "startDate"));
 		wxVote.setEndDate(RequestUtils.getDate(request, "endDate"));
-
+		wxVote.setRelationIds(request.getParameter("relationIds"));
 		wxVote.setCreateBy(actorId);
 
 		wxVoteService.save(wxVote);
@@ -304,7 +319,7 @@ public class WxVoteController {
 			wxVote.setResultFlag(RequestUtils.getInt(request, "resultFlag"));
 			wxVote.setStartDate(RequestUtils.getDate(request, "startDate"));
 			wxVote.setEndDate(RequestUtils.getDate(request, "endDate"));
-
+			wxVote.setRelationIds(request.getParameter("relationIds"));
 			wxVote.setCreateBy(actorId);
 
 			Map<Integer, WxVoteItem> dataMap = new HashMap<Integer, WxVoteItem>();
@@ -373,7 +388,7 @@ public class WxVoteController {
 			wxVote.setResultFlag(RequestUtils.getInt(request, "resultFlag"));
 			wxVote.setStartDate(RequestUtils.getDate(request, "startDate"));
 			wxVote.setEndDate(RequestUtils.getDate(request, "endDate"));
-
+			wxVote.setRelationIds(request.getParameter("relationIds"));
 			wxVoteService.save(wxVote);
 		}
 

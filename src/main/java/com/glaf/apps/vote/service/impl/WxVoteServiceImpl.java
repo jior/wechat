@@ -20,8 +20,6 @@ package com.glaf.apps.vote.service.impl;
 
 import java.util.*;
 
-
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.commons.lang.StringUtils;
@@ -31,6 +29,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.core.id.*;
+import com.glaf.core.util.StringTools;
 import com.glaf.core.dao.*;
 import com.glaf.apps.vote.mapper.*;
 import com.glaf.apps.vote.domain.*;
@@ -90,7 +89,21 @@ public class WxVoteServiceImpl implements WxVoteService {
 			List<WxVoteItem> items = wxVoteItemMapper
 					.getWxVoteItemsByVoteId(wxVote.getId());
 			wxVote.setItems(items);
+			if (StringUtils.isNotEmpty(wxVote.getRelationIds())) {
+				List<Long> relationIds = StringTools.splitToLong(wxVote
+						.getRelationIds());
+				if (relationIds != null && !relationIds.isEmpty()) {
+					for (Long voteId : relationIds) {
+						WxVote relation = wxVoteMapper.getWxVoteById(voteId);
+						List<WxVoteItem> childItems = wxVoteItemMapper
+								.getWxVoteItemsByVoteId(relation.getId());
+						relation.setItems(childItems);
+						wxVote.addRelation(relation);
+					}
+				}
+			}
 		}
+
 		return wxVote;
 	}
 

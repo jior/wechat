@@ -79,5 +79,14 @@ public interface WxVoteResultService {
 	 */
 	@Transactional
 	void save(WxVoteResult wxVoteResult);
+	
+	
+	/**
+	 * 保存多条记录
+	 * 
+	 * @return
+	 */
+	@Transactional
+	void saveAll(List<WxVoteResult> wxVoteResults);
 
 }

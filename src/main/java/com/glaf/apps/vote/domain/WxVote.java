@@ -33,7 +33,7 @@ import com.glaf.core.base.*;
 import com.glaf.apps.vote.util.*;
 
 @Entity
-@Table(name = "wx_vote")
+@Table(name = "WX_VOTE")
 public class WxVote implements Serializable, JSONable {
 	private static final long serialVersionUID = 1L;
 
@@ -64,6 +64,12 @@ public class WxVote implements Serializable, JSONable {
 
 	@Column(name = "ICON_", length = 250)
 	protected String icon;
+
+	/**
+	 * 顺序
+	 */
+	@Column(name = "SORT_")
+	protected Integer sort;
 
 	@Column(name = "STATUS_")
 	protected Integer status;
@@ -101,6 +107,15 @@ public class WxVote implements Serializable, JSONable {
 	@Column(name = "CREATEDATE_")
 	protected Date createDate;
 
+	/**
+	 * 关联的内容编号，多个之间用逗号隔开
+	 */
+	@Column(name = "RELATIONIDS_", length = 100)
+	protected String relationIds;
+
+	@javax.persistence.Transient
+	protected List<WxVote> relations = new ArrayList<WxVote>();
+
 	@javax.persistence.Transient
 	protected List<WxVoteItem> items = new ArrayList<WxVoteItem>();
 
@@ -113,6 +128,13 @@ public class WxVote implements Serializable, JSONable {
 			items = new ArrayList<WxVoteItem>();
 		}
 		items.add(item);
+	}
+
+	public void addRelation(WxVote item) {
+		if (relations == null) {
+			relations = new ArrayList<WxVote>();
+		}
+		relations.add(item);
 	}
 
 	@Override
@@ -184,6 +206,14 @@ public class WxVote implements Serializable, JSONable {
 		return this.multiFlag;
 	}
 
+	public String getRelationIds() {
+		return relationIds;
+	}
+
+	public List<WxVote> getRelations() {
+		return relations;
+	}
+
 	public Integer getResultFlag() {
 		return resultFlag;
 	}
@@ -194,6 +224,10 @@ public class WxVote implements Serializable, JSONable {
 
 	public Integer getSignFlag() {
 		return this.signFlag;
+	}
+
+	public Integer getSort() {
+		return sort;
 	}
 
 	public Date getStartDate() {
@@ -272,6 +306,14 @@ public class WxVote implements Serializable, JSONable {
 		this.multiFlag = multiFlag;
 	}
 
+	public void setRelationIds(String relationIds) {
+		this.relationIds = relationIds;
+	}
+
+	public void setRelations(List<WxVote> relations) {
+		this.relations = relations;
+	}
+
 	public void setResultFlag(Integer resultFlag) {
 		this.resultFlag = resultFlag;
 	}
@@ -282,6 +324,10 @@ public class WxVote implements Serializable, JSONable {
 
 	public void setSignFlag(Integer signFlag) {
 		this.signFlag = signFlag;
+	}
+
+	public void setSort(Integer sort) {
+		this.sort = sort;
 	}
 
 	public void setStartDate(Date startDate) {

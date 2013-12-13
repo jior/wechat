@@ -20,8 +20,6 @@ package com.glaf.apps.vote.service.impl;
 
 import java.util.*;
 
-
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.ibatis.session.RowBounds;
@@ -108,6 +106,19 @@ public class WxVoteResultServiceImpl implements WxVoteResultService {
 			wxVoteResultMapper.insertWxVoteResult(wxVoteResult);
 		} else {
 			wxVoteResultMapper.updateWxVoteResult(wxVoteResult);
+		}
+	}
+
+	@Transactional
+	public void saveAll(List<WxVoteResult> wxVoteResults) {
+		for (WxVoteResult wxVoteResult : wxVoteResults) {
+			if (wxVoteResult.getId() == null) {
+				wxVoteResult.setId(idGenerator.nextId());
+				wxVoteResult.setVoteDate(new Date());
+				wxVoteResultMapper.insertWxVoteResult(wxVoteResult);
+			} else {
+				wxVoteResultMapper.updateWxVoteResult(wxVoteResult);
+			}
 		}
 	}
 

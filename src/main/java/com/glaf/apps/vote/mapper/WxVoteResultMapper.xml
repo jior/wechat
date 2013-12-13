@@ -15,7 +15,7 @@
 
 
 	<insert id="insertWxVoteResult" parameterType="com.glaf.apps.vote.domain.WxVoteResult">
-		insert into wx_vote_result
+		insert into WX_VOTE_RESULT
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			ID_
 			<if test="voteId != null">
@@ -58,7 +58,7 @@
 
 
 	<update id="updateWxVoteResult" parameterType="com.glaf.apps.vote.domain.WxVoteResult">
-		update wx_vote_result
+		update WX_VOTE_RESULT
 		set
 		<trim prefix="" suffix="" suffixOverrides=",">
 			<if test="voteId != null">
@@ -85,20 +85,20 @@
 
 	<delete id="deleteWxVoteResultById" parameterType="long">
 		delete from
-		wx_vote_result
+		WX_VOTE_RESULT
 		where ID_ = #{id}
 	</delete>
 
 
 	<delete id="deleteWxVoteResultByVoteId" parameterType="long">
 		delete
-		from wx_vote_result
+		from WX_VOTE_RESULT
 		where VOTEID_ = #{voteId}
 	</delete>
 
 
 	<delete id="deleteWxVoteResults" parameterType="com.glaf.apps.vote.query.WxVoteResultQuery">
-		delete from wx_vote_result
+		delete from WX_VOTE_RESULT
 		where (
 		ID_ IN
 		<foreach item="x_id" index="index" collection="ids" open="("
@@ -111,22 +111,22 @@
 
 	<select id="getWxVoteResultById" parameterType="long"
 		resultMap="wxVoteResultResultMap">
-		select * from wx_vote_result where ID_ = #{id}
+		select * from WX_VOTE_RESULT where ID_ = #{id}
 	</select>
 
 
 	<select id="getWxVoteResultsByVoteId" parameterType="long"
 		resultMap="wxVoteResultResultMap">
-		select * from wx_vote_result where VOTEID_ = #{voteId}
+		select * from WX_VOTE_RESULT where VOTEID_ = #{voteId}
 	</select>
 
 
 	<select id="getLatestVoteResult" parameterType="com.glaf.apps.vote.query.WxVoteResultQuery"
 		resultMap="wxVoteResultResultMap">
 		select *
-		from wx_vote_result
+		from WX_VOTE_RESULT
 		where IP_ = #{ip} and
-		ID_ = (select max(ID_) from wx_vote_result where IP_ = #{ip} and VOTEID_ = #{voteId} )
+		ID_ = (select max(ID_) from WX_VOTE_RESULT where IP_ = #{ip} and VOTEID_ = #{voteId} )
 	</select>
 
 
@@ -154,7 +154,7 @@
 
 	<sql id="selectWxVoteResultsSql">
 
-		from wx_vote_result E
+		from WX_VOTE_RESULT E
 
 		<where>
 			1 = 1

@@ -27,8 +27,7 @@ limitations under the License.
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <%@ include file="/WEB-INF/views/wx/inc/wx_mobile_include.jsp" %>
 <script type="text/javascript">
-     var contextPath="<%=request.getContextPath()%>";
-
+    var contextPath="<%=request.getContextPath()%>";
 
 	function submitVote(){
 		<c:choose>

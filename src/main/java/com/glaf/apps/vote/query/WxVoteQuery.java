@@ -34,7 +34,8 @@ public class WxVoteQuery extends DataQuery {
 	protected Date startDateLessThanOrEqual;
 	protected Date endDateGreaterThanOrEqual;
 	protected Date endDateLessThanOrEqual;
-	protected List<String> createBys;
+	protected List<Long> voteIds;
+
 	protected Date createDateGreaterThanOrEqual;
 	protected Date createDateLessThanOrEqual;
 
@@ -47,14 +48,6 @@ public class WxVoteQuery extends DataQuery {
 			throw new RuntimeException("content is null");
 		}
 		this.contentLike = contentLike;
-		return this;
-	}
-
-	public WxVoteQuery createBys(List<String> createBys) {
-		if (createBys == null) {
-			throw new RuntimeException("createBys is empty ");
-		}
-		this.createBys = createBys;
 		return this;
 	}
 
@@ -105,10 +98,6 @@ public class WxVoteQuery extends DataQuery {
 			}
 		}
 		return contentLike;
-	}
-
-	public List<String> getCreateBys() {
-		return createBys;
 	}
 
 	public Date getCreateDateGreaterThanOrEqual() {
@@ -274,10 +263,6 @@ public class WxVoteQuery extends DataQuery {
 
 	public void setCreateBy(String createBy) {
 		this.createBy = createBy;
-	}
-
-	public void setCreateBys(List<String> createBys) {
-		this.createBys = createBys;
 	}
 
 	public void setCreateDate(Date createDate) {

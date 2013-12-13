@@ -59,6 +59,9 @@ public class WxVoteJsonFactory {
 		if (jsonObject.containsKey("icon")) {
 			model.setIcon(jsonObject.getString("icon"));
 		}
+		if (jsonObject.containsKey("sort")) {
+			model.setSort(jsonObject.getInteger("sort"));
+		}
 		if (jsonObject.containsKey("status")) {
 			model.setStatus(jsonObject.getInteger("status"));
 		}
@@ -86,6 +89,9 @@ public class WxVoteJsonFactory {
 		}
 		if (jsonObject.containsKey("endDate")) {
 			model.setEndDate(jsonObject.getDate("endDate"));
+		}
+		if (jsonObject.containsKey("relationIds")) {
+			model.setRelationIds(jsonObject.getString("relationIds"));
 		}
 		if (jsonObject.containsKey("createBy")) {
 			model.setCreateBy(jsonObject.getString("createBy"));
@@ -131,6 +137,7 @@ public class WxVoteJsonFactory {
 		if (model.getIcon() != null) {
 			jsonObject.put("icon", model.getIcon());
 		}
+		jsonObject.put("sort", model.getSort());
 		jsonObject.put("status", model.getStatus());
 		jsonObject.put("signFlag", model.getShowIconFlag());
 		jsonObject.put("showIconFlag", model.getSignFlag());
@@ -153,6 +160,9 @@ public class WxVoteJsonFactory {
 					DateUtils.getDate(model.getEndDate()));
 			jsonObject.put("endDate_datetime",
 					DateUtils.getDateTime(model.getEndDate()));
+		}
+		if (model.getRelationIds() != null) {
+			jsonObject.put("relationIds", model.getRelationIds());
 		}
 		if (model.getCreateBy() != null) {
 			jsonObject.put("createBy", model.getCreateBy());
@@ -191,6 +201,7 @@ public class WxVoteJsonFactory {
 		if (model.getIcon() != null) {
 			jsonObject.put("icon", model.getIcon());
 		}
+		jsonObject.put("sort", model.getSort());
 		jsonObject.put("status", model.getStatus());
 		jsonObject.put("signFlag", model.getSignFlag());
 		jsonObject.put("showIconFlag", model.getSignFlag());
@@ -213,6 +224,9 @@ public class WxVoteJsonFactory {
 					DateUtils.getDate(model.getEndDate()));
 			jsonObject.put("endDate_datetime",
 					DateUtils.getDateTime(model.getEndDate()));
+		}
+		if (model.getRelationIds() != null) {
+			jsonObject.put("relationIds", model.getRelationIds());
 		}
 		if (model.getCreateBy() != null) {
 			jsonObject.put("createBy", model.getCreateBy());

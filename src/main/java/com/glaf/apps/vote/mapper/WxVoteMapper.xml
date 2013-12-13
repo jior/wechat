@@ -12,6 +12,7 @@
 		<result property="desc" column="DESC_" jdbcType="VARCHAR" />
 		<result property="keywords" column="KEYWORDS_" jdbcType="VARCHAR" />
 		<result property="icon" column="ICON_" jdbcType="VARCHAR" />
+		<result property="sort" column="SORT_" jdbcType="INTEGER" />
 		<result property="status" column="STATUS_" jdbcType="INTEGER" />
 		<result property="showIconFlag" column="SHOWICONFLAG_"
 			jdbcType="INTEGER" />
@@ -22,13 +23,14 @@
 			jdbcType="INTEGER" />
 		<result property="startDate" column="STARTDATE_" jdbcType="TIMESTAMP" />
 		<result property="endDate" column="ENDDATE_" jdbcType="TIMESTAMP" />
+		<result property="relationIds" column="RELATIONIDS_" jdbcType="VARCHAR" />
 		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
 		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP" />
 	</resultMap>
 
 
 	<insert id="insertWxVote" parameterType="com.glaf.apps.vote.domain.WxVote">
-		insert into wx_vote
+		insert into WX_VOTE
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			ID_
 			<if test="accountId != null">
@@ -48,6 +50,9 @@
 			</if>
 			<if test="icon != null">
 				,ICON_
+			</if>
+			<if test="sort != null">
+				,SORT_
 			</if>
 			<if test="status != null">
 				,STATUS_
@@ -72,6 +77,9 @@
 			</if>
 			<if test="endDate != null">
 				,ENDDATE_
+			</if>
+			<if test="relationIds != null">
+				,RELATIONIDS_
 			</if>
 			<if test="createBy != null">
 				,CREATEBY_
@@ -101,6 +109,9 @@
 			<if test="icon != null">
 				,#{icon, jdbcType=VARCHAR}
 			</if>
+			<if test="sort != null">
+				,#{sort, jdbcType=INTEGER}
+			</if>
 			<if test="status != null">
 				,#{status, jdbcType=INTEGER}
 			</if>
@@ -125,6 +136,9 @@
 			<if test="endDate != null">
 				,#{endDate, jdbcType=TIMESTAMP}
 			</if>
+			<if test="relationIds != null">
+				,#{relationIds, jdbcType=VARCHAR}
+			</if>
 			<if test="createBy != null">
 				,#{createBy, jdbcType=VARCHAR}
 			</if>
@@ -136,7 +150,7 @@
 
 
 	<update id="updateWxVote" parameterType="com.glaf.apps.vote.domain.WxVote">
-		update wx_vote
+		update WX_VOTE
 		set
 		<trim prefix="" suffix="" suffixOverrides=",">
 			<if test="title != null">
@@ -153,6 +167,9 @@
 			</if>
 			<if test="icon != null">
 				ICON_ = #{icon, jdbcType=VARCHAR},
+			</if>
+			<if test="sort != null">
+				SORT_ = #{sort, jdbcType=INTEGER},
 			</if>
 			<if test="status != null">
 				STATUS_ = #{status, jdbcType=INTEGER},
@@ -179,6 +196,9 @@
 			<if test="endDate != null">
 				ENDDATE_ = #{endDate, jdbcType=TIMESTAMP},
 			</if>
+			<if test="relationIds != null">
+				RELATIONIDS_ = #{relationIds, jdbcType=VARCHAR},
+			</if>
 			<if test="createBy != null">
 				CREATEBY_ = #{createBy, jdbcType=VARCHAR},
 			</if>
@@ -193,13 +213,13 @@
 
 
 	<delete id="deleteWxVoteById" parameterType="long">
-		delete from wx_vote
+		delete from WX_VOTE
 		where ID_ = #{id}
 	</delete>
 
 
 	<delete id="deleteWxVotes" parameterType="com.glaf.apps.vote.query.WxVoteQuery">
-		delete from wx_vote
+		delete from WX_VOTE
 		where (
 		ID_ IN
 		<foreach item="x_id" index="index" collection="ids" open="("
@@ -211,7 +231,7 @@
 
 
 	<select id="getWxVoteById" parameterType="long" resultMap="wxVoteResultMap">
-		select * from wx_vote where ID_ = #{id}
+		select * from WX_VOTE where ID_ = #{id}
 	</select>
 
 
@@ -224,7 +244,7 @@
 				order by ${orderBy}
 			</when>
 			<otherwise>
-				order by E.ID_ desc
+				order by E.SORT_ desc
 			</otherwise>
 		</choose>
 	</select>
@@ -239,10 +259,18 @@
 
 	<sql id="selectWxVotesSql">
 
-		from wx_vote E
+		from WX_VOTE E
 
 		<where>
 			1 = 1
+
+			<if test="voteIds != null and voteIds.size !=0">
+				and E.ID_ IN
+				<foreach item="x_voteId" index="index" collection="voteIds"
+					open="(" separator="," close=")">
+					#{x_voteId}
+				</foreach>
+			</if>
 
 			<if test="accountId != null">
 				and E.ACCOUNTID_ = #{accountId}
@@ -290,14 +318,6 @@
 
 			<if test="createBy != null and createBy != '' ">
 				and E.CREATEBY_ = #{createBy}
-			</if>
-
-			<if test="createBys != null and createBys.size !=0">
-				and E.CREATEBY_ IN
-				<foreach item="x_createBy" index="index" collection="createBys"
-					open="(" separator="," close=")">
-					#{x_createBy}
-				</foreach>
 			</if>
 
 			<if test="createDateGreaterThanOrEqual != null">

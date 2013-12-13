@@ -28,7 +28,7 @@ import com.glaf.core.base.*;
 import com.glaf.apps.vote.util.*;
 
 @Entity
-@Table(name = "wx_vote_item")
+@Table(name = "WX_VOTE_ITEM")
 public class WxVoteItem implements Serializable, JSONable {
 	private static final long serialVersionUID = 1L;
 

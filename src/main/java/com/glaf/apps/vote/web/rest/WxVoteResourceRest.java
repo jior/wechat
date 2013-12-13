@@ -19,7 +19,9 @@
 package com.glaf.apps.vote.web.rest;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
@@ -83,12 +85,27 @@ public class WxVoteResourceRest {
 						}
 					}
 				}
-				WxVoteResult result = new WxVoteResult();
-				result.setIp(ip);
-				result.setVoteId(vote.getId());
-				result.setVoteDate(new Date());
-				result.setResult(request.getParameter("result"));
-				wxVoteResultService.save(result);
+				if (vote.getRelations() != null
+						&& !vote.getRelations().isEmpty()) {
+					List<WxVoteResult> wxVoteResults = new ArrayList<WxVoteResult>();
+					for (WxVote relation : vote.getRelations()) {
+						WxVoteResult result = new WxVoteResult();
+						result.setIp(ip);
+						result.setVoteId(vote.getId());
+						result.setVoteDate(new Date());
+						result.setResult(request.getParameter("result_"
+								+ relation.getId()));
+						wxVoteResults.add(result);
+					}
+					wxVoteResultService.saveAll(wxVoteResults);
+				} else {
+					WxVoteResult result = new WxVoteResult();
+					result.setIp(ip);
+					result.setVoteId(vote.getId());
+					result.setVoteDate(new Date());
+					result.setResult(request.getParameter("result"));
+					wxVoteResultService.save(result);
+				}
 			}
 		}
 		return ResponseUtils.responseJsonResult(false, "投票不成功，请稍候再试！");

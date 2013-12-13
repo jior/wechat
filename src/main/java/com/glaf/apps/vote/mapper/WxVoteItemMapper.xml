@@ -16,7 +16,7 @@
 
 
 	<insert id="insertWxVoteItem" parameterType="com.glaf.apps.vote.domain.WxVoteItem">
-		insert into wx_vote_item
+		insert into WX_VOTE_ITEM
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			ID_
 			<if test="voteId != null">
@@ -65,7 +65,7 @@
 
 
 	<update id="updateWxVoteItem" parameterType="com.glaf.apps.vote.domain.WxVoteItem">
-		update wx_vote_item
+		update WX_VOTE_ITEM
 		set
 		<trim prefix="" suffix="" suffixOverrides=",">
 			<if test="voteId != null">
@@ -95,20 +95,20 @@
 
 	<delete id="deleteWxVoteItemById" parameterType="long">
 		delete from
-		wx_vote_item
+		WX_VOTE_ITEM
 		where ID_ = #{id}
 	</delete>
 
 
 	<delete id="deleteWxVoteItemByVoteId" parameterType="long">
 		delete from
-		wx_vote_item
+		WX_VOTE_ITEM
 		where VOTEID_ = #{voteId}
 	</delete>
 
 
 	<delete id="deleteWxVoteItems" parameterType="com.glaf.apps.vote.query.WxVoteItemQuery">
-		delete from wx_vote_item
+		delete from WX_VOTE_ITEM
 		where (
 		ID_ IN
 		<foreach item="x_id" index="index" collection="ids" open="("
@@ -121,14 +121,14 @@
 
 	<select id="getWxVoteItemById" parameterType="long"
 		resultMap="wxVoteItemResultMap">
-		select * from wx_vote_item where ID_ = #{id}
+		select * from WX_VOTE_ITEM where ID_ = #{id}
 	</select>
 
 
 	<select id="getWxVoteItemsByVoteId" parameterType="long"
 		resultMap="wxVoteItemResultMap">
 		select distinct E.*
-		from wx_vote_item E
+		from WX_VOTE_ITEM E
 		where E.VOTEID_ = #{voteId}
 		order by E.SORT_ desc
 	</select>
@@ -157,7 +157,7 @@
 
 	<sql id="selectWxVoteItemsSql">
 
-		from wx_vote_item E
+		from WX_VOTE_ITEM E
 
 		<where>
 			1 = 1
