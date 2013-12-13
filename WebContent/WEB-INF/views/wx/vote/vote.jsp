@@ -30,24 +30,51 @@ limitations under the License.
     var contextPath="<%=request.getContextPath()%>";
 
 	function submitVote(){
-		<c:choose>
-		<c:when test="${vote.multiFlag == 1}">
-		var arr = document.getElementsByName("result_1");
-		var result="";
-		for(var i = 0; i < arr.length; i++){
-			if(arr.item(i).checked){
-				result = result+arr.item(i).value+",";
-			}
-		}
-		</c:when>
+        <c:choose>
+		    <c:when test="${!empty vote.relations}">
+              <c:forEach items="${vote.relations}" var="relation">
+		         <c:choose>
+                    <c:when test="${relation.multiFlag == 1}">
+					var arr_${relation.id} = document.getElementsByName("result_${relation.id}_1");
+					var result_${relation.id}="";
+					for(var i = 0; i < arr_${relation.id}.length; i++){
+						if(arr_${relation.id}.item(i).checked){
+							result_${relation.id} = result_${relation.id}+arr_${relation.id}.item(i).value+",";
+						}
+					}
+					jQuery("#result_${relation.id}").val(result_${relation.id});
+					</c:when>
+					<c:otherwise>
+					//var result_${relation.id} = jQuery("#result_${relation.id}").val();
+					</c:otherwise>
+				 </c:choose>
+		     </c:forEach>
+	    </c:when>
 		<c:otherwise>
-		var result = jQuery("#result").val();
-		</c:otherwise>
+			<c:choose>
+				<c:when test="${vote.multiFlag == 1}">
+				var arr = document.getElementsByName("result_1");
+				var result="";
+				for(var i = 0; i < arr.length; i++){
+					if(arr.item(i).checked){
+						result = result+arr.item(i).value+",";
+					}
+				}
+				jQuery("#result").val(result);
+				</c:when>
+				<c:otherwise>
+				//var result = jQuery("#result").val();
+				</c:otherwise>
+			</c:choose>
+            </c:otherwise>
         </c:choose>
+		var params = jQuery("#iForm").formSerialize();
+	    alert(params);
 		jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/website/wx/vote/post/${vote.id}?result='+result,
+				   url: '<%=request.getContextPath()%>/website/wx/vote/post/${vote.id}',
 				   dataType:  'json',
+				   data: params,
 				   error: function(data){
 					   alert('服务器处理错误！');
 				   },
@@ -70,8 +97,43 @@ limitations under the License.
         <div data-role="content">
             <div style="margin-left: auto; margin-right: auto; width: 90%;">
        
-                <form action="<%=request.getContextPath()%>/website/wx/vote/post/${vote.id}" method="post">
-				 <input type="hidden" id="result" name="result">
+                <form id="iForm" name="iForm" method="post"
+				      action="<%=request.getContextPath()%>/website/wx/vote/post/${vote.id}" >
+				
+				<c:choose>
+				 <c:when test="${!empty vote.relations}">
+                   <c:forEach items="${vote.relations}" var="relation">
+				     <input type="hidden" id="result_${relation.id}" name="result_${relation.id}">
+				     <c:if test="${!empty relation.icon && relation.showIconFlag == 1}">
+						 <p align="center">
+						   <img src="<%=request.getContextPath()%>/${relation.icon}"/>
+						 </p>
+						 </c:if>
+						 <c:if test="${!empty relation.desc}">
+						 <p>
+						   ${relation.desc}
+						 </p>
+						 </c:if>
+                         <fieldset data-role="controlgroup">  
+						 <c:choose>
+						 <c:when test="${relation.multiFlag == 1}">
+						 <c:forEach items="${relation.items}" var="item">
+							<input type="checkbox" id="result_${relation.id}_<%=index%>" name="result_${relation.id}_1" value="${item.value}"/>
+							<label for="result_${relation.id}_<%=index++%>">${item.name}</label>
+						 </c:forEach>
+						 </c:when>
+						 <c:otherwise>
+						   <c:forEach items="${relation.items}" var="item">
+							<input type="radio" id="result_${relation.id}_<%=index%>" name="result_${relation.id}_1"
+								   onclick="jQuery('#result_${relation.id}').val('${item.value}');"/>
+							<label for="result_${relation.id}_<%=index++%>">${item.name}</label>
+						   </c:forEach>
+						 </c:otherwise>
+						 </c:choose>
+						</fieldset>
+ 			       </c:forEach>
+				 </c:when>
+                 <c:otherwise>
 				 <c:if test="${!empty vote.icon && vote.showIconFlag == 1}">
 				 <p align="center">
 				   <img src="<%=request.getContextPath()%>/${vote.icon}"/>
@@ -82,6 +144,7 @@ limitations under the License.
 				   ${vote.desc}
 				 </p>
 				 </c:if>
+				 <input type="hidden" id="result" name="result">
 				 <fieldset data-role="controlgroup">  
 				 <c:choose>
 				 <c:when test="${vote.multiFlag == 1}">
@@ -99,6 +162,8 @@ limitations under the License.
 				 </c:otherwise>
                  </c:choose>
 				</fieldset>
+				</c:otherwise>
+                </c:choose>
                 <p>
                     <input type="button" value="确认" data-role="button" data-icon="star" data-theme="b" 
 					       onclick="javascript:submitVote();"/>

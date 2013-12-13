@@ -18,7 +18,9 @@
 package com.glaf.apps.vote.website.springmvc;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -35,7 +37,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.ResponseUtils;
-
 import com.glaf.apps.vote.domain.WxVote;
 import com.glaf.apps.vote.domain.WxVoteResult;
 import com.glaf.apps.vote.service.WxVoteResultService;
@@ -65,7 +66,7 @@ public class WxPublicVoteController {
 							"投票主题已经结束，谢谢您的关注！");
 				}
 				Date now = new Date();
-				if (vote.getEndDate().getTime() < now.getTime()) {
+				if (vote.getEndDate() != null && vote.getEndDate().getTime() < now.getTime()) {
 					return ResponseUtils.responseJsonResult(false,
 							"投票主题已经结束，谢谢您的关注！");
 				}
@@ -82,12 +83,27 @@ public class WxPublicVoteController {
 						}
 					}
 				}
-				WxVoteResult result = new WxVoteResult();
-				result.setIp(ip);
-				result.setVoteId(vote.getId());
-				result.setVoteDate(new Date());
-				result.setResult(request.getParameter("result"));
-				wxVoteResultService.save(result);
+				if (vote.getRelations() != null
+						&& !vote.getRelations().isEmpty()) {
+					List<WxVoteResult> wxVoteResults = new ArrayList<WxVoteResult>();
+					for (WxVote relation : vote.getRelations()) {
+						WxVoteResult result = new WxVoteResult();
+						result.setIp(ip);
+						result.setVoteId(relation.getId());
+						result.setVoteDate(new Date());
+						result.setResult(request.getParameter("result_"
+								+ relation.getId()));
+						wxVoteResults.add(result);
+					}
+					wxVoteResultService.saveAll(wxVoteResults);
+				} else {
+					WxVoteResult result = new WxVoteResult();
+					result.setIp(ip);
+					result.setVoteId(vote.getId());
+					result.setVoteDate(new Date());
+					result.setResult(request.getParameter("result"));
+					wxVoteResultService.save(result);
+				}
 				return ResponseUtils.responseJsonResult(true, "投票成功，谢谢您的参与！");
 			}
 		}

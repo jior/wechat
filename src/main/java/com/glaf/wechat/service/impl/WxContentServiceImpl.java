@@ -85,6 +85,23 @@ public class WxContentServiceImpl implements WxContentService {
 			return null;
 		}
 		WxContent wxContent = wxContentMapper.getWxContentById(id);
+		if (wxContent != null
+				&& StringUtils.isNotEmpty(wxContent.getRelationIds())) {
+			List<Long> relationIds = StringTools.splitToLong(wxContent
+					.getRelationIds());
+			logger.debug("relationIds:" + relationIds);
+			List<WxContent> relations = wxContentMapper
+					.getWxContentsByIds(relationIds);
+			wxContent.setRelations(relations);
+		}
+		if (wxContent != null
+				&& StringUtils.isNotEmpty(wxContent.getRecommendationIds())) {
+			List<Long> recommendationIds = StringTools.splitToLong(wxContent
+					.getRecommendationIds());
+			List<WxContent> recommendations = wxContentMapper
+					.getWxContentsByIds(recommendationIds);
+			wxContent.setRecommendations(recommendations);
+		}
 		return wxContent;
 	}
 

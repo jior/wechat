@@ -348,15 +348,23 @@ limitations under the License.
 	<tr>
 		<td width="15%" align="left" valign="middle">多图文</td>
 		<td align="left" valign="middle">
-			 <input type="hidden" id="relationIds" name="relationIds" value="${wxContent.relationIds}"> 
-			 <input type="hidden" id="relations" name="relations"> 
-			 <input type="button" value=" 添加 " onclick="javascript:editRelations();" class="btnGreen">
+		    <c:forEach items="${wxContent.relations}" var="relation">
+			<br><a href="<%=request.getContextPath()%>/mx/wx/wxContent/edit?id=${relation.id}">${relation.title}</a>
+			</c:forEach>
+			<br>
+			<input type="hidden" id="relationIds" name="relationIds" value="${wxContent.relationIds}"> 
+			<input type="hidden" id="relations" name="relations"> 
+			<input type="button" value=" 添加 " onclick="javascript:editRelations();" class="btnGreen">
 		</td>
 	</tr>
 
 	<tr>
 		<td width="15%" align="left" valign="middle">推荐阅读</td>
 		<td align="left" valign="middle">
+		    <c:forEach items="${wxContent.recommendations}" var="recommendation">
+			<br><a href="<%=request.getContextPath()%>/mx/wx/wxContent/edit?id=${recommendation.id}">${recommendation.title}</a>
+			</c:forEach>
+			<br>
 			<input type="hidden" id="recommendationIds" name="recommendationIds" value="${wxContent.recommendationIds}"> 
 			<input type="hidden" id="recommendations" name="recommendations">
 			<input type="button" value=" 添加 " onclick="javascript:editRecommendations();" class="btnGreen">

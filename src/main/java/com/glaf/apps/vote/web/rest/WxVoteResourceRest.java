@@ -68,7 +68,7 @@ public class WxVoteResourceRest {
 							"投票主题已经结束，谢谢您的关注！");
 				}
 				Date now = new Date();
-				if (vote.getEndDate().getTime() < now.getTime()) {
+				if (vote.getEndDate() != null && vote.getEndDate().getTime() < now.getTime()) {
 					return ResponseUtils.responseJsonResult(false,
 							"投票主题已经结束，谢谢您的关注！");
 				}
@@ -91,7 +91,7 @@ public class WxVoteResourceRest {
 					for (WxVote relation : vote.getRelations()) {
 						WxVoteResult result = new WxVoteResult();
 						result.setIp(ip);
-						result.setVoteId(vote.getId());
+						result.setVoteId(relation.getId());
 						result.setVoteDate(new Date());
 						result.setResult(request.getParameter("result_"
 								+ relation.getId()));
