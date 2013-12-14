@@ -24,7 +24,7 @@ public class WxKeywords implements Serializable, JSONable {
 	protected Long id;
 
 	/**
-	 * 微站公众号应用ID
+	 * 微站公众号ID
 	 */
 	@Column(name = "ACCOUNTID_")
 	protected Long accountId;

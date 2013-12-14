@@ -23,6 +23,14 @@ public class WxKeywordsQuery extends DataQuery {
 	public WxKeywordsQuery() {
 
 	}
+	
+	public WxKeywordsQuery accountId(Long accountId) {
+		if (accountId == null) {
+			throw new RuntimeException("accountId is null");
+		}
+		this.accountId = accountId;
+		return this;
+	}
 
 	public WxKeywordsQuery categoryId(Long categoryId) {
 		if (categoryId == null) {

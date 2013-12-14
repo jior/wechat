@@ -43,6 +43,7 @@ public class DefaultResponseMessageFilter extends AbstractMessageFilter
 		WxContentService wxContentService = ContextFactory
 				.getBean("wxContentService");
 		WxContentQuery query = new WxContentQuery();
+		query.accountId(message.getAccountId());
 		query.createBy(message.getCustomer());
 		query.type("D");
 		List<WxContent> rows = wxContentService.list(query);

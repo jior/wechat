@@ -63,6 +63,7 @@ public class KeywordsMessageFilter extends AbstractMessageFilter implements
 			WxKeywordsService wxKeywordsService = ContextFactory
 					.getBean("wxKeywordsService");
 			WxKeywordsQuery query = new WxKeywordsQuery();
+			query.accountId(message.getAccountId());
 			query.createBy(message.getCustomer());
 			query.keywords(content);
 			List<WxKeywords> list = wxKeywordsService.list(query);

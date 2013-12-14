@@ -29,6 +29,7 @@ public class LocationMessageFilter extends AbstractMessageFilter implements
 			WxContentService wxContentService = ContextFactory
 					.getBean("wxContentService");
 			WxContentQuery query = new WxContentQuery();
+			query.accountId(message.getAccountId());
 			query.createBy(message.getCustomer());
 			query.type("L");
 		 

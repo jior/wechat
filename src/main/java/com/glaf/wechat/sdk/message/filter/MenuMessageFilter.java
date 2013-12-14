@@ -37,6 +37,7 @@ public class MenuMessageFilter extends AbstractMessageFilter implements
 		EventMessage msg = (EventMessage) message;
 		WxMenuService wxMenuService = ContextFactory.getBean("wxMenuService");
 		WxMenuQuery query = new WxMenuQuery();
+		query.accountId(message.getAccountId());
 		query.createBy(message.getCustomer());
 		query.key(msg.getEventKey());
 		List<WxMenu> rows = wxMenuService.list(query);

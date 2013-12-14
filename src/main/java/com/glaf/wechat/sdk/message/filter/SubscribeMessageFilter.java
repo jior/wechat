@@ -41,6 +41,7 @@ public class SubscribeMessageFilter extends AbstractMessageFilter implements
 		WxContentService wxContentService = ContextFactory
 				.getBean("wxContentService");
 		WxContentQuery query = new WxContentQuery();
+		query.accountId(message.getAccountId());
 		query.createBy(message.getCustomer());
 		query.type("F");
 		List<WxContent> rows = wxContentService.list(query);
