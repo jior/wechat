@@ -36,6 +36,9 @@ public interface IMessage {
 	public static final String MESSAGE_RESPONSE_MUSIC = "music";
 	public static final String MESSAGE_RESPONSE_NEWS = "news";
 	public static final String MESSAGE_RESPONSE_TEXT = "text";
+	public static final String MESSAGE_RESPONSE_IMAGE = "image";
+	public static final String MESSAGE_RESPONSE_VOICE = "voice";
+	public static final String MESSAGE_RESPONSE_VIDEO = "video";
 
 	// 事件类型
 	public static final String EVENT_CLICK = "CLICK";
@@ -68,9 +71,12 @@ public interface IMessage {
 	public static final String TAG_TOUSERNAME = "ToUserName";
 	public static final String TAG_URL = "Url";
 	public static final String TAG_XML = "xml";
+	public static final String TAG_IMAGE = "Image";
 	public static final String TAG_MEDIAID = "MediaId";
 	public static final String TAG_THUMBMEDIAID = "thumbMediaId";
 	public static final String TAG_FORMAT = "Format";
 	public static final String TAG_TICKET = "Ticket";
+	public static final String TAG_VOICE = "Voice";
+	public static final String TAG_VIDEO = "Video";
 
 }

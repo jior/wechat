@@ -57,10 +57,13 @@ import com.glaf.wechat.sdk.message.handler.TextMessageHandler;
 import com.glaf.wechat.sdk.message.handler.VideoMessageHandler;
 import com.glaf.wechat.sdk.message.handler.VoiceMessageHandler;
 import com.glaf.wechat.sdk.message.response.handler.IResponseMessageHandler;
+import com.glaf.wechat.sdk.message.response.handler.ImageResponseMessageHandler;
 import com.glaf.wechat.sdk.message.response.handler.MenuResponseMessageHandler;
 import com.glaf.wechat.sdk.message.response.handler.MusicResponseMessageHandler;
 import com.glaf.wechat.sdk.message.response.handler.NewsResponseMessageHandler;
 import com.glaf.wechat.sdk.message.response.handler.TextResponseMessageHandler;
+import com.glaf.wechat.sdk.message.response.handler.VideoResponseMessageHandler;
+import com.glaf.wechat.sdk.message.response.handler.VoiceResponseMessageHandler;
 import com.glaf.wechat.util.SignUtils;
 import com.glaf.wechat.util.TimeUtils;
 import com.glaf.wechat.util.WechatUtils;
@@ -219,6 +222,15 @@ public class WeixinExecutor implements IMessage {
 				} else if (StringUtils.equalsIgnoreCase(
 						responseMessage.getMsgType(), MESSAGE_RESPONSE_NEWS)) {
 					responseMessageHandler = new NewsResponseMessageHandler();
+				} else if (StringUtils.equalsIgnoreCase(
+						responseMessage.getMsgType(), MESSAGE_RESPONSE_IMAGE)) {
+					responseMessageHandler = new ImageResponseMessageHandler();
+				} else if (StringUtils.equalsIgnoreCase(
+						responseMessage.getMsgType(), MESSAGE_RESPONSE_VOICE)) {
+					responseMessageHandler = new VoiceResponseMessageHandler();
+				} else if (StringUtils.equalsIgnoreCase(
+						responseMessage.getMsgType(), MESSAGE_RESPONSE_VIDEO)) {
+					responseMessageHandler = new VideoResponseMessageHandler();
 				} else if (StringUtils.equalsIgnoreCase(
 						responseMessage.getMsgType(), MESSAGE_RESPONSE_MUSIC)) {
 					responseMessageHandler = new MusicResponseMessageHandler();
