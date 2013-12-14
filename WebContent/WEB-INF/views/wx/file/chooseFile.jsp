@@ -25,7 +25,15 @@ limitations under the License.
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>文件列表</title>
-<%@ include file="/WEB-INF/views/wx/inc/wx_styles.jsp"%>
+<%
+    String theme = com.glaf.core.util.RequestUtils.getTheme(request);
+    request.setAttribute("theme", theme);
+%> 
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/artDialog/skins/default.css"/>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css"/>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/ztree/css/zTreeStyle/zTreeStyle.css"/>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/themes/${theme}/styles.css"/>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/icons/styles.css"/>
 <%@ include file="/WEB-INF/views/wx/inc/wx_scripts.jsp"%>
 <script type="text/javascript">
 
