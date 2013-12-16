@@ -37,6 +37,7 @@ public class WxIdentityFactory {
 	public static void createWxAccount(User user) {
 		if (getUserByAccountId(user.getId()) == null) {
 			WxUser wxUser = new WxUser();
+			wxUser.setName(user.getActorId());
 			wxUser.setToken(UUID32.getUUID());
 			wxUser.setActorId(user.getActorId());
 			wxUser.setAccountType(2);

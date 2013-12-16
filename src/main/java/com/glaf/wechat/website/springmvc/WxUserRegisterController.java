@@ -53,6 +53,7 @@ import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
 import com.glaf.core.security.DigestUtil;
+import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.Tools;
 import com.glaf.wechat.config.WechatConfiguration;
@@ -117,6 +118,7 @@ public class WxUserRegisterController {
 		bean.setEvection(0);
 		bean.setCreateTime(new Date());
 		bean.setLastLoginTime(new Date());
+		bean.setLastChangePasswordDate(new Date());
 		bean.setCreateBy("website");
 		bean.setUpdateBy("website");
 		// bean.setLastChangePasswordDate(new Date());
@@ -138,6 +140,9 @@ public class WxUserRegisterController {
 							Tools.populate(userRole, dataMap);
 							userRole.setAuthorized(0);
 							userRole.setCreateBy("website");
+							userRole.setCreateDate(new Date());
+							userRole.setAvailDateStart(new Date());
+							userRole.setAvailDateEnd(DateUtils.toDate("2020-01-01"));
 							userRole.setUser(bean);
 							sysUserRoleService.create(userRole);
 						} else {
@@ -154,6 +159,9 @@ public class WxUserRegisterController {
 								userRole.setCreateBy("website");
 								userRole.setDeptRole(deptRole);
 								userRole.setUser(bean);
+								userRole.setCreateDate(new Date());
+								userRole.setAvailDateStart(new Date());
+								userRole.setAvailDateEnd(DateUtils.toDate("2020-01-01"));
 								sysUserRoleService.create(userRole);
 							}
 						}
