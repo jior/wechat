@@ -22,15 +22,16 @@ public class WxLogCreateTableJob implements Job {
 		String jobName = context.getJobDetail().getKey().getName();
 		logger.info("Executing job: " + jobName + " executing at "
 				+ DateUtils.getDateTime(new Date()));
+		Date date = DateUtils.getDateAfter(new Date(), 20);
 		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(new Date());
+		calendar.setTime(date);
 		int year = calendar.get(Calendar.YEAR);
 		int month = calendar.get(Calendar.MONTH);
 		int daysOfMonth = DateUtils.getYearMonthDays(year, month + 1);
 
 		calendar.set(year, month, daysOfMonth);
 
-		int begin = getYearMonthDay(new Date());
+		int begin = getYearMonthDay(date);
 		int end = getYearMonthDay(calendar.getTime());
 
 		for (int i = begin; i <= end; i++) {
@@ -44,11 +45,36 @@ public class WxLogCreateTableJob implements Job {
 
 	}
 
-	public int getYearMonthDay(Date date) {
+	public static int getYearMonthDay(Date date) {
 		String returnStr = null;
 		SimpleDateFormat f = new SimpleDateFormat("yyyyMMdd");
 		returnStr = f.format(date);
 		return Integer.parseInt(returnStr);
+	}
+	
+	public static void main(String[] args){
+		Date date = DateUtils.getDateAfter(new Date(), 20);
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		int year = calendar.get(Calendar.YEAR);
+		int month = calendar.get(Calendar.MONTH);
+		int daysOfMonth = DateUtils.getYearMonthDays(year, month + 1);
+
+		calendar.set(year, month, daysOfMonth);
+
+		int begin = getYearMonthDay(date);
+		int end = getYearMonthDay(calendar.getTime());
+
+		for (int i = begin; i <= end; i++) {
+			logger.debug(i);
+			try {
+				WxLogTableUtils.createTable("wx_log_" + i);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				logger.error(ex);
+			}
+		}
+
 	}
 
 }

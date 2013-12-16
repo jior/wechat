@@ -23,27 +23,28 @@ public class WxLogTableUtils {
 	}
 
 	public static void main(String[] args) {
+		Date date = DateUtils.getDateAfter(new Date(), 20);
 		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(new Date());
+		calendar.setTime(date);
 		int year = calendar.get(Calendar.YEAR);
 		int month = calendar.get(Calendar.MONTH);
-		int daysOfMonth = DateUtils.getYearMonthDays(year, month+1);
+		int daysOfMonth = DateUtils.getYearMonthDays(year, month + 1);
 
 		calendar.set(year, month, daysOfMonth);
 
-		int begin = getYearMonthDay(new Date());
+		int begin = getYearMonthDay(date);
 		int end = getYearMonthDay(calendar.getTime());
-		System.out.println("daysOfMonth :" + daysOfMonth);
-		System.out.println("begin :" + begin);
-		System.out.println("end :" + end);
+
 		for (int i = begin; i <= end; i++) {
+			System.out.println(i);
 			try {
-				System.out.println("create :" + i);
 				WxLogTableUtils.createTable("wx_log_" + i);
 			} catch (Exception ex) {
 				ex.printStackTrace();
+				System.out.println(ex);
 			}
 		}
+
 	}
 
 	public static TableDefinition createTable(String tableName) {
