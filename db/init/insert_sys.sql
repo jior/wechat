@@ -43,6 +43,15 @@ insert into SYS_DEPARTMENT (id, name, deptdesc, sort, deptno, code, code2, statu
 insert into SYS_DEPARTMENT (id, name, deptdesc, sort, deptno, code, code2, status, fincode, nodeid ) values (3887, '影音娱乐', '影音娱乐', 3887, '', '', '', 0, null, 3888);
 insert into SYS_DEPARTMENT (id, name, deptdesc, sort, deptno, code, code2, status, fincode, nodeid ) values (3892, '政务官微', '政务官微', 3892, '', '', '', 0, null, 3893);
 
+insert into SYS_DEPT_ROLE (id, grade, code, sort, sysroleid, deptid) values (1000, 0, null, 0, 2415, 2408);
+insert into SYS_DEPT_ROLE (id, grade, code, sort, sysroleid, deptid) values (1001, 0, null, 0, 2415, 2409);
+insert into SYS_DEPT_ROLE (id, grade, code, sort, sysroleid, deptid) values (1002, 0, null, 0, 2415, 3863);
+insert into SYS_DEPT_ROLE (id, grade, code, sort, sysroleid, deptid) values (1003, 0, null, 0, 2415, 3872);
+insert into SYS_DEPT_ROLE (id, grade, code, sort, sysroleid, deptid) values (1004, 0, null, 0, 2415, 3877);
+insert into SYS_DEPT_ROLE (id, grade, code, sort, sysroleid, deptid) values (1005, 0, null, 0, 2415, 3882);
+insert into SYS_DEPT_ROLE (id, grade, code, sort, sysroleid, deptid) values (1006, 0, null, 0, 2415, 3887);
+insert into SYS_DEPT_ROLE (id, grade, code, sort, sysroleid, deptid) values (1007, 0, null, 0, 2415, 3892);
+
 
 insert into SYS_APPLICATION (id, name, code, appdesc, url, sort, showmenu, nodeid, locked) values (1427, '微信应用', 'WeChat', '微信应用', '', 1427, 1, 1428, 0);
 insert into SYS_APPLICATION (id, name, code, appdesc, url, sort, showmenu, nodeid, locked) values (1443, '微回复', '', '微回复', '', 1443, 1, 1444, 0);
