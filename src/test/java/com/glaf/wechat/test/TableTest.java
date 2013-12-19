@@ -19,7 +19,7 @@ public class TableTest {
 			try {
 				con = DBConnectionFactory.getConnection();
 				for (String table : tables) {
-					if (StringUtils.startsWith(table.toLowerCase(), "WX_LOG_")) {
+					if (StringUtils.startsWith(table.toUpperCase(), "WX_LOG_")) {
 						con.setAutoCommit(false);
 						DBUtils.dropTable(con, table);
 						con.commit();
