@@ -22,7 +22,7 @@ public class WxLogCreateTableJob implements Job {
 		String jobName = context.getJobDetail().getKey().getName();
 		logger.info("Executing job: " + jobName + " executing at "
 				+ DateUtils.getDateTime(new Date()));
-		Date date = DateUtils.getDateAfter(new Date(), 20);
+		Date date = DateUtils.getDateAfter(new Date(), 0);
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
 		int year = calendar.get(Calendar.YEAR);
@@ -36,7 +36,7 @@ public class WxLogCreateTableJob implements Job {
 
 		for (int i = begin; i <= end; i++) {
 			try {
-				WxLogTableUtils.createTable("wx_log_" + i);
+				WxLogTableUtils.createTable("WX_LOG_" + i);
 			} catch (Exception ex) {
 				ex.printStackTrace();
 				logger.error(ex);
@@ -51,9 +51,9 @@ public class WxLogCreateTableJob implements Job {
 		returnStr = f.format(date);
 		return Integer.parseInt(returnStr);
 	}
-	
-	public static void main(String[] args){
-		Date date = DateUtils.getDateAfter(new Date(), 20);
+
+	public static void main(String[] args) {
+		Date date = DateUtils.getDateAfter(new Date(), 0);
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
 		int year = calendar.get(Calendar.YEAR);

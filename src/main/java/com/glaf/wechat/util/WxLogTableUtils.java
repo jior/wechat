@@ -48,6 +48,7 @@ public class WxLogTableUtils {
 	}
 
 	public static TableDefinition createTable(String tableName) {
+		tableName = tableName.toUpperCase();
 		TableDefinition tableDefinition = new TableDefinition();
 		tableDefinition.setTableName(tableName);
 
