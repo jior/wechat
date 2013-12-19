@@ -100,7 +100,10 @@ public class WxLogServiceImpl implements WxLogService {
 				|| ((System.currentTimeMillis() - lastUpdate) / 60000 > 0)) {
 			while (!wxLogs.isEmpty()) {
 				WxLog bean = wxLogs.pop();
-				sysLogMapper.insertWxLog(bean);
+				sysLogMapper.insertWxLog(bean);// 写历史表
+
+				bean.setSuffix("");
+				sysLogMapper.insertWxLog(bean);// 写当前表
 			}
 			lastUpdate = System.currentTimeMillis();
 		}

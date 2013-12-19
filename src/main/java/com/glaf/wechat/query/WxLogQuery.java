@@ -28,6 +28,7 @@ public class WxLogQuery extends DataQuery {
 	protected String account;
 	protected String accountLike;
 	protected List<String> accounts;
+	protected String openId;
 	protected Date createTimeGreaterThanOrEqual;
 	protected Date createTimeLessThanOrEqual;
 	protected Integer flag;
@@ -95,6 +96,14 @@ public class WxLogQuery extends DataQuery {
 		return account;
 	}
 
+	public Long getAccountId() {
+		return accountId;
+	}
+
+	public List<Long> getAccountIds() {
+		return accountIds;
+	}
+
 	public String getAccountLike() {
 		if (accountLike != null && accountLike.trim().length() > 0) {
 			if (!accountLike.startsWith("%")) {
@@ -109,14 +118,6 @@ public class WxLogQuery extends DataQuery {
 
 	public List<String> getAccounts() {
 		return accounts;
-	}
-
-	public Long getAccountId() {
-		return accountId;
-	}
-
-	public List<Long> getAccountIds() {
-		return accountIds;
 	}
 
 	public Date getCreateTimeGreaterThanOrEqual() {
@@ -147,6 +148,10 @@ public class WxLogQuery extends DataQuery {
 		return ipLike;
 	}
 
+	public String getOpenId() {
+		return openId;
+	}
+
 	public String getOperate() {
 		return operate;
 	}
@@ -175,23 +180,23 @@ public class WxLogQuery extends DataQuery {
 			}
 
 			if ("account".equals(sortColumn)) {
-				orderBy = "E.ACCOUNT" + a_x;
+				orderBy = "E.ACCOUNT_" + a_x;
 			}
 
 			if ("ip".equals(sortColumn)) {
-				orderBy = "E.IP" + a_x;
+				orderBy = "E.IP_" + a_x;
 			}
 
 			if ("createTime".equals(sortColumn)) {
-				orderBy = "E.CREATETIME" + a_x;
+				orderBy = "E.CREATETIME_" + a_x;
 			}
 
 			if ("operate".equals(sortColumn)) {
-				orderBy = "E.OPERATE" + a_x;
+				orderBy = "E.OPERATE_" + a_x;
 			}
 
 			if ("flag".equals(sortColumn)) {
-				orderBy = "E.FLAG" + a_x;
+				orderBy = "E.FLAG_" + a_x;
 			}
 
 		}
@@ -205,12 +210,13 @@ public class WxLogQuery extends DataQuery {
 	@Override
 	public void initQueryColumns() {
 		super.initQueryColumns();
-		addColumn("id", "ID");
-		addColumn("account", "ACCOUNT");
-		addColumn("ip", "IP");
-		addColumn("createTime", "CREATETIME");
-		addColumn("operate", "OPERATE");
-		addColumn("flag", "FLAG");
+		addColumn("id", "ID_");
+		addColumn("account", "ACCOUNT_");
+		addColumn("accountId", "ACCOUNTID_");
+		addColumn("ip", "IP_");
+		addColumn("createTime", "CREATETIME_");
+		addColumn("operate", "OPERATE_");
+		addColumn("flag", "FLAG_");
 	}
 
 	public WxLogQuery ip(String ip) {
@@ -257,20 +263,20 @@ public class WxLogQuery extends DataQuery {
 		this.account = account;
 	}
 
-	public void setAccountLike(String accountLike) {
-		this.accountLike = accountLike;
-	}
-
-	public void setAccounts(List<String> accounts) {
-		this.accounts = accounts;
-	}
-
 	public void setAccountId(Long accountId) {
 		this.accountId = accountId;
 	}
 
 	public void setAccountIds(List<Long> accountIds) {
 		this.accountIds = accountIds;
+	}
+
+	public void setAccountLike(String accountLike) {
+		this.accountLike = accountLike;
+	}
+
+	public void setAccounts(List<String> accounts) {
+		this.accounts = accounts;
 	}
 
 	public void setCreateTimeGreaterThanOrEqual(
@@ -292,6 +298,10 @@ public class WxLogQuery extends DataQuery {
 
 	public void setIpLike(String ipLike) {
 		this.ipLike = ipLike;
+	}
+
+	public void setOpenId(String openId) {
+		this.openId = openId;
 	}
 
 	public void setOperate(String operate) {

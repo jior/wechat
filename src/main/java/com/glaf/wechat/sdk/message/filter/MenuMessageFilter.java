@@ -17,17 +17,20 @@
  */
 package com.glaf.wechat.sdk.message.filter;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 
 import com.glaf.core.context.ContextFactory;
+import com.glaf.wechat.domain.WxLog;
 import com.glaf.wechat.domain.WxMenu;
 import com.glaf.wechat.query.WxMenuQuery;
 import com.glaf.wechat.sdk.message.EventMessage;
 import com.glaf.wechat.sdk.message.Message;
 import com.glaf.wechat.sdk.message.ResponseMenuMessage;
 import com.glaf.wechat.service.WxMenuService;
+import com.glaf.wechat.util.WxLogFactory;
 
 public class MenuMessageFilter extends AbstractMessageFilter implements
 		IMessageFilter {
@@ -62,6 +65,18 @@ public class MenuMessageFilter extends AbstractMessageFilter implements
 				} else {
 					menuMessage.setPicUrl(menu.getIcon());
 				}
+			}
+			
+			try {
+				WxLog bean = new WxLog();
+				bean.setOpenId(message.getFromUserName());
+				bean.setAccount(message.getCustomer());
+				bean.setCreateTime(new Date());
+				bean.setFlag(3001);
+				bean.setIp(message.getRemoteIPAddr());
+				bean.setOperate("menu");
+				WxLogFactory.create(bean);
+			} catch (Exception ex) {
 			}
 			return menuMessage;
 		}

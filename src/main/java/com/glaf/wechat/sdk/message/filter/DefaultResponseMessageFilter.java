@@ -17,17 +17,20 @@
  */
 package com.glaf.wechat.sdk.message.filter;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 
 import com.glaf.core.context.ContextFactory;
 import com.glaf.wechat.domain.WxContent;
+import com.glaf.wechat.domain.WxLog;
 import com.glaf.wechat.query.WxContentQuery;
 import com.glaf.wechat.sdk.message.ItemArticle;
 import com.glaf.wechat.sdk.message.Message;
 import com.glaf.wechat.sdk.message.ResponseNewsMessage;
 import com.glaf.wechat.service.WxContentService;
+import com.glaf.wechat.util.WxLogFactory;
 
 /**
  * filter whether the message is for everything<br>
@@ -83,6 +86,19 @@ public class DefaultResponseMessageFilter extends AbstractMessageFilter
 				}
 				newsMessage.addItemArticle(art);
 			}
+			
+			try {
+				WxLog bean = new WxLog();
+				bean.setOpenId(message.getFromUserName());
+				bean.setAccount(message.getCustomer());
+				bean.setCreateTime(new Date());
+				bean.setFlag(10);// Ä¬ÈÏ»Ø¸´
+				bean.setIp(message.getRemoteIPAddr());
+				bean.setOperate("default");
+				WxLogFactory.create(bean);
+			} catch (Exception ex) {
+			}
+			
 			return newsMessage;
 		}
 		return null;

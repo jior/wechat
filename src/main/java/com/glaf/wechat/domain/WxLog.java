@@ -21,20 +21,53 @@ package com.glaf.wechat.domain;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 import com.alibaba.fastjson.*;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.core.base.JSONable;
 import com.glaf.wechat.util.*;
 
+@Entity
+@Table(name = "WX_LOG")
 public class WxLog implements Serializable, JSONable {
 	private static final long serialVersionUID = 3489584842305336744L;
+
+	@Id
+	@Column(name = "ID_", nullable = false)
 	private long id;
+
+	@Column(name = "ACCOUNTID_")
 	private Long accountId;
+
+	@Column(name = "ACCOUNT_", length = 50)
 	private String account;
+
+	@Column(name = "OPENID_", length = 200)
+	private String openId;
+
+	@Column(name = "IP_", length = 100)
 	private String ip;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "CREATETIME_")
 	private Date createTime;
+
+	@Column(name = "OPERATE_", length = 50)
 	private String operate;
+
+	@Column(name = "CONTENT_", length = 500)
+	private String content;
+
+	@Column(name = "FLAG_")
 	private int flag;
+
+	@javax.persistence.Transient
 	private String suffix;
 
 	public WxLog() {
@@ -63,6 +96,10 @@ public class WxLog implements Serializable, JSONable {
 		return accountId;
 	}
 
+	public String getContent() {
+		return content;
+	}
+
 	public Date getCreateTime() {
 		return createTime;
 	}
@@ -77,6 +114,10 @@ public class WxLog implements Serializable, JSONable {
 
 	public String getIp() {
 		return ip;
+	}
+
+	public String getOpenId() {
+		return openId;
 	}
 
 	public String getOperate() {
@@ -107,6 +148,10 @@ public class WxLog implements Serializable, JSONable {
 		this.accountId = accountId;
 	}
 
+	public void setContent(String content) {
+		this.content = content;
+	}
+
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
@@ -121,6 +166,10 @@ public class WxLog implements Serializable, JSONable {
 
 	public void setIp(String ip) {
 		this.ip = ip;
+	}
+
+	public void setOpenId(String openId) {
+		this.openId = openId;
 	}
 
 	public void setOperate(String operate) {

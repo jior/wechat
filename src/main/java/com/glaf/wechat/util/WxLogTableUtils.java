@@ -38,7 +38,7 @@ public class WxLogTableUtils {
 		for (int i = begin; i <= end; i++) {
 			System.out.println(i);
 			try {
-				WxLogTableUtils.createTable("wx_log_" + i);
+				WxLogTableUtils.createTable("WX_LOG_" + i);
 			} catch (Exception ex) {
 				ex.printStackTrace();
 				System.out.println(ex);
@@ -62,6 +62,18 @@ public class WxLogTableUtils {
 		column1.setLength(50);
 		tableDefinition.addColumn(column1);
 
+		ColumnDefinition column11 = new ColumnDefinition();
+		column11.setColumnName("ACCOUNTID_");
+		column11.setJavaType("Long");
+		column11.setLength(50);
+		tableDefinition.addColumn(column11);
+
+		ColumnDefinition column12 = new ColumnDefinition();
+		column12.setColumnName("OPENID_");
+		column12.setJavaType("String");
+		column12.setLength(200);
+		tableDefinition.addColumn(column11);
+
 		ColumnDefinition column2 = new ColumnDefinition();
 		column2.setColumnName("IP_");
 		column2.setJavaType("String");
@@ -84,8 +96,16 @@ public class WxLogTableUtils {
 		column5.setJavaType("Integer");
 		tableDefinition.addColumn(column5);
 
+		ColumnDefinition column6 = new ColumnDefinition();
+		column6.setColumnName("CONTENT_");
+		column6.setJavaType("String");
+		column6.setLength(500);
+		tableDefinition.addColumn(column4);
+
 		if (!DBUtils.tableExists(tableName)) {
 			DBUtils.createTable(tableDefinition);
+		} else {
+			DBUtils.alterTable(tableDefinition);
 		}
 
 		return tableDefinition;
