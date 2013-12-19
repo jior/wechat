@@ -2,6 +2,6 @@ insert into wx_template (id_, createby_, createdate_, defaultflag_, skinimage_, 
 insert into wx_template (id_, createby_, createdate_, defaultflag_, skinimage_, type_, path_, lastupdateby_, lastupdatedate_, locked_, categoryid_, content_, name_, desc_, templatetype_,  accountid_) values (2, 'system', null, null, '/templates/images/list.gif', '1', '/WEB-INF/conf/templates/wx/default/list.ftl', null, null, null, 0, null, '¡–±Ì“≥0', null, 'html', 0);
 insert into wx_template (id_, createby_, createdate_, defaultflag_, skinimage_, type_, path_, lastupdateby_, lastupdatedate_, locked_, categoryid_, content_, name_, desc_, templatetype_,  accountid_) values (3, 'system', null, null, '/templates/images/detail.gif', '2', '/WEB-INF/conf/templates/wx/default/detail.ftl', null, null, null, 0, null, 'œÍœ∏“≥0', null, 'html', 0);
 
-insert into wx_user_template (id_, categoryid_, createby_, createdate_, templateid_, type_,  accountid_) values (1, 0, 'system', '2013-10-11 15:52:26', 1, '0', 0);
-insert into wx_user_template (id_, categoryid_, createby_, createdate_, templateid_, type_,  accountid_) values (2, 0, 'system', '2013-10-11 15:52:33', 2, '1', 0);
-insert into wx_user_template (id_, categoryid_, createby_, createdate_, templateid_, type_,  accountid_) values (3, 0, 'system', '2013-10-11 15:52:38', 3, '2', 0);
+insert into wx_user_template (id_, categoryid_, createby_, templateid_, type_,  accountid_) values (1, 0, 'system', 1, '0', 0);
+insert into wx_user_template (id_, categoryid_, createby_, templateid_, type_,  accountid_) values (2, 0, 'system', 2, '1', 0);
+insert into wx_user_template (id_, categoryid_, createby_, templateid_, type_,  accountid_) values (3, 0, 'system', 3, '2', 0);
