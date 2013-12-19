@@ -45,8 +45,8 @@ public class WxLog implements Serializable, JSONable {
 	@Column(name = "ACCOUNTID_")
 	private Long accountId;
 
-	@Column(name = "ACCOUNT_", length = 50)
-	private String account;
+	@Column(name = "ACTORID_", length = 50)
+	private String actorId;
 
 	@Column(name = "OPENID_", length = 200)
 	private String openId;
@@ -86,10 +86,6 @@ public class WxLog implements Serializable, JSONable {
 		if (id != other.id)
 			return false;
 		return true;
-	}
-
-	public String getAccount() {
-		return account;
 	}
 
 	public Long getAccountId() {
@@ -140,8 +136,12 @@ public class WxLog implements Serializable, JSONable {
 		return WxLogJsonFactory.jsonToObject(jsonObject);
 	}
 
-	public void setAccount(String account) {
-		this.account = account;
+	public String getActorId() {
+		return actorId;
+	}
+
+	public void setActorId(String actorId) {
+		this.actorId = actorId;
 	}
 
 	public void setAccountId(Long accountId) {

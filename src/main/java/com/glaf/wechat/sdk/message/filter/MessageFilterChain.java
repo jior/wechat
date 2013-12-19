@@ -48,7 +48,7 @@ public class MessageFilterChain {
 				// returned!
 				try {
 					WxLog bean = new WxLog();
-					bean.setAccount(message.getCustomer());
+					bean.setActorId(message.getCustomer());
 					bean.setCreateTime(new Date());
 					bean.setFlag(0);
 					bean.setIp(message.getRemoteIPAddr());

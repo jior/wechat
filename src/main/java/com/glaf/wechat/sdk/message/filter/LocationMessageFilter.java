@@ -93,7 +93,7 @@ public class LocationMessageFilter extends AbstractMessageFilter implements
 					try {
 						WxLog bean = new WxLog();
 						bean.setOpenId(message.getFromUserName());
-						bean.setAccount(message.getCustomer());
+						bean.setActorId(message.getCustomer());
 						bean.setCreateTime(new Date());
 						bean.setFlag(2001);//地理信息回复
 						bean.setIp(message.getRemoteIPAddr());

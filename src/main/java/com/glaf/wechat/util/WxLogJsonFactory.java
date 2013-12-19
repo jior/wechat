@@ -45,8 +45,8 @@ public class WxLogJsonFactory {
 		if (jsonObject.containsKey("accountId")) {
 			model.setAccountId(jsonObject.getLong("accountId"));
 		}
-		if (jsonObject.containsKey("account")) {
-			model.setAccount(jsonObject.getString("account"));
+		if (jsonObject.containsKey("actorId")) {
+			model.setActorId(jsonObject.getString("actorId"));
 		}
 		if (jsonObject.containsKey("ip")) {
 			model.setIp(jsonObject.getString("ip"));
@@ -83,8 +83,8 @@ public class WxLogJsonFactory {
 		if (model.getAccountId() != null) {
 			jsonObject.put("accountId", model.getAccountId());
 		}
-		if (model.getAccount() != null) {
-			jsonObject.put("account", model.getAccount());
+		if (model.getActorId() != null) {
+			jsonObject.put("actorId", model.getActorId());
 		}
 		if (model.getIp() != null) {
 			jsonObject.put("ip", model.getIp());
@@ -112,8 +112,8 @@ public class WxLogJsonFactory {
 		if (model.getAccountId() != null) {
 			jsonObject.put("accountId", model.getAccountId());
 		}
-		if (model.getAccount() != null) {
-			jsonObject.put("account", model.getAccount());
+		if (model.getActorId() != null) {
+			jsonObject.put("actorId", model.getActorId());
 		}
 		if (model.getIp() != null) {
 			jsonObject.put("ip", model.getIp());

@@ -23,7 +23,7 @@ public class WxLogTableUtils {
 	}
 
 	public static void main(String[] args) {
-		Date date = DateUtils.getDateAfter(new Date(), 20);
+		Date date = DateUtils.getDateAfter(new Date(), 0);
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
 		int year = calendar.get(Calendar.YEAR);
@@ -58,7 +58,7 @@ public class WxLogTableUtils {
 		tableDefinition.setIdColumn(idColumn);
 
 		ColumnDefinition column1 = new ColumnDefinition();
-		column1.setColumnName("ACCOUNT_");
+		column1.setColumnName("ACTORID_");
 		column1.setJavaType("String");
 		column1.setLength(50);
 		tableDefinition.addColumn(column1);
@@ -73,7 +73,7 @@ public class WxLogTableUtils {
 		column12.setColumnName("OPENID_");
 		column12.setJavaType("String");
 		column12.setLength(200);
-		tableDefinition.addColumn(column11);
+		tableDefinition.addColumn(column12);
 
 		ColumnDefinition column2 = new ColumnDefinition();
 		column2.setColumnName("IP_");
@@ -92,16 +92,16 @@ public class WxLogTableUtils {
 		column4.setLength(500);
 		tableDefinition.addColumn(column4);
 
-		ColumnDefinition column5 = new ColumnDefinition();
-		column5.setColumnName("FLAG_");
-		column5.setJavaType("Integer");
-		tableDefinition.addColumn(column5);
-
 		ColumnDefinition column6 = new ColumnDefinition();
 		column6.setColumnName("CONTENT_");
 		column6.setJavaType("String");
 		column6.setLength(500);
-		tableDefinition.addColumn(column4);
+		tableDefinition.addColumn(column6);
+
+		ColumnDefinition column8 = new ColumnDefinition();
+		column8.setColumnName("FLAG_");
+		column8.setJavaType("Integer");
+		tableDefinition.addColumn(column8);
 
 		if (!DBUtils.tableExists(tableName)) {
 			DBUtils.createTable(tableDefinition);

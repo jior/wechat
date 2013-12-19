@@ -205,7 +205,7 @@ public class WxPublicContentController {
 
 				try {
 					WxLog bean = new WxLog();
-					bean.setAccount(actorId);
+					bean.setActorId(actorId);
 					bean.setAccountId(accountId);
 					bean.setCreateTime(new Date());
 					bean.setFlag(1002);
@@ -236,7 +236,7 @@ public class WxPublicContentController {
 			IOUtils.closeStream(out);
 			try {
 				WxLog bean = new WxLog();
-				bean.setAccount(user.getActorId());
+				bean.setActorId(user.getActorId());
 				bean.setAccountId(accountId);
 				bean.setCreateTime(new Date());
 				bean.setFlag(10001);
@@ -334,7 +334,7 @@ public class WxPublicContentController {
 				IOUtils.closeStream(out);
 				try {
 					WxLog bean = new WxLog();
-					bean.setAccount(actorId);
+					bean.setActorId(actorId);
 					bean.setAccountId(accountId);
 					bean.setCreateTime(new Date());
 					bean.setFlag(10002);
@@ -366,7 +366,7 @@ public class WxPublicContentController {
 			try {
 				WxLog bean = new WxLog();
 				if (category != null) {
-					bean.setAccount(category.getCreateBy());
+					bean.setActorId(category.getCreateBy());
 					bean.setAccountId(category.getAccountId());
 				}
 				bean.setCreateTime(new Date());
@@ -530,7 +530,7 @@ public class WxPublicContentController {
 
 					try {
 						WxLog bean = new WxLog();
-						bean.setAccount(actorId);
+						bean.setActorId(actorId);
 						bean.setAccountId(category.getAccountId());
 						bean.setCreateTime(new Date());
 						bean.setFlag(5002);
@@ -695,7 +695,7 @@ public class WxPublicContentController {
 
 				try {
 					WxLog bean = new WxLog();
-					bean.setAccount(actorId);
+					bean.setActorId(actorId);
 					bean.setAccountId(accountId);
 					bean.setCreateTime(new Date());
 					bean.setFlag(2002);

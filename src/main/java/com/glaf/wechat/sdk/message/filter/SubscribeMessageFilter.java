@@ -90,7 +90,7 @@ public class SubscribeMessageFilter extends AbstractMessageFilter implements
 			try {
 				WxLog bean = new WxLog();
 				bean.setOpenId(message.getFromUserName());
-				bean.setAccount(message.getCustomer());
+				bean.setActorId(message.getCustomer());
 				bean.setCreateTime(new Date());
 				bean.setFlag(5001);
 				bean.setIp(message.getRemoteIPAddr());

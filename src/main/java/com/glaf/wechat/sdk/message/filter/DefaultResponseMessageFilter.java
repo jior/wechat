@@ -90,7 +90,7 @@ public class DefaultResponseMessageFilter extends AbstractMessageFilter
 			try {
 				WxLog bean = new WxLog();
 				bean.setOpenId(message.getFromUserName());
-				bean.setAccount(message.getCustomer());
+				bean.setActorId(message.getCustomer());
 				bean.setCreateTime(new Date());
 				bean.setFlag(10);// Ä¬ÈÏ»Ø¸´
 				bean.setIp(message.getRemoteIPAddr());

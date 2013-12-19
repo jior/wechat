@@ -25,9 +25,7 @@ public class WxLogQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
 	protected Long accountId;
 	protected List<Long> accountIds;
-	protected String account;
-	protected String accountLike;
-	protected List<String> accounts;
+
 	protected String openId;
 	protected Date createTimeGreaterThanOrEqual;
 	protected Date createTimeLessThanOrEqual;
@@ -41,30 +39,6 @@ public class WxLogQuery extends DataQuery {
 
 	public WxLogQuery() {
 
-	}
-
-	public WxLogQuery account(String account) {
-		if (account == null) {
-			throw new RuntimeException("account is null");
-		}
-		this.account = account;
-		return this;
-	}
-
-	public WxLogQuery accountLike(String accountLike) {
-		if (accountLike == null) {
-			throw new RuntimeException("account is null");
-		}
-		this.accountLike = accountLike;
-		return this;
-	}
-
-	public WxLogQuery accounts(List<String> accounts) {
-		if (accounts == null) {
-			throw new RuntimeException("accounts is empty ");
-		}
-		this.accounts = accounts;
-		return this;
 	}
 
 	public WxLogQuery createTimeGreaterThanOrEqual(
@@ -92,32 +66,12 @@ public class WxLogQuery extends DataQuery {
 		return this;
 	}
 
-	public String getAccount() {
-		return account;
-	}
-
 	public Long getAccountId() {
 		return accountId;
 	}
 
 	public List<Long> getAccountIds() {
 		return accountIds;
-	}
-
-	public String getAccountLike() {
-		if (accountLike != null && accountLike.trim().length() > 0) {
-			if (!accountLike.startsWith("%")) {
-				accountLike = "%" + accountLike;
-			}
-			if (!accountLike.endsWith("%")) {
-				accountLike = accountLike + "%";
-			}
-		}
-		return accountLike;
-	}
-
-	public List<String> getAccounts() {
-		return accounts;
 	}
 
 	public Date getCreateTimeGreaterThanOrEqual() {
@@ -179,8 +133,8 @@ public class WxLogQuery extends DataQuery {
 				a_x = sortOrder;
 			}
 
-			if ("account".equals(sortColumn)) {
-				orderBy = "E.ACCOUNT_" + a_x;
+			if ("actorId".equals(sortColumn)) {
+				orderBy = "E.ACTORID_" + a_x;
 			}
 
 			if ("ip".equals(sortColumn)) {
@@ -211,7 +165,7 @@ public class WxLogQuery extends DataQuery {
 	public void initQueryColumns() {
 		super.initQueryColumns();
 		addColumn("id", "ID_");
-		addColumn("account", "ACCOUNT_");
+		addColumn("actorId", "ACTORID_");
 		addColumn("accountId", "ACCOUNTID_");
 		addColumn("ip", "IP_");
 		addColumn("createTime", "CREATETIME_");
@@ -259,24 +213,12 @@ public class WxLogQuery extends DataQuery {
 		return this;
 	}
 
-	public void setAccount(String account) {
-		this.account = account;
-	}
-
 	public void setAccountId(Long accountId) {
 		this.accountId = accountId;
 	}
 
 	public void setAccountIds(List<Long> accountIds) {
 		this.accountIds = accountIds;
-	}
-
-	public void setAccountLike(String accountLike) {
-		this.accountLike = accountLike;
-	}
-
-	public void setAccounts(List<String> accounts) {
-		this.accounts = accounts;
 	}
 
 	public void setCreateTimeGreaterThanOrEqual(

@@ -72,10 +72,11 @@ public class WxMongoDBLogServiceImpl implements WxLogService {
 					BasicDBObject row = new BasicDBObject();
 					row.put("id", model.getId());
 					row.put("accountId", model.getAccountId());
-					row.put("account", model.getAccount());
+					row.put("actorId", model.getActorId());
 					row.put("flag", Integer.valueOf(model.getFlag()));
 					row.put("ip", model.getIp());
 					row.put("operate", model.getOperate());
+					row.put("content", model.getContent());
 					row.put("createTime", model.getCreateTime().getTime());
 					coll.insert(row);
 					logger.debug("insert row:" + model.getId());
@@ -108,8 +109,8 @@ public class WxMongoDBLogServiceImpl implements WxLogService {
 			q.put("flag", query.getFlag());
 		}
 
-		if (query.getAccount() != null) {
-			q.put("account", query.getAccount());
+		if (query.getActorId() != null) {
+			q.put("actorId", query.getActorId());
 		}
 
 		if (query.getIp() != null) {
@@ -179,7 +180,8 @@ public class WxMongoDBLogServiceImpl implements WxLogService {
 				WxLog log = new WxLog();
 				log.setId((Long) object.get("id"));
 				log.setIp((String) object.get("ip"));
-				log.setAccount((String) object.get("account"));
+				log.setActorId((String) object.get("actorId"));
+				log.setContent((String) object.get("content"));
 				log.setOperate((String) object.get("operate"));
 				if (object.containsField("accountId")) {
 					log.setAccountId((Long) object.get("accountId"));
@@ -210,8 +212,9 @@ public class WxMongoDBLogServiceImpl implements WxLogService {
 			WxLog log = new WxLog();
 			log.setId((Long) object.get("id"));
 			log.setIp((String) object.get("ip"));
-			log.setAccount((String) object.get("account"));
+			log.setActorId((String) object.get("actorId"));
 			log.setOperate((String) object.get("operate"));
+			log.setContent((String) object.get("content"));
 			if (object.containsField("accountId")) {
 				log.setAccountId((Long) object.get("accountId"));
 			}

@@ -70,7 +70,7 @@ public class MenuMessageFilter extends AbstractMessageFilter implements
 			try {
 				WxLog bean = new WxLog();
 				bean.setOpenId(message.getFromUserName());
-				bean.setAccount(message.getCustomer());
+				bean.setActorId(message.getCustomer());
 				bean.setCreateTime(new Date());
 				bean.setFlag(3001);
 				bean.setIp(message.getRemoteIPAddr());
