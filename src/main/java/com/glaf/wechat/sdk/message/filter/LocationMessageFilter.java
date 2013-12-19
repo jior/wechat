@@ -18,6 +18,7 @@ import com.glaf.wechat.sdk.message.LocationMessage;
 import com.glaf.wechat.sdk.util.LocationUtils;
  
 import com.glaf.wechat.service.WxContentService;
+import com.glaf.wechat.util.Constants;
 import com.glaf.wechat.util.WxIdentityFactory;
 import com.glaf.wechat.util.WxLogFactory;
 
@@ -95,7 +96,7 @@ public class LocationMessageFilter extends AbstractMessageFilter implements
 						bean.setOpenId(message.getFromUserName());
 						bean.setActorId(message.getCustomer());
 						bean.setCreateTime(new Date());
-						bean.setFlag(2001);//地理信息回复
+						bean.setFlag(Constants.LOCATION_LOG_FLAG);//地理信息回复
 						bean.setIp(message.getRemoteIPAddr());
 						bean.setOperate("location");
 						WxLogFactory.create(bean);

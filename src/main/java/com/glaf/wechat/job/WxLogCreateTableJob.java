@@ -68,7 +68,7 @@ public class WxLogCreateTableJob implements Job {
 		for (int i = begin; i <= end; i++) {
 			logger.debug(i);
 			try {
-				WxLogTableUtils.createTable("wx_log_" + i);
+				WxLogTableUtils.createTable("WX_LOG_" + i);
 			} catch (Exception ex) {
 				ex.printStackTrace();
 				logger.error(ex);

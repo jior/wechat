@@ -37,6 +37,7 @@ import com.glaf.wechat.sdk.message.ResponseNewsMessage;
 import com.glaf.wechat.sdk.message.TextMessage;
 import com.glaf.wechat.service.WxContentService;
 import com.glaf.wechat.service.WxKeywordsService;
+import com.glaf.wechat.util.Constants;
 import com.glaf.wechat.util.WxLogFactory;
 
 /**
@@ -126,7 +127,7 @@ public class KeywordsMessageFilter extends AbstractMessageFilter implements
 						bean.setOpenId(message.getFromUserName());
 						bean.setActorId(message.getCustomer());
 						bean.setCreateTime(new Date());
-						bean.setFlag(100);// 关键字回复
+						bean.setFlag(Constants.KEYWORDS_LOG_FLAG);// 关键字回复
 						bean.setIp(message.getRemoteIPAddr());
 						bean.setOperate("keywords");
 						bean.setContent(content);

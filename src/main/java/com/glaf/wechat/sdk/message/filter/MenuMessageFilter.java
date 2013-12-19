@@ -30,6 +30,7 @@ import com.glaf.wechat.sdk.message.EventMessage;
 import com.glaf.wechat.sdk.message.Message;
 import com.glaf.wechat.sdk.message.ResponseMenuMessage;
 import com.glaf.wechat.service.WxMenuService;
+import com.glaf.wechat.util.Constants;
 import com.glaf.wechat.util.WxLogFactory;
 
 public class MenuMessageFilter extends AbstractMessageFilter implements
@@ -72,7 +73,7 @@ public class MenuMessageFilter extends AbstractMessageFilter implements
 				bean.setOpenId(message.getFromUserName());
 				bean.setActorId(message.getCustomer());
 				bean.setCreateTime(new Date());
-				bean.setFlag(3001);
+				bean.setFlag(Constants.MENU_LOG_FLAG);
 				bean.setIp(message.getRemoteIPAddr());
 				bean.setOperate("menu");
 				WxLogFactory.create(bean);

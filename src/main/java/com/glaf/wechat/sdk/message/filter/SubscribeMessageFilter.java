@@ -31,6 +31,7 @@ import com.glaf.wechat.sdk.message.ItemArticle;
 import com.glaf.wechat.sdk.message.Message;
 import com.glaf.wechat.sdk.message.ResponseNewsMessage;
 import com.glaf.wechat.service.WxContentService;
+import com.glaf.wechat.util.Constants;
 import com.glaf.wechat.util.WxLogFactory;
 
 /**
@@ -92,7 +93,7 @@ public class SubscribeMessageFilter extends AbstractMessageFilter implements
 				bean.setOpenId(message.getFromUserName());
 				bean.setActorId(message.getCustomer());
 				bean.setCreateTime(new Date());
-				bean.setFlag(5001);
+				bean.setFlag(Constants.SUBSCRIBE_LOG_FLAG);
 				bean.setIp(message.getRemoteIPAddr());
 				bean.setOperate("subscribe");
 				WxLogFactory.create(bean);
