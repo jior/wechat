@@ -151,7 +151,7 @@
 			  <a href="${serviceUrl}/website/wx/content/list/${cat2.stringId}">
 			</#if>
 			  <div class="menubtn">
-			  <#if cat2.coverIcon?exists>
+			  <#if cat2.coverIcon?exists && cat2.coverIcon !=''>
 			    <div class="menuimg"><img src="${serviceUrl}/${cat2.coverIcon}" /></div>
 			  </#if>
 			    <div class="menutitle">${cat2.name}</div>
@@ -173,7 +173,7 @@
 		<#list  contents as content>      
 			<li>
 				<a href="${serviceUrl}/website/wx/content/detail/${content.uuid}">
-					<#if content.smallIcon?exists>
+					<#if content.smallIcon?exists && content.smallIcon !=''>
 					<div class="img"><img src="${serviceUrl}/${content.smallIcon}"></div>
 					</#if>
 				<h2>${content.title}</h2>

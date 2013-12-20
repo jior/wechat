@@ -19,7 +19,7 @@
      define subcomponents such as "Valves" at this level.
      Documentation at /docs/config/server.html
  -->
-<Server port="29005" shutdown="SHUTDOWN">
+<Server port="39005" shutdown="SHUTDOWN">
   <!-- Security listener. Documentation at /docs/config/listeners.html
   <Listener className="org.apache.catalina.security.SecurityListener" />
   -->
@@ -88,7 +88,7 @@
     -->
 
     <!-- Define an AJP 1.3 Connector on port 9005 -->
-    <Connector port="29005" protocol="AJP/1.3" redirectPort="25443" />
+    <Connector port="49005" protocol="AJP/1.3" redirectPort="25443" />
 
 
     <!-- An Engine represents the entry point (within Catalina) that processes

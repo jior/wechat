@@ -71,7 +71,7 @@ oWin.style.display = "none"
 <h1 id="activity-name">${content.title}</h1>
 <span id="post-date">${content.createDate?string("yyyy-MM-dd")}</span>　<span class="commentNum"></span>
 </div>
-<#if content.bigIcon?exists>
+<#if content.bigIcon?exists && content.bigIcon !=''>
 <div class="showpic"><img src="${serviceUrl}/${content.bigIcon}" ></div>
 </#if>
 <div class="text" id="content">

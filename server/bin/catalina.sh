@@ -217,6 +217,8 @@ if $cygwin; then
   JAVA_ENDORSED_DIRS=`cygpath --path --windows "$JAVA_ENDORSED_DIRS"`
 fi
 
+JAVA_OPTS="$JAVA_OPTS  -Xmx512m -XX:PermSize=128m -XX:MaxPermSize=256m "
+
 # Set juli LogManager config file if it is present and an override has not been issued
 if [ -z "$LOGGING_CONFIG" ]; then
   if [ -r "$CATALINA_BASE"/conf/logging.properties ]; then

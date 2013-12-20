@@ -56,15 +56,6 @@ limitations under the License.
 		return childNodes;
 	}
 
- 
-    function getUrl(treeId, treeNode) {
-		if(treeNode != null){
-		    var param = "parentId="+treeNode.id;
-		    return "<%=request.getContextPath()%>/mx/wx/wxMenu/treeJson/${accountId}?group=${group}&"+param;
-		}
-		return "<%=request.getContextPath()%>/mx/wx/wxMenu/treeJson/${accountId}?group=${group}";
-	}
-
 
     function zTreeOnClick(event, treeId, treeNode, clickFlag) {
 		jQuery("#nodeId").val(treeNode.id);

@@ -146,7 +146,7 @@
 			<a href="${serviceUrl}/website/wx/content/list/${item.stringId}">
 			</#if>
 			  <div class="menubtn">
-			  <#if item.coverIcon?exists>
+			  <#if item.coverIcon?exists && item.coverIcon !=''>
 			    <div class="menuimg"><img src="${serviceUrl}/${item.coverIcon}" /></div>
 			  </#if>
 			  <div class="menutitle">${item.name}</div>
