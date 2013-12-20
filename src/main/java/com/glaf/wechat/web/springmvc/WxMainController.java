@@ -43,6 +43,7 @@ public class WxMainController {
 	@RequestMapping("/wechat/index")
 	public ModelAndView index(HttpServletRequest request,
 			HttpServletResponse response, ModelMap modelMap) {
+		logger.debug("----------------------@/wechat/index@--------------------------");
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		RequestUtils.setRequestParameterToAttribute(request);
 		RequestUtils.setTheme(request, response, "gray");
@@ -64,7 +65,7 @@ public class WxMainController {
 		SysApplication app = sysApplicationService.findByCode(appCode);
 
 		TreeModel root = sysApplicationService.getTreeModelByAppId(app.getId());
-
+		logger.debug("####root tree id="+root.getId());
 		List<TreeModel> treeNodes = sysApplicationService.getTreeModels(
 				root.getId(), loginContext.getActorId());
 
@@ -88,6 +89,7 @@ public class WxMainController {
 			logger.debug(treeJson.toJSONString());
 		}
 
+		logger.debug("----------------------#/wechat/index#--------------------------");
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {
 			return new ModelAndView(view, modelMap);
