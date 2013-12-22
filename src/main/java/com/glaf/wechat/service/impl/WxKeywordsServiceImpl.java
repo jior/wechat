@@ -115,6 +115,7 @@ public class WxKeywordsServiceImpl implements WxKeywordsService {
 					i++;
 					WxKeywords wxKeywords = new WxKeywords();
 					wxKeywords.setId(idGenerator.nextId());
+					wxKeywords.setAccountId(content.getAccountId());
 					wxKeywords.setCategoryId(categoryId);
 					wxKeywords.setContentId(content.getId());
 					wxKeywords.setCreateBy(content.getCreateBy());
