@@ -175,7 +175,7 @@ set "CLASSPATH=%CLASSPATH%;%CATALINA_HOME%\bin\tomcat-juli.jar"
 :juliClasspathDone
 
 
-set JAVA_OPTS=%JAVA_OPTS% -Xmx512m -XX:PermSize=128m -XX:MaxPermSize=256m
+set JAVA_OPTS=%JAVA_OPTS% -Xmx512m -XX:PermSize=128m -XX:MaxPermSize=256m -XX:+UseParNewGC -XX:+UseConcMarkSweepGC -XX:CMSInitiatingOccupancyFraction=7 -XX:+UseCMSInitiatingOccupancyOnly
 set JAVA_OPTS=%JAVA_OPTS%  -Drebel.packages_include=com.glaf -Drebel.aspectj_plugin=true -Drebel.spring_plugin=true  -Drebel.resteasy_plugin=true -Drebel.mybatis_plugin=true -Drebel.jackson_plugin=true -noverify -javaagent:./jrebel.jar
 
 if not "%LOGGING_CONFIG%" == "" goto noJuliConfig

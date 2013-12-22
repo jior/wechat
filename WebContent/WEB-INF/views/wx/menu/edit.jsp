@@ -28,6 +28,13 @@ limitations under the License.
     var contextPath="<%=request.getContextPath()%>";
 
 	function saveData(){
+		if(document.getElementById("type").value=='view'){
+            if(document.getElementById("url").value==''){
+               document.getElementById("url").focus();
+			   alert("链接地址不能为空！");
+			   return;
+			}
+		}
 		var params = jQuery("#iForm").formSerialize();
 		jQuery.ajax({
 				   type: "POST",
@@ -61,6 +68,13 @@ limitations under the License.
 
 	function saveAsData(){
 		document.getElementById("id").value="";
+		if(document.getElementById("type").value=='view'){
+            if(document.getElementById("url").value==''){
+               document.getElementById("url").focus();
+			   alert("链接地址不能为空！");
+			   return;
+			}
+		}
 		var params = jQuery("#iForm").formSerialize();
 		jQuery.ajax({
 				   type: "POST",
@@ -183,10 +197,11 @@ limitations under the License.
 	<tr>
 		<td width="20%" align="left">名称</td>
 		<td align="left">
-            <input id="name" name="name" type="text"  size="50"
+            <input id="name" name="name" type="text"  size="50" maxlength="14"
 			       class="easyui-validatebox x-text"  
 			       data-options="required:true"
 				   value="${wxMenu.name}"/>
+			<br>（提示：一级菜单最多4个汉字，二级菜单最多7个汉字）
 		</td>
 	</tr>
 	<tr>
