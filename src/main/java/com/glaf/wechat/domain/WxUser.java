@@ -45,25 +45,25 @@ public class WxUser implements Serializable, JSONable, User {
 	@Column(name = "ACTORID", length = 50)
 	protected String actorId;
 
-	@Column(name = "WXID", length = 50)
+	@Column(name = "WXID", length = 200)
 	protected String wxid;
 
-	@Column(name = "WXSOURCEID", length = 50)
+	@Column(name = "WXSOURCEID", length = 200)
 	protected String wxSourceId;
 
-	@Column(name = "WXNAME", length = 50)
+	@Column(name = "WXNAME", length = 200)
 	protected String wxname;
 
 	@Column(name = "WXHEADIMAGE", length = 250)
 	protected String wxHeadImage;
 
-	@Column(name = "YXID", length = 50)
+	@Column(name = "YXID", length = 200)
 	protected String yxid;
 
-	@Column(name = "YXSOURCEID", length = 50)
+	@Column(name = "YXSOURCEID", length = 200)
 	protected String yxSourceId;
 
-	@Column(name = "YXName", length = 50)
+	@Column(name = "YXNAME", length = 200)
 	protected String yxname;
 
 	@Column(name = "YXHEADIMAGE", length = 250)

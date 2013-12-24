@@ -13,7 +13,7 @@
 		<result property="wxHeadImage" column="WXHEADIMAGE" jdbcType="VARCHAR" />
 		<result property="yxid" column="YXID" jdbcType="VARCHAR" />
 		<result property="yxSourceId" column="YXSOURCEID" jdbcType="VARCHAR" />
-		<result property="yxname" column="YXName" jdbcType="VARCHAR" />
+		<result property="yxname" column="YXNAME" jdbcType="VARCHAR" />
 		<result property="yxHeadImage" column="YXHEADIMAGE" jdbcType="VARCHAR" />
 		<result property="token" column="TOKEN" jdbcType="VARCHAR" />
 		<result property="wxAppId" column="WXAPPID" jdbcType="VARCHAR" />
@@ -65,7 +65,7 @@
 				,YXSOURCEID
 			</if>
 			<if test="yxname != null">
-				,YXName
+				,YXNAME
 			</if>
 			<if test="yxHeadImage != null">
 				,YXHEADIMAGE
@@ -255,7 +255,7 @@
 				YXSOURCEID = #{yxSourceId, jdbcType=VARCHAR},
 			</if>
 			<if test="yxname != null">
-				YXName = #{yxname, jdbcType=VARCHAR},
+				YXNAME = #{yxname, jdbcType=VARCHAR},
 			</if>
 			<if test="yxHeadImage != null">
 				YXHEADIMAGE = #{yxHeadImage, jdbcType=VARCHAR},

@@ -44,7 +44,7 @@ public class WxUserTemplate implements Serializable, JSONable {
 	/**
 	 * Ä£°å±àºÅ
 	 */
-	@Column(name = "templateId_")
+	@Column(name = "TEMPLATEID_")
 	protected Long templateId;
 
 	/**

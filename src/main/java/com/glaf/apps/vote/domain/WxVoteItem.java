@@ -42,7 +42,7 @@ public class WxVoteItem implements Serializable, JSONable {
 	@Column(name = "NAME_", length = 200)
 	protected String name;
 
-	@Column(name = "VALUE_", length = 20)
+	@Column(name = "VALUE_", length = 2000)
 	protected String value;
 
 	@Column(name = "SORT_")
