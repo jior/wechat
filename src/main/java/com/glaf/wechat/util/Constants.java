@@ -15,4 +15,6 @@ public class Constants {
 	public final static int MENU_LOG_FLAG = 300;
 
 	public final static int SUBSCRIBE_LOG_FLAG = 800;
+
+	public final static int UNSUBSCRIBE_LOG_FLAG = -800;
 }

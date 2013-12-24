@@ -29,6 +29,7 @@ import com.glaf.wechat.sdk.message.filter.MenuMessageFilter;
 import com.glaf.wechat.sdk.message.filter.MessageFilterChain;
 import com.glaf.wechat.sdk.message.filter.DefaultResponseMessageFilter;
 import com.glaf.wechat.sdk.message.filter.SubscribeMessageFilter;
+import com.glaf.wechat.sdk.message.filter.UnsubscribeMessageFilter;
 
 /**
  * handle event message
@@ -46,6 +47,9 @@ public class EventMessageHandler extends AbstractMessageHandler {
 		if (StringUtils.equalsIgnoreCase(msg.getEvent(), "subscribe")) {
 			// 订阅事件
 			filterChain.addFilter(new SubscribeMessageFilter());
+		}else if (StringUtils.equalsIgnoreCase(msg.getEvent(), "unsubscribe")) {
+			// 取消订阅事件
+			filterChain.addFilter(new UnsubscribeMessageFilter());
 		} else if (StringUtils.equalsIgnoreCase(msg.getEvent(), "CLICK")) {
 			// 自定义菜单点击事件
 			String eventKey = msg.getEventKey();

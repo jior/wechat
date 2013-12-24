@@ -29,6 +29,9 @@
 				columns:[[
 				        {title:'序号', field:'startIndex', width:80, sortable:false},
 					    {title:'昵称', field:'nickName', width:150, sortable:false},
+					    {title:'OpenID', field:'openId', width:150, sortable:false},
+					    {title:'关注时间', field:'subscribeTime_datetime', width:150, sortable:false},
+					    {title:'取消关注时间', field:'unsubscribeTime_datetime', width:150, sortable:false},
 					    {field:'functionKey',title:'功能键',width:120}
 				]],
 				rownumbers: false,

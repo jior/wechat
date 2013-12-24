@@ -81,9 +81,9 @@ public abstract class AbstractMessageHandler implements IMessageHandler,
 	}
 
 	// get current Unix time
-	public int getCurrentUnixTimestamp() {
+	public long getCurrentUnixTimestamp() {
 		Date date = new Date();
-		return (int) (date.getTime() / 1000);
+		return (long) (date.getTime() / 1000);
 	}
 
 	@Override

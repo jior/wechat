@@ -25,6 +25,7 @@ public class WxFollowerQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
 	protected Long accountId;
 	protected List<Long> accountIds;
+	protected String sourceId;
 	protected String openId;
 	protected List<String> openIds;
 	protected String nickNameLike;
@@ -48,225 +49,6 @@ public class WxFollowerQuery extends DataQuery {
 
 	}
 
-	public Long getAccountId() {
-		return accountId;
-	}
-
-	public List<Long> getAccountIds() {
-		return accountIds;
-	}
-
-	public String getActorId() {
-		return actorId;
-	}
-
-	public List<String> getActorIds() {
-		return actorIds;
-	}
-
-	public String getOpenId() {
-		return openId;
-	}
-
-	public List<String> getOpenIds() {
-		return openIds;
-	}
-
-	public String getNickNameLike() {
-		if (nickNameLike != null && nickNameLike.trim().length() > 0) {
-			if (!nickNameLike.startsWith("%")) {
-				nickNameLike = "%" + nickNameLike;
-			}
-			if (!nickNameLike.endsWith("%")) {
-				nickNameLike = nickNameLike + "%";
-			}
-		}
-		return nickNameLike;
-	}
-
-	public String getSex() {
-		return sex;
-	}
-
-	public String getMobile() {
-		return mobile;
-	}
-
-	public String getMobileLike() {
-		if (mobileLike != null && mobileLike.trim().length() > 0) {
-			if (!mobileLike.startsWith("%")) {
-				mobileLike = "%" + mobileLike;
-			}
-			if (!mobileLike.endsWith("%")) {
-				mobileLike = mobileLike + "%";
-			}
-		}
-		return mobileLike;
-	}
-
-	public String getMail() {
-		return mail;
-	}
-
-	public String getMailLike() {
-		if (mailLike != null && mailLike.trim().length() > 0) {
-			if (!mailLike.startsWith("%")) {
-				mailLike = "%" + mailLike;
-			}
-			if (!mailLike.endsWith("%")) {
-				mailLike = mailLike + "%";
-			}
-		}
-		return mailLike;
-	}
-
-	public String getTelephoneLike() {
-		if (telephoneLike != null && telephoneLike.trim().length() > 0) {
-			if (!telephoneLike.startsWith("%")) {
-				telephoneLike = "%" + telephoneLike;
-			}
-			if (!telephoneLike.endsWith("%")) {
-				telephoneLike = telephoneLike + "%";
-			}
-		}
-		return telephoneLike;
-	}
-
-	public String getProvince() {
-		return province;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public String getCountry() {
-		return country;
-	}
-
-	public String getLanguage() {
-		return language;
-	}
-
-	public Integer getLocked() {
-		return locked;
-	}
-
-	public String getRemarkLike() {
-		if (remarkLike != null && remarkLike.trim().length() > 0) {
-			if (!remarkLike.startsWith("%")) {
-				remarkLike = "%" + remarkLike;
-			}
-			if (!remarkLike.endsWith("%")) {
-				remarkLike = remarkLike + "%";
-			}
-		}
-		return remarkLike;
-	}
-
-	public Long getSubscribeTimeGreaterThanOrEqual() {
-		return subscribeTimeGreaterThanOrEqual;
-	}
-
-	public Long getSubscribeTimeLessThanOrEqual() {
-		return subscribeTimeLessThanOrEqual;
-	}
-
-	public Date getCreateDateGreaterThanOrEqual() {
-		return createDateGreaterThanOrEqual;
-	}
-
-	public Date getCreateDateLessThanOrEqual() {
-		return createDateLessThanOrEqual;
-	}
-
-	public void setAccountId(Long accountId) {
-		this.accountId = accountId;
-	}
-
-	public void setAccountIds(List<Long> accountIds) {
-		this.accountIds = accountIds;
-	}
-
-	public void setOpenId(String openId) {
-		this.openId = openId;
-	}
-
-	public void setOpenIds(List<String> openIds) {
-		this.openIds = openIds;
-	}
-
-	public void setNickNameLike(String nickNameLike) {
-		this.nickNameLike = nickNameLike;
-	}
-
-	public void setSex(String sex) {
-		this.sex = sex;
-	}
-
-	public void setMobile(String mobile) {
-		this.mobile = mobile;
-	}
-
-	public void setMobileLike(String mobileLike) {
-		this.mobileLike = mobileLike;
-	}
-
-	public void setMail(String mail) {
-		this.mail = mail;
-	}
-
-	public void setMailLike(String mailLike) {
-		this.mailLike = mailLike;
-	}
-
-	public void setTelephoneLike(String telephoneLike) {
-		this.telephoneLike = telephoneLike;
-	}
-
-	public void setProvince(String province) {
-		this.province = province;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public void setCountry(String country) {
-		this.country = country;
-	}
-
-	public void setLanguage(String language) {
-		this.language = language;
-	}
-
-	public void setLocked(Integer locked) {
-		this.locked = locked;
-	}
-
-	public void setRemarkLike(String remarkLike) {
-		this.remarkLike = remarkLike;
-	}
-
-	public void setSubscribeTimeGreaterThanOrEqual(
-			Long subscribeTimeGreaterThanOrEqual) {
-		this.subscribeTimeGreaterThanOrEqual = subscribeTimeGreaterThanOrEqual;
-	}
-
-	public void setSubscribeTimeLessThanOrEqual(
-			Long subscribeTimeLessThanOrEqual) {
-		this.subscribeTimeLessThanOrEqual = subscribeTimeLessThanOrEqual;
-	}
-
-	public void setCreateDateGreaterThanOrEqual(
-			Date createDateGreaterThanOrEqual) {
-		this.createDateGreaterThanOrEqual = createDateGreaterThanOrEqual;
-	}
-
-	public void setCreateDateLessThanOrEqual(Date createDateLessThanOrEqual) {
-		this.createDateLessThanOrEqual = createDateLessThanOrEqual;
-	}
-
 	public WxFollowerQuery accountId(Long accountId) {
 		if (accountId == null) {
 			throw new RuntimeException("accountId is null");
@@ -280,86 +62,6 @@ public class WxFollowerQuery extends DataQuery {
 			throw new RuntimeException("accountIds is empty ");
 		}
 		this.accountIds = accountIds;
-		return this;
-	}
-
-	public WxFollowerQuery openId(String openId) {
-		if (openId == null) {
-			throw new RuntimeException("openId is null");
-		}
-		this.openId = openId;
-		return this;
-	}
-
-	public WxFollowerQuery openIds(List<String> openIds) {
-		if (openIds == null) {
-			throw new RuntimeException("openIds is empty ");
-		}
-		this.openIds = openIds;
-		return this;
-	}
-
-	public WxFollowerQuery nickNameLike(String nickNameLike) {
-		if (nickNameLike == null) {
-			throw new RuntimeException("nickName is null");
-		}
-		this.nickNameLike = nickNameLike;
-		return this;
-	}
-
-	public WxFollowerQuery sex(String sex) {
-		if (sex == null) {
-			throw new RuntimeException("sex is null");
-		}
-		this.sex = sex;
-		return this;
-	}
-
-	public WxFollowerQuery mobile(String mobile) {
-		if (mobile == null) {
-			throw new RuntimeException("mobile is null");
-		}
-		this.mobile = mobile;
-		return this;
-	}
-
-	public WxFollowerQuery mobileLike(String mobileLike) {
-		if (mobileLike == null) {
-			throw new RuntimeException("mobile is null");
-		}
-		this.mobileLike = mobileLike;
-		return this;
-	}
-
-	public WxFollowerQuery mail(String mail) {
-		if (mail == null) {
-			throw new RuntimeException("mail is null");
-		}
-		this.mail = mail;
-		return this;
-	}
-
-	public WxFollowerQuery mailLike(String mailLike) {
-		if (mailLike == null) {
-			throw new RuntimeException("mail is null");
-		}
-		this.mailLike = mailLike;
-		return this;
-	}
-
-	public WxFollowerQuery telephoneLike(String telephoneLike) {
-		if (telephoneLike == null) {
-			throw new RuntimeException("telephone is null");
-		}
-		this.telephoneLike = telephoneLike;
-		return this;
-	}
-
-	public WxFollowerQuery province(String province) {
-		if (province == null) {
-			throw new RuntimeException("province is null");
-		}
-		this.province = province;
 		return this;
 	}
 
@@ -379,48 +81,6 @@ public class WxFollowerQuery extends DataQuery {
 		return this;
 	}
 
-	public WxFollowerQuery language(String language) {
-		if (language == null) {
-			throw new RuntimeException("language is null");
-		}
-		this.language = language;
-		return this;
-	}
-
-	public WxFollowerQuery locked(Integer locked) {
-		if (locked == null) {
-			throw new RuntimeException("locked is null");
-		}
-		this.locked = locked;
-		return this;
-	}
-
-	public WxFollowerQuery remarkLike(String remarkLike) {
-		if (remarkLike == null) {
-			throw new RuntimeException("remark is null");
-		}
-		this.remarkLike = remarkLike;
-		return this;
-	}
-
-	public WxFollowerQuery subscribeTimeGreaterThanOrEqual(
-			Long subscribeTimeGreaterThanOrEqual) {
-		if (subscribeTimeGreaterThanOrEqual == null) {
-			throw new RuntimeException("subscribeTime is null");
-		}
-		this.subscribeTimeGreaterThanOrEqual = subscribeTimeGreaterThanOrEqual;
-		return this;
-	}
-
-	public WxFollowerQuery subscribeTimeLessThanOrEqual(
-			Long subscribeTimeLessThanOrEqual) {
-		if (subscribeTimeLessThanOrEqual == null) {
-			throw new RuntimeException("subscribeTime is null");
-		}
-		this.subscribeTimeLessThanOrEqual = subscribeTimeLessThanOrEqual;
-		return this;
-	}
-
 	public WxFollowerQuery createDateGreaterThanOrEqual(
 			Date createDateGreaterThanOrEqual) {
 		if (createDateGreaterThanOrEqual == null) {
@@ -437,6 +97,98 @@ public class WxFollowerQuery extends DataQuery {
 		}
 		this.createDateLessThanOrEqual = createDateLessThanOrEqual;
 		return this;
+	}
+
+	public Long getAccountId() {
+		return accountId;
+	}
+
+	public List<Long> getAccountIds() {
+		return accountIds;
+	}
+
+	public String getActorId() {
+		return actorId;
+	}
+
+	public List<String> getActorIds() {
+		return actorIds;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public Date getCreateDateGreaterThanOrEqual() {
+		return createDateGreaterThanOrEqual;
+	}
+
+	public Date getCreateDateLessThanOrEqual() {
+		return createDateLessThanOrEqual;
+	}
+
+	public String getLanguage() {
+		return language;
+	}
+
+	public Integer getLocked() {
+		return locked;
+	}
+
+	public String getMail() {
+		return mail;
+	}
+
+	public String getMailLike() {
+		if (mailLike != null && mailLike.trim().length() > 0) {
+			if (!mailLike.startsWith("%")) {
+				mailLike = "%" + mailLike;
+			}
+			if (!mailLike.endsWith("%")) {
+				mailLike = mailLike + "%";
+			}
+		}
+		return mailLike;
+	}
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public String getMobileLike() {
+		if (mobileLike != null && mobileLike.trim().length() > 0) {
+			if (!mobileLike.startsWith("%")) {
+				mobileLike = "%" + mobileLike;
+			}
+			if (!mobileLike.endsWith("%")) {
+				mobileLike = mobileLike + "%";
+			}
+		}
+		return mobileLike;
+	}
+
+	public String getNickNameLike() {
+		if (nickNameLike != null && nickNameLike.trim().length() > 0) {
+			if (!nickNameLike.startsWith("%")) {
+				nickNameLike = "%" + nickNameLike;
+			}
+			if (!nickNameLike.endsWith("%")) {
+				nickNameLike = nickNameLike + "%";
+			}
+		}
+		return nickNameLike;
+	}
+
+	public String getOpenId() {
+		return openId;
+	}
+
+	public List<String> getOpenIds() {
+		return openIds;
 	}
 
 	public String getOrderBy() {
@@ -518,6 +270,50 @@ public class WxFollowerQuery extends DataQuery {
 		return orderBy;
 	}
 
+	public String getProvince() {
+		return province;
+	}
+
+	public String getRemarkLike() {
+		if (remarkLike != null && remarkLike.trim().length() > 0) {
+			if (!remarkLike.startsWith("%")) {
+				remarkLike = "%" + remarkLike;
+			}
+			if (!remarkLike.endsWith("%")) {
+				remarkLike = remarkLike + "%";
+			}
+		}
+		return remarkLike;
+	}
+
+	public String getSex() {
+		return sex;
+	}
+
+	public String getSourceId() {
+		return sourceId;
+	}
+
+	public Long getSubscribeTimeGreaterThanOrEqual() {
+		return subscribeTimeGreaterThanOrEqual;
+	}
+
+	public Long getSubscribeTimeLessThanOrEqual() {
+		return subscribeTimeLessThanOrEqual;
+	}
+
+	public String getTelephoneLike() {
+		if (telephoneLike != null && telephoneLike.trim().length() > 0) {
+			if (!telephoneLike.startsWith("%")) {
+				telephoneLike = "%" + telephoneLike;
+			}
+			if (!telephoneLike.endsWith("%")) {
+				telephoneLike = telephoneLike + "%";
+			}
+		}
+		return telephoneLike;
+	}
+
 	@Override
 	public void initQueryColumns() {
 		super.initQueryColumns();
@@ -539,6 +335,227 @@ public class WxFollowerQuery extends DataQuery {
 		addColumn("remark", "REMARK");
 		addColumn("subscribeTime", "SUBSCRIBETIME_");
 		addColumn("createDate", "CREATEDATE_");
+	}
+
+	public WxFollowerQuery language(String language) {
+		if (language == null) {
+			throw new RuntimeException("language is null");
+		}
+		this.language = language;
+		return this;
+	}
+
+	public WxFollowerQuery locked(Integer locked) {
+		if (locked == null) {
+			throw new RuntimeException("locked is null");
+		}
+		this.locked = locked;
+		return this;
+	}
+
+	public WxFollowerQuery mail(String mail) {
+		if (mail == null) {
+			throw new RuntimeException("mail is null");
+		}
+		this.mail = mail;
+		return this;
+	}
+
+	public WxFollowerQuery mailLike(String mailLike) {
+		if (mailLike == null) {
+			throw new RuntimeException("mail is null");
+		}
+		this.mailLike = mailLike;
+		return this;
+	}
+
+	public WxFollowerQuery mobile(String mobile) {
+		if (mobile == null) {
+			throw new RuntimeException("mobile is null");
+		}
+		this.mobile = mobile;
+		return this;
+	}
+
+	public WxFollowerQuery mobileLike(String mobileLike) {
+		if (mobileLike == null) {
+			throw new RuntimeException("mobile is null");
+		}
+		this.mobileLike = mobileLike;
+		return this;
+	}
+
+	public WxFollowerQuery nickNameLike(String nickNameLike) {
+		if (nickNameLike == null) {
+			throw new RuntimeException("nickName is null");
+		}
+		this.nickNameLike = nickNameLike;
+		return this;
+	}
+
+	public WxFollowerQuery openId(String openId) {
+		if (openId == null) {
+			throw new RuntimeException("openId is null");
+		}
+		this.openId = openId;
+		return this;
+	}
+
+	public WxFollowerQuery openIds(List<String> openIds) {
+		if (openIds == null) {
+			throw new RuntimeException("openIds is empty ");
+		}
+		this.openIds = openIds;
+		return this;
+	}
+
+	public WxFollowerQuery province(String province) {
+		if (province == null) {
+			throw new RuntimeException("province is null");
+		}
+		this.province = province;
+		return this;
+	}
+
+	public WxFollowerQuery remarkLike(String remarkLike) {
+		if (remarkLike == null) {
+			throw new RuntimeException("remark is null");
+		}
+		this.remarkLike = remarkLike;
+		return this;
+	}
+
+	public void setAccountId(Long accountId) {
+		this.accountId = accountId;
+	}
+
+	public void setAccountIds(List<Long> accountIds) {
+		this.accountIds = accountIds;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public void setCreateDateGreaterThanOrEqual(
+			Date createDateGreaterThanOrEqual) {
+		this.createDateGreaterThanOrEqual = createDateGreaterThanOrEqual;
+	}
+
+	public void setCreateDateLessThanOrEqual(Date createDateLessThanOrEqual) {
+		this.createDateLessThanOrEqual = createDateLessThanOrEqual;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+
+	public void setLocked(Integer locked) {
+		this.locked = locked;
+	}
+
+	public void setMail(String mail) {
+		this.mail = mail;
+	}
+
+	public void setMailLike(String mailLike) {
+		this.mailLike = mailLike;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+	public void setMobileLike(String mobileLike) {
+		this.mobileLike = mobileLike;
+	}
+
+	public void setNickNameLike(String nickNameLike) {
+		this.nickNameLike = nickNameLike;
+	}
+
+	public void setOpenId(String openId) {
+		this.openId = openId;
+	}
+
+	public void setOpenIds(List<String> openIds) {
+		this.openIds = openIds;
+	}
+
+	public void setProvince(String province) {
+		this.province = province;
+	}
+
+	public void setRemarkLike(String remarkLike) {
+		this.remarkLike = remarkLike;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+
+	public void setSourceId(String sourceId) {
+		this.sourceId = sourceId;
+	}
+
+	public void setSubscribeTimeGreaterThanOrEqual(
+			Long subscribeTimeGreaterThanOrEqual) {
+		this.subscribeTimeGreaterThanOrEqual = subscribeTimeGreaterThanOrEqual;
+	}
+
+	public void setSubscribeTimeLessThanOrEqual(
+			Long subscribeTimeLessThanOrEqual) {
+		this.subscribeTimeLessThanOrEqual = subscribeTimeLessThanOrEqual;
+	}
+
+	public void setTelephoneLike(String telephoneLike) {
+		this.telephoneLike = telephoneLike;
+	}
+
+	public WxFollowerQuery sex(String sex) {
+		if (sex == null) {
+			throw new RuntimeException("sex is null");
+		}
+		this.sex = sex;
+		return this;
+	}
+
+	public WxFollowerQuery sourceId(String sourceId) {
+		if (sourceId == null) {
+			throw new RuntimeException("sourceId is null");
+		}
+		this.sourceId = sourceId;
+		return this;
+	}
+
+	public WxFollowerQuery subscribeTimeGreaterThanOrEqual(
+			Long subscribeTimeGreaterThanOrEqual) {
+		if (subscribeTimeGreaterThanOrEqual == null) {
+			throw new RuntimeException("subscribeTime is null");
+		}
+		this.subscribeTimeGreaterThanOrEqual = subscribeTimeGreaterThanOrEqual;
+		return this;
+	}
+
+	public WxFollowerQuery subscribeTimeLessThanOrEqual(
+			Long subscribeTimeLessThanOrEqual) {
+		if (subscribeTimeLessThanOrEqual == null) {
+			throw new RuntimeException("subscribeTime is null");
+		}
+		this.subscribeTimeLessThanOrEqual = subscribeTimeLessThanOrEqual;
+		return this;
+	}
+
+	public WxFollowerQuery telephoneLike(String telephoneLike) {
+		if (telephoneLike == null) {
+			throw new RuntimeException("telephone is null");
+		}
+		this.telephoneLike = telephoneLike;
+		return this;
 	}
 
 }

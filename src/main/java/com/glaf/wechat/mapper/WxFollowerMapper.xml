@@ -8,6 +8,7 @@
 		<id property="id" column="ID_" jdbcType="BIGINT" />
 		<result property="accountId" column="ACCOUNTID_" jdbcType="BIGINT" />
 		<result property="actorId" column="ACTORID_" jdbcType="VARCHAR" />
+		<result property="sourceId" column="SOURCEID_" jdbcType="VARCHAR" />
 		<result property="openId" column="OPENID_" jdbcType="VARCHAR" />
 		<result property="nickName" column="NICKNAME_" jdbcType="VARCHAR" />
 		<result property="sex" column="SEX_" jdbcType="VARCHAR" />
@@ -23,6 +24,8 @@
 		<result property="remark" column="REMARK" jdbcType="VARCHAR" />
 		<result property="subscribeTime" column="SUBSCRIBETIME_"
 			jdbcType="BIGINT" />
+		<result property="unsubscribeTime" column="UNSUBSCRIBETIME_"
+			jdbcType="BIGINT" />
 		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP" />
 	</resultMap>
 
@@ -36,6 +39,9 @@
 			</if>
 			<if test="actorId != null">
 				,ACTORID_
+			</if>
+			<if test="sourceId != null">
+				,SOURCEID_
 			</if>
 			<if test="openId != null">
 				,OPENID_
@@ -79,6 +85,9 @@
 			<if test="subscribeTime != null">
 				,SUBSCRIBETIME_
 			</if>
+			<if test="unsubscribeTime != null">
+				,UNSUBSCRIBETIME_
+			</if>
 			<if test="createDate != null">
 				,CREATEDATE_
 			</if>
@@ -92,6 +101,9 @@
 			</if>
 			<if test="actorId != null">
 				,#{actorId, jdbcType=VARCHAR}
+			</if>
+			<if test="sourceId != null">
+				,#{sourceId, jdbcType=VARCHAR}
 			</if>
 			<if test="openId != null">
 				,#{openId, jdbcType=VARCHAR}
@@ -134,6 +146,9 @@
 			</if>
 			<if test="subscribeTime != null">
 				,#{subscribeTime, jdbcType=BIGINT}
+			</if>
+			<if test="unsubscribeTime != null">
+				,#{unsubscribeTime, jdbcType=BIGINT}
 			</if>
 			<if test="createDate != null">
 				,#{createDate, jdbcType=TIMESTAMP}
@@ -184,6 +199,9 @@
 			</if>
 			<if test="subscribeTime != null">
 				SUBSCRIBETIME_ = #{subscribeTime, jdbcType=BIGINT},
+			</if>
+			<if test="unsubscribeTime != null">
+				UNSUBSCRIBETIME_ = #{unsubscribeTime, jdbcType=BIGINT},
 			</if>
 		</trim>
 		where
@@ -274,6 +292,10 @@
 					open="(" separator="," close=")">
 					#{x_actorId}
 				</foreach>
+			</if>
+			
+			<if test="sourceId != null and sourceId != '' ">
+				and E.SOURCEID_ = #{sourceId}
 			</if>
 
 			<if test="openId != null and openId != '' ">

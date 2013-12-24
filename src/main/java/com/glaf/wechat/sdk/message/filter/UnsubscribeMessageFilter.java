@@ -37,9 +37,9 @@ import com.glaf.wechat.util.Constants;
 import com.glaf.wechat.util.WxLogFactory;
 
 /**
- * 关注时回复
+ * 取消关注时回复
  */
-public class SubscribeMessageFilter extends AbstractMessageFilter implements
+public class UnsubscribeMessageFilter extends AbstractMessageFilter implements
 		IMessageFilter {
 
 	@Override
@@ -98,9 +98,9 @@ public class SubscribeMessageFilter extends AbstractMessageFilter implements
 			bean.setOpenId(message.getFromUserName());
 			bean.setActorId(message.getCustomer());
 			bean.setCreateTime(new Date());
-			bean.setFlag(Constants.SUBSCRIBE_LOG_FLAG);
+			bean.setFlag(Constants.UNSUBSCRIBE_LOG_FLAG);
 			bean.setIp(message.getRemoteIPAddr());
-			bean.setOperate("subscribe");
+			bean.setOperate("unsubscribe");
 			WxLogFactory.create(bean);
 		} catch (Exception ex) {
 		}
@@ -111,19 +111,20 @@ public class SubscribeMessageFilter extends AbstractMessageFilter implements
 			WxFollower follower = wxFollowerService.getWxFollower(
 					message.getToUserName(), message.getFromUserName());
 			if (follower == null) {
+				Date date = new Date();
 				follower = new WxFollower();
 				follower.setAccountId(message.getAccountId());
 				follower.setActorId(message.getCustomer());
 				follower.setSourceId(message.getToUserName());
 				follower.setOpenId(message.getFromUserName());
+				follower.setUnsubscribeTime(date.getTime());
 			}
-			Date date = new Date();
-			follower.setSubscribeTime(date.getTime());
-			follower.setLocked(0);
+			follower.setLocked(1);
 			wxFollowerService.save(follower);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
+
 		return null;
 	}
 

@@ -72,6 +72,14 @@ public interface WxFollowerService {
 	 */
 	WxFollower getWxFollower(Long id);
 
+	/**
+	 * 获取一条关注者信息
+	 * @param sourceId 原始微信ID
+	 * @param openId 关注者OPENID
+	 * @return
+	 */
+	WxFollower getWxFollower(String sourceId, String openId);
+
 	@Transactional
 	void insertAll(List<WxFollower> followers);
 

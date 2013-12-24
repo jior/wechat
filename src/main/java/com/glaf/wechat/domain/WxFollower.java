@@ -41,6 +41,9 @@ public class WxFollower implements Serializable, JSONable {
 
 	@Column(name = "ACTORID_", length = 50)
 	protected String actorId;
+	
+	@Column(name = "SOURCEID_", length = 200)
+	protected String sourceId;
 
 	@Column(name = "OPENID_", length = 200)
 	protected String openId;
@@ -84,6 +87,9 @@ public class WxFollower implements Serializable, JSONable {
 	@Column(name = "SUBSCRIBETIME_")
 	protected Long subscribeTime;
 
+	@Column(name = "UNSUBSCRIBETIME_")
+	protected Long unsubscribeTime;
+
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATEDATE_")
 	protected Date createDate;
@@ -112,6 +118,8 @@ public class WxFollower implements Serializable, JSONable {
 	public Long getAccountId() {
 		return this.accountId;
 	}
+	
+	
 
 	public String getActorId() {
 		return this.actorId;
@@ -173,12 +181,20 @@ public class WxFollower implements Serializable, JSONable {
 		return this.sex;
 	}
 
+	public String getSourceId() {
+		return sourceId;
+	}
+
 	public Long getSubscribeTime() {
 		return this.subscribeTime;
 	}
 
 	public String getTelephone() {
 		return this.telephone;
+	}
+
+	public Long getUnsubscribeTime() {
+		return unsubscribeTime;
 	}
 
 	@Override
@@ -257,12 +273,20 @@ public class WxFollower implements Serializable, JSONable {
 		this.sex = sex;
 	}
 
+	public void setSourceId(String sourceId) {
+		this.sourceId = sourceId;
+	}
+
 	public void setSubscribeTime(Long subscribeTime) {
 		this.subscribeTime = subscribeTime;
 	}
 
 	public void setTelephone(String telephone) {
 		this.telephone = telephone;
+	}
+
+	public void setUnsubscribeTime(Long unsubscribeTime) {
+		this.unsubscribeTime = unsubscribeTime;
 	}
 
 	public JSONObject toJsonObject() {

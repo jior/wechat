@@ -97,8 +97,8 @@ public class WxFollowerServiceImpl implements WxFollowerService {
 
 	@Transactional
 	public void save(WxFollower wxFollower) {
-		WxFollower bean = wxFollowerMapper.getWxFollowerByOpenId(wxFollower
-				.getOpenId());
+		WxFollower bean = this.getWxFollower(wxFollower.getSourceId(),
+				wxFollower.getOpenId());
 		if (bean != null) {
 			wxFollower.setMail(bean.getMail());
 			wxFollower.setMobile(bean.getMobile());
@@ -110,8 +110,17 @@ public class WxFollowerServiceImpl implements WxFollowerService {
 				wxFollower.setId(idGenerator.nextId());
 				wxFollower.setCreateDate(new Date());
 			}
+			if (wxFollower.getSubscribeTime() == null
+					|| wxFollower.getSubscribeTime() == 0) {
+				wxFollower.setSubscribeTime(getCurrentUnixTimestamp());
+			}
 			wxFollowerMapper.insertWxFollower(wxFollower);
 		}
+	}
+
+	public long getCurrentUnixTimestamp() {
+		Date date = new Date();
+		return (date.getTime());
 	}
 
 	@Transactional
@@ -141,6 +150,17 @@ public class WxFollowerServiceImpl implements WxFollowerService {
 	@javax.annotation.Resource
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
+	}
+
+	public WxFollower getWxFollower(String sourceId, String openId) {
+		WxFollowerQuery query = new WxFollowerQuery();
+		query.sourceId(sourceId);
+		query.openId(openId);
+		List<WxFollower> list = wxFollowerMapper.getWxFollowers(query);
+		if (list != null && !list.isEmpty()) {
+			return list.get(0);
+		}
+		return null;
 	}
 
 }

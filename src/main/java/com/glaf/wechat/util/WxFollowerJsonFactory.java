@@ -17,6 +17,8 @@
  */
 package com.glaf.wechat.util;
 
+import java.util.Date;
+
 import com.alibaba.fastjson.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -45,6 +47,9 @@ public class WxFollowerJsonFactory {
 		}
 		if (jsonObject.containsKey("actorId")) {
 			model.setActorId(jsonObject.getString("actorId"));
+		}
+		if (jsonObject.containsKey("sourceId")) {
+			model.setSourceId(jsonObject.getString("sourceId"));
 		}
 		if (jsonObject.containsKey("openId")) {
 			model.setOpenId(jsonObject.getString("openId"));
@@ -115,6 +120,9 @@ public class WxFollowerJsonFactory {
 		if (model.getActorId() != null) {
 			jsonObject.put("actorId", model.getActorId());
 		}
+		if (model.getSourceId() != null) {
+			jsonObject.put("sourceId", model.getSourceId());
+		}
 		if (model.getOpenId() != null) {
 			jsonObject.put("openId", model.getOpenId());
 		}
@@ -152,7 +160,21 @@ public class WxFollowerJsonFactory {
 		if (model.getRemark() != null) {
 			jsonObject.put("remark", model.getRemark());
 		}
-		jsonObject.put("subscribeTime", model.getSubscribeTime());
+		if (model.getSubscribeTime() != null) {
+			jsonObject.put("subscribeTime", model.getSubscribeTime());
+			jsonObject.put("subscribeTime_date",
+					DateUtils.getDate(new Date(model.getSubscribeTime())));
+			jsonObject.put("subscribeTime_datetime",
+					DateUtils.getDateTime(new Date(model.getSubscribeTime())));
+		}
+		if (model.getUnsubscribeTime() != null) {
+			jsonObject.put("unsubscribeTime", model.getUnsubscribeTime());
+			jsonObject.put("unsubscribeTime_date",
+					DateUtils.getDate(new Date(model.getUnsubscribeTime())));
+			jsonObject
+					.put("unsubscribeTime_datetime", DateUtils
+							.getDateTime(new Date(model.getUnsubscribeTime())));
+		}
 		if (model.getCreateDate() != null) {
 			jsonObject.put("createDate",
 					DateUtils.getDate(model.getCreateDate()));
@@ -173,6 +195,9 @@ public class WxFollowerJsonFactory {
 		if (model.getActorId() != null) {
 			jsonObject.put("actorId", model.getActorId());
 		}
+		if (model.getSourceId() != null) {
+			jsonObject.put("sourceId", model.getSourceId());
+		}
 		if (model.getOpenId() != null) {
 			jsonObject.put("openId", model.getOpenId());
 		}
@@ -210,7 +235,21 @@ public class WxFollowerJsonFactory {
 		if (model.getRemark() != null) {
 			jsonObject.put("remark", model.getRemark());
 		}
-		jsonObject.put("subscribeTime", model.getSubscribeTime());
+		if (model.getSubscribeTime() != null) {
+			jsonObject.put("subscribeTime", model.getSubscribeTime());
+			jsonObject.put("subscribeTime_date",
+					DateUtils.getDate(new Date(model.getSubscribeTime())));
+			jsonObject.put("subscribeTime_datetime",
+					DateUtils.getDateTime(new Date(model.getSubscribeTime())));
+		}
+		if (model.getUnsubscribeTime() != null) {
+			jsonObject.put("unsubscribeTime", model.getUnsubscribeTime());
+			jsonObject.put("unsubscribeTime_date",
+					DateUtils.getDate(new Date(model.getUnsubscribeTime())));
+			jsonObject
+					.put("unsubscribeTime_datetime", DateUtils
+							.getDateTime(new Date(model.getUnsubscribeTime())));
+		}
 		if (model.getCreateDate() != null) {
 			jsonObject.put("createDate",
 					DateUtils.getDate(model.getCreateDate()));
