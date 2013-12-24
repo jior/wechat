@@ -69,7 +69,7 @@ limitations under the License.
             </c:otherwise>
         </c:choose>
 		var params = jQuery("#iForm").formSerialize();
-	    alert(params);
+	    //alert(params);
 		jQuery.ajax({
 				   type: "POST",
 				   url: '<%=request.getContextPath()%>/website/wx/vote/post/${vote.id}',
