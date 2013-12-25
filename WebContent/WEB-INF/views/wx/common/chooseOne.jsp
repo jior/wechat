@@ -52,7 +52,7 @@
     var setting = {
 			async: {
 				enable: true,
-				url: "<%=request.getContextPath()%>/mx/wx/wxContent/treeJson/${accountId}?selecteds=${selecteds}&type=${type}&accountId=${accountId}",
+				url: "<%=request.getContextPath()%>/rs/wx/content/treeJson/${accountId}?selecteds=${selecteds}&type=${type}&accountId=${accountId}",
                 dataFilter: filter
 			},
 			check: {

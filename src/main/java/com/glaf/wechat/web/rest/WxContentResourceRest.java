@@ -19,6 +19,8 @@
 package com.glaf.wechat.web.rest;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,6 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -38,14 +41,22 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.glaf.core.base.BaseTree;
+import com.glaf.core.base.TreeModel;
 import com.glaf.core.identity.User;
 import com.glaf.core.security.IdentityFactory;
+import com.glaf.core.security.LoginContext;
+import com.glaf.core.tree.helper.TreeHelper;
 import com.glaf.core.util.PageResult;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
+import com.glaf.core.util.StringTools;
 import com.glaf.core.util.Tools;
+
+import com.glaf.wechat.domain.WxCategory;
 import com.glaf.wechat.domain.WxContent;
 import com.glaf.wechat.query.WxContentQuery;
+import com.glaf.wechat.service.WxCategoryService;
 import com.glaf.wechat.service.WxContentService;
 
 @Controller
@@ -53,6 +64,8 @@ import com.glaf.wechat.service.WxContentService;
 public class WxContentResourceRest {
 	protected static final Log logger = LogFactory
 			.getLog(WxContentResourceRest.class);
+
+	protected WxCategoryService wxCategoryService;
 
 	protected WxContentService wxContentService;
 
@@ -138,8 +151,81 @@ public class WxContentResourceRest {
 	}
 
 	@javax.annotation.Resource
+	public void setWxCategoryService(WxCategoryService wxCategoryService) {
+		this.wxCategoryService = wxCategoryService;
+	}
+
+	@javax.annotation.Resource
 	public void setWxContentService(WxContentService wxContentService) {
 		this.wxContentService = wxContentService;
+	}
+
+	@GET
+	@POST
+	@Path("/treeJson/{accountId}")
+	@ResponseBody
+	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
+	public byte[] treeJson(@PathParam("accountId") Long accountId,
+			@Context HttpServletRequest request) throws IOException {
+		LoginContext loginContext = RequestUtils.getLoginContext(request);
+		String selecteds = request.getParameter("selecteds");
+		List<String> checkIds = new ArrayList<String>();
+		if (StringUtils.isNotEmpty(selecteds)) {
+			checkIds = StringTools.split(selecteds);
+		}
+
+		String type = request.getParameter("type");
+		JSONObject result = new JSONObject();
+		List<WxCategory> categories = wxCategoryService.getCategoryList(
+				accountId, type);
+		if (categories != null && !categories.isEmpty()) {
+			Map<Long, TreeModel> treeMap = new HashMap<Long, TreeModel>();
+			List<TreeModel> treeModels = new ArrayList<TreeModel>();
+			List<Long> categoryIds = new ArrayList<Long>();
+			for (WxCategory category : categories) {
+				TreeModel tree = new BaseTree();
+				tree.setId(category.getId());
+				tree.setParentId(category.getParentId());
+				tree.setCode(category.getCode());
+				tree.setName(category.getName());
+				tree.setSortNo(category.getSort());
+				tree.setDescription(category.getDesc());
+				tree.setCreateBy(category.getCreateBy());
+				tree.setIconCls("tree_folder");
+				tree.setTreeId(category.getTreeId());
+				tree.setUrl(category.getUrl());
+				treeModels.add(tree);
+				categoryIds.add(category.getId());
+				treeMap.put(category.getId(), tree);
+			}
+			WxContentQuery query = new WxContentQuery();
+			query.categoryIds(categoryIds);
+			query.createBy(loginContext.getActorId());
+			List<WxContent> contents = wxContentService.list(query);
+			if (contents != null && !contents.isEmpty()) {
+				for (WxContent content : contents) {
+					TreeModel parent = treeMap.get(content.getCategoryId());
+					TreeModel tree = new BaseTree();
+					tree.setId(content.getId());
+					tree.setParentId(parent.getId());
+					tree.setName(content.getTitle());
+					tree.setSortNo(content.getSort());
+					tree.setCreateBy(content.getCreateBy());
+					tree.setIconCls("tree_leaf");
+					tree.setUrl(content.getUrl());
+					if (checkIds.contains(String.valueOf(content.getId()))) {
+						tree.setChecked(true);
+					}
+					treeModels.add(tree);
+				}
+			}
+			logger.debug("treeModels:" + treeModels.size());
+			TreeHelper treeHelper = new TreeHelper();
+			JSONArray jsonArray = treeHelper.getTreeJSONArray(treeModels);
+			logger.debug(jsonArray.toJSONString());
+			return jsonArray.toJSONString().getBytes("UTF-8");
+		}
+		return result.toJSONString().getBytes("UTF-8");
 	}
 
 	@GET
