@@ -1,5 +1,7 @@
 package com.glaf.wechat.web.springmvc;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
@@ -12,8 +14,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.util.RequestUtils;
+import com.glaf.wechat.domain.WxModule;
+import com.glaf.wechat.query.WxModuleQuery;
 import com.glaf.wechat.service.WxCategoryService;
 import com.glaf.wechat.service.WxContentService;
+import com.glaf.wechat.service.WxModuleService;
 
 @Controller("/wx/wxChoose")
 @RequestMapping("/wx/wxChoose")
@@ -26,6 +31,8 @@ public class WxChooseController {
 
 	protected WxContentService wxContentService;
 
+	protected WxModuleService wxModuleService;
+
 	public WxChooseController() {
 
 	}
@@ -33,6 +40,12 @@ public class WxChooseController {
 	@RequestMapping("/chooseOne")
 	public ModelAndView chooseOne(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
+
+		WxModuleQuery query = new WxModuleQuery();
+		query.locked(0);
+
+		List<WxModule> modules = wxModuleService.list(query);
+		request.setAttribute("modules", modules);
 
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {
@@ -55,6 +68,11 @@ public class WxChooseController {
 	@javax.annotation.Resource
 	public void setWxContentService(WxContentService wxContentService) {
 		this.wxContentService = wxContentService;
+	}
+
+	@javax.annotation.Resource
+	public void setWxModuleService(WxModuleService wxModuleService) {
+		this.wxModuleService = wxModuleService;
 	}
 
 }

@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.wechat.mapper.WxModuleMapper">
+
+	<resultMap id="wxModuleResultMap" type="com.glaf.wechat.domain.WxModule">
+		<id property="id" column="ID_" jdbcType="BIGINT" />
+		<result property="code" column="CODE_" jdbcType="VARCHAR" />
+		<result property="title" column="TITLE_" jdbcType="VARCHAR" />
+		<result property="content" column="CONTENT_" jdbcType="VARCHAR" />
+		<result property="link" column="LINK_" jdbcType="VARCHAR" />
+		<result property="listLink" column="LISTLINK_" jdbcType="VARCHAR" />
+		<result property="linkType" column="LINKTYPE_" jdbcType="VARCHAR" />
+		<result property="idField" column="IDFIELD_" jdbcType="VARCHAR" />
+		<result property="subjectField" column="SUBJECTFIELD_"
+			jdbcType="VARCHAR" />
+		<result property="moduleId" column="MODULEID_" jdbcType="VARCHAR" />
+		<result property="moduleName" column="MODULENAME_" jdbcType="VARCHAR" />
+		<result property="sql" column="SQL_" jdbcType="VARCHAR" />
+		<result property="json" column="JSON_" jdbcType="VARCHAR" />
+		<result property="locked" column="LOCKED_" jdbcType="INTEGER" />
+	</resultMap>
+
+
+	<insert id="insertWxModule" parameterType="com.glaf.wechat.domain.WxModule">
+		insert into WX_MODULE
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ID_
+			<if test="code != null">
+				,CODE_
+			</if>
+			<if test="title != null">
+				,TITLE_
+			</if>
+			<if test="content != null">
+				,CONTENT_
+			</if>
+			<if test="link != null">
+				,LINK_
+			</if>
+			<if test="listLink != null">
+				,LISTLINK_
+			</if>
+			<if test="linkType != null">
+				,LINKTYPE_
+			</if>
+			<if test="idField != null">
+				,IDFIELD_
+			</if>
+			<if test="subjectField != null">
+				,SUBJECTFIELD_
+			</if>
+			<if test="moduleId != null">
+				,MODULEID_
+			</if>
+			<if test="moduleName != null">
+				,MODULENAME_
+			</if>
+			<if test="sql != null">
+				,SQL_
+			</if>
+			<if test="json != null">
+				,JSON_
+			</if>
+			<if test="locked != null">
+				,LOCKED_
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			#{id, jdbcType=BIGINT}
+
+			<if test="code != null">
+				,#{code, jdbcType=VARCHAR}
+			</if>
+			<if test="title != null">
+				,#{title, jdbcType=VARCHAR}
+			</if>
+			<if test="content != null">
+				,#{content, jdbcType=VARCHAR}
+			</if>
+			<if test="link != null">
+				,#{link, jdbcType=VARCHAR}
+			</if>
+			<if test="listLink != null">
+				,#{listLink, jdbcType=VARCHAR}
+			</if>
+			<if test="linkType != null">
+				,#{linkType, jdbcType=VARCHAR}
+			</if>
+			<if test="idField != null">
+				,#{idField, jdbcType=VARCHAR}
+			</if>
+			<if test="subjectField != null">
+				,#{subjectField, jdbcType=VARCHAR}
+			</if>
+			<if test="moduleId != null">
+				,#{moduleId, jdbcType=VARCHAR}
+			</if>
+			<if test="moduleName != null">
+				,#{moduleName, jdbcType=VARCHAR}
+			</if>
+			<if test="sql != null">
+				,#{sql, jdbcType=VARCHAR}
+			</if>
+			<if test="json != null">
+				,#{json, jdbcType=VARCHAR}
+			</if>
+			<if test="locked != null">
+				,#{locked, jdbcType=INTEGER}
+			</if>
+		</trim>
+	</insert>
+
+
+	<update id="updateWxModule" parameterType="com.glaf.wechat.domain.WxModule">
+		update WX_MODULE
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">
+			<if test="code != null">
+				CODE_ = #{code, jdbcType=VARCHAR},
+			</if>
+			<if test="title != null">
+				TITLE_ = #{title, jdbcType=VARCHAR},
+			</if>
+			<if test="content != null">
+				CONTENT_ = #{content, jdbcType=VARCHAR},
+			</if>
+			<if test="link != null">
+				LINK_ = #{link, jdbcType=VARCHAR},
+			</if>
+			<if test="listLink != null">
+				LISTLINK_ = #{listLink, jdbcType=VARCHAR},
+			</if>
+			<if test="linkType != null">
+				LINKTYPE_ = #{linkType, jdbcType=VARCHAR},
+			</if>
+			<if test="idField != null">
+				IDFIELD_ = #{idField, jdbcType=VARCHAR},
+			</if>
+			<if test="subjectField != null">
+				SUBJECTFIELD_ = #{subjectField, jdbcType=VARCHAR},
+			</if>
+			<if test="moduleId != null">
+				MODULEID_ = #{moduleId, jdbcType=VARCHAR},
+			</if>
+			<if test="moduleName != null">
+				MODULENAME_ = #{moduleName, jdbcType=VARCHAR},
+			</if>
+			<if test="sql != null">
+				SQL_ = #{sql, jdbcType=VARCHAR},
+			</if>
+			<if test="json != null">
+				JSON_ = #{json, jdbcType=VARCHAR},
+			</if>
+			<if test="locked != null">
+				LOCKED_ = #{locked, jdbcType=INTEGER},
+			</if>
+		</trim>
+		where
+		ID_ = #{id, jdbcType=BIGINT}
+
+	</update>
+
+
+	<delete id="deleteWxModuleById" parameterType="long">
+		delete from
+		WX_MODULE
+		where ID_ = #{id}
+	</delete>
+
+
+	<delete id="deleteWxModules" parameterType="com.glaf.wechat.query.WxModuleQuery">
+		delete from WX_MODULE
+		where (
+		ID_ IN
+		<foreach item="x_id" index="index" collection="ids" open="("
+			separator="," close=")">
+			#{x_id}
+		</foreach>
+		)
+	</delete>
+
+
+	<select id="getWxModuleById" parameterType="long" resultMap="wxModuleResultMap">
+		select * from WX_MODULE where ID_ = #{id}
+	</select>
+
+
+	<select id="getWxModules" parameterType="com.glaf.wechat.query.WxModuleQuery"
+		resultMap="wxModuleResultMap">
+		select distinct E.*
+		<include refid="selectWxModulesSql" />
+		<choose>
+			<when test="orderBy != null">
+				order by ${orderBy}
+			</when>
+			<otherwise>
+				order by E.ID_ desc
+			</otherwise>
+		</choose>
+	</select>
+
+
+	<select id="getWxModuleCount" parameterType="com.glaf.wechat.query.WxModuleQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectWxModulesSql" />
+	</select>
+
+
+	<sql id="selectWxModulesSql">
+
+		from WX_MODULE E
+
+		<where>
+			1 = 1
+
+			<if test="code != null and code != '' ">
+				and E.CODE_ = #{code}
+			</if>
+
+			<if test="codeLike != null and codeLike != '' ">
+				and E.CODE_ like #{codeLike}
+			</if>
+
+			<if test="codes != null and codes.size !=0">
+				and E.CODE_ IN
+				<foreach item="x_code" index="index" collection="codes"
+					open="(" separator="," close=")">
+					#{x_code}
+				</foreach>
+			</if>
+
+			<if test="titleLike != null and titleLike != '' ">
+				and E.TITLE_ like #{titleLike}
+			</if>
+
+			<if test="linkType != null and linkType != '' ">
+				and E.LINKTYPE_ = #{linkType}
+			</if>
+
+			<if test="moduleId != null and moduleId != '' ">
+				and E.MODULEID_ = #{moduleId}
+			</if>
+
+			<if test="moduleIds != null and moduleIds.size !=0">
+				and E.MODULEID_ IN
+				<foreach item="x_moduleId" index="index" collection="moduleIds"
+					open="(" separator="," close=")">
+					#{x_moduleId}
+				</foreach>
+			</if>
+
+			<if test="moduleNameLike != null and moduleNameLike != '' ">
+				and E.MODULENAME_ like #{moduleNameLike}
+			</if>
+
+			<if test="locked != null">
+				and E.LOCKED_ = #{locked}
+			</if>
+
+		</where>
+	</sql>
+
+</mapper>

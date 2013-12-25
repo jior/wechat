@@ -4,17 +4,14 @@
 <%
 	request.setAttribute("contextPath", request.getContextPath());
 	String actorId = com.glaf.core.util.RequestUtils.getActorId(request);
-	com.glaf.core.identity.User user = com.glaf.core.security.IdentityFactory.getUser(actorId);
+    String theme = com.glaf.core.util.RequestUtils.getTheme(request);
+    request.setAttribute("theme", theme);	 
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>微站内容</title>
-<%
-    String theme = com.glaf.core.util.RequestUtils.getTheme(request);
-    request.setAttribute("theme", theme);
-%> 
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/artDialog/skins/default.css"/>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css"/>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/ztree/css/zTreeStyle/zTreeStyle.css"/>
@@ -135,6 +132,57 @@
 		window.close(); 
 	}
 
+
+
+    jQuery(function(){
+		jQuery('#mydatagrid').datagrid({
+				width:580,
+				height:280,
+				fit:true,
+				fitColumns:true,
+				nowrap: false,
+				striped: true,
+				collapsible:true,
+				url:'<%=request.getContextPath()%>/mx/wx/wxModule/dataJson?accountId=${accountId}&id=1',
+				remoteSort: false,
+				singleSelect:true,
+				idField:'id',
+				columns:[[
+	                {title:'序号',field:'startIndex',width:80,sortable:false},
+					{title:'标题',field:'title', width:180},
+					{title:'链接',field:'url', width:320}
+				]],
+				rownumbers:false
+			});
+	});
+
+	function loadMMData(url){
+		  jQuery.get(url,{qq:'xx'},function(data){
+		      //var text = JSON.stringify(data); 
+              //alert(text);
+			  jQuery('#mydatagrid').datagrid('loadData', data);
+		  },'json');
+	}
+
+	function reloadMYModule(){
+		var id = document.getElementById('mx_id').value;
+        var url = '<%=request.getContextPath()%>/mx/wx/wxModule/dataJson?accountId=${accountId}&id='+id;
+        loadMMData(url);
+	}
+
+	function chooseModuleData(){
+	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
+	    if (selected){
+		    //alert(selected.code+":"+selected.name+":"+selected.addr+":"+selected.col4);
+			var parent_window = getOpener();
+			var x_elementId = parent_window.document.getElementById("${elementId}");
+            var x_element_name = parent_window.document.getElementById("${elementName}");
+			x_elementId.value=selected.url;
+			x_element_name.value=selected.url;
+			window.close();
+	    }
+	}
+
 </script>
 <style type="text/css">
 .ztree li span.button.tree_folder_ico_open{margin-right:2px; background: url(${contextPath}/icons/icons/folder-open.gif) no-repeat scroll 0 0 transparent; vertical-align:top; *vertical-align:middle}
@@ -167,11 +215,27 @@
 	   <div title="微站首页" data-options="closable:false" style="padding:10px">
 	     <input id="microUrl" name="microUrl" type="text" 
 			    class="easyui-validatebox x-text" size="80"
-				value="<%=com.glaf.wechat.util.WechatUtils.getServiceUrl(request)%>/website/wx/content/index/<%=user.getId()%>"/>
+				value="<%=com.glaf.wechat.util.WechatUtils.getServiceUrl(request)%>/website/wx/content/index/${accountId}"/>
 		  <br>
 		  <br>
 		  <input type="button" value=" 确定 " onclick="javascript:chooseMyHomeData();" class="btnGreen">
 		  <br>
+	   </div>
+	   <div title="功能模块" data-options="closable:false" style="padding:10px">
+	      <select id="mx_id" name="mx_id" onchange="javascript:reloadMYModule();">
+			 <c:forEach items="${modules}" var="module">
+			   <option value="${module.id}">${module.moduleName}</option>
+             </c:forEach>
+	      </select>
+		  &nbsp;
+		  <input type="button" value=" 确定 " onclick="javascript:chooseModuleData();" class="btnGreen">
+	      <br/>
+		  <br/>
+		  <table id="mydatagrid"></table>
+		  <br/>
+		  <br/>
+		  <input type="button" value=" 确定 " onclick="javascript:chooseModuleData();" class="btnGreen">
+		  <br/>
 	   </div>
 	</div>
   </form>
