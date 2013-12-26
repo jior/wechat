@@ -52,13 +52,13 @@
 
 		 
 	function addNew(){
-	    var link="<%=request.getContextPath()%>/mx/wx/wxFollower/edit?fromUrl=${fromUrl}";
+	    var link="<%=request.getContextPath()%>/mx/wx/wxFollower/edit?fromUrl=${fromUrl}&accountId=${accountId}";
 	    //art.dialog.open(link, { height: 420, width: 680, title: "添加记录", lock: true, scrollbars:"no" }, false);
 		location.href=link;
 	}
 
 	function onRowClick(rowIndex, row){
-	    var link = '<%=request.getContextPath()%>/mx/wx/wxFollower/edit?id='+row.id+'&fromUrl=${fromUrl}';
+	    var link = '<%=request.getContextPath()%>/mx/wx/wxFollower/edit?id='+row.id+'&fromUrl=${fromUrl}&accountId=${accountId}';
 	    //art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"no" }, false);
 		location.href=link;
 	}
@@ -83,7 +83,7 @@
 	    }
 	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
 	    if (selected ){
-		  var link = '<%=request.getContextPath()%>/mx/wx/wxFollower/edit?id='+selected.id+'&fromUrl=${fromUrl}';
+		  var link = '<%=request.getContextPath()%>/mx/wx/wxFollower/edit?id='+selected.id+'&fromUrl=${fromUrl}&accountId=${accountId}';
 		  //art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"no" }, false);
 		  location.href=link;
 	    }
@@ -97,7 +97,7 @@
 		}
 		var selected = jQuery('#mydatagrid').datagrid('getSelected');
 		if (selected ){
-		    location.href='<%=request.getContextPath()%>/mx/wx/wxFollower/edit?readonly=true&id='+selected.id+'&fromUrl=${fromUrl}';
+		    location.href='<%=request.getContextPath()%>/mx/wx/wxFollower/edit?readonly=true&id='+selected.id+'&fromUrl=${fromUrl}&accountId=${accountId}';
 		}
 	}
 
@@ -160,24 +160,6 @@
             //alert(text);
             jQuery('#mydatagrid').datagrid('loadData', data);
         },'json');
-	}
-
-	function searchData(){
-        var params = jQuery("#searchForm").formSerialize();
-        jQuery.ajax({
-                    type: "POST",
-                    url: '<%=request.getContextPath()%>/mx/wx/wxFollower/json',
-                    dataType:  'json',
-                    data: params,
-                    error: function(data){
-                              alert('服务器处理错误！');
-                    },
-                    success: function(data){
-                              jQuery('#mydatagrid').datagrid('loadData', data);
-                    }
-                  });
-
-	    jQuery('#dlg').dialog('close');
 	}
 
 	function fetchFollower(type){
