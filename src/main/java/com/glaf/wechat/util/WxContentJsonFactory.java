@@ -18,6 +18,8 @@
 
 package com.glaf.wechat.util;
 
+import java.util.StringTokenizer;
+
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -155,9 +157,10 @@ public class WxContentJsonFactory {
 		if (model.getAccountId() != null) {
 			jsonObject.put("accountId", model.getAccountId());
 		}
-		
+
 		if (model.getTitle() != null) {
 			jsonObject.put("title", model.getTitle());
+			jsonObject.put("subject", model.getTitle());
 		}
 		if (model.getContent() != null) {
 			jsonObject.put("content", model.getContent());
@@ -181,6 +184,15 @@ public class WxContentJsonFactory {
 		}
 		if (model.getKeywords() != null) {
 			jsonObject.put("keywords", model.getKeywords());
+			JSONArray arrayObject = new JSONArray();
+			StringTokenizer token = new StringTokenizer(model.getKeywords());
+			while (token.hasMoreTokens()) {
+				String str = token.nextToken();
+				if (str.length() > 1) {
+					arrayObject.add(str);
+				}
+			}
+			jsonObject.put("tags", arrayObject);
 		}
 		jsonObject.put("keywordsCount", model.getKeywordsCount());
 		if (model.getKeywordsMatchType() != null) {
@@ -281,6 +293,7 @@ public class WxContentJsonFactory {
 		}
 		if (model.getTitle() != null) {
 			jsonObject.put("title", model.getTitle());
+			jsonObject.put("subject", model.getTitle());
 		}
 		if (model.getContent() != null) {
 			jsonObject.put("content", model.getContent());
@@ -304,6 +317,15 @@ public class WxContentJsonFactory {
 		}
 		if (model.getKeywords() != null) {
 			jsonObject.put("keywords", model.getKeywords());
+			ArrayNode arrayObject = new ObjectMapper().createArrayNode();
+			StringTokenizer token = new StringTokenizer(model.getKeywords());
+			while (token.hasMoreTokens()) {
+				String str = token.nextToken();
+				if (str.length() > 1) {
+					arrayObject.add(str);
+				}
+			}
+			jsonObject.put("tags", arrayObject);
 		}
 		jsonObject.put("keywordsCount", model.getKeywordsCount());
 		if (model.getKeywordsMatchType() != null) {
