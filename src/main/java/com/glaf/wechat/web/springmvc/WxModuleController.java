@@ -71,6 +71,8 @@ public class WxModuleController {
 			String link = wxModule.getLink();
 			String list_link = wxModule.getLink();
 			for (Map<String, Object> row : dataList) {
+				row.put("accountId", accountId);
+
 				JSONObject json = new JSONObject();
 
 				Set<Entry<String, Object>> entrySet = row.entrySet();
@@ -271,6 +273,7 @@ public class WxModuleController {
 			wxModule.setSql(request.getParameter("sql"));
 			wxModule.setJson(request.getParameter("json"));
 			wxModule.setLocked(RequestUtils.getInt(request, "locked"));
+			wxModule.setSort(RequestUtils.getInt(request, "sort"));
 
 			wxModuleService.save(wxModule);
 		}
@@ -300,6 +303,7 @@ public class WxModuleController {
 				wxModule.setSql(request.getParameter("sql"));
 				wxModule.setJson(request.getParameter("json"));
 				wxModule.setLocked(RequestUtils.getInt(request, "locked"));
+				wxModule.setSort(RequestUtils.getInt(request, "sort"));
 				this.wxModuleService.save(wxModule);
 				return ResponseUtils.responseJsonResult(true);
 			} catch (Exception ex) {
@@ -335,6 +339,7 @@ public class WxModuleController {
 				wxModule.setSql(request.getParameter("sql"));
 				wxModule.setJson(request.getParameter("json"));
 				wxModule.setLocked(RequestUtils.getInt(request, "locked"));
+				wxModule.setSort(RequestUtils.getInt(request, "sort"));
 				wxModuleService.save(wxModule);
 			}
 		}

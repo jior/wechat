@@ -137,7 +137,7 @@
     jQuery(function(){
 		jQuery('#mydatagrid').datagrid({
 				width:580,
-				height:280,
+				height:320,
 				fit:true,
 				fitColumns:true,
 				nowrap: false,
@@ -203,7 +203,7 @@
   
   <div data-options="region:'center',border:false,cache:true">
   <form id="iForm" name="iForm" method="post">
-    <div class="easyui-tabs" style="width:680px;height:350px">
+    <div class="easyui-tabs" style="width:680px;height:460px">
 	   <div title="微站内容" data-options="closable:false" style="padding:10px">
 	    <input type="button" value=" 确定 " onclick="javascript:chooseMyTreeData();" class="btnGreen">
 		<br>
@@ -229,11 +229,9 @@
 	      </select>
 		  &nbsp;
 		  <input type="button" value=" 确定 " onclick="javascript:chooseModuleData();" class="btnGreen">
-	      <br/>
-		  <br/>
+		  <br/><br/>
 		  <table id="mydatagrid"></table>
-		  <br/>
-		  <br/>
+		  <br/><br/>
 		  <input type="button" value=" 确定 " onclick="javascript:chooseModuleData();" class="btnGreen">
 		  <br/>
 	   </div>

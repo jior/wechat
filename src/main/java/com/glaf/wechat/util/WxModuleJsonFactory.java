@@ -69,6 +69,9 @@ public class WxModuleJsonFactory {
 		if (jsonObject.containsKey("locked")) {
 			model.setLocked(jsonObject.getInteger("locked"));
 		}
+		if (jsonObject.containsKey("sort")) {
+			model.setSort(jsonObject.getInteger("sort"));
+		}
 
 		return model;
 	}
@@ -115,6 +118,7 @@ public class WxModuleJsonFactory {
 			jsonObject.put("json", model.getJson());
 		}
 		jsonObject.put("locked", model.getLocked());
+		jsonObject.put("sort", model.getSort());
 		return jsonObject;
 	}
 
@@ -160,6 +164,7 @@ public class WxModuleJsonFactory {
 			jsonObject.put("json", model.getJson());
 		}
 		jsonObject.put("locked", model.getLocked());
+		jsonObject.put("sort", model.getSort());
 		return jsonObject;
 	}
 

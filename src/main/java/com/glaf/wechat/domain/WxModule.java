@@ -20,6 +20,7 @@ package com.glaf.wechat.domain;
 
 import java.io.*;
 import java.util.*;
+
 import javax.persistence.*;
 
 import com.alibaba.fastjson.*;
@@ -78,6 +79,9 @@ public class WxModule implements Serializable, JSONable {
 
 	@Column(name = "LOCKED_", nullable = false)
 	protected int locked;
+
+	@Column(name = "SORT_")
+	protected int sort;
 
 	@javax.persistence.Transient
 	protected List<Map<String, Object>> dataList = new ArrayList<Map<String, Object>>();
@@ -146,6 +150,10 @@ public class WxModule implements Serializable, JSONable {
 
 	public String getModuleName() {
 		return this.moduleName;
+	}
+
+	public int getSort() {
+		return sort;
 	}
 
 	public String getSql() {
@@ -218,6 +226,10 @@ public class WxModule implements Serializable, JSONable {
 
 	public void setModuleName(String moduleName) {
 		this.moduleName = moduleName;
+	}
+
+	public void setSort(int sort) {
+		this.sort = sort;
 	}
 
 	public void setSql(String sql) {
