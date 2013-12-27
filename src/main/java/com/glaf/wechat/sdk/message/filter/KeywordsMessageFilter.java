@@ -32,7 +32,9 @@ import com.glaf.wechat.domain.WxLog;
 import com.glaf.wechat.query.WxContentQuery;
 import com.glaf.wechat.query.WxKeywordsQuery;
 import com.glaf.wechat.sdk.message.ItemArticle;
+import com.glaf.wechat.sdk.message.ItemMusic;
 import com.glaf.wechat.sdk.message.Message;
+import com.glaf.wechat.sdk.message.ResponseMusicMessage;
 import com.glaf.wechat.sdk.message.ResponseNewsMessage;
 import com.glaf.wechat.sdk.message.TextMessage;
 import com.glaf.wechat.service.WxContentService;
@@ -59,6 +61,20 @@ public class KeywordsMessageFilter extends AbstractMessageFilter implements
 					|| StringUtils.equals(content, "首页")) {
 
 			}
+
+			try {
+				WxLog bean = new WxLog();
+				bean.setOpenId(message.getFromUserName());
+				bean.setActorId(message.getCustomer());
+				bean.setCreateTime(new Date());
+				bean.setFlag(Constants.KEYWORDS_LOG_FLAG);// 关键字回复
+				bean.setIp(message.getRemoteIPAddr());
+				bean.setOperate("keywords");
+				bean.setContent(content);
+				WxLogFactory.create(bean);
+			} catch (Exception ex) {
+			}
+
 			WxContentService wxContentService = ContextFactory
 					.getBean("wxContentService");
 			WxKeywordsService wxKeywordsService = ContextFactory
@@ -78,6 +94,40 @@ public class KeywordsMessageFilter extends AbstractMessageFilter implements
 				q.type("K");
 				List<WxContent> rows = wxContentService.list(q);
 				if (rows != null && !rows.isEmpty()) {
+					if (rows.size() == 1) {
+						WxContent item = rows.get(0);
+						if (StringUtils.equals(item.getMsgType(),
+								MESSAGE_RESPONSE_IMAGE)) {
+
+						} else if (StringUtils.equals(item.getMsgType(),
+								MESSAGE_RESPONSE_MUSIC)) {
+							ResponseMusicMessage musicMessage = new ResponseMusicMessage();
+							ItemMusic music = new ItemMusic();
+							music.setDescription(item.getSummary());
+							music.setTitle(item.getTitle());
+							if (StringUtils.isNotEmpty(item.getUrl())) {
+								if (StringUtils.startsWith(item.getUrl(),
+										"/wx/upload/")) {
+									String url = message.getServiceUrl()
+											+ item.getUrl();
+									music.setMusicUrl(url);
+									music.setHqMusicUrl(url);
+								} else {
+									music.setMusicUrl(item.getUrl());
+									music.setHqMusicUrl(item.getUrl());
+								}
+							}
+							musicMessage.setMsgType(MESSAGE_RESPONSE_MUSIC);
+							musicMessage.setMusic(music);
+							return musicMessage;
+						} else if (StringUtils.equals(item.getMsgType(),
+								MESSAGE_RESPONSE_VOICE)) {
+
+						} else if (StringUtils.equals(item.getMsgType(),
+								MESSAGE_RESPONSE_VIDEO)) {
+
+						}
+					}
 					ResponseNewsMessage newsMessage = new ResponseNewsMessage();
 					newsMessage.setCount(rows.size());
 					for (WxContent c : rows) {
@@ -121,19 +171,6 @@ public class KeywordsMessageFilter extends AbstractMessageFilter implements
 					}
 					logger.debug(msg.getContent() + " reply content:"
 							+ newsMessage.getArticleItems().size());
-
-					try {
-						WxLog bean = new WxLog();
-						bean.setOpenId(message.getFromUserName());
-						bean.setActorId(message.getCustomer());
-						bean.setCreateTime(new Date());
-						bean.setFlag(Constants.KEYWORDS_LOG_FLAG);// 关键字回复
-						bean.setIp(message.getRemoteIPAddr());
-						bean.setOperate("keywords");
-						bean.setContent(content);
-						WxLogFactory.create(bean);
-					} catch (Exception ex) {
-					}
 
 					return newsMessage;
 				}

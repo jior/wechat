@@ -36,7 +36,7 @@ public class MusicResponseMessageHandler extends AbstractResponseMessageHandler 
 		item.append(wrapperContent(TAG_TITLE, itemMusic.getTitle(), true))
 				.append(wrapperContent(TAG_DESCRIPTION,
 						itemMusic.getDescription(), true))
-				.append(wrapperContent(TAG_URL, itemMusic.getMusicUrl(), true))
+				.append(wrapperContent(TAG_MUSICURL, itemMusic.getMusicUrl(), true))
 				.append(wrapperContent(TAG_HQMUSICURL,
 						itemMusic.getHqMusicUrl(), true));
 		String music = wrapperContent(TAG_MUSIC, item.toString(), false);

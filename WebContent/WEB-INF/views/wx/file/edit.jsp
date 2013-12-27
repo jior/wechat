@@ -80,7 +80,7 @@ limitations under the License.
 		form.title.focus();
 		return ;
 	 }
-    
+    document.getElementById("ok_btn").disabled=!document.getElementById("ok_btn").disabled;
 	form.submit();
 	//window.parent.reload();
 	//window.close();
@@ -156,7 +156,7 @@ limitations under the License.
 
 <div align="center">
 <br />
-<input type="button" class="btnGreen" value="确定"
+<input id="ok_btn" name="ok_btn" type="button" class="btnGreen" value="确定"
 	onclick="javascript:submitRequest(this.form);" /> 
 <input type="button" class="btnGreen" value="返回"
 	onclick="javascript:window.history.go(-1);" /> 
