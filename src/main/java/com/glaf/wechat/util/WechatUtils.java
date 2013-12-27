@@ -18,24 +18,12 @@
 
 package com.glaf.wechat.util;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.ConnectException;
-import java.net.URL;
-
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSocketFactory;
-import javax.net.ssl.TrustManager;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.util.StringTools;
@@ -69,7 +57,8 @@ public class WechatUtils {
 		// 将菜单对象转换成json字符串
 		String jsonMenu = menu.toJSONObject().toJSONString();
 		// 调用接口创建菜单
-		JSONObject jsonObject = httpRequest(url, "POST", jsonMenu);
+		JSONObject jsonObject = HttpClientUtils.executeRequest(url, "POST",
+				jsonMenu);
 
 		if (null != jsonObject) {
 			if (0 != jsonObject.getInteger("errcode")) {
@@ -98,7 +87,8 @@ public class WechatUtils {
 
 		String requestUrl = access_token_url.replace("APPID", accountId)
 				.replace("APPSECRET", appSecret);
-		JSONObject jsonObject = httpRequest(requestUrl, "GET", null);
+		JSONObject jsonObject = HttpClientUtils.executeRequest(requestUrl,
+				"GET", null);
 		// 如果请求成功
 		if (null != jsonObject) {
 			log.debug(jsonObject.toJSONString());
@@ -140,7 +130,8 @@ public class WechatUtils {
 			String openid) {
 		String url = orgi_url.replace("ACCESS_TOKEN", accessToken);
 		url = url.replace("OPENID", openid);
-		JSONObject jsonObject = httpRequest(url, "GET", null);
+		JSONObject jsonObject = HttpClientUtils
+				.executeRequest(url, "GET", null);
 		return jsonObject;
 	}
 
@@ -159,7 +150,8 @@ public class WechatUtils {
 		} else {
 			url = StringTools.replace(url, "&next_openid=NEXT_OPENID", "");
 		}
-		JSONObject jsonObject = httpRequest(url, "GET", null);
+		JSONObject jsonObject = HttpClientUtils
+				.executeRequest(url, "GET", null);
 		return jsonObject;
 	}
 
@@ -178,7 +170,8 @@ public class WechatUtils {
 	public static JSONObject getMenu(String orgi_url, String accessToken) {
 		String url = orgi_url.replace("ACCESS_TOKEN", accessToken);
 		// 调用接口创建菜单
-		JSONObject jsonObject = httpRequest(url, "GET", null);
+		JSONObject jsonObject = HttpClientUtils
+				.executeRequest(url, "GET", null);
 		return jsonObject;
 	}
 
@@ -193,83 +186,4 @@ public class WechatUtils {
 		return serviceUrl;
 	}
 
-	/**
-	 * 发起https请求并获取结果
-	 * 
-	 * @param requestUrl
-	 *            请求地址
-	 * @param requestMethod
-	 *            请求方式（GET、POST）
-	 * @param outputStr
-	 *            提交的数据
-	 * @return JSONObject(通过JSONObject.get(key)的方式获取json对象的属性值)
-	 */
-	public static JSONObject httpRequest(String requestUrl,
-			String requestMethod, String outputStr) {
-		JSONObject jsonObject = null;
-		HttpsURLConnection httpUrlConn = null;
-		StringBuffer buffer = new StringBuffer();
-		try {
-			// 创建SSLContext对象，并使用我们指定的信任管理器初始化
-			TrustManager[] tm = { new MyX509TrustManager() };
-			SSLContext sslContext = SSLContext.getInstance("SSL", "SunJSSE");
-			sslContext.init(null, tm, new java.security.SecureRandom());
-			// 从上述SSLContext对象中得到SSLSocketFactory对象
-			SSLSocketFactory ssf = sslContext.getSocketFactory();
-			log.debug("requestUrl:" + requestUrl);
-			URL url = new URL(requestUrl);
-			httpUrlConn = (HttpsURLConnection) url.openConnection();
-			httpUrlConn.setSSLSocketFactory(ssf);
-
-			httpUrlConn.setDoOutput(true);
-			httpUrlConn.setDoInput(true);
-			httpUrlConn.setUseCaches(false);
-			// 设置请求方式（GET/POST）
-			httpUrlConn.setRequestMethod(requestMethod);
-
-			if ("GET".equalsIgnoreCase(requestMethod)) {
-				httpUrlConn.connect();
-			}
-
-			// 当有数据需要提交时
-			if (null != outputStr) {
-				OutputStream outputStream = httpUrlConn.getOutputStream();
-				// 注意编码格式，防止中文乱码
-				outputStream.write(outputStr.getBytes("UTF-8"));
-				outputStream.close();
-			}
-
-			// 将返回的输入流转换成字符串
-			InputStream inputStream = httpUrlConn.getInputStream();
-			InputStreamReader inputStreamReader = new InputStreamReader(
-					inputStream, "UTF-8");
-			BufferedReader bufferedReader = new BufferedReader(
-					inputStreamReader);
-
-			String str = null;
-			while ((str = bufferedReader.readLine()) != null) {
-				buffer.append(str);
-			}
-			bufferedReader.close();
-			inputStreamReader.close();
-			// 释放资源
-			inputStream.close();
-			inputStream = null;
-
-			log.debug("response:" + buffer.toString());
-
-			jsonObject = JSON.parseObject(buffer.toString());
-		} catch (ConnectException ce) {
-			ce.printStackTrace();
-			log.error("Weixin server connection timed out.");
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			log.error("https request error:{}", ex);
-		} finally {
-			if (httpUrlConn != null) {
-				httpUrlConn.disconnect();
-			}
-		}
-		return jsonObject;
-	}
 }

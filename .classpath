@@ -128,5 +128,8 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/glaf-test.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/glaf-ui.jar"/>
 	<classpathentry kind="lib" path="lib/mysql-connector-java-bin.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/async-http-client.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/glaf-mail.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/httpcore-nio.jar"/>
 	<classpathentry kind="output" path="WebContent/WEB-INF/classes"/>
 </classpath>
