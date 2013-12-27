@@ -53,11 +53,6 @@ public class WxFileResourceRest {
 
 	protected WxFileService wxFileService;
 
-	@javax.annotation.Resource
-	public void setWxFileService(WxFileService wxFileService) {
-		this.wxFileService = wxFileService;
-	}
-
 	@GET
 	@POST
 	@Path("/jsonArray")
@@ -86,6 +81,11 @@ public class WxFileResourceRest {
 		}
 
 		return result.toJSONString().getBytes("UTF-8");
+	}
+
+	@javax.annotation.Resource
+	public void setWxFileService(WxFileService wxFileService) {
+		this.wxFileService = wxFileService;
 	}
 
 	@GET
