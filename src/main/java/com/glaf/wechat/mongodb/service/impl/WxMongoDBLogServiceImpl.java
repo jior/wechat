@@ -73,6 +73,7 @@ public class WxMongoDBLogServiceImpl implements WxLogService {
 					row.put("id", model.getId());
 					row.put("accountId", model.getAccountId());
 					row.put("actorId", model.getActorId());
+					row.put("openId", model.getOpenId());
 					row.put("flag", Integer.valueOf(model.getFlag()));
 					row.put("ip", model.getIp());
 					row.put("operate", model.getOperate());
@@ -105,16 +106,24 @@ public class WxMongoDBLogServiceImpl implements WxLogService {
 			q.put("accountId", query.getAccountId());
 		}
 
-		if (query.getFlag() != null && query.getFlag() != 0) {
-			q.put("flag", query.getFlag());
-		}
-
 		if (query.getActorId() != null) {
 			q.put("actorId", query.getActorId());
 		}
 
+		if (query.getOpenId() != null) {
+			q.put("openId", query.getOpenId());
+		}
+
 		if (query.getIp() != null) {
 			q.put("ip", query.getIp());
+		}
+
+		if (query.getOperate() != null) {
+			q.put("operate", query.getOperate());
+		}
+
+		if (query.getFlag() != null && query.getFlag() != 0) {
+			q.put("flag", query.getFlag());
 		}
 
 	}
@@ -186,6 +195,9 @@ public class WxMongoDBLogServiceImpl implements WxLogService {
 				if (object.containsField("accountId")) {
 					log.setAccountId((Long) object.get("accountId"));
 				}
+				if (object.containsField("openId")) {
+					log.setOpenId((String) object.get("openId"));
+				}
 				if (object.containsField("flag")) {
 					log.setFlag((Integer) object.get("flag"));
 				}
@@ -217,6 +229,9 @@ public class WxMongoDBLogServiceImpl implements WxLogService {
 			log.setContent((String) object.get("content"));
 			if (object.containsField("accountId")) {
 				log.setAccountId((Long) object.get("accountId"));
+			}
+			if (object.containsField("openId")) {
+				log.setOpenId((String) object.get("openId"));
 			}
 			if (object.containsField("flag")) {
 				log.setFlag((Integer) object.get("flag"));
