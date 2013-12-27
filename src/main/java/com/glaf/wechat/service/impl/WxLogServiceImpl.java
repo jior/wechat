@@ -108,6 +108,21 @@ public class WxLogServiceImpl implements WxLogService {
 			lastUpdate = System.currentTimeMillis();
 		}
 	}
+	
+	@Transactional
+	public void saveAll(){
+		if (wxLogs.size() >= conf.getInt("wx_log_step", 100)
+				|| ((System.currentTimeMillis() - lastUpdate) / 60000 > 0)) {
+			while (!wxLogs.isEmpty()) {
+				WxLog bean = wxLogs.pop();
+				sysLogMapper.insertWxLog(bean);// 写历史表
+
+				bean.setSuffix("");
+				sysLogMapper.insertWxLog(bean);// 写当前表
+			}
+			lastUpdate = System.currentTimeMillis();
+		}
+	}
 
 	@javax.annotation.Resource
 	public void setIdGenerator(IdGenerator idGenerator) {

@@ -246,6 +246,39 @@ public class WxMongoDBLogServiceImpl implements WxLogService {
 		return logs;
 	}
 
+	public void saveAll() {
+		/**
+		 * 当记录数达到写数据库的条数或时间超过1分钟，写日志到数据库
+		 */
+		if (wxLogs.size() >= conf.getInt("wx_log_step", 100)
+				|| ((System.currentTimeMillis() - lastUpdate) / 60000 > 0)) {
+			DB db = mongoTemplate.getDb();
+			db.requestStart();
+			while (!wxLogs.isEmpty()) {
+				WxLog model = wxLogs.pop();
+				String tableName = "wx_log" + model.getSuffix();
+				DBCollection coll = db.getCollection(tableName);
+				if (coll != null) {
+					BasicDBObject row = new BasicDBObject();
+					row.put("id", model.getId());
+					row.put("accountId", model.getAccountId());
+					row.put("actorId", model.getActorId());
+					row.put("openId", model.getOpenId());
+					row.put("flag", Integer.valueOf(model.getFlag()));
+					row.put("ip", model.getIp());
+					row.put("operate", model.getOperate());
+					row.put("content", model.getContent());
+					row.put("createTime", model.getCreateTime().getTime());
+					coll.insert(row);
+					logger.debug("insert row:" + model.getId());
+				}
+			}
+			db.requestDone();
+			lastUpdate = System.currentTimeMillis();
+			logger.debug("submit ok.");
+		}
+	}
+
 	public void setMongoTemplate(MongoTemplate mongoTemplate) {
 		this.mongoTemplate = mongoTemplate;
 	}

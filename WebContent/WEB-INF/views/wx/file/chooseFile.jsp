@@ -235,7 +235,7 @@ limitations under the License.
 				<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-ok'"
 				   onclick="javascript:selectedFile();">选择</a> 
 				<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-reload'"
-					   onclick="javascript:reloadGrid();">重载</a> 
+				   onclick="javascript:reloadGrid();">重载</a> 
 				<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-upload'"
 				   onclick="javascript:uploadFile();">上传</a> 
 			</div> 

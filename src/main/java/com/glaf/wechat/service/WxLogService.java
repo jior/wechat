@@ -65,4 +65,7 @@ public interface WxLogService {
 	 */
 	List<WxLog> list(WxLogQuery query);
 
+	@Transactional
+	void saveAll();
+
 }
