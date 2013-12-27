@@ -174,7 +174,7 @@ limitations under the License.
 
 	function reloadPic(){
 		var type = jQuery('#type').val();
-		$.getJSON("<%=request.getContextPath()%>/mx/wx/wxFile/jsonArray?type="+type, function(data) {
+		$.getJSON("<%=request.getContextPath()%>/rs/wx/file/jsonArray?type="+type, function(data) {
                 $("#pic_layer").empty(); //先清空标记中的内容
                 var strHTML = ""; //初始化保存内容变量
 				var i=0;

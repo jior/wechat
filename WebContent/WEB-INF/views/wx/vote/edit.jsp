@@ -71,14 +71,14 @@ limitations under the License.
 					   if(data != null && data.message != null){
 						   alert(data.message);
 					   } else {
-						 alert('操作成功完成！');
+						   alert('操作成功完成！');
 					   }
 				   }
 			 });
 	}
 
 	function chooseImage(){
-		var link = '<%=request.getContextPath()%>/mx/wx/wxFile/chooseFile?elementId=icon&elementName=icon';
+		var link = '<%=request.getContextPath()%>/mx/wx/wxFile/chooseFile?elementId=icon&elementName=icon&accountId=${accountId}';
 		var x=100;
 		var y=100;
 		if(is_ie) {

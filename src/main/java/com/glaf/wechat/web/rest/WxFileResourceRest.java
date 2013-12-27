@@ -19,6 +19,8 @@
 package com.glaf.wechat.web.rest;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
@@ -31,14 +33,16 @@ import javax.ws.rs.core.MediaType;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-
 import com.glaf.core.util.RequestUtils;
-
+import com.glaf.core.util.Tools;
 import com.glaf.wechat.domain.WxFile;
+import com.glaf.wechat.query.WxFileQuery;
 import com.glaf.wechat.service.WxFileService;
 
 @Controller
@@ -56,14 +60,44 @@ public class WxFileResourceRest {
 
 	@GET
 	@POST
+	@Path("/jsonArray")
+	@ResponseBody
+	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
+	public byte[] jsonArray(@Context HttpServletRequest request)
+			throws IOException {
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		WxFileQuery query = new WxFileQuery();
+		Tools.populate(query, params);
+
+		query.createBy("system");
+
+		JSONArray result = new JSONArray();
+		int total = wxFileService.getWxFileCountByQueryCriteria(query);
+		if (total > 0) {
+			List<WxFile> list = wxFileService.list(query);
+			if (list != null && !list.isEmpty()) {
+				for (WxFile wxFile : list) {
+					JSONObject rowJSON = wxFile.toJsonObject();
+					rowJSON.put("id", wxFile.getId());
+					rowJSON.put("fileId", wxFile.getId());
+					result.add(rowJSON);
+				}
+			}
+		}
+
+		return result.toJSONString().getBytes("UTF-8");
+	}
+
+	@GET
+	@POST
 	@Path("/view")
 	@ResponseBody
 	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
 	public byte[] view(@Context HttpServletRequest request) throws IOException {
 		WxFile wxFile = null;
 		if (StringUtils.isNotEmpty(request.getParameter("uuid"))) {
-			wxFile = wxFileService.getWxFileByUUID(RequestUtils
-					.getString(request, "uuid"));
+			wxFile = wxFileService.getWxFileByUUID(RequestUtils.getString(
+					request, "uuid"));
 		}
 		JSONObject result = new JSONObject();
 		if (wxFile != null) {
