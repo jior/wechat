@@ -216,8 +216,8 @@ limitations under the License.
 	function editSelected(){
 	    var rows = jQuery('#mydatagrid').datagrid('getSelections');
 	    if(rows == null || rows.length !=1){
-		alert("请选择其中一条记录。");
-		return;
+		  alert("请选择其中一条记录。");
+		  return;
 	    }
 	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
 	    if (selected ){
@@ -258,7 +258,8 @@ limitations under the License.
 		for(var i=0;i<rows.length;i++){
 			ids.push(rows[i].id);
 		}
-		if(ids.length > 0 && confirm("数据删除后不能恢复，确定删除吗？")){
+		if(ids.length > 0 ){
+		  if(confirm("数据删除后不能恢复，确定删除吗？")){
 		    var rowIds = ids.join(',');
 			jQuery.ajax({
 				   type: "POST",
@@ -276,6 +277,7 @@ limitations under the License.
 					   jQuery('#mydatagrid').datagrid('reload');
 				   }
 			 });
+		  }
 		} else {
 			alert("请选择至少一条记录。");
 		}

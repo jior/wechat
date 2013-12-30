@@ -26,11 +26,8 @@ limitations under the License.
 <title>文件信息</title>
 <%@ include file="/WEB-INF/views/wx/inc/wx_styles.jsp"%>
 <%@ include file="/WEB-INF/views/wx/inc/wx_scripts.jsp"%>
- <script language="javascript">
-  String.prototype.trim = function() {
-     return this.replace(/(^\s*)|(\s*$)/g, "");
-  }
-
+<script language="javascript">
+ 
  //(用于onKeypress事件)浮点数字框不能输入其他字符
  function numberFilter() {
 		var berr=true;
@@ -87,6 +84,18 @@ limitations under the License.
 		form.desc.focus();
 		return ;
 	}
+	if(document.getElementById("file").value.trim().length==0){
+		alert("请选择要上传的文件！");
+		form.file.focus();
+		return ;
+	}
+	<c:if test="${not empty wxFile.fileExt }">
+	if(!document.getElementById("file").value.endsWith("${wxFile.fileExt}")){
+		alert("选择的文件扩展名必须是${wxFile.fileExt}！");
+		form.file.focus();
+		return ;
+	}
+    </c:if>
     document.getElementById("ok_btn").disabled=!document.getElementById("ok_btn").disabled;
 	form.submit();
 	//window.parent.reload();
@@ -147,15 +156,18 @@ limitations under the License.
 		<tr class="x-content-hight">
 			<td align="left" width="18%" align="left"><span>文件</span></td>
 			<td align="left" width="82%">
-			<c:if test="${not empty wxFile.path }">
+			<c:if test="${not empty wxFile.path and wxFile.image }">
 			   <br>
 			   <br>
 			   <img src="<%=request.getContextPath()%>/${wxFile.path}" border="0"/>
 			   <br>
 			   <br>
 			</c:if>
-			<input type="file" name="file" size="40"
+			<input type="file" id="file" name="file" size="40"
 				class="input-file x-text">
+			<c:if test="${not empty wxFile.path}">
+			   <br>请注意：如果需要替换原始文件，文件扩展名必须和以前相同。
+            </c:if>
             </td>
 		</tr>
 	</tbody>

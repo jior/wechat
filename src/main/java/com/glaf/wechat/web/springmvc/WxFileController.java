@@ -385,30 +385,47 @@ public class WxFileController {
 
 		MultipartHttpServletRequest req = (MultipartHttpServletRequest) request;
 		Long accountId = RequestUtils.getLong(req, "accountId");
+		Long id = RequestUtils.getLong(req, "id");
 		Map<String, MultipartFile> fileMap = req.getFileMap();
-		WxFile wxFile = new WxFile();
-		wxFile.setId(RequestUtils.getLong(req, "id"));
+		WxFile wxFile = null;
+		String path = null;
+		boolean update = true;
+		boolean exists = false;
+		if (id != null && id > 0) {
+			wxFile = wxFileService.getWxFile(id);
+		}
+		if (wxFile != null) {
+			exists = true;
+			path = wxFile.getPath();
+		} else {
+			exists = false;
+			wxFile = new WxFile();
+		}
+		wxFile.setId(id);
 		wxFile.setTitle(req.getParameter("title"));
 		wxFile.setDesc(req.getParameter("desc"));
 		wxFile.setContent(req.getParameter("content"));
-		if (StringUtils.isNotEmpty(request.getParameter("categoryId"))
-				&& !StringUtils.equals(request.getParameter("categoryId"),
-						"undefined")) {
-			wxFile.setCategoryId(RequestUtils.getLong(req, "categoryId"));
+		if (!exists) {
+			if (StringUtils.isNotEmpty(request.getParameter("categoryId"))
+					&& !StringUtils.equals(request.getParameter("categoryId"),
+							"undefined")) {
+				wxFile.setCategoryId(RequestUtils.getLong(req, "categoryId"));
+			}
+			wxFile.setAccountId(accountId);
 		}
-		wxFile.setAccountId(accountId);
 
-		boolean update = true;
 		Set<Entry<String, MultipartFile>> entrySet = fileMap.entrySet();
 		for (Entry<String, MultipartFile> entry : entrySet) {
 			MultipartFile mFile = entry.getValue();
 			if (mFile.getSize() > 0) {
 				String rand = WechatUtils.getImagePath(user.getId(), accountId);
-				String path = com.glaf.wechat.util.Constants.UPLOAD_PATH + rand;
-				try {
-					FileUtils.mkdirs(SystemProperties.getAppPath() + path);
-				} catch (IOException ex) {
-					ex.printStackTrace();
+				if (path == null) {
+					path = com.glaf.wechat.util.Constants.UPLOAD_PATH + rand;
+					try {
+						FileUtils.mkdirs(SystemProperties.getAppPath() + path);
+					} catch (IOException ex) {
+						ex.printStackTrace();
+					}
 				}
 
 				String fileExt = FileUtils.getFileExt(
@@ -416,11 +433,13 @@ public class WxFileController {
 				if (!(StringUtils.equals(fileExt, "jsp") || StringUtils.equals(
 						fileExt, "js"))) {
 					SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
-					String newFilename = df.format(new Date()) + "_"
-							+ new Random().nextInt(10000) + "." + fileExt;
-					wxFile.setFilename(newFilename);
 					wxFile.setOriginalFilename(mFile.getOriginalFilename());
-					wxFile.setPath(path + "/" + newFilename);
+					if (!exists) {
+						String newFilename = df.format(new Date()) + "_"
+								+ new Random().nextInt(10000) + "." + fileExt;
+						wxFile.setFilename(newFilename);
+						wxFile.setPath(path + "/" + newFilename);
+					}
 					wxFile.setCreateBy(actorId);
 					wxFile.setSize(mFile.getSize());
 					wxFileService.save(wxFile);
@@ -446,31 +465,6 @@ public class WxFileController {
 	@javax.annotation.Resource
 	public void setWxFileService(WxFileService wxFileService) {
 		this.wxFileService = wxFileService;
-	}
-
-	@RequestMapping("/update/{id}")
-	public ModelAndView update(@PathVariable("id") Long id,
-			HttpServletRequest request, ModelMap modelMap) {
-		LoginContext loginContext = RequestUtils.getLoginContext(request);
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		params.remove("status");
-		params.remove("wfStatus");
-
-		WxFile wxFile = wxFileService.getWxFile(id);
-		if (wxFile != null
-				&& (StringUtils.equals(wxFile.getCreateBy(),
-						loginContext.getActorId()) || loginContext
-						.isSystemAdministrator())) {
-			wxFile.setCategoryId(RequestUtils.getLong(request, "categoryId"));
-			wxFile.setTitle(request.getParameter("title"));
-			wxFile.setFilename(request.getParameter("filename"));
-			wxFile.setPath(request.getParameter("path"));
-			wxFile.setLastUpdateBy(loginContext.getActorId());
-
-			wxFileService.save(wxFile);
-		}
-
-		return new ModelAndView("/wx/file/saveOK");
 	}
 
 	@RequestMapping("/view/{id}")

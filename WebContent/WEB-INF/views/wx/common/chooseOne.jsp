@@ -91,7 +91,7 @@
 		}
 
 		if(selectedNodes[0].cls == 'tree_folder'){
-			alert("您选择的是栏目，只能选择文章，请重新选择！");
+			alert("您选择的是栏目，只能选择栏目下的内容，如果栏目下无内容请录入内容再选择！");
 			return;
 		}
 

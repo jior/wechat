@@ -230,7 +230,7 @@ limitations under the License.
 	    }
 	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
 	    if (selected ){
-		   location.href="${contextPath}/mx/wx/wxTemplate/settings/${accountId}?type=1&categoryId="+selected.id;
+		   location.href="${contextPath}/mx/wx/wxTemplate/settings?accountId=${accountId}&type=1&categoryId="+selected.id;
 	    }
 	}
 
@@ -242,7 +242,7 @@ limitations under the License.
 	    }
 	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
 	    if (selected ){
-		    location.href="${contextPath}/mx/wx/wxTemplate/settings/${accountId}?type=2&categoryId="+selected.id;
+		    location.href="${contextPath}/mx/wx/wxTemplate/settings?accountId=${accountId}&type=2&categoryId="+selected.id;
 	    }
 	}
 
@@ -264,7 +264,8 @@ limitations under the License.
 		for(var i=0;i<rows.length;i++){
 			ids.push(rows[i].id);
 		}
-		if(ids.length > 0 && confirm("数据删除后不能恢复，确定删除吗？")){
+		if(ids.length > 0 ){
+		  if(confirm("数据删除后不能恢复，确定删除吗？")){
 		    var rowIds = ids.join(',');
 			jQuery.ajax({
 				   type: "POST",
@@ -282,6 +283,7 @@ limitations under the License.
 					   jQuery('#mydatagrid').datagrid('reload');
 				   }
 			 });
+		  }
 		} else {
 			alert("请选择至少一条记录。");
 		}

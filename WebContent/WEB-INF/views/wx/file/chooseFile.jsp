@@ -223,7 +223,7 @@ limitations under the License.
 </script>
 </head>
 <body style="margin:1px;">  
-
+<input type="hidden" id="nodeId" name="nodeId" value="" >
 <div style="margin:0;"></div>  
 <div class="easyui-tabs" style="width:740px;height:580px;">
 	<div title="我的素材库" data-options="closable:false" style="padding:1px">

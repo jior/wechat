@@ -75,7 +75,7 @@
     $(function() {
         $("#loginWindow").window({
                 title: '登录<%=SystemConfig.getString("res_system_name")%>',
-                width: 290,
+                width: 320,
                 height: 190,
                 modal: true,
                 shadow: false,
@@ -149,7 +149,7 @@
                     </td>
                     <td>
                         <input id="x" name="x" class="easyui-validatebox input" required="true" validtype="length[3,20]"
-                            style="width: 150px;" datatype="string" nullable="no" maxsize="20" chname="用户名" value="" />
+                            style="width: 180px;" datatype="string" nullable="no" maxsize="20" chname="用户名" value="" />
                     </td>
                 </tr>
                 <tr>
@@ -157,7 +157,7 @@
                         密&nbsp;&nbsp;&nbsp;&nbsp;码：
                     </td>
                     <td>
-                        <input type="password" id="y" name="y" style="width: 150px;" class="easyui-validatebox input"
+                        <input type="password" id="y" name="y" style="width: 180px;" class="easyui-validatebox input"
                             required="true" validtype="length[6,20]" datatype="string" nullable="no" maxsize="20" chname="密码" value=""/>
                     </td>
                 </tr>

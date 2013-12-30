@@ -34,6 +34,7 @@ import org.apache.commons.lang.builder.ToStringStyle;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.core.base.JSONable;
+import com.glaf.core.util.FileUtils;
 import com.glaf.wechat.util.WxFileJsonFactory;
 
 /**
@@ -144,8 +145,25 @@ public class WxFile implements java.io.Serializable, JSONable {
 	@Column(name = "LASTUPDATEDATE_")
 	protected Date lastUpdateDate;
 
+	@javax.persistence.Transient
+	protected boolean image;
+
+	@javax.persistence.Transient
+	protected String fileExt;
+
 	public WxFile() {
 
+	}
+
+	public String getFileExt() {
+		if (filename != null) {
+			fileExt = FileUtils.getFileExt(filename.toLowerCase());
+		}
+		return fileExt;
+	}
+
+	public void setFileExt(String fileExt) {
+		this.fileExt = fileExt;
 	}
 
 	public Long getAccountId() {
@@ -216,6 +234,18 @@ public class WxFile implements java.io.Serializable, JSONable {
 		return uuid;
 	}
 
+	public boolean isImage() {
+		image = false;
+		if (path != null
+				&& (path.toLowerCase().endsWith(".jpg")
+						|| path.toLowerCase().endsWith(".gif")
+						|| path.toLowerCase().endsWith(".png") || path
+						.toLowerCase().endsWith(".bmp"))) {
+			image = true;
+		}
+		return image;
+	}
+
 	public WxFile jsonToObject(JSONObject jsonObject) {
 		return WxFileJsonFactory.jsonToObject(jsonObject);
 	}
@@ -250,6 +280,10 @@ public class WxFile implements java.io.Serializable, JSONable {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public void setImage(boolean isImage) {
+		this.image = isImage;
 	}
 
 	public void setLastUpdateBy(String lastUpdateBy) {

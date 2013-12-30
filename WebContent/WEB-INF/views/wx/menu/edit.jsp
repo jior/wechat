@@ -35,6 +35,11 @@ limitations under the License.
 			   return;
 			}
 		}
+		if(document.getElementById("desc").value.trim().length>500){
+			alert("描述长度超过500字节！");
+			document.getElementById("desc").focus();
+			return ;
+		}
 		var params = jQuery("#iForm").formSerialize();
 		jQuery.ajax({
 				   type: "POST",
@@ -240,7 +245,7 @@ limitations under the License.
 	<tr>
 		<td width="15%" align="left" valign="middle">图标</td>
 		<td align="left" valign="top">
-		     <c:if test="${not empty wxMenu.icon }">
+		    <c:if test="${not empty wxMenu.icon }">
 			     <img src="<%=request.getContextPath()%>/${wxMenu.icon}" width="60" height="60" border="0"/>&nbsp;
 				 <br>
 			</c:if>

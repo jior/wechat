@@ -45,7 +45,7 @@ limitations under the License.
 		}
 
 		if(document.getElementById("summary").value.trim().length>250){
-			alert("描述长度超过250字节！");
+			alert("简介长度超过250字节！");
 			document.getElementById("summary").focus();
 			return ;
 		}

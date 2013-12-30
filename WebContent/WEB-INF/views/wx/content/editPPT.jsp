@@ -58,7 +58,9 @@ limitations under the License.
 					   }
 					   */
 					   //history.back();
+					   <%if(request.getParameter("fromUrl")!=null){%>
 					   location.href='<%=com.glaf.core.util.RequestUtils.decodeURL(request.getParameter("fromUrl"))%>';
+					   <%}%>
 				   }
 			 });
 	}

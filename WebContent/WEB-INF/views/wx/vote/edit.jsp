@@ -283,7 +283,7 @@ limitations under the License.
 		</td>
 	</tr>
 	<tr>
-	    <td width="20%" align="left">选择关联项</td>
+	    <td width="20%" align="left">选择组合项</td>
 		<td align="left" > 
 		    <c:forEach items="${wxVote.relations}" var="relation">
 			<br><a href="<%=request.getContextPath()%>/mx/wx/wxVote/edit?id=${relation.id}">${relation.title}</a>
@@ -292,6 +292,7 @@ limitations under the License.
 		    <input type="hidden" id="relationIds" name="relationIds" value="${wxVote.relationIds}"> 
 		    <input type="hidden" id="relations" name="relations"> 
 			<input type="button" value=" 添加 " onclick="javascript:editRelations();" class="btnGreen">
+			<br>提示：可以把多个投票组合到一个界面中。
 		</td>
 	</tr>
 	<tr>
