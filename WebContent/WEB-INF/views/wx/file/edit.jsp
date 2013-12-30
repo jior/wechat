@@ -73,13 +73,20 @@ limitations under the License.
 }
 
  function submitRequest(form){
-    var title = form.title.value.trim();
+    var title = document.getElementById("title").value.trim();
 	 
     if(title == ""){
 		alert("名称不能为空！");
 		form.title.focus();
 		return ;
 	 }
+
+    //alert(document.getElementById("desc").value.trim().length);
+	if(document.getElementById("desc").value.trim().length>500){
+		alert("描述长度超过500字节！");
+		form.desc.focus();
+		return ;
+	}
     document.getElementById("ok_btn").disabled=!document.getElementById("ok_btn").disabled;
 	form.submit();
 	//window.parent.reload();
@@ -125,14 +132,15 @@ limitations under the License.
 		<tr class="x-content-hight">
 			<td align="left" width="18%" noWrap><span>名称</span></td>
 			<td align="left">
-			<input id="title" name="title" type="text" size="40" class="input-xlarge x-text" maxlength="255"
+			<input id="title" name="title" type="text" size="40" class="input-xlarge x-text" maxlength="200"
 				value="${wxFile.title}">
 			</td>
 		</tr>
 		<tr>
 			<td width="18%" align="left">描述</td>
 			<td align="left">
-			    <textarea  id="desc" name="desc" class="x-textarea"  rows="5" cols="38" style="width:264px;height:90px;">${wxFile.desc}</textarea> 
+			    <textarea  id="desc" name="desc" class="x-textarea"  rows="5" cols="38"  
+				           style="width:264px;height:90px;">${wxFile.desc}</textarea> 
 			</td>
 		</tr>
 

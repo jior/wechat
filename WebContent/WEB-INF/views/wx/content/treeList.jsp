@@ -106,8 +106,10 @@ limitations under the License.
 					{title:'标题',field:'title', width:180},
 					{title:'链接',field:'url', width:320},
 					{title:'关键词', field:'keywords', align:'left', width:120},
+					<c:if test="${type eq 'K'}">
 					{title:'关键词数', field:'keywordsCount', align:'right', width:80},
 					{title:'关键词匹配', field:'keywordsMatchType', align:'center', width:120, formatter:formatterMatchType},
+					</c:if>
 					{title:'顺序', field:'sort', align:'right', width:60},
 					{title:'时间', field:'createDate', align:'center', width:90},
 					{title:'功能键', field:'functionKey', width:90, formatter:formatterKeys}
@@ -306,10 +308,21 @@ limitations under the License.
 	}
 
 	function searchData(){
-	    var params = jQuery("#searchForm").formSerialize();
-	    var queryParams = jQuery('#mydatagrid').datagrid('options').queryParams;
-	    jQuery('#mydatagrid').datagrid('reload');	
-	    jQuery('#dlg').dialog('close');
+		    var title = document.getElementById("title").value.trim();
+			document.getElementById("titleLike").value = title;
+			var params = jQuery("#iForm").formSerialize();
+            jQuery.ajax({
+                        type: "POST",
+                        url: '<%=request.getContextPath()%>/mx/wx/wxContent/json/${accountId}?type=${type}',
+                        dataType:  'json',
+						data: params,
+                        error: function(data){
+                                  alert('服务器处理错误！');
+                        },
+                        success: function(data){
+                                  jQuery('#mydatagrid').datagrid('loadData', data);
+                        }
+                        });
 	}
 
 	function viewSite(rowId){
@@ -344,6 +357,10 @@ limitations under the License.
 			   onclick="javascript:deleteSelections();">删除</a>  
 			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-view'"
 			   onclick="javascript:viewSite();">预览我的微网站</a>  
+			<input id="title" name="title" type="text" 
+	               class="x-searchtext" size="50" maxlength="200"/>
+	        <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-search'"
+	           onclick="javascript:searchData();">查找</a>
 		</div> 
 	</div> 
        
@@ -356,5 +373,8 @@ limitations under the License.
 	</div>  
 
 </div>
+<form id="iForm" name="iForm" method="post">
+<input type="hidden" id="titleLike" name="titleLike">
+</form>
 </body>
 </html>

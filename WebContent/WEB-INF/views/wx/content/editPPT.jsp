@@ -28,6 +28,13 @@ limitations under the License.
     var contextPath="<%=request.getContextPath()%>";
 
 	function saveData(){
+		var title = document.getElementById("title").value.trim();
+	 
+		if(title == ""){
+			alert("名称不能为空！");
+			document.getElementById("title").focus();
+			return ;
+		}
 		var params = jQuery("#iForm").formSerialize();
 		jQuery.ajax({
 				   type: "POST",
@@ -128,7 +135,7 @@ limitations under the License.
 		<td width="15%" align="left">标题</td>
 		<td align="left">
             <input id="title" name="title" type="text" 
-			       class="easyui-validatebox x-text"  size="60"
+			       class="easyui-validatebox x-text"  size="60" maxlength="200"
 			       data-options="required:true"
 				   value="${wxContent.title}"/>
 		</td>
@@ -162,7 +169,7 @@ limitations under the License.
 	<tr>
 		<td width="15%" align="left">跳转地址</td>
 		<td align="left">
-			<input type="text" id="url" name="url"class="x-text" size="60" value="${wxContent.url}">
+			<input type="text" id="url" name="url"class="x-text" size="60" value="${wxContent.url}" maxlength="250">
 			&nbsp;<img src="<%=request.getContextPath()%>/images/link.png" 
 			           title="链接"
 			           onclick="javascript:chooseLink();" border="0"/>&nbsp;

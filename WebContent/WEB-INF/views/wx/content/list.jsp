@@ -45,9 +45,11 @@ limitations under the License.
 					{title:'封面', field:'cover', align:'center', width:80, formatter:formatterCover},
 					{title:'标题', field:'title', align:'left', width:380, formatter:formatterTitle},
 					{title:'链接地址', field:'url', align:'left', width:180, formatter:formatterLink},
+					<c:if test="${type eq 'K'}">
 					{title:'关键词', field:'keywords', align:'left', width:120},
 					{title:'关键词数', field:'keywordsCount', align:'right', width:80},
 					{title:'关键词匹配', field:'keywordsMatchType', align:'center', width:120, formatter:formatterMatchType},
+					</c:if>
 					{title:'顺序', field:'sort', align:'right', width:60},
 					{title:'时间', field:'createDate', align:'center', width:90},
 					{title:'状态', field:'status', align:'center', width:90, formatter:formatterStatus},
@@ -268,12 +270,14 @@ limitations under the License.
 	  }
 
 	function searchData(){
-            var params = jQuery("#searchForm").formSerialize();
+		    var title = document.getElementById("title").value.trim();
+			document.getElementById("titleLike").value = title;
+			var params = jQuery("#iForm").formSerialize();
             jQuery.ajax({
                         type: "POST",
-                        url: '<%=request.getContextPath()%>/mx/wx/wxContent/json/${accountId}',
+                        url: '<%=request.getContextPath()%>/mx/wx/wxContent/json/${accountId}?type=${type}',
                         dataType:  'json',
-                        data: params,
+						data: params,
                         error: function(data){
                                   alert('服务器处理错误！');
                         },
@@ -281,13 +285,11 @@ limitations under the License.
                                   jQuery('#mydatagrid').datagrid('loadData', data);
                         }
                         });
-
-	    jQuery('#dlg').dialog('close');
 	}
 		 
 </script>
 </head>
-<body style="margin:1px;">  
+<body style="margin:1px;">
 <div style="margin:0;"></div>  
 <div class="easyui-layout" data-options="fit:true">  
    <div data-options="region:'north',split:true,border:true" style="height:40px"> 
@@ -302,14 +304,18 @@ limitations under the License.
 	   onclick="javascript:editSelected();">修改</a>  
 	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-remove'"
 	   onclick="javascript:deleteSelections();">删除</a> 
+	<input id="title" name="title" type="text" 
+	       class="x-searchtext" size="50" maxlength="200"/>
 	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-search'"
-	   onclick="javascript:searchWin();">查找</a>
+	   onclick="javascript:searchData();">查找</a>
    </div> 
   </div> 
   <div data-options="region:'center',border:true">
 	 <table id="mydatagrid"></table>
   </div>  
 </div>
- 
+<form id="iForm" name="iForm" method="post">
+<input type="hidden" id="titleLike" name="titleLike">
+</form>
 </body>
 </html>

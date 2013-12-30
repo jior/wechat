@@ -29,6 +29,31 @@ limitations under the License.
     var contextPath="<%=request.getContextPath()%>";
 
 	function saveData(){
+		var title = document.getElementById("title").value.trim();
+	 
+		if(title == ""){
+			alert("名称不能为空！");
+			document.getElementById("title").focus();
+			return ;
+		}
+		if(document.getElementById("summary").value.trim().length>250){
+			alert("描述长度超过250字节！");
+			document.getElementById("summary").focus();
+			return ;
+		}
+
+		<c:if test="${type eq 'K'}">
+		if(document.getElementById("keywords").value.trim().length==0){
+			alert("请填写关键字！");
+			document.getElementById("keywords").focus();
+			return;
+		}
+        if(document.getElementById("keywords").value.trim().length>250){
+			alert("关键字长度超过250字节！");
+			document.getElementById("keywords").focus();
+			return;
+		}
+	    </c:if>
 		var params = jQuery("#iForm").formSerialize();
 		jQuery.ajax({
 				   type: "POST",
@@ -161,20 +186,20 @@ limitations under the License.
 		<td width="15%" align="left">标题</td>
 		<td align="left">
             <input id="title" name="title" type="text" 
-			       class="easyui-validatebox x-text"  size="80"
+			       class="easyui-validatebox x-text"  size="80" maxlength="200"
 			       data-options="required:true"
 				   value="${wxContent.title}"/>
 		</td>
 	</tr>
-	<tr>
+	<!-- <tr>
 		<td width="15%" align="left">作者（选填）</td>
 		<td align="left">
             <input id="author" name="author" type="text" 
-			       class="easyui-validatebox x-text"  size="80"
+			       class="easyui-validatebox x-text"  size="80" maxlength="50"
 			       data-options="required:false"
 				   value="${wxContent.author}"/>
 		</td>
-	</tr>
+	</tr> -->
     <tr>
 		<td width="15%" align="left" valign="middle">图文封面</td>
 		<td align="left" valign="middle">
@@ -202,7 +227,7 @@ limitations under the License.
 				   value="${wxContent.sort}"/>&nbsp;(同级栏目顺序越大越靠前)
 		</td>
 	</tr>
-	<c:if test="${type eq 'K' || type eq 'F' }">
+	<c:if test="${type eq 'K'}">
 	<tr>
 		<td width="15%" align="left">关键词</td>
 		<td align="left">
@@ -220,7 +245,7 @@ limitations under the License.
 		<td align="left">
              <select id="keywordsMatchType" name="keywordsMatchType">
 				<option value="1">完全匹配</option>
-				<option value="0">包含匹配</option>
+				<!-- <option value="0">包含匹配</option> -->
              </select>
 			 <script type="text/javascript">
 			     jQuery("#keywordsMatchType").val("${wxContent.keywordsMatchType}");
