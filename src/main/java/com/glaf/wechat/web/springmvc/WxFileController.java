@@ -401,7 +401,6 @@ public class WxFileController {
 			exists = false;
 			wxFile = new WxFile();
 		}
-		wxFile.setId(id);
 		wxFile.setTitle(req.getParameter("title"));
 		wxFile.setDesc(req.getParameter("desc"));
 		wxFile.setContent(req.getParameter("content"));
