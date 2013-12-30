@@ -78,6 +78,9 @@ public class HttpClientUtils {
 			builder.setFollowRedirects(true);
 			builder.setAllowPoolingConnection(true);
 			builder.setAllowSslConnectionPool(true);
+			builder.setMaximumConnectionsPerHost(20);
+			builder.setMaximumConnectionsTotal(10000);
+			builder.setMaxRequestRetry(3);
 			builder.setRequestTimeoutInMs(30000);// 30seconds
 
 			client = new AsyncHttpClient(builder.build());
