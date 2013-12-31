@@ -38,3 +38,7 @@
     border:1px solid #D3D3D3;
     background: #f3f3f3;
 }
+
+.x-searchtext {
+	background-color:#fff;border:1px solid #d3d3d3;color:#666; padding:2px 2px; line-height:18px ; height:18px;font-size: 13px;
+} 

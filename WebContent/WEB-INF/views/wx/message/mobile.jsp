@@ -30,6 +30,11 @@ limitations under the License.
      var contextPath="<%=request.getContextPath()%>";
 
 	function submitRequest(){
+		if(document.getElementById("content").value.trim().length>2000){
+			alert("意见内容超过2000字节！");
+			document.getElementById("content").focus();
+			return ;
+		}
 		var params = jQuery("#iForm").formSerialize();
 		jQuery.ajax({
 				   type: "POST",
@@ -63,19 +68,19 @@ limitations under the License.
                     <b>您的姓名：</b>
                 </p>
                 <p>
-                    <input id="name" name="name" type="text" value="" />
+                    <input id="name" name="name" type="text" value="" maxlength="50" />
                 </p>
                 <p>
                     <b>您的手机：</b>
                 </p>
                 <p>
-                    <input id="mobile" name="mobile" type="text" value="" />
+                    <input id="mobile" name="mobile" type="text" value="" maxlength="50"/>
                 </p> 
 				<p>
                     <b>反馈主题：</b>
                 </p>
                 <p>
-                    <input id="title" name="title" type="text" value="" />
+                    <input id="title" name="title" type="text" value="" maxlength="200"/>
                 </p> 
 				<p>
                     <b>您的意见：</b>

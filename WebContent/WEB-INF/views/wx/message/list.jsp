@@ -47,14 +47,14 @@ limitations under the License.
 				singleSelect: false,
 				idField: 'id',
 				columns:[[
-					    {title:'ck', field:'ck', width:60, checkbox:true},
+					    {title:'ck', field:'ck', width:50, checkbox:true},
 				        {title:'序号', field:'startIndex', width:80, sortable:false},
-					    {title:'姓名',field:'name', width:120},
-					    {title:'手机',field:'mobile', width:120},
-					    {title:'标题',field:'title', width:120},
-					    {title:'内容',field:'content', width:120},
-					    {title:'创建日期',field:'createDate', width:120},
-					    {field:'functionKey',title:'功能键',width:120, formatter:formatterKeys}
+					    {title:'姓名',field:'name', width:80, formatter:formatterName},
+					    {title:'手机',field:'mobile', width:80, formatter:formatterMobile},
+					    {title:'标题',field:'title', width:220, formatter:formatterTitle},
+					    {title:'内容',field:'content', width:280, formatter:formatterContent},
+					    {title:'创建日期',field:'createDate', width:80},
+					    {field:'functionKey',title:'功能键',width:80, formatter:formatterKeys}
 				]],
 				rownumbers: false,
 				pagination: true,
@@ -72,6 +72,22 @@ limitations under the License.
 		    });
 	});
 
+
+	function formatterName(val, row){
+		return "<label title='"+val+"'>"+val+"</label>";
+	}
+
+	function formatterMobile(val, row){
+		return "<label title='"+val+"'>"+val+"</label>";
+	}
+
+	function formatterTitle(val, row){
+		return "<label title='"+val+"'>"+val+"</label>";
+	}
+
+	function formatterContent(val, row){
+		return "<label title='"+val+"'>"+val+"</label>";
+	}
 
 	function formatterKeys(val, row){
 		return "<a href='#' onclick='javascript:deleteRow("+row.id+");'>删除</a>";
@@ -212,25 +228,26 @@ limitations under the License.
             },'json');
 	  }
 
+ 
+
 	function searchData(){
-            var params = jQuery("#searchForm").formSerialize();
-            jQuery.ajax({
-                        type: "POST",
-                        url: '<%=request.getContextPath()%>/mx/wx/wxMessage/json/${accountId}',
-                        dataType:  'json',
-                        data: params,
-                        error: function(data){
-                                  alert('服务器处理错误！');
-                        },
-                        success: function(data){
-                                  jQuery('#mydatagrid').datagrid('loadData', data);
-                        }
-                        });
-
-	    jQuery('#dlg').dialog('close');
+        var title = document.getElementById("title").value.trim();
+		document.getElementById("titleLike").value = title;
+		var params = jQuery("#iForm").formSerialize();
+        jQuery.ajax({
+                      type: "POST",
+                      url: '<%=request.getContextPath()%>/mx/wx/wxMessage/json/${accountId}',
+                      dataType:  'json',
+                      data: params,
+                      error: function(data){
+                                alert('服务器处理错误！');
+                      },
+                      success: function(data){
+                                jQuery('#mydatagrid').datagrid('loadData', data);
+                      }
+                    });
 	}
-
-
+		 
 	function viewSite(){
 			var link = '<%=request.getContextPath()%>/website/wx/message/mobile/${accountId}';
 			//art.dialog.open(link, { height: 720, width: 400, title: "预览效果", lock: true, scrollbars:"no" }, false);
@@ -256,72 +273,18 @@ limitations under the License.
 	   onclick="javascript:deleteSelections();">删除</a> 
     <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'preview'"
 	   onclick="javascript:viewSite();">预览</a>
+	<input id="title" name="title" type="text" 
+	       class="x-searchtext" size="50" maxlength="200"/>
+	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-search'"
+	   onclick="javascript:searchData();">查找</a>
    </div> 
   </div> 
   <div data-options="region:'center',border:true">
 	 <table id="mydatagrid"></table>
   </div>  
 </div>
-<div id="edit_dlg" class="easyui-dialog" style="width:400px;height:280px;padding:10px 20px"
-	closed="true" buttons="#dlg-buttons">
-    <form id="editForm" name="editForm" method="post">
-         
-    </form>
-</div>
-<div id="dlg" class="easyui-dialog" style="width:400px;height:280px;padding:10px 20px"
-	closed="true" buttons="#dlg-buttons">
-  <form id="searchForm" name="searchForm" method="post">
-  <table class="easyui-form" >
-    <tbody>
-    <tr>
-	<td>姓名</td>
-	<td>
-        <input id="nameLike" name="nameLike" class="easyui-validatebox" type="text"></input>
-       </td>
-     </tr>
-    <tr>
-	<td>手机</td>
-	<td>
-        <input id="mobileLike" name="mobileLike" class="easyui-validatebox" type="text"></input>
-       </td>
-     </tr>
-    <tr>
-	<td>标题</td>
-	<td>
-        <input id="titleLike" name="titleLike" class="easyui-validatebox" type="text"></input>
-       </td>
-     </tr>
-    <tr>
-	<td>内容</td>
-	<td>
-        <input id="contentLike" name="contentLike" class="easyui-validatebox" type="text"></input>
-       </td>
-     </tr>
-    <tr>
-	<td>UUID</td>
-	<td>
-        <input id="uuidLike" name="uuidLike" class="easyui-validatebox" type="text"></input>
-       </td>
-     </tr>
-    <tr>
-	<td>拥有者</td>
-	<td>
-        <input id="createByLike" name="createByLike" class="easyui-validatebox" type="text"></input>
-       </td>
-     </tr>
-    <tr>
-	<td>创建日期</td>
-	<td>
-	<input id="createDateLessThanOrEqual" name="createDateLessThanOrEqual" class="easyui-datebox"></input>
-       </td>
-     </tr>
-      </tbody>
-    </table>
-  </form>
-</div>
-<div id="dlg-buttons">
-	<a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="javascript:searchData()">查询</a>
-	<a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:jQuery('#dlg').dialog('close')">取消</a>
-</div>
+<form id="iForm" name="iForm" method="post">
+<input type="hidden" id="titleLike" name="titleLike">
+</form>
 </body>
 </html>

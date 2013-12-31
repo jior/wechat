@@ -315,7 +315,7 @@ limitations under the License.
 			var params = jQuery("#iForm").formSerialize();
             jQuery.ajax({
                         type: "POST",
-                        url: '<%=request.getContextPath()%>/mx/wx/wxContent/json/${accountId}?type=${type}',
+                        url: '<%=request.getContextPath()%>/mx/wx/wxContent/json/${accountId}?type=P',
                         dataType:  'json',
 						data: params,
                         error: function(data){
