@@ -300,7 +300,7 @@ limitations under the License.
 	}
 
 	function syncServer(type){
-		if(confirm("因服务器缓存原因更新菜单需要24小时后才能生效，确定重新同步吗？")){
+		if(confirm("系统当前菜单会同步到服务器，确定重新同步吗？")){
             jQuery.ajax({
 				   type: "POST",
 				   url: '<%=request.getContextPath()%>/mx/wx/wxMenu/syncServer/${accountId}?type='+type,
