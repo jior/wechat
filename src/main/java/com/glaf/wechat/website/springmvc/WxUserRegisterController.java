@@ -19,9 +19,8 @@ package com.glaf.wechat.website.springmvc;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
+
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -33,29 +32,19 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.glaf.base.modules.Constants;
-import com.glaf.base.modules.sys.model.SysDepartment;
-import com.glaf.base.modules.sys.model.SysDeptRole;
-import com.glaf.base.modules.sys.model.SysRole;
-import com.glaf.base.modules.sys.model.SysTree;
-import com.glaf.base.modules.sys.model.SysUser;
-import com.glaf.base.modules.sys.model.SysUserRole;
-import com.glaf.base.modules.sys.service.SysDepartmentService;
-import com.glaf.base.modules.sys.service.SysDeptRoleService;
-import com.glaf.base.modules.sys.service.SysRoleService;
-import com.glaf.base.modules.sys.service.SysTreeService;
-import com.glaf.base.modules.sys.service.SysUserRoleService;
-import com.glaf.base.modules.sys.service.SysUserService;
-import com.glaf.base.utils.ParamUtil;
 import com.glaf.core.config.Configuration;
 import com.glaf.core.config.ViewProperties;
-import com.glaf.core.res.MessageUtils;
-import com.glaf.core.res.ViewMessage;
-import com.glaf.core.res.ViewMessages;
-import com.glaf.core.security.DigestUtil;
-import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.RequestUtils;
-import com.glaf.core.util.Tools;
+
+import com.glaf.base.modules.Constants;
+import com.glaf.base.modules.sys.model.SysDepartment;
+import com.glaf.base.modules.sys.model.SysTree;
+import com.glaf.base.modules.sys.service.SysDepartmentService;
+import com.glaf.base.modules.sys.service.SysRoleService;
+import com.glaf.base.modules.sys.service.SysTreeService;
+import com.glaf.base.modules.sys.service.SysUserService;
+import com.glaf.base.utils.ParamUtil;
+
 import com.glaf.wechat.config.WechatConfiguration;
 
 @Controller("/wx/register")
@@ -69,11 +58,7 @@ public class WxUserRegisterController {
 
 	protected SysUserService sysUserService;
 
-	protected SysUserRoleService sysUserRoleService;
-
 	protected SysDepartmentService sysDepartmentService;
-
-	protected SysDeptRoleService sysDeptRoleService;
 
 	protected SysRoleService sysRoleService;
 
@@ -81,115 +66,6 @@ public class WxUserRegisterController {
 
 	public WxUserRegisterController() {
 
-	}
-
-	@RequestMapping("/create")
-	public ModelAndView create(HttpServletRequest request, ModelMap modelMap) {
-		SysUser bean = new SysUser();
-		long deptId = RequestUtils.getLong(request, "deptId");
-		if (deptId > 0) {
-			SysDepartment department = sysDepartmentService.findById(deptId);
-			bean.setDepartment(department);
-			bean.setDeptId(department.getId());
-		} else {
-			SysDepartment department = sysDepartmentService
-					.findByCode("website");
-			if (department != null) {
-				bean.setDepartment(department);
-				bean.setDeptId(department.getId());
-			}
-		}
-
-		bean.setAccount(ParamUtil.getParameter(request, "actorId"));
-		// bean.setCode(bean.getAccount());
-		bean.setName(ParamUtil.getParameter(request, "name"));
-		String password = ParamUtil.getParameter(request, "password");
-		try {
-			String pwd = DigestUtil.digestString(password, "MD5");
-			bean.setPassword(pwd);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-		bean.setMobile(ParamUtil.getParameter(request, "mobile"));
-		bean.setEmail(ParamUtil.getParameter(request, "email"));
-		// bean.setBlocked(0);
-		bean.setUserType(0);
-		bean.setAccountType(2);
-		bean.setEvection(0);
-		bean.setCreateTime(new Date());
-		bean.setLastLoginTime(new Date());
-		bean.setLastChangePasswordDate(new Date());
-		bean.setCreateBy("website");
-		bean.setUpdateBy("website");
-		// bean.setLastChangePasswordDate(new Date());
-		// bean.setIsChangePassword(0);
-
-		int ret = 0;
-		if (sysUserService.findByAccount(bean.getAccount()) == null) {
-			if (sysUserService.create(bean)) {
-				ret = 2;
-				try {
-					SysRole role = sysRoleService.findByCode("WX_ROLE");
-					if (role != null) {
-						if (conf.getBoolean("isIsdpIdentity", false)) {
-							Map<String, Object> dataMap = new HashMap<String, Object>();
-							dataMap.put("authorizeFrom", 0);
-							dataMap.put("userId", bean.getAccount());
-							dataMap.put("roleId", String.valueOf(role.getId()));
-							SysUserRole userRole = new SysUserRole();
-							Tools.populate(userRole, dataMap);
-							userRole.setAuthorized(0);
-							userRole.setCreateBy("website");
-							userRole.setCreateDate(new Date());
-							userRole.setAvailDateStart(new Date());
-							userRole.setAvailDateEnd(DateUtils.toDate("2020-01-01"));
-							userRole.setUser(bean);
-							sysUserRoleService.create(userRole);
-						} else {
-							SysDeptRole deptRole = sysDeptRoleService.find(
-									bean.getDeptId(), role.getId());
-							if (deptRole != null) {
-								Map<String, Object> dataMap = new HashMap<String, Object>();
-								dataMap.put("authorizeFrom", "0");
-								dataMap.put("userId", bean.getId());
-								dataMap.put("deptRoleId", deptRole.getId());
-								SysUserRole userRole = new SysUserRole();
-								Tools.populate(userRole, dataMap);
-								userRole.setAuthorized(0);
-								userRole.setCreateBy("website");
-								userRole.setDeptRole(deptRole);
-								userRole.setUser(bean);
-								userRole.setCreateDate(new Date());
-								userRole.setAvailDateStart(new Date());
-								userRole.setAvailDateEnd(DateUtils.toDate("2020-01-01"));
-								sysUserRoleService.create(userRole);
-							}
-						}
-					}
-				} catch (Exception ex) {
-					logger.error(ex);
-				}
-			}
-		} else {// 帐号存在
-			ret = 1;
-		}
-
-		ViewMessages messages = new ViewMessages();
-		if (ret == 2) {// 保存成功
-			modelMap.put("registerStatus", 2);
-			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
-					"user.reg_success"));
-		} else if (ret == 1) {// 保存失败
-			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
-					"user.existed"));
-		} else {
-			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
-					"user.reg_failure"));
-		}
-		MessageUtils.addMessages(request, messages);
-
-		// 显示注册成功页面
-		return new ModelAndView("/wx/user/registerEnd", modelMap);
 	}
 
 	/**
@@ -262,11 +138,6 @@ public class WxUserRegisterController {
 	}
 
 	@javax.annotation.Resource
-	public void setSysDeptRoleService(SysDeptRoleService sysDeptRoleService) {
-		this.sysDeptRoleService = sysDeptRoleService;
-	}
-
-	@javax.annotation.Resource
 	public void setSysRoleService(SysRoleService sysRoleService) {
 		this.sysRoleService = sysRoleService;
 	}
@@ -277,14 +148,8 @@ public class WxUserRegisterController {
 	}
 
 	@javax.annotation.Resource
-	public void setSysUserRoleService(SysUserRoleService sysUserRoleService) {
-		this.sysUserRoleService = sysUserRoleService;
-	}
-
-	@javax.annotation.Resource
 	public void setSysUserService(SysUserService sysUserService) {
 		this.sysUserService = sysUserService;
-		logger.info("setSysUserService");
 	}
 
 }

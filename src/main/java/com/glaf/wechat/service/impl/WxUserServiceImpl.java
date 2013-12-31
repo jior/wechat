@@ -18,7 +18,10 @@
 
 package com.glaf.wechat.service.impl;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.session.RowBounds;
@@ -28,9 +31,24 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.glaf.base.modules.sys.model.SysDepartment;
+import com.glaf.base.modules.sys.model.SysDeptRole;
+import com.glaf.base.modules.sys.model.SysRole;
+import com.glaf.base.modules.sys.model.SysUser;
+import com.glaf.base.modules.sys.model.SysUserRole;
+import com.glaf.base.modules.sys.service.SysDepartmentService;
+import com.glaf.base.modules.sys.service.SysDeptRoleService;
+import com.glaf.base.modules.sys.service.SysRoleService;
+import com.glaf.base.modules.sys.service.SysTreeService;
+import com.glaf.base.modules.sys.service.SysUserRoleService;
+import com.glaf.base.modules.sys.service.SysUserService;
+import com.glaf.core.config.Configuration;
 import com.glaf.core.dao.EntityDAO;
 import com.glaf.core.id.IdGenerator;
+import com.glaf.core.util.DateUtils;
+import com.glaf.core.util.Tools;
 import com.glaf.core.util.UUID32;
+import com.glaf.wechat.config.WechatConfiguration;
 import com.glaf.wechat.domain.WxUser;
 import com.glaf.wechat.mapper.WxUserMapper;
 import com.glaf.wechat.query.WxUserQuery;
@@ -41,6 +59,8 @@ import com.glaf.wechat.service.WxUserService;
 public class WxUserServiceImpl implements WxUserService {
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
 
+	protected static Configuration conf = WechatConfiguration.create();
+
 	protected EntityDAO entityDAO;
 
 	protected IdGenerator idGenerator;
@@ -49,8 +69,84 @@ public class WxUserServiceImpl implements WxUserService {
 
 	protected WxUserMapper wxUserMapper;
 
+	protected SysUserService sysUserService;
+
+	protected SysUserRoleService sysUserRoleService;
+
+	protected SysDepartmentService sysDepartmentService;
+
+	protected SysDeptRoleService sysDeptRoleService;
+
+	protected SysRoleService sysRoleService;
+
+	protected SysTreeService sysTreeService;
+
 	public WxUserServiceImpl() {
 
+	}
+
+	/**
+	 * 创建用户账号
+	 * 
+	 * @param user
+	 */
+	@Transactional
+	public boolean createAccount(SysUser bean) {
+		boolean ret = false;
+		long deptId = bean.getDeptId();
+		if (deptId > 0) {
+			SysDepartment department = sysDepartmentService.findById(deptId);
+			bean.setDepartment(department);
+			bean.setDeptId(department.getId());
+		} else {
+			SysDepartment department = sysDepartmentService
+					.findByCode("website");
+			if (department != null) {
+				bean.setDepartment(department);
+				bean.setDeptId(department.getId());
+			}
+		}
+		if (sysUserService.create(bean)) {
+			SysRole role = sysRoleService.findByCode("WX_ROLE");
+			if (role != null) {
+				if (conf.getBoolean("isIsdpIdentity", false)) {
+					Map<String, Object> dataMap = new HashMap<String, Object>();
+					dataMap.put("authorizeFrom", 0);
+					dataMap.put("userId", bean.getAccount());
+					dataMap.put("roleId", String.valueOf(role.getId()));
+					SysUserRole userRole = new SysUserRole();
+					Tools.populate(userRole, dataMap);
+					userRole.setAuthorized(0);
+					userRole.setCreateBy("website");
+					userRole.setCreateDate(new Date());
+					userRole.setAvailDateStart(new Date());
+					userRole.setAvailDateEnd(DateUtils.toDate("2020-01-01"));
+					userRole.setUser(bean);
+					sysUserRoleService.create(userRole);
+				} else {
+					SysDeptRole deptRole = sysDeptRoleService.find(
+							bean.getDeptId(), role.getId());
+					if (deptRole != null) {
+						Map<String, Object> dataMap = new HashMap<String, Object>();
+						dataMap.put("authorizeFrom", "0");
+						dataMap.put("userId", bean.getId());
+						dataMap.put("deptRoleId", deptRole.getId());
+						SysUserRole userRole = new SysUserRole();
+						Tools.populate(userRole, dataMap);
+						userRole.setAuthorized(0);
+						userRole.setCreateBy("website");
+						userRole.setDeptRole(deptRole);
+						userRole.setUser(bean);
+						userRole.setCreateDate(new Date());
+						userRole.setAvailDateStart(new Date());
+						userRole.setAvailDateEnd(DateUtils.toDate("2020-01-01"));
+						sysUserRoleService.create(userRole);
+					}
+				}
+			}
+			ret = true;
+		}
+		return ret;
 	}
 
 	@Transactional
@@ -145,6 +241,38 @@ public class WxUserServiceImpl implements WxUserService {
 	@javax.annotation.Resource
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
+	}
+
+	@javax.annotation.Resource
+	public void setSysDepartmentService(
+			SysDepartmentService sysDepartmentService) {
+		this.sysDepartmentService = sysDepartmentService;
+	}
+
+	@javax.annotation.Resource
+	public void setSysDeptRoleService(SysDeptRoleService sysDeptRoleService) {
+		this.sysDeptRoleService = sysDeptRoleService;
+	}
+
+	@javax.annotation.Resource
+	public void setSysRoleService(SysRoleService sysRoleService) {
+		this.sysRoleService = sysRoleService;
+	}
+
+	@javax.annotation.Resource
+	public void setSysTreeService(SysTreeService sysTreeService) {
+		this.sysTreeService = sysTreeService;
+	}
+
+	@javax.annotation.Resource
+	public void setSysUserRoleService(SysUserRoleService sysUserRoleService) {
+		this.sysUserRoleService = sysUserRoleService;
+	}
+
+	@javax.annotation.Resource
+	public void setSysUserService(SysUserService sysUserService) {
+		this.sysUserService = sysUserService;
+		logger.info("setSysUserService");
 	}
 
 }

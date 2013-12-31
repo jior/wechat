@@ -19,13 +19,23 @@
 package com.glaf.wechat.service;
 
 import java.util.*;
+
 import org.springframework.transaction.annotation.Transactional;
 
+import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.wechat.domain.*;
 import com.glaf.wechat.query.*;
 
 @Transactional(readOnly = true)
 public interface WxUserService {
+
+	/**
+	 * 创建用户账号
+	 * 
+	 * @param user
+	 */
+	@Transactional
+	boolean createAccount(SysUser user);
 
 	/**
 	 * 根据主键删除记录
@@ -71,7 +81,7 @@ public interface WxUserService {
 	 * @return
 	 */
 	WxUser getWxUser(Long id);
-	
+
 	WxUser getWxUserByActorId(String actorId);
 
 	/**

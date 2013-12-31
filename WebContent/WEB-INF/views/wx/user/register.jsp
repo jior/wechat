@@ -44,45 +44,74 @@ limitations under the License.
 <script language="javascript" src='<%=context%>/scripts/main.js'></script>
 <script language="javascript" src='<%=context%>/scripts/verify.js'></script></head>
 <script language="javascript">
-function checkForm(form){
+
+function regXY(){
+   var buff = '{';
    if(jQuery("#actorId").val()==""){
        alert("请输入用户名");
 	   document.getElementById("actorId").focus();
-       return false;
+       return;
    }
+   buff +='"x":"'+jQuery("#actorId").val()+'"';
 
    if(jQuery("#name").val()==""){
        alert("请输入姓名");
 	   document.getElementById("name").focus();
-       return false;
+       return;
    }
+
+   buff +=',"name":"'+jQuery("#name").val()+'"';
 
    if(jQuery("#password").val()==""){
        alert("请输入密码");
 	   document.getElementById("password").focus();
-       return false;
+       return;
    }
 
    if(jQuery("#password").val()!=jQuery("#password2").val()){
        alert("密码与确认密码不一致，请重新输入");
 	   document.getElementById("password2").focus();
-       return false;
+       return;
    }
+
+   buff +=',"y":"'+jQuery("#password").val()+'"';
 
    if(jQuery("#email").val()==""){
        alert("请输入邮件地址");
 	   document.getElementById("email").focus();
-       return false;
+       return;
    }
 
     if(!isEmail(jQuery("#email").val())){
        alert("请输入合法的邮件地址");
 	   document.getElementById("email").focus();
-       return false;
+       return;
    }
- 
-   return true;
+
+   buff +=',"email":"'+jQuery("#email").val()+'"';
+   buff +='}';
+   //alert(buff);
+   document.getElementById("json").value=buff;
+   var params = jQuery("#iForm").formSerialize();
+   jQuery.ajax({
+				   type: "POST",
+				   url: '<%=request.getContextPath()%>/website/wx/auth',
+				   dataType:  'json',
+				   data: params,
+				   error: function(data){
+					   alert('服务器处理错误！');
+				   },
+				   success: function(data){
+					   if(data != null && data.message != null){
+						 alert(data.message);
+						 if(data.status==200){
+							 location.href="<%=request.getContextPath()%>/mx/wechat/main";
+						 }
+					   } 
+				   }
+			 });
 }
+
 function setValue(obj){
   obj.value=obj[obj.selectedIndex].value;
 }
@@ -96,7 +125,8 @@ function setValue(obj){
 	alt="填写个人资料">&nbsp;用户注册
 </div>
 <br>
-<form action="<%=request.getContextPath()%>/website/wx/register/create" method="post" onsubmit="return checkForm(this);"> 
+<form id="iForm" name="iForm" method="post" > 
+<input type="hidden" id="json" name="json">
   <table width="600" border="0" align="center" cellpadding="0" cellspacing="0" class="box">
       <tr>
         <td height="40">用户名*</td>
@@ -172,7 +202,7 @@ function setValue(obj){
         <td class="input-box2"  height="30">&nbsp;</td>
         <td  align="left" height="40">&nbsp;
 		   <br>
-           <input name="btn_save2" type="submit" value=" 确 定 " class="btnGreen">
+           <input name="btn_save2" type="button" value=" 确 定 " class="btnGreen" onclick="javascript:regXY();">
 	    </td>
       </tr>
 
