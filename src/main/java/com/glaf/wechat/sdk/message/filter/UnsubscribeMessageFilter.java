@@ -50,6 +50,8 @@ public class UnsubscribeMessageFilter extends AbstractMessageFilter implements
 		query.accountId(message.getAccountId());
 		query.createBy(message.getCustomer());
 		query.type("F");
+		query.locked(0);
+		
 		List<WxContent> rows = wxContentService.list(query);
 		if (rows != null && !rows.isEmpty()) {
 			ResponseNewsMessage newsMessage = new ResponseNewsMessage();

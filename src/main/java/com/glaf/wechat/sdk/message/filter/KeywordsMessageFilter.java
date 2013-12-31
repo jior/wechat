@@ -83,6 +83,7 @@ public class KeywordsMessageFilter extends AbstractMessageFilter implements
 			query.accountId(message.getAccountId());
 			query.createBy(message.getCustomer());
 			query.keywords(content);
+			query.locked(0);
 			List<WxKeywords> list = wxKeywordsService.list(query);
 			if (list != null && !list.isEmpty()) {
 				List<Long> contentIds = new ArrayList<Long>();

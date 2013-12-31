@@ -103,7 +103,7 @@ limitations under the License.
 				columns:[[
 	                {title:'序号',field:'startIndex',width:80,sortable:false},
 					{title:'封面', field:'cover', width:80, formatter:formatterCover},
-					{title:'标题',field:'title', width:180},
+					{title:'标题',field:'title', width:220, formatter:formatterTitle},
 					{title:'链接',field:'url', width:320},
 					{title:'关键词', field:'keywords', align:'left', width:120},
 					<c:if test="${type eq 'K'}">
@@ -140,6 +140,23 @@ limitations under the License.
 	   } else  {
 			return '<span style="color:black; font: bold 13px 宋体;">未发布</span>';
 	   }  
+	}
+
+    function formatterTitle(val, row){
+        return "<a href='#' onclick='javascript:preview("+row.id+");'>"+val+"</a>";
+	}
+
+	function preview(id){
+		var link = '<%=request.getContextPath()%>/website/wx/content/view/'+id;
+	    //art.dialog.open(link, { height: 720, width: 400, title: "预览效果", lock: true, scrollbars:"no" }, false);
+		var x=200;
+		var y=150;
+		var fx = "height=520,width=400,status=0,toolbar=no,menubar=no,location=no,scrollbars=yes,top="+y+",left="+x+",resizable=no,modal=yes,dependent=yes,dialog=yes,minimizable=no";
+		if(jQuery.browser.msie){
+			window.open(link,  "预览效果", fx);
+		} else {
+            window.open(link, self, fx, true);
+		}
 	}
 
 	function formatterKeys(val, row){

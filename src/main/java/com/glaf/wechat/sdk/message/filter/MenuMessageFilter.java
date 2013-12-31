@@ -44,6 +44,8 @@ public class MenuMessageFilter extends AbstractMessageFilter implements
 		query.accountId(message.getAccountId());
 		query.createBy(message.getCustomer());
 		query.key(msg.getEventKey());
+		query.locked(0);
+		
 		List<WxMenu> rows = wxMenuService.list(query);
 		if (rows != null && !rows.isEmpty()) {
 			WxMenu menu = rows.get(0);

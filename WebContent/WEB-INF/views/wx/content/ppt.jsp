@@ -230,25 +230,25 @@ limitations under the License.
             jQuery('#mydatagrid').datagrid('loadData', data);
             },'json');
 	  }
+ 
 
 	function searchData(){
-            var params = jQuery("#searchForm").formSerialize();
-            jQuery.ajax({
-                        type: "POST",
-                        url: '<%=request.getContextPath()%>/mx/wx/wxContent/json/${accountId}?categoryId=${categoryId}',
-                        dataType:  'json',
-                        data: params,
-                        error: function(data){
-                                  alert('服务器处理错误！');
-                        },
-                        success: function(data){
-                                  jQuery('#mydatagrid').datagrid('loadData', data);
-                        }
-                        });
-
-	    jQuery('#dlg').dialog('close');
-	}
-		 
+        var title = document.getElementById("title").value.trim();
+		document.getElementById("titleLike").value = title;
+		var params = jQuery("#iForm").formSerialize();
+        jQuery.ajax({
+                      type: "POST",
+                      url: '<%=request.getContextPath()%>/mx/wx/wxContent/json/${accountId}?categoryId=${categoryId}&type=PPT',
+                      dataType:  'json',
+                      data: params,
+                      error: function(data){
+                                alert('服务器处理错误！');
+                      },
+                      success: function(data){
+                                jQuery('#mydatagrid').datagrid('loadData', data);
+                      }
+                    });
+	}		 
 </script>
 </head>
 <body style="margin:1px;">  
@@ -266,12 +266,18 @@ limitations under the License.
 	   onclick="javascript:deleteSelections();">删除</a> 
 	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-search'"
 	   onclick="javascript:searchWin();">查找</a>
+	<input id="title" name="title" type="text" 
+	       class="x-searchtext" size="50" maxlength="200"/>
+	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-search'"
+	   onclick="javascript:searchData();">查找</a>
    </div> 
   </div> 
   <div data-options="region:'center',border:true">
 	 <table id="mydatagrid"></table>
   </div>  
 </div>
- 
+<form id="iForm" name="iForm" method="post">
+<input type="hidden" id="titleLike" name="titleLike">
+</form>   
 </body>
 </html>

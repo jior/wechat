@@ -156,13 +156,22 @@ limitations under the License.
 		<tr class="x-content-hight">
 			<td align="left" width="18%" align="left"><span>文件</span></td>
 			<td align="left" width="82%">
-			<c:if test="${not empty wxFile.path and wxFile.image }">
+			<c:choose>
+			  <c:when test="${not empty wxFile.path and wxFile.image }">
 			   <br>
 			   <br>
 			   <img src="<%=request.getContextPath()%>/${wxFile.path}" border="0"/>
 			   <br>
 			   <br>
-			</c:if>
+			  </c:when>
+			  <c:when test="${not empty wxFile.path }">
+			   <br>
+			   <br>
+			   <a href="<%=request.getContextPath()%>/${wxFile.path}">${wxFile.filename}</a>
+			   <br>
+			   <br>
+			  </c:when>
+            </c:choose>
 			<input type="file" id="file" name="file" size="40"
 				class="input-file x-text">
 			<c:if test="${not empty wxFile.path}">

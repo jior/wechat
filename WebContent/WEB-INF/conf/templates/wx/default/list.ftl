@@ -95,9 +95,13 @@
                    <#list pptList as ppt>  
 					  <li>
 					    <p></p>
+						<#if ppt.url?exists>
 						<a href="${ppt.url?if_exists}">
 							<img src="${serviceUrl}${ppt.icon}" alt="${ppt.title}" style="width:100%;">
 						</a>
+						<#else>
+						    <img src="${serviceUrl}${ppt.icon}" alt="${ppt.title}" style="width:100%;">
+						</#if>
 					  </li>
 					</#list>         
                 </ul>

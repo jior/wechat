@@ -36,6 +36,7 @@ public class LocationMessageFilter extends AbstractMessageFilter implements
 			query.accountId(message.getAccountId());
 			query.createBy(message.getCustomer());
 			query.type("L");
+			query.locked(0);
 		 
 			WxUser user = WxIdentityFactory.getUserByAccountId(message.getAccountId());
 			List<WxContent> rows = wxContentService.list(query);

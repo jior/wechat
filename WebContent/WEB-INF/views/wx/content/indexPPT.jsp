@@ -43,7 +43,7 @@ limitations under the License.
 				columns:[[
 				    {title:'序号', field:'startIndex', width:80, sortable:false},
 					{title:'图片', field:'icon', width:180, formatter:formatterCover},
-					{title:'标题', field:'title', width:380, formatter:formatterTitle},
+					{title:'标题', field:'title', width:220, formatter:formatterTitle},
 					{title:'跳转地址', field:'url', width:180, formatter:formatterLink},
 					{title:'排序', field:'sort', width:80},
 					{title:'状态', field:'status', width:90, formatter:formatterStatus},
@@ -72,9 +72,8 @@ limitations under the License.
 
 
 	function formatterTitle(val, row){
-        return "<a href='#' target='blank'>"+val+"</a>";
+		return "<label title='"+val+"'>"+val+"</label>";
 	}
-
 
 	function formatterLink(val, row){
        return "<a href='"+val+"' target='blank'>"+val+"</a>";
@@ -268,9 +267,9 @@ limitations under the License.
 	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-remove'"
 	   onclick="javascript:deleteSelections();">删除</a> 
 	<input id="title" name="title" type="text" 
-	               class="x-searchtext" size="50" maxlength="200"/>
-	        <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-search'"
-	           onclick="javascript:searchData();">查找</a>
+	       class="x-searchtext" size="50" maxlength="200"/>
+	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-search'"
+	   onclick="javascript:searchData();">查找</a>
    </div> 
   </div> 
   <div data-options="region:'center',border:true">
