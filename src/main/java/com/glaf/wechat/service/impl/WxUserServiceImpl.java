@@ -94,13 +94,13 @@ public class WxUserServiceImpl implements WxUserService {
 	public boolean createAccount(SysUser bean) {
 		boolean ret = false;
 		long deptId = bean.getDeptId();
+		SysDepartment department = null;
 		if (deptId > 0) {
-			SysDepartment department = sysDepartmentService.findById(deptId);
+			department = sysDepartmentService.findById(deptId);
 			bean.setDepartment(department);
 			bean.setDeptId(department.getId());
 		} else {
-			SysDepartment department = sysDepartmentService
-					.findByCode("website");
+			department = sysDepartmentService.findByCode("website");
 			if (department != null) {
 				bean.setDepartment(department);
 				bean.setDeptId(department.getId());
@@ -129,6 +129,16 @@ public class WxUserServiceImpl implements WxUserService {
 				} else {
 					SysDeptRole deptRole = sysDeptRoleService.find(
 							bean.getDeptId(), role.getId());
+					if (deptRole == null) {
+						deptRole = new SysDeptRole();
+						deptRole.setDeptId(bean.getDeptId());
+						deptRole.setCreateBy("website");
+						deptRole.setCreateDate(new Date());
+						deptRole.setDept(department);
+						deptRole.setRole(role);
+						deptRole.setSysRoleId(role.getId());
+						sysDeptRoleService.create(deptRole);
+					}
 					if (deptRole != null) {
 						Map<String, Object> dataMap = new HashMap<String, Object>();
 						dataMap.put("authorizeFrom", "0");

@@ -95,6 +95,7 @@ function regXY(){
    }
 
    buff +=',"email":"'+jQuery("#email").val()+'"';
+   buff +=',"deptId":"'+jQuery("#deptId").val()+'"';
    buff +='}';
    //alert(buff);
    document.getElementById("json").value=buff;
@@ -186,7 +187,7 @@ function setValue(obj){
       </tr>
 	  <tr>
         <td class="input-box">类　型</td>
-        <td><select name="deptId" onChange="javascript:setValue(this);" class="input">
+        <td><select id="deptId" name="deptId" onChange="javascript:setValue(this);" class="input">
           <%
 			if(list!=null){
 			  Iterator iter=list.iterator();   
