@@ -26,7 +26,13 @@ limitations under the License.
     String context = request.getContextPath();
     String theme = com.glaf.core.util.RequestUtils.getTheme(request);
     request.setAttribute("theme", theme);
-	List  list = (List)request.getAttribute("depts");
+	List list = (List)request.getAttribute("depts");
+    java.util.Random random = new java.util.Random();
+	String rand = Math.abs(random.nextInt(999999))+com.glaf.core.util.UUID32.getUUID()+Math.abs(random.nextInt(999999));
+	session = request.getSession(true);
+	if (session != null) {
+       session.setAttribute("x_y", rand);
+	}
 %>
 <!DOCTYPE html>
 <html>
@@ -105,7 +111,9 @@ function regXY(){
 					   if(data != null && data.message != null){
 						 alert(data.message);
 						 if(data.status==200){
-							 location.href="<%=request.getContextPath()%>/mx/wechat/main";
+							 var x = jQuery("#actorId").val();
+							 var y = jQuery("#password").val();
+							 location.href="<%=context%>/mx/login/doLogin?x="+x+"&y=<%=rand%>"+y;
 						 }
 					   } 
 				   }

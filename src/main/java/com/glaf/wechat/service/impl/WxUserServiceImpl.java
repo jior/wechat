@@ -106,6 +106,9 @@ public class WxUserServiceImpl implements WxUserService {
 				bean.setDeptId(department.getId());
 			}
 		}
+		if (sysUserService.findByMail(bean.getEmail()) != null) {
+			throw new RuntimeException(bean.getEmail() + " is exist.");
+		}
 		if (sysUserService.create(bean)) {
 			SysRole role = sysRoleService.findByCode("WX_ROLE");
 			if (role != null) {

@@ -19,10 +19,10 @@
        session.setAttribute("x_y", rand);
 	}
 %>
-<!DOCTYPE html >
+<!DOCTYPE html>
 <html>
-<head id="Head1">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>登录<%=SystemConfig.getString("res_system_name")%></title>
 <link href="${contextPath}/scripts/easyui/themes/gray/easyui.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/core.css">

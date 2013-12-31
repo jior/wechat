@@ -24,15 +24,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-
 import com.glaf.core.config.Configuration;
 import com.glaf.core.security.DigestUtil;
 import com.glaf.core.util.RequestUtils;
@@ -72,6 +73,12 @@ public class WxUserAuthController {
 		JSONObject result = new JSONObject();
 		String actorId = jsonObject.getString("x");
 		String password = jsonObject.getString("y");
+		String email = jsonObject.getString("email");
+		if (sysUserService.findByMail(email) != null) {
+			result.put("status", 500);
+			result.put("message", "邮箱已经存在，请换个再来！");
+			return result.toJSONString().getBytes("UTF-8");
+		}
 		SysUser user = sysUserService.findByAccount(actorId);
 		int status = 0;
 		if (user != null) {
@@ -182,6 +189,44 @@ public class WxUserAuthController {
 		return result.toJSONString().getBytes("UTF-8");
 	}
 
+	/**
+	 * 登录
+	 * 
+	 * @param request
+	 * @param modelMap
+	 * @return
+	 */
+	@RequestMapping("/login")
+	public ModelAndView login(HttpServletRequest request,
+			HttpServletResponse response) {
+		String ip = RequestUtils.getIPAddress(request);
+		/**
+		 * 允许从指定的机器上通过用户名密码登录
+		 */
+		if (StringUtils.contains(conf.get("login.allow.ip", "127.0.0.1"), ip)) {
+			String actorId = request.getParameter("x");
+			String password = request.getParameter("y");
+			HttpSession session = request.getSession(true);
+			java.util.Random random = new java.util.Random();
+			String rand = Math.abs(random.nextInt(999999))
+					+ com.glaf.core.util.UUID32.getUUID()
+					+ Math.abs(random.nextInt(999999));
+			session = request.getSession(true);
+			if (session != null) {
+				session.setAttribute("x_y", rand);
+			}
+			String url = request.getContextPath() + "/mx/login/doLogin?x="
+					+ actorId + "&y=" + rand + password;
+			try {
+				response.sendRedirect(url);
+				return null;
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		}
+		return new ModelAndView("/modules/login");
+	}
+
 	@javax.annotation.Resource
 	public void setSysUserService(SysUserService sysUserService) {
 		this.sysUserService = sysUserService;
@@ -189,15 +234,15 @@ public class WxUserAuthController {
 	}
 
 	@javax.annotation.Resource
-	public void setWxUserService(WxUserService wxUserService) {
-		this.wxUserService = wxUserService;
-		logger.debug("setWxUserService");
-	}
-
-	@javax.annotation.Resource
 	public void setUserOnlineService(UserOnlineService userOnlineService) {
 		this.userOnlineService = userOnlineService;
 		logger.debug("setUserOnlineService");
+	}
+
+	@javax.annotation.Resource
+	public void setWxUserService(WxUserService wxUserService) {
+		this.wxUserService = wxUserService;
+		logger.debug("setWxUserService");
 	}
 
 }
