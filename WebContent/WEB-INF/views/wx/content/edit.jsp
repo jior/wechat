@@ -119,35 +119,35 @@ limitations under the License.
 
 	function chooseImage(){
 		var link = '<%=request.getContextPath()%>/mx/wx/wxFile/chooseFile?elementId=icon&elementName=icon&accountId=${accountId}';
-		var x=100;
-		var y=100;
+		var x=50;
+		var y=50;
 		if(is_ie) {
 			x=document.body.scrollLeft+event.clientX-event.offsetX-200;
 			y=document.body.scrollTop+event.clientY-event.offsetY-200;
 		}
-		openWindow(link,self,x, y, 745, 580);
+		openWindow(link,self,x, y, 845, 580);
 	}
 
 	function chooseBigImage(){
 		var link = '<%=request.getContextPath()%>/mx/wx/wxFile/chooseFile?elementId=bigIcon&elementName=bigIcon&accountId=${accountId}';
-		var x=100;
-		var y=100;
+		var x=50;
+		var y=50;
 		if(is_ie) {
 			x=document.body.scrollLeft+event.clientX-event.offsetX-200;
 			y=document.body.scrollTop+event.clientY-event.offsetY-200;
 		}
-		openWindow(link,self,x, y, 745, 580);
+		openWindow(link,self,x, y, 845, 580);
 	}
 
 	function chooseSmallImage(){
 		var link = '<%=request.getContextPath()%>/mx/wx/wxFile/chooseFile?elementId=smallIcon&elementName=smallIcon&accountId=${accountId}';
-		var x=100;
-		var y=100;
+		var x=50;
+		var y=50;
 		if(is_ie) {
 			x=document.body.scrollLeft+event.clientX-event.offsetX-200;
 			y=document.body.scrollTop+event.clientY-event.offsetY-200;
 		}
-		openWindow(link,self,x, y, 745, 580);
+		openWindow(link,self,x, y, 845, 580);
 	}
 
 	function editRelations(){

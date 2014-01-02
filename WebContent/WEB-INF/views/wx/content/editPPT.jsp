@@ -88,24 +88,24 @@ limitations under the License.
 
 	function chooseImage(){
 		var link = '<%=request.getContextPath()%>/mx/wx/wxFile/chooseFile?elementId=icon&elementName=icon&accountId=${accountId}';
-		var x=100;
-		var y=100;
+		var x=50;
+		var y=50;
 		if(is_ie) {
 			x=document.body.scrollLeft+event.clientX-event.offsetX-200;
 			y=document.body.scrollTop+event.clientY-event.offsetY-200;
 		}
-		openWindow(link,self,x, y, 745, 580);
+		openWindow(link,self,x, y, 845, 580);
 	}
 
 	function chooseLink(){
 		var link = '<%=request.getContextPath()%>/mx/wx/wxChoose/chooseOne?elementId=url&elementName=url&accountId=${accountId}';
-		var x=100;
-		var y=100;
+		var x=50;
+		var y=50;
 		if(is_ie) {
 			x=document.body.scrollLeft+event.clientX-event.offsetX-200;
 			y=document.body.scrollTop+event.clientY-event.offsetY-200;
 		}
-		openWindow(link,self,x, y, 745, 480);
+		openWindow(link,self,x, y, 845, 480);
 	}
 
 </script>

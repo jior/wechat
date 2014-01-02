@@ -203,7 +203,7 @@
   
   <div data-options="region:'center',border:false,cache:true">
   <form id="iForm" name="iForm" method="post">
-    <div class="easyui-tabs" style="width:680px;height:460px">
+    <div class="easyui-tabs" style="width:820px;height:460px">
 	   <div title="微站内容" data-options="closable:false" style="padding:10px">
 	    <input type="button" value=" 确定 " onclick="javascript:chooseMyTreeData();" class="btnGreen">
 		<br>

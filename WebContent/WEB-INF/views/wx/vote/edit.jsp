@@ -125,7 +125,7 @@ limitations under the License.
 	<tr>
 		<td width="20%" align="left">主题</td>
 		<td align="left">
-            <input id="title" name="title" type="text" 
+            <input id="title" name="title" type="text" maxlength="50"
 			       class="easyui-validatebox"  style="width:415px;"
 			       required="true" data-options="required:true" 
 				   value="${wxVote.title}"/>
