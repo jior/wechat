@@ -32,9 +32,6 @@ import com.glaf.base.utils.RequestUtil;
 import com.glaf.core.cache.CacheUtils;
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.identity.User;
-import com.glaf.core.res.MessageUtils;
-import com.glaf.core.res.ViewMessage;
-import com.glaf.core.res.ViewMessages;
 import com.glaf.core.security.DigestUtil;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.ResponseUtils;
@@ -284,11 +281,10 @@ public class WxUserController {
 	 * @param modelMap
 	 * @return
 	 */
+	@ResponseBody
 	@RequestMapping("/saveModifyInfo")
-	public ModelAndView saveModifyInfo(HttpServletRequest request,
-			ModelMap modelMap) {
+	public byte[] saveModifyInfo(HttpServletRequest request, ModelMap modelMap) {
 		SysUser bean = RequestUtil.getLoginUser(request);
-		boolean ret = false;
 		if (bean != null) {
 			SysUser user = sysUserService.findByAccount(bean.getActorId());
 			user.setName(ParamUtil.getParameter(request, "name"));
@@ -296,20 +292,12 @@ public class WxUserController {
 			user.setEmail(ParamUtil.getParameter(request, "email"));
 			user.setTelephone(ParamUtil.getParameter(request, "telephone"));
 			user.setUpdateBy(RequestUtils.getActorId(request));
-			ret = sysUserService.update(user);
+			sysUserService.update(user);
 			CacheUtils.clearUserCache(user.getAccount());
+			return ResponseUtils.responseJsonResult(true);
 		}
 
-		ViewMessages messages = new ViewMessages();
-		if (ret) {// 保存成功
-			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
-					"user.modify_success"));
-		} else {// 保存失败
-			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
-					"user.modify_failure"));
-		}
-		MessageUtils.addMessages(request, messages);
-		return new ModelAndView("show_msg", modelMap);
+		return ResponseUtils.responseJsonResult(false);
 	}
 
 	/**
@@ -319,8 +307,9 @@ public class WxUserController {
 	 * @param modelMap
 	 * @return
 	 */
+	@ResponseBody
 	@RequestMapping("/savePwd")
-	public ModelAndView savePwd(HttpServletRequest request, ModelMap modelMap) {
+	public byte[] savePwd(HttpServletRequest request, ModelMap modelMap) {
 		SysUser bean = RequestUtil.getLoginUser(request);
 		boolean ret = false;
 		String oldPwd = ParamUtil.getParameter(request, "oldPwd");
@@ -336,22 +325,18 @@ public class WxUserController {
 					// user.setLastChangePasswordDate(new Date());
 					// user.setIsChangePassword(2);
 					ret = sysUserService.update(user);
+					if (ret) {
+						return ResponseUtils.responseJsonResult(true);
+					}
+				} else {
+					return ResponseUtils.responseJsonResult(false, "原始密码不正确。");
 				}
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
 		}
 
-		ViewMessages messages = new ViewMessages();
-		if (ret) {// 保存成功
-			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
-					"user.modify_success"));
-		} else {// 保存失败
-			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
-					"user.modify_failure"));
-		}
-		MessageUtils.addMessages(request, messages);
-		return new ModelAndView("show_msg", modelMap);
+		return ResponseUtils.responseJsonResult(false, "修改密码不成功。");
 	}
 
 	@ResponseBody

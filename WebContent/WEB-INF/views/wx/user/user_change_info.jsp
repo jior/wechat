@@ -33,18 +33,47 @@ limitations under the License.
 <title>修改用户信息</title>
 <%@ include file="/WEB-INF/views/wx/inc/wx_styles.jsp"%>
 <%@ include file="/WEB-INF/views/wx/inc/wx_scripts.jsp"%>
-<script language="javascript" src='<%=context%>/scripts/main.js'></script>
-<script language="javascript" src='<%=context%>/scripts/verify.js'></script></head>
 <script language="javascript">
-function checkForm(form){
-  if(verifyAll(form)){
-	 return true;
-  }
-   return false;
-}
-function setValue(obj){
-  obj.value=obj[obj.selectedIndex].value;
-}
+ 
+    function saveData(){
+	    if(document.getElementById("name").value.trim().length == 0){
+			alert("请输入姓名！");
+			document.getElementById("name").focus();
+			return ;
+		}
+
+		if(document.getElementById("mobile").value.trim().length == 0){
+			alert("请输入手机号码！");
+			document.getElementById("mobile").focus();
+			return ;
+		}
+
+		if(document.getElementById("email").value.trim().length == 0){
+			alert("请输入电子邮件！");
+			document.getElementById("email").focus();
+			return ;
+		}
+
+		var params = jQuery("#iForm").formSerialize();
+		jQuery.ajax({
+				   type: "POST",
+				   url: '${contextPath}/mx/wx/wxUser/saveModifyInfo',
+				   data: params,
+				   dataType:  'json',
+				   error: function(data){
+					   alert('服务器处理错误！');
+				   },
+				   success: function(data){
+					   if(data != null && data.message != null){
+						 alert(data.message);
+					   } else {
+						 alert('操作成功完成！');
+					   }
+				   }
+			 });
+	}
+
+
 </script>
 </head>
 
@@ -55,12 +84,12 @@ function setValue(obj){
 	alt="修改个人资料">&nbsp;修改个人资料
 </div>
 <br>
-<html:form action="${contextPath}/mx/wx/wxUser/saveModifyInfo" method="post" target="hiddenFrame" onsubmit="return checkForm(this);"> 
+<form id="iForm" name="iForm" method="post"  > 
   <table width="600" border="0" align="center" cellpadding="0" cellspacing="0" class="box">
       <tr>
         <td height="40">姓　　名*</td>
         <td>
-		<input name="name" type="text" size="50" class="easyui-validatebox x-text" data-options="required:true" datatype="string" 
+		<input id="name" name="name" type="text" maxlength="50" size="50" class="easyui-validatebox x-text" data-options="required:true" datatype="string" 
 		  value="<%=bean.getName()%>" 
 		  nullable="no" maxsize="50" chname="姓名">   
 		</td>
@@ -68,15 +97,15 @@ function setValue(obj){
       <tr>
         <td height="40">手　　机*</td>
         <td>
-          <input name="mobile" type="text" size="50" class="easyui-validatebox x-text" data-options="required:true" datatype="string" 
+          <input id="mobile" name="mobile" type="text" size="50" class="easyui-validatebox x-text" data-options="required:true" datatype="string" maxlength="11"
 		  value="<%=bean.getMobile() != null ? bean.getMobile() : ""%>" 
-		  nullable="no" maxsize="50" chname="手机">        
+		  nullable="no" maxsize="12" chname="手机">        
 		</td>
       </tr>
       <tr>
         <td height="40">邮　　件*</td>
         <td>
-          <input name="email" type="text" size="50" class="easyui-validatebox x-text" data-options="required:true" datatype="email" 
+          <input id="email" name="email" type="text" size="50" maxlength="80" class="easyui-validatebox x-text" data-options="required:true" datatype="email" 
 		  value="<%=bean.getEmail() != null ? bean.getEmail():""%>" 
 		  nullable="no" maxsize="50" chname="邮件">        
 		</td>
@@ -84,7 +113,7 @@ function setValue(obj){
       <tr>
         <td height="40">办公电话</td>
         <td>
-          <input name="telephone" type="text" size="50" class="easyui-validatebox x-text" data-options="required:false" datatype="string" 
+          <input name="telephone" type="text" size="50" maxlength="50" class="easyui-validatebox x-text" data-options="required:false" datatype="string" 
 		  value="<%=bean.getTelephone() != null ? bean.getTelephone() :""%>" nullable="yes" maxsize="50" chname="办公电话">       
 		</td>
       </tr>
@@ -92,12 +121,12 @@ function setValue(obj){
         <td class="input-box2"  height="30">&nbsp;</td>
         <td  align="left" height="40">&nbsp;
 		   <br>
-           <input name="btn_save2" type="submit" value="保存" class="btnGreen">
+           <input name="btn_save2" type="button" value="保存" class="btnGreen" onclick="javascript:saveData();">
 	    </td>
       </tr>
 
 </table>
-</html:form>
+</form>
 
 </body>
 </html>

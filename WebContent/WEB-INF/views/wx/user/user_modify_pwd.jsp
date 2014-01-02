@@ -34,22 +34,46 @@ limitations under the License.
 <title>修改密码</title>
 <%@ include file="/WEB-INF/views/wx/inc/wx_styles.jsp"%>
 <%@ include file="/WEB-INF/views/wx/inc/wx_scripts.jsp"%>
-<script language="javascript" src='<%=context%>/scripts/main.js'></script>
-<script language="javascript" src='<%=context%>/scripts/verify.js'></script></head>
 <script language="JavaScript">
-function checkForm(form){
-  if(verifyAll(form)){
-     if(form.newPwd.value!=form.password2.value){
-	   alert("新密码与确认密码不匹配！");
-	 }else{
-	   return true;
-	 }
-  }
-   return false;
-}
-function setValue(obj){
-  obj.value=obj[obj.selectedIndex].value;
-}
+ 
+	function saveData(){
+		if(document.getElementById("oldPwd").value.trim().length == 0){
+			alert("请输入原密码！");
+			document.getElementById("oldPwd").focus();
+			return ;
+		}
+
+		if(document.getElementById("newPwd").value.trim().length == 0){
+			alert("请输入新密码！");
+			document.getElementById("newPwd").focus();
+			return ;
+		}
+
+		if(document.getElementById("newPwd").value.trim() != document.getElementById("password2").value.trim()){
+			alert("两次密码输入不一致，请再次输入新密码！");
+			document.getElementById("password2").focus();
+			return ;
+		}
+		var params = jQuery("#iForm").formSerialize();
+		jQuery.ajax({
+				   type: "POST",
+				   url: '${contextPath}/mx/wx/wxUser/savePwd',
+				   data: params,
+				   dataType:  'json',
+				   error: function(data){
+					   alert('服务器处理错误！');
+				   },
+				   success: function(data){
+					   if(data != null && data.message != null){
+						 alert(data.message);
+					   } else {
+						 alert('操作成功完成！');
+					   }
+				   }
+			 });
+	}
+
+
 </script>
 </head>
 <body>
@@ -60,37 +84,37 @@ function setValue(obj){
  
 </div>
 <br>
-<html:form action="${contextPath}/mx/wx/wxUser/savePwd" method="post"  onsubmit="return checkForm(this);"> 
+<form id="iForm" name="iForm" method="post" > 
  
 <table width="600" border="0" align="center" cellpadding="0" cellspacing="0" class="box">
  	  <tr>
         <td class="input-box2"  height="40">原密码*</td>
         <td align="left">
-		<input name="oldPwd" type="password" size="40" datatype="string" nullable="no" minsize="6" maxsize="20" chname="密码" class="easyui-validatebox x-text"    data-options="required:true">
+		<input id="oldPwd" name="oldPwd" type="password" size="40" datatype="string" nullable="no" minsize="6" maxsize="20" chname="密码" class="easyui-validatebox x-text" data-options="required:true" maxlength="20">
 		</td>
       </tr>
       <tr>
         <td class="input-box2"  height="40">新密码*</td>
         <td align="left">
-		<input name="newPwd" type="password" size="40" datatype="string" nullable="no" minsize="6" maxsize="20" chname="密码" class="easyui-validatebox x-text"    data-options="required:true">
+		<input id="newPwd" name="newPwd" type="password" size="40" datatype="string" nullable="no" minsize="6" maxsize="20" chname="密码" class="easyui-validatebox x-text" data-options="required:true" maxlength="20">
 		</td>
       </tr>
       <tr>
         <td class="input-box2"  height="40">确认密码*</td>
         <td align="left">
-		<input name="password2" type="password" size="40"  datatype="string" nullable="no" minsize="6" maxsize="20" chname="确认密码" class="easyui-validatebox x-text"    data-options="required:true">
+		<input id="password2" name="password2" type="password" size="40"  datatype="string" nullable="no" minsize="6" maxsize="20" chname="确认密码" class="easyui-validatebox x-text" data-options="required:true" maxlength="20"> 
 		</td>
       </tr>
       <tr>
 	    <td class="input-box2"  height="40">&nbsp;</td>
         <td  align="left" valign="bottom" height="40">&nbsp;
 		   <br>
-           <input name="btn_save2" type="submit" value="修改密码" class="btnGreen">
+           <input name="btn_save2" type="button" value="修改密码" class="btnGreen" onclick="javascript:saveData();">
 		</td>
       </tr>
   </tr>
 </table>
-</html:form>
+</form>
 </div>
 </body>
 </html>

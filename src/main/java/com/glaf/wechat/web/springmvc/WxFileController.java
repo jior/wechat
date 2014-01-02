@@ -126,8 +126,6 @@ public class WxFileController {
 						loginContext.getActorId()) || loginContext
 						.isSystemAdministrator())) {
 			request.setAttribute("wxFile", wxFile);
-			JSONObject rowJSON = wxFile.toJsonObject();
-			request.setAttribute("x_json", rowJSON.toJSONString());
 		}
 
 		String view = request.getParameter("view");
