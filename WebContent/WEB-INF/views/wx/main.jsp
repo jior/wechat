@@ -66,7 +66,6 @@ limitations under the License.
                         <span>管理平台</span>
                     </a>
                 </li>
-              
             </ul>
 
             <div class="user">
@@ -100,9 +99,6 @@ limitations under the License.
                                 <span class="satgreen"></span>
                             </li>
                         </ul>
-                    </li>
-                     <li>
-                        <a href="javascript:relogin();" target="_self" title="退出"><i class="icon-signout"></i> 退出</a>
                     </li>
                 </ul>
             </div>
