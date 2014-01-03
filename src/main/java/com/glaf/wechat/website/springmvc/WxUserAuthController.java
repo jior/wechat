@@ -35,6 +35,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.config.Configuration;
+import com.glaf.core.config.SystemConfig;
 import com.glaf.core.security.DigestUtil;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.base.modules.sys.model.SysUser;
@@ -203,7 +204,10 @@ public class WxUserAuthController {
 		/**
 		 * 允许从指定的机器上通过用户名密码登录
 		 */
-		if (StringUtils.contains(conf.get("login.allow.ip", "127.0.0.1"), ip)) {
+		if (StringUtils.contains(conf.get("login.allow.ip", "127.0.0.1"), ip)
+				|| StringUtils.contains(
+						SystemConfig.getString("login.allow.ip", "127.0.0.1"),
+						ip)) {
 			String actorId = request.getParameter("x");
 			String password = request.getParameter("y");
 			HttpSession session = request.getSession(true);

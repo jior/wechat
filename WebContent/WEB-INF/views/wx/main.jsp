@@ -131,7 +131,7 @@ limitations under the License.
 
             <iframe frameborder="0" id="mainFrame" name="mainFrame" 
 				src="<%=request.getContextPath()%>/mx/wx/wxUser/account" 
-				style=" center no-repeat"></iframe>
+				scrolling="auto" style=" center no-repeat" autoscroll="true"></iframe>
 
             </div>
         </div>
