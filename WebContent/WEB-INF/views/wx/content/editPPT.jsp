@@ -50,17 +50,16 @@ limitations under the License.
 					   } else {
 						 alert('操作成功完成！');
 					   }
-					   /*
+					
 					   if (window.opener) {
-						window.opener.location.reload();
+						  window.opener.location.reload();
 					   } else if (window.parent) {
-						window.parent.location.reload();
-					   }
-					   */
-					   //history.back();
+						  window.parent.location.reload();
+					   } else {
 					   <%if(request.getParameter("fromUrl")!=null){%>
-					   location.href='<%=com.glaf.core.util.RequestUtils.decodeURL(request.getParameter("fromUrl"))%>';
+					     location.href='<%=com.glaf.core.util.RequestUtils.decodeURL(request.getParameter("fromUrl"))%>';
 					   <%}%>
+					   }
 				   }
 			 });
 	}
@@ -196,7 +195,7 @@ limitations under the License.
    	<tr>
 	    <td width="20%" align="left"></td>
 		<td align="left" ><br>
-            <input type="button" value=" 保存 " onclick="javascript:saveData();" class="btnGreen">
+            <!-- <input type="button" value=" 保存 " onclick="javascript:saveData();" class="btnGreen"> -->
 		</td>
 	</tr>
     </tbody>

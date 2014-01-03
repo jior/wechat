@@ -68,30 +68,22 @@ public class WxCategoryController {
 				if (StringUtils.isNotEmpty(x)) {
 					WxCategory wxCategory = wxCategoryService
 							.getWxCategory(Long.valueOf(x));
-					/**
-					 * 此处业务逻辑需自行调整
-					 */
-
 					if (wxCategory != null
 							&& (StringUtils.equals(wxCategory.getCreateBy(),
 									loginContext.getActorId()) || loginContext
 									.isSystemAdministrator())) {
-						wxCategoryService.save(wxCategory);
+						wxCategoryService.deleteById(wxCategory.getId());
 					}
 				}
 			}
 		} else if (id != null) {
 			WxCategory wxCategory = wxCategoryService.getWxCategory(Long
 					.valueOf(id));
-			/**
-			 * 此处业务逻辑需自行调整
-			 */
-
 			if (wxCategory != null
 					&& (StringUtils.equals(wxCategory.getCreateBy(),
 							loginContext.getActorId()) || loginContext
 							.isSystemAdministrator())) {
-				wxCategoryService.save(wxCategory);
+				wxCategoryService.deleteById(wxCategory.getId());
 			}
 		}
 	}

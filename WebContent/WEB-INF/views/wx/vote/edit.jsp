@@ -290,15 +290,15 @@ limitations under the License.
 			</c:forEach>
 			<br>
 		    <input type="hidden" id="relationIds" name="relationIds" value="${wxVote.relationIds}"> 
-		    <input type="hidden" id="relations" name="relations"> 
 			<input type="button" value=" 添加 " onclick="javascript:editRelations();" class="btnGreen">
+			<div id="relations"></div>
 			<br>提示：可以把多个投票组合到一个界面中。
 		</td>
 	</tr>
 	<tr>
 	    <td width="20%" align="left"></td>
 		<td align="left" ><br>
-            <input type="button" value=" 保存 " onclick="javascript:saveData();" class="btnGreen">
+            <!-- <input type="button" value=" 保存 " onclick="javascript:saveData();" class="btnGreen"> -->
 			<br><br>
 		</td>
 	</tr>
@@ -307,5 +307,9 @@ limitations under the License.
   </form>
 </div>
 </div>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
 </body>
 </html>

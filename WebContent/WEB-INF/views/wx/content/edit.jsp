@@ -435,7 +435,7 @@ limitations under the License.
 	    <td width="20%" align="left"></td>
 		<td align="left" >
 		    <br>
-            <input type="button" value=" 保存 " onclick="javascript:saveData();" class="btnGreen">
+            <!-- <input type="button" value=" 保存 " onclick="javascript:saveData();" class="btnGreen"> -->
 		</td>
 	</tr>
     </tbody>

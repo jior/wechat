@@ -28,8 +28,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.glaf.core.config.SystemProperties;
 import com.glaf.core.dao.EntityDAO;
 import com.glaf.core.id.IdGenerator;
+import com.glaf.core.util.FileUtils;
 import com.glaf.core.util.UUID32;
 import com.glaf.wechat.domain.WxFile;
 import com.glaf.wechat.mapper.WxFileMapper;
@@ -54,7 +56,6 @@ public class WxFileServiceImpl implements WxFileService {
 	}
 
 	public int count(WxFileQuery query) {
-		query.ensureInitialized();
 		return wxFileMapper.getWxFileCount(query);
 	}
 
@@ -70,6 +71,25 @@ public class WxFileServiceImpl implements WxFileService {
 		if (ids != null && !ids.isEmpty()) {
 			for (Long id : ids) {
 				wxFileMapper.deleteWxFileById(id);
+			}
+		}
+	}
+
+	/**
+	 * 删除某个栏目的文件
+	 * 
+	 * @param categoryId
+	 */
+	@Transactional
+	public void deleteByCategoryId(Long categoryId) {
+		WxFileQuery query = new WxFileQuery();
+		query.categoryId(categoryId);
+		List<WxFile> rows = list(query);
+		if (rows != null && !rows.isEmpty()) {
+			for (WxFile file : rows) {
+				FileUtils.deleteFile(SystemProperties.getAppPath()
+						+ file.getPath());
+				wxFileMapper.deleteWxFileById(file.getId());
 			}
 		}
 	}
@@ -99,7 +119,6 @@ public class WxFileServiceImpl implements WxFileService {
 	}
 
 	public List<WxFile> list(WxFileQuery query) {
-		query.ensureInitialized();
 		List<WxFile> list = wxFileMapper.getWxFiles(query);
 		return list;
 	}

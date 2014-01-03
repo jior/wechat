@@ -37,21 +37,12 @@ public interface WxCategoryService {
 	void deleteById(Long id);
 
 	/**
-	 * 根据主键删除多条记录
-	 * 
-	 * @return
-	 */
-	@Transactional
-	void deleteByIds(List<Long> ids);
-
-	/**
 	 * 根据主键获取一条记录
 	 * 
 	 * @return
 	 */
 	WxCategory getWxCategory(Long id);
-	
-	
+
 	/**
 	 * 根据uuid获取一条记录
 	 * 
@@ -90,7 +81,7 @@ public interface WxCategoryService {
 	 * @return
 	 */
 	List<WxCategory> getCategoryList(Long accountId, long parentId);
-	
+
 	/**
 	 * 获取某个用户创建的某类型的子分类列表
 	 * 

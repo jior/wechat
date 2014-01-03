@@ -43,6 +43,13 @@ public interface WxContentService {
 	 */
 	@Transactional
 	void deleteByIds(List<Long> ids);
+	
+	/**
+	 * 删除某个栏目的内容
+	 * @param categoryId
+	 */
+	@Transactional
+	void deleteWxContentByCategoryId(Long categoryId);
 
 	/**
 	 * 根据主键获取一条记录

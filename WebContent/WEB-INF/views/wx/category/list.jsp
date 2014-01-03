@@ -106,14 +106,14 @@ limitations under the License.
 				singleSelect:true,
 				idField:'id',
 				columns:[[
-	                {title:'序号',field:'startIndex',width:60,sortable:false},
-					{title:'封面图片', field:'coverIcon',align:'center', valign:'middle', width:80, formatter:formatterCover},
-					{title:'名称',field:'name', width:120},
-					{title:'描述',field:'desc', width:180},
-					{title:'顺序',field:'sort', width:60},
-					{title:'跳转地址',field:'url', width:280},
-					{title:'前台显示',field:'indexShow', width:80, formatter:formatterShow},
-					{title:'是否有效',field:'locked', width:80, formatter:formatterStatus},
+	                {title:'序号', field:'startIndex',width:60,sortable:false},
+					{title:'封面图片', field:'coverIcon', align:'center', valign:'middle', width:80, formatter:formatterCover},
+					{title:'名称', field:'name', width:120},
+					{title:'描述', field:'desc', width:180},
+					{title:'顺序', field:'sort', width:60},
+					{title:'跳转地址', field:'url', width:280},
+					{title:'前台显示', field:'indexShow', width:80, formatter:formatterShow},
+					{title:'是否有效', field:'locked', width:80, formatter:formatterStatus},
 					{title:'功能键', field:'functionKey', width:120, formatter:formatterKeys}
 				]],
 				rownumbers:false,
@@ -265,24 +265,27 @@ limitations under the License.
 			ids.push(rows[i].id);
 		}
 		if(ids.length > 0 ){
-		  if(confirm("数据删除后不能恢复，确定删除吗？")){
-		    var rowIds = ids.join(',');
-			jQuery.ajax({
-				   type: "POST",
-				   url: '<%=request.getContextPath()%>/mx/wx/wxCategory/delete?rowIds='+rowIds,
-				   dataType:  'json',
-				   error: function(data){
-					   alert('服务器处理错误！');
-				   },
-				   success: function(data){
-					   if(data != null && data.message != null){
-						   alert(data.message);
-					   } else {
-						 alert('操作成功完成！');
+		  if(confirm("删除栏目会将栏目下的素材及内容全部删除并且不能恢复，确定删除吗？")){
+			  if(confirm("删除会导致已经引用了该栏目素材的内容无法显示，确定删除吗？")){
+				var rowIds = ids.join(',');
+				jQuery.ajax({
+					   type: "POST",
+					   url: '<%=request.getContextPath()%>/mx/wx/wxCategory/delete?ids='+rowIds,
+					   dataType:  'json',
+					   error: function(data){
+						   alert('服务器处理错误！');
+					   },
+					   success: function(data){
+						   if(data != null && data.message != null){
+							   alert(data.message);
+						   } else {
+							   alert('操作成功完成！');
+						   }
+						   //jQuery('#mydatagrid').datagrid('reload');
+						   window.location.reload();
 					   }
-					   jQuery('#mydatagrid').datagrid('reload');
-				   }
-			 });
+				 });
+			  }
 		  }
 		} else {
 			alert("请选择至少一条记录。");
@@ -348,8 +351,8 @@ limitations under the License.
 			   onclick="javascript:addNew();">新增</a>  
 			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-edit'"
 			   onclick="javascript:editSelected();">修改</a>  
-			<!-- <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-remove'"
-			   onclick="javascript:deleteSelections();">删除</a>  -->
+			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-remove'"
+			   onclick="javascript:deleteSelections();">删除</a> 
 			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-reload'"
 			   onclick="javascript:reloadGrid();">重载</a> 
 			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-sys'"

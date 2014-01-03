@@ -170,17 +170,20 @@ limitations under the License.
 		  return;
 	    }
 		var ids = [];
+		var names = [];
 		var rows = jQuery('#mydatagrid').datagrid('getSelections');
 		for(var i=0;i<rows.length;i++){
 			ids.push(rows[i].id);
+			names.push(rows[i].title);
 		}
 	    var str = ids.join(',');
+		var str2 = names.join('<br/>');
 		var parent_window = getOpener();
 	    var x_elementId = parent_window.document.getElementById("${elementId}");
-        //var x_element_name = parent_window.document.getElementById("${elementName}");
+        var x_element_name = parent_window.document.getElementById("${elementName}");
 		x_elementId.value=str;
-		//x_element_name.value=sx_name;
-		
+		x_element_name.innerHTML=str2;
+		//alert();
 		window.close(); 
 	}
 	

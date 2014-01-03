@@ -29,6 +29,8 @@ public interface WxContentMapper {
 	void deleteWxContentById(Long id);
 
 	void deleteWxContents(WxContentQuery query);
+	
+	void deleteWxContentByCategoryId(Long categoryId);
 
 	WxContent getWxContentById(Long id);
 

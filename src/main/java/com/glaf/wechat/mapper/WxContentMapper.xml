@@ -339,6 +339,13 @@
 	</delete>
 
 
+	<delete id="deleteWxContentByCategoryId" parameterType="long">
+		delete
+		from WX_CONTENT
+		where CATEGORYID_ = #{categoryId}
+	</delete>
+
+
 	<select id="getWxContentById" parameterType="long" resultMap="wxContentResultMap">
 		select * from WX_CONTENT where ID_ = #{id}
 	</select>

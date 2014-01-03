@@ -79,6 +79,15 @@ public class WxContentServiceImpl implements WxContentService {
 			}
 		}
 	}
+	
+	/**
+	 * 删除某个栏目的内容
+	 * @param categoryId
+	 */
+	@Transactional
+	public void deleteWxContentByCategoryId(Long categoryId){
+		wxContentMapper.deleteWxContentByCategoryId(categoryId);
+	}
 
 	public WxContent getWxContent(Long id) {
 		if (id == null) {

@@ -43,8 +43,10 @@ import com.glaf.core.util.StringTools;
 import com.glaf.core.util.UUID32;
 import com.glaf.wechat.domain.WxCategory;
 import com.glaf.wechat.mapper.WxCategoryMapper;
+import com.glaf.wechat.mapper.WxContentMapper;
 import com.glaf.wechat.query.WxCategoryQuery;
 import com.glaf.wechat.service.WxCategoryService;
+import com.glaf.wechat.service.WxFileService;
 import com.glaf.wechat.util.WxCategoryJsonFactory;
 
 @Service("wxCategoryService")
@@ -60,7 +62,11 @@ public class WxCategoryServiceImpl implements WxCategoryService {
 
 	protected WxCategoryMapper wxCategoryMapper;
 
+	protected WxContentMapper wxContentMapper;
+
 	protected ITableDataService tableDataService;
+
+	protected WxFileService wxFileService;
 
 	public WxCategoryServiceImpl() {
 
@@ -73,16 +79,9 @@ public class WxCategoryServiceImpl implements WxCategoryService {
 	@Transactional
 	public void deleteById(Long id) {
 		if (id != null) {
+			wxFileService.deleteByCategoryId(id);
+			wxContentMapper.deleteWxContentByCategoryId(id);
 			wxCategoryMapper.deleteWxCategoryById(id);
-		}
-	}
-
-	@Transactional
-	public void deleteByIds(List<Long> ids) {
-		if (ids != null && !ids.isEmpty()) {
-			for (Long id : ids) {
-				wxCategoryMapper.deleteWxCategoryById(id);
-			}
 		}
 	}
 
@@ -275,6 +274,16 @@ public class WxCategoryServiceImpl implements WxCategoryService {
 	@javax.annotation.Resource
 	public void setWxCategoryMapper(WxCategoryMapper wxCategoryMapper) {
 		this.wxCategoryMapper = wxCategoryMapper;
+	}
+
+	@javax.annotation.Resource
+	public void setWxContentMapper(WxContentMapper wxContentMapper) {
+		this.wxContentMapper = wxContentMapper;
+	}
+	
+	@javax.annotation.Resource
+	public void setWxFileService(WxFileService wxFileService) {
+		this.wxFileService = wxFileService;
 	}
 
 	@Transactional

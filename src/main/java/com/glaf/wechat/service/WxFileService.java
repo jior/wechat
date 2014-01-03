@@ -43,6 +43,13 @@ public interface WxFileService {
 	 */
 	@Transactional
 	void deleteByIds(List<Long> ids);
+	
+	/**
+	 * 删除某个栏目的文件
+	 * @param categoryId
+	 */
+	@Transactional
+	void deleteByCategoryId(Long categoryId);
 
 	/**
 	 * 根据主键获取一条记录

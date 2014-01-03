@@ -175,7 +175,7 @@ limitations under the License.
 					   } else {
 						   alert('操作成功完成！');
 					   }
-					   reloadGrid();
+					   window.location.reload();
 				   }
 			 });
 		} 
@@ -257,7 +257,8 @@ limitations under the License.
 					   } else {
 						   alert('操作成功完成！');
 					   }
-					   reloadGrid();
+					   //reloadGrid();
+					   window.location.reload();
 				   }
 			 });
 		  }
