@@ -89,14 +89,15 @@ public class WxUserAuthController {
 				status = 500;
 				result.put("status", 500);
 				result.put("message", "ÃÜÂë²»Æ¥Åä");
-			}
-			if (user.getBlocked() == 1) {
+			} else if (user.getBlocked() == 1) {
 				status = 500;
 				result.put("status", 500);
 				result.put("message", "ÕÊºÅÒÑ¾­½ûÖ¹");
+			} else {
+				status = 200;
+				result.put("status", 200);
+				result.put("message", "³É¹¦µÇÂ¼");
 			}
-			result.put("status", 200);
-			result.put("message", "³É¹¦µÇÂ¼");
 		} else {
 			user = new SysUser();
 			user.setAccount(actorId);
