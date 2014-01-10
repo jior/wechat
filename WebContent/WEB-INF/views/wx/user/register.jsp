@@ -102,7 +102,7 @@ function regXY(){
    var params = jQuery("#iForm").formSerialize();
    jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/website/wx/auth',
+				   url: '<%=request.getContextPath()%>/website/wx/auth/register',
 				   dataType:  'json',
 				   data: params,
 				   error: function(data){

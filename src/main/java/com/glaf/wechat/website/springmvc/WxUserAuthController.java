@@ -232,6 +232,80 @@ public class WxUserAuthController {
 		return new ModelAndView("/modules/login");
 	}
 
+	@ResponseBody
+	@RequestMapping("/register")
+	public byte[] register(HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		String json = request.getParameter("json");
+		JSONObject jsonObject = JSON.parseObject(json);
+		JSONObject result = new JSONObject();
+		String actorId = jsonObject.getString("x");
+		String password = jsonObject.getString("y");
+		String email = jsonObject.getString("email");
+		if (sysUserService.findByMail(email) != null) {
+			result.put("status", 500);
+			result.put("message", "邮箱已经存在，请换个再来！");
+			return result.toJSONString().getBytes("UTF-8");
+		}
+		SysUser user = sysUserService.findByAccount(actorId);
+		int status = 0;
+		if (user != null) {
+			status = 400;
+			result.put("status", 400);
+			result.put("message", "用户已经存在！");
+		} else {
+			user = new SysUser();
+			user.setAccount(actorId);
+
+			try {
+				String pwd = DigestUtil.digestString(password, "MD5");
+				user.setPassword(pwd);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+
+			long deptId = 0;
+			if (jsonObject.containsKey("deptId")) {
+				deptId = Long.parseLong(jsonObject.getString("deptId"));
+			}
+			user.setDeptId(deptId);
+
+			user.setName(jsonObject.getString("name"));
+			if (user.getName() == null) {
+				user.setName(actorId);
+			}
+			user.setMobile(jsonObject.getString("mobile"));
+			user.setEmail(jsonObject.getString("email"));
+			user.setUserType(0);
+			user.setAccountType(2);
+			user.setEvection(0);
+			user.setCreateTime(new Date());
+			user.setLastLoginTime(new Date());
+			user.setLastChangePasswordDate(new Date());
+			user.setIsChangePassword(0);
+			user.setCreateBy("website");
+			user.setUpdateBy("website");
+
+			try {
+				if (wxUserService.createAccount(user)) {
+					status = 200;
+				}
+			} catch (Exception ex) {
+				status = 500;
+				logger.error(ex);
+			}
+			if (status == 200) {// 保存成功
+				result.put("status", 200);
+				result.put("message", "注册成功");
+			} else if (status == 500) {
+				result.put("status", 500);
+				result.put("message", "注册失败");
+			}
+		}
+
+		return result.toJSONString().getBytes("UTF-8");
+	}
+
 	@javax.annotation.Resource
 	public void setSysUserService(SysUserService sysUserService) {
 		this.sysUserService = sysUserService;
