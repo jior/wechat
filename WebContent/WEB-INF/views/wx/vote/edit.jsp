@@ -126,7 +126,7 @@ limitations under the License.
 		<td width="20%" align="left">主题</td>
 		<td align="left">
             <input id="title" name="title" type="text" maxlength="50"
-			       class="easyui-validatebox"  style="width:415px;"
+			       class="easyui-validatebox x-text"  style="width:415px;"
 			       required="true" data-options="required:true" 
 				   value="${wxVote.title}"/>
 		</td>
@@ -201,7 +201,7 @@ limitations under the License.
 		<td width="20%" align="left">限制时间间隔</td>
 		<td align="left">
 			<input id="limitTimeInterval" name="limitTimeInterval" type="text" 
-			       class="easyui-numberspinner" size="5" maxlength="5"
+			       class="easyui-numberspinner x-text" size="5" maxlength="5"
 				   increment="60"  
 				   value="${wxVote.limitTimeInterval}"/>&nbsp;（单位：分钟  1小时=60分钟，1天=1440分钟）
 		</td>
@@ -210,7 +210,7 @@ limitations under the License.
 		<td width="20%" align="left">开始日期</td>
 		<td align="left">
 			<input id="startDate" name="startDate" type="text" 
-			       class="easyui-datebox"
+			       class="easyui-datebox x-text"
 			       required="true" data-options="required:true" 
 				   value="<fmt:formatDate value="${wxVote.startDate}" pattern="yyyy-MM-dd"/>"/>
 		    &nbsp;&nbsp;&nbsp;&nbsp;结束日期&nbsp;
@@ -224,7 +224,7 @@ limitations under the License.
 		<td width="15%" align="left">顺序号</td>
 		<td align="left">
 			<input id="sort" name="sort" type="text" 
-			       class="easyui-numberspinner" size="5"
+			       class="easyui-numberspinner x-text" size="5"
 				   increment="1"  
 				   value="${wxVote.sort}"/>&nbsp;(顺序越大越靠前)
 		</td>
