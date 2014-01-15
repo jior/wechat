@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.glaf.wechat.web.rest;
+package com.glaf.apps.message.web.rest;
 
 import java.io.IOException;
 import java.util.List;
