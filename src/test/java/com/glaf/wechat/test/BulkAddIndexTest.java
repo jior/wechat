@@ -1,0 +1,71 @@
+package com.glaf.wechat.test;
+
+import java.util.List;
+
+import org.elasticsearch.action.bulk.BulkRequestBuilder;
+import org.elasticsearch.action.bulk.BulkResponse;
+import org.elasticsearch.action.index.IndexRequestBuilder;
+import org.elasticsearch.client.transport.TransportClient;
+import org.elasticsearch.common.settings.ImmutableSettings;
+import org.elasticsearch.common.settings.Settings;
+import org.elasticsearch.common.transport.InetSocketTransportAddress;
+import org.junit.Test;
+
+import com.glaf.test.AbstractTest;
+import com.glaf.wechat.domain.WxContent;
+import com.glaf.wechat.query.WxContentQuery;
+import com.glaf.wechat.service.WxContentService;
+
+/**
+ * 向ES添加索引对象
+ * 
+ */
+public class BulkAddIndexTest extends AbstractTest {
+
+	protected WxContentService wxContentService;
+
+	public BulkAddIndexTest() {
+		wxContentService = getBean("wxContentService");
+	}
+
+	@Test
+	public void addIndex() {
+		Settings settings = ImmutableSettings.settingsBuilder()
+		// 5个主分片
+				.put("number_of_shards", 5)
+				// 测试环境，减少副本提高速度
+				.put("number_of_replicas", 0)
+				// 指定集群名称
+				.put("cluster.name", "elasticsearch")
+				// 探测集群中机器状态
+				.put("client.transport.sniff", true).build();
+		/*
+		 * 创建客户端，所有的操作都由客户端开始，这个就好像是JDBC的Connection对象 用完记得要关闭
+		 */
+		TransportClient client = new TransportClient(settings);
+		client.addTransportAddress(new InetSocketTransportAddress("127.0.0.1",
+				9300));
+		client.addTransportAddress(new InetSocketTransportAddress("127.0.0.1",
+				9301));
+		WxContentQuery query = new WxContentQuery();
+		List<WxContent> list = wxContentService.list(query);
+		BulkRequestBuilder bulkRequest = client.prepareBulk();
+		for (WxContent content : list) {
+			// 在这里创建我们要索引的对象
+			IndexRequestBuilder indexRequest = client
+					.prepareIndex("wechat", "content")
+					// 必须为对象单独指定ID
+					.setId(String.valueOf(content.getId()))
+					.setSource(content.toJsonObject().toJSONString());
+			bulkRequest.add(indexRequest);
+		}
+
+		BulkResponse bulkResponse = bulkRequest.execute().actionGet();
+		if (bulkResponse.hasFailures()) {
+			// process failures by iterating through each bulk response item
+			System.out.println(bulkResponse.buildFailureMessage());
+		}
+
+		client.close();
+	}
+}

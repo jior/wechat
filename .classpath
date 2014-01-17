@@ -137,5 +137,23 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/poi-ooxml-3.9-20121203.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/poi-ooxml-schemas-3.9-20121203.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-jexl-2.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/elasticsearch.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jna.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jts.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/lucene-analyzers-common.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/lucene-codecs.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/lucene-core.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/lucene-expressions.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/lucene-grouping.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/lucene-highlighter.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/lucene-join.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/lucene-memory.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/lucene-misc.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/lucene-queries.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/lucene-queryparser.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/lucene-sandbox.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/lucene-spatial.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/lucene-suggest.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spatial4j.jar"/>
 	<classpathentry kind="output" path="WebContent/WEB-INF/classes"/>
 </classpath>
