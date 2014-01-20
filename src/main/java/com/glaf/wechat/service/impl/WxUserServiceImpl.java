@@ -123,7 +123,7 @@ public class WxUserServiceImpl implements WxUserService {
 					userRole.setCreateBy("website");
 					userRole.setCreateDate(new Date());
 					userRole.setAvailDateStart(new Date());
-					userRole.setAvailDateEnd(DateUtils.toDate("2020-01-01"));
+					userRole.setAvailDateEnd(DateUtils.toDate("2049-10-01"));
 					userRole.setUser(bean);
 					sysUserRoleService.create(userRole);
 				} else {
@@ -152,7 +152,7 @@ public class WxUserServiceImpl implements WxUserService {
 						userRole.setUser(bean);
 						userRole.setCreateDate(new Date());
 						userRole.setAvailDateStart(new Date());
-						userRole.setAvailDateEnd(DateUtils.toDate("2020-01-01"));
+						userRole.setAvailDateEnd(DateUtils.toDate("2049-10-01"));
 						sysUserRoleService.create(userRole);
 					}
 				}

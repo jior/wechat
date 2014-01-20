@@ -49,6 +49,7 @@ public class AddIndexTest extends AbstractTest {
 		List<WxContent> list = wxContentService.list(query);
 		for (WxContent content : list) {
 			// 在这里创建我们要索引的对象
+			//其中wechat为索引库名，一个es集群中可以有多个索引库。content为索引类型，是用来区分同索引库下不同类型的数据的，一个索引库下可以有多个索引类型。
 			IndexResponse response = client
 					.prepareIndex("wechat", "content")
 					// 必须为对象单独指定ID

@@ -38,6 +38,7 @@ public class SearchTest {
 		//query.must(QueryBuilders.fieldQuery("type", "P"));
 		//query.must(QueryBuilders.fieldQuery("accountId", 1L));
 
+		//其中wechat为索引库名，一个es集群中可以有多个索引库。content为索引类型，是用来区分同索引库下不同类型的数据的，一个索引库下可以有多个索引类型。
 		SearchResponse response = client.prepareSearch("wechat")
 				// 这个在prepareSearch中指定还不行，必须使用setTypes
 				.setTypes("content").setQuery(query).setFrom(0).setSize(100)

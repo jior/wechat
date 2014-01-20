@@ -44,6 +44,7 @@ public class GetIndexTest extends AbstractTest {
 		WxContentQuery query = new WxContentQuery();
 		List<WxContent> list = wxContentService.list(query);
 		for (WxContent content : list) {
+			//其中wechat为索引库名，一个es集群中可以有多个索引库。content为索引类型，是用来区分同索引库下不同类型的数据的，一个索引库下可以有多个索引类型。
 			GetResponse response = client
 					.prepareGet("wechat", "content",
 							String.valueOf(content.getId())).execute()
