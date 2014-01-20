@@ -24,6 +24,7 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.util.StringTools;
@@ -84,24 +85,36 @@ public class WechatUtils {
 	public static AccessToken getAccessToken(String access_token_url,
 			String accountId, String appSecret) {
 		AccessToken accessToken = null;
-
-		String requestUrl = access_token_url.replace("APPID", accountId)
-				.replace("APPSECRET", appSecret);
-		JSONObject jsonObject = HttpClientUtils.executeRequest(requestUrl,
-				"GET", null);
-		// 如果请求成功
-		if (null != jsonObject) {
-			log.debug(jsonObject.toJSONString());
-			try {
-				accessToken = new AccessToken();
-				accessToken.setToken(jsonObject.getString("access_token"));
-				accessToken.setExpiresIn(jsonObject.getInteger("expires_in"));
-			} catch (JSONException e) {
-				accessToken = null;
-				// 获取token失败
-				log.error("获取token失败 errcode:{} errmsg:{}",
-						jsonObject.getInteger("errcode"),
-						jsonObject.getString("errmsg"));
+		String cacheKey = accountId + "_" + appSecret;
+		if (CacheFactory.getInstance().getObject(cacheKey) != null) {
+			String str = (String) CacheFactory.getInstance()
+					.getObject(cacheKey);
+			JSONObject jsonObject = JSON.parseObject(str);
+			accessToken = new AccessToken();
+			accessToken.setToken(jsonObject.getString("access_token"));
+			accessToken.setExpiresIn(jsonObject.getInteger("expires_in"));
+		} else {
+			String requestUrl = access_token_url.replace("APPID", accountId)
+					.replace("APPSECRET", appSecret);
+			JSONObject jsonObject = HttpClientUtils.executeRequest(requestUrl,
+					"GET", null);
+			// 如果请求成功
+			if (null != jsonObject) {
+				log.debug(jsonObject.toJSONString());
+				try {
+					accessToken = new AccessToken();
+					accessToken.setToken(jsonObject.getString("access_token"));
+					accessToken.setExpiresIn(jsonObject
+							.getInteger("expires_in"));
+					CacheFactory.getInstance().putObject(cacheKey,
+							jsonObject.toJSONString());
+				} catch (JSONException e) {
+					accessToken = null;
+					// 获取token失败
+					log.error("获取token失败 errcode:{} errmsg:{}",
+							jsonObject.getInteger("errcode"),
+							jsonObject.getString("errmsg"));
+				}
 			}
 		}
 		return accessToken;
