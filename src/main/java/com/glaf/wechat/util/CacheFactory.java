@@ -25,14 +25,24 @@ import com.google.common.cache.CacheBuilder;
 
 public class CacheFactory {
 
-	protected static Cache<Object, Object> cache;
-
 	private static class CacheFactoryHolder {
 		public static CacheFactory instance = new CacheFactory();
 	}
 
 	public static CacheFactory getInstance() {
 		return CacheFactoryHolder.instance;
+	}
+
+	protected Cache<Object, Object> cache;
+
+	private CacheFactory() {
+		cache = CacheBuilder.newBuilder().maximumSize(10000)
+				.expireAfterAccess(30, TimeUnit.MINUTES).build();
+	}
+
+	public void clear() {
+		getCache().invalidateAll();
+		getCache().cleanUp();
 	}
 
 	public Cache<Object, Object> getCache() {
@@ -52,7 +62,12 @@ public class CacheFactory {
 		getCache().put(key, value);
 	}
 
-	private CacheFactory() {
+	public void removeObject(String key) {
+		getCache().invalidate(key);
+	}
 
+	public void shutdown() {
+		getCache().invalidateAll();
+		getCache().cleanUp();
 	}
 }
