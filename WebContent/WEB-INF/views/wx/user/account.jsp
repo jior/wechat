@@ -22,6 +22,7 @@ limitations under the License.
 <%
     String theme = com.glaf.core.util.RequestUtils.getTheme(request);
     request.setAttribute("theme", theme);
+	String serviceUrl =  com.glaf.wechat.util.WechatUtils.getServiceUrl(request);
  
 %>
 <!DOCTYPE html>
@@ -78,10 +79,9 @@ limitations under the License.
                                         <thead>
                                             <tr>
                                                 <th>公众号名称</th>
-                                                <th>创建时间/到期时间</th>
-                                                <th>已定义/上限</th>
-                                                <th>请求数</th>
-                                                <th>剩余请求数</th>
+                                                <th>创建时间</th>
+												<th>接口地址</th>
+												<th>TOKEN</th>
                                                 <th>操作</th>
                                             </tr>
 
@@ -89,29 +89,13 @@ limitations under the License.
                                         <tbody>
                                            <c:forEach items="${users}" var="user">
 										     <tr>
-                                                <td style="text-align:center;">
-                                                    <p>
-                                                        <a href="javascript:void(0)" onclick="parent.location.href='<%=request.getContextPath()%>/wechat/index'" title="点击进入功能管理">
-                                                        </a>
-                                                    </p>
-                                                    <p>${user.name}</p>
+                                                <td style="text-align:left;">
+                                                  <a href="javascript:void(0)" onclick="parent.location.href='<%=request.getContextPath()%>/mx/wechat/index?accountId=${user.id}'" title="点击进入功能管理">${user.name}
+                                                  </a>
                                                 </td>
-                                                <td>
-                                                    <p>创建时间:<fmt:formatDate value="${user.createDate}" pattern="yyyy-MM-dd" /></p>
-                                                    <p>到期时间:<fmt:formatDate value="${user.endDate}" pattern="yyyy-MM-dd" /></p>
-                                                </td>
-                                                <td>
-                                                    <p>文本：1000</p>
-                                                    <p>图文：100</p>
-                                                    <p>语音：10</p>
-                                                </td>
-                                                <td>
-                                                    <p>总请求数:0</p>
-                                                    <p>本月请求数:0</p>
-                                                </td>
-                                                <td>
-                                                    <p>请求数剩余：2000</p>
-                                                </td>                                             
+                                                <td><fmt:formatDate value="${user.createDate}" pattern="yyyy-MM-dd" /></td>
+												<td><%=serviceUrl%>/weixin/${user.id}</td>
+												<td>${user.token}</td>                                            
                                                 <td>
                                                     <a href="<%=request.getContextPath()%>/mx/wx/wxUser/editAccount?id=${user.id}" class="btn" rel="tooltip" title="编辑"><i class="icon-edit"></i></a>
                                                     <a href="#" onclick="parent.location.href='<%=request.getContextPath()%>/mx/wechat/index?accountId=${user.id}'" class="btn" rel="tooltip" title="管理"><i class="icon-cog"></i></a>

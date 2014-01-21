@@ -57,21 +57,9 @@ limitations under the License.
                             <dt>
                             </dt>
                             <dd>
-                                <p><strong>${wxUser.name}</strong></p>
-
-                                <table class="table noborder">
-								     <tbody><tr>
-                                        <td>文本自定义：13/100</td>
-                                        <td>图文自定义：0/10</td>
-                                        <td>语音自定义：0/0</td>
-                                    </tr>
-                                    <tr>
-                                        <td>总请求数：0</td>
-                                        <td>本月请求数：0</td>
-                                        <td>每月可请求总数：2000</td>
-                                    </tr>
-                                </tbody></table>
-								<p><strong>接口地址：<%=serviceUrl+"/weixin/"%>${wxUser.id}</strong></p>
+                                <p><strong>名称：${wxUser.name}</strong></p>
+                                <p><strong>创建时间：<fmt:formatDate value="${wxUser.createDate}" pattern="yyyy-MM-dd" /></strong></p>
+								<p><strong>接口地址：<%=serviceUrl%>/weixin/${wxUser.id}</strong></p>
 								<p><strong>TOKEN：${wxUser.token}</strong></p>
                             </dd>
                         </dl>
@@ -84,8 +72,8 @@ limitations under the License.
 
                 <div class="box-title">
                     <h3>
-                        <i class="icon-rocket"></i>
-                        快捷操作
+                        
+                        
                     </h3>
                 </div>
                 <div class="box-content">
