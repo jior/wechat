@@ -74,20 +74,6 @@ public class WxLog implements Serializable, JSONable {
 
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		WxLog other = (WxLog) obj;
-		if (id != other.id)
-			return false;
-		return true;
-	}
-
 	public Long getAccountId() {
 		return accountId;
 	}
@@ -130,6 +116,20 @@ public class WxLog implements Serializable, JSONable {
 		int result = 1;
 		result = prime * result + (int) (id ^ (id >>> 32));
 		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		WxLog other = (WxLog) obj;
+		if (id != other.id)
+			return false;
+		return true;
 	}
 
 	public WxLog jsonToObject(JSONObject jsonObject) {

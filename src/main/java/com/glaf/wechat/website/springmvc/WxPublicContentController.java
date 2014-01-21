@@ -58,7 +58,6 @@ import com.glaf.wechat.service.WxCategoryService;
 import com.glaf.wechat.service.WxContentService;
 import com.glaf.wechat.service.WxCoverService;
 import com.glaf.wechat.service.WxFileService;
-import com.glaf.wechat.service.WxLogService;
 import com.glaf.wechat.service.WxMenuService;
 import com.glaf.wechat.service.WxSiteInfoService;
 import com.glaf.wechat.service.WxTemplateService;
@@ -91,8 +90,6 @@ public class WxPublicContentController {
 	protected WxMenuService wxMenuService;
 
 	protected WxSiteInfoService wxSiteInfoService;
-
-	protected WxLogService wxLogService;
 
 	public WxPublicContentController() {
 
@@ -541,11 +538,6 @@ public class WxPublicContentController {
 	@javax.annotation.Resource
 	public void setWxFileService(WxFileService wxFileService) {
 		this.wxFileService = wxFileService;
-	}
-
-	@javax.annotation.Resource
-	public void setWxLogService(WxLogService wxLogService) {
-		this.wxLogService = wxLogService;
 	}
 
 	@javax.annotation.Resource

@@ -1,5 +1,8 @@
 package com.glaf.wechat.util;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.glaf.core.config.Configuration;
 import com.glaf.core.context.ContextFactory;
 import com.glaf.wechat.config.WechatConfiguration;
@@ -8,6 +11,7 @@ import com.glaf.wechat.mongodb.config.MongodbContextFactory;
 import com.glaf.wechat.service.WxLogService;
 
 public class WxLogFactory {
+	protected final static Log logger = LogFactory.getLog(WxLogFactory.class);
 
 	protected static Configuration conf = WechatConfiguration.create();
 
@@ -21,10 +25,12 @@ public class WxLogFactory {
 		if (isMongoDB) {
 			WxLogService wxLogService = (WxLogService) MongodbContextFactory
 					.getBean("wxLogService");
-			wxLogService.create(log);
+			wxLogService.save(log);
+			logger.debug(" save mongodb log.");
 		} else {
 			WxLogService wxLogService = ContextFactory.getBean("wxLogService");
-			wxLogService.create(log);
+			wxLogService.save(log);
+			logger.debug(" save database log.");
 		}
 	}
 

@@ -29,16 +29,6 @@ import com.glaf.wechat.query.WxLogQuery;
 public interface WxLogService {
 
 	/**
-	 * 保存
-	 * 
-	 * @param bean
-	 *            WxLog
-	 * @return boolean
-	 */
-	@Transactional
-	boolean create(WxLog bean);
-
-	/**
 	 * 获取日志总记录数
 	 * 
 	 * @param query
@@ -64,6 +54,16 @@ public interface WxLogService {
 	 * @return
 	 */
 	List<WxLog> list(WxLogQuery query);
+
+	/**
+	 * 保存
+	 * 
+	 * @param bean
+	 *            WxLog
+	 * @return boolean
+	 */
+	@Transactional
+	void save(WxLog bean);
 
 	@Transactional
 	void saveAll();

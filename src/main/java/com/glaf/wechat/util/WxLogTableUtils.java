@@ -66,7 +66,6 @@ public class WxLogTableUtils {
 		ColumnDefinition column11 = new ColumnDefinition();
 		column11.setColumnName("ACCOUNTID_");
 		column11.setJavaType("Long");
-		column11.setLength(50);
 		tableDefinition.addColumn(column11);
 
 		ColumnDefinition column12 = new ColumnDefinition();

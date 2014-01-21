@@ -52,7 +52,7 @@ public class WxMongoDBLogServiceImpl implements WxLogService {
 
 	protected MongoTemplate mongoTemplate;
 
-	public boolean create(WxLog bean) {
+	public void save(WxLog bean) {
 		bean.setId(Long.MAX_VALUE - System.currentTimeMillis());
 		bean.setCreateTime(new Date());
 		bean.setSuffix("_" + DateUtils.getNowYearMonthDay());
@@ -64,8 +64,9 @@ public class WxMongoDBLogServiceImpl implements WxLogService {
 				|| ((System.currentTimeMillis() - lastUpdate) / 60000 > 0)) {
 			DB db = mongoTemplate.getDb();
 			db.requestStart();
+			WxLog model = null;
 			while (!wxLogs.isEmpty()) {
-				WxLog model = wxLogs.pop();
+				model = wxLogs.pop();
 				String tableName = "wx_log" + model.getSuffix();
 				DBCollection coll = db.getCollection(tableName);
 				if (coll != null) {
@@ -86,9 +87,7 @@ public class WxMongoDBLogServiceImpl implements WxLogService {
 			db.requestDone();
 			lastUpdate = System.currentTimeMillis();
 			logger.debug("submit ok.");
-			return true;
 		}
-		return false;
 	}
 
 	protected void fillQueryCondition(DBObject q, WxLogQuery query) {
@@ -254,8 +253,9 @@ public class WxMongoDBLogServiceImpl implements WxLogService {
 				|| ((System.currentTimeMillis() - lastUpdate) / 60000 > 0)) {
 			DB db = mongoTemplate.getDb();
 			db.requestStart();
+			WxLog model = null;
 			while (!wxLogs.isEmpty()) {
-				WxLog model = wxLogs.pop();
+				model = wxLogs.pop();
 				String tableName = "wx_log" + model.getSuffix();
 				DBCollection coll = db.getCollection(tableName);
 				if (coll != null) {

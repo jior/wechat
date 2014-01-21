@@ -25,7 +25,7 @@ public class MongodbLogTest {
 			log.setFlag(1);
 			log.setIp("127.0.0.1");
 			log.setOperate("add");
-			wxLogService.create(log);
+			wxLogService.save(log);
 			try {
 				Thread.sleep(1);
 			} catch (InterruptedException e) {

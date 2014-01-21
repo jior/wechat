@@ -64,12 +64,6 @@ public class WxLogServiceImpl implements WxLogService {
 		return sysLogMapper.getWxLogCount(query);
 	}
 
-	@Transactional
-	public boolean create(WxLog bean) {
-		this.save(bean);
-		return true;
-	}
-
 	public int getWxLogCountByQueryCriteria(WxLogQuery query) {
 		return sysLogMapper.getWxLogCount(query);
 	}
@@ -93,34 +87,38 @@ public class WxLogServiceImpl implements WxLogService {
 		sysLog.setCreateTime(new Date());
 		sysLog.setSuffix("_" + DateUtils.getNowYearMonthDay());
 		wxLogs.push(sysLog);
+		logger.debug("->wxLogs.size:" + wxLogs.size());
 		/**
 		 * 当记录数达到写数据库的条数或时间超过1分钟，写日志到数据库
 		 */
 		if (wxLogs.size() >= conf.getInt("wx_log_step", 100)
 				|| ((System.currentTimeMillis() - lastUpdate) / 60000 > 0)) {
+			WxLog bean = null;
 			while (!wxLogs.isEmpty()) {
-				WxLog bean = wxLogs.pop();
+				bean = wxLogs.pop();
 				sysLogMapper.insertWxLog(bean);// 写历史表
-
 				bean.setSuffix("");
 				sysLogMapper.insertWxLog(bean);// 写当前表
 			}
 			lastUpdate = System.currentTimeMillis();
+			logger.debug("wxLogs.size:" + wxLogs.size());
 		}
 	}
-	
+
 	@Transactional
-	public void saveAll(){
+	public void saveAll() {
 		if (wxLogs.size() >= conf.getInt("wx_log_step", 100)
 				|| ((System.currentTimeMillis() - lastUpdate) / 60000 > 0)) {
+			WxLog bean = null;
 			while (!wxLogs.isEmpty()) {
-				WxLog bean = wxLogs.pop();
+				bean = wxLogs.pop();
 				sysLogMapper.insertWxLog(bean);// 写历史表
 
 				bean.setSuffix("");
 				sysLogMapper.insertWxLog(bean);// 写当前表
 			}
 			lastUpdate = System.currentTimeMillis();
+			logger.debug("wxLogs.size:" + wxLogs.size());
 		}
 	}
 
