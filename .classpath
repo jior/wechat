@@ -133,9 +133,6 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/httpcore-nio.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jxls-core.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jxls-reader.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/poi-3.9-20121203.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/poi-ooxml-3.9-20121203.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/poi-ooxml-schemas-3.9-20121203.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-jexl-2.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/elasticsearch.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jna.jar"/>
@@ -155,5 +152,9 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/lucene-spatial.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/lucene-suggest.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spatial4j.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/poi-ooxml-schemas.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/poi-ooxml.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/poi-scratchpad.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/poi.jar"/>
 	<classpathentry kind="output" path="WebContent/WEB-INF/classes"/>
 </classpath>
