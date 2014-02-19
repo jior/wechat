@@ -34,7 +34,7 @@ public class SearchTest {
 				9301));
 
 		BoolQueryBuilder query = QueryBuilders.boolQuery();
-		query.must(QueryBuilders.fieldQuery("content", "商业"));
+		//query.must(QueryBuilders.fieldQuery("content", "商业"));
 		//query.must(QueryBuilders.fieldQuery("type", "P"));
 		//query.must(QueryBuilders.fieldQuery("accountId", 1L));
 
