@@ -20,7 +20,8 @@ package com.glaf.wechat.service.impl;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Stack;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -32,6 +33,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.glaf.core.config.Configuration;
 import com.glaf.core.id.IdGenerator;
 import com.glaf.core.util.DateUtils;
+
 import com.glaf.wechat.config.WechatConfiguration;
 import com.glaf.wechat.domain.WxLog;
 import com.glaf.wechat.mapper.WxLogMapper;
@@ -46,7 +48,8 @@ public class WxLogServiceImpl implements WxLogService {
 
 	protected static Configuration conf = WechatConfiguration.create();
 
-	protected static Stack<WxLog> wxLogs = new Stack<WxLog>();
+	protected static BlockingQueue<WxLog> wxLogs = new ArrayBlockingQueue<WxLog>(
+			1000);
 
 	protected static long lastUpdate = System.currentTimeMillis();
 
@@ -86,7 +89,10 @@ public class WxLogServiceImpl implements WxLogService {
 		sysLog.setId(idGenerator.nextId());
 		sysLog.setCreateTime(new Date());
 		sysLog.setSuffix("_" + DateUtils.getNowYearMonthDay());
-		wxLogs.push(sysLog);
+		try {
+			wxLogs.put(sysLog);
+		} catch (InterruptedException ex) {
+		}
 		logger.debug("->wxLogs.size:" + wxLogs.size());
 		/**
 		 * 当记录数达到写数据库的条数或时间超过1分钟，写日志到数据库
@@ -95,7 +101,7 @@ public class WxLogServiceImpl implements WxLogService {
 				|| ((System.currentTimeMillis() - lastUpdate) / 60000 > 0)) {
 			WxLog bean = null;
 			while (!wxLogs.isEmpty()) {
-				bean = wxLogs.pop();
+				bean = wxLogs.poll();
 				sysLogMapper.insertWxLog(bean);// 写历史表
 				bean.setSuffix("");
 				sysLogMapper.insertWxLog(bean);// 写当前表
@@ -111,7 +117,7 @@ public class WxLogServiceImpl implements WxLogService {
 				|| ((System.currentTimeMillis() - lastUpdate) / 60000 > 0)) {
 			WxLog bean = null;
 			while (!wxLogs.isEmpty()) {
-				bean = wxLogs.pop();
+				bean = wxLogs.poll();
 				sysLogMapper.insertWxLog(bean);// 写历史表
 
 				bean.setSuffix("");

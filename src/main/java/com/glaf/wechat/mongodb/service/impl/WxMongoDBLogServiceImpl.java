@@ -20,7 +20,8 @@ package com.glaf.wechat.mongodb.service.impl;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Stack;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -32,9 +33,11 @@ import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
+
 import com.glaf.core.config.Configuration;
 import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.Paging;
+
 import com.glaf.wechat.config.WechatConfiguration;
 import com.glaf.wechat.domain.WxLog;
 import com.glaf.wechat.query.WxLogQuery;
@@ -46,7 +49,8 @@ public class WxMongoDBLogServiceImpl implements WxLogService {
 
 	protected static Configuration conf = WechatConfiguration.create();
 
-	protected static Stack<WxLog> wxLogs = new Stack<WxLog>();
+	protected static BlockingQueue<WxLog> wxLogs = new ArrayBlockingQueue<WxLog>(
+			1000);
 
 	protected static long lastUpdate = System.currentTimeMillis();
 
@@ -56,7 +60,10 @@ public class WxMongoDBLogServiceImpl implements WxLogService {
 		bean.setId(Long.MAX_VALUE - System.currentTimeMillis());
 		bean.setCreateTime(new Date());
 		bean.setSuffix("_" + DateUtils.getNowYearMonthDay());
-		wxLogs.push(bean);
+		try {
+			wxLogs.put(bean);
+		} catch (InterruptedException ex) {
+		}
 		/**
 		 * 当记录数达到写数据库的条数或时间超过1分钟，写日志到数据库
 		 */
@@ -66,7 +73,7 @@ public class WxMongoDBLogServiceImpl implements WxLogService {
 			db.requestStart();
 			WxLog model = null;
 			while (!wxLogs.isEmpty()) {
-				model = wxLogs.pop();
+				model = wxLogs.poll();
 				String tableName = "wx_log" + model.getSuffix();
 				DBCollection coll = db.getCollection(tableName);
 				if (coll != null) {
@@ -255,7 +262,7 @@ public class WxMongoDBLogServiceImpl implements WxLogService {
 			db.requestStart();
 			WxLog model = null;
 			while (!wxLogs.isEmpty()) {
-				model = wxLogs.pop();
+				model = wxLogs.poll();
 				String tableName = "wx_log" + model.getSuffix();
 				DBCollection coll = db.getCollection(tableName);
 				if (coll != null) {
