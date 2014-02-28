@@ -1,6 +1,5 @@
 package com.glaf.wechat.test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
@@ -17,7 +16,7 @@ public class IdentityTest extends AbstractTest {
 	public void testList() {
 		entityService = getBean("entityService");
 		TreeModelQuery query = new com.glaf.core.query.TreeModelQuery();
-		List<Long> nodeIds = new ArrayList<Long>();
+		List<Long> nodeIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
 		nodeIds.add(6L);
 		nodeIds.add(2410L);
 		List<Object> list = entityService.getList("getDepartments", query);

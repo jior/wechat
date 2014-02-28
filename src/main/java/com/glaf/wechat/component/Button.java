@@ -18,7 +18,6 @@
 
 package com.glaf.wechat.component;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -51,7 +50,7 @@ public class Button implements java.io.Serializable {
 
 	public void addChild(Button b) {
 		if (children == null) {
-			children = new ArrayList<Button>();
+			children = new java.util.concurrent.CopyOnWriteArrayList<Button>();
 		}
 		children.add(b);
 	}
@@ -90,7 +89,7 @@ public class Button implements java.io.Serializable {
 
 	public void setSubButtons(Button[] buttons) {
 		if (children == null) {
-			children = new ArrayList<Button>();
+			children = new java.util.concurrent.CopyOnWriteArrayList<Button>();
 		}
 		if (buttons != null && buttons.length > 0) {
 			for (Button b : buttons) {

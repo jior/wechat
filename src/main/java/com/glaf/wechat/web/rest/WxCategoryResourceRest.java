@@ -19,8 +19,6 @@
 package com.glaf.wechat.web.rest;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -166,9 +164,9 @@ public class WxCategoryResourceRest {
 		}
 
 		if (categories != null && !categories.isEmpty()) {
-			Map<Long, TreeModel> treeMap = new HashMap<Long, TreeModel>();
-			List<TreeModel> treeModels = new ArrayList<TreeModel>();
-			List<Long> categoryIds = new ArrayList<Long>();
+			Map<Long, TreeModel> treeMap = new java.util.concurrent.ConcurrentHashMap<Long, TreeModel>();
+			List<TreeModel> treeModels = new java.util.concurrent.CopyOnWriteArrayList<TreeModel>();
+			List<Long> categoryIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
 			for (WxCategory category : categories) {
 				TreeModel tree = new BaseTree();
 				tree.setId(category.getId());

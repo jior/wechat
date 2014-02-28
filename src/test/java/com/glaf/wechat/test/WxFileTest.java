@@ -1,6 +1,7 @@
 package com.glaf.wechat.test;
 
-import java.util.*;
+import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.junit.Test;
@@ -20,7 +21,7 @@ public class WxFileTest extends AbstractTest {
 
 	@Test
 	public void insertWxFile() {
-		List<WxFile> files = new ArrayList<WxFile>();
+		List<WxFile> files = new java.util.concurrent.CopyOnWriteArrayList<WxFile>();
 		for (int i = 1; i <= 200; i++) {
 			WxFile wxFile = new WxFile();
 			wxFile.setCategoryId(0L);

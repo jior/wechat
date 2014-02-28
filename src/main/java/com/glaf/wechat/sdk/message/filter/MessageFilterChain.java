@@ -17,7 +17,6 @@
  */
 package com.glaf.wechat.sdk.message.filter;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -31,7 +30,7 @@ import com.glaf.wechat.util.WxLogFactory;
  */
 public class MessageFilterChain {
 
-	public List<IMessageFilter> filters = new ArrayList<IMessageFilter>();
+	public List<IMessageFilter> filters = new java.util.concurrent.CopyOnWriteArrayList<IMessageFilter>();
 
 	// add a filter
 	public void addFilter(IMessageFilter filter) {

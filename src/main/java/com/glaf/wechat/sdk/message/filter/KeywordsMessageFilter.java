@@ -17,7 +17,6 @@
  */
 package com.glaf.wechat.sdk.message.filter;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -86,7 +85,7 @@ public class KeywordsMessageFilter extends AbstractMessageFilter implements
 			query.locked(0);
 			List<WxKeywords> list = wxKeywordsService.list(query);
 			if (list != null && !list.isEmpty()) {
-				List<Long> contentIds = new ArrayList<Long>();
+				List<Long> contentIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
 				for (WxKeywords m : list) {
 					contentIds.add(m.getContentId());
 				}

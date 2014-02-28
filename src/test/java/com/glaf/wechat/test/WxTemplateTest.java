@@ -1,13 +1,14 @@
 package com.glaf.wechat.test;
 
-import java.util.*;
+import java.util.Date;
+import java.util.List;
 
 import org.junit.Test;
 
+import com.glaf.test.AbstractTest;
 import com.glaf.wechat.domain.WxTemplate;
 import com.glaf.wechat.query.WxTemplateQuery;
 import com.glaf.wechat.service.WxTemplateService;
-import com.glaf.test.AbstractTest;
 
 public class WxTemplateTest extends AbstractTest {
 

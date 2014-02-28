@@ -33,7 +33,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.glaf.core.config.Configuration;
 import com.glaf.core.id.IdGenerator;
 import com.glaf.core.util.DateUtils;
-
 import com.glaf.wechat.config.WechatConfiguration;
 import com.glaf.wechat.domain.WxLog;
 import com.glaf.wechat.mapper.WxLogMapper;

@@ -322,7 +322,7 @@ public class WxVoteController {
 			wxVote.setRelationIds(request.getParameter("relationIds"));
 			wxVote.setCreateBy(actorId);
 
-			Map<Integer, WxVoteItem> dataMap = new HashMap<Integer, WxVoteItem>();
+			Map<Integer, WxVoteItem> dataMap = new java.util.concurrent.ConcurrentHashMap<Integer, WxVoteItem>();
 			String[] titleArray = request.getParameterValues("item_title");
 			if (titleArray != null && titleArray.length > 0) {
 				int index = 0;

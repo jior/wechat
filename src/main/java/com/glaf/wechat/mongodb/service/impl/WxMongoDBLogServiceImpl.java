@@ -17,7 +17,6 @@
  */
 package com.glaf.wechat.mongodb.service.impl;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -28,20 +27,18 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
+import com.glaf.core.config.Configuration;
+import com.glaf.core.util.DateUtils;
+import com.glaf.core.util.Paging;
+import com.glaf.wechat.config.WechatConfiguration;
+import com.glaf.wechat.domain.WxLog;
+import com.glaf.wechat.query.WxLogQuery;
+import com.glaf.wechat.service.WxLogService;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
-
-import com.glaf.core.config.Configuration;
-import com.glaf.core.util.DateUtils;
-import com.glaf.core.util.Paging;
-
-import com.glaf.wechat.config.WechatConfiguration;
-import com.glaf.wechat.domain.WxLog;
-import com.glaf.wechat.query.WxLogQuery;
-import com.glaf.wechat.service.WxLogService;
 
 public class WxMongoDBLogServiceImpl implements WxLogService {
 	protected final static Log logger = LogFactory
@@ -180,7 +177,7 @@ public class WxMongoDBLogServiceImpl implements WxLogService {
 		this.fillQueryCondition(q, query);
 		DBCursor cur = coll.find(q);
 
-		List<WxLog> logs = new ArrayList<WxLog>();
+		List<WxLog> logs = new java.util.concurrent.CopyOnWriteArrayList<WxLog>();
 
 		int limit = query.getPageSize();
 		if (limit <= 0) {
@@ -225,7 +222,7 @@ public class WxMongoDBLogServiceImpl implements WxLogService {
 		BasicDBObject q = new BasicDBObject();
 		this.fillQueryCondition(q, query);
 		List<DBObject> list = coll.find(q).toArray();
-		List<WxLog> logs = new ArrayList<WxLog>();
+		List<WxLog> logs = new java.util.concurrent.CopyOnWriteArrayList<WxLog>();
 		for (DBObject object : list) {
 			WxLog log = new WxLog();
 			log.setId((Long) object.get("id"));

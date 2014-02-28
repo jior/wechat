@@ -18,8 +18,10 @@
 
 package com.glaf.wechat.test;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.glaf.core.config.Configuration;
 import com.glaf.wechat.component.Button;
@@ -27,9 +29,6 @@ import com.glaf.wechat.component.Menu;
 import com.glaf.wechat.config.WechatConfiguration;
 import com.glaf.wechat.model.AccessToken;
 import com.glaf.wechat.util.WechatUtils;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * 菜单管理器类
@@ -127,7 +126,7 @@ public class MenuTest {
 		 * menu.setButton(new Button[] { mainBtn1, mainBtn2, btn33 });
 		 */
 		Menu menu = new Menu();
-		List<Button> buttons = new ArrayList<Button>();
+		List<Button> buttons = new java.util.concurrent.CopyOnWriteArrayList<Button>();
 		buttons.add(mainBtn1);
 		buttons.add(mainBtn2);
 		buttons.add(mainBtn3);

@@ -3,7 +3,6 @@ package com.glaf.wechat.test;
 import java.util.List;
 
 import org.elasticsearch.action.delete.DeleteResponse;
- 
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.ImmutableSettings;
 import org.elasticsearch.common.settings.Settings;
@@ -11,7 +10,6 @@ import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.junit.Test;
 
 import com.glaf.test.AbstractTest;
-
 import com.glaf.wechat.domain.WxContent;
 import com.glaf.wechat.query.WxContentQuery;
 import com.glaf.wechat.service.WxContentService;

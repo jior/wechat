@@ -28,10 +28,10 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.alibaba.fastjson.*;
+import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.core.base.JSONable;
-import com.glaf.wechat.util.*;
+import com.glaf.wechat.util.WxLogJsonFactory;
 
 @Entity
 @Table(name = "WX_LOG")

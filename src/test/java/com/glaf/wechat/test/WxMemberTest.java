@@ -1,6 +1,7 @@
 package com.glaf.wechat.test;
 
-import java.util.*;
+import java.util.Date;
+import java.util.List;
 
 import org.junit.Test;
 

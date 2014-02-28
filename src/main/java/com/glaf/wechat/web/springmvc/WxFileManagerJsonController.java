@@ -18,7 +18,6 @@
 
 package com.glaf.wechat.web.springmvc;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
@@ -145,7 +144,7 @@ public class WxFileManagerJsonController {
 		List<WxFile> dataFiles = wxFileService.list(query);
 
 		// 遍历目录取的文件信息
-		List<Hashtable<?, ?>> fileList = new ArrayList<Hashtable<?, ?>>();
+		List<Hashtable<?, ?>> fileList = new java.util.concurrent.CopyOnWriteArrayList<Hashtable<?, ?>>();
 		if (dataFiles != null && !dataFiles.isEmpty()) {
 			for (WxFile file : dataFiles) {
 				Hashtable<String, Object> hash = new Hashtable<String, Object>();

@@ -18,10 +18,10 @@
 
 package com.glaf.wechat.component;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import com.alibaba.fastjson.*;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 
 /**
  * ²Ëµ¥
@@ -40,7 +40,7 @@ public class Menu implements java.io.Serializable {
 
 	public void addButton(Button button) {
 		if (buttons == null) {
-			buttons = new ArrayList<Button>();
+			buttons = new java.util.concurrent.CopyOnWriteArrayList<Button>();
 		}
 		buttons.add(button);
 	}

@@ -19,7 +19,6 @@
 package com.glaf.apps.vote.web.rest;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -31,17 +30,18 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.apache.commons.lang.StringUtils;
 
-import com.glaf.core.util.*;
 import com.glaf.apps.vote.domain.WxVote;
 import com.glaf.apps.vote.domain.WxVoteResult;
 import com.glaf.apps.vote.service.WxVoteResultService;
 import com.glaf.apps.vote.service.WxVoteService;
+import com.glaf.core.util.RequestUtils;
+import com.glaf.core.util.ResponseUtils;
 
 @Controller
 @Path("/rs/wx/vote")
@@ -87,7 +87,7 @@ public class WxVoteResourceRest {
 				}
 				if (vote.getRelations() != null
 						&& !vote.getRelations().isEmpty()) {
-					List<WxVoteResult> wxVoteResults = new ArrayList<WxVoteResult>();
+					List<WxVoteResult> wxVoteResults = new java.util.concurrent.CopyOnWriteArrayList<WxVoteResult>();
 					for (WxVote relation : vote.getRelations()) {
 						WxVoteResult result = new WxVoteResult();
 						result.setIp(ip);

@@ -12,7 +12,7 @@ public class Followers implements java.io.Serializable {
 
 	protected String nextOpenId;
 
-	protected List<User> users = new ArrayList<User>();
+	protected List<User> users = new java.util.concurrent.CopyOnWriteArrayList<User>();
 
 	public Followers() {
 

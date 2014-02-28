@@ -35,6 +35,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.glaf.base.modules.sys.model.SysApplication;
+import com.glaf.base.modules.sys.service.SysApplicationService;
 import com.glaf.core.base.TreeModel;
 import com.glaf.core.config.Environment;
 import com.glaf.core.config.ViewProperties;
@@ -47,8 +49,6 @@ import com.glaf.ui.service.PanelService;
 import com.glaf.ui.service.UserPortalService;
 import com.glaf.wechat.domain.WxUser;
 import com.glaf.wechat.service.WxUserService;
-import com.glaf.base.modules.sys.model.SysApplication;
-import com.glaf.base.modules.sys.service.SysApplicationService;
 
 @Controller("/wx/portal")
 public class WxPortalController {

@@ -18,7 +18,6 @@
 package com.glaf.wechat.website.springmvc;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,7 +34,6 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.base.BaseTree;
 import com.glaf.core.base.TreeModel;
-
 import com.glaf.core.tree.helper.TreeHelper;
 import com.glaf.wechat.domain.WxCategory;
 import com.glaf.wechat.domain.WxContent;
@@ -89,7 +87,7 @@ public class WxPublicJsonController {
 		List<WxCategory> categories = wxCategoryService.getCategoryList(
 				accountId, type);
 		if (categories != null && !categories.isEmpty()) {
-			List<TreeModel> treeModels = new ArrayList<TreeModel>();
+			List<TreeModel> treeModels = new java.util.concurrent.CopyOnWriteArrayList<TreeModel>();
 			for (WxCategory category : categories) {
 				TreeModel tree = new BaseTree();
 				tree.setId(category.getId());

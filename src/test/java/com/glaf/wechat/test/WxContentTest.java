@@ -1,13 +1,14 @@
 package com.glaf.wechat.test;
 
-import java.util.*;
+import java.util.Date;
+import java.util.List;
 
 import org.junit.Test;
 
+import com.glaf.test.AbstractTest;
 import com.glaf.wechat.domain.WxContent;
 import com.glaf.wechat.query.WxContentQuery;
 import com.glaf.wechat.service.WxContentService;
-import com.glaf.test.AbstractTest;
 
 public class WxContentTest extends AbstractTest {
 
@@ -45,7 +46,7 @@ public class WxContentTest extends AbstractTest {
 	@Test
 	public void list() {
 		WxContentQuery wxContentQuery = new WxContentQuery();
-		List<Long> contentIds = new ArrayList<Long>();
+		List<Long> contentIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
 		contentIds.add(2494L);
 		wxContentQuery.contentIds(contentIds);
 		logger.debug("---------------------total----------------------");

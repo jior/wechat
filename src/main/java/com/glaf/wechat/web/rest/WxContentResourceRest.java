@@ -19,8 +19,6 @@
 package com.glaf.wechat.web.rest;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -52,7 +50,6 @@ import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.StringTools;
 import com.glaf.core.util.Tools;
-
 import com.glaf.wechat.domain.WxCategory;
 import com.glaf.wechat.domain.WxContent;
 import com.glaf.wechat.query.WxContentQuery;
@@ -169,7 +166,7 @@ public class WxContentResourceRest {
 			@Context HttpServletRequest request) throws IOException {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		String selecteds = request.getParameter("selecteds");
-		List<String> checkIds = new ArrayList<String>();
+		List<String> checkIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		if (StringUtils.isNotEmpty(selecteds)) {
 			checkIds = StringTools.split(selecteds);
 		}
@@ -179,9 +176,9 @@ public class WxContentResourceRest {
 		List<WxCategory> categories = wxCategoryService.getCategoryList(
 				accountId, type);
 		if (categories != null && !categories.isEmpty()) {
-			Map<Long, TreeModel> treeMap = new HashMap<Long, TreeModel>();
-			List<TreeModel> treeModels = new ArrayList<TreeModel>();
-			List<Long> categoryIds = new ArrayList<Long>();
+			Map<Long, TreeModel> treeMap = new java.util.concurrent.ConcurrentHashMap<Long, TreeModel>();
+			List<TreeModel> treeModels = new java.util.concurrent.CopyOnWriteArrayList<TreeModel>();
+			List<Long> categoryIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
 			for (WxCategory category : categories) {
 				TreeModel tree = new BaseTree();
 				tree.setId(category.getId());

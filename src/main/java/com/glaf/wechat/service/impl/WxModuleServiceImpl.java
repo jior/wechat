@@ -18,26 +18,29 @@
 
 package com.glaf.wechat.service.impl;
 
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.glaf.core.id.*;
-import com.glaf.core.dao.*;
+import com.glaf.core.dao.EntityDAO;
+import com.glaf.core.id.IdGenerator;
 import com.glaf.core.service.ITablePageService;
 import com.glaf.core.util.DBUtils;
 import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.JsonUtils;
-import com.glaf.wechat.mapper.*;
-import com.glaf.wechat.domain.*;
-import com.glaf.wechat.query.*;
+import com.glaf.wechat.domain.WxModule;
+import com.glaf.wechat.mapper.WxModuleMapper;
+import com.glaf.wechat.query.WxModuleQuery;
 import com.glaf.wechat.service.WxModuleService;
 
 @Service("wxModuleService")
@@ -109,7 +112,7 @@ public class WxModuleServiceImpl implements WxModuleService {
 		WxModule wxModule = wxModuleMapper.getWxModuleById(id);
 		if (wxModule != null && StringUtils.isNotEmpty(wxModule.getSql())) {
 			if (DBUtils.isLegalQuerySql(wxModule.getSql())) {
-				Map<String, Object> paramMap = new HashMap<String, Object>();
+				Map<String, Object> paramMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 				if (StringUtils.isNotEmpty(wxModule.getJson())) {
 					String json = wxModule.getJson();
 					if (StringUtils.isNotEmpty(json)) {

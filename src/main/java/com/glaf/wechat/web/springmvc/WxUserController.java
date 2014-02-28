@@ -1,6 +1,5 @@
 package com.glaf.wechat.web.springmvc;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +27,6 @@ import com.glaf.base.modules.sys.service.SysUserRoleService;
 import com.glaf.base.modules.sys.service.SysUserService;
 import com.glaf.base.utils.ParamUtil;
 import com.glaf.base.utils.RequestUtil;
-
 import com.glaf.core.cache.CacheUtils;
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.identity.User;
@@ -36,7 +34,6 @@ import com.glaf.core.security.DigestUtil;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.ResponseUtils;
 import com.glaf.core.util.Tools;
-
 import com.glaf.wechat.domain.WxUser;
 import com.glaf.wechat.query.WxUserQuery;
 import com.glaf.wechat.service.WxUserService;
@@ -176,7 +173,7 @@ public class WxUserController {
 				logger.error(ex);
 			}
 
-			List<SysDepartment> depts = new ArrayList<SysDepartment>();
+			List<SysDepartment> depts = new java.util.concurrent.CopyOnWriteArrayList<SysDepartment>();
 			depts.add(department);
 			modelMap.put("depts", depts);
 			request.setAttribute("depts", depts);

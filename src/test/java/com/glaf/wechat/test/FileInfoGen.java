@@ -1,7 +1,8 @@
 package com.glaf.wechat.test;
 
 import java.io.File;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
 import net.sf.jxls.transformer.XLSTransformer;
 
@@ -10,10 +11,10 @@ import com.glaf.core.util.StringTools;
 public class FileInfoGen {
 
 	public static void main(String[] args) throws Exception {
-		List<FileInfo> files = new ArrayList<FileInfo>();
+		List<FileInfo> files = new java.util.concurrent.CopyOnWriteArrayList<FileInfo>();
 		File dir = new File(args[0]);
 		scanFiles(dir, files, args[0]);
-		Map<String, Object> context = new HashMap<String, Object>();
+		Map<String, Object> context = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		context.put("rows", files);
 		XLSTransformer transformer = new XLSTransformer();
 		transformer.transformXLS("code2.xls", context, "dest.xls");

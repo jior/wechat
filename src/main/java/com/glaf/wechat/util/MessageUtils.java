@@ -20,8 +20,6 @@ package com.glaf.wechat.util;
 
 import java.io.IOException;
 import java.io.InputStream;
-
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -108,7 +106,7 @@ public class MessageUtils {
 	@SuppressWarnings("unchecked")
 	public static Map<String, String> parseXml(HttpServletRequest request) {
 		// 将解析结果存储在HashMap中
-		Map<String, String> map = new HashMap<String, String>();
+		Map<String, String> map = new java.util.concurrent.ConcurrentHashMap<String, String>();
 
 		// 从request中取得输入流
 		InputStream inputStream = null;

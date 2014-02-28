@@ -21,8 +21,11 @@ package com.glaf.wechat.web.springmvc;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
+import java.util.StringTokenizer;
 import java.util.zip.ZipInputStream;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,22 +33,35 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 
-import com.alibaba.fastjson.*;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.config.SystemProperties;
 import com.glaf.core.config.ViewProperties;
-import com.glaf.core.identity.*;
-import com.glaf.core.security.*;
-import com.glaf.core.util.*;
-import com.glaf.wechat.domain.*;
-import com.glaf.wechat.query.*;
-import com.glaf.wechat.service.*;
+import com.glaf.core.identity.User;
+import com.glaf.core.security.LoginContext;
+import com.glaf.core.util.FileUtils;
+import com.glaf.core.util.IOUtils;
+import com.glaf.core.util.JsonUtils;
+import com.glaf.core.util.Paging;
+import com.glaf.core.util.ParamUtils;
+import com.glaf.core.util.RequestUtils;
+import com.glaf.core.util.ResponseUtils;
+import com.glaf.core.util.Tools;
+import com.glaf.core.util.ZipUtils;
+import com.glaf.wechat.domain.WxTemplate;
+import com.glaf.wechat.domain.WxUserTemplate;
+import com.glaf.wechat.query.WxTemplateQuery;
+import com.glaf.wechat.service.WxTemplateService;
+import com.glaf.wechat.service.WxUserTemplateService;
 import com.glaf.wechat.util.WechatUtils;
 
 @Controller("/wx/wxTemplate")
@@ -434,7 +450,7 @@ public class WxTemplateController {
 				} catch (IOException ex) {
 					ex.printStackTrace();
 				}
-				List<String> excludes = new ArrayList<String>();
+				List<String> excludes = new java.util.concurrent.CopyOnWriteArrayList<String>();
 				excludes.add("java");
 				excludes.add("jsp");
 				excludes.add("php");
@@ -450,7 +466,7 @@ public class WxTemplateController {
 				excludes.add("db");
 				InputStream inputStream = null;
 				ZipInputStream zipInputStream = null;
-				List<String> includes = new ArrayList<String>();
+				List<String> includes = new java.util.concurrent.CopyOnWriteArrayList<String>();
 				includes.add("html");
 				try {
 					ZipUtils.unzip(mFile.getInputStream(),

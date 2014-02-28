@@ -18,7 +18,6 @@
 
 package com.glaf.wechat.service.impl;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -293,7 +292,7 @@ public class WxCategoryServiceImpl implements WxCategoryService {
 		 * 如果节点移动了位置，即移动到别的节点下面去了
 		 */
 		if (model.getParentId() != bean.getParentId()) {
-			List<WxCategory> list = new ArrayList<WxCategory>();
+			List<WxCategory> list = new java.util.concurrent.CopyOnWriteArrayList<WxCategory>();
 			this.loadChildren(list, bean.getId());
 			if (!list.isEmpty()) {
 				for (WxCategory node : list) {

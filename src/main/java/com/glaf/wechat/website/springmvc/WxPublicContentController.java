@@ -54,7 +54,6 @@ import com.glaf.wechat.domain.WxUserTemplate;
 import com.glaf.wechat.query.WxCategoryQuery;
 import com.glaf.wechat.query.WxContentQuery;
 import com.glaf.wechat.service.WxCategoryService;
-
 import com.glaf.wechat.service.WxContentService;
 import com.glaf.wechat.service.WxCoverService;
 import com.glaf.wechat.service.WxFileService;

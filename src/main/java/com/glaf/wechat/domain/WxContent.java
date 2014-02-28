@@ -18,7 +18,6 @@
 
 package com.glaf.wechat.domain;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -228,10 +227,10 @@ public class WxContent implements java.io.Serializable, JSONable {
 	protected Date lastUpdateDate;
 
 	@javax.persistence.Transient
-	protected List<WxContent> relations = new ArrayList<WxContent>();
+	protected List<WxContent> relations = new java.util.concurrent.CopyOnWriteArrayList<WxContent>();
 
 	@javax.persistence.Transient
-	protected List<WxContent> recommendations = new ArrayList<WxContent>();
+	protected List<WxContent> recommendations = new java.util.concurrent.CopyOnWriteArrayList<WxContent>();
 
 	public WxContent() {
 

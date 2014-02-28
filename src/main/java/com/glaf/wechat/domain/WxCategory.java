@@ -18,7 +18,6 @@
 
 package com.glaf.wechat.domain;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -181,10 +180,10 @@ public class WxCategory implements java.io.Serializable, JSONable {
 	protected int deep;
 
 	@javax.persistence.Transient
-	protected List<WxCategory> children = new ArrayList<WxCategory>();
+	protected List<WxCategory> children = new java.util.concurrent.CopyOnWriteArrayList<WxCategory>();
 
 	@javax.persistence.Transient
-	protected List<WxContent> pptList = new ArrayList<WxContent>();
+	protected List<WxContent> pptList = new java.util.concurrent.CopyOnWriteArrayList<WxContent>();
 
 	public WxCategory() {
 
@@ -192,14 +191,14 @@ public class WxCategory implements java.io.Serializable, JSONable {
 
 	public void addChild(WxCategory child) {
 		if (children == null) {
-			children = new ArrayList<WxCategory>();
+			children = new java.util.concurrent.CopyOnWriteArrayList<WxCategory>();
 		}
 		children.add(child);
 	}
 
 	public void addPPT(WxContent ppt) {
 		if (pptList == null) {
-			pptList = new ArrayList<WxContent>();
+			pptList = new java.util.concurrent.CopyOnWriteArrayList<WxContent>();
 		}
 		pptList.add(ppt);
 	}

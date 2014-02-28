@@ -17,7 +17,6 @@
  */
 package com.glaf.wechat.sdk.message;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,7 +31,7 @@ public class ResponseNewsMessage extends Message {
 	
 	public void addItemArticle(ItemArticle item){
 		if(articleItems == null){
-			articleItems = new ArrayList<ItemArticle>();
+			articleItems = new java.util.concurrent.CopyOnWriteArrayList<ItemArticle>();
 		}
 		articleItems.add(item);
 	}

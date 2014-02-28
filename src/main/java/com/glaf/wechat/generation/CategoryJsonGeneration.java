@@ -17,7 +17,6 @@
  */
 package com.glaf.wechat.generation;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -76,7 +75,7 @@ public class CategoryJsonGeneration {
 		List<WxCategory> categories = wxCategoryService.getCategoryList(
 				accountId, type);
 		if (categories != null && !categories.isEmpty()) {
-			List<TreeModel> treeModels = new ArrayList<TreeModel>();
+			List<TreeModel> treeModels = new java.util.concurrent.CopyOnWriteArrayList<TreeModel>();
 			for (WxCategory category : categories) {
 				TreeModel tree = new BaseTree();
 				tree.setId(category.getId());

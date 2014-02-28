@@ -114,10 +114,10 @@ public class WxVote implements Serializable, JSONable {
 	protected String relationIds;
 
 	@javax.persistence.Transient
-	protected List<WxVote> relations = new ArrayList<WxVote>();
+	protected List<WxVote> relations = new java.util.concurrent.CopyOnWriteArrayList<WxVote>();
 
 	@javax.persistence.Transient
-	protected List<WxVoteItem> items = new ArrayList<WxVoteItem>();
+	protected List<WxVoteItem> items = new java.util.concurrent.CopyOnWriteArrayList<WxVoteItem>();
 
 	public WxVote() {
 
@@ -125,14 +125,14 @@ public class WxVote implements Serializable, JSONable {
 
 	public void addItem(WxVoteItem item) {
 		if (items == null) {
-			items = new ArrayList<WxVoteItem>();
+			items = new java.util.concurrent.CopyOnWriteArrayList<WxVoteItem>();
 		}
 		items.add(item);
 	}
 
 	public void addRelation(WxVote item) {
 		if (relations == null) {
-			relations = new ArrayList<WxVote>();
+			relations = new java.util.concurrent.CopyOnWriteArrayList<WxVote>();
 		}
 		relations.add(item);
 	}

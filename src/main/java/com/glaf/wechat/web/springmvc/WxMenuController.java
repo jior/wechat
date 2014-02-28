@@ -19,35 +19,47 @@
 package com.glaf.wechat.web.springmvc;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
-import com.alibaba.fastjson.*;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.base.BaseTree;
 import com.glaf.core.base.TreeModel;
 import com.glaf.core.config.Configuration;
 import com.glaf.core.config.ViewProperties;
-import com.glaf.core.identity.*;
-import com.glaf.core.security.*;
+import com.glaf.core.identity.User;
+import com.glaf.core.security.LoginContext;
 import com.glaf.core.tree.helper.TreeHelper;
-import com.glaf.core.util.*;
+import com.glaf.core.util.JsonUtils;
+import com.glaf.core.util.Paging;
+import com.glaf.core.util.ParamUtils;
+import com.glaf.core.util.RequestUtils;
+import com.glaf.core.util.ResponseUtils;
+import com.glaf.core.util.Tools;
 import com.glaf.wechat.component.Button;
 import com.glaf.wechat.component.Menu;
 import com.glaf.wechat.config.WechatCodeProperties;
 import com.glaf.wechat.config.WechatConfiguration;
-import com.glaf.wechat.domain.*;
+import com.glaf.wechat.domain.WxMenu;
+import com.glaf.wechat.domain.WxUser;
 import com.glaf.wechat.model.AccessToken;
-import com.glaf.wechat.query.*;
-import com.glaf.wechat.service.*;
+import com.glaf.wechat.query.WxMenuQuery;
+import com.glaf.wechat.service.WxMenuService;
+import com.glaf.wechat.service.WxUserService;
 import com.glaf.wechat.util.WechatUtils;
 import com.glaf.wechat.util.WxIdentityFactory;
 
@@ -179,7 +191,7 @@ public class WxMenuController {
 							JSONObject menuJson = jsonObject
 									.getJSONObject("menu");
 							if (menuJson.containsKey("button")) {
-								List<WxMenu> menus = new ArrayList<WxMenu>();
+								List<WxMenu> menus = new java.util.concurrent.CopyOnWriteArrayList<WxMenu>();
 								JSONArray buttonArray = menuJson
 										.getJSONArray("button");
 								for (int i = 0; i < buttonArray.size(); i++) {
@@ -597,9 +609,9 @@ public class WxMenuController {
 			}
 
 			if (menus != null && !menus.isEmpty()) {
-				Map<Long, TreeModel> treeMap = new HashMap<Long, TreeModel>();
-				List<TreeModel> treeModels = new ArrayList<TreeModel>();
-				List<Long> menuIds = new ArrayList<Long>();
+				Map<Long, TreeModel> treeMap = new java.util.concurrent.ConcurrentHashMap<Long, TreeModel>();
+				List<TreeModel> treeModels = new java.util.concurrent.CopyOnWriteArrayList<TreeModel>();
+				List<Long> menuIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
 				for (WxMenu menu : menus) {
 					TreeModel tree = new BaseTree();
 					tree.setId(menu.getId());

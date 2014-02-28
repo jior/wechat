@@ -6,17 +6,15 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 
 import com.glaf.core.context.ContextFactory;
- 
 import com.glaf.wechat.domain.WxContent;
 import com.glaf.wechat.domain.WxLog;
 import com.glaf.wechat.domain.WxUser;
 import com.glaf.wechat.query.WxContentQuery;
 import com.glaf.wechat.sdk.message.ItemArticle;
+import com.glaf.wechat.sdk.message.LocationMessage;
 import com.glaf.wechat.sdk.message.Message;
 import com.glaf.wechat.sdk.message.ResponseNewsMessage;
-import com.glaf.wechat.sdk.message.LocationMessage;
 import com.glaf.wechat.sdk.util.LocationUtils;
- 
 import com.glaf.wechat.service.WxContentService;
 import com.glaf.wechat.util.Constants;
 import com.glaf.wechat.util.WxIdentityFactory;

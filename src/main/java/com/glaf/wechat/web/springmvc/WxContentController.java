@@ -19,29 +19,42 @@
 package com.glaf.wechat.web.springmvc;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
-import com.alibaba.fastjson.*;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.base.BaseTree;
 import com.glaf.core.base.TreeModel;
 import com.glaf.core.config.ViewProperties;
-import com.glaf.core.identity.*;
-import com.glaf.core.security.*;
+import com.glaf.core.identity.User;
+import com.glaf.core.security.LoginContext;
 import com.glaf.core.tree.helper.TreeHelper;
-import com.glaf.core.util.*;
-import com.glaf.wechat.domain.*;
-import com.glaf.wechat.query.*;
-import com.glaf.wechat.service.*;
+import com.glaf.core.util.JsonUtils;
+import com.glaf.core.util.Paging;
+import com.glaf.core.util.ParamUtils;
+import com.glaf.core.util.RequestUtils;
+import com.glaf.core.util.ResponseUtils;
+import com.glaf.core.util.StringTools;
+import com.glaf.core.util.Tools;
+import com.glaf.wechat.domain.WxCategory;
+import com.glaf.wechat.domain.WxContent;
+import com.glaf.wechat.query.WxContentQuery;
+import com.glaf.wechat.service.WxCategoryService;
+import com.glaf.wechat.service.WxContentService;
 
 @Controller("/wx/wxContent")
 @RequestMapping("/wx/wxContent")
@@ -551,7 +564,7 @@ public class WxContentController {
 			HttpServletRequest request) throws IOException {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		String selecteds = request.getParameter("selecteds");
-		List<String> checkIds = new ArrayList<String>();
+		List<String> checkIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		if (StringUtils.isNotEmpty(selecteds)) {
 			checkIds = StringTools.split(selecteds);
 		}
@@ -561,9 +574,9 @@ public class WxContentController {
 		List<WxCategory> categories = wxCategoryService.getCategoryList(
 				accountId, type);
 		if (categories != null && !categories.isEmpty()) {
-			Map<Long, TreeModel> treeMap = new HashMap<Long, TreeModel>();
-			List<TreeModel> treeModels = new ArrayList<TreeModel>();
-			List<Long> categoryIds = new ArrayList<Long>();
+			Map<Long, TreeModel> treeMap = new java.util.concurrent.ConcurrentHashMap<Long, TreeModel>();
+			List<TreeModel> treeModels = new java.util.concurrent.CopyOnWriteArrayList<TreeModel>();
+			List<Long> categoryIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
 			for (WxCategory category : categories) {
 				TreeModel tree = new BaseTree();
 				tree.setId(category.getId());

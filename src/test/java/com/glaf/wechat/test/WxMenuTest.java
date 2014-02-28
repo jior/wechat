@@ -1,13 +1,14 @@
 package com.glaf.wechat.test;
 
-import java.util.*;
+import java.util.Date;
+import java.util.List;
 
 import org.junit.Test;
 
+import com.glaf.test.AbstractTest;
 import com.glaf.wechat.domain.WxMenu;
 import com.glaf.wechat.query.WxMenuQuery;
 import com.glaf.wechat.service.WxMenuService;
-import com.glaf.test.AbstractTest;
 
 public class WxMenuTest extends AbstractTest {
 

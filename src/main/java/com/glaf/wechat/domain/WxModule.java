@@ -18,19 +18,22 @@
 
 package com.glaf.wechat.domain;
 
-import java.io.*;
-import java.util.*;
+import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
 
-import javax.persistence.*;
-
-import com.alibaba.fastjson.*;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
-import com.glaf.core.base.*;
-import com.glaf.wechat.util.*;
+import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.glaf.core.base.JSONable;
+import com.glaf.wechat.util.WxModuleJsonFactory;
 
 @Entity
 @Table(name = "WX_MODULE")
@@ -84,7 +87,7 @@ public class WxModule implements Serializable, JSONable {
 	protected int sort;
 
 	@javax.persistence.Transient
-	protected List<Map<String, Object>> dataList = new ArrayList<Map<String, Object>>();
+	protected List<Map<String, Object>> dataList = new java.util.concurrent.CopyOnWriteArrayList<Map<String, Object>>();
 
 	public WxModule() {
 

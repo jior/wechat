@@ -19,8 +19,6 @@
 package com.glaf.wechat.web.rest;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -167,9 +165,9 @@ public class WxMenuResourceRest {
 		}
 
 		if (menus != null && !menus.isEmpty()) {
-			Map<Long, TreeModel> treeMap = new HashMap<Long, TreeModel>();
-			List<TreeModel> treeModels = new ArrayList<TreeModel>();
-			List<Long> menuIds = new ArrayList<Long>();
+			Map<Long, TreeModel> treeMap = new java.util.concurrent.ConcurrentHashMap<Long, TreeModel>();
+			List<TreeModel> treeModels = new java.util.concurrent.CopyOnWriteArrayList<TreeModel>();
+			List<Long> menuIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
 			for (WxMenu menu : menus) {
 				TreeModel tree = new BaseTree();
 				tree.setId(menu.getId());
