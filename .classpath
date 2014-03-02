@@ -125,7 +125,6 @@
 	<classpathentry kind="lib" path="lib/thumbnailator-all.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/glaf-base.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/glaf-core.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/glaf-test.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/glaf-ui.jar"/>
 	<classpathentry kind="lib" path="lib/mysql-connector-java-bin.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/async-http-client.jar"/>
@@ -156,5 +155,6 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/poi-ooxml.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/poi-scratchpad.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/poi.jar"/>
+	<classpathentry kind="lib" path="lib/glaf-test.jar"/>
 	<classpathentry kind="output" path="WebContent/WEB-INF/classes"/>
 </classpath>
