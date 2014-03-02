@@ -47,7 +47,7 @@ public class CategoryJsonGeneration {
 
 	protected static String configurationResource = "spring/spring-config.xml";
 
-	protected static org.springframework.context.ApplicationContext ctx;
+	protected static volatile org.springframework.context.ApplicationContext ctx;
 
 	public static void main(String[] args) {
 		if (ctx == null) {
