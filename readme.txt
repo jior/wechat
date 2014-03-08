@@ -14,7 +14,11 @@ jvm_args    : -Xms1024m -Xmx1024m -XX:NewSize=64m -XX:MaxNewSize=64m -XX:PermSiz
 
 2、修改jdbc.properties配置文件
    修改WebContent\WEB-INF\conf\jdbc.properties,如果提供的数据库名称（url）、用户名（username）、密码（password）不一致时请修改成您自己的配置信息，默认配置如下：
- 
+jdbc.type=postgresql
+jdbc.driver=org.postgresql.Driver
+jdbc.url=jdbc:postgresql://127.0.0.1:5432/wechat2014
+jdbc.user=root
+jdbc.password=root
  
 3、 启动server
 如果把需要修改虚拟目录，请修改server/conf/server.xml中配置信息
