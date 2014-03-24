@@ -1,4 +1,12 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
+<%@ page import="com.glaf.core.util.*" %>
+<%
+    com.glaf.core.identity.User user = com.glaf.core.security.IdentityFactory.getUser(com.glaf.core.util.RequestUtils.getActorId(request));
+	if(user.getAccountType() == 2){
+		response.sendRedirect(request.getContextPath()+"/mx/wechat/main");
+		return;
+	}
+%>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />

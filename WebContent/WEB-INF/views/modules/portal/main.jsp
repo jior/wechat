@@ -14,6 +14,11 @@
 	request.setAttribute("theme", theme);
 	request.setAttribute("nowDate", new java.util.Date());
 	LoginContext loginContext = com.glaf.core.util.RequestUtils.getLoginContext(request);
+	com.glaf.core.identity.User user = com.glaf.core.security.IdentityFactory.getUser(loginContext.getActorId());
+	if(user.getAccountType() == 2){
+		response.sendRedirect(request.getContextPath()+"/mx/wechat/main");
+		return;
+	}
 	String json = (String) request.getAttribute("json");
 	request.setAttribute("contextPath", request.getContextPath());
 %>

@@ -16,6 +16,12 @@
     String theme = com.glaf.core.util.RequestUtils.getTheme(request);
 	request.setAttribute("theme", theme);
 
+	com.glaf.core.identity.User user = com.glaf.core.security.IdentityFactory.getUser(RequestUtils.getActorId(request));
+	if(user.getAccountType() == 2){
+		response.sendRedirect(request.getContextPath()+"/mx/wechat/main");
+		return;
+	}
+
 	//String userId = RequestUtils.getActorId(request);
  	//SysApplicationService sysApplicationService = ContextFactory.getBean("sysApplicationService");
 	//long appId = RequestUtils.getLong(request, "appId", 3);
