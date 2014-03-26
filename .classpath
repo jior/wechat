@@ -156,5 +156,6 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/poi-scratchpad.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/poi.jar"/>
 	<classpathentry kind="lib" path="lib/glaf-test.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/glaf-template.jar"/>
 	<classpathentry kind="output" path="WebContent/WEB-INF/classes"/>
 </classpath>

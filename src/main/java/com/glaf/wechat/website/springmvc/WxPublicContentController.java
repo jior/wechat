@@ -37,13 +37,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.glaf.core.cache.CacheFactory;
 import com.glaf.core.config.Configuration;
-import com.glaf.core.freemarker.TemplateUtils;
 import com.glaf.core.identity.User;
 import com.glaf.core.security.IdentityFactory;
 import com.glaf.core.util.IOUtils;
 import com.glaf.core.util.Paging;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
+import com.glaf.template.util.TemplateUtils;
 import com.glaf.wechat.config.WechatConfiguration;
 import com.glaf.wechat.domain.WxCategory;
 import com.glaf.wechat.domain.WxContent;
