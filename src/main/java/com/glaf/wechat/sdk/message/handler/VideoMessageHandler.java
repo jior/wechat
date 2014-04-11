@@ -19,7 +19,7 @@ package com.glaf.wechat.sdk.message.handler;
 
 import java.util.StringTokenizer;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Element;
 
 import com.glaf.wechat.sdk.message.Message;

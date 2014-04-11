@@ -20,7 +20,7 @@ package com.glaf.wechat.sdk.message.filter;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import com.glaf.core.context.ContextFactory;
 import com.glaf.wechat.domain.WxContent;
