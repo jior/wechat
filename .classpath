@@ -68,7 +68,6 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/mybatis.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/quartz-all.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/resteasy-cache-core.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/resteasy-crypto.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/resteasy-jackson-provider.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/resteasy-jaxb-provider.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/resteasy-jaxrs.jar"/>
