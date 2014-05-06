@@ -37,7 +37,7 @@ import com.glaf.wechat.util.WxSiteInfoJsonFactory;
 
 /**
  * 
- * Õ¾µãĞÅÏ¢
+ * ç«™ç‚¹ä¿¡æ¯
  * 
  */
 @Entity
@@ -51,25 +51,25 @@ public class WxSiteInfo implements java.io.Serializable, JSONable {
 	protected long id;
 
 	/**
-	 * Î¢Õ¾¹«ÖÚºÅÓ¦ÓÃID
+	 * å¾®ç«™å…¬ä¼—å·åº”ç”¨ID
 	 */
 	@Column(name = "ACCOUNTID_")
 	protected Long accountId;
 
 	/**
-	 * ÁªÏµÈË
+	 * è”ç³»äºº
 	 */
 	@Column(name = "LINKMAN_", length = 50)
 	protected String linkman;
 
 	/**
-	 * ÁªÏµµç»°
+	 * è”ç³»ç”µè¯
 	 */
 	@Column(name = "TELEPHONE_", length = 50)
 	protected String telephone;
 
 	/**
-	 * ÊÖ»ú
+	 * æ‰‹æœº
 	 */
 	@Column(name = "MOBILE_", length = 50)
 	protected String mobile;
@@ -87,45 +87,45 @@ public class WxSiteInfo implements java.io.Serializable, JSONable {
 	protected String qq;
 
 	/**
-	 * ÁªÏµµØÖ·
+	 * è”ç³»åœ°å€
 	 */
 	@Column(name = "ADDRESS_", length = 50)
 	protected String address;
 
 	/**
-	 * ÍøÕ¾µØÖ·
+	 * ç½‘ç«™åœ°å€
 	 */
 	@Column(name = "SITEURL_", length = 250)
 	protected String siteUrl;
 
 	/**
-	 * ¹«ÖÚÕËºÅÃèÊö
+	 * å…¬ä¼—è´¦å·æè¿°
 	 */
 	@Column(name = "REMARK_", length = 2000)
 	protected String remark;
 
 
 	/**
-	 * ´´½¨ÈË
+	 * åˆ›å»ºäºº
 	 */
 	@Column(name = "CREATEBY_", length = 50)
 	protected String createBy;
 
 	/**
-	 * ´´½¨ÈÕÆÚ
+	 * åˆ›å»ºæ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATEDATE_")
 	protected Date createDate;
 
 	/**
-	 * ×îºóĞŞ¸ÄÈË
+	 * æœ€åä¿®æ”¹äºº
 	 */
 	@Column(name = "LASTUPDATEBY_", length = 50)
 	protected String lastUpdateBy;
 
 	/**
-	 * ×îºóĞŞ¸ÄÈÕÆÚ
+	 * æœ€åä¿®æ”¹æ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "LASTUPDATEDATE_")

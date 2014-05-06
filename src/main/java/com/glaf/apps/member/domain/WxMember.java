@@ -37,7 +37,7 @@ import com.glaf.core.base.JSONable;
 
 /**
  * 
- * »áÔ±ĞÅÏ¢
+ * ä¼šå‘˜ä¿¡æ¯
  * 
  */
 @Entity
@@ -51,31 +51,31 @@ public class WxMember implements java.io.Serializable, JSONable {
 	protected long id;
 
 	/**
-	 * Î¢Õ¾¹«ÖÚºÅÕËºÅID
+	 * å¾®ç«™å…¬ä¼—å·è´¦å·ID
 	 */
 	@Column(name = "ACCOUNTID_")
 	protected Long accountId;
 
 	/**
-	 * »áÔ±¿¨ºÅ
+	 * ä¼šå‘˜å¡å·
 	 */
 	@Column(name = "CARDNO_", length = 50)
 	protected String cardNo;
 
 	/**
-	 * ĞÕÃû
+	 * å§“å
 	 */
 	@Column(name = "NAME_", length = 50)
 	protected String name;
 
 	/**
-	 * ÁªÏµµç»°
+	 * è”ç³»ç”µè¯
 	 */
 	@Column(name = "TELEPHONE_", length = 50)
 	protected String telephone;
 
 	/**
-	 * ÊÖ»ú
+	 * æ‰‹æœº
 	 */
 	@Column(name = "MOBILE_", length = 50)
 	protected String mobile;
@@ -93,19 +93,19 @@ public class WxMember implements java.io.Serializable, JSONable {
 	protected String qq;
 
 	/**
-	 * ÁªÏµµØÖ·
+	 * è”ç³»åœ°å€
 	 */
 	@Column(name = "ADDRESS_", length = 50)
 	protected String address;
 
 	/**
-	 * Óà¶î
+	 * ä½™é¢
 	 */
 	@Column(name = "BALANCE_")
 	protected Double balance;
 
 	/**
-	 * ×´Ì¬
+	 * çŠ¶æ€
 	 */
 	@Column(name = "STATUS_")
 	protected int status;
@@ -117,26 +117,26 @@ public class WxMember implements java.io.Serializable, JSONable {
 	protected String uuid;
 
 	/**
-	 * ´´½¨ÈË
+	 * åˆ›å»ºäºº
 	 */
 	@Column(name = "CREATEBY_", length = 50)
 	protected String createBy;
 
 	/**
-	 * ´´½¨ÈÕÆÚ
+	 * åˆ›å»ºæ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATEDATE_")
 	protected Date createDate;
 
 	/**
-	 * ×îºóĞŞ¸ÄÈË
+	 * æœ€åä¿®æ”¹äºº
 	 */
 	@Column(name = "LASTUPDATEBY_", length = 50)
 	protected String lastUpdateBy;
 
 	/**
-	 * ×îºóĞŞ¸ÄÈÕÆÚ
+	 * æœ€åä¿®æ”¹æ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "LASTUPDATEDATE_")

@@ -82,7 +82,7 @@ public class WxTemplateServiceImpl implements WxTemplateService {
 	}
 
 	/**
-	 * »ñÈ¡Ä³¸öÀ¸Ä¿Ö¸¶¨ÀàĞÍµÄÄ£°å
+	 * è·å–æŸä¸ªæ ç›®æŒ‡å®šç±»å‹çš„æ¨¡æ¿
 	 * 
 	 * @param accountId
 	 * @param categoryId
@@ -117,7 +117,7 @@ public class WxTemplateServiceImpl implements WxTemplateService {
 		if (wxTemplate != null && StringUtils.isNotEmpty(wxTemplate.getPath())) {
 			String cacheKey02 = "wx_tpl_" + wxTemplate.getPath();
 			if (cache && CacheFactory.getString(cacheKey02) != null) {
-				logger.debug("´Ó»º´æÖĞ»ñÈ¡Ä£°å");
+				logger.debug("ä»ç¼“å­˜ä¸­è·å–æ¨¡æ¿");
 				wxTemplate.setContent(CacheFactory.getString(cacheKey02));
 			} else {
 				String filename = SystemProperties.getAppPath()

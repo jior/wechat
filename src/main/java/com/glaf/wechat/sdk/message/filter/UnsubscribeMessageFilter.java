@@ -37,7 +37,7 @@ import com.glaf.wechat.util.Constants;
 import com.glaf.wechat.util.WxLogFactory;
 
 /**
- * È¡Ïû¹Ø×¢Ê±»Ø¸´
+ * å–æ¶ˆå…³æ³¨æ—¶å›å¤
  */
 public class UnsubscribeMessageFilter extends AbstractMessageFilter implements
 		IMessageFilter {

@@ -108,12 +108,12 @@ public class WxVoteServiceImpl implements WxVoteService {
 	}
 
 	/**
-	 * »ñÈ¡×îĞÂµÄÒ»ÌõÍ¶Æ±½á¹û
+	 * è·å–æœ€æ–°çš„ä¸€æ¡æŠ•ç¥¨ç»“æœ
 	 * 
 	 * @param voteId
-	 *            Í¶Æ±¼ÇÂ¼
+	 *            æŠ•ç¥¨è®°å½•
 	 * @param ip
-	 *            IPµØÖ·
+	 *            IPåœ°å€
 	 * @return
 	 */
 	public WxVoteResult getLatestVoteResult(Long voteId, String ip) {

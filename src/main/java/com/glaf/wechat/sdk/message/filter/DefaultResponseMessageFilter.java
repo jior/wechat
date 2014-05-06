@@ -94,7 +94,7 @@ public class DefaultResponseMessageFilter extends AbstractMessageFilter
 				bean.setOpenId(message.getFromUserName());
 				bean.setActorId(message.getCustomer());
 				bean.setCreateTime(new Date());
-				bean.setFlag(Constants.DEFAULT_LOG_FLAG);// Ĭ�ϻظ�
+				bean.setFlag(Constants.DEFAULT_LOG_FLAG);// 默认回复
 				bean.setIp(message.getRemoteIPAddr());
 				bean.setOperate("default");
 				WxLogFactory.create(bean);

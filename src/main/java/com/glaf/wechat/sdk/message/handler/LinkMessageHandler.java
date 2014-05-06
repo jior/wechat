@@ -50,7 +50,7 @@ public class LinkMessageHandler extends AbstractMessageHandler {
 				}
 			}
 		}
-		//加入默认的响应处理类
+		//鍔犲叆榛樿鐨勫搷搴斿鐞嗙被
 		filterChain.addFilter(new DefaultResponseMessageFilter());
 		return filterChain.doFilterChain(message);
 	}

@@ -26,33 +26,33 @@ import java.util.List;
 import java.util.Locale;
 
 public class TimeUtils {
-	// ¼ÆËã¶àÉÙÌìºóµÄÊ±¼ä
+	// è®¡ç®—å¤šå°‘å¤©åçš„æ—¶é—´
 	private static int after(int curYear, int curMonth, int curDay, int i) {
 		int _iCurYear = curYear;
 		int _iCurMonth = curMonth;
 		int _iCurDay = curDay;
 		int _iDays = i;
-		// Æ½ÄêÔÂµÄÌìÊı
+		// å¹³å¹´æœˆçš„å¤©æ•°
 		int _aNormMonthDays[] = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31,
 				30, 31 };
-		// ÈòÄêÔÂµÄÌìÊı
+		// é—°å¹´æœˆçš„å¤©æ•°
 		int _aLeapMonthDays[] = { 0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31,
 				30, 31 };
 		int[] _aMonthDays = new int[13];
-		// ¼ÆËãÏÂ¸öÄê¶ÈµÄÔÂ·İ
+		// è®¡ç®—ä¸‹ä¸ªå¹´åº¦çš„æœˆä»½
 		while (_iDays != 0) {
-			// ÊÇ·ñÈòÄê
+			// æ˜¯å¦é—°å¹´
 			if (isLeapYear(_iCurYear)) {
 				_aMonthDays = _aLeapMonthDays;
 			} else {
 				_aMonthDays = _aNormMonthDays;
 			}
 
-			// ÊÇ·ñÔÚµ±Ç°ÔÂÖĞ
+			// æ˜¯å¦åœ¨å½“å‰æœˆä¸­
 			int _iDescDays = _aMonthDays[_iCurMonth] - _iCurDay;
 			if (_iDays > _iDescDays) {
 				_iDays = _iDays - _iDescDays - 1;
-				// Éè¶¨ÏÂÔÂµÄÄêÔÂÈÕ
+				// è®¾å®šä¸‹æœˆçš„å¹´æœˆæ—¥
 				_iCurDay = 1;
 				if (_iCurMonth < 12) {
 					_iCurMonth++;
@@ -75,33 +75,33 @@ public class TimeUtils {
 		int _iCurDay = curDay;
 		int _iDays = i;
 		_iDays = -_iDays;
-		// Æ½ÄêÔÂµÄÌìÊı
+		// å¹³å¹´æœˆçš„å¤©æ•°
 		int _aNormMonthDays[] = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31,
 				30, 31 };
-		// ÈòÄêÔÂµÄÌìÊı
+		// é—°å¹´æœˆçš„å¤©æ•°
 		int _aLeapMonthDays[] = { 0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31,
 				30, 31 };
 		int[] _aMonthDays = new int[13];
-		// ¼ÆËãÏÂ¸öÄê¶ÈµÄÔÂ·İ
+		// è®¡ç®—ä¸‹ä¸ªå¹´åº¦çš„æœˆä»½
 		while (_iDays != 0) {
-			// ÊÇ·ñÔÚµ±Ç°ÔÂÖĞ
+			// æ˜¯å¦åœ¨å½“å‰æœˆä¸­
 			int _iDescDays = _iCurDay - 1;
 			if (_iDays > _iDescDays) {
 				_iDays = _iDays - _iDescDays - 1;
-				// Éè¶¨ÉÏÔÂµÄÄêÔÂÈÕ
+				// è®¾å®šä¸Šæœˆçš„å¹´æœˆæ—¥
 				if (_iCurMonth > 1) {
 					_iCurMonth--;
 				} else {
 					_iCurMonth = 12;
 					_iCurYear--;
 				}
-				// ÊÇ·ñÈòÄê
+				// æ˜¯å¦é—°å¹´
 				if (isLeapYear(_iCurYear)) {
 					_aMonthDays = _aLeapMonthDays;
 				} else {
 					_aMonthDays = _aNormMonthDays;
 				}
-				// ÉÏÔÂµÄÔÂÄ©ÈÕÆÚ
+				// ä¸Šæœˆçš„æœˆæœ«æ—¥æœŸ
 				_iCurDay = _aMonthDays[_iCurMonth];
 			} else {
 				_iCurDay = _iCurDay - _iDays;
@@ -119,32 +119,32 @@ public class TimeUtils {
 	}
 
 	/**
-	 * Ğ£ÑéÊ±¼äÊÇ·ñºÏ·¨
+	 * æ ¡éªŒæ—¶é—´æ˜¯å¦åˆæ³•
 	 * 
 	 * @param curTime
-	 *            Â¼ÈëÊ±¼ä HHMMSS »ò HMMSS
-	 * @return Ê±¼äºÏ·¨Ôò·µ»Øtrue£¬²»ºÏ·¨·µ»Øfalse
+	 *            å½•å…¥æ—¶é—´ HHMMSS æˆ– HMMSS
+	 * @return æ—¶é—´åˆæ³•åˆ™è¿”å›trueï¼Œä¸åˆæ³•è¿”å›false
 	 */
 	public static boolean checkTime(int curTime) {
-		// Ê±¼äµÄ·¶Î§
+		// æ—¶é—´çš„èŒƒå›´
 		if ((curTime > 235959) || (curTime < 0)) {
 			return false;
 		}
 
-		// »ñµÃ²»Í¬¶ÎµÄÊ±¼ä
-		int iHour = curTime / 10000; // Ğ¡Ê±
-		int iMinute = (curTime - (iHour * 10000)) / 100; // ·ÖÖÓ
-		int iSecond = curTime % 100; // Ãë
+		// è·å¾—ä¸åŒæ®µçš„æ—¶é—´
+		int iHour = curTime / 10000; // å°æ—¶
+		int iMinute = (curTime - (iHour * 10000)) / 100; // åˆ†é’Ÿ
+		int iSecond = curTime % 100; // ç§’
 
-		// ¶ÔĞ¡Ê±½øĞĞĞ£Ñé
+		// å¯¹å°æ—¶è¿›è¡Œæ ¡éªŒ
 		if ((iHour < 0) || (iHour > 23)) {
 			return false;
 		}
-		// ¶Ô·ÖÖÓ½øĞĞĞ£Ñé
+		// å¯¹åˆ†é’Ÿè¿›è¡Œæ ¡éªŒ
 		if ((iMinute < 0) || (iMinute > 59)) {
 			return false;
 		}
-		// ¶ÔÃëÖÓ½øĞĞĞ£Ñé
+		// å¯¹ç§’é’Ÿè¿›è¡Œæ ¡éªŒ
 		if ((iSecond < 0) || (iSecond > 59)) {
 			return false;
 		}
@@ -153,14 +153,14 @@ public class TimeUtils {
 	}
 
 	/**
-	 * Ğ£ÑéÊ±¼ä»òÕßÈÕÆÚÊÇ·ñºÏ·¨
+	 * æ ¡éªŒæ—¶é—´æˆ–è€…æ—¥æœŸæ˜¯å¦åˆæ³•
 	 * 
 	 * @param strDate
 	 *            "YYYYMMDD" OR "YYYYMMDDhhmmss"
-	 * @return true - ºÏ·¨£» false - ·Ç·¨
+	 * @return true - åˆæ³•ï¼› false - éæ³•
 	 */
 	public static boolean checkTimeStr(String strDate) {
-		// Ê±¼ä²ÎÊı:Äê¡¢ÔÂ¡¢ÈÕ¡¢Ê±¡¢·Ö¡¢Ãë
+		// æ—¶é—´å‚æ•°:å¹´ã€æœˆã€æ—¥ã€æ—¶ã€åˆ†ã€ç§’
 		int _iYear = 0;
 		int _iMonth = 0;
 		int _iDay = 0;
@@ -170,7 +170,7 @@ public class TimeUtils {
 		boolean _bFlag = false;
 		String _strDate = strDate.trim();
 
-		// ºÏ·¨ĞÔµÄÅĞ¶Ï
+		// åˆæ³•æ€§çš„åˆ¤æ–­
 		try {
 			if (Long.parseLong(_strDate) > 0) {
 				_bFlag = true;
@@ -184,7 +184,7 @@ public class TimeUtils {
 			return _bFlag;
 		}
 
-		// ½«ÄêÔÂÈÕ×ª»»ÎªÕûĞÍ
+		// å°†å¹´æœˆæ—¥è½¬æ¢ä¸ºæ•´å‹
 		try {
 			_iYear = Integer.parseInt(_strDate.substring(0, 4));
 			_iMonth = Integer.parseInt(_strDate.substring(4, 6));
@@ -194,19 +194,19 @@ public class TimeUtils {
 			return _bFlag;
 		}
 
-		// ÅĞ¶ÏÄêÔÂÊÇ·ñºÏ·¨
+		// åˆ¤æ–­å¹´æœˆæ˜¯å¦åˆæ³•
 		if ((_iYear > 1900) && (_iDay > 0) && ((_iMonth > 0) && (_iMonth < 13))) {
 			_bFlag = true;
 		} else {
 			_bFlag = false;
 		}
 
-		// ÅĞ¶¨ÈÕÆÚÊÇ·ñºÏ·¨
+		// åˆ¤å®šæ—¥æœŸæ˜¯å¦åˆæ³•
 		if (_bFlag) {
-			// Æ½ÄêÊ±Ã¿ÔÂµÄÌìÊı
+			// å¹³å¹´æ—¶æ¯æœˆçš„å¤©æ•°
 			int[] months = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 			int _maxDay = months[_iMonth];
-			// Èç¹ûÊÇÈòÄê£¬¶şÔÂÔÙÔö¼ÓÒ»Ìì
+			// å¦‚æœæ˜¯é—°å¹´ï¼ŒäºŒæœˆå†å¢åŠ ä¸€å¤©
 			if (((_iYear % 4 == 0) && (_iYear % 100 != 0))
 					|| (_iYear % 400 == 0)) {
 				if (_iMonth == 2) {
@@ -217,7 +217,7 @@ public class TimeUtils {
 		}
 
 		if ((_bFlag) && (_strDate.length() == 14)) {
-			// µ±×Ö·û´®ÖĞº¬ÓĞÊ±¼ä´®(hh:mm:ss)
+			// å½“å­—ç¬¦ä¸²ä¸­å«æœ‰æ—¶é—´ä¸²(hh:mm:ss)
 			try {
 				_iHour = Integer.parseInt(_strDate.substring(8, 10));
 				_iMinute = Integer.parseInt(_strDate.substring(10, 12));
@@ -229,7 +229,7 @@ public class TimeUtils {
 				return _bFlag;
 			}
 
-			// ¼ì²âÊ±·ÖÃë
+			// æ£€æµ‹æ—¶åˆ†ç§’
 			if (((_iHour >= 0) && (_iHour <= 23))
 					&& ((_iMinute >= 0) && (_iMinute <= 59))
 					&& ((_iSecond >= 0) && (_iSecond <= 59))) {
@@ -243,7 +243,7 @@ public class TimeUtils {
 	}
 
 	/**
-	 * ½«ÈÕÆÚ¸ñÊ½¾«¼ò³ÉÄêÔÂ¸ñÊ½
+	 * å°†æ—¥æœŸæ ¼å¼ç²¾ç®€æˆå¹´æœˆæ ¼å¼
 	 * 
 	 * @param date
 	 * @return
@@ -258,11 +258,11 @@ public class TimeUtils {
 	}
 
 	/**
-	 * ×ªÕûĞÍÈÕÆÚÎª×Ö·û´®ÈÕÆÚ
+	 * è½¬æ•´å‹æ—¥æœŸä¸ºå­—ç¬¦ä¸²æ—¥æœŸ
 	 * 
 	 * @param iDate
-	 *            ÕûĞÍYYYYMMDD
-	 * @return ×Ö·û´®YYYY-MM-DD
+	 *            æ•´å‹YYYYMMDD
+	 * @return å­—ç¬¦ä¸²YYYY-MM-DD
 	 */
 	public static String date2Str(int iDate) {
 		String _strDate = null;
@@ -271,12 +271,12 @@ public class TimeUtils {
 			String _strYear = _strDate.substring(0, 4);
 			String _strMonth = _strDate.substring(4, 6);
 			String _strDay = _strDate.substring(6, 8);
-			// ÕûºÏ³ÉYYYYÄêMMÔÂDDÈÕ´®
+			// æ•´åˆæˆYYYYå¹´MMæœˆDDæ—¥ä¸²
 			_strDate = _strYear + "-" + _strMonth + "-" + _strDay;
 		} else if (_strDate.length() == 6) {
 			String _strYear = _strDate.substring(0, 4);
 			String _strMonth = _strDate.substring(4, 6);
-			// ÕûºÏ³ÉYYYYÄêMMÔÂ´®
+			// æ•´åˆæˆYYYYå¹´MMæœˆä¸²
 			_strDate = _strYear + "-" + _strMonth;
 
 		}
@@ -284,11 +284,11 @@ public class TimeUtils {
 	}
 
 	/**
-	 * ×ªÕûĞÍÈÕÆÚÎª×Ö·û´®ÈÕÆÚ
+	 * è½¬æ•´å‹æ—¥æœŸä¸ºå­—ç¬¦ä¸²æ—¥æœŸ
 	 * 
 	 * @param iDate
-	 *            ÕûĞÍYYYYMMDD
-	 * @return ×Ö·û´®YYYY-MM-DD
+	 *            æ•´å‹YYYYMMDD
+	 * @return å­—ç¬¦ä¸²YYYY-MM-DD
 	 */
 	public static String date2Str(String iDate) {
 		String _strDate = null;
@@ -297,12 +297,12 @@ public class TimeUtils {
 			String _strYear = _strDate.substring(0, 4);
 			String _strMonth = _strDate.substring(4, 6);
 			String _strDay = _strDate.substring(6, 8);
-			// ÕûºÏ³ÉYYYYÄêMMÔÂDDÈÕ´®
+			// æ•´åˆæˆYYYYå¹´MMæœˆDDæ—¥ä¸²
 			_strDate = _strYear + "-" + _strMonth + "-" + _strDay;
 		} else if (_strDate.length() == 6) {
 			String _strYear = _strDate.substring(0, 4);
 			String _strMonth = _strDate.substring(4, 6);
-			// ÕûºÏ³ÉYYYYÄêMMÔÂ´®
+			// æ•´åˆæˆYYYYå¹´MMæœˆä¸²
 			_strDate = _strYear + "-" + _strMonth;
 
 		}
@@ -310,11 +310,11 @@ public class TimeUtils {
 	}
 
 	/**
-	 * ×ªÕûĞÍÈÕÆÚÎª×Ö·û´®ÈÕÆÚ
+	 * è½¬æ•´å‹æ—¥æœŸä¸ºå­—ç¬¦ä¸²æ—¥æœŸ
 	 * 
 	 * @param iDate
-	 *            ÕûĞÍYYYYMMDD
-	 * @return ×Ö·û´®YYYY/MM/DD
+	 *            æ•´å‹YYYYMMDD
+	 * @return å­—ç¬¦ä¸²YYYY/MM/DD
 	 */
 	public static String date2Str2(int iDate) {
 		String _strDate = null;
@@ -323,12 +323,12 @@ public class TimeUtils {
 			String _strYear = _strDate.substring(0, 4);
 			String _strMonth = _strDate.substring(4, 6);
 			String _strDay = _strDate.substring(6, 8);
-			// ÕûºÏ³ÉYYYY/MM/DD´®
+			// æ•´åˆæˆYYYY/MM/DDä¸²
 			_strDate = _strYear + "/" + _strMonth + "/" + _strDay;
 		} else if (_strDate.length() == 6) {
 			String _strYear = _strDate.substring(0, 4);
 			String _strMonth = _strDate.substring(4, 6);
-			// ÕûºÏ³ÉYYYY/MM´®
+			// æ•´åˆæˆYYYY/MMä¸²
 			_strDate = _strYear + "/" + _strMonth;
 
 		}
@@ -336,30 +336,30 @@ public class TimeUtils {
 	}
 
 	/**
-	 * ×ªÕûĞÍÈÕÆÚÎª×Ö·û´®ÈÕÆÚ
+	 * è½¬æ•´å‹æ—¥æœŸä¸ºå­—ç¬¦ä¸²æ—¥æœŸ
 	 * 
 	 * @param iDate
-	 *            ÕûĞÍYYYYMMDD
-	 * @return ×Ö·û´®YYYY/MM/DD
+	 *            æ•´å‹YYYYMMDD
+	 * @return å­—ç¬¦ä¸²YYYY/MM/DD
 	 */
 	public static String date2Str2(String iDate) {
 		if (iDate.length() == 8) {
 			String _strYear = iDate.substring(0, 4);
 			String _strMonth = iDate.substring(4, 6);
 			String _strDay = iDate.substring(6, 8);
-			// ÕûºÏ³ÉYYYY/MM/DD´®
+			// æ•´åˆæˆYYYY/MM/DDä¸²
 			iDate = _strYear + "/" + _strMonth + "/" + _strDay;
 		} else if (iDate.length() == 6) {
 			String _strYear = iDate.substring(0, 4);
 			String _strMonth = iDate.substring(4, 6);
-			// ÕûºÏ³ÉYYYY/MM´®
+			// æ•´åˆæˆYYYY/MMä¸²
 			iDate = _strYear + "/" + _strMonth;
 		}
 		return iDate;
 	}
 
 	/**
-	 * ´«ÈëÒ»¸öintµÄÈÕÆÚ×ª»»³ÉÒ»¸öÖĞÎÄµÄÈÕÆÚ ÀıÈç20050328 Êä³ö¶şOOÎåÄêÈıÔÂ¶şÊ®°ËÈÕ
+	 * ä¼ å…¥ä¸€ä¸ªintçš„æ—¥æœŸè½¬æ¢æˆä¸€ä¸ªä¸­æ–‡çš„æ—¥æœŸ ä¾‹å¦‚20050328 è¾“å‡ºäºŒOOäº”å¹´ä¸‰æœˆäºŒåå…«æ—¥
 	 * 
 	 * @param iDate
 	 *            int
@@ -367,51 +367,51 @@ public class TimeUtils {
 	 */
 	public static String date2StrCHS(int iDate) {
 		String result = "";
-		String[] chineseNumber = { "0", "Ò»", "¶ş", "Èı", "ËÄ", "Îå", "Áù", "Æß", "°Ë",
-				"¾Å" };
+		String[] chineseNumber = { "0", "ä¸€", "äºŒ", "ä¸‰", "å››", "äº”", "å…­", "ä¸ƒ", "å…«",
+				"ä¹" };
 		char[] cDate = String.valueOf(iDate).toCharArray();
 		StringBuffer tempDate = new StringBuffer("");
 		for (char aCDate : cDate) {
 			int chatat = Integer.parseInt(String.valueOf(aCDate));
 			tempDate.append(chineseNumber[chatat]);
 		}
-		result = tempDate.substring(0, 4) + "Äê";
+		result = tempDate.substring(0, 4) + "å¹´";
 		int chatM = Integer.parseInt(String.valueOf(cDate[4]));
 		if (chatM != 0) {
 			if ("0".equals(tempDate.substring(5, 6))) {
-				result += "Ê®ÔÂ";
+				result += "åæœˆ";
 			} else {
-				result += "Ê®" + tempDate.substring(5, 6) + "ÔÂ";
+				result += "å" + tempDate.substring(5, 6) + "æœˆ";
 			}
 		} else {
-			result += tempDate.substring(5, 6) + "ÔÂ";
+			result += tempDate.substring(5, 6) + "æœˆ";
 		}
 		int chatd = Integer.parseInt(String.valueOf(cDate[6]));
 		if (chatd == 0) {
-			result += tempDate.substring(7, 8) + "ÈÕ";
+			result += tempDate.substring(7, 8) + "æ—¥";
 		} else if (chatd == 1) {
 			if ("0".equals(tempDate.substring(7, 8))) {
-				result += "Ê®ÈÕ";
+				result += "åæ—¥";
 			} else {
-				result += "Ê®" + tempDate.substring(7, 8) + "ÈÕ";
+				result += "å" + tempDate.substring(7, 8) + "æ—¥";
 			}
 		} else {
 			if ("0".equals(tempDate.substring(7, 8))) {
-				result += tempDate.substring(6, 7) + "Ê®ÈÕ";
+				result += tempDate.substring(6, 7) + "åæ—¥";
 			} else {
-				result += tempDate.substring(6, 7) + "Ê®"
-						+ tempDate.substring(7, 8) + "ÈÕ";
+				result += tempDate.substring(6, 7) + "å"
+						+ tempDate.substring(7, 8) + "æ—¥";
 			}
 		}
 		return result;
 	}
 
 	/**
-	 * ×ªÕûĞÍÈÕÆÚÎª×Ö·û´®ÈÕÆÚ
+	 * è½¬æ•´å‹æ—¥æœŸä¸ºå­—ç¬¦ä¸²æ—¥æœŸ
 	 * 
 	 * @param iDate
-	 *            ÕûĞÍYYYYMMDD
-	 * @return ×Ö·û´®YYYYÄêMMÔÂDDÈÕ
+	 *            æ•´å‹YYYYMMDD
+	 * @return å­—ç¬¦ä¸²YYYYå¹´MMæœˆDDæ—¥
 	 */
 	public static String date2StrCN(int iDate) {
 		String _strDate = null;
@@ -420,24 +420,24 @@ public class TimeUtils {
 			String _strYear = _strDate.substring(0, 4);
 			String _strMonth = _strDate.substring(4, 6);
 			String _strDay = _strDate.substring(6, 8);
-			// ÕûºÏ³ÉYYYYÄêMMÔÂDDÈÕ´®
-			_strDate = _strYear + "Äê" + _strMonth + "ÔÂ" + _strDay + "ÈÕ";
+			// æ•´åˆæˆYYYYå¹´MMæœˆDDæ—¥ä¸²
+			_strDate = _strYear + "å¹´" + _strMonth + "æœˆ" + _strDay + "æ—¥";
 		} else if (_strDate.length() == 6) {
 			String _strYear = _strDate.substring(0, 4);
 			String _strMonth = _strDate.substring(4, 6);
-			// ÕûºÏ³ÉYYYYÄêMMÔÂ´®
-			_strDate = _strYear + "Äê" + _strMonth + "ÔÂ";
+			// æ•´åˆæˆYYYYå¹´MMæœˆä¸²
+			_strDate = _strYear + "å¹´" + _strMonth + "æœˆ";
 
 		}
 		return _strDate;
 	}
 
 	/**
-	 * ×ª»»×Ö·û´®ÈÕÆÚÎªÊı×ÖĞÍÈÕÆÚ
+	 * è½¬æ¢å­—ç¬¦ä¸²æ—¥æœŸä¸ºæ•°å­—å‹æ—¥æœŸ
 	 * 
 	 * @param strDate
 	 *            "YYYY-MM-DD"
-	 * @return Êı×ÖÈÕÆÚ
+	 * @return æ•°å­—æ—¥æœŸ
 	 */
 	public static int dateFromString(String strDate) {
 		int intYear = Integer.parseInt(strDate.substring(0, 4));
@@ -447,7 +447,7 @@ public class TimeUtils {
 	}
 
 	/**
-	 * ½«Ê±¼ä¸ñÊ½¾«¼ò³ÉÈÕÆÚ¸ñÊ½
+	 * å°†æ—¶é—´æ ¼å¼ç²¾ç®€æˆæ—¥æœŸæ ¼å¼
 	 * 
 	 * @param datetime
 	 * @return
@@ -466,7 +466,7 @@ public class TimeUtils {
 	}
 
 	/**
-	 * ½«Ê±¼ä¸ñÊ½¾«¼ò³ÉÄêÔÂ¸ñÊ½
+	 * å°†æ—¶é—´æ ¼å¼ç²¾ç®€æˆå¹´æœˆæ ¼å¼
 	 * 
 	 * @param datetime
 	 * @return
@@ -476,31 +476,31 @@ public class TimeUtils {
 	}
 
 	/**
-	 * ×ªÕûĞÍÈÕÆÚÊ±¼äÎª×Ö·û´®ÈÕÆÚÊ±¼ä
+	 * è½¬æ•´å‹æ—¥æœŸæ—¶é—´ä¸ºå­—ç¬¦ä¸²æ—¥æœŸæ—¶é—´
 	 * 
 	 * @param iDateTime
-	 *            ÕûĞÍYYMMDDhhmmss
-	 * @return ×Ö·û´® YY-MM-DD hh:mm:ss
+	 *            æ•´å‹YYMMDDhhmmss
+	 * @return å­—ç¬¦ä¸² YY-MM-DD hh:mm:ss
 	 */
 	public static String dateTime2Str(long iDateTime) {
 		String _strDateTimeTemp = iDateTime + "";
-		// µ÷ÓÃdate2Str(int iDate)·½·¨»ñµÃYY-MM-DD´®
+		// è°ƒç”¨date2Str(int iDate)æ–¹æ³•è·å¾—YY-MM-DDä¸²
 		String _strDate = date2Str(Integer.parseInt(_strDateTimeTemp.substring(
 				0, 8)));
 		String _strTimeTemp = _strDateTimeTemp.substring(8, 14) + "";
 		String _strHour = _strTimeTemp.substring(0, 2);
 		String _strMinute = _strTimeTemp.substring(2, 4);
 		String _strSecond = _strTimeTemp.substring(4, 6);
-		// ÕûºÏ³É hh:ss:mm ´®
+		// æ•´åˆæˆ hh:ss:mm ä¸²
 		String _strTime = _strHour + ":" + _strMinute + ":" + _strSecond;
 		return _strDate + " " + _strTime;
 	}
 
 	/**
-	 * ·µ»Øµ±Ç°ÈÕÆÚµÄÇ°(ºó)Ê±¼ä
+	 * è¿”å›å½“å‰æ—¥æœŸçš„å‰(å)æ—¶é—´
 	 * 
 	 * @param minute
-	 *            15 ·ÖÖÓ
+	 *            15 åˆ†é’Ÿ
 	 * @return
 	 */
 	public static long dateTimeBeforeMinute(long minute) {
@@ -529,104 +529,104 @@ public class TimeUtils {
 	}
 
 	/**
-	 * »ñµÃÏµÍ³ÄêÔÂÈÕ£¬·µ»Ø"YYYYMMDD"ÕûĞÍ
+	 * è·å¾—ç³»ç»Ÿå¹´æœˆæ—¥ï¼Œè¿”å›"YYYYMMDD"æ•´å‹
 	 * 
-	 * @return ·µ»Ø"YYYYMMDD"ÕûĞÍ
+	 * @return è¿”å›"YYYYMMDD"æ•´å‹
 	 */
 	public static Integer getCurrentDate() {
 		return Integer.parseInt(timeFormate("yyyyMMdd"));
 	}
 
 	/**
-	 * »ñµÃÏµÍ³ÌìÊı£¬ÒÔÕûÊı"DD"·µ»Ø
+	 * è·å¾—ç³»ç»Ÿå¤©æ•°ï¼Œä»¥æ•´æ•°"DD"è¿”å›
 	 * 
-	 * @return ·µ»Ø"DD"ÕûÊı
+	 * @return è¿”å›"DD"æ•´æ•°
 	 */
 	public static int getCurrentDay() {
 		return Integer.parseInt(timeFormate("dd"));
 	}
 
 	/**
-	 * »ñµÃÏµÍ³ÄêÔÂÈÕÊ±·ÖÃëºÁÃë£¬ÒÔ³¤ÕûĞÍ"YYYYMMDDhhmmssSSS"·µ»Ø
+	 * è·å¾—ç³»ç»Ÿå¹´æœˆæ—¥æ—¶åˆ†ç§’æ¯«ç§’ï¼Œä»¥é•¿æ•´å‹"YYYYMMDDhhmmssSSS"è¿”å›
 	 * 
-	 * @return ·µ»Ø"YYYYMMDDhhmmssSSS"ÕûĞÍ
+	 * @return è¿”å›"YYYYMMDDhhmmssSSS"æ•´å‹
 	 */
 	public static long getCurrentDetailTime() {
 		return Long.parseLong(timeFormate("yyyyMMddHHmmssSSS"));
 	}
 
 	/**
-	 * »ñµÃÏµÍ³Ê±·ÖÃëºÁÃë£¬ÒÔÕûĞÍ"hhmmssSSS"·µ»Ø
+	 * è·å¾—ç³»ç»Ÿæ—¶åˆ†ç§’æ¯«ç§’ï¼Œä»¥æ•´å‹"hhmmssSSS"è¿”å›
 	 * 
-	 * @return ·µ»Ø"hhmmssSSS"ÕûĞÍ
+	 * @return è¿”å›"hhmmssSSS"æ•´å‹
 	 */
 	public static int getCurrentHmsSTime() {
 		return Integer.parseInt(timeFormate("HHmmssSSS"));
 	}
 
 	/**
-	 * »ñµÃÏµÍ³Ê±·ÖÃë£¬ÒÔÕûĞÍ"hhmmss"·µ»Ø
+	 * è·å¾—ç³»ç»Ÿæ—¶åˆ†ç§’ï¼Œä»¥æ•´å‹"hhmmss"è¿”å›
 	 * 
-	 * @return ·µ»Ø"hhmmssSSS"ÕûĞÍ
+	 * @return è¿”å›"hhmmssSSS"æ•´å‹
 	 */
 	public static int getCurrentHmsTime() {
 		return Integer.parseInt(timeFormate("HHmmss"));
 	}
 
 	/**
-	 * »ñµÃÏµÍ³Ê±·Ö£¬ÒÔÕûĞÍ"hhmm"·µ»Ø
+	 * è·å¾—ç³»ç»Ÿæ—¶åˆ†ï¼Œä»¥æ•´å‹"hhmm"è¿”å›
 	 * 
-	 * @return ·µ»Ø"hhmm"ÕûĞÍ
+	 * @return è¿”å›"hhmm"æ•´å‹
 	 */
 	public static Integer getCurrentHmTime() {
 		return Integer.parseInt(timeFormate("HHmm"));
 	}
 
 	/**
-	 * »ñµÃÏµÍ³ÔÂ·İ£¬ÒÔÕûÊı"MM"·µ»Ø
+	 * è·å¾—ç³»ç»Ÿæœˆä»½ï¼Œä»¥æ•´æ•°"MM"è¿”å›
 	 * 
-	 * @return ·µ»Ø"MM"ÕûÊı
+	 * @return è¿”å›"MM"æ•´æ•°
 	 */
 	public static int getCurrentMonth() {
 		return Integer.parseInt(timeFormate("MM"));
 	}
 
 	/**
-	 * »ñµÃÏµÍ³ÄêÔÂÈÕÊ±·ÖÃë£¬ÒÔÕûĞÍ"YYYYMMDDhhmmss"·µ»Ø
+	 * è·å¾—ç³»ç»Ÿå¹´æœˆæ—¥æ—¶åˆ†ç§’ï¼Œä»¥æ•´å‹"YYYYMMDDhhmmss"è¿”å›
 	 * 
-	 * @return ·µ»Ø"YYYYMMDDhhmmss"ÕûĞÍ
+	 * @return è¿”å›"YYYYMMDDhhmmss"æ•´å‹
 	 */
 	public static long getCurrentTime() {
 		return Long.parseLong(timeFormate("yyyyMMddHHmmss"));
 	}
 
 	/**
-	 * »ñµÃÏµÍ³Äê·İ£¬ÒÔÕûÊı"YYYY"·µ»Ø
+	 * è·å¾—ç³»ç»Ÿå¹´ä»½ï¼Œä»¥æ•´æ•°"YYYY"è¿”å›
 	 * 
-	 * @return ·µ»Ø"YYYY"ÕûÊı
+	 * @return è¿”å›"YYYY"æ•´æ•°
 	 */
 	public static int getCurrentYear() {
 		return Integer.parseInt(timeFormate("yyyy"));
 	}
 
 	/**
-	 * »ñµÃÏµÍ³ÄêÔÂ£¬·µ»Ø"YYYYMM"ÕûĞÍ
+	 * è·å¾—ç³»ç»Ÿå¹´æœˆï¼Œè¿”å›"YYYYMM"æ•´å‹
 	 * 
-	 * @return ·µ»Ø"YYYYMM"ÕûĞÍ
+	 * @return è¿”å›"YYYYMM"æ•´å‹
 	 */
 	public static int getCurrentYearMonth() {
 		return Integer.parseInt(timeFormate("yyyyMM"));
 	}
 
-	// ¼ÆËã¶àÉÙÌìÇ°µÄÊ±¼ä
+	// è®¡ç®—å¤šå°‘å¤©å‰çš„æ—¶é—´
 
 	/**
-	 * »ñÈ¡ÏµÍ³ĞÇÆÚ¼¸
+	 * è·å–ç³»ç»Ÿæ˜ŸæœŸå‡ 
 	 * 
 	 * @return
 	 */
 	public static String getCurrenWeekday() {
-		String[] weekDays = { "ĞÇÆÚÈÕ", "ĞÇÆÚÒ»", "ĞÇÆÚ¶ş", "ĞÇÆÚÈı", "ĞÇÆÚËÄ", "ĞÇÆÚÎå", "ĞÇÆÚÁù" };
+		String[] weekDays = { "æ˜ŸæœŸæ—¥", "æ˜ŸæœŸä¸€", "æ˜ŸæœŸäºŒ", "æ˜ŸæœŸä¸‰", "æ˜ŸæœŸå››", "æ˜ŸæœŸäº”", "æ˜ŸæœŸå…­" };
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(Calendar.getInstance().getTime());
 		int w = cal.get(Calendar.DAY_OF_WEEK) - 1;
@@ -636,7 +636,7 @@ public class TimeUtils {
 	}
 
 	/**
-	 * °ÑYYYY/MM/DD ×ª»»ÎªYYYYMMDD¸ñÊ½
+	 * æŠŠYYYY/MM/DD è½¬æ¢ä¸ºYYYYMMDDæ ¼å¼
 	 * 
 	 * @param date
 	 *            YYYYDDMM
@@ -651,7 +651,7 @@ public class TimeUtils {
 	}
 
 	/**
-	 * °ÑYYYYMMDD ×ª»»ÎªYYYY/MM/DD¸ñÊ½
+	 * æŠŠYYYYMMDD è½¬æ¢ä¸ºYYYY/MM/DDæ ¼å¼
 	 * 
 	 * @param date
 	 *            YYYY/DD/MM
@@ -666,13 +666,13 @@ public class TimeUtils {
 	}
 
 	/**
-	 * »ñÈ¡Á½¸öÈÕÆÚ¼ä¸ôÌìÊı
+	 * è·å–ä¸¤ä¸ªæ—¥æœŸé—´éš”å¤©æ•°
 	 * 
 	 * @param startDate
-	 *            ¿ªÊ¼ÈÕÆÚ YYYYMMDD
+	 *            å¼€å§‹æ—¥æœŸ YYYYMMDD
 	 * @param endDate
-	 *            ½áÊøÈÕÆÚ YYYYMMDD
-	 * @return ¼ä¸ôÌìÊı:ÓĞÕı£¬ÓĞ¸º
+	 *            ç»“æŸæ—¥æœŸ YYYYMMDD
+	 * @return é—´éš”å¤©æ•°:æœ‰æ­£ï¼Œæœ‰è´Ÿ
 	 */
 	public static int getDateBetween(int startDate, int endDate) {
 		int interval = 0;
@@ -687,7 +687,7 @@ public class TimeUtils {
 			endDate = tempDate;
 		}
 
-		// Æ½ÄêÔÂµÄÌìÊı
+		// å¹³å¹´æœˆçš„å¤©æ•°
 		int _monthDays[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
 		String _startDate = Integer.toString(startDate);
@@ -701,8 +701,8 @@ public class TimeUtils {
 		int _endMonth = Integer.parseInt(_endDate.substring(4, 6));
 		int _endDay = Integer.parseInt(_endDate.substring(6, 8));
 
-		// ¼ÆËã¿ªÊ¼Äê¶Èµ½µ±Äêµ×µÄÌìÊı
-		int _passDay = 0; // µ±ÄêÒÑ¹ıµÄÌìÊı
+		// è®¡ç®—å¼€å§‹å¹´åº¦åˆ°å½“å¹´åº•çš„å¤©æ•°
+		int _passDay = 0; // å½“å¹´å·²è¿‡çš„å¤©æ•°
 		if (_startMonth < 3) {
 			for (int index = 0; index < _startMonth - 1; index++) {
 				_passDay += _monthDays[index];
@@ -722,8 +722,8 @@ public class TimeUtils {
 			interval = 365 - _passDay;
 		}
 
-		// ¼ÆËã¿ªÊ¼ÏÂÒ»Äê¶Èµ½½áÊøÇ°Äê¶ÈµÄÌìÊı
-		if (_startYear == _endYear) { // Í¬Ò»Äê
+		// è®¡ç®—å¼€å§‹ä¸‹ä¸€å¹´åº¦åˆ°ç»“æŸå‰å¹´åº¦çš„å¤©æ•°
+		if (_startYear == _endYear) { // åŒä¸€å¹´
 			if (isLeapYear(_startYear)) {
 				interval -= 366;
 			} else {
@@ -740,7 +740,7 @@ public class TimeUtils {
 			_startYear++;
 		}
 
-		// ¼ÆËã½áÊøÄê¶ÈµÄÌìÊı
+		// è®¡ç®—ç»“æŸå¹´åº¦çš„å¤©æ•°
 		_passDay = 0;
 		if (_endMonth > 2) {
 			for (int index = 0; index < _endMonth - 1; index++) {
@@ -769,18 +769,18 @@ public class TimeUtils {
 	}
 
 	/**
-	 * ·µ»ØÖ¸¶¨ÌìÊıºóµÄÈÕÆÚ
+	 * è¿”å›æŒ‡å®šå¤©æ•°åçš„æ—¥æœŸ
 	 * 
 	 * @param curDate
-	 *            Ê±¼äÆğµã YYYYMMDD
+	 *            æ—¶é—´èµ·ç‚¹ YYYYMMDD
 	 * @param i
-	 *            ÊıÌìÇ° (Days < 0); Days ÊıÌìºó (Days > 0)
-	 * @return ÊıÌìºóµÄÈÕÆÚ YYYYMMDD
+	 *            æ•°å¤©å‰ (Days < 0); Days æ•°å¤©å (Days > 0)
+	 * @return æ•°å¤©åçš„æ—¥æœŸ YYYYMMDD
 	 */
 	public static int getDateLater(int curDate, int i) {
-		int _iCurYear = curDate / 10000; // »ñµÃÄê¶È
-		int _iCurMonth = (curDate - _iCurYear * 10000) / 100; // »ñµÃÔÂ·İ
-		int _iCurDay = (curDate) % 100; // »ñµÃÈÕÆÚ
+		int _iCurYear = curDate / 10000; // è·å¾—å¹´åº¦
+		int _iCurMonth = (curDate - _iCurYear * 10000) / 100; // è·å¾—æœˆä»½
+		int _iCurDay = (curDate) % 100; // è·å¾—æ—¥æœŸ
 		int _iNextDate = 0;
 		if (i >= 0) {
 			_iNextDate = after(_iCurYear, _iCurMonth, _iCurDay, i);
@@ -793,18 +793,18 @@ public class TimeUtils {
 	}
 
 	/**
-	 * È¡ÔÂÄ©×îºóÒ»ÌìµÄÈÕÆÚ
+	 * å–æœˆæœ«æœ€åä¸€å¤©çš„æ—¥æœŸ
 	 * 
 	 * @param YearMonth
-	 *            Ö¸¶¨µÄÄêÔÂ
-	 * @return Ö¸¶¨ÄêÔÂµÄ×îºóÒ»ÌìµÄÈÕÆÚ£¬¸ñÊ½ÎªYYYYMMDD
+	 *            æŒ‡å®šçš„å¹´æœˆ
+	 * @return æŒ‡å®šå¹´æœˆçš„æœ€åä¸€å¤©çš„æ—¥æœŸï¼Œæ ¼å¼ä¸ºYYYYMMDD
 	 */
 	public static int getDateOfMonthEnd(int YearMonth) {
 		int _year = YearMonth / 100;
 		int _month = YearMonth % 100;
 		int[] months = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 		int _endDay = months[_month];
-		// Èç¹ûÊÇÈòÄê£¬¶şÔÂÔò¶àÒ»Ìì
+		// å¦‚æœæ˜¯é—°å¹´ï¼ŒäºŒæœˆåˆ™å¤šä¸€å¤©
 		if (isLeapYear(_year) && _month == 2) {
 			_endDay++;
 		}
@@ -812,11 +812,11 @@ public class TimeUtils {
 	}
 
 	/**
-	 * ÔÂÄ©µÄ×îºóÊ±¿Ì
+	 * æœˆæœ«çš„æœ€åæ—¶åˆ»
 	 * 
 	 * @param yearMonth
-	 *            ÄêÔÂ YYYYMM
-	 * @return ÔÂÄ©µÄ×îºóÊ±¿Ì YYYYMMdd2359999
+	 *            å¹´æœˆ YYYYMM
+	 * @return æœˆæœ«çš„æœ€åæ—¶åˆ» YYYYMMdd2359999
 	 */
 	public static String getDateTimeOfMonthEnd(Integer yearMonth) {
 		String _lMonthEndDetailTime = "";
@@ -824,7 +824,7 @@ public class TimeUtils {
 		int _month = Integer.parseInt(yearMonth.toString().substring(4, 6));
 		int[] months = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 		int _endDay = months[_month];
-		// Èç¹ûÊÇÈòÄê£¬¶şÔÂÔò¶àÒ»Ìì
+		// å¦‚æœæ˜¯é—°å¹´ï¼ŒäºŒæœˆåˆ™å¤šä¸€å¤©
 		if (isLeapYear(_year) && _month == 2) {
 			_endDay++;
 		}
@@ -833,18 +833,18 @@ public class TimeUtils {
 	}
 
 	/**
-	 * µÃµ½Ä³ÄêÔÂµÄ×î´óÌìÊı
+	 * å¾—åˆ°æŸå¹´æœˆçš„æœ€å¤§å¤©æ•°
 	 * 
 	 * @param strYearMonth
 	 *            "YYYYMM"
-	 * @return ÌìÊı
+	 * @return å¤©æ•°
 	 */
 	public static int getDaysMaxOfMonth(String strYearMonth) {
 		int[] months = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 		int _iMonth = new Integer(strYearMonth.substring(4, 6));
 		int _iYear = new Integer(strYearMonth.substring(0, 4));
 		int _maxDay = months[_iMonth];
-		// Èç¹ûÊÇÈòÄê£¬¶şÔÂÔÙÔö¼ÓÒ»Ìì
+		// å¦‚æœæ˜¯é—°å¹´ï¼ŒäºŒæœˆå†å¢åŠ ä¸€å¤©
 		if (((_iYear % 4 == 0) && (_iYear % 100 != 0)) || (_iYear % 400 == 0)) {
 			if (_iMonth == 2) {
 				_maxDay++;
@@ -854,13 +854,13 @@ public class TimeUtils {
 	}
 
 	/**
-	 * ¼ÆËãÁ½¸öÄêÔÂÖ®¼äÏà¸ôµÄÔÂ·İ
+	 * è®¡ç®—ä¸¤ä¸ªå¹´æœˆä¹‹é—´ç›¸éš”çš„æœˆä»½
 	 * 
 	 * @param startMonth
-	 *            ¿ªÊ¼µÄÄêÔÂ(int YYYYMM)
+	 *            å¼€å§‹çš„å¹´æœˆ(int YYYYMM)
 	 * @param endMonth
-	 *            ½áÊøµÄÄêÔÂ(int YYYYMM)
-	 * @return ¼ÆËãÈÕÆÚÏà¸ôµÄÔÂ·İ
+	 *            ç»“æŸçš„å¹´æœˆ(int YYYYMM)
+	 * @return è®¡ç®—æ—¥æœŸç›¸éš”çš„æœˆä»½
 	 */
 	public static int getMonthBetween(int startMonth, int endMonth) {
 		int _iYearS = startMonth / 100;
@@ -879,12 +879,12 @@ public class TimeUtils {
 	}
 
 	/**
-	 * ¼ÆËãÈô¸É¸öÔÂÖ®ºóµÄÄêÔÂ
+	 * è®¡ç®—è‹¥å¹²ä¸ªæœˆä¹‹åçš„å¹´æœˆ
 	 * 
 	 * @param beginYearMonth
-	 *            ¿ªÊ¼ÄêÔÂ
+	 *            å¼€å§‹å¹´æœˆ
 	 * @param month
-	 *            ¾­¹ıÔÂÊı
+	 *            ç»è¿‡æœˆæ•°
 	 * @return
 	 */
 	public static int getMonthLater(int beginYearMonth, int month) {
@@ -916,12 +916,12 @@ public class TimeUtils {
 	}
 
 	/**
-	 * ¼ÆËãÄêÁäÔÂÊı
+	 * è®¡ç®—å¹´é¾„æœˆæ•°
 	 * 
 	 * @param birthday
-	 *            ³öÉúÈÕÆÚ
+	 *            å‡ºç”Ÿæ—¥æœŸ
 	 * @param calcDate
-	 *            ¼ÆËãÈÕÆÚ
+	 *            è®¡ç®—æ—¥æœŸ
 	 * @return
 	 */
 	public static int getMonthOfAge(int birthday, int calcDate) {
@@ -929,12 +929,12 @@ public class TimeUtils {
 	}
 
 	/**
-	 * ·µ»ØÁ½¸öÄêÔÂÖ®¼äµÄÄêÔÂÊı×é
+	 * è¿”å›ä¸¤ä¸ªå¹´æœˆä¹‹é—´çš„å¹´æœˆæ•°ç»„
 	 * 
 	 * @param begin
-	 *            ¿ªÊ¼ÄêÔÂ
+	 *            å¼€å§‹å¹´æœˆ
 	 * @param end
-	 *            ½áÊøÄêÔÂ
+	 *            ç»“æŸå¹´æœˆ
 	 * @return
 	 */
 	public static int[] getMonthPeriod(int begin, int end) {
@@ -951,12 +951,12 @@ public class TimeUtils {
 	}
 
 	/**
-	 * »ñµÃÏµÍ³ÄêÔÂÈÕ£¬ÒÔ×Ö·û´®"YYYY-MM-DD"·µ»Ø
+	 * è·å¾—ç³»ç»Ÿå¹´æœˆæ—¥ï¼Œä»¥å­—ç¬¦ä¸²"YYYY-MM-DD"è¿”å›
 	 * 
-	 * @return ·µ»Ø"YYYY-MM-DD"×Ö·û´®
+	 * @return è¿”å›"YYYY-MM-DD"å­—ç¬¦ä¸²
 	 */
 	public static String getStrCurrentDate() {
-		return timeFormate("yyyyÄêMMÔÂddÈÕ");
+		return timeFormate("yyyyå¹´MMæœˆddæ—¥");
 	}
 
 	public static String getStrCurrentDate1() {
@@ -964,61 +964,61 @@ public class TimeUtils {
 	}
 
 	/**
-	 * »ñµÃÏµÍ³ÌìÊı£¬ÒÔ×Ö·û´®"DD"·µ»Ø
+	 * è·å¾—ç³»ç»Ÿå¤©æ•°ï¼Œä»¥å­—ç¬¦ä¸²"DD"è¿”å›
 	 * 
-	 * @return ·µ»Ø"DD"×Ö·û´®
+	 * @return è¿”å›"DD"å­—ç¬¦ä¸²
 	 */
 	public static String getStrCurrentDay() {
 		return timeFormate("dd");
 	}
 
 	/**
-	 * »ñµÃÏµÍ³ÄêÔÂÈÕÊ±·ÖÃëºÁÃë£¬ÒÔ×Ö·û´®"YYYY-MM-DD hh:mm:ss.SSS"·µ»Ø
+	 * è·å¾—ç³»ç»Ÿå¹´æœˆæ—¥æ—¶åˆ†ç§’æ¯«ç§’ï¼Œä»¥å­—ç¬¦ä¸²"YYYY-MM-DD hh:mm:ss.SSS"è¿”å›
 	 * 
-	 * @return ·µ»Ø"YYYY-MM-DD hh:mm:ss.SSS"×Ö·û´®
+	 * @return è¿”å›"YYYY-MM-DD hh:mm:ss.SSS"å­—ç¬¦ä¸²
 	 */
 	public static String getStrCurrentDetailTime() {
 		return timeFormate("yyyy-MM-dd HH:mm:ss.SSS");
 	}
 
 	/**
-	 * »ñµÃÏµÍ³ÔÂ·İ£¬ÒÔ×Ö·û´®"MM"·µ»Ø
+	 * è·å¾—ç³»ç»Ÿæœˆä»½ï¼Œä»¥å­—ç¬¦ä¸²"MM"è¿”å›
 	 * 
-	 * @return ·µ»Ø"MM"×Ö·û´®
+	 * @return è¿”å›"MM"å­—ç¬¦ä¸²
 	 */
 	public static String getStrCurrentMonth() {
 		return timeFormate("MM");
 	}
 
 	/**
-	 * »ñµÃÏµÍ³ÄêÔÂÈÕÊ±·ÖÃë£¬ÒÔ×Ö·û´®"YYYY-MM-DD hh:mm:ss"·µ»Ø
+	 * è·å¾—ç³»ç»Ÿå¹´æœˆæ—¥æ—¶åˆ†ç§’ï¼Œä»¥å­—ç¬¦ä¸²"YYYY-MM-DD hh:mm:ss"è¿”å›
 	 * 
-	 * @return ·µ»Ø"YYYY-MM-DD hh:mm:ss"×Ö·û´®
+	 * @return è¿”å›"YYYY-MM-DD hh:mm:ss"å­—ç¬¦ä¸²
 	 */
 	public static String getStrCurrentTime() {
 		return timeFormate("yyyy-MM-dd HH:mm:ss");
 	}
 
 	/**
-	 * »ñµÃÏµÍ³Äê·İ£¬ÒÔ×Ö·û´®"YYYY"·µ»Ø
+	 * è·å¾—ç³»ç»Ÿå¹´ä»½ï¼Œä»¥å­—ç¬¦ä¸²"YYYY"è¿”å›
 	 * 
-	 * @return ·µ»Ø"YYYY"×Ö·û´®
+	 * @return è¿”å›"YYYY"å­—ç¬¦ä¸²
 	 */
 	public static String getStrCurrentYear() {
 		return timeFormate("yyyy");
 	}
 
 	/**
-	 * »ñµÃÏµÍ³ÄêÔÂ£¬ÒÔ×Ö·û´®"YYYY-MM"·µ»Ø
+	 * è·å¾—ç³»ç»Ÿå¹´æœˆï¼Œä»¥å­—ç¬¦ä¸²"YYYY-MM"è¿”å›
 	 * 
-	 * @return ·µ»Ø"YYYY-MM"×Ö·û´®
+	 * @return è¿”å›"YYYY-MM"å­—ç¬¦ä¸²
 	 */
 	public static String getStrCurYearMonth() {
-		return timeFormate("yyyyÄêMMÔÂ");
+		return timeFormate("yyyyå¹´MMæœˆ");
 	}
 
 	/**
-	 * °ÑHH:mm ×ª»»ÎªHHmm¸ñÊ½
+	 * æŠŠHH:mm è½¬æ¢ä¸ºHHmmæ ¼å¼
 	 * 
 	 * @param time
 	 *            HHmm
@@ -1032,7 +1032,7 @@ public class TimeUtils {
 	}
 
 	/**
-	 * °ÑHHmmÊ±¼ä×ª»»ÎªÊ±¼äHH:mm
+	 * æŠŠHHmmæ—¶é—´è½¬æ¢ä¸ºæ—¶é—´HH:mm
 	 * 
 	 * @param time
 	 *            HH:mm
@@ -1046,15 +1046,15 @@ public class TimeUtils {
 	}
 
 	/**
-	 * ÊÇ·ñÈòÄê
+	 * æ˜¯å¦é—°å¹´
 	 * 
 	 * @param CurYear
-	 *            Äê¶È
-	 * @return True - ÊÇÈòÄê£» false - Æ½Äê
+	 *            å¹´åº¦
+	 * @return True - æ˜¯é—°å¹´ï¼› false - å¹³å¹´
 	 */
 	public static boolean isLeapYear(int CurYear) {
 		boolean _bIsLeap = false;
-		// ÅĞ¶¨Æ½ÄêÈòÄê
+		// åˆ¤å®šå¹³å¹´é—°å¹´
 		if (((CurYear % 4 == 0) && (CurYear % 100 != 0))
 				|| (CurYear % 400 == 0)) {
 			_bIsLeap = true;
@@ -1065,14 +1065,14 @@ public class TimeUtils {
 	}
 
 	/**
-	 * Ğ£ÑéÊ±¼ä»òÕßÈÕÆÚÊÇ·ñºÏ·¨:²»ĞèÒªÅĞ¶Ï2ÔÂÊÇ·ñÊÇÈóÄêµÄÌìÊı
+	 * æ ¡éªŒæ—¶é—´æˆ–è€…æ—¥æœŸæ˜¯å¦åˆæ³•:ä¸éœ€è¦åˆ¤æ–­2æœˆæ˜¯å¦æ˜¯æ¶¦å¹´çš„å¤©æ•°
 	 * 
 	 * @param strDate
 	 *            "YYYYMMDD" OR "YYYYMMDDhhmmss"
-	 * @return true - ºÏ·¨£» false - ·Ç·¨
+	 * @return true - åˆæ³•ï¼› false - éæ³•
 	 */
 	public static boolean isValidate(String strDate) {
-		// Ê±¼ä²ÎÊı:Äê¡¢ÔÂ¡¢ÈÕ¡¢Ê±¡¢·Ö¡¢Ãë
+		// æ—¶é—´å‚æ•°:å¹´ã€æœˆã€æ—¥ã€æ—¶ã€åˆ†ã€ç§’
 		int _iYear = 0;
 		int _iMonth = 0;
 		int _iDay = 0;
@@ -1082,7 +1082,7 @@ public class TimeUtils {
 		boolean _bFlag;
 		String _strDate = strDate.trim();
 
-		// ºÏ·¨ĞÔµÄÅĞ¶Ï
+		// åˆæ³•æ€§çš„åˆ¤æ–­
 		try {
 			_bFlag = Long.parseLong(_strDate) > 0;
 		} catch (NumberFormatException ex2) {
@@ -1093,7 +1093,7 @@ public class TimeUtils {
 		}
 
 		if (_bFlag) {
-			// ½«ÄêÔÂÈÕ×ª»»ÎªÕûĞÍ
+			// å°†å¹´æœˆæ—¥è½¬æ¢ä¸ºæ•´å‹
 			try {
 				_iYear = Integer.parseInt(_strDate.substring(0, 4));
 				_iMonth = Integer.parseInt(_strDate.substring(4, 6));
@@ -1104,17 +1104,17 @@ public class TimeUtils {
 			if (!_bFlag) {
 				return _bFlag;
 			}
-			// ÅĞ¶ÏÄêÔÂÊÇ·ñºÏ·¨
+			// åˆ¤æ–­å¹´æœˆæ˜¯å¦åˆæ³•
 			_bFlag = (_iYear > 1900) && (_iDay > 0)
 					&& ((_iMonth > 0) && (_iMonth < 13));
 
-			// ÅĞ¶¨ÈÕÆÚÊÇ·ñºÏ·¨
+			// åˆ¤å®šæ—¥æœŸæ˜¯å¦åˆæ³•
 			if (_bFlag) {
-				// Æ½ÄêÊ±Ã¿ÔÂµÄÌìÊı
+				// å¹³å¹´æ—¶æ¯æœˆçš„å¤©æ•°
 				int[] months = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30,
 						31 };
 				int _maxDay = months[_iMonth];
-				// Èç¹ûÊÇÈòÄê£¬¶şÔÂÔÙÔö¼ÓÒ»Ìì
+				// å¦‚æœæ˜¯é—°å¹´ï¼ŒäºŒæœˆå†å¢åŠ ä¸€å¤©
 				// if (((_iYear % 4 == 0) && (_iYear % 100 != 0)) || (_iYear %
 				// 400 == 0)) {
 				if (_iMonth == 2) {
@@ -1125,7 +1125,7 @@ public class TimeUtils {
 			}
 
 			if (_bFlag && _strDate.length() == 14) {
-				// µ±×Ö·û´®ÖĞº¬ÓĞÊ±¼ä´®(hh:mm:ss)
+				// å½“å­—ç¬¦ä¸²ä¸­å«æœ‰æ—¶é—´ä¸²(hh:mm:ss)
 				try {
 					_iHour = Integer.parseInt(_strDate.substring(8, 10));
 					_iMinute = Integer.parseInt(_strDate.substring(10, 12));
@@ -1137,7 +1137,7 @@ public class TimeUtils {
 					return _bFlag;
 				}
 
-				// ¼ì²âÊ±·ÖÃë
+				// æ£€æµ‹æ—¶åˆ†ç§’
 				_bFlag = ((_iHour >= 0) && (_iHour <= 23))
 						&& ((_iMinute >= 0) && (_iMinute <= 59))
 						&& ((_iSecond >= 0) && (_iSecond <= 59));
@@ -1147,10 +1147,10 @@ public class TimeUtils {
 	}
 
 	/**
-	 * °ÑÕûÊıĞÍÈÕÆÚ×ª»»³É×Ö·û´®ĞÎÊ½·µ»Ø
+	 * æŠŠæ•´æ•°å‹æ—¥æœŸè½¬æ¢æˆå­—ç¬¦ä¸²å½¢å¼è¿”å›
 	 * 
 	 * @param dateint
-	 *            ÈÕÆÚ
+	 *            æ—¥æœŸ
 	 * @return
 	 */
 	public static String spliteWith(int dateint, char spliter) {
@@ -1160,7 +1160,7 @@ public class TimeUtils {
 	}
 
 	/**
-	 * ½«Ê±¼ä×ª»»Îªhh:mm¸ñÊ½
+	 * å°†æ—¶é—´è½¬æ¢ä¸ºhh:mmæ ¼å¼
 	 * 
 	 * @param time
 	 *            "yyyMMdd/hhmm"
@@ -1175,16 +1175,16 @@ public class TimeUtils {
 		return tempStr;
 	}
 
-	// ÈÕÆÚ¸ñÊ½
+	// æ—¥æœŸæ ¼å¼
 	private synchronized static String timeFormate(String format) {
 		SimpleDateFormat _dateFormat = new SimpleDateFormat(format);
-		// »ñµÃµ±Ç°µÄÊ±¼ä
+		// è·å¾—å½“å‰çš„æ—¶é—´
 		Date _currentDate = Calendar.getInstance().getTime();
 		return _dateFormat.format(_currentDate);
 	}
 
 	/**
-	 * ½«XLMÍ¨ÓÃÊ±¼äÈÕÆÚĞÍ×ª»»ÎªÈÕÆÚ 2010-01-12T13:00:00+08:00 -> 20100112
+	 * å°†XLMé€šç”¨æ—¶é—´æ—¥æœŸå‹è½¬æ¢ä¸ºæ—¥æœŸ 2010-01-12T13:00:00+08:00 -> 20100112
 	 * 
 	 * @param dateTime
 	 *            String
@@ -1201,7 +1201,7 @@ public class TimeUtils {
 	}
 
 	/**
-	 * ½«UTC-secondÀàĞÍÊ±¼ä×ª»¯Îªhh:mm:ss¸ñÊ½
+	 * å°†UTC-secondç±»å‹æ—¶é—´è½¬åŒ–ä¸ºhh:mm:ssæ ¼å¼
 	 * 
 	 * @return
 	 */

@@ -29,7 +29,7 @@ import com.glaf.wechat.query.WxFileQuery;
 public interface WxFileService {
 
 	/**
-	 * ¸ù¾İÖ÷¼üÉ¾³ı¼ÇÂ¼
+	 * æ ¹æ®ä¸»é”®åˆ é™¤è®°å½•
 	 * 
 	 * @return
 	 */
@@ -37,7 +37,7 @@ public interface WxFileService {
 	void deleteById(Long id);
 
 	/**
-	 * ¸ù¾İÖ÷¼üÉ¾³ı¶àÌõ¼ÇÂ¼
+	 * æ ¹æ®ä¸»é”®åˆ é™¤å¤šæ¡è®°å½•
 	 * 
 	 * @return
 	 */
@@ -45,14 +45,14 @@ public interface WxFileService {
 	void deleteByIds(List<Long> ids);
 	
 	/**
-	 * É¾³ıÄ³¸öÀ¸Ä¿µÄÎÄ¼ş
+	 * åˆ é™¤æŸä¸ªæ ç›®çš„æ–‡ä»¶
 	 * @param categoryId
 	 */
 	@Transactional
 	void deleteByCategoryId(Long categoryId);
 
 	/**
-	 * ¸ù¾İÖ÷¼ü»ñÈ¡Ò»Ìõ¼ÇÂ¼
+	 * æ ¹æ®ä¸»é”®è·å–ä¸€æ¡è®°å½•
 	 * 
 	 * @return
 	 */
@@ -61,14 +61,14 @@ public interface WxFileService {
 	WxFile getWxFileByUUID(String uuid);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡¼ÇÂ¼×ÜÊı
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–è®°å½•æ€»æ•°
 	 * 
 	 * @return
 	 */
 	int getWxFileCountByQueryCriteria(WxFileQuery query);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡Ò»Ò³µÄÊı¾İ
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–ä¸€é¡µçš„æ•°æ®
 	 * 
 	 * @return
 	 */
@@ -76,14 +76,14 @@ public interface WxFileService {
 			WxFileQuery query);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡¼ÇÂ¼ÁĞ±í
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–è®°å½•åˆ—è¡¨
 	 * 
 	 * @return
 	 */
 	List<WxFile> list(WxFileQuery query);
 
 	/**
-	 * ±£´æÒ»Ìõ¼ÇÂ¼
+	 * ä¿å­˜ä¸€æ¡è®°å½•
 	 * 
 	 * @return
 	 */

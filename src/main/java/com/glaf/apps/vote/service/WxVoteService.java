@@ -28,7 +28,7 @@ import com.glaf.apps.vote.query.*;
 public interface WxVoteService {
 
 	/**
-	 * ¸ù¾İÖ÷¼üÉ¾³ı¼ÇÂ¼
+	 * æ ¹æ®ä¸»é”®åˆ é™¤è®°å½•
 	 * 
 	 * @return
 	 */
@@ -36,7 +36,7 @@ public interface WxVoteService {
 	void deleteById(Long id);
 
 	/**
-	 * ¸ù¾İÖ÷¼üÉ¾³ı¶àÌõ¼ÇÂ¼
+	 * æ ¹æ®ä¸»é”®åˆ é™¤å¤šæ¡è®°å½•
 	 * 
 	 * @return
 	 */
@@ -44,29 +44,29 @@ public interface WxVoteService {
 	void deleteByIds(List<Long> ids);
 
 	/**
-	 * ¸ù¾İÖ÷¼ü»ñÈ¡Ò»Ìõ¼ÇÂ¼
+	 * æ ¹æ®ä¸»é”®è·å–ä¸€æ¡è®°å½•
 	 * 
 	 * @return
 	 */
 	WxVote getWxVote(Long id);
 	
 	/**
-	 * »ñÈ¡×îĞÂµÄÒ»ÌõÍ¶Æ±½á¹û
-	 * @param voteId Í¶Æ±¼ÇÂ¼ 
-	 * @param ip IPµØÖ·
+	 * è·å–æœ€æ–°çš„ä¸€æ¡æŠ•ç¥¨ç»“æœ
+	 * @param voteId æŠ•ç¥¨è®°å½• 
+	 * @param ip IPåœ°å€
 	 * @return
 	 */
 	WxVoteResult getLatestVoteResult(Long voteId, String ip);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡¼ÇÂ¼×ÜÊı
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–è®°å½•æ€»æ•°
 	 * 
 	 * @return
 	 */
 	int getWxVoteCountByQueryCriteria(WxVoteQuery query);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡Ò»Ò³µÄÊı¾İ
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–ä¸€é¡µçš„æ•°æ®
 	 * 
 	 * @return
 	 */
@@ -74,14 +74,14 @@ public interface WxVoteService {
 			WxVoteQuery query);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡¼ÇÂ¼ÁĞ±í
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–è®°å½•åˆ—è¡¨
 	 * 
 	 * @return
 	 */
 	List<WxVote> list(WxVoteQuery query);
 
 	/**
-	 * ±£´æÒ»Ìõ¼ÇÂ¼
+	 * ä¿å­˜ä¸€æ¡è®°å½•
 	 * 
 	 * @return
 	 */

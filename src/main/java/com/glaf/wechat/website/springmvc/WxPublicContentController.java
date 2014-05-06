@@ -141,7 +141,7 @@ public class WxPublicContentController {
 						0L, "2");
 			}
 
-			// categoryId == 0 为回复内容或ppt
+			// categoryId == 0 涓哄洖澶嶅唴瀹规垨ppt
 			WxCategory category = wxCategoryService.getWxCategory(categoryId);
 			Long templateId = wxUserTemplate.getTemplateId();
 			boolean cache = conf.getBoolean("wx_template_cache", true);

@@ -29,7 +29,7 @@ import com.glaf.wechat.query.WxLogQuery;
 public interface WxLogService {
 
 	/**
-	 * »ñÈ¡ÈÕÖ¾×Ü¼ÇÂ¼Êı
+	 * è·å–æ—¥å¿—æ€»è®°å½•æ•°
 	 * 
 	 * @param query
 	 * @return
@@ -37,7 +37,7 @@ public interface WxLogService {
 	int getWxLogCountByQueryCriteria(WxLogQuery query);
 
 	/**
-	 * »ñÈ¡Ò»Ò³ÈÕÖ¾
+	 * è·å–ä¸€é¡µæ—¥å¿—
 	 * 
 	 * @param start
 	 * @param pageSize
@@ -48,7 +48,7 @@ public interface WxLogService {
 			WxLogQuery query);
 
 	/**
-	 * ¸ù¾İ²éÑ¯Ìõ¼ş»ñÈ¡ÈÕÖ¾
+	 * æ ¹æ®æŸ¥è¯¢æ¡ä»¶è·å–æ—¥å¿—
 	 * 
 	 * @param query
 	 * @return
@@ -56,7 +56,7 @@ public interface WxLogService {
 	List<WxLog> list(WxLogQuery query);
 
 	/**
-	 * ±£´æ
+	 * ä¿å­˜
 	 * 
 	 * @param bean
 	 *            WxLog

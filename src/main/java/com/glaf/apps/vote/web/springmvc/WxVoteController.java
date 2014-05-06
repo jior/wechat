@@ -142,7 +142,7 @@ public class WxVoteController {
 		query.setAccountId(accountId);
 
 		/**
-		 * 此处业务逻辑需自行调整
+		 * 姝ゅ涓氬姟閫昏緫闇�鑷璋冩暣
 		 */
 		if (!loginContext.isSystemAdministrator()) {
 			String actorId = loginContext.getActorId();

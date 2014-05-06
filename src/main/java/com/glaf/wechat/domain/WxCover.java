@@ -37,7 +37,7 @@ import com.glaf.wechat.util.WxCoverJsonFactory;
 
 /**
  * 
- * ·âÃæĞÅÏ¢
+ * å°é¢ä¿¡æ¯
  * 
  */
 @Entity
@@ -51,44 +51,44 @@ public class WxCover implements java.io.Serializable, JSONable {
 	protected long id;
 
 	/**
-	 * Î¢Õ¾¹«ÖÚºÅÓ¦ÓÃID
+	 * å¾®ç«™å…¬ä¼—å·åº”ç”¨ID
 	 */
 	@Column(name = "ACCOUNTID_")
 	protected Long accountId;
 
 	/**
-	 * ´óÍ¼±ê
+	 * å¤§å›¾æ ‡
 	 */
 	@Column(name = "BIGICON_", length = 150)
 	protected String bigIcon;
 
 	/**
-	 * Ğ¡Í¼±ê
+	 * å°å›¾æ ‡
 	 */
 	@Column(name = "SMALLICON_", length = 150)
 	protected String smallIcon;
 
 	/**
-	 * ´´½¨ÈË
+	 * åˆ›å»ºäºº
 	 */
 	@Column(name = "CREATEBY_", length = 50)
 	protected String createBy;
 
 	/**
-	 * ´´½¨ÈÕÆÚ
+	 * åˆ›å»ºæ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATEDATE_")
 	protected Date createDate;
 
 	/**
-	 * ×îºóĞŞ¸ÄÈË
+	 * æœ€åä¿®æ”¹äºº
 	 */
 	@Column(name = "LASTUPDATEBY_", length = 50)
 	protected String lastUpdateBy;
 
 	/**
-	 * ×îºóĞŞ¸ÄÈÕÆÚ
+	 * æœ€åä¿®æ”¹æ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "LASTUPDATEDATE_")

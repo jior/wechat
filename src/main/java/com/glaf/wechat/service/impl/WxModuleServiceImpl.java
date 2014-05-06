@@ -100,7 +100,7 @@ public class WxModuleServiceImpl implements WxModuleService {
 	}
 
 	/**
-	 * ¸ù¾İÖ÷¼ü»ñÈ¡Ò»ÌõÊı¾İ
+	 * æ ¹æ®ä¸»é”®è·å–ä¸€æ¡æ•°æ®
 	 * 
 	 * @param id
 	 * @param accountId

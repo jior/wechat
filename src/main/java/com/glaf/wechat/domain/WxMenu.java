@@ -38,7 +38,7 @@ import com.glaf.wechat.util.WxMenuJsonFactory;
 
 /**
  * 
- * ²Ëµ¥ĞÅÏ¢
+ * èœå•ä¿¡æ¯
  * 
  */
 @Entity
@@ -52,110 +52,110 @@ public class WxMenu implements java.io.Serializable, JSONable {
 	protected long id;
 
 	/**
-	 * Î¢Õ¾¹«ÖÚºÅÓ¦ÓÃID
+	 * å¾®ç«™å…¬ä¼—å·åº”ç”¨ID
 	 */
 	@Column(name = "ACCOUNTID_")
 	protected Long accountId;
 
 	/**
-	 * ¸¸½Úµã±àºÅ
+	 * çˆ¶èŠ‚ç‚¹ç¼–å·
 	 */
 	@Column(name = "PARENT_")
 	protected long parentId;
 
 	/**
-	 * °´Å¥Ãû³Æ£¬²»³¬¹ı16¸ö×Ö½Ú£¬×Ó²Ëµ¥²»³¬¹ı40¸ö×Ö½Ú
+	 * æŒ‰é’®åç§°ï¼Œä¸è¶…è¿‡16ä¸ªå­—èŠ‚ï¼Œå­èœå•ä¸è¶…è¿‡40ä¸ªå­—èŠ‚
 	 */
 	@Column(name = "NAME_", length = 50)
 	protected String name;
 
 	/**
-	 * °´Å¥ÀàĞÍ£¬Ä¿Ç°ÓĞclickÀàĞÍ
+	 * æŒ‰é’®ç±»å‹ï¼Œç›®å‰æœ‰clickç±»å‹
 	 */
 	@Column(name = "TYPE_", length = 50)
 	protected String type;
 
 	/**
-	 * °´Å¥KEYÖµ£¬ÓÃÓÚÏûÏ¢½Ó¿Ú(eventÀàĞÍ)ÍÆËÍ£¬²»³¬¹ı128×Ö½Ú
+	 * æŒ‰é’®KEYå€¼ï¼Œç”¨äºæ¶ˆæ¯æ¥å£(eventç±»å‹)æ¨é€ï¼Œä¸è¶…è¿‡128å­—èŠ‚
 	 */
 	@Column(name = "KEY_", length = 200)
 	protected String key;
 
 	/**
-	 * Á´½ÓµØÖ·
+	 * é“¾æ¥åœ°å€
 	 */
 	@Column(name = "URL_", length = 500)
 	protected String url;
 
 	/**
-	 * Í¼Æ¬Á´½ÓµØÖ·
+	 * å›¾ç‰‡é“¾æ¥åœ°å€
 	 */
 	@Column(name = "PICURL_", length = 500)
 	protected String picUrl;
 
 	/**
-	 * ÃèÊö
+	 * æè¿°
 	 */
 	@Column(name = "DESC_", length = 500)
 	protected String desc;
 
 	/**
-	 * Í¼±ê
+	 * å›¾æ ‡
 	 */
 	@Column(name = "ICON_", length = 150)
 	protected String icon;
 
 	/**
-	 * Í¼±êÑùÊ½
+	 * å›¾æ ‡æ ·å¼
 	 */
 	@Column(name = "ICONCLS_", length = 50)
 	protected String iconCls;
 
 	/**
-	 * ·Ö×é
+	 * åˆ†ç»„
 	 */
 	@Column(name = "GROUP_", length = 50)
 	protected String group;
 
 	/**
-	 * Ê÷±àºÅ
+	 * æ ‘ç¼–å·
 	 */
 	@Column(name = "TREEID_", length = 500)
 	protected String treeId;
 
 	/**
-	 * Ë³ĞòºÅ
+	 * é¡ºåºå·
 	 */
 	@Column(name = "SORT_")
 	protected int sort;
 
 	/**
-	 * ÊÇ·ñÆôÓÃ
+	 * æ˜¯å¦å¯ç”¨
 	 */
 	@Column(name = "LOCKED_")
 	protected int locked;
 
 	/**
-	 * ´´½¨ÈË
+	 * åˆ›å»ºäºº
 	 */
 	@Column(name = "CREATEBY_", length = 50)
 	protected String createBy;
 
 	/**
-	 * ´´½¨ÈÕÆÚ
+	 * åˆ›å»ºæ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATEDATE_")
 	protected Date createDate;
 
 	/**
-	 * ×îºóĞŞ¸ÄÈË
+	 * æœ€åä¿®æ”¹äºº
 	 */
 	@Column(name = "LASTUPDATEBY_", length = 50)
 	protected String lastUpdateBy;
 
 	/**
-	 * ×îºóĞŞ¸ÄÈÕÆÚ
+	 * æœ€åä¿®æ”¹æ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "LASTUPDATEDATE_")

@@ -76,7 +76,7 @@ public class WxSiteInfoController {
 					WxSiteInfo wxSiteInfo = wxSiteInfoService
 							.getWxSiteInfo(Long.valueOf(x));
 					/**
-					 * 此处业务逻辑需自行调整
+					 * 姝ゅ涓氬姟閫昏緫闇�鑷璋冩暣
 					 */
 					if (wxSiteInfo != null
 							&& (StringUtils.equals(wxSiteInfo.getCreateBy(),
@@ -90,7 +90,7 @@ public class WxSiteInfoController {
 			WxSiteInfo wxSiteInfo = wxSiteInfoService.getWxSiteInfo(Long
 					.valueOf(id));
 			/**
-			 * 此处业务逻辑需自行调整
+			 * 姝ゅ涓氬姟閫昏緫闇�鑷璋冩暣
 			 */
 			if (wxSiteInfo != null
 					&& (StringUtils.equals(wxSiteInfo.getCreateBy(),

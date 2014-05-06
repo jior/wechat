@@ -3,9 +3,9 @@ package com.glaf.wechat.sdk.message;
 public class VoiceMessage extends Message {
 	private static final long serialVersionUID = 1L;
 
-	// Ã½ÌåID
+	// åª’ä½“ID
 	private String mediaId;
-	// ÓïÒô¸ñÊ½
+	// è¯­éŸ³æ ¼å¼
 	private String format;
 
 	public VoiceMessage() {

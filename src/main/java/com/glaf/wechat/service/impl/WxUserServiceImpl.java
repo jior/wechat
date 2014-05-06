@@ -85,7 +85,7 @@ public class WxUserServiceImpl implements WxUserService {
 	}
 
 	/**
-	 * 创建用户账号
+	 * 鍒涘缓鐢ㄦ埛璐﹀彿
 	 * 
 	 * @param user
 	 */

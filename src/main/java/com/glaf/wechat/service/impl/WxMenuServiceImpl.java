@@ -98,7 +98,7 @@ public class WxMenuServiceImpl implements WxMenuService {
 	}
 
 	/**
-	 * »ñÈ¡Ä³¸öÓÃ»§µÄÄ³¸ö·Ö×éµÄÈ«²¿×Ó²Ëµ¥
+	 * è·å–æŸä¸ªç”¨æˆ·çš„æŸä¸ªåˆ†ç»„çš„å…¨éƒ¨å­èœå•
 	 * 
 	 * @param accountId
 	 * @param group

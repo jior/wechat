@@ -81,7 +81,7 @@ public class WxContentServiceImpl implements WxContentService {
 	}
 	
 	/**
-	 * É¾³ıÄ³¸öÀ¸Ä¿µÄÄÚÈİ
+	 * åˆ é™¤æŸä¸ªæ ç›®çš„å†…å®¹
 	 * @param categoryId
 	 */
 	@Transactional
@@ -148,7 +148,7 @@ public class WxContentServiceImpl implements WxContentService {
 	}
 
 	/**
-	 * »ñÈ¡Ä³¸öÓÃ»§Ä³¸öÀ¸Ä¿Ö¸¶¨ÀàĞÍµÄÄÚÈİ
+	 * è·å–æŸä¸ªç”¨æˆ·æŸä¸ªæ ç›®æŒ‡å®šç±»å‹çš„å†…å®¹
 	 * 
 	 * @param accountId
 	 * @param categoryId

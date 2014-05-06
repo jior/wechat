@@ -29,7 +29,7 @@ import com.glaf.wechat.query.WxMenuQuery;
 public interface WxMenuService {
 
 	/**
-	 * ¸ù¾İÖ÷¼üÉ¾³ı¼ÇÂ¼
+	 * æ ¹æ®ä¸»é”®åˆ é™¤è®°å½•
 	 * 
 	 * @return
 	 */
@@ -37,7 +37,7 @@ public interface WxMenuService {
 	void deleteById(Long id);
 
 	/**
-	 * ¸ù¾İÖ÷¼üÉ¾³ı¶àÌõ¼ÇÂ¼
+	 * æ ¹æ®ä¸»é”®åˆ é™¤å¤šæ¡è®°å½•
 	 * 
 	 * @return
 	 */
@@ -45,7 +45,7 @@ public interface WxMenuService {
 	void deleteByIds(List<Long> ids);
 
 	/**
-	 * »ñÈ¡Ä³¸öÓÃ»§µÄÄ³¸ö·ÖÀàÏÂµÄÈ«²¿×Ó²Ëµ¥
+	 * è·å–æŸä¸ªç”¨æˆ·çš„æŸä¸ªåˆ†ç±»ä¸‹çš„å…¨éƒ¨å­èœå•
 	 * 
 	 * @param accountId
 	 * @param parentId
@@ -54,7 +54,7 @@ public interface WxMenuService {
 	List<WxMenu> getMenuList(Long accountId, Long parentId);
 
 	/**
-	 * »ñÈ¡Ä³¸öÓÃ»§µÄÄ³¸ö·Ö×éµÄÈ«²¿×Ó²Ëµ¥
+	 * è·å–æŸä¸ªç”¨æˆ·çš„æŸä¸ªåˆ†ç»„çš„å…¨éƒ¨å­èœå•
 	 * 
 	 * @param accountId
 	 * @param group
@@ -63,7 +63,7 @@ public interface WxMenuService {
 	List<WxMenu> getMenuList(Long accountId, String group);
 
 	/**
-	 * »ñÈ¡Ä³¸öÓÃ»§µÄÄ³¸ö·Ö×éµÄÈ«²¿×Ó²Ëµ¥
+	 * è·å–æŸä¸ªç”¨æˆ·çš„æŸä¸ªåˆ†ç»„çš„å…¨éƒ¨å­èœå•
 	 * 
 	 * @param accountId
 	 * @param group
@@ -73,21 +73,21 @@ public interface WxMenuService {
 	List<WxMenu> getMenuList(Long accountId, String group, Long parentId);
 
 	/**
-	 * ¸ù¾İÖ÷¼ü»ñÈ¡Ò»Ìõ¼ÇÂ¼
+	 * æ ¹æ®ä¸»é”®è·å–ä¸€æ¡è®°å½•
 	 * 
 	 * @return
 	 */
 	WxMenu getWxMenu(Long id);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡¼ÇÂ¼×ÜÊı
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–è®°å½•æ€»æ•°
 	 * 
 	 * @return
 	 */
 	int getWxMenuCountByQueryCriteria(WxMenuQuery query);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡Ò»Ò³µÄÊı¾İ
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–ä¸€é¡µçš„æ•°æ®
 	 * 
 	 * @return
 	 */
@@ -95,14 +95,14 @@ public interface WxMenuService {
 			WxMenuQuery query);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡¼ÇÂ¼ÁĞ±í
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–è®°å½•åˆ—è¡¨
 	 * 
 	 * @return
 	 */
 	List<WxMenu> list(WxMenuQuery query);
 
 	/**
-	 * ±£´æÒ»Ìõ¼ÇÂ¼
+	 * ä¿å­˜ä¸€æ¡è®°å½•
 	 * 
 	 * @return
 	 */

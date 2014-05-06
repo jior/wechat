@@ -38,7 +38,7 @@ import com.glaf.wechat.util.WxTemplateJsonFactory;
 
 /**
  * 
- * Ä£°åĞÅÏ¢
+ * æ¨¡æ¿ä¿¡æ¯
  * 
  */
 @Entity
@@ -52,31 +52,31 @@ public class WxTemplate implements java.io.Serializable, JSONable {
 	protected long id;
 
 	/**
-	 * Î¢Õ¾¹«ÖÚºÅÓ¦ÓÃID
+	 * å¾®ç«™å…¬ä¼—å·åº”ç”¨ID
 	 */
 	@Column(name = "ACCOUNTID_")
 	protected Long accountId;
 
 	/**
-	 * À¸Ä¿±àºÅ
+	 * æ ç›®ç¼–å·
 	 */
 	@Column(name = "CATEGORYID_")
 	protected long categoryId;
 
 	/**
-	 * Ãû³Æ
+	 * åç§°
 	 */
 	@Column(name = "NAME_", length = 100)
 	protected String name;
 
 	/**
-	 * Ä£°åÀàĞÍ(html,ftl)
+	 * æ¨¡æ¿ç±»å‹(html,ftl)
 	 */
 	@Column(name = "TEMPLATETYPE_", length = 50)
 	protected String templateType;
 
 	/**
-	 * ÃèÊö
+	 * æè¿°
 	 */
 	@Column(name = "DESC_", length = 500)
 	protected String desc;
@@ -86,56 +86,56 @@ public class WxTemplate implements java.io.Serializable, JSONable {
 	protected String content;
 
 	/**
-	 * Ä£°åÍ¼Æ¬
+	 * æ¨¡æ¿å›¾ç‰‡
 	 */
 	@Column(name = "SKINIMAGE_", length = 250)
 	protected String skinImage;
 
 	/**
-	 * ÀàĞÍ£¨Ê×Ò³0|ÁĞ±í1|ÏêÏ¸2£©
+	 * ç±»å‹ï¼ˆé¦–é¡µ0|åˆ—è¡¨1|è¯¦ç»†2ï¼‰
 	 */
 	@Column(name = "TYPE_", length = 50)
 	protected String type;
 
 	/**
-	 * ´æ·ÅÂ·¾¶£¬Ïà¶ÔÓÚÓ¦ÓÃ¸ùÄ¿Â¼µÄÂ·¾¶
+	 * å­˜æ”¾è·¯å¾„ï¼Œç›¸å¯¹äºåº”ç”¨æ ¹ç›®å½•çš„è·¯å¾„
 	 */
 	@Column(name = "PATH_", length = 500)
 	protected String path;
 
 	/**
-	 * ÊÇ·ñÄ¬ÈÏÄ£°å
+	 * æ˜¯å¦é»˜è®¤æ¨¡æ¿
 	 */
 	@Column(name = "DEFAULTFLAG_")
 	protected int defaultFlag;
 
 	/**
-	 * ÊÇ·ñÆôÓÃ
+	 * æ˜¯å¦å¯ç”¨
 	 */
 	@Column(name = "LOCKED_")
 	protected int locked;
 
 	/**
-	 * ´´½¨ÈË
+	 * åˆ›å»ºäºº
 	 */
 	@Column(name = "CREATEBY_", length = 50)
 	protected String createBy;
 
 	/**
-	 * ´´½¨ÈÕÆÚ
+	 * åˆ›å»ºæ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATEDATE_")
 	protected Date createDate;
 
 	/**
-	 * ×îºóĞŞ¸ÄÈË
+	 * æœ€åä¿®æ”¹äºº
 	 */
 	@Column(name = "LASTUPDATEBY_", length = 50)
 	protected String lastUpdateBy;
 
 	/**
-	 * ×îºóĞŞ¸ÄÈÕÆÚ
+	 * æœ€åä¿®æ”¹æ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "LASTUPDATEDATE_")

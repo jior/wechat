@@ -37,7 +37,7 @@ import com.glaf.wechat.util.Constants;
 import com.glaf.wechat.util.WxLogFactory;
 
 /**
- * ��עʱ�ظ�
+ * 关注时回复
  */
 public class SubscribeMessageFilter extends AbstractMessageFilter implements
 		IMessageFilter {

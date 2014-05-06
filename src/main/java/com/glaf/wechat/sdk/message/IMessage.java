@@ -18,12 +18,12 @@
 package com.glaf.wechat.sdk.message;
 
 /**
- * È«²¿³£Á¿¶¨Òå
+ * å…¨éƒ¨å¸¸é‡å®šä¹‰
  * 
  */
 public interface IMessage {
 
-	// ½ÓÊÕµÄÏûÏ¢ÀàĞÍ
+	// æ¥æ”¶çš„æ¶ˆæ¯ç±»å‹
 	public static final String MESSAGE_EVENT = "event";
 	public static final String MESSAGE_IMAGE = "image";
 	public static final String MESSAGE_LINK = "link";
@@ -32,7 +32,7 @@ public interface IMessage {
 	public static final String MESSAGE_VOICE = "voice";
 	public static final String MESSAGE_VIDEO = "video";
 
-	// ÏìÓ¦µÄÏûÏ¢ÀàĞÍ
+	// å“åº”çš„æ¶ˆæ¯ç±»å‹
 	public static final String MESSAGE_RESPONSE_MUSIC = "music";
 	public static final String MESSAGE_RESPONSE_NEWS = "news";
 	public static final String MESSAGE_RESPONSE_TEXT = "text";
@@ -40,12 +40,12 @@ public interface IMessage {
 	public static final String MESSAGE_RESPONSE_VOICE = "voice";
 	public static final String MESSAGE_RESPONSE_VIDEO = "video";
 
-	// ÊÂ¼şÀàĞÍ
+	// äº‹ä»¶ç±»å‹
 	public static final String EVENT_CLICK = "CLICK";
 	public static final String EVENT_SUBSCRIBE = "subscribe";
 	public static final String EVENT_UNSUBSCRIBE = "unsubscribe";
 
-	// ÏûÏ¢±êÇ©
+	// æ¶ˆæ¯æ ‡ç­¾
 	public static final String TAG_ARTICLECOUNT = "ArticleCount";
 	public static final String TAG_ARTICLES = "Articles";
 	public static final String TAG_AUTHOR = "Author";

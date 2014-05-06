@@ -95,7 +95,7 @@ public class LocationMessageFilter extends AbstractMessageFilter implements
 						bean.setOpenId(message.getFromUserName());
 						bean.setActorId(message.getCustomer());
 						bean.setCreateTime(new Date());
-						bean.setFlag(Constants.LOCATION_LOG_FLAG);//地理信息回复
+						bean.setFlag(Constants.LOCATION_LOG_FLAG);//鍦扮悊淇℃伅鍥炲
 						bean.setIp(message.getRemoteIPAddr());
 						bean.setOperate("location");
 						WxLogFactory.create(bean);

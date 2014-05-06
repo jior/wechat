@@ -42,7 +42,7 @@ import com.glaf.wechat.util.Constants;
 import com.glaf.wechat.util.WxLogFactory;
 
 /**
- * ¹Ø¼ü×Ö»Ø¸´
+ * å…³é”®å­—å›å¤
  * 
  */
 public class KeywordsMessageFilter extends AbstractMessageFilter implements
@@ -56,8 +56,8 @@ public class KeywordsMessageFilter extends AbstractMessageFilter implements
 		if (message instanceof TextMessage) {
 			TextMessage msg = (TextMessage) message;
 			String content = msg.getContent();
-			if (StringUtils.equals(content, "Ö÷Ò³")
-					|| StringUtils.equals(content, "Ê×Ò³")) {
+			if (StringUtils.equals(content, "ä¸»é¡µ")
+					|| StringUtils.equals(content, "é¦–é¡µ")) {
 
 			}
 
@@ -66,7 +66,7 @@ public class KeywordsMessageFilter extends AbstractMessageFilter implements
 				bean.setOpenId(message.getFromUserName());
 				bean.setActorId(message.getCustomer());
 				bean.setCreateTime(new Date());
-				bean.setFlag(Constants.KEYWORDS_LOG_FLAG);// ¹Ø¼ü×Ö»Ø¸´
+				bean.setFlag(Constants.KEYWORDS_LOG_FLAG);// å…³é”®å­—å›å¤
 				bean.setIp(message.getRemoteIPAddr());
 				bean.setOperate("keywords");
 				bean.setContent(content);

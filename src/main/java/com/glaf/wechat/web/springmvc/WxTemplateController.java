@@ -491,21 +491,21 @@ public class WxTemplateController {
 									.equalsIgnoreCase("index.html", name)) {
 								String content = new String(bytes, "UTF-8");
 								wxTemplate.setContent(content);
-								wxTemplate.setName("Ê×Ò³Ä£°æ");
+								wxTemplate.setName("é¦–é¡µæ¨¡ç‰ˆ");
 								wxTemplate.setType("0");
 								wxTemplateService.save(wxTemplate);
 							} else if (StringUtils.equalsIgnoreCase(
 									"list.html", name)) {
 								String content = new String(bytes, "UTF-8");
 								wxTemplate.setContent(content);
-								wxTemplate.setName("ÁÐ±íÒ³Ä£°æ");
+								wxTemplate.setName("åˆ—è¡¨é¡µæ¨¡ç‰ˆ");
 								wxTemplate.setType("1");
 								wxTemplateService.save(wxTemplate);
 							} else if (StringUtils.equalsIgnoreCase(
 									"detail.html", name)) {
 								String content = new String(bytes, "UTF-8");
 								wxTemplate.setContent(content);
-								wxTemplate.setName("ÏêÏ¸Ò³Ä£°æ");
+								wxTemplate.setName("è¯¦ç»†é¡µæ¨¡ç‰ˆ");
 								wxTemplate.setType("2");
 								wxTemplateService.save(wxTemplate);
 							}

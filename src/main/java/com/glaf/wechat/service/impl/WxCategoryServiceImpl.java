@@ -85,7 +85,7 @@ public class WxCategoryServiceImpl implements WxCategoryService {
 	}
 
 	/**
-	 * »ñÈ¡Ä³¸ö·ÖÀàµÄÖ±½Ó×Ó½ÚµãÁĞ±í
+	 * è·å–æŸä¸ªåˆ†ç±»çš„ç›´æ¥å­èŠ‚ç‚¹åˆ—è¡¨
 	 * 
 	 * @param parentId
 	 * @return
@@ -98,7 +98,7 @@ public class WxCategoryServiceImpl implements WxCategoryService {
 	}
 
 	/**
-	 * »ñÈ¡Ä³¸öÓÃ»§´´½¨µÄÈ«²¿·ÖÀàÁĞ±í
+	 * è·å–æŸä¸ªç”¨æˆ·åˆ›å»ºçš„å…¨éƒ¨åˆ†ç±»åˆ—è¡¨
 	 * 
 	 * @param createBy
 	 * @return
@@ -112,7 +112,7 @@ public class WxCategoryServiceImpl implements WxCategoryService {
 	}
 
 	/**
-	 * »ñÈ¡Ä³¸öÓÃ»§´´½¨µÄÄ³¸ö·ÖÀàµÄ×Ó·ÖÀàÁĞ±í
+	 * è·å–æŸä¸ªç”¨æˆ·åˆ›å»ºçš„æŸä¸ªåˆ†ç±»çš„å­åˆ†ç±»åˆ—è¡¨
 	 * 
 	 * @param createBy
 	 * @param parentId
@@ -128,7 +128,7 @@ public class WxCategoryServiceImpl implements WxCategoryService {
 	}
 
 	/**
-	 * »ñÈ¡Ä³¸öÓÃ»§´´½¨µÄÄ³ÀàĞÍµÄ×Ó·ÖÀàÁĞ±í
+	 * è·å–æŸä¸ªç”¨æˆ·åˆ›å»ºçš„æŸç±»å‹çš„å­åˆ†ç±»åˆ—è¡¨
 	 * 
 	 * @param createBy
 	 * @param type
@@ -289,7 +289,7 @@ public class WxCategoryServiceImpl implements WxCategoryService {
 	public boolean update(WxCategory bean) {
 		WxCategory model = this.getWxCategory(bean.getId());
 		/**
-		 * Èç¹û½ÚµãÒÆ¶¯ÁËÎ»ÖÃ£¬¼´ÒÆ¶¯µ½±ğµÄ½ÚµãÏÂÃæÈ¥ÁË
+		 * å¦‚æœèŠ‚ç‚¹ç§»åŠ¨äº†ä½ç½®ï¼Œå³ç§»åŠ¨åˆ°åˆ«çš„èŠ‚ç‚¹ä¸‹é¢å»äº†
 		 */
 		if (model.getParentId() != bean.getParentId()) {
 			List<WxCategory> list = new java.util.concurrent.CopyOnWriteArrayList<WxCategory>();
@@ -297,7 +297,7 @@ public class WxCategoryServiceImpl implements WxCategoryService {
 			if (!list.isEmpty()) {
 				for (WxCategory node : list) {
 					/**
-					 * ²»ÄÜÒÆ¶¯µ½ta×Ô¼ºµÄ×Ó½ÚµãÏÂÃæÈ¥
+					 * ä¸èƒ½ç§»åŠ¨åˆ°taè‡ªå·±çš„å­èŠ‚ç‚¹ä¸‹é¢å»
 					 */
 					if (bean.getParentId() == node.getId()) {
 						throw new RuntimeException(
@@ -305,7 +305,7 @@ public class WxCategoryServiceImpl implements WxCategoryService {
 					}
 				}
 				/**
-				 * ĞŞÕıËùÓĞ×Ó½ÚµãµÄtreeId
+				 * ä¿®æ­£æ‰€æœ‰å­èŠ‚ç‚¹çš„treeId
 				 */
 				WxCategory oldParent = this.getWxCategory(model.getParentId());
 				WxCategory newParent = this.getWxCategory(bean.getParentId());

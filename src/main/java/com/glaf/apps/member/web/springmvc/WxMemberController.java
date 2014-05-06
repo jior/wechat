@@ -66,7 +66,7 @@ public class WxMemberController {
 					WxMember wxMember = wxMemberService.getWxMember(Long
 							.valueOf(x));
 					/**
-					 * 此处业务逻辑需自行调整
+					 * 姝ゅ涓氬姟閫昏緫闇�鑷璋冩暣
 					 */
 
 					if (wxMember != null
@@ -80,7 +80,7 @@ public class WxMemberController {
 		} else if (id != null) {
 			WxMember wxMember = wxMemberService.getWxMember(Long.valueOf(id));
 			/**
-			 * 此处业务逻辑需自行调整
+			 * 姝ゅ涓氬姟閫昏緫闇�鑷璋冩暣
 			 */
 			if (wxMember != null
 					&& (StringUtils.equals(wxMember.getCreateBy(),

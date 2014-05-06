@@ -68,7 +68,7 @@ public class WxUserTemplateServiceImpl implements WxUserTemplateService {
 	}
 
 	/**
-	 * »ñÈ¡Ä³¸öÀ¸Ä¿Ö¸¶¨ÀàĞÍµÄÄ£°åÊµÀı
+	 * è·å–æŸä¸ªæ ç›®æŒ‡å®šç±»å‹çš„æ¨¡æ¿å®ä¾‹
 	 * 
 	 * @param type
 	 * @param categoryId
@@ -88,7 +88,7 @@ public class WxUserTemplateServiceImpl implements WxUserTemplateService {
 	}
 
 	/**
-	 * »ñÈ¡Ä³¸öÀ¸Ä¿Ö¸¶¨ÀàĞÍµÄÄ£°åÊµÀı
+	 * è·å–æŸä¸ªæ ç›®æŒ‡å®šç±»å‹çš„æ¨¡æ¿å®ä¾‹
 	 * 
 	 * @param accountId
 	 * @param categoryId

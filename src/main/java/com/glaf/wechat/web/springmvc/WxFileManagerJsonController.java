@@ -121,12 +121,12 @@ public class WxFileManagerJsonController {
 
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 
-		// ÎÄ¼şÀ©Õ¹Ãû
+		// æ–‡ä»¶æ‰©å±•å
 		String[] fileTypes = new String[] { "gif", "jpg", "jpeg", "png", "bmp",
 				"swf", "mp3", "wma", "wav", "amr", "rm", "rmvb", "mp4", "wvm",
 				"avi", "mpg", "mpeg" };
 
-		// ÅÅĞòĞÎÊ½£¬name or size or type
+		// æ’åºå½¢å¼ï¼Œname or size or type
 		String order = request.getParameter("order") != null ? request
 				.getParameter("order").toLowerCase() : "filename";
 
@@ -143,7 +143,7 @@ public class WxFileManagerJsonController {
 
 		List<WxFile> dataFiles = wxFileService.list(query);
 
-		// ±éÀúÄ¿Â¼È¡µÄÎÄ¼şĞÅÏ¢
+		// éå†ç›®å½•å–çš„æ–‡ä»¶ä¿¡æ¯
 		List<Hashtable<?, ?>> fileList = new java.util.concurrent.CopyOnWriteArrayList<Hashtable<?, ?>>();
 		if (dataFiles != null && !dataFiles.isEmpty()) {
 			for (WxFile file : dataFiles) {

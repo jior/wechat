@@ -19,7 +19,7 @@ import com.glaf.core.base.JSONable;
 import com.glaf.wechat.util.WxUserTemplateJsonFactory;
 
 /**
- * ÓÃ»§Ä£°åÊµÀı (ÓÃ»§Ö¸¶¨À¸Ä¿¼°ÀàĞÍµÄÄ£°å±àºÅ)
+ * ç”¨æˆ·æ¨¡æ¿å®ä¾‹ (ç”¨æˆ·æŒ‡å®šæ ç›®åŠç±»å‹çš„æ¨¡æ¿ç¼–å·)
  */
 @Entity
 @Table(name = "WX_USER_TEMPLATE")
@@ -27,44 +27,44 @@ public class WxUserTemplate implements Serializable, JSONable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Ö÷¼ü
+	 * ä¸»é”®
 	 */
 	@Id
 	@Column(name = "ID_", nullable = false)
 	protected Long id;
 
 	/**
-	 * Î¢Õ¾¹«ÖÚºÅÓ¦ÓÃID
+	 * å¾®ç«™å…¬ä¼—å·åº”ç”¨ID
 	 */
 	@Column(name = "ACCOUNTID_")
 	protected Long accountId;
 
 	/**
-	 * À¸Ä¿±àºÅ
+	 * æ ç›®ç¼–å·
 	 */
 	@Column(name = "CATEGORYID_")
 	protected Long categoryId;
 
 	/**
-	 * Ä£°å±àºÅ
+	 * æ¨¡æ¿ç¼–å·
 	 */
 	@Column(name = "TEMPLATEID_")
 	protected Long templateId;
 
 	/**
-	 * Ä£°åÀàĞÍ
+	 * æ¨¡æ¿ç±»å‹
 	 */
 	@Column(name = "TYPE_", length = 50)
 	protected String type;
 
 	/**
-	 * ´´½¨ÈË
+	 * åˆ›å»ºäºº
 	 */
 	@Column(name = "CREATEBY_", length = 50)
 	protected String createBy;
 
 	/**
-	 * ´´½¨ÈÕÆÚ
+	 * åˆ›å»ºæ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATEDATE_")

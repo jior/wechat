@@ -37,7 +37,7 @@ import com.glaf.core.base.JSONable;
 
 /**
  * 
- * ÏûÏ¢
+ * æ¶ˆæ¯
  * 
  */
 @Entity
@@ -51,56 +51,56 @@ public class WxMessage implements java.io.Serializable, JSONable {
 	protected long id;
 
 	/**
-	 * Î¢Õ¾¹«ÖÚºÅÓ¦ÓÃID
+	 * å¾®ç«™å…¬ä¼—å·åº”ç”¨ID
 	 */
 	@Column(name = "ACCOUNTID_")
 	protected Long accountId;
 
 	/**
-	 * ÁªÏµÈË
+	 * è”ç³»äºº
 	 */
 	@Column(name = "NAME_", length = 50)
 	protected String name;
 
 	/**
-	 * ÊÖ»ú
+	 * æ‰‹æœº
 	 */
 	@Column(name = "MOBILE_", length = 50)
 	protected String mobile;
 
 	/**
-	 * ±êÌâ
+	 * æ ‡é¢˜
 	 */
 	@Column(name = "TITLE_", length = 200)
 	protected String title;
 
 	/**
-	 * ÄÚÈİ
+	 * å†…å®¹
 	 */
 	@Column(name = "CONTENT_", length = 2048)
 	protected String content;
 
 	/**
-	 * ´´½¨ÈË
+	 * åˆ›å»ºäºº
 	 */
 	@Column(name = "CREATEBY_", length = 50)
 	protected String createBy;
 
 	/**
-	 * ´´½¨ÈÕÆÚ
+	 * åˆ›å»ºæ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATEDATE_")
 	protected Date createDate;
 
 	/**
-	 * ×îºóĞŞ¸ÄÈË
+	 * æœ€åä¿®æ”¹äºº
 	 */
 	@Column(name = "LASTUPDATEBY_", length = 50)
 	protected String lastUpdateBy;
 
 	/**
-	 * ×îºóĞŞ¸ÄÈÕÆÚ
+	 * æœ€åä¿®æ”¹æ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "LASTUPDATEDATE_")

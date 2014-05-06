@@ -20,13 +20,13 @@ package com.glaf.wechat.sdk.message.response.handler;
 import com.glaf.wechat.sdk.message.Message;
 
 /**
- * 消息响应接口
+ * 娑堟伅鍝嶅簲鎺ュ彛
  * 
  */
 public interface IResponseMessageHandler {
 
 	/**
-	 * 根据消息主体封装响应消息
+	 * 鏍规嵁娑堟伅涓讳綋灏佽鍝嶅簲娑堟伅
 	 * 
 	 * @param message
 	 * @return

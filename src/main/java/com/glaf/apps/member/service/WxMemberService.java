@@ -29,7 +29,7 @@ import com.glaf.apps.member.query.WxMemberQuery;
 public interface WxMemberService {
 
 	/**
-	 * ¸ù¾İÖ÷¼üÉ¾³ı¼ÇÂ¼
+	 * æ ¹æ®ä¸»é”®åˆ é™¤è®°å½•
 	 * 
 	 * @return
 	 */
@@ -37,7 +37,7 @@ public interface WxMemberService {
 	void deleteById(Long id);
 
 	/**
-	 * ¸ù¾İÖ÷¼üÉ¾³ı¶àÌõ¼ÇÂ¼
+	 * æ ¹æ®ä¸»é”®åˆ é™¤å¤šæ¡è®°å½•
 	 * 
 	 * @return
 	 */
@@ -45,7 +45,7 @@ public interface WxMemberService {
 	void deleteByIds(List<Long> ids);
 
 	/**
-	 * ¸ù¾İÖ÷¼ü»ñÈ¡Ò»Ìõ¼ÇÂ¼
+	 * æ ¹æ®ä¸»é”®è·å–ä¸€æ¡è®°å½•
 	 * 
 	 * @return
 	 */
@@ -54,14 +54,14 @@ public interface WxMemberService {
 	WxMember getWxMemberByUUID(String uuid);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡¼ÇÂ¼×ÜÊı
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–è®°å½•æ€»æ•°
 	 * 
 	 * @return
 	 */
 	int getWxMemberCountByQueryCriteria(WxMemberQuery query);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡Ò»Ò³µÄÊı¾İ
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–ä¸€é¡µçš„æ•°æ®
 	 * 
 	 * @return
 	 */
@@ -69,14 +69,14 @@ public interface WxMemberService {
 			WxMemberQuery query);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡¼ÇÂ¼ÁĞ±í
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–è®°å½•åˆ—è¡¨
 	 * 
 	 * @return
 	 */
 	List<WxMember> list(WxMemberQuery query);
 
 	/**
-	 * ±£´æÒ»Ìõ¼ÇÂ¼
+	 * ä¿å­˜ä¸€æ¡è®°å½•
 	 * 
 	 * @return
 	 */

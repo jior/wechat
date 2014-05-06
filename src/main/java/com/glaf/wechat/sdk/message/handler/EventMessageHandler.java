@@ -45,24 +45,24 @@ public class EventMessageHandler extends AbstractMessageHandler {
 		logger.debug("event:" + msg.getEvent());
 		logger.debug("eventKey:" + msg.getEventKey());
 		if (StringUtils.equalsIgnoreCase(msg.getEvent(), "subscribe")) {
-			// ¶©ÔÄÊÂ¼ş
+			// è®¢é˜…äº‹ä»¶
 			filterChain.addFilter(new SubscribeMessageFilter());
 		}else if (StringUtils.equalsIgnoreCase(msg.getEvent(), "unsubscribe")) {
-			// È¡Ïû¶©ÔÄÊÂ¼ş
+			// å–æ¶ˆè®¢é˜…äº‹ä»¶
 			filterChain.addFilter(new UnsubscribeMessageFilter());
 		} else if (StringUtils.equalsIgnoreCase(msg.getEvent(), "CLICK")) {
-			// ×Ô¶¨Òå²Ëµ¥µã»÷ÊÂ¼ş
+			// è‡ªå®šä¹‰èœå•ç‚¹å‡»äº‹ä»¶
 			String eventKey = msg.getEventKey();
 			if (StringUtils.isNotEmpty(eventKey)) {
 				filterChain.addFilter(new MenuMessageFilter());
-				logger.debug("×Ô¶¨Òå²Ëµ¥µã»÷ÊÂ¼ş:" + eventKey);
+				logger.debug("è‡ªå®šä¹‰èœå•ç‚¹å‡»äº‹ä»¶:" + eventKey);
 			}
 		} else if (StringUtils.equalsIgnoreCase(msg.getEvent(), "LOCATION")) {
-			// µØÀíÎ»ÖÃÊÂ¼ş
+			// åœ°ç†ä½ç½®äº‹ä»¶
 			filterChain.addFilter(new LocationMessageFilter());
 		}
 
-		// ¼ÓÈëÄ¬ÈÏµÄÏìÓ¦´¦ÀíÀà
+		// åŠ å…¥é»˜è®¤çš„å“åº”å¤„ç†ç±»
 		filterChain.addFilter(new DefaultResponseMessageFilter());
 		return filterChain.doFilterChain(message);
 	}

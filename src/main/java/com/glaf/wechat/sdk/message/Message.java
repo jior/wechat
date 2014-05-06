@@ -22,23 +22,23 @@ import java.util.Map;
 import org.dom4j.Element;
 
 /**
- * ÏûÏ¢»ù´¡Àà
+ * æ¶ˆæ¯åŸºç¡€ç±»
  * 
  */
 public class Message implements IMessage, java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	protected String msgType;// ÏûÏ¢ÀàĞÍ£¨text/image/location/link/voice£©
-	protected String fromUserName;// ·¢ËÍ·½ÕÊºÅ£¨Ò»¸öOpenID£©
-	protected String toUserName;// ¿ª·¢ÕßÎ¢ĞÅºÅ
-	protected long msgId;// ÏûÏ¢id£¨64Î»³¤ÕûĞÍ£©
-	protected long createTime;// ÏûÏ¢´´½¨Ê±¼ä £¨64Î»³¤ÕûĞÍ£©
+	protected String msgType;// æ¶ˆæ¯ç±»å‹ï¼ˆtext/image/location/link/voiceï¼‰
+	protected String fromUserName;// å‘é€æ–¹å¸å·ï¼ˆä¸€ä¸ªOpenIDï¼‰
+	protected String toUserName;// å¼€å‘è€…å¾®ä¿¡å·
+	protected long msgId;// æ¶ˆæ¯idï¼ˆ64ä½é•¿æ•´å‹ï¼‰
+	protected long createTime;// æ¶ˆæ¯åˆ›å»ºæ—¶é—´ ï¼ˆ64ä½é•¿æ•´å‹ï¼‰
 	protected String contextPath;
-	protected Long accountId;// ¿Í»§ÕËºÅ
-	protected String customer;// ¿Í»§±àºÅ
+	protected Long accountId;// å®¢æˆ·è´¦å·
+	protected String customer;// å®¢æˆ·ç¼–å·
 	protected String serviceUrl;
-	protected String remoteIPAddr;// ·ÃÎÊÕßIPµØÖ·
+	protected String remoteIPAddr;// è®¿é—®è€…IPåœ°å€
 	protected Element root;
 	protected Map<String, Object> requestParameters;
 

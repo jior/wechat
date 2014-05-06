@@ -76,7 +76,7 @@ public class WxPublicMemberController {
 			logger.error(ex);
 		}
 
-		return ResponseUtils.responseJsonResult(false, "提交不成功，请稍候再试！");
+		return ResponseUtils.responseJsonResult(false, "鎻愪氦涓嶆垚鍔燂紝璇风◢鍊欏啀璇曪紒");
 	}
 
 	@javax.annotation.Resource

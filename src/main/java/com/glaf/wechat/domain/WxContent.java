@@ -39,7 +39,7 @@ import com.glaf.wechat.util.WxContentJsonFactory;
 
 /**
  * 
- * ÎÄÕÂĞÅÏ¢
+ * æ–‡ç« ä¿¡æ¯
  * 
  */
 @Entity
@@ -53,25 +53,25 @@ public class WxContent implements java.io.Serializable, JSONable {
 	protected long id;
 
 	/**
-	 * Î¢Õ¾¹«ÖÚºÅÓ¦ÓÃID
+	 * å¾®ç«™å…¬ä¼—å·åº”ç”¨ID
 	 */
 	@Column(name = "ACCOUNTID_")
 	protected Long accountId;
 
 	/**
-	 * À¸Ä¿±àºÅ
+	 * æ ç›®ç¼–å·
 	 */
 	@Column(name = "CATEGORYID_")
 	protected long categoryId;
 
 	/**
-	 * ±êÌâ
+	 * æ ‡é¢˜
 	 */
 	@Column(name = "TITLE_", length = 200)
 	protected String title;
 
 	/**
-	 * ÄÚÈİ
+	 * å†…å®¹
 	 */
 	@Lob
 	@Column(name = "CONTENT_", length = 2048)
@@ -81,37 +81,37 @@ public class WxContent implements java.io.Serializable, JSONable {
 	protected String detailShowCover;
 
 	/**
-	 * ×÷Õß
+	 * ä½œè€…
 	 */
 	@Column(name = "AUTHOR_", length = 50)
 	protected String author;
 
 	/**
-	 * ×´Ì¬
+	 * çŠ¶æ€
 	 */
 	@Column(name = "STATUS_")
 	protected int status;
 
 	/**
-	 * ĞòºÅ
+	 * åºå·
 	 */
 	@Column(name = "SORT_")
 	protected int sort;
 
 	/**
-	 * ÓÅÏÈ¼¶
+	 * ä¼˜å…ˆçº§
 	 */
 	@Column(name = "PRIORTY_")
 	protected int priority;
 
 	/**
-	 * Àà±ğ£¨¹Ø×¢Ê±»Ø¸´F£¬Ä¬ÈÏ»Ø¸´D£¬¹Ø¼ü×Ö»Ø¸´K£¬LBS»Ø¸´L£©
+	 * ç±»åˆ«ï¼ˆå…³æ³¨æ—¶å›å¤Fï¼Œé»˜è®¤å›å¤Dï¼Œå…³é”®å­—å›å¤Kï¼ŒLBSå›å¤Lï¼‰
 	 */
 	@Column(name = "TYPE_", length = 20)
 	protected String type;
 
 	/**
-	 * ÏûÏ¢ÀàĞÍ£¨text/image/location/link/voice£©
+	 * æ¶ˆæ¯ç±»å‹ï¼ˆtext/image/location/link/voiceï¼‰
 	 */
 	@Column(name = "MSGTYPE_", length = 20)
 	protected String msgType;
@@ -123,67 +123,67 @@ public class WxContent implements java.io.Serializable, JSONable {
 	protected String uuid;
 
 	/**
-	 * ¹Ø¼ü×Ö
+	 * å…³é”®å­—
 	 */
 	@Column(name = "KEYWORDS_", length = 250)
 	protected String keywords;
 
 	/**
-	 * ¹Ø¼ü×ÖÊıÁ¿
+	 * å…³é”®å­—æ•°é‡
 	 */
 	@Column(name = "KEYWORDSCOUNT_")
 	protected int keywordsCount;
 
 	/**
-	 * ¹Ø¼ü×ÖÆ¥ÅäÀàĞÍ
+	 * å…³é”®å­—åŒ¹é…ç±»å‹
 	 */
 	@Column(name = "KEYWORDSMATCHTYPE_", length = 10)
 	protected String keywordsMatchType;
 
 	/**
-	 * ÍÆ¼öÔÄ¶ÁµÄÄÚÈİ±àºÅ£¬¶à¸öÖ®¼äÓÃ¶ººÅ¸ô¿ª
+	 * æ¨èé˜…è¯»çš„å†…å®¹ç¼–å·ï¼Œå¤šä¸ªä¹‹é—´ç”¨é€—å·éš”å¼€
 	 */
 	@Column(name = "RECOMMENDATIONIDS_", length = 100)
 	protected String recommendationIds;
 
 	/**
-	 * ¹ØÁªµÄÄÚÈİ±àºÅ£¬¶à¸öÖ®¼äÓÃ¶ººÅ¸ô¿ª
+	 * å…³è”çš„å†…å®¹ç¼–å·ï¼Œå¤šä¸ªä¹‹é—´ç”¨é€—å·éš”å¼€
 	 */
 	@Column(name = "RELATIONIDS_", length = 100)
 	protected String relationIds;
 
 	/**
-	 * ÕªÒª
+	 * æ‘˜è¦
 	 */
 	@Column(name = "SUMMARY_", length = 250)
 	protected String summary;
 
 	/**
-	 * ·âÃæÍ¼±ê
+	 * å°é¢å›¾æ ‡
 	 */
 	@Column(name = "ICON_", length = 150)
 	protected String icon;
 
 	/**
-	 * ´óÍ¼±ê
+	 * å¤§å›¾æ ‡
 	 */
 	@Column(name = "BIGICON_", length = 150)
 	protected String bigIcon;
 
 	/**
-	 * Ğ¡Í¼±ê
+	 * å°å›¾æ ‡
 	 */
 	@Column(name = "SMALLICON_", length = 150)
 	protected String smallIcon;
 
 	/**
-	 * Ô­ÎÄÁ´½Ó
+	 * åŸæ–‡é“¾æ¥
 	 */
 	@Column(name = "URL_", length = 500)
 	protected String url;
 
 	/**
-	 * Í¼Æ¬Á´½ÓµØÖ·
+	 * å›¾ç‰‡é“¾æ¥åœ°å€
 	 */
 	@Column(name = "PICURL_", length = 500)
 	protected String picUrl;
@@ -201,26 +201,26 @@ public class WxContent implements java.io.Serializable, JSONable {
 	protected String label;
 
 	/**
-	 * ´´½¨ÈË
+	 * åˆ›å»ºäºº
 	 */
 	@Column(name = "CREATEBY_", length = 50)
 	protected String createBy;
 
 	/**
-	 * ´´½¨ÈÕÆÚ
+	 * åˆ›å»ºæ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATEDATE_")
 	protected Date createDate;
 
 	/**
-	 * ×îºóĞŞ¸ÄÈË
+	 * æœ€åä¿®æ”¹äºº
 	 */
 	@Column(name = "LASTUPDATEBY_", length = 50)
 	protected String lastUpdateBy;
 
 	/**
-	 * ×îºóĞŞ¸ÄÈÕÆÚ
+	 * æœ€åä¿®æ”¹æ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "LASTUPDATEDATE_")

@@ -52,7 +52,7 @@ public class LocationMessageHandler extends AbstractMessageHandler {
 			}
 		}
 		filterChain.addFilter(new LocationMessageFilter());
-		//加入默认的响应处理类
+		//鍔犲叆榛樿鐨勫搷搴斿鐞嗙被
 		filterChain.addFilter(new DefaultResponseMessageFilter());
 		return filterChain.doFilterChain(message);
 	}

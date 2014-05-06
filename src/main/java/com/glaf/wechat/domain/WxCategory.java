@@ -38,7 +38,7 @@ import com.glaf.wechat.util.WxCategoryJsonFactory;
 
 /**
  * 
- * À¸Ä¿ĞÅÏ¢
+ * æ ç›®ä¿¡æ¯
  * 
  */
 @Entity
@@ -48,98 +48,98 @@ public class WxCategory implements java.io.Serializable, JSONable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * ±àºÅ£¬Ö÷¼ü
+	 * ç¼–å·ï¼Œä¸»é”®
 	 */
 	@Id
 	@Column(name = "ID_", nullable = false)
 	protected long id;
 
 	/**
-	 * ¸¸½Úµã±àºÅ
+	 * çˆ¶èŠ‚ç‚¹ç¼–å·
 	 */
 	@Column(name = "PARENT_")
 	protected long parentId;
 
 	/**
-	 * Î¢Õ¾¹«ÖÚºÅÕËºÅID
+	 * å¾®ç«™å…¬ä¼—å·è´¦å·ID
 	 */
 	@Column(name = "ACCOUNTID_")
 	protected Long accountId;
 
 	/**
-	 * Ê÷±àºÅ
+	 * æ ‘ç¼–å·
 	 */
 	@Column(name = "TREEID_", length = 500)
 	protected String treeId;
 
 	/**
-	 * ĞòºÅ
+	 * åºå·
 	 */
 	@Column(name = "SORT_")
 	protected int sort;
 
 	/**
-	 * Í¼±ê
+	 * å›¾æ ‡
 	 */
 	@Column(name = "ICON_", length = 150)
 	protected String icon;
 
 	/**
-	 * Í¼±êÑùÊ½
+	 * å›¾æ ‡æ ·å¼
 	 */
 	@Column(name = "ICONCLS_", length = 50)
 	protected String iconCls;
 
 	/**
-	 * ·âÃæÍ¼±ê
+	 * å°é¢å›¾æ ‡
 	 */
 	@Column(name = "COVERICON_", length = 150)
 	protected String coverIcon;
 
 	/**
-	 * ÊÇ·ñÊ×Ò³ÏÔÊ¾
+	 * æ˜¯å¦é¦–é¡µæ˜¾ç¤º
 	 */
 	@Column(name = "INDEXSHOW_")
 	protected int indexShow;
 
 	/**
-	 * ÊÇ·ñÆôÓÃ
+	 * æ˜¯å¦å¯ç”¨
 	 */
 	@Column(name = "LOCKED_")
 	protected int locked;
 
 	/**
-	 * Ãû³Æ
+	 * åç§°
 	 */
 	@Column(name = "NAME_", length = 100)
 	protected String name;
 
 	/**
-	 * ±àÂë
+	 * ç¼–ç 
 	 */
 	@Column(name = "CODE_", length = 50)
 	protected String code;
 
 	/**
-	 * ÃèÊö
+	 * æè¿°
 	 */
 	@Column(name = "DESC_", length = 500)
 	protected String desc;
 
 	/**
-	 * À¸Ä¿ÀàĞÍ(category, menu)
+	 * æ ç›®ç±»å‹(category, menu)
 	 */
 	@Column(name = "TYPE_", length = 50)
 	protected String type;
 
 	/**
-	 * ÊÂ¼şÀàĞÍ
+	 * äº‹ä»¶ç±»å‹
 	 */
 	@Column(name = "EVENTTYPE_", length = 50)
 	protected String eventType;
 
 	/**
-	 * Á´½ÓµØÖ·
+	 * é“¾æ¥åœ°å€
 	 */
 	@Column(name = "URL_", length = 500)
 	protected String url;
@@ -151,26 +151,26 @@ public class WxCategory implements java.io.Serializable, JSONable {
 	protected String uuid;
 
 	/**
-	 * ´´½¨ÈË
+	 * åˆ›å»ºäºº
 	 */
 	@Column(name = "CREATEBY_", length = 50)
 	protected String createBy;
 
 	/**
-	 * ´´½¨ÈÕÆÚ
+	 * åˆ›å»ºæ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATEDATE_")
 	protected Date createDate;
 
 	/**
-	 * ×îºóĞŞ¸ÄÈË
+	 * æœ€åä¿®æ”¹äºº
 	 */
 	@Column(name = "LASTUPDATEBY_", length = 50)
 	protected String lastUpdateBy;
 
 	/**
-	 * ×îºóĞŞ¸ÄÈÕÆÚ
+	 * æœ€åä¿®æ”¹æ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "LASTUPDATEDATE_")

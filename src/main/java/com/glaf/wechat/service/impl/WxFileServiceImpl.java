@@ -76,7 +76,7 @@ public class WxFileServiceImpl implements WxFileService {
 	}
 
 	/**
-	 * É¾³ıÄ³¸öÀ¸Ä¿µÄÎÄ¼ş
+	 * åˆ é™¤æŸä¸ªæ ç›®çš„æ–‡ä»¶
 	 * 
 	 * @param categoryId
 	 */

@@ -272,7 +272,7 @@ public class WeixinExecutor implements IMessage {
 		} else {
 			request.setCharacterEncoding("UTF-8");
 			response.setCharacterEncoding("UTF-8");
-			out.print("不正确的命令");
+			out.print("涓嶆纭殑鍛戒护");
 			out.flush();
 			IOUtils.closeStream(out);
 		}

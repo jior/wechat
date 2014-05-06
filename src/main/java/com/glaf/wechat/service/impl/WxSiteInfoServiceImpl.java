@@ -82,7 +82,7 @@ public class WxSiteInfoServiceImpl implements WxSiteInfoService {
 	}
 
 	/**
-	 * ¸ù¾İ´´½¨ÈË»ñÈ¡Ò»Ìõ¼ÇÂ¼
+	 * æ ¹æ®åˆ›å»ºäººè·å–ä¸€æ¡è®°å½•
 	 * 
 	 * @return
 	 */

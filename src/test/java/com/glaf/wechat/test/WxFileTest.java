@@ -25,7 +25,7 @@ public class WxFileTest extends AbstractTest {
 		for (int i = 1; i <= 200; i++) {
 			WxFile wxFile = new WxFile();
 			wxFile.setCategoryId(0L);
-			wxFile.setTitle("ԭʼ��ͼƬ" + i);
+			wxFile.setTitle("原始大图片" + i);
 			wxFile.setFilename("/wx/small/small.pic" + i + ".jpg");
 			wxFile.setOriginalFilename("/wx/images/pic" + i + ".jpg");
 			wxFile.setUuid(DigestUtils.md5Hex(wxFile.getOriginalFilename()));
@@ -39,7 +39,7 @@ public class WxFileTest extends AbstractTest {
 		for (int i = 1; i <= 200; i++) {
 			WxFile wxFile = new WxFile();
 			wxFile.setCategoryId(0L);
-			wxFile.setTitle("��ͼƬ" + i);
+			wxFile.setTitle("大图片" + i);
 			wxFile.setFilename("/wx/small/small.pic" + i + ".jpg");
 			wxFile.setOriginalFilename("/wx/big/big.pic" + i + ".jpg");
 			wxFile.setUuid(DigestUtils.md5Hex(wxFile.getOriginalFilename()));
@@ -53,7 +53,7 @@ public class WxFileTest extends AbstractTest {
 		for (int i = 1; i <= 200; i++) {
 			WxFile wxFile = new WxFile();
 			wxFile.setCategoryId(0L);
-			wxFile.setTitle("�е�ͼƬ" + i);
+			wxFile.setTitle("中等图片" + i);
 			wxFile.setFilename("/wx/small/small.pic" + i + ".jpg");
 			wxFile.setOriginalFilename("/wx/medium/medium.pic" + i + ".jpg");
 			wxFile.setUuid(DigestUtils.md5Hex(wxFile.getOriginalFilename()));
@@ -67,7 +67,7 @@ public class WxFileTest extends AbstractTest {
 		for (int i = 1; i <= 200; i++) {
 			WxFile wxFile = new WxFile();
 			wxFile.setCategoryId(0L);
-			wxFile.setTitle("СͼƬ" + i);
+			wxFile.setTitle("小图片" + i);
 			wxFile.setFilename("/wx/small/small.pic" + i + ".jpg");
 			wxFile.setOriginalFilename("/wx/small/small.pic" + i + ".jpg");
 			wxFile.setUuid(DigestUtils.md5Hex(wxFile.getOriginalFilename()));

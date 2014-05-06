@@ -62,7 +62,7 @@ public class WxMongoDBLogServiceImpl implements WxLogService {
 		} catch (InterruptedException ex) {
 		}
 		/**
-		 * 当记录数达到写数据库的条数或时间超过1分钟，写日志到数据库
+		 * 褰撹褰曟暟杈惧埌鍐欐暟鎹簱鐨勬潯鏁版垨鏃堕棿瓒呰繃1鍒嗛挓锛屽啓鏃ュ織鍒版暟鎹簱
 		 */
 		if (wxLogs.size() >= conf.getInt("wx_log_step", 100)
 				|| ((System.currentTimeMillis() - lastUpdate) / 60000 > 0)) {
@@ -251,7 +251,7 @@ public class WxMongoDBLogServiceImpl implements WxLogService {
 
 	public void saveAll() {
 		/**
-		 * 当记录数达到写数据库的条数或时间超过1分钟，写日志到数据库
+		 * 褰撹褰曟暟杈惧埌鍐欐暟鎹簱鐨勬潯鏁版垨鏃堕棿瓒呰繃1鍒嗛挓锛屽啓鏃ュ織鍒版暟鎹簱
 		 */
 		if (wxLogs.size() >= conf.getInt("wx_log_step", 100)
 				|| ((System.currentTimeMillis() - lastUpdate) / 60000 > 0)) {

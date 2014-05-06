@@ -82,7 +82,7 @@ public class WxCoverServiceImpl implements WxCoverService {
 	}
 
 	/**
-	 * 获取用户封面信息
+	 * 鑾峰彇鐢ㄦ埛灏侀潰淇℃伅
 	 * 
 	 * @param accountId
 	 * @return

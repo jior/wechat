@@ -94,16 +94,16 @@ public class WxLogServiceImpl implements WxLogService {
 		}
 		logger.debug("->wxLogs.size:" + wxLogs.size());
 		/**
-		 * 当记录数达到写数据库的条数或时间超过1分钟，写日志到数据库
+		 * 褰撹褰曟暟杈惧埌鍐欐暟鎹簱鐨勬潯鏁版垨鏃堕棿瓒呰繃1鍒嗛挓锛屽啓鏃ュ織鍒版暟鎹簱
 		 */
 		if (wxLogs.size() >= conf.getInt("wx_log_step", 100)
 				|| ((System.currentTimeMillis() - lastUpdate) / 60000 > 0)) {
 			WxLog bean = null;
 			while (!wxLogs.isEmpty()) {
 				bean = wxLogs.poll();
-				sysLogMapper.insertWxLog(bean);// 写历史表
+				sysLogMapper.insertWxLog(bean);// 鍐欏巻鍙茶〃
 				bean.setSuffix("");
-				sysLogMapper.insertWxLog(bean);// 写当前表
+				sysLogMapper.insertWxLog(bean);// 鍐欏綋鍓嶈〃
 			}
 			lastUpdate = System.currentTimeMillis();
 			logger.debug("wxLogs.size:" + wxLogs.size());
@@ -117,10 +117,10 @@ public class WxLogServiceImpl implements WxLogService {
 			WxLog bean = null;
 			while (!wxLogs.isEmpty()) {
 				bean = wxLogs.poll();
-				sysLogMapper.insertWxLog(bean);// 写历史表
+				sysLogMapper.insertWxLog(bean);// 鍐欏巻鍙茶〃
 
 				bean.setSuffix("");
-				sysLogMapper.insertWxLog(bean);// 写当前表
+				sysLogMapper.insertWxLog(bean);// 鍐欏綋鍓嶈〃
 			}
 			lastUpdate = System.currentTimeMillis();
 			logger.debug("wxLogs.size:" + wxLogs.size());

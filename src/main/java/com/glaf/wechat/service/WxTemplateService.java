@@ -29,7 +29,7 @@ import com.glaf.wechat.query.WxTemplateQuery;
 public interface WxTemplateService {
 
 	/**
-	 * ¸ù¾İÖ÷¼üÉ¾³ı¼ÇÂ¼
+	 * æ ¹æ®ä¸»é”®åˆ é™¤è®°å½•
 	 * 
 	 * @return
 	 */
@@ -37,7 +37,7 @@ public interface WxTemplateService {
 	void deleteById(Long id);
 
 	/**
-	 * ¸ù¾İÖ÷¼üÉ¾³ı¶àÌõ¼ÇÂ¼
+	 * æ ¹æ®ä¸»é”®åˆ é™¤å¤šæ¡è®°å½•
 	 * 
 	 * @return
 	 */
@@ -45,21 +45,21 @@ public interface WxTemplateService {
 	void deleteByIds(List<Long> ids);
 
 	/**
-	 * ¸ù¾İÖ÷¼ü»ñÈ¡Ò»Ìõ¼ÇÂ¼
+	 * æ ¹æ®ä¸»é”®è·å–ä¸€æ¡è®°å½•
 	 * 
 	 * @return
 	 */
 	WxTemplate getWxTemplate(Long id);
 
 	/**
-	 * ¸ù¾İÖ÷¼ü»ñÈ¡Ò»Ìõ¼ÇÂ¼
+	 * æ ¹æ®ä¸»é”®è·å–ä¸€æ¡è®°å½•
 	 * 
 	 * @return
 	 */
 	WxTemplate getWxTemplate(Long id, boolean cache);
 
 	/**
-	 * »ñÈ¡Ä³¸öÀ¸Ä¿Ö¸¶¨ÀàĞÍµÄÄ£°å
+	 * è·å–æŸä¸ªæ ç›®æŒ‡å®šç±»å‹çš„æ¨¡æ¿
 	 * 
 	 * @param accountId
 	 * @param categoryId
@@ -69,14 +69,14 @@ public interface WxTemplateService {
 	List<WxTemplate> getTemplates(Long accountId, Long categoryId, String type);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡¼ÇÂ¼×ÜÊı
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–è®°å½•æ€»æ•°
 	 * 
 	 * @return
 	 */
 	int getWxTemplateCountByQueryCriteria(WxTemplateQuery query);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡Ò»Ò³µÄÊı¾İ
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–ä¸€é¡µçš„æ•°æ®
 	 * 
 	 * @return
 	 */
@@ -84,14 +84,14 @@ public interface WxTemplateService {
 			WxTemplateQuery query);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡¼ÇÂ¼ÁĞ±í
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–è®°å½•åˆ—è¡¨
 	 * 
 	 * @return
 	 */
 	List<WxTemplate> list(WxTemplateQuery query);
 
 	/**
-	 * ±£´æÒ»Ìõ¼ÇÂ¼
+	 * ä¿å­˜ä¸€æ¡è®°å½•
 	 * 
 	 * @return
 	 */

@@ -36,7 +36,7 @@ public class MongodbLogTest {
 
 	@Before
 	public void setUp() throws Exception {
-		System.out.println("¿ªÊ¼²âÊÔ..................................");
+		System.out.println("å¼€å§‹æµ‹è¯•..................................");
 		wxLogService = (WxLogService) MongodbContextFactory
 				.getBean("wxLogService");
 	}

@@ -92,7 +92,7 @@ public class WxMenuController {
 				if (StringUtils.isNotEmpty(x)) {
 					WxMenu wxMenu = wxMenuService.getWxMenu(Long.valueOf(x));
 					/**
-					 * ´Ë´¦ÒµÎñÂß¼­Ğè×ÔĞĞµ÷Õû
+					 * æ­¤å¤„ä¸šåŠ¡é€»è¾‘éœ€è‡ªè¡Œè°ƒæ•´
 					 */
 
 					if (wxMenu != null
@@ -106,7 +106,7 @@ public class WxMenuController {
 		} else if (id != null) {
 			WxMenu wxMenu = wxMenuService.getWxMenu(Long.valueOf(id));
 			/**
-			 * ´Ë´¦ÒµÎñÂß¼­Ğè×ÔĞĞµ÷Õû
+			 * æ­¤å¤„ä¸šåŠ¡é€»è¾‘éœ€è‡ªè¡Œè°ƒæ•´
 			 */
 
 			if (wxMenu != null
@@ -572,7 +572,7 @@ public class WxMenuController {
 									accessToken.getToken());
 							logger.debug("result=" + result);
 							if (result == 0) {
-								logger.debug("³É¹¦Í¬²½²Ëµ¥µ½Î¢ĞÅ·şÎñÆ÷¡£");
+								logger.debug("æˆåŠŸåŒæ­¥èœå•åˆ°å¾®ä¿¡æœåŠ¡å™¨ã€‚");
 								return ResponseUtils.responseJsonResult(true);
 							} else {
 								String message = WechatCodeProperties

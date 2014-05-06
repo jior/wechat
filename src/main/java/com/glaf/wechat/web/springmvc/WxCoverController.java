@@ -89,7 +89,7 @@ public class WxCoverController {
 					WxCover wxCover = wxCoverService
 							.getWxCover(Long.valueOf(x));
 					/**
-					 * ´Ë´¦ÒµÎñÂß¼­Ğè×ÔĞĞµ÷Õû
+					 * æ­¤å¤„ä¸šåŠ¡é€»è¾‘éœ€è‡ªè¡Œè°ƒæ•´
 					 */
 
 					if (wxCover != null
@@ -103,7 +103,7 @@ public class WxCoverController {
 		} else if (id != null) {
 			WxCover wxCover = wxCoverService.getWxCover(Long.valueOf(id));
 			/**
-			 * ´Ë´¦ÒµÎñÂß¼­Ğè×ÔĞĞµ÷Õû
+			 * æ­¤å¤„ä¸šåŠ¡é€»è¾‘éœ€è‡ªè¡Œè°ƒæ•´
 			 */
 			if (wxCover != null
 					&& (StringUtils.equals(wxCover.getCreateBy(),
@@ -307,10 +307,10 @@ public class WxCoverController {
 
 					if (StringUtils.equals(mFile.getName(), "bigIcon")) {
 						wxCover.setBigIcon(wxFile.getPath());
-						wxFile.setTitle("·âÃæ´óÍ¼Æ¬");
+						wxFile.setTitle("å°é¢å¤§å›¾ç‰‡");
 						save = true;
 					} else if (StringUtils.equals(mFile.getName(), "smallIcon")) {
-						wxFile.setTitle("·âÃæĞ¡Í¼Æ¬");
+						wxFile.setTitle("å°é¢å°å›¾ç‰‡");
 						wxCover.setSmallIcon(wxFile.getPath());
 						save = true;
 					}

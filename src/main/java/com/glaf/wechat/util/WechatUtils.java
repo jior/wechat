@@ -32,7 +32,7 @@ import com.glaf.wechat.component.Menu;
 import com.glaf.wechat.model.AccessToken;
 
 /**
- * ¹«ÖÚÆ½Ì¨Í¨ÓÃ½Ó¿Ú¹¤¾ßÀà
+ * å…¬ä¼—å¹³å°é€šç”¨æ¥å£å·¥å…·ç±»
  * 
  * @author jior
  */
@@ -41,30 +41,30 @@ public class WechatUtils {
 			.getLogger(WechatUtils.class);
 
 	/**
-	 * ´´½¨²Ëµ¥
+	 * åˆ›å»ºèœå•
 	 * 
 	 * @param menu
-	 *            ²Ëµ¥ÊµÀı
+	 *            èœå•å®ä¾‹
 	 * @param accessToken
-	 *            ÓĞĞ§µÄaccess_token
-	 * @return 0±íÊ¾³É¹¦£¬ÆäËûÖµ±íÊ¾Ê§°Ü
+	 *            æœ‰æ•ˆçš„access_token
+	 * @return 0è¡¨ç¤ºæˆåŠŸï¼Œå…¶ä»–å€¼è¡¨ç¤ºå¤±è´¥
 	 */
 	public static int createMenu(String menu_create_url, Menu menu,
 			String accessToken) {
 		int result = 0;
 
-		// Æ´×°´´½¨²Ëµ¥µÄurl
+		// æ‹¼è£…åˆ›å»ºèœå•çš„url
 		String url = menu_create_url.replace("ACCESS_TOKEN", accessToken);
-		// ½«²Ëµ¥¶ÔÏó×ª»»³Éjson×Ö·û´®
+		// å°†èœå•å¯¹è±¡è½¬æ¢æˆjsonå­—ç¬¦ä¸²
 		String jsonMenu = menu.toJSONObject().toJSONString();
-		// µ÷ÓÃ½Ó¿Ú´´½¨²Ëµ¥
+		// è°ƒç”¨æ¥å£åˆ›å»ºèœå•
 		JSONObject jsonObject = HttpClientUtils.executeRequest(url, "POST",
 				jsonMenu);
 
 		if (null != jsonObject) {
 			if (0 != jsonObject.getInteger("errcode")) {
 				result = jsonObject.getInteger("errcode");
-				log.error("´´½¨²Ëµ¥Ê§°Ü errcode:{} errmsg:{}",
+				log.error("åˆ›å»ºèœå•å¤±è´¥ errcode:{} errmsg:{}",
 						jsonObject.getInteger("errcode"),
 						jsonObject.getString("errmsg"));
 			}
@@ -74,12 +74,12 @@ public class WechatUtils {
 	}
 
 	/**
-	 * »ñÈ¡access_token
+	 * è·å–access_token
 	 * 
 	 * @param accountId
-	 *            Æ¾Ö¤
+	 *            å‡­è¯
 	 * @param appSecret
-	 *            ÃÜÔ¿
+	 *            å¯†é’¥
 	 * @return
 	 */
 	public static AccessToken getAccessToken(String access_token_url,
@@ -98,7 +98,7 @@ public class WechatUtils {
 					.replace("APPSECRET", appSecret);
 			JSONObject jsonObject = HttpClientUtils.executeRequest(requestUrl,
 					"GET", null);
-			// Èç¹ûÇëÇó³É¹¦
+			// å¦‚æœè¯·æ±‚æˆåŠŸ
 			if (null != jsonObject) {
 				log.debug(jsonObject.toJSONString());
 				try {
@@ -110,8 +110,8 @@ public class WechatUtils {
 							jsonObject.toJSONString());
 				} catch (JSONException e) {
 					accessToken = null;
-					// »ñÈ¡tokenÊ§°Ü
-					log.error("»ñÈ¡tokenÊ§°Ü errcode:{} errmsg:{}",
+					// è·å–tokenå¤±è´¥
+					log.error("è·å–tokenå¤±è´¥ errcode:{} errmsg:{}",
 							jsonObject.getInteger("errcode"),
 							jsonObject.getString("errmsg"));
 				}
@@ -133,11 +133,11 @@ public class WechatUtils {
 	}
 
 	/**
-	 * »ñÈ¡¹Ø×¢Õß
+	 * è·å–å…³æ³¨è€…
 	 * 
 	 * @param accessToken
-	 *            ÓĞĞ§µÄaccess_token
-	 * @return ¹Ø×¢ÕßJSON
+	 *            æœ‰æ•ˆçš„access_token
+	 * @return å…³æ³¨è€…JSON
 	 */
 	public static JSONObject getFollower(String orgi_url, String accessToken,
 			String openid) {
@@ -149,11 +149,11 @@ public class WechatUtils {
 	}
 
 	/**
-	 * »ñÈ¡¹Ø×¢ÕßÁĞ±í
+	 * è·å–å…³æ³¨è€…åˆ—è¡¨
 	 * 
 	 * @param accessToken
-	 *            ÓĞĞ§µÄaccess_token
-	 * @return ¹Ø×¢ÕßÁĞ±íJSON
+	 *            æœ‰æ•ˆçš„access_token
+	 * @return å…³æ³¨è€…åˆ—è¡¨JSON
 	 */
 	public static JSONObject getFollowers(String orgi_url, String accessToken,
 			String next_openid) {
@@ -174,15 +174,15 @@ public class WechatUtils {
 	}
 
 	/**
-	 * »ñÈ¡²Ëµ¥
+	 * è·å–èœå•
 	 * 
 	 * @param accessToken
-	 *            ÓĞĞ§µÄaccess_token
-	 * @return ²Ëµ¥ÊµÀıJSON
+	 *            æœ‰æ•ˆçš„access_token
+	 * @return èœå•å®ä¾‹JSON
 	 */
 	public static JSONObject getMenu(String orgi_url, String accessToken) {
 		String url = orgi_url.replace("ACCESS_TOKEN", accessToken);
-		// µ÷ÓÃ½Ó¿Ú´´½¨²Ëµ¥
+		// è°ƒç”¨æ¥å£åˆ›å»ºèœå•
 		JSONObject jsonObject = HttpClientUtils
 				.executeRequest(url, "GET", null);
 		return jsonObject;

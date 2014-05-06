@@ -65,7 +65,7 @@ public class WxUserRegisterController {
 	}
 
 	/**
-	 * ÏÔÊ¾ĞŞ¸ÄÒ³Ãæ
+	 * æ˜¾ç¤ºä¿®æ”¹é¡µé¢
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -87,8 +87,8 @@ public class WxUserRegisterController {
 			department.setCode2("website");
 			department.setNo("website");
 			department.setDeptLevel(0);
-			department.setDesc("ÍøÕ¾ÓÃ»§");
-			department.setName("ÍøÕ¾ÓÃ»§");
+			department.setDesc("ç½‘ç«™ç”¨æˆ·");
+			department.setName("ç½‘ç«™ç”¨æˆ·");
 			department.setLevel(0);
 			department.setCreateBy("website");
 			department.setCreateTime(new Date());

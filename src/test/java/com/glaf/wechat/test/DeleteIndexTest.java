@@ -15,7 +15,7 @@ import com.glaf.wechat.query.WxContentQuery;
 import com.glaf.wechat.service.WxContentService;
 
 /**
- * ´ÓESÉ¾³ıË÷Òı¶ÔÏó
+ * ä»ESåˆ é™¤ç´¢å¼•å¯¹è±¡
  * 
  */
 public class DeleteIndexTest extends AbstractTest {
@@ -29,12 +29,12 @@ public class DeleteIndexTest extends AbstractTest {
 	@Test
 	public void deleteIndex() {
 		Settings settings = ImmutableSettings.settingsBuilder()
-		// Ö¸¶¨¼¯ÈºÃû³Æ
+		// æŒ‡å®šé›†ç¾¤åç§°
 				.put("cluster.name", "elasticsearch")
-				// Ì½²â¼¯ÈºÖĞ»úÆ÷×´Ì¬
+				// æ¢æµ‹é›†ç¾¤ä¸­æœºå™¨çŠ¶æ€
 				.put("client.transport.sniff", true).build();
 		/*
-		 * ´´½¨¿Í»§¶Ë£¬ËùÓĞµÄ²Ù×÷¶¼ÓÉ¿Í»§¶Ë¿ªÊ¼£¬Õâ¸ö¾ÍºÃÏñÊÇJDBCµÄConnection¶ÔÏó ÓÃÍê¼ÇµÃÒª¹Ø±Õ
+		 * åˆ›å»ºå®¢æˆ·ç«¯ï¼Œæ‰€æœ‰çš„æ“ä½œéƒ½ç”±å®¢æˆ·ç«¯å¼€å§‹ï¼Œè¿™ä¸ªå°±å¥½åƒæ˜¯JDBCçš„Connectionå¯¹è±¡ ç”¨å®Œè®°å¾—è¦å…³é—­
 		 */
 		TransportClient client = new TransportClient(settings);
 		client.addTransportAddress(new InetSocketTransportAddress("127.0.0.1",
@@ -44,7 +44,7 @@ public class DeleteIndexTest extends AbstractTest {
 		WxContentQuery query = new WxContentQuery();
 		List<WxContent> list = wxContentService.list(query);
 		for (WxContent content : list) {
-			//ÆäÖĞwechatÎªË÷Òı¿âÃû£¬Ò»¸öes¼¯ÈºÖĞ¿ÉÒÔÓĞ¶à¸öË÷Òı¿â¡£contentÎªË÷ÒıÀàĞÍ£¬ÊÇÓÃÀ´Çø·ÖÍ¬Ë÷Òı¿âÏÂ²»Í¬ÀàĞÍµÄÊı¾İµÄ£¬Ò»¸öË÷Òı¿âÏÂ¿ÉÒÔÓĞ¶à¸öË÷ÒıÀàĞÍ¡£
+			//å…¶ä¸­wechatä¸ºç´¢å¼•åº“åï¼Œä¸€ä¸ªesé›†ç¾¤ä¸­å¯ä»¥æœ‰å¤šä¸ªç´¢å¼•åº“ã€‚contentä¸ºç´¢å¼•ç±»å‹ï¼Œæ˜¯ç”¨æ¥åŒºåˆ†åŒç´¢å¼•åº“ä¸‹ä¸åŒç±»å‹çš„æ•°æ®çš„ï¼Œä¸€ä¸ªç´¢å¼•åº“ä¸‹å¯ä»¥æœ‰å¤šä¸ªç´¢å¼•ç±»å‹ã€‚
 			DeleteResponse response = client
 					.prepareDelete("wechat", "content",
 							String.valueOf(content.getId())).execute()

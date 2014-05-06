@@ -12,7 +12,7 @@ import org.elasticsearch.search.SearchHits;
 import org.junit.Test;
 
 /**
- * ´ÓES¼ìË÷¶ÔÏó
+ * ä»ESæ£€ç´¢å¯¹è±¡
  * 
  */
 public class SearchTest {
@@ -20,12 +20,12 @@ public class SearchTest {
 	@Test
 	public void search() {
 		Settings settings = ImmutableSettings.settingsBuilder()
-		// Ö¸¶¨¼¯ÈºÃû³Æ
+		// æŒ‡å®šé›†ç¾¤åç§°
 				.put("cluster.name", "elasticsearch")
-				// Ì½²â¼¯ÈºÖĞ»úÆ÷×´Ì¬
+				// æ¢æµ‹é›†ç¾¤ä¸­æœºå™¨çŠ¶æ€
 				.put("client.transport.sniff", true).build();
 		/*
-		 * ´´½¨¿Í»§¶Ë£¬ËùÓĞµÄ²Ù×÷¶¼ÓÉ¿Í»§¶Ë¿ªÊ¼£¬Õâ¸ö¾ÍºÃÏñÊÇJDBCµÄConnection¶ÔÏó ÓÃÍê¼ÇµÃÒª¹Ø±Õ
+		 * åˆ›å»ºå®¢æˆ·ç«¯ï¼Œæ‰€æœ‰çš„æ“ä½œéƒ½ç”±å®¢æˆ·ç«¯å¼€å§‹ï¼Œè¿™ä¸ªå°±å¥½åƒæ˜¯JDBCçš„Connectionå¯¹è±¡ ç”¨å®Œè®°å¾—è¦å…³é—­
 		 */
 		TransportClient client = new TransportClient(settings);
 		client.addTransportAddress(new InetSocketTransportAddress("127.0.0.1",
@@ -34,17 +34,17 @@ public class SearchTest {
 				9301));
 
 		BoolQueryBuilder query = QueryBuilders.boolQuery();
-		//query.must(QueryBuilders.fieldQuery("content", "ÉÌÒµ"));
+		//query.must(QueryBuilders.fieldQuery("content", "å•†ä¸š"));
 		//query.must(QueryBuilders.fieldQuery("type", "P"));
 		//query.must(QueryBuilders.fieldQuery("accountId", 1L));
 
-		//ÆäÖĞwechatÎªË÷Òı¿âÃû£¬Ò»¸öes¼¯ÈºÖĞ¿ÉÒÔÓĞ¶à¸öË÷Òı¿â¡£contentÎªË÷ÒıÀàĞÍ£¬ÊÇÓÃÀ´Çø·ÖÍ¬Ë÷Òı¿âÏÂ²»Í¬ÀàĞÍµÄÊı¾İµÄ£¬Ò»¸öË÷Òı¿âÏÂ¿ÉÒÔÓĞ¶à¸öË÷ÒıÀàĞÍ¡£
+		//å…¶ä¸­wechatä¸ºç´¢å¼•åº“åï¼Œä¸€ä¸ªesé›†ç¾¤ä¸­å¯ä»¥æœ‰å¤šä¸ªç´¢å¼•åº“ã€‚contentä¸ºç´¢å¼•ç±»å‹ï¼Œæ˜¯ç”¨æ¥åŒºåˆ†åŒç´¢å¼•åº“ä¸‹ä¸åŒç±»å‹çš„æ•°æ®çš„ï¼Œä¸€ä¸ªç´¢å¼•åº“ä¸‹å¯ä»¥æœ‰å¤šä¸ªç´¢å¼•ç±»å‹ã€‚
 		SearchResponse response = client.prepareSearch("wechat")
-				// Õâ¸öÔÚprepareSearchÖĞÖ¸¶¨»¹²»ĞĞ£¬±ØĞëÊ¹ÓÃsetTypes
+				// è¿™ä¸ªåœ¨prepareSearchä¸­æŒ‡å®šè¿˜ä¸è¡Œï¼Œå¿…é¡»ä½¿ç”¨setTypes
 				.setTypes("content").setQuery(query).setFrom(0).setSize(100)
 				.execute().actionGet();
 		/**
-		 * SearchHitsÊÇSearchHitµÄ¸´ÊıĞÎÊ½£¬±íÊ¾Õâ¸öÊÇÒ»¸öÁĞ±í
+		 * SearchHitsæ˜¯SearchHitçš„å¤æ•°å½¢å¼ï¼Œè¡¨ç¤ºè¿™ä¸ªæ˜¯ä¸€ä¸ªåˆ—è¡¨
 		 */
 		SearchHits shs = response.getHits();
 		for (SearchHit hit : shs) {

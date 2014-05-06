@@ -77,31 +77,31 @@ public class WxUser implements Serializable, JSONable, User {
 	protected String token;
 
 	/**
-	 * 微信应用编号
+	 * 寰俊搴旂敤缂栧彿
 	 */
 	@Column(name = "WXAPPID", length = 100)
 	protected String wxAppId;
 
 	/**
-	 * 微信应用密锁
+	 * 寰俊搴旂敤瀵嗛攣
 	 */
 	@Column(name = "WXAPPSECRET", length = 100)
 	protected String wxAppSecret;
 
 	/**
-	 * 易信应用编号
+	 * 鏄撲俊搴旂敤缂栧彿
 	 */
 	@Column(name = "YXAPPID", length = 100)
 	protected String yxAppId;
 
 	/**
-	 * 易信应用密锁
+	 * 鏄撲俊搴旂敤瀵嗛攣
 	 */
 	@Column(name = "YXAPPSECRET", length = 100)
 	protected String yxAppSecret;
 
 	/**
-	 * LBS信息距离(单位：米)
+	 * LBS淇℃伅璺濈(鍗曚綅锛氱背)
 	 */
 	@Column(name = "LBSPOSITION")
 	protected Integer lbsPosition;

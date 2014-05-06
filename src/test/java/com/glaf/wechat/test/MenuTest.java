@@ -31,7 +31,7 @@ import com.glaf.wechat.model.AccessToken;
 import com.glaf.wechat.util.WechatUtils;
 
 /**
- * ²Ëµ¥¹ÜÀíÆ÷Àà
+ * èœå•ç®¡ç†å™¨ç±»
  * 
  * @author jior
  */
@@ -41,88 +41,88 @@ public class MenuTest {
 	protected static Configuration conf = WechatConfiguration.create();
 
 	/**
-	 * ×é×°²Ëµ¥Êı¾İ
+	 * ç»„è£…èœå•æ•°æ®
 	 * 
 	 * @return
 	 */
 	private static Menu getMenu() {
 		Button btn11 = new Button();
-		btn11.setName("ÌìÆøÔ¤±¨");
+		btn11.setName("å¤©æ°”é¢„æŠ¥");
 		btn11.setType("click");
 		btn11.setKey("11");
 
 		Button btn12 = new Button();
-		btn12.setName("¹«½»²éÑ¯");
+		btn12.setName("å…¬äº¤æŸ¥è¯¢");
 		btn12.setType("click");
 		btn12.setKey("12");
 
 		Button btn13 = new Button();
-		btn13.setName("ÖÜ±ßËÑË÷");
+		btn13.setName("å‘¨è¾¹æœç´¢");
 		btn13.setType("click");
 		btn13.setKey("13");
 
 		Button btn14 = new Button();
-		btn14.setName("ÀúÊ·ÉÏµÄ½ñÌì");
+		btn14.setName("å†å²ä¸Šçš„ä»Šå¤©");
 		btn14.setType("click");
 		btn14.setKey("14");
 
 		Button btn21 = new Button();
-		btn21.setName("¸èÇúµã²¥");
+		btn21.setName("æ­Œæ›²ç‚¹æ’­");
 		btn21.setType("click");
 		btn21.setKey("21");
 
 		Button btn22 = new Button();
-		btn22.setName("¾­µäÓÎÏ·");
+		btn22.setName("ç»å…¸æ¸¸æˆ");
 		btn22.setType("click");
 		btn22.setKey("22");
 
 		Button btn23 = new Button();
-		btn23.setName("ÃÀÅ®µçÌ¨");
+		btn23.setName("ç¾å¥³ç”µå°");
 		btn23.setType("click");
 		btn23.setKey("23");
 
 		Button btn24 = new Button();
-		btn24.setName("ÈËÁ³Ê¶±ğ");
+		btn24.setName("äººè„¸è¯†åˆ«");
 		btn24.setType("click");
 		btn24.setKey("24");
 
 		Button btn25 = new Button();
-		btn25.setName("ÁÄÌìßëà¾");
+		btn25.setName("èŠå¤©å” å—‘");
 		btn25.setType("click");
 		btn25.setKey("25");
 
 		Button btn31 = new Button();
-		btn31.setName("QÓÑÈ¦");
+		btn31.setName("Qå‹åœˆ");
 		btn31.setType("click");
 		btn31.setKey("31");
 
 		Button btn32 = new Button();
-		btn32.setName("µçÓ°ÅÅĞĞ°ñ");
+		btn32.setName("ç”µå½±æ’è¡Œæ¦œ");
 		btn32.setType("click");
 		btn32.setKey("32");
 
 		Button btn33 = new Button();
-		btn33.setName("ÓÄÄ¬Ğ¦»°");
+		btn33.setName("å¹½é»˜ç¬‘è¯");
 		btn33.setType("click");
 		btn33.setKey("33");
 
 		Button mainBtn1 = new Button();
-		mainBtn1.setName("Éú»îÖúÊÖ");
+		mainBtn1.setName("ç”Ÿæ´»åŠ©æ‰‹");
 		mainBtn1.setSubButtons(new Button[] { btn11, btn12, btn13, btn14 });
 
 		Button mainBtn2 = new Button();
-		mainBtn2.setName("ĞİÏĞæäÕ¾");
+		mainBtn2.setName("ä¼‘é—²é©¿ç«™");
 		mainBtn2.setSubButtons(new Button[] { btn21, btn22, btn23, btn24, btn25 });
 
 		Button mainBtn3 = new Button();
-		mainBtn3.setName("¸ü¶àÌåÑé");
+		mainBtn3.setName("æ›´å¤šä½“éªŒ");
 		mainBtn3.setSubButtons(new Button[] { btn31, btn32, btn33 });
 
 		/**
-		 * ÕâÊÇ¹«ÖÚºÅxxxxÄ¿Ç°µÄ²Ëµ¥½á¹¹£¬Ã¿¸öÒ»¼¶²Ëµ¥¶¼ÓĞ¶ş¼¶²Ëµ¥Ïî<br>
+		 * è¿™æ˜¯å…¬ä¼—å·xxxxç›®å‰çš„èœå•ç»“æ„ï¼Œæ¯ä¸ªä¸€çº§èœå•éƒ½æœ‰äºŒçº§èœå•é¡¹<br>
 		 * 
-		 * ÔÚÄ³¸öÒ»¼¶²Ëµ¥ÏÂÃ»ÓĞ¶ş¼¶²Ëµ¥µÄÇé¿ö£¬menu¸ÃÈçºÎ¶¨ÒåÄØ£¿<br>
-		 * ±ÈÈç£¬µÚÈı¸öÒ»¼¶²Ëµ¥Ïî²»ÊÇ¡°¸ü¶àÌåÑé¡±£¬¶øÖ±½ÓÊÇ¡°ÓÄÄ¬Ğ¦»°¡±£¬ÄÇÃ´menuÓ¦¸ÃÕâÑù¶¨Òå£º<br>
+		 * åœ¨æŸä¸ªä¸€çº§èœå•ä¸‹æ²¡æœ‰äºŒçº§èœå•çš„æƒ…å†µï¼Œmenuè¯¥å¦‚ä½•å®šä¹‰å‘¢ï¼Ÿ<br>
+		 * æ¯”å¦‚ï¼Œç¬¬ä¸‰ä¸ªä¸€çº§èœå•é¡¹ä¸æ˜¯â€œæ›´å¤šä½“éªŒâ€ï¼Œè€Œç›´æ¥æ˜¯â€œå¹½é»˜ç¬‘è¯â€ï¼Œé‚£ä¹ˆmenuåº”è¯¥è¿™æ ·å®šä¹‰ï¼š<br>
 		 * menu.setButton(new Button[] { mainBtn1, mainBtn2, btn33 });
 		 */
 		Menu menu = new Menu();
@@ -138,25 +138,25 @@ public class MenuTest {
 	public static void main(String[] args) {
 		Menu menu = getMenu();
 		log.info(menu.toJSONObject().toJSONString());
-		// µÚÈı·½ÓÃ»§Î¨Ò»Æ¾Ö¤
+		// ç¬¬ä¸‰æ–¹ç”¨æˆ·å”¯ä¸€å‡­è¯
 		String appId = "0000000000000000000000";
-		// µÚÈı·½ÓÃ»§Î¨Ò»Æ¾Ö¤ÃÜÔ¿
+		// ç¬¬ä¸‰æ–¹ç”¨æˆ·å”¯ä¸€å‡­è¯å¯†é’¥
 		String appSecret = "00000000000000000000";
 
-		// µ÷ÓÃ½Ó¿Ú»ñÈ¡access_token
+		// è°ƒç”¨æ¥å£è·å–access_token
 		AccessToken at = WechatUtils.getAccessToken(
 				conf.get("weixin_access_token_url"), appId, appSecret);
 
 		if (null != at) {
-			// µ÷ÓÃ½Ó¿Ú´´½¨²Ëµ¥
+			// è°ƒç”¨æ¥å£åˆ›å»ºèœå•
 			int result = WechatUtils.createMenu(
 					conf.get("weixin_menu_create_url"), menu, at.getToken());
 
-			// ÅĞ¶Ï²Ëµ¥´´½¨½á¹û
+			// åˆ¤æ–­èœå•åˆ›å»ºç»“æœ
 			if (0 == result) {
-				log.info("²Ëµ¥´´½¨³É¹¦£¡");
+				log.info("èœå•åˆ›å»ºæˆåŠŸï¼");
 			} else {
-				log.info("²Ëµ¥´´½¨Ê§°Ü£¬´íÎóÂë£º" + result);
+				log.info("èœå•åˆ›å»ºå¤±è´¥ï¼Œé”™è¯¯ç ï¼š" + result);
 			}
 		}
 	}

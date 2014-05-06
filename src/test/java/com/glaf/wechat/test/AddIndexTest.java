@@ -15,7 +15,7 @@ import com.glaf.wechat.query.WxContentQuery;
 import com.glaf.wechat.service.WxContentService;
 
 /**
- * ÏòESÌí¼ÓË÷Òı¶ÔÏó
+ * å‘ESæ·»åŠ ç´¢å¼•å¯¹è±¡
  * 
  */
 public class AddIndexTest extends AbstractTest {
@@ -29,16 +29,16 @@ public class AddIndexTest extends AbstractTest {
 	@Test
 	public void addIndex() {
 		Settings settings = ImmutableSettings.settingsBuilder()
-		// 5¸öÖ÷·ÖÆ¬
+		// 5ä¸ªä¸»åˆ†ç‰‡
 				.put("number_of_shards", 5)
-				// ²âÊÔ»·¾³£¬¼õÉÙ¸±±¾Ìá¸ßËÙ¶È
+				// æµ‹è¯•ç¯å¢ƒï¼Œå‡å°‘å‰¯æœ¬æé«˜é€Ÿåº¦
 				.put("number_of_replicas", 0)
-				// Ö¸¶¨¼¯ÈºÃû³Æ
+				// æŒ‡å®šé›†ç¾¤åç§°
 				.put("cluster.name", "elasticsearch")
-				// Ì½²â¼¯ÈºÖĞ»úÆ÷×´Ì¬
+				// æ¢æµ‹é›†ç¾¤ä¸­æœºå™¨çŠ¶æ€
 				.put("client.transport.sniff", true).build();
 		/*
-		 * ´´½¨¿Í»§¶Ë£¬ËùÓĞµÄ²Ù×÷¶¼ÓÉ¿Í»§¶Ë¿ªÊ¼£¬Õâ¸ö¾ÍºÃÏñÊÇJDBCµÄConnection¶ÔÏó ÓÃÍê¼ÇµÃÒª¹Ø±Õ
+		 * åˆ›å»ºå®¢æˆ·ç«¯ï¼Œæ‰€æœ‰çš„æ“ä½œéƒ½ç”±å®¢æˆ·ç«¯å¼€å§‹ï¼Œè¿™ä¸ªå°±å¥½åƒæ˜¯JDBCçš„Connectionå¯¹è±¡ ç”¨å®Œè®°å¾—è¦å…³é—­
 		 */
 		TransportClient client = new TransportClient(settings);
 		client.addTransportAddress(new InetSocketTransportAddress("127.0.0.1",
@@ -48,15 +48,15 @@ public class AddIndexTest extends AbstractTest {
 		WxContentQuery query = new WxContentQuery();
 		List<WxContent> list = wxContentService.list(query);
 		for (WxContent content : list) {
-			// ÔÚÕâÀï´´½¨ÎÒÃÇÒªË÷ÒıµÄ¶ÔÏó
-			//ÆäÖĞwechatÎªË÷Òı¿âÃû£¬Ò»¸öes¼¯ÈºÖĞ¿ÉÒÔÓĞ¶à¸öË÷Òı¿â¡£contentÎªË÷ÒıÀàĞÍ£¬ÊÇÓÃÀ´Çø·ÖÍ¬Ë÷Òı¿âÏÂ²»Í¬ÀàĞÍµÄÊı¾İµÄ£¬Ò»¸öË÷Òı¿âÏÂ¿ÉÒÔÓĞ¶à¸öË÷ÒıÀàĞÍ¡£
+			// åœ¨è¿™é‡Œåˆ›å»ºæˆ‘ä»¬è¦ç´¢å¼•çš„å¯¹è±¡
+			//å…¶ä¸­wechatä¸ºç´¢å¼•åº“åï¼Œä¸€ä¸ªesé›†ç¾¤ä¸­å¯ä»¥æœ‰å¤šä¸ªç´¢å¼•åº“ã€‚contentä¸ºç´¢å¼•ç±»å‹ï¼Œæ˜¯ç”¨æ¥åŒºåˆ†åŒç´¢å¼•åº“ä¸‹ä¸åŒç±»å‹çš„æ•°æ®çš„ï¼Œä¸€ä¸ªç´¢å¼•åº“ä¸‹å¯ä»¥æœ‰å¤šä¸ªç´¢å¼•ç±»å‹ã€‚
 			IndexResponse response = client
 					.prepareIndex("wechat", "content")
-					// ±ØĞëÎª¶ÔÏóµ¥¶ÀÖ¸¶¨ID
+					// å¿…é¡»ä¸ºå¯¹è±¡å•ç‹¬æŒ‡å®šID
 					.setId(String.valueOf(content.getId()))
 					.setSource(content.toJsonObject().toJSONString()).execute()
 					.actionGet();
-			// ¶à´ÎindexÕâ¸ö°æ±¾ºÅ»á±ä
+			// å¤šæ¬¡indexè¿™ä¸ªç‰ˆæœ¬å·ä¼šå˜
 			System.out.println("version:" + response.getVersion());
 			System.out.println("headers:" + response.getHeaders());
 		}

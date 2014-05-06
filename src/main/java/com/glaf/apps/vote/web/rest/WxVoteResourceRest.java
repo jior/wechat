@@ -65,15 +65,15 @@ public class WxVoteResourceRest {
 			if (vote != null) {
 				if (vote.getStatus() != 0) {
 					return ResponseUtils.responseJsonResult(false,
-							"Í¶Æ±Ö÷ÌâÒÑ¾­½áÊø£¬Ğ»Ğ»ÄúµÄ¹Ø×¢£¡");
+							"æŠ•ç¥¨ä¸»é¢˜å·²ç»ç»“æŸï¼Œè°¢è°¢æ‚¨çš„å…³æ³¨ï¼");
 				}
 				Date now = new Date();
 				if (vote.getEndDate() != null && vote.getEndDate().getTime() < now.getTime()) {
 					return ResponseUtils.responseJsonResult(false,
-							"Í¶Æ±Ö÷ÌâÒÑ¾­½áÊø£¬Ğ»Ğ»ÄúµÄ¹Ø×¢£¡");
+							"æŠ•ç¥¨ä¸»é¢˜å·²ç»ç»“æŸï¼Œè°¢è°¢æ‚¨çš„å…³æ³¨ï¼");
 				}
 				String ip = RequestUtils.getIPAddress(request);
-				if (vote.getLimitFlag() == 1) {// ÏŞÖÆÃ¿¸öIPµØÖ·Í¶Æ±´ÎÊı
+				if (vote.getLimitFlag() == 1) {// é™åˆ¶æ¯ä¸ªIPåœ°å€æŠ•ç¥¨æ¬¡æ•°
 					WxVoteResult result = wxVoteService.getLatestVoteResult(
 							vote.getId(), ip);
 					if (result != null) {
@@ -81,7 +81,7 @@ public class WxVoteResourceRest {
 						long ts = now.getTime() - voteDate.getTime();
 						if (ts / (1000 * 60) <= vote.getLimitTimeInterval()) {
 							return ResponseUtils.responseJsonResult(false,
-									"ÄúÒÑ¾­Í¶¹ıÆ±ÁË£¬Ğ»Ğ»ÄúµÄ¹Ø×¢£¡");
+									"æ‚¨å·²ç»æŠ•è¿‡ç¥¨äº†ï¼Œè°¢è°¢æ‚¨çš„å…³æ³¨ï¼");
 						}
 					}
 				}
@@ -108,7 +108,7 @@ public class WxVoteResourceRest {
 				}
 			}
 		}
-		return ResponseUtils.responseJsonResult(false, "Í¶Æ±²»³É¹¦£¬ÇëÉÔºòÔÙÊÔ£¡");
+		return ResponseUtils.responseJsonResult(false, "æŠ•ç¥¨ä¸æˆåŠŸï¼Œè¯·ç¨å€™å†è¯•ï¼");
 	}
 
 	@javax.annotation.Resource

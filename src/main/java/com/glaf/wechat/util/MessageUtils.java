@@ -30,74 +30,74 @@ import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
 /**
- * ÏûÏ¢¹¤¾ßÀà
+ * æ¶ˆæ¯å·¥å…·ç±»
  * 
  * @author jior
  */
 public class MessageUtils {
 
 	/**
-	 * ·µ»ØÏûÏ¢ÀàĞÍ£ºÎÄ±¾
+	 * è¿”å›æ¶ˆæ¯ç±»å‹ï¼šæ–‡æœ¬
 	 */
 	public static final String RESP_MESSAGE_TYPE_TEXT = "text";
 
 	/**
-	 * ·µ»ØÏûÏ¢ÀàĞÍ£ºÒôÀÖ
+	 * è¿”å›æ¶ˆæ¯ç±»å‹ï¼šéŸ³ä¹
 	 */
 	public static final String RESP_MESSAGE_TYPE_MUSIC = "music";
 
 	/**
-	 * ·µ»ØÏûÏ¢ÀàĞÍ£ºÍ¼ÎÄ
+	 * è¿”å›æ¶ˆæ¯ç±»å‹ï¼šå›¾æ–‡
 	 */
 	public static final String RESP_MESSAGE_TYPE_NEWS = "news";
 
 	/**
-	 * ÇëÇóÏûÏ¢ÀàĞÍ£ºÎÄ±¾
+	 * è¯·æ±‚æ¶ˆæ¯ç±»å‹ï¼šæ–‡æœ¬
 	 */
 	public static final String REQ_MESSAGE_TYPE_TEXT = "text";
 
 	/**
-	 * ÇëÇóÏûÏ¢ÀàĞÍ£ºÍ¼Æ¬
+	 * è¯·æ±‚æ¶ˆæ¯ç±»å‹ï¼šå›¾ç‰‡
 	 */
 	public static final String REQ_MESSAGE_TYPE_IMAGE = "image";
 
 	/**
-	 * ÇëÇóÏûÏ¢ÀàĞÍ£ºÁ´½Ó
+	 * è¯·æ±‚æ¶ˆæ¯ç±»å‹ï¼šé“¾æ¥
 	 */
 	public static final String REQ_MESSAGE_TYPE_LINK = "link";
 
 	/**
-	 * ÇëÇóÏûÏ¢ÀàĞÍ£ºµØÀíÎ»ÖÃ
+	 * è¯·æ±‚æ¶ˆæ¯ç±»å‹ï¼šåœ°ç†ä½ç½®
 	 */
 	public static final String REQ_MESSAGE_TYPE_LOCATION = "location";
 
 	/**
-	 * ÇëÇóÏûÏ¢ÀàĞÍ£ºÒôÆµ
+	 * è¯·æ±‚æ¶ˆæ¯ç±»å‹ï¼šéŸ³é¢‘
 	 */
 	public static final String REQ_MESSAGE_TYPE_VOICE = "voice";
 
 	/**
-	 * ÇëÇóÏûÏ¢ÀàĞÍ£ºÍÆËÍ
+	 * è¯·æ±‚æ¶ˆæ¯ç±»å‹ï¼šæ¨é€
 	 */
 	public static final String REQ_MESSAGE_TYPE_EVENT = "event";
 
 	/**
-	 * ÊÂ¼şÀàĞÍ£ºsubscribe(¶©ÔÄ)
+	 * äº‹ä»¶ç±»å‹ï¼šsubscribe(è®¢é˜…)
 	 */
 	public static final String EVENT_TYPE_SUBSCRIBE = "subscribe";
 
 	/**
-	 * ÊÂ¼şÀàĞÍ£ºunsubscribe(È¡Ïû¶©ÔÄ)
+	 * äº‹ä»¶ç±»å‹ï¼šunsubscribe(å–æ¶ˆè®¢é˜…)
 	 */
 	public static final String EVENT_TYPE_UNSUBSCRIBE = "unsubscribe";
 
 	/**
-	 * ÊÂ¼şÀàĞÍ£ºCLICK(×Ô¶¨Òå²Ëµ¥µã»÷ÊÂ¼ş)
+	 * äº‹ä»¶ç±»å‹ï¼šCLICK(è‡ªå®šä¹‰èœå•ç‚¹å‡»äº‹ä»¶)
 	 */
 	public static final String EVENT_TYPE_CLICK = "CLICK";
 
 	/**
-	 * ½âÎöÎ¢ĞÅ·¢À´µÄÇëÇó£¨XML£©
+	 * è§£æå¾®ä¿¡å‘æ¥çš„è¯·æ±‚ï¼ˆXMLï¼‰
 	 * 
 	 * @param request
 	 * @return
@@ -105,23 +105,23 @@ public class MessageUtils {
 	 */
 	@SuppressWarnings("unchecked")
 	public static Map<String, String> parseXml(HttpServletRequest request) {
-		// ½«½âÎö½á¹û´æ´¢ÔÚHashMapÖĞ
+		// å°†è§£æç»“æœå­˜å‚¨åœ¨HashMapä¸­
 		Map<String, String> map = new java.util.concurrent.ConcurrentHashMap<String, String>();
 
-		// ´ÓrequestÖĞÈ¡µÃÊäÈëÁ÷
+		// ä»requestä¸­å–å¾—è¾“å…¥æµ
 		InputStream inputStream = null;
-		// ¶ÁÈ¡ÊäÈëÁ÷
+		// è¯»å–è¾“å…¥æµ
 		SAXReader reader = new SAXReader();
 		try {
 			inputStream = request.getInputStream();
 
 			Document document = reader.read(inputStream);
-			// µÃµ½xml¸ùÔªËØ
+			// å¾—åˆ°xmlæ ¹å…ƒç´ 
 			Element root = document.getRootElement();
-			// µÃµ½¸ùÔªËØµÄËùÓĞ×Ó½Úµã
+			// å¾—åˆ°æ ¹å…ƒç´ çš„æ‰€æœ‰å­èŠ‚ç‚¹
 			List<Element> elementList = root.elements();
 
-			// ±éÀúËùÓĞ×Ó½Úµã
+			// éå†æ‰€æœ‰å­èŠ‚ç‚¹
 			for (Element e : elementList) {
 				map.put(e.getName(), e.getText());
 			}
@@ -130,7 +130,7 @@ public class MessageUtils {
 			throw new RuntimeException(ex);
 		} finally {
 			try {
-				// ÊÍ·Å×ÊÔ´
+				// é‡Šæ”¾èµ„æº
 				if (inputStream != null) {
 					inputStream.close();
 					inputStream = null;

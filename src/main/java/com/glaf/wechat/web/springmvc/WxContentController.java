@@ -155,7 +155,7 @@ public class WxContentController {
 					WxContent wxContent = wxContentService.getWxContent(Long
 							.valueOf(x));
 					/**
-					 * 此处业务逻辑需自行调整
+					 * 姝ゅ涓氬姟閫昏緫闇�鑷璋冩暣
 					 */
 
 					if (wxContent != null
@@ -170,7 +170,7 @@ public class WxContentController {
 			WxContent wxContent = wxContentService.getWxContent(Long
 					.valueOf(id));
 			/**
-			 * 此处业务逻辑需自行调整
+			 * 姝ゅ涓氬姟閫昏緫闇�鑷璋冩暣
 			 */
 			if (wxContent != null
 					&& (StringUtils.equals(wxContent.getCreateBy(),

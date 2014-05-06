@@ -24,7 +24,7 @@ import com.glaf.wechat.sdk.message.Message;
 import com.glaf.wechat.sdk.message.VoiceMessage;
 
 /**
- * ÓïÑÔ»Ø¸´
+ * è¯­è¨€å›å¤
  * 
  */
 public class VoiceMessageFilter extends AbstractMessageFilter implements

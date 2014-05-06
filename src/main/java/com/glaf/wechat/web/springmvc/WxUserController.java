@@ -61,7 +61,7 @@ public class WxUserController {
 	protected WxUserService wxUserService;
 
 	/**
-	 * ÏÔÊ¾ĞŞ¸ÄÒ³Ãæ
+	 * æ˜¾ç¤ºä¿®æ”¹é¡µé¢
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -90,7 +90,7 @@ public class WxUserController {
 	}
 
 	/**
-	 * ÏÔÊ¾ĞŞ¸ÄÒ³Ãæ
+	 * æ˜¾ç¤ºä¿®æ”¹é¡µé¢
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -117,7 +117,7 @@ public class WxUserController {
 	}
 
 	/**
-	 * ÏÔÊ¾ĞŞ¸ÄÒ³Ãæ
+	 * æ˜¾ç¤ºä¿®æ”¹é¡µé¢
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -147,8 +147,8 @@ public class WxUserController {
 			department.setCode2("website");
 			department.setNo("website");
 			department.setDeptLevel(0);
-			department.setDesc("ÍøÕ¾ÓÃ»§");
-			department.setName("ÍøÕ¾ÓÃ»§");
+			department.setDesc("ç½‘ç«™ç”¨æˆ·");
+			department.setName("ç½‘ç«™ç”¨æˆ·");
 			department.setLevel(0);
 			department.setCreateBy("website");
 			department.setCreateTime(new Date());
@@ -188,7 +188,7 @@ public class WxUserController {
 	}
 
 	/**
-	 * ÏÔÊ¾ĞŞ¸ÄÒ³Ãæ
+	 * æ˜¾ç¤ºä¿®æ”¹é¡µé¢
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -211,7 +211,7 @@ public class WxUserController {
 	}
 
 	/**
-	 * ÏÔÊ¾ĞŞ¸ÄÒ³Ãæ
+	 * æ˜¾ç¤ºä¿®æ”¹é¡µé¢
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -272,7 +272,7 @@ public class WxUserController {
 	}
 
 	/**
-	 * Ìá½»ĞŞ¸ÄĞÅÏ¢
+	 * æäº¤ä¿®æ”¹ä¿¡æ¯
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -298,7 +298,7 @@ public class WxUserController {
 	}
 
 	/**
-	 * ĞŞ¸ÄÓÃ»§ÃÜÂë
+	 * ä¿®æ”¹ç”¨æˆ·å¯†ç 
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -326,14 +326,14 @@ public class WxUserController {
 						return ResponseUtils.responseJsonResult(true);
 					}
 				} else {
-					return ResponseUtils.responseJsonResult(false, "Ô­Ê¼ÃÜÂë²»ÕıÈ·¡£");
+					return ResponseUtils.responseJsonResult(false, "åŸå§‹å¯†ç ä¸æ­£ç¡®ã€‚");
 				}
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
 		}
 
-		return ResponseUtils.responseJsonResult(false, "ĞŞ¸ÄÃÜÂë²»³É¹¦¡£");
+		return ResponseUtils.responseJsonResult(false, "ä¿®æ”¹å¯†ç ä¸æˆåŠŸã€‚");
 	}
 
 	@ResponseBody

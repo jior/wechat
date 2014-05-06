@@ -24,7 +24,7 @@ import com.glaf.wechat.sdk.message.Message;
 import com.glaf.wechat.sdk.message.VideoMessage;
 
 /**
- * ÊÓÆµ»Ø¸´
+ * è§†é¢‘å›å¤
  * 
  */
 public class VideoMessageFilter extends AbstractMessageFilter implements

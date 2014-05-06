@@ -22,16 +22,16 @@ public class LocationUtils {
 	private final static double EARTH_RADIUS = 6378.137;
 
 	/**
-	 * »ñÈ¡Á½µØ¾àÀë
+	 * è·å–ä¸¤åœ°è·ç¦»
 	 * 
 	 * @param lat1
-	 *            AµØÎ³¶È
+	 *            Aåœ°çº¬åº¦
 	 * @param lng1
-	 *            AµØ¾­¶È
+	 *            Aåœ°ç»åº¦
 	 * @param lat2
-	 *            BµØÎ³¶È
+	 *            Båœ°çº¬åº¦
 	 * @param lng2
-	 *            BµØ¾­¶È
+	 *            Båœ°ç»åº¦
 	 * @return
 	 */
 	public static double getDistance(double lat1, double lng1, double lat2,
@@ -49,16 +49,16 @@ public class LocationUtils {
 	}
 
 	/**
-	 * »ñÈ¡Á½µØ¾àÀë
+	 * è·å–ä¸¤åœ°è·ç¦»
 	 * 
 	 * @param lat1
-	 *            AµØÎ³¶È
+	 *            Aåœ°çº¬åº¦
 	 * @param lng1
-	 *            AµØ¾­¶È
+	 *            Aåœ°ç»åº¦
 	 * @param lat2
-	 *            BµØÎ³¶È
+	 *            Båœ°çº¬åº¦
 	 * @param lng2
-	 *            BµØ¾­¶È
+	 *            Båœ°ç»åº¦
 	 * @return
 	 */
 	public static double getKilometreDistance(double lat1, double lng1,

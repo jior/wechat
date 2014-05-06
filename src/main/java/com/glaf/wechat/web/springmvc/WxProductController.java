@@ -75,7 +75,7 @@ public class WxProductController {
 					WxProduct wxProduct = wxProductService.getWxProduct(Long
 							.valueOf(x));
 					/**
-					 * �˴�ҵ���߼������е���
+					 * 此处业务逻辑需自行调整
 					 */
 					if (wxProduct != null
 							&& (StringUtils.equals(wxProduct.getCreateBy(),
@@ -89,7 +89,7 @@ public class WxProductController {
 			WxProduct wxProduct = wxProductService.getWxProduct(Long
 					.valueOf(id));
 			/**
-			 * �˴�ҵ���߼������е���
+			 * 此处业务逻辑需自行调整
 			 */
 			if (wxProduct != null
 					&& (StringUtils.equals(wxProduct.getCreateBy(),
@@ -137,7 +137,7 @@ public class WxProductController {
 		query.setActorId(loginContext.getActorId());
 		query.setLoginContext(loginContext);
 		/**
-		 * �˴�ҵ���߼������е���
+		 * 此处业务逻辑需自行调整
 		 */
 		if (!loginContext.isSystemAdministrator()) {
 			String actorId = loginContext.getActorId();

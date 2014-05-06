@@ -71,15 +71,15 @@ public class WxUploadJsonController {
 	public void upload(HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		response.setContentType("text/html; charset=UTF-8");
-		// ÎÄ¼ş±£´æÄ¿Â¼Â·¾¶
+		// æ–‡ä»¶ä¿å­˜ç›®å½•è·¯å¾„
 
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 
-		// ¶¨ÒåÔÊĞíÉÏ´«µÄÎÄ¼şÀ©Õ¹Ãû
+		// å®šä¹‰å…è®¸ä¸Šä¼ çš„æ–‡ä»¶æ‰©å±•å
 		String[] fileTypes = new String[] { "gif", "jpg", "jpeg", "png", "bmp",
 				"swf", "mp3", "wma", "wav", "amr", "rm", "rmvb", "mp4", "wvm",
 				"avi", "mpg", "mpeg" };
-		// ×î´óÎÄ¼ş´óĞ¡
+		// æœ€å¤§æ–‡ä»¶å¤§å°
 		long maxSize = FileUtils.MB_SIZE * 5;
 
 		String allowSize = CustomProperties.getString("upload.maxSize");
@@ -99,16 +99,16 @@ public class WxUploadJsonController {
 		for (Entry<String, MultipartFile> entry : entrySet) {
 			MultipartFile mFile = entry.getValue();
 			if (mFile.getOriginalFilename() != null && mFile.getSize() > 0) {
-				// ¼ì²éÎÄ¼ş´óĞ¡
+				// æ£€æŸ¥æ–‡ä»¶å¤§å°
 				if (mFile.getSize() > maxSize) {
-					response.getWriter().write(getError("ÉÏ´«ÎÄ¼ş´óĞ¡³¬¹ıÏŞÖÆ¡£"));
+					response.getWriter().write(getError("ä¸Šä¼ æ–‡ä»¶å¤§å°è¶…è¿‡é™åˆ¶ã€‚"));
 					return;
 				}
 				String fileName = mFile.getOriginalFilename();
-				// ¼ì²éÀ©Õ¹Ãû
+				// æ£€æŸ¥æ‰©å±•å
 				String fileExt = FileUtils.getFileExt(fileName).toLowerCase();
 				if (!Arrays.<String> asList(fileTypes).contains(fileExt)) {
-					response.getWriter().write(getError("ÉÏ´«ÎÄ¼şÀ©Õ¹ÃûÊÇ²»ÔÊĞíµÄÀ©Õ¹Ãû¡£"));
+					response.getWriter().write(getError("ä¸Šä¼ æ–‡ä»¶æ‰©å±•åæ˜¯ä¸å…è®¸çš„æ‰©å±•åã€‚"));
 					return;
 				}
 
@@ -151,7 +151,7 @@ public class WxUploadJsonController {
 
 				} catch (Exception ex) {
 					ex.printStackTrace();
-					response.getWriter().write(getError("ÉÏ´«ÎÄ¼şÊ§°Ü¡£"));
+					response.getWriter().write(getError("ä¸Šä¼ æ–‡ä»¶å¤±è´¥ã€‚"));
 					return;
 				}
 

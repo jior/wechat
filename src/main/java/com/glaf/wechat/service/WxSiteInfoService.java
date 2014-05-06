@@ -29,7 +29,7 @@ import com.glaf.wechat.query.WxSiteInfoQuery;
 public interface WxSiteInfoService {
 
 	/**
-	 * ¸ù¾İÖ÷¼üÉ¾³ı¼ÇÂ¼
+	 * æ ¹æ®ä¸»é”®åˆ é™¤è®°å½•
 	 * 
 	 * @return
 	 */
@@ -37,7 +37,7 @@ public interface WxSiteInfoService {
 	void deleteById(Long id);
 
 	/**
-	 * ¸ù¾İÖ÷¼üÉ¾³ı¶àÌõ¼ÇÂ¼
+	 * æ ¹æ®ä¸»é”®åˆ é™¤å¤šæ¡è®°å½•
 	 * 
 	 * @return
 	 */
@@ -45,7 +45,7 @@ public interface WxSiteInfoService {
 	void deleteByIds(List<Long> ids);
 
 	/**
-	 * ¸ù¾İÖ÷¼ü»ñÈ¡Ò»Ìõ¼ÇÂ¼
+	 * æ ¹æ®ä¸»é”®è·å–ä¸€æ¡è®°å½•
 	 * 
 	 * @return
 	 */
@@ -53,21 +53,21 @@ public interface WxSiteInfoService {
 
 
 	/**
-	 * ¸ù¾İ´´½¨ÈË»ñÈ¡Ò»Ìõ¼ÇÂ¼
+	 * æ ¹æ®åˆ›å»ºäººè·å–ä¸€æ¡è®°å½•
 	 * 
 	 * @return
 	 */
 	WxSiteInfo getWxSiteInfoByAccountId(Long accountId);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡¼ÇÂ¼×ÜÊı
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–è®°å½•æ€»æ•°
 	 * 
 	 * @return
 	 */
 	int getWxSiteInfoCountByQueryCriteria(WxSiteInfoQuery query);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡Ò»Ò³µÄÊı¾İ
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–ä¸€é¡µçš„æ•°æ®
 	 * 
 	 * @return
 	 */
@@ -75,14 +75,14 @@ public interface WxSiteInfoService {
 			WxSiteInfoQuery query);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡¼ÇÂ¼ÁĞ±í
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–è®°å½•åˆ—è¡¨
 	 * 
 	 * @return
 	 */
 	List<WxSiteInfo> list(WxSiteInfoQuery query);
 
 	/**
-	 * ±£´æÒ»Ìõ¼ÇÂ¼
+	 * ä¿å­˜ä¸€æ¡è®°å½•
 	 * 
 	 * @return
 	 */

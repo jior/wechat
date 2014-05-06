@@ -98,7 +98,7 @@ public class WxFileController {
 				if (StringUtils.isNotEmpty(x)) {
 					WxFile wxFile = wxFileService.getWxFile(Long.valueOf(x));
 					/**
-					 * 此处业务逻辑需自行调整
+					 * 姝ゅ涓氬姟閫昏緫闇�鑷璋冩暣
 					 */
 
 					if (wxFile != null
