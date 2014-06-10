@@ -19,6 +19,8 @@ package com.glaf.wechat.website.springmvc;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.Enumeration;
+import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -42,16 +44,21 @@ import com.glaf.base.utils.ContextUtil;
 import com.glaf.core.config.Configuration;
 import com.glaf.core.config.SystemConfig;
 import com.glaf.core.security.DigestUtil;
+import com.glaf.core.util.ClassUtils;
+import com.glaf.core.util.FileUtils;
 import com.glaf.core.util.RequestUtils;
+import com.glaf.core.util.UUID32;
+import com.glaf.core.web.callback.CallbackProperties;
+import com.glaf.core.web.callback.LoginCallback;
 import com.glaf.wechat.config.WechatConfiguration;
 import com.glaf.wechat.service.WxUserService;
 
-@Controller("/wx/user/auth")
-@RequestMapping("/wx/user/auth")
-public class WxUserAuthController {
+@Controller("/wx/auth")
+@RequestMapping("/wx/auth")
+public class WxAuthController {
 
 	protected static final Log logger = LogFactory
-			.getLog(WxUserAuthController.class);
+			.getLog(WxAuthController.class);
 
 	protected static Configuration conf = WechatConfiguration.create();
 
@@ -61,13 +68,13 @@ public class WxUserAuthController {
 
 	protected UserOnlineService userOnlineService;
 
-	public WxUserAuthController() {
+	public WxAuthController() {
 
 	}
 
 	@ResponseBody
 	@RequestMapping
-	public byte[] auth(HttpServletRequest request, HttpServletResponse response)
+	public void auth(HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 		String json = request.getParameter("json");
 		JSONObject jsonObject = JSON.parseObject(json);
@@ -78,29 +85,51 @@ public class WxUserAuthController {
 		if (sysUserService.findByMail(email) != null) {
 			result.put("status", 500);
 			result.put("message", "邮箱已经存在，请换个再来！");
-			return result.toJSONString().getBytes("UTF-8");
+			return;
 		}
 		SysUser user = sysUserService.findByAccount(actorId);
 		int status = 0;
 		if (user != null) {
-			// 用户已经存在，验证用户名及密码是否正确
-			String pwd = DigestUtil.digestString(password, "MD5");
-			if (pwd != null && !user.getPassword().equals(pwd)) {
-				status = 500;
-				result.put("status", 500);
-				result.put("message", "密码不匹配");
-			} else if (user.getBlocked() == 1) {
-				status = 500;
-				result.put("status", 500);
-				result.put("message", "帐号已经禁止");
+			/**
+			 * 密码方式登录
+			 */
+			if (StringUtils.isNotEmpty(password)) {
+				// 用户已经存在，验证用户名及密码是否正确
+				String pwd = DigestUtil.digestString(password, "MD5");
+				if (pwd != null && !user.getPassword().equals(pwd)) {
+					status = 500;
+					result.put("status", 500);
+					result.put("message", "密码不匹配");
+				} else if (user.getBlocked() == 1) {
+					status = 500;
+					result.put("status", 500);
+					result.put("message", "帐号已经禁止");
+				} else {
+					status = 200;
+					result.put("status", 200);
+					result.put("message", "成功登录");
+				}
 			} else {
-				status = 200;
-				result.put("status", 200);
-				result.put("message", "成功登录");
+				String time = jsonObject.getString("t");
+				String m = jsonObject.getString("m");
+				String key = FileUtils.readFile("/key");
+				String str = actorId + time + key;
+				String tk = org.apache.commons.codec.digest.DigestUtils
+						.md5Hex(str);
+				if (StringUtils.equals(tk, m)) {
+					status = 200;
+					result.put("status", 200);
+					result.put("message", "成功登录");
+				}
 			}
 		} else {
 			user = new SysUser();
 			user.setAccount(actorId);
+
+			if (password == null) {
+				password = UUID32.getUUID();
+				user.setToken(password);
+			}
 
 			try {
 				String pwd = DigestUtil.digestString(password, "MD5");
@@ -154,14 +183,23 @@ public class WxUserAuthController {
 			ContextUtil.put(actorId, user);// 传入全局变量
 			RequestUtils.setLoginUser(request, response, "default", actorId);
 
-			java.util.Random random = new java.util.Random();
-			String token = org.apache.commons.codec.digest.DigestUtils
-					.md5Hex(actorId)
-					+ Math.abs(random.nextInt(9999))
-					+ com.glaf.core.util.UUID32.getUUID()
-					+ Math.abs(random.nextInt(9999));
-			result.put("actorId", actorId);
-			result.put("token", token);
+			Properties props = CallbackProperties.getProperties();
+			if (props != null && props.keys().hasMoreElements()) {
+				Enumeration<?> e = props.keys();
+				while (e.hasMoreElements()) {
+					String className = (String) e.nextElement();
+					try {
+						Object obj = ClassUtils.instantiateObject(className);
+						if (obj instanceof LoginCallback) {
+							LoginCallback callback = (LoginCallback) obj;
+							callback.afterLogin(actorId, request, response);
+						}
+					} catch (Exception ex) {
+						ex.printStackTrace();
+						logger.error(ex);
+					}
+				}
+			}
 
 			try {
 				if (user.getLoginCount() != null) {
@@ -186,9 +224,16 @@ public class WxUserAuthController {
 				ex.printStackTrace();
 				logger.error(ex);
 			}
+
 		}
 
-		return result.toJSONString().getBytes("UTF-8");
+		String url = request.getContextPath() + "/index.jsp";
+		try {
+			response.sendRedirect(url);
+			return;
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
 	}
 
 	/**
