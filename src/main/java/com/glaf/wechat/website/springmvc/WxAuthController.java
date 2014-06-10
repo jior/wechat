@@ -123,57 +123,64 @@ public class WxAuthController {
 				}
 			}
 		} else {
-			user = new SysUser();
-			user.setAccount(actorId);
+			String time = jsonObject.getString("t");
+			String m = jsonObject.getString("m");
+			String key = FileUtils.readFile("/key");
+			String str = actorId + time + key;
+			String tk = org.apache.commons.codec.digest.DigestUtils.md5Hex(str);
+			if (StringUtils.equals(tk, m)) {
+				user = new SysUser();
+				user.setAccount(actorId);
 
-			if (password == null) {
-				password = UUID32.getUUID();
-				user.setToken(password);
-			}
-
-			try {
-				String pwd = DigestUtil.digestString(password, "MD5");
-				user.setPassword(pwd);
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
-
-			long deptId = 0;
-			if (jsonObject.containsKey("deptId")) {
-				deptId = Long.parseLong(jsonObject.getString("deptId"));
-			}
-			user.setDeptId(deptId);
-
-			user.setName(jsonObject.getString("name"));
-			if (user.getName() == null) {
-				user.setName(actorId);
-			}
-			user.setMobile(jsonObject.getString("mobile"));
-			user.setEmail(jsonObject.getString("email"));
-			user.setUserType(0);
-			user.setAccountType(2);
-			user.setEvection(0);
-			user.setCreateTime(new Date());
-			user.setLastLoginTime(new Date());
-			user.setLastChangePasswordDate(new Date());
-			user.setIsChangePassword(0);
-			user.setCreateBy("website");
-			user.setUpdateBy("website");
-
-			try {
-				if (wxUserService.createAccount(user)) {
-					status = 200;
+				if (password == null) {
+					password = UUID32.getUUID();
+					user.setToken(password);
 				}
-			} catch (Exception ex) {
-				status = 500;
-				logger.error(ex);
-			}
-			if (status == 200) {// 保存成功
-				result.put("status", 200);
-				result.put("message", "注册成功");
-			} else if (status == 500) {
-				result.put("status", 500);
-				result.put("message", "注册失败");
+
+				try {
+					String pwd = DigestUtil.digestString(password, "MD5");
+					user.setPassword(pwd);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+
+				long deptId = 0;
+				if (jsonObject.containsKey("deptId")) {
+					deptId = Long.parseLong(jsonObject.getString("deptId"));
+				}
+				user.setDeptId(deptId);
+
+				user.setName(jsonObject.getString("name"));
+				if (user.getName() == null) {
+					user.setName(actorId);
+				}
+				user.setMobile(jsonObject.getString("mobile"));
+				user.setEmail(jsonObject.getString("email"));
+				user.setUserType(0);
+				user.setAccountType(2);
+				user.setEvection(0);
+				user.setCreateTime(new Date());
+				user.setLastLoginTime(new Date());
+				user.setLastChangePasswordDate(new Date());
+				user.setIsChangePassword(0);
+				user.setCreateBy("website");
+				user.setUpdateBy("website");
+
+				try {
+					if (wxUserService.createAccount(user)) {
+						status = 200;
+					}
+				} catch (Exception ex) {
+					status = 500;
+					logger.error(ex);
+				}
+				if (status == 200) {// 保存成功
+					result.put("status", 200);
+					result.put("message", "注册成功");
+				} else if (status == 500) {
+					result.put("status", 500);
+					result.put("message", "注册失败");
+				}
 			}
 		}
 
