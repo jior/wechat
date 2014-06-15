@@ -325,7 +325,7 @@ public class WxContentJsonFactory {
 					arrayObject.add(str);
 				}
 			}
-			jsonObject.put("tags", arrayObject);
+			jsonObject.set("tags", arrayObject);
 		}
 		jsonObject.put("keywordsCount", model.getKeywordsCount());
 		if (model.getKeywordsMatchType() != null) {
@@ -393,7 +393,7 @@ public class WxContentJsonFactory {
 				json.remove("content");
 				arrayObject.add(json);
 			}
-			jsonObject.put("relations", arrayObject);
+			jsonObject.set("relations", arrayObject);
 		}
 
 		if (model.getRecommendations() != null
@@ -404,7 +404,7 @@ public class WxContentJsonFactory {
 				json.remove("content");
 				arrayObject.add(json);
 			}
-			jsonObject.put("recommendations", arrayObject);
+			jsonObject.set("recommendations", arrayObject);
 		}
 
 		return jsonObject;
