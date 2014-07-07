@@ -74,8 +74,8 @@ public class WxAuthController {
 
 	@ResponseBody
 	@RequestMapping
-	public void auth(HttpServletRequest request, HttpServletResponse response)
-			throws IOException {
+	public ModelAndView auth(HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
 		String json = request.getParameter("json");
 		JSONObject jsonObject = JSON.parseObject(json);
 		JSONObject result = new JSONObject();
@@ -85,7 +85,7 @@ public class WxAuthController {
 		if (sysUserService.findByMail(email) != null) {
 			result.put("status", 500);
 			result.put("message", "邮箱已经存在，请换个再来！");
-			return;
+			return new ModelAndView("/wx/user/register");
 		}
 		SysUser user = sysUserService.findByAccount(actorId);
 		int status = 0;
@@ -234,13 +234,7 @@ public class WxAuthController {
 
 		}
 
-		String url = request.getContextPath() + "/index.jsp";
-		try {
-			response.sendRedirect(url);
-			return;
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		}
+		return new ModelAndView("/modules/wx_main");
 	}
 
 	/**
