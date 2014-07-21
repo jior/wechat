@@ -33,7 +33,7 @@
 <link href="<%=request.getContextPath()%>/scripts/artDialog/skins/default.css" rel="stylesheet" />
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/themes/${theme}/styles.css">
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/icons/styles.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/icons.css">
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/jquery.easyui.min.js"></script>
@@ -59,7 +59,7 @@
 			var v1 = changeStr1(m1);
 			var v2 = changeStr1(m2);
 			var modeValue = mode.value;
-			jQuery.post("<%=request.getContextPath()%>/mx/system/calendar/saveCalendarTime", 
+			jQuery.post("<%=request.getContextPath()%>/mx/sys/calendar/saveCalendarTime", 
 				{Action:"post",v1:v1,v2:v2,mode:modeValue}, 
 				function (data,textStatus){
 					if(textStatus=='success'){
@@ -119,7 +119,7 @@
 		var params = jQuery("#iForm").formSerialize();
 		jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/mx/system/calendar/save',
+				   url: '<%=request.getContextPath()%>/mx/sys/calendar/save',
 				   data: params,
 				   dataType:  'json',
 				   error: function(data){
@@ -138,7 +138,7 @@
 	
 	function changeDate(){
 		var params = jQuery("#iForm").formSerialize();
-		window.location.href="<%=request.getContextPath()%>/mx/system/calendar?"+params;
+		window.location.href="<%=request.getContextPath()%>/mx/sys/calendar?"+params;
 	}
 	 
 </script>

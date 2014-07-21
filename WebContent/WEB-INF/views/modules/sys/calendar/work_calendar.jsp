@@ -9,7 +9,7 @@ int year =ParamUtil.getIntAttribute(request, "year", cal.get(Calendar.YEAR));
 <html> 
 <head> 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
-<link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/themes/<%=com.glaf.core.util.RequestUtils.getTheme(request)%>/site.css">
 <link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/css/calendar.css">
 <script language="javascript" src='<%=request.getContextPath()%>/scripts/verify.js'></script>
 <script language="javascript" src='<%=request.getContextPath()%>/scripts/main.js'></script>
@@ -21,7 +21,7 @@ var year = <%=year%>;
 
 function goYear(i){  
   year=year+i;
-  window.location="workCalendar.do?method=showList&year="+year;
+  window.location="workCalendar/showList?year="+year;
 }
 function selDay(obj, month, day){
   if(obj.checked){
@@ -30,7 +30,7 @@ function selDay(obj, month, day){
 	 
 	jQuery.ajax({
 			type: "POST",
-			url: '<%=request.getContextPath()%>/sys/workCalendar.do?method=createData&year='+year+'&month='+month+'&day='+day,
+			url: '<%=request.getContextPath()%>/mx/sys/workCalendar/createData?year='+year+'&month='+month+'&day='+day,
 			dataType:  'json',
 				error: function(data){
 					alert('服务器处理错误！');
@@ -45,7 +45,7 @@ function selDay(obj, month, day){
 	//WorkCalendarAjaxService.deleteData(year, month, day);
 	jQuery.ajax({
 			type: "POST",
-			url: '<%=request.getContextPath()%>/sys/workCalendar.do?method=deleteData&year='+year+'&month='+month+'&day='+day,
+			url: '<%=request.getContextPath()%>/mx/sys/workCalendar/deleteData?year='+year+'&month='+month+'&day='+day,
 			dataType:  'json',
 				error: function(data){
 					alert('服务器处理错误！');
@@ -67,19 +67,19 @@ function selDay(obj, month, day){
   </tr>
   <tr>
     <td valign="top">
-	<jsp:include page="/sys/workCalendar.do?method=showCalendar" flush="true">
+	<jsp:include page="/mx/sys/workCalendar/showCalendar" flush="true">
 	  <jsp:param name="year" value="<%=year%>"/>
 	  <jsp:param name="month" value="0"/>	
 	</jsp:include>	
 	</td>
     <td valign="top">
-	<jsp:include page="/sys/workCalendar.do?method=showCalendar" flush="true">
+	<jsp:include page="/mx/sys/workCalendar/showCalendar" flush="true">
 	  <jsp:param name="year" value="<%=year%>"/>
 	  <jsp:param name="month" value="1"/>	
 	</jsp:include>	
 	</td>
     <td valign="top">
-	<jsp:include page="/sys/workCalendar.do?method=showCalendar" flush="true">
+	<jsp:include page="/mx/sys/workCalendar/showCalendar" flush="true">
 	  <jsp:param name="year" value="<%=year%>"/>
 	  <jsp:param name="month" value="2"/>	
 	</jsp:include>	
@@ -87,19 +87,19 @@ function selDay(obj, month, day){
   </tr>
   <tr>
     <td valign="top">
-	<jsp:include page="/sys/workCalendar.do?method=showCalendar" flush="true">
+	<jsp:include page="/mx/sys/workCalendar/showCalendar" flush="true">
 	  <jsp:param name="year" value="<%=year%>"/>
 	  <jsp:param name="month" value="3"/>	
 	 </jsp:include>	
 	</td>
     <td valign="top">
-	<jsp:include page="/sys/workCalendar.do?method=showCalendar" flush="true">
+	<jsp:include page="/mx/sys/workCalendar/showCalendar" flush="true">
 	  <jsp:param name="year" value="<%=year%>"/>
 	  <jsp:param name="month" value="4"/>	
 	 </jsp:include>	
 	</td>
     <td valign="top">
-	<jsp:include page="/sys/workCalendar.do?method=showCalendar" flush="true">
+	<jsp:include page="/mx/sys/workCalendar/showCalendar" flush="true">
 	  <jsp:param name="year" value="<%=year%>"/>
 	  <jsp:param name="month" value="5"/>	
 	 </jsp:include>	
@@ -107,19 +107,19 @@ function selDay(obj, month, day){
   </tr>
   <tr>
     <td valign="top">
-	<jsp:include page="/sys/workCalendar.do?method=showCalendar" flush="true">
+	<jsp:include page="/mx/sys/workCalendar/showCalendar" flush="true">
 	  <jsp:param name="year" value="<%=year%>"/>
 	  <jsp:param name="month" value="6"/>	
 	 </jsp:include>	
 	</td>
 	<td valign="top">
-	<jsp:include page="/sys/workCalendar.do?method=showCalendar" flush="true">
+	<jsp:include page="/mx/sys/workCalendar/showCalendar" flush="true">
 	  <jsp:param name="year" value="<%=year%>"/>
 	  <jsp:param name="month" value="7"/>	
 	 </jsp:include>	
 	</td>
 	<td valign="top">
-	<jsp:include page="/sys/workCalendar.do?method=showCalendar" flush="true">
+	<jsp:include page="/mx/sys/workCalendar/showCalendar" flush="true">
 	  <jsp:param name="year" value="<%=year%>"/>
 	  <jsp:param name="month" value="8"/>	
 	</jsp:include>	
@@ -127,19 +127,19 @@ function selDay(obj, month, day){
   </tr>
   <tr>
     <td valign="top">
-	<jsp:include page="/sys/workCalendar.do?method=showCalendar" flush="true">
+	<jsp:include page="/mx/sys/workCalendar/showCalendar" flush="true">
 	  <jsp:param name="year" value="<%=year%>"/>
 	  <jsp:param name="month" value="9"/>	
 	</jsp:include>	
 	</td>
     <td valign="top">
-	<jsp:include page="/sys/workCalendar.do?method=showCalendar" flush="true">
+	<jsp:include page="/mx/sys/workCalendar/showCalendar" flush="true">
 	  <jsp:param name="year" value="<%=year%>"/>
 	  <jsp:param name="month" value="10"/>	
 	 </jsp:include>	
 	</td>
     <td valign="top">
-	<jsp:include page="/sys/workCalendar.do?method=showCalendar" flush="true">
+	<jsp:include page="/mx/sys/workCalendar/showCalendar" flush="true">
 	  <jsp:param name="year" value="<%=year%>"/>
 	  <jsp:param name="month" value="11"/>	
 	 </jsp:include>	
