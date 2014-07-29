@@ -32,7 +32,7 @@ public class CreateKeyJob implements Job {
 	public void execute(JobExecutionContext context)
 			throws JobExecutionException {
 		StringBuffer sb = new StringBuffer();
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 32; i++) {
 			sb.append(UUID32.getUUID());
 		}
 		FileUtils.save("/key", sb.toString().getBytes());
