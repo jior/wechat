@@ -68,6 +68,10 @@
 		    <fileset dir="bin" includes="com/glaf/apps/**/*.class,com/glaf/apps/**/*.xml,com/glaf/apps/**/*.properties" excludes="**/test/**"/>
         </jar>
 
+		<jar jarfile="glaf-web-resource.jar">
+			<fileset dir="web" includes="**/*.*" excludes="**/*.jar,**/*.class,**/archives/*.*,**/*.ttc,**/*.lib,**/*.dll,**/*.so, **/data/index/**/*.*,**/examples/**/*.*, **/locks" casesensitive="yes" />
+		</jar>
+
 		<jar jarfile="glaf-wechat-min-web.zip">
 			<fileset dir="WebContent" includes="**/*.*" excludes="**/*.jar,**/*.class,**/archives/*.*,**/*.ttc,**/*.lib,**/*.dll,**/*.so, **/data/index/**/*.*,**/examples/**/*.*, **/locks, wx/**/*.*" casesensitive="yes" />
 		</jar> 
