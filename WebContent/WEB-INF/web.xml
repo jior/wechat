@@ -173,6 +173,11 @@
 
     <servlet-mapping>
 		<servlet-name>WebResourceServlet</servlet-name>
+		<url-pattern>/styles/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+		<servlet-name>WebResourceServlet</servlet-name>
 		<url-pattern>/scripts/*</url-pattern>
     </servlet-mapping>
 
@@ -194,6 +199,11 @@
 	<servlet-mapping>
 		<servlet-name>WebResourceServlet</servlet-name>
 		<url-pattern>/diagram-viewer/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+		<servlet-name>WebResourceServlet</servlet-name>
+		<url-pattern>/templates/*</url-pattern>
     </servlet-mapping>
 
 	<servlet-mapping>

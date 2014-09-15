@@ -39,13 +39,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title><%=SystemConfig.getString("res_system_name")%></title>
-<link href="<%=request.getContextPath()%>/layout/css/styles.css" rel="stylesheet" type="text/css" />
+<link href="<%=request.getContextPath()%>/css/styles.css" rel="stylesheet" type="text/css" />
 <link href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css" rel="stylesheet" type="text/css" />
 <link href="<%=request.getContextPath()%>/themes/${theme}/styles.css" rel="stylesheet" type="text/css" />
 <link href="<%=request.getContextPath()%>/icons/styles.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/jquery.easyui.min.js"></script>
-<script type="text/javascript" src='<%=request.getContextPath()%>/layout/js/outlook3.js'> </script>
+<script type="text/javascript" src='<%=request.getContextPath()%>/scripts/layout/js/outlook3.js'> </script>
 <script type="text/javascript">
 
    var contextPath = "<%=request.getContextPath()%>";
@@ -123,7 +123,7 @@
 		<a href="#" id="loginOut">退出</a>
         </span>
         <span style="padding-left:10px; font-size: 24px; ">
-		<img src="<%=request.getContextPath()%>/layout/images/logo.gif" border="0" align="absmiddle" /> 
+		<img src="<%=request.getContextPath()%>/images/logo.gif" border="0" align="absmiddle" /> 
 		<span class="sys_name" style="padding-left:10px; font-size: 24px; ">
 		<%=SystemConfig.getString("res_system_name")%></span>&nbsp;
 	   <span class="sys_version"><%=SystemConfig.getString("res_version")%></span>
