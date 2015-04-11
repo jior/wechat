@@ -12,6 +12,7 @@
     <property name="hibernate.connection.username">root</property>
     <property name="hibernate.connection.password">root</property>
     <property name="hibernate.connection.provider_class">com.glaf.jbpm.connection.DruidConnectionProvider</property>
+	<property name="validationQuery">SELECT 'X'</property>
     <mapping resource="org/jbpm/db/hibernate.queries.hbm.xml"/>
     <mapping resource="org/jbpm/graph/action/MailAction.hbm.xml"/>
     <mapping resource="org/jbpm/graph/def/ProcessDefinition.hbm.xml"/>

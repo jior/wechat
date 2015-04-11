@@ -49,7 +49,7 @@ public class WxFollower implements Serializable, JSONable {
 
 	@Column(name = "ACTORID_", length = 50)
 	protected String actorId;
-	
+
 	@Column(name = "SOURCEID_", length = 200)
 	protected String sourceId;
 
@@ -95,12 +95,27 @@ public class WxFollower implements Serializable, JSONable {
 	@Column(name = "SUBSCRIBETIME_")
 	protected Long subscribeTime;
 
+	@Column(name = "SUBSCRIBEYEAR_")
+	protected Integer subscribeYear;
+
+	@Column(name = "SUBSCRIBEMONTH_")
+	protected Integer subscribeMonth;
+
+	@Column(name = "SUBSCRIBEDAY_")
+	protected Integer subscribeDay;
+
 	@Column(name = "UNSUBSCRIBETIME_")
 	protected Long unsubscribeTime;
+
+	@Column(name = "LASTMODIFIED_")
+	protected Long lastModified;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATEDATE_")
 	protected Date createDate;
+
+	@javax.persistence.Transient
+	protected String tableName;
 
 	public WxFollower() {
 
@@ -126,8 +141,6 @@ public class WxFollower implements Serializable, JSONable {
 	public Long getAccountId() {
 		return this.accountId;
 	}
-	
-	
 
 	public String getActorId() {
 		return this.actorId;
@@ -155,6 +168,10 @@ public class WxFollower implements Serializable, JSONable {
 
 	public String getLanguage() {
 		return this.language;
+	}
+
+	public Long getLastModified() {
+		return lastModified;
 	}
 
 	public Integer getLocked() {
@@ -193,8 +210,24 @@ public class WxFollower implements Serializable, JSONable {
 		return sourceId;
 	}
 
+	public Integer getSubscribeDay() {
+		return subscribeDay;
+	}
+
+	public Integer getSubscribeMonth() {
+		return subscribeMonth;
+	}
+
 	public Long getSubscribeTime() {
 		return this.subscribeTime;
+	}
+
+	public Integer getSubscribeYear() {
+		return subscribeYear;
+	}
+
+	public String getTableName() {
+		return tableName;
 	}
 
 	public String getTelephone() {
@@ -249,6 +282,10 @@ public class WxFollower implements Serializable, JSONable {
 		this.language = language;
 	}
 
+	public void setLastModified(Long lastModified) {
+		this.lastModified = lastModified;
+	}
+
 	public void setLocked(Integer locked) {
 		this.locked = locked;
 	}
@@ -285,8 +322,24 @@ public class WxFollower implements Serializable, JSONable {
 		this.sourceId = sourceId;
 	}
 
+	public void setSubscribeDay(Integer subscribeDay) {
+		this.subscribeDay = subscribeDay;
+	}
+
+	public void setSubscribeMonth(Integer subscribeMonth) {
+		this.subscribeMonth = subscribeMonth;
+	}
+
 	public void setSubscribeTime(Long subscribeTime) {
 		this.subscribeTime = subscribeTime;
+	}
+
+	public void setSubscribeYear(Integer subscribeYear) {
+		this.subscribeYear = subscribeYear;
+	}
+
+	public void setTableName(String tableName) {
+		this.tableName = tableName;
 	}
 
 	public void setTelephone(String telephone) {

@@ -17,13 +17,23 @@
  */
 package com.glaf.wechat.util;
 
+import java.util.Date;
+import java.util.concurrent.CountDownLatch;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.context.ContextFactory;
+import com.glaf.core.util.DateUtils;
 import com.glaf.wechat.domain.WxFollower;
 import com.glaf.wechat.service.WxFollowerService;
 import com.glaf.wechat.service.WxUserService;
 
 public class WxFollowerThread extends Thread {
+	protected static final Log logger = LogFactory
+			.getLog(WxFollowerThread.class);
+	protected CountDownLatch latch;
 	protected WxUserService wxUserService;
 	protected WxFollowerService wxFollowerService;
 	protected Long accountId;
@@ -51,43 +61,69 @@ public class WxFollowerThread extends Thread {
 	}
 
 	public WxFollowerThread(Long accountId, String actorId,
-			String subscribe_get_url, String token, String openId) {
+			String subscribe_get_url, String token, String openId,
+			CountDownLatch latch) {
 		this.accountId = accountId;
 		this.actorId = actorId;
 		this.subscribe_get_url = subscribe_get_url;
 		this.token = token;
 		this.openId = openId;
+		this.latch = latch;
 	}
 
 	public void run() {
-		JSONObject jsonObject = WechatUtils.getFollower(subscribe_get_url,
-				token, openId);
-		if (jsonObject != null) {
-			boolean success = false;
-			int retry = 0;
-			while (retry < 3 && !success) {
-				retry++;
-				try {
-					WxFollower bean = new WxFollower();
-					bean.setAccountId(accountId);
-					bean.setActorId(actorId);
-					bean.setCity(jsonObject.getString("city"));
-					bean.setCountry(jsonObject.getString("country"));
-					bean.setHeadimgurl(jsonObject.getString("headimgurl"));
-					bean.setLanguage(jsonObject.getString("language"));
-					bean.setNickName(jsonObject.getString("nickname"));
-					bean.setOpenId(openId);
-					bean.setProvince(jsonObject.getString("province"));
-					bean.setSex(jsonObject.getString("sex"));
-					bean.setSubscribeTime(jsonObject.getLong("subscribe_time"));
-					getWxFollowerService().save(bean);
+		boolean success = false;
+		int retry = 0;
+		while (retry < 3 && !success) {
+			retry++;
+			try {
+				WxFollower follower = getWxFollowerService()
+						.getWxFollowerByOpenId(accountId, openId);
+				if (follower == null
+						|| (System.currentTimeMillis()
+								- follower.getLastModified() > DateUtils.DAY * 2)) {
+					logger.debug("get openId from server: " + openId);
+					JSONObject jsonObject = WechatUtils.getFollower(
+							subscribe_get_url, token, openId);
+					if (jsonObject != null) {
+						WxFollower bean = new WxFollower();
+						bean.setAccountId(accountId);
+						bean.setActorId(actorId);
+						bean.setCity(jsonObject.getString("city"));
+						bean.setCountry(jsonObject.getString("country"));
+						bean.setHeadimgurl(jsonObject.getString("headimgurl"));
+						bean.setLanguage(jsonObject.getString("language"));
+						bean.setNickName(jsonObject.getString("nickname"));
+						bean.setOpenId(openId);
+						bean.setSourceId(String.valueOf(accountId));
+						bean.setProvince(jsonObject.getString("province"));
+						bean.setSex(jsonObject.getString("sex"));
+						bean.setSubscribeTime(jsonObject
+								.getLong("subscribe_time"));
+						getWxFollowerService().save(bean);
+						retry = 5;
+						success = true;
+					}
+				} else {
 					retry = 5;
 					success = true;
-				} catch (Exception ex) {
-					ex.printStackTrace();
 				}
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				logger.error(ex);
 			}
 		}
+		latch.countDown();
 	}
 
+	public static void main(String[] args) {
+		Date date = DateUtils.toDate("1970-01-01 00:00:00");
+		long time = date.getTime();
+		System.out.println("time:" + time);
+		java.util.Calendar cal = java.util.Calendar.getInstance();
+		cal.set(1970, 0, 0);
+		System.out.println("time:" + cal.getTime().getTime());
+		cal.setTimeInMillis(1419173575L * 1000);
+		System.out.println(DateUtils.getDateTime(cal.getTime()));
+	}
 }

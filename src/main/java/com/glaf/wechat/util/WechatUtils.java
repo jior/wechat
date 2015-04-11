@@ -27,7 +27,8 @@ import org.slf4j.LoggerFactory;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
-import com.glaf.core.util.StringTools;
+import com.glaf.core.util.*;
+import com.glaf.core.util.http.*;
 import com.glaf.wechat.component.Menu;
 import com.glaf.wechat.model.AccessToken;
 
@@ -37,9 +38,6 @@ import com.glaf.wechat.model.AccessToken;
  * @author jior
  */
 public class WechatUtils {
-	private static final Logger log = LoggerFactory
-			.getLogger(WechatUtils.class);
-
 	/**
 	 * 创建菜单
 	 * 
@@ -58,8 +56,7 @@ public class WechatUtils {
 		// 将菜单对象转换成json字符串
 		String jsonMenu = menu.toJSONObject().toJSONString();
 		// 调用接口创建菜单
-		JSONObject jsonObject = HttpClientUtils.executeRequest(url, "POST",
-				jsonMenu);
+		JSONObject jsonObject = HttpUtils.executeRequest(url, "POST", jsonMenu);
 
 		if (null != jsonObject) {
 			if (0 != jsonObject.getInteger("errcode")) {
@@ -96,8 +93,8 @@ public class WechatUtils {
 		} else {
 			String requestUrl = access_token_url.replace("APPID", accountId)
 					.replace("APPSECRET", appSecret);
-			JSONObject jsonObject = HttpClientUtils.executeRequest(requestUrl,
-					"GET", null);
+			JSONObject jsonObject = HttpUtils.executeRequest(requestUrl, "GET",
+					null);
 			// 如果请求成功
 			if (null != jsonObject) {
 				log.debug(jsonObject.toJSONString());
@@ -143,8 +140,9 @@ public class WechatUtils {
 			String openid) {
 		String url = orgi_url.replace("ACCESS_TOKEN", accessToken);
 		url = url.replace("OPENID", openid);
-		JSONObject jsonObject = HttpClientUtils
-				.executeRequest(url, "GET", null);
+		//String text = HttpClientUtils.doGet(url);
+		//JSONObject jsonObject = JSON.parseObject(text);
+		JSONObject jsonObject = HttpUtils.executeRequest(url, "GET", null);
 		return jsonObject;
 	}
 
@@ -163,8 +161,9 @@ public class WechatUtils {
 		} else {
 			url = StringTools.replace(url, "&next_openid=NEXT_OPENID", "");
 		}
-		JSONObject jsonObject = HttpClientUtils
-				.executeRequest(url, "GET", null);
+		JSONObject jsonObject = HttpUtils.executeRequest(url, "GET", null);
+		//String text = HttpClientUtils.doGet(url);
+		//JSONObject jsonObject = JSON.parseObject(text);
 		return jsonObject;
 	}
 
@@ -183,8 +182,7 @@ public class WechatUtils {
 	public static JSONObject getMenu(String orgi_url, String accessToken) {
 		String url = orgi_url.replace("ACCESS_TOKEN", accessToken);
 		// 调用接口创建菜单
-		JSONObject jsonObject = HttpClientUtils
-				.executeRequest(url, "GET", null);
+		JSONObject jsonObject = HttpUtils.executeRequest(url, "GET", null);
 		return jsonObject;
 	}
 
@@ -198,5 +196,8 @@ public class WechatUtils {
 		}
 		return serviceUrl;
 	}
+
+	private static final Logger log = LoggerFactory
+			.getLogger(WechatUtils.class);
 
 }

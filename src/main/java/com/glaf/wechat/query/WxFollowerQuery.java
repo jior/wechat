@@ -19,10 +19,12 @@
 package com.glaf.wechat.query;
 
 import java.util.*;
+
 import com.glaf.core.query.DataQuery;
 
 public class WxFollowerQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
+	protected Long id;
 	protected Long accountId;
 	protected List<Long> accountIds;
 	protected String sourceId;
@@ -40,8 +42,18 @@ public class WxFollowerQuery extends DataQuery {
 	protected String country;
 	protected String language;
 	protected String remarkLike;
+	protected String tableName;
 	protected Long subscribeTimeGreaterThanOrEqual;
 	protected Long subscribeTimeLessThanOrEqual;
+	protected Integer subscribeYear;
+	protected Integer subscribeYearGreaterThanOrEqual;
+	protected Integer subscribeYearLessThanOrEqual;
+	protected Integer subscribeMonth;
+	protected Integer subscribeMonthGreaterThanOrEqual;
+	protected Integer subscribeMonthLessThanOrEqual;
+	protected Integer subscribeDay;
+	protected Integer subscribeDayGreaterThanOrEqual;
+	protected Integer subscribeDayLessThanOrEqual;
 	protected Date createDateGreaterThanOrEqual;
 	protected Date createDateLessThanOrEqual;
 
@@ -129,6 +141,10 @@ public class WxFollowerQuery extends DataQuery {
 
 	public Date getCreateDateLessThanOrEqual() {
 		return createDateLessThanOrEqual;
+	}
+
+	public Long getId() {
+		return id;
 	}
 
 	public String getLanguage() {
@@ -294,12 +310,52 @@ public class WxFollowerQuery extends DataQuery {
 		return sourceId;
 	}
 
+	public Integer getSubscribeDay() {
+		return subscribeDay;
+	}
+
+	public Integer getSubscribeDayGreaterThanOrEqual() {
+		return subscribeDayGreaterThanOrEqual;
+	}
+
+	public Integer getSubscribeDayLessThanOrEqual() {
+		return subscribeDayLessThanOrEqual;
+	}
+
+	public Integer getSubscribeMonth() {
+		return subscribeMonth;
+	}
+
+	public Integer getSubscribeMonthGreaterThanOrEqual() {
+		return subscribeMonthGreaterThanOrEqual;
+	}
+
+	public Integer getSubscribeMonthLessThanOrEqual() {
+		return subscribeMonthLessThanOrEqual;
+	}
+
 	public Long getSubscribeTimeGreaterThanOrEqual() {
 		return subscribeTimeGreaterThanOrEqual;
 	}
 
 	public Long getSubscribeTimeLessThanOrEqual() {
 		return subscribeTimeLessThanOrEqual;
+	}
+
+	public Integer getSubscribeYear() {
+		return subscribeYear;
+	}
+
+	public Integer getSubscribeYearGreaterThanOrEqual() {
+		return subscribeYearGreaterThanOrEqual;
+	}
+
+	public Integer getSubscribeYearLessThanOrEqual() {
+		return subscribeYearLessThanOrEqual;
+	}
+
+	public String getTableName() {
+		return tableName;
 	}
 
 	public String getTelephoneLike() {
@@ -450,6 +506,10 @@ public class WxFollowerQuery extends DataQuery {
 		this.createDateLessThanOrEqual = createDateLessThanOrEqual;
 	}
 
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	public void setLanguage(String language) {
 		this.language = language;
 	}
@@ -502,6 +562,34 @@ public class WxFollowerQuery extends DataQuery {
 		this.sourceId = sourceId;
 	}
 
+	public void setSubscribeDay(Integer subscribeDay) {
+		this.subscribeDay = subscribeDay;
+	}
+
+	public void setSubscribeDayGreaterThanOrEqual(
+			Integer subscribeDayGreaterThanOrEqual) {
+		this.subscribeDayGreaterThanOrEqual = subscribeDayGreaterThanOrEqual;
+	}
+
+	public void setSubscribeDayLessThanOrEqual(
+			Integer subscribeDayLessThanOrEqual) {
+		this.subscribeDayLessThanOrEqual = subscribeDayLessThanOrEqual;
+	}
+
+	public void setSubscribeMonth(Integer subscribeMonth) {
+		this.subscribeMonth = subscribeMonth;
+	}
+
+	public void setSubscribeMonthGreaterThanOrEqual(
+			Integer subscribeMonthGreaterThanOrEqual) {
+		this.subscribeMonthGreaterThanOrEqual = subscribeMonthGreaterThanOrEqual;
+	}
+
+	public void setSubscribeMonthLessThanOrEqual(
+			Integer subscribeMonthLessThanOrEqual) {
+		this.subscribeMonthLessThanOrEqual = subscribeMonthLessThanOrEqual;
+	}
+
 	public void setSubscribeTimeGreaterThanOrEqual(
 			Long subscribeTimeGreaterThanOrEqual) {
 		this.subscribeTimeGreaterThanOrEqual = subscribeTimeGreaterThanOrEqual;
@@ -510,6 +598,24 @@ public class WxFollowerQuery extends DataQuery {
 	public void setSubscribeTimeLessThanOrEqual(
 			Long subscribeTimeLessThanOrEqual) {
 		this.subscribeTimeLessThanOrEqual = subscribeTimeLessThanOrEqual;
+	}
+
+	public void setSubscribeYear(Integer subscribeYear) {
+		this.subscribeYear = subscribeYear;
+	}
+
+	public void setSubscribeYearGreaterThanOrEqual(
+			Integer subscribeYearGreaterThanOrEqual) {
+		this.subscribeYearGreaterThanOrEqual = subscribeYearGreaterThanOrEqual;
+	}
+
+	public void setSubscribeYearLessThanOrEqual(
+			Integer subscribeYearLessThanOrEqual) {
+		this.subscribeYearLessThanOrEqual = subscribeYearLessThanOrEqual;
+	}
+
+	public void setTableName(String tableName) {
+		this.tableName = tableName;
 	}
 
 	public void setTelephoneLike(String telephoneLike) {
@@ -532,6 +638,58 @@ public class WxFollowerQuery extends DataQuery {
 		return this;
 	}
 
+	public WxFollowerQuery subscribeDay(Integer subscribeDay) {
+		if (subscribeDay == null) {
+			throw new RuntimeException("subscribeDay is null");
+		}
+		this.subscribeDay = subscribeDay;
+		return this;
+	}
+
+	public WxFollowerQuery subscribeDayGreaterThanOrEqual(
+			Integer subscribeDayGreaterThanOrEqual) {
+		if (subscribeDayGreaterThanOrEqual == null) {
+			throw new RuntimeException("subscribeDay is null");
+		}
+		this.subscribeDayGreaterThanOrEqual = subscribeDayGreaterThanOrEqual;
+		return this;
+	}
+
+	public WxFollowerQuery subscribeDayLessThanOrEqual(
+			Integer subscribeDayLessThanOrEqual) {
+		if (subscribeDayLessThanOrEqual == null) {
+			throw new RuntimeException("subscribeDay is null");
+		}
+		this.subscribeDayLessThanOrEqual = subscribeDayLessThanOrEqual;
+		return this;
+	}
+
+	public WxFollowerQuery subscribeMonth(Integer subscribeMonth) {
+		if (subscribeMonth == null) {
+			throw new RuntimeException("subscribeMonth is null");
+		}
+		this.subscribeMonth = subscribeMonth;
+		return this;
+	}
+
+	public WxFollowerQuery subscribeMonthGreaterThanOrEqual(
+			Integer subscribeMonthGreaterThanOrEqual) {
+		if (subscribeMonthGreaterThanOrEqual == null) {
+			throw new RuntimeException("subscribeMonth is null");
+		}
+		this.subscribeMonthGreaterThanOrEqual = subscribeMonthGreaterThanOrEqual;
+		return this;
+	}
+
+	public WxFollowerQuery subscribeMonthLessThanOrEqual(
+			Integer subscribeMonthLessThanOrEqual) {
+		if (subscribeMonthLessThanOrEqual == null) {
+			throw new RuntimeException("subscribeMonth is null");
+		}
+		this.subscribeMonthLessThanOrEqual = subscribeMonthLessThanOrEqual;
+		return this;
+	}
+
 	public WxFollowerQuery subscribeTimeGreaterThanOrEqual(
 			Long subscribeTimeGreaterThanOrEqual) {
 		if (subscribeTimeGreaterThanOrEqual == null) {
@@ -547,6 +705,32 @@ public class WxFollowerQuery extends DataQuery {
 			throw new RuntimeException("subscribeTime is null");
 		}
 		this.subscribeTimeLessThanOrEqual = subscribeTimeLessThanOrEqual;
+		return this;
+	}
+
+	public WxFollowerQuery subscribeYear(Integer subscribeYear) {
+		if (subscribeYear == null) {
+			throw new RuntimeException("subscribeYear is null");
+		}
+		this.subscribeYear = subscribeYear;
+		return this;
+	}
+
+	public WxFollowerQuery subscribeYearGreaterThanOrEqual(
+			Integer subscribeYearGreaterThanOrEqual) {
+		if (subscribeYearGreaterThanOrEqual == null) {
+			throw new RuntimeException("subscribeYear is null");
+		}
+		this.subscribeYearGreaterThanOrEqual = subscribeYearGreaterThanOrEqual;
+		return this;
+	}
+
+	public WxFollowerQuery subscribeYearLessThanOrEqual(
+			Integer subscribeYearLessThanOrEqual) {
+		if (subscribeYearLessThanOrEqual == null) {
+			throw new RuntimeException("subscribeYear is null");
+		}
+		this.subscribeYearLessThanOrEqual = subscribeYearLessThanOrEqual;
 		return this;
 	}
 

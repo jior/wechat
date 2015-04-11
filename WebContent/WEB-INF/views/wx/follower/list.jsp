@@ -22,17 +22,20 @@
 				nowrap: false,
 				striped: true,
 				collapsible: true,
-				url: '<%=request.getContextPath()%>/mx/wx/wxFollower/json?accountId=${accountId}',
+				url: '<%=request.getContextPath()%>/mx/wx/wxFollower/json?accountId=${accountId}&x_complex_query=${x_complex_query}',
 				remoteSort: false,
 				singleSelect: true,
 				idField: 'id',
 				columns:[[
-				        {title:'序号', field:'startIndex', width:80, sortable:false},
+				        {title:'序号', field:'startIndex', width:60, sortable:false},
 					    {title:'昵称', field:'nickName', width:150, sortable:false},
-					    {title:'OpenID', field:'openId', width:150, sortable:false},
-					    {title:'关注时间', field:'subscribeTime_datetime', width:150, sortable:false},
-					    {title:'取消关注时间', field:'unsubscribeTime_datetime', width:150, sortable:false},
-					    {field:'functionKey',title:'功能键',width:120}
+					    {title:'国家', field:'country', width:90, sortable:false},
+					    {title:'省份', field:'province', width:90, sortable:false},
+					    {title:'城市', field:'city', width:90, sortable:false},
+					    {title:'性别', field:'sex', align:'center', width:60, formatter:formatterSex},
+					    {title:'OpenID', field:'openId', width:240, sortable:false},
+					    {title:'关注时间', field:'subscribeTime_datetime', width:120, sortable:false},
+					    {title:'取消关注时间', field:'unsubscribeTime_datetime', width:120, sortable:false}
 				]],
 				rownumbers: false,
 				pagination: true,
@@ -61,6 +64,16 @@
 	    var link = '<%=request.getContextPath()%>/mx/wx/wxFollower/edit?id='+row.id+'&fromUrl=${fromUrl}&accountId=${accountId}';
 	    //art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"no" }, false);
 		location.href=link;
+	}
+
+	function formatterSex(val, row){
+        if(val == "1"){
+			return '男';
+	   } else if(val == "2") {
+			return '女';
+	   } else{
+		    return "未知";
+	   }
 	}
 
 	function searchWin(){
@@ -164,6 +177,28 @@
         },'json');
 	}
 
+	function searchData(){
+		var params = jQuery("#searchForm").formSerialize();
+		jQuery.ajax({
+				   type: "POST",
+				   url: '<%=request.getContextPath()%>/mx/wx/wxFollower/json?accountId=${accountId}',
+				   data: params,
+				   dataType:  'json',
+				   error: function(data){
+					   alert('服务器处理错误！');
+				   },
+				   success: function(data){
+					   jQuery('#mydatagrid').datagrid('loadData', data);
+				   }
+	    });
+	}
+
+	function doSearch(){
+		document.searchForm.method="POST";
+		document.searchForm.action="<%=request.getContextPath()%>/mx/wx/wxFollower?accountId=${accountId}&x_query=true";
+        document.searchForm.submit();
+	}
+
 	function fetchFollower(type){
 		if(confirm("确定从服务器获取关注者列表吗？")){
             jQuery.ajax({
@@ -217,27 +252,37 @@
     <tr>
 	<td>省份</td>
 	<td>
-        <input id="provinceLike" name="provinceLike" class="easyui-validatebox" type="text"></input>
+        <input id="province" name="province" class="easyui-validatebox" type="text"></input>
        </td>
      </tr>
     <tr>
 	<td>城市</td>
 	<td>
-        <input id="cityLike" name="cityLike" class="easyui-validatebox" type="text"></input>
+        <input id="city" name="city" class="easyui-validatebox" type="text"></input>
        </td>
      </tr>
     <tr>
 	<td>国家</td>
 	<td>
-        <input id="countryLike" name="countryLike" class="easyui-validatebox" type="text"></input>
+        <input id="country" name="country" class="easyui-validatebox" type="text"></input>
        </td>
      </tr>
     <tr>
-	<td>语言</td>
-	<td>
-        <input id="languageLike" name="languageLike" class="easyui-validatebox" type="text"></input>
+	  <td>语言</td>
+	  <td>
+        <input id="language" name="language" class="easyui-validatebox" type="text"></input>
        </td>
-     </tr>
+    </tr>
+	 <tr>
+	  <td>性别</td>
+	  <td>
+         <select name="sex">
+			<option value="1" selected>男</option>
+			<option value="2">女</option>
+			<option value="0">未知</option>
+         </select>
+      </td>
+    </tr>
     <tr>
 	<td>备注</td>
 	<td>
@@ -249,7 +294,7 @@
   </form>
 </div>
 <div id="dlg-buttons">
-	<a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="javascript:searchData()">查询</a>
+	<a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="javascript:doSearch();">查询</a>
 	<a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:jQuery('#dlg').dialog('close')">取消</a>
 </div>
 </body>

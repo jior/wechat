@@ -110,7 +110,8 @@ public class SubscribeMessageFilter extends AbstractMessageFilter implements
 			WxFollowerService wxFollowerService = ContextFactory
 					.getBean("wxFollowerService");
 			WxFollower follower = wxFollowerService.getWxFollower(
-					message.getToUserName(), message.getFromUserName());
+					message.getAccountId(), message.getToUserName(),
+					message.getFromUserName());
 			if (follower == null) {
 				follower = new WxFollower();
 				follower.setAccountId(message.getAccountId());

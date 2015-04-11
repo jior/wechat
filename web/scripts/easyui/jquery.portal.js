@@ -53,6 +53,24 @@
 		
 		return columnWidths;
 	}
+
+	function initCss(){
+		if (!$('#easyui-portal-style').length){
+			$('head').append(
+				'<style id="easyui-portal-style">' +
+				'.portal{padding:0;margin:0;overflow:auto;border:1px solid #99bbe8;}' +
+				'.portal-noborder{border:0;}' +
+				'.portal .portal-panel{margin-bottom:10px;}' +
+				'.portal-column-td{vertical-align:top;}' +
+				'.portal-column{padding:10px 0 10px 10px;overflow:hidden;}' +
+				'.portal-column-left{padding-left:10px;}' +
+				'.portal-column-right{padding-right:10px;}' +
+				'.portal-proxy{opacity:0.6;filter:alpha(opacity=60);}' +
+				'.portal-spacer{border:3px dashed #eee;margin-bottom:10px;}' +
+				'</style>'
+			);
+		}
+	}
 	
 	function setSize(target){
 		var t = $(target);
@@ -228,6 +246,7 @@
 			} else {
 				$(this).addClass('portal-noborder');
 			}
+			initCss();
 			setSize(this);
 		});
 	};

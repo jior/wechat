@@ -33,7 +33,7 @@ public interface WxFollowerService {
 	 * @return
 	 */
 	@Transactional
-	void deleteById(Long id);
+	void deleteById(Long accountId, Long id);
 
 	/**
 	 * 根据主键删除多条记录
@@ -41,7 +41,7 @@ public interface WxFollowerService {
 	 * @return
 	 */
 	@Transactional
-	void deleteByIds(List<Long> ids);
+	void deleteByIds(Long accountId, List<Long> ids);
 
 	/**
 	 * 根据查询参数获取记录列表
@@ -70,15 +70,25 @@ public interface WxFollowerService {
 	 * 
 	 * @return
 	 */
-	WxFollower getWxFollower(Long id);
+	WxFollower getWxFollower(Long accountId, Long id);
+	
+	/**
+	 * 根据OpenId获取一条记录
+	 * 
+	 * @return
+	 */
+	WxFollower getWxFollowerByOpenId(Long accountId, String openId);
 
 	/**
 	 * 获取一条关注者信息
-	 * @param sourceId 原始微信ID
-	 * @param openId 关注者OPENID
+	 * 
+	 * @param sourceId
+	 *            原始微信ID
+	 * @param openId
+	 *            关注者OPENID
 	 * @return
 	 */
-	WxFollower getWxFollower(String sourceId, String openId);
+	WxFollower getWxFollower(Long accountId, String sourceId, String openId);
 
 	@Transactional
 	void insertAll(List<WxFollower> followers);

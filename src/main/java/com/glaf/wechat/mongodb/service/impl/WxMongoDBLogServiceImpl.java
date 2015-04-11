@@ -67,7 +67,6 @@ public class WxMongoDBLogServiceImpl implements WxLogService {
 		if (wxLogs.size() >= conf.getInt("wx_log_step", 100)
 				|| ((System.currentTimeMillis() - lastUpdate) / 60000 > 0)) {
 			DB db = mongoTemplate.getDb();
-			db.requestStart();
 			WxLog model = null;
 			while (!wxLogs.isEmpty()) {
 				model = wxLogs.poll();
@@ -88,7 +87,6 @@ public class WxMongoDBLogServiceImpl implements WxLogService {
 					logger.debug("insert row:" + model.getId());
 				}
 			}
-			db.requestDone();
 			lastUpdate = System.currentTimeMillis();
 			logger.debug("submit ok.");
 		}
@@ -256,7 +254,6 @@ public class WxMongoDBLogServiceImpl implements WxLogService {
 		if (wxLogs.size() >= conf.getInt("wx_log_step", 100)
 				|| ((System.currentTimeMillis() - lastUpdate) / 60000 > 0)) {
 			DB db = mongoTemplate.getDb();
-			db.requestStart();
 			WxLog model = null;
 			while (!wxLogs.isEmpty()) {
 				model = wxLogs.poll();
@@ -277,7 +274,6 @@ public class WxMongoDBLogServiceImpl implements WxLogService {
 					logger.debug("insert row:" + model.getId());
 				}
 			}
-			db.requestDone();
 			lastUpdate = System.currentTimeMillis();
 			logger.debug("submit ok.");
 		}

@@ -21,6 +21,10 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -32,6 +36,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -52,6 +59,7 @@ import com.glaf.wechat.query.WxFollowerQuery;
 import com.glaf.wechat.service.WxFollowerService;
 import com.glaf.wechat.service.WxUserService;
 import com.glaf.wechat.util.WechatUtils;
+import com.glaf.wechat.util.WxFollowerDomainFactory;
 import com.glaf.wechat.util.WxFollowerThread;
 import com.glaf.wechat.util.WxIdentityFactory;
 
@@ -60,6 +68,12 @@ import com.glaf.wechat.util.WxIdentityFactory;
 public class WxFollowerController {
 	protected static final Log logger = LogFactory
 			.getLog(WxFollowerController.class);
+
+	protected static Cache<Long, Integer> accessCounter = CacheBuilder
+			.newBuilder().maximumSize(1000)
+			.expireAfterAccess(30, TimeUnit.MINUTES).build();
+
+	protected static ExecutorService pool = Executors.newFixedThreadPool(4);
 
 	protected static Configuration conf = WechatConfiguration.create();
 
@@ -74,17 +88,26 @@ public class WxFollowerController {
 	protected void addFollower(Long accountId, String actorId,
 			String subscribe_list_get_url, String subscribe_get_url,
 			String token, JSONObject jsonObject) {
-		JSONObject json = jsonObject.getJSONObject("data");
-		if (json.containsKey("openid")) {
-			JSONArray array = json.getJSONArray("openid");
+		JSONObject data = jsonObject.getJSONObject("data");
+		if (data.containsKey("openid")) {
+			JSONArray array = data.getJSONArray("openid");
 			if (array != null && array.size() > 0) {
+				final CountDownLatch latch = new CountDownLatch(array.size());
 				for (int i = 0, len = array.size(); i < len; i++) {
-					JSONObject o = array.getJSONObject(i);
-					String openid = o.toString();
+					String openid = array.getString(i);
 					logger.debug("openid:" + openid);
 					WxFollowerThread thread = new WxFollowerThread(accountId,
-							actorId, subscribe_get_url, token, openid);
-					com.glaf.core.util.threads.ThreadFactory.run(thread);
+							actorId, subscribe_get_url, token, openid, latch);
+					if (conf.getBoolean("wx_follower_fetch_pool", true)) {
+						// pool.execute(thread);
+						com.glaf.core.util.ThreadFactory.run(thread);
+					} else {
+						thread.start();
+					}
+				}
+				try {
+					latch.await();
+				} catch (InterruptedException e) {
 				}
 			}
 		}
@@ -99,10 +122,23 @@ public class WxFollowerController {
 		}
 	}
 
+	protected void decreaseCounter(Long accountId) {
+		Integer count = accessCounter.getIfPresent(accountId);
+		if (count == null) {
+			count = 0;
+		}
+		count = count - 1;
+		if (count <= 0) {
+			count = 0;
+		}
+		accessCounter.put(accountId, count);
+	}
+
 	@ResponseBody
 	@RequestMapping("/delete")
 	public void delete(HttpServletRequest request, ModelMap modelMap) {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
+		Long accountId = RequestUtils.getLong(request, "accountId");
 		Long id = RequestUtils.getLong(request, "id");
 		String ids = request.getParameter("ids");
 		if (StringUtils.isNotEmpty(ids)) {
@@ -110,24 +146,25 @@ public class WxFollowerController {
 			while (token.hasMoreTokens()) {
 				String x = token.nextToken();
 				if (StringUtils.isNotEmpty(x)) {
-					WxFollower wxFollower = wxFollowerService
-							.getWxFollower(Long.valueOf(x));
+					WxFollower wxFollower = wxFollowerService.getWxFollower(
+							accountId, Long.valueOf(x));
 					if (wxFollower != null
 							&& (StringUtils.equals(wxFollower.getActorId(),
 									loginContext.getActorId()) || loginContext
 									.isSystemAdministrator())) {
-						wxFollowerService.deleteById(wxFollower.getId());
+						wxFollowerService.deleteById(accountId,
+								wxFollower.getId());
 					}
 				}
 			}
 		} else if (id != null) {
-			WxFollower wxFollower = wxFollowerService.getWxFollower(Long
-					.valueOf(id));
+			WxFollower wxFollower = wxFollowerService.getWxFollower(accountId,
+					Long.valueOf(id));
 			if (wxFollower != null
 					&& (StringUtils.equals(wxFollower.getActorId(),
 							loginContext.getActorId()) || loginContext
 							.isSystemAdministrator())) {
-				wxFollowerService.deleteById(wxFollower.getId());
+				wxFollowerService.deleteById(accountId, wxFollower.getId());
 			}
 		}
 	}
@@ -139,8 +176,8 @@ public class WxFollowerController {
 		Long accountId = RequestUtils.getLong(request, "accountId");
 		WxUser user = WxIdentityFactory.getUserByAccountId(accountId);
 		if (StringUtils.equals(loginContext.getActorId(), user.getActorId())) {
-			WxFollower wxFollower = wxFollowerService
-					.getWxFollower(RequestUtils.getLong(request, "id"));
+			WxFollower wxFollower = wxFollowerService.getWxFollower(accountId,
+					RequestUtils.getLong(request, "id"));
 			if (wxFollower != null) {
 				request.setAttribute("wxFollower", wxFollower);
 			}
@@ -167,6 +204,7 @@ public class WxFollowerController {
 		Long accountId = RequestUtils.getLong(request, "accountId");
 		WxUser user = WxIdentityFactory.getUserByAccountId(accountId);
 		if (StringUtils.equals(loginContext.getActorId(), user.getActorId())) {
+			this.increaseCounter(accountId);
 			try {
 				String type = request.getParameter("type");
 				String access_token_url = null;
@@ -203,9 +241,12 @@ public class WxFollowerController {
 								access_token_url, appId, appSecret);
 						if (accessToken != null
 								&& accessToken.getToken() != null) {
+							logger.debug("access token:"
+									+ accessToken.getToken());
 							JSONObject jsonObject = WechatUtils.getFollowers(
 									subscribe_list_get_url,
 									accessToken.getToken(), "");
+							logger.debug(jsonObject.toJSONString());
 							if (jsonObject.containsKey("data")) {
 								this.addFollower(accountId, actorId,
 										subscribe_list_get_url,
@@ -220,9 +261,23 @@ public class WxFollowerController {
 			} catch (Exception ex) {
 				ex.printStackTrace();
 				logger.error(ex);
+			} finally {
+				this.decreaseCounter(accountId);
 			}
 		}
 		return ResponseUtils.responseJsonResult(false);
+	}
+
+	protected void increaseCounter(Long accountId) {
+		Integer count = accessCounter.getIfPresent(accountId);
+		if (count == null) {
+			count = 0;
+		}
+		if (count > conf.getInt("client.threads", 5)) {
+			throw new RuntimeException("client threads so much");
+		}
+		count = count + 1;
+		accessCounter.put(accountId, count);
 	}
 
 	@RequestMapping("/json")
@@ -231,11 +286,25 @@ public class WxFollowerController {
 			throws IOException {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		logger.debug("params->" + params);
+		Long accountId = RequestUtils.getLong(request, "accountId");
 		WxFollowerQuery query = new WxFollowerQuery();
+
+		String x_complex_query = request.getParameter("x_complex_query");
+		if (StringUtils.isNotEmpty(x_complex_query)) {
+			try {
+				String text = RequestUtils.decodeString(x_complex_query);
+				Map<String, Object> parameter = JsonUtils.decode(text);
+				Tools.populate(query, parameter);
+			} catch (Exception ex) {
+			}
+		}
+
 		Tools.populate(query, params);
 		query.deleteFlag(0);
 		query.setActorId(loginContext.getActorId());
 		query.setLoginContext(loginContext);
+		query.setTableName(WxFollowerDomainFactory.TABLENAME_PREFIX + accountId);
 		/**
 		 * 此处业务逻辑需自行调整
 		 */
@@ -322,6 +391,11 @@ public class WxFollowerController {
 			request.setAttribute("x_complex_query", x_complex_query);
 		} else {
 			request.setAttribute("x_complex_query", "");
+		}
+
+		Long accountId = RequestUtils.getLong(request, "accountId");
+		if (accountId != null && accountId > 0) {
+			WxFollowerDomainFactory.createOrAlterTable(accountId);
 		}
 
 		String requestURI = request.getRequestURI();
@@ -430,8 +504,8 @@ public class WxFollowerController {
 		Long accountId = RequestUtils.getLong(request, "accountId");
 		WxUser user = WxIdentityFactory.getUserByAccountId(accountId);
 		if (StringUtils.equals(loginContext.getActorId(), user.getActorId())) {
-			WxFollower wxFollower = wxFollowerService
-					.getWxFollower(RequestUtils.getLong(request, "id"));
+			WxFollower wxFollower = wxFollowerService.getWxFollower(accountId,
+					RequestUtils.getLong(request, "id"));
 
 			wxFollower.setMobile(request.getParameter("mobile"));
 			wxFollower.setMail(request.getParameter("mail"));
@@ -452,8 +526,8 @@ public class WxFollowerController {
 		Long accountId = RequestUtils.getLong(request, "accountId");
 		WxUser user = WxIdentityFactory.getUserByAccountId(accountId);
 		if (StringUtils.equals(loginContext.getActorId(), user.getActorId())) {
-			WxFollower wxFollower = wxFollowerService
-					.getWxFollower(RequestUtils.getLong(request, "id"));
+			WxFollower wxFollower = wxFollowerService.getWxFollower(accountId,
+					RequestUtils.getLong(request, "id"));
 			if (wxFollower != null) {
 				request.setAttribute("wxFollower", wxFollower);
 			}

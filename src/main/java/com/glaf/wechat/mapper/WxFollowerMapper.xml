@@ -24,14 +24,22 @@
 		<result property="remark" column="REMARK" jdbcType="VARCHAR" />
 		<result property="subscribeTime" column="SUBSCRIBETIME_"
 			jdbcType="BIGINT" />
+		<result property="subscribeYear" column="SUBSCRIBEYEAR_"
+			jdbcType="INTEGER" />
+		<result property="subscribeMonth" column="SUBSCRIBEMONTH_"
+			jdbcType="INTEGER" />
+		<result property="subscribeDay" column="SUBSCRIBEDAY_"
+			jdbcType="INTEGER" />
 		<result property="unsubscribeTime" column="UNSUBSCRIBETIME_"
 			jdbcType="BIGINT" />
 		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP" />
+		<result property="lastModified" column="LASTMODIFIED_"
+			jdbcType="BIGINT" />
 	</resultMap>
 
 
 	<insert id="insertWxFollower" parameterType="com.glaf.wechat.domain.WxFollower">
-		insert into WX_FOLLOWER
+		insert into ${tableName}
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			ID_
 			<if test="accountId != null">
@@ -85,11 +93,23 @@
 			<if test="subscribeTime != null">
 				,SUBSCRIBETIME_
 			</if>
+			<if test="subscribeYear != null">
+				,SUBSCRIBEYEAR_
+			</if>
+			<if test="subscribeMonth != null">
+				,SUBSCRIBEMONTH_
+			</if>
+			<if test="subscribeDay != null">
+				,SUBSCRIBEDAY_
+			</if>
 			<if test="unsubscribeTime != null">
 				,UNSUBSCRIBETIME_
 			</if>
 			<if test="createDate != null">
 				,CREATEDATE_
+			</if>
+			<if test="lastModified != null">
+				,LASTMODIFIED_
 			</if>
 		</trim>
 
@@ -147,18 +167,30 @@
 			<if test="subscribeTime != null">
 				,#{subscribeTime, jdbcType=BIGINT}
 			</if>
+			<if test="subscribeYear != null">
+				,#{subscribeYear, jdbcType=INTEGER}
+			</if>
+			<if test="subscribeMonth != null">
+				,#{subscribeMonth, jdbcType=INTEGER}
+			</if>
+			<if test="subscribeDay != null">
+				,#{subscribeDay, jdbcType=INTEGER}
+			</if>
 			<if test="unsubscribeTime != null">
 				,#{unsubscribeTime, jdbcType=BIGINT}
 			</if>
 			<if test="createDate != null">
 				,#{createDate, jdbcType=TIMESTAMP}
 			</if>
+			<if test="lastModified != null">
+				,#{lastModified, jdbcType=BIGINT}
+			</if>
 		</trim>
 	</insert>
 
 
 	<update id="updateWxFollower" parameterType="com.glaf.wechat.domain.WxFollower">
-		update WX_FOLLOWER
+		update ${tableName}
 		set
 		<trim prefix="" suffix="" suffixOverrides=",">
 			<if test="nickName != null">
@@ -200,8 +232,20 @@
 			<if test="subscribeTime != null">
 				SUBSCRIBETIME_ = #{subscribeTime, jdbcType=BIGINT},
 			</if>
+			<if test="subscribeYear != null">
+				SUBSCRIBEYEAR_ = #{subscribeYear, jdbcType=INTEGER},
+			</if>
+			<if test="subscribeMonth != null">
+				SUBSCRIBEMONTH_ = #{subscribeMonth, jdbcType=INTEGER},
+			</if>
+			<if test="subscribeDay != null">
+				SUBSCRIBEDAY_ = #{subscribeDay, jdbcType=INTEGER},
+			</if>
 			<if test="unsubscribeTime != null">
 				UNSUBSCRIBETIME_ = #{unsubscribeTime, jdbcType=BIGINT},
+			</if>
+			<if test="lastModified != null">
+				LASTMODIFIED_ = #{lastModified, jdbcType=BIGINT},
 			</if>
 		</trim>
 		where
@@ -210,15 +254,15 @@
 	</update>
 
 
-	<delete id="deleteWxFollowerById" parameterType="long">
+	<delete id="deleteWxFollowerById" parameterType="com.glaf.wechat.query.WxFollowerQuery">
 		delete from
-		WX_FOLLOWER
+		${tableName}
 		where ID_ = #{id}
 	</delete>
 
 
 	<delete id="deleteWxFollowers" parameterType="com.glaf.wechat.query.WxFollowerQuery">
-		delete from WX_FOLLOWER
+		delete from ${tableName}
 		where (
 		ID_ IN
 		<foreach item="x_id" index="index" collection="ids" open="("
@@ -229,28 +273,28 @@
 	</delete>
 
 
-	<select id="getWxFollowerById" parameterType="long"
+	<select id="getWxFollowerById" parameterType="com.glaf.wechat.query.WxFollowerQuery"
 		resultMap="wxFollowerResultMap">
-		select * from WX_FOLLOWER where ID_ = #{id}
+		select * from ${tableName} where ID_ = #{id}
 	</select>
 
 
-	<select id="getWxFollowerByOpenId" parameterType="string"
+	<select id="getWxFollowerByOpenId" parameterType="com.glaf.wechat.query.WxFollowerQuery"
 		resultMap="wxFollowerResultMap">
-		select * from WX_FOLLOWER where OPENID_ = #{openid}
+		select * from ${tableName} where OPENID_ = #{openid}
 	</select>
 
 
 	<select id="getWxFollowers" parameterType="com.glaf.wechat.query.WxFollowerQuery"
 		resultMap="wxFollowerResultMap">
-		select distinct E.*
+		select E.*
 		<include refid="selectWxFollowersSql" />
 		<choose>
 			<when test="orderBy != null">
 				order by ${orderBy}
 			</when>
 			<otherwise>
-				order by E.ID_ desc
+				order by E.CREATEDATE_ desc
 			</otherwise>
 		</choose>
 	</select>
@@ -265,7 +309,7 @@
 
 	<sql id="selectWxFollowersSql">
 
-		from WX_FOLLOWER E
+		from ${tableName} E
 
 		<where>
 			1 = 1
@@ -293,7 +337,7 @@
 					#{x_actorId}
 				</foreach>
 			</if>
-			
+
 			<if test="sourceId != null and sourceId != '' ">
 				and E.SOURCEID_ = #{sourceId}
 			</if>
@@ -366,6 +410,47 @@
 			<if test="subscribeTimeLessThanOrEqual != null">
 				and E.SUBSCRIBETIME_ &lt;=
 				#{subscribeTimeLessThanOrEqual}
+			</if>
+
+			<if test="subscribeYear != null">
+				and E.SUBSCRIBEYEAR_ = #{subscribeYear}
+			</if>
+
+			<if test="subscribeYearGreaterThanOrEqual != null">
+				and E.SUBSCRIBEYEAR_ &gt;=
+				#{subscribeYearGreaterThanOrEqual}
+			</if>
+
+			<if test="subscribeYearLessThanOrEqual != null">
+				and E.SUBSCRIBEYEAR_ &lt;=
+				#{subscribeYearLessThanOrEqual}
+			</if>
+
+			<if test="subscribeMonth != null">
+				and E.SUBSCRIBEMONTH_ = #{subscribeMonth}
+			</if>
+
+			<if test="subscribeMonthGreaterThanOrEqual != null">
+				and E.SUBSCRIBEMONTH_ &gt;=
+				#{subscribeMonthGreaterThanOrEqual}
+			</if>
+
+			<if test="subscribeMonthLessThanOrEqual != null">
+				and E.SUBSCRIBEMONTH_ &lt;=
+				#{subscribeMonthLessThanOrEqual}
+			</if>
+
+			<if test="subscribeDay != null">
+				and E.SUBSCRIBEDAY_ = #{subscribeDay}
+			</if>
+
+			<if test="subscribeDayGreaterThanOrEqual != null">
+				and E.SUBSCRIBEDAY_ &gt;=
+				#{subscribeDayGreaterThanOrEqual}
+			</if>
+
+			<if test="subscribeDayLessThanOrEqual != null">
+				and E.SUBSCRIBEDAY_ &lt;= #{subscribeDayLessThanOrEqual}
 			</if>
 
 			<if test="createDateGreaterThanOrEqual != null">

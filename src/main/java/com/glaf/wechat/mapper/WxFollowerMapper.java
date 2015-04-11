@@ -27,11 +27,11 @@ public interface WxFollowerMapper {
 
 	void deleteWxFollowers(WxFollowerQuery query);
 
-	void deleteWxFollowerById(Long id);
+	void deleteWxFollowerById(WxFollowerQuery query);
 
-	WxFollower getWxFollowerById(Long id);
+	WxFollower getWxFollowerById(WxFollowerQuery query);
 	
-	WxFollower getWxFollowerByOpenId(String openid);
+	WxFollower getWxFollowerByOpenId(WxFollowerQuery query);
 
 	int getWxFollowerCount(WxFollowerQuery query);
 

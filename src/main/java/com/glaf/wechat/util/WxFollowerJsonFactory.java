@@ -94,8 +94,20 @@ public class WxFollowerJsonFactory {
 		if (jsonObject.containsKey("subscribeTime")) {
 			model.setSubscribeTime(jsonObject.getLong("subscribeTime"));
 		}
+		if (jsonObject.containsKey("subscribeYear")) {
+			model.setSubscribeYear(jsonObject.getInteger("subscribeYear"));
+		}
+		if (jsonObject.containsKey("subscribeMonth")) {
+			model.setSubscribeMonth(jsonObject.getInteger("subscribeMonth"));
+		}
+		if (jsonObject.containsKey("subscribeDay")) {
+			model.setSubscribeDay(jsonObject.getInteger("subscribeDay"));
+		}
 		if (jsonObject.containsKey("createDate")) {
 			model.setCreateDate(jsonObject.getDate("createDate"));
+		}
+		if (jsonObject.containsKey("lastModified")) {
+			model.setLastModified(jsonObject.getLong("lastModified"));
 		}
 
 		return model;
@@ -161,20 +173,22 @@ public class WxFollowerJsonFactory {
 		if (model.getRemark() != null) {
 			jsonObject.put("remark", model.getRemark());
 		}
+		jsonObject.put("subscribeYear", model.getSubscribeYear());
+		jsonObject.put("subscribeMonth", model.getSubscribeMonth());
+		jsonObject.put("subscribeDay", model.getSubscribeDay());
 		if (model.getSubscribeTime() != null) {
 			jsonObject.put("subscribeTime", model.getSubscribeTime());
-			jsonObject.put("subscribeTime_date",
-					DateUtils.getDate(new Date(model.getSubscribeTime())));
-			jsonObject.put("subscribeTime_datetime",
-					DateUtils.getDateTime(new Date(model.getSubscribeTime())));
+			jsonObject.put("subscribeTime_date", DateUtils.getDate(new Date(
+					model.getSubscribeTime() * 1000)));
+			jsonObject.put("subscribeTime_datetime", DateUtils
+					.getDateTime(new Date(model.getSubscribeTime() * 1000)));
 		}
 		if (model.getUnsubscribeTime() != null) {
 			jsonObject.put("unsubscribeTime", model.getUnsubscribeTime());
-			jsonObject.put("unsubscribeTime_date",
-					DateUtils.getDate(new Date(model.getUnsubscribeTime())));
-			jsonObject
-					.put("unsubscribeTime_datetime", DateUtils
-							.getDateTime(new Date(model.getUnsubscribeTime())));
+			jsonObject.put("unsubscribeTime_date", DateUtils.getDate(new Date(
+					model.getUnsubscribeTime() * 1000)));
+			jsonObject.put("unsubscribeTime_datetime", DateUtils
+					.getDateTime(new Date(model.getUnsubscribeTime() * 1000)));
 		}
 		if (model.getCreateDate() != null) {
 			jsonObject.put("createDate",
@@ -184,6 +198,7 @@ public class WxFollowerJsonFactory {
 			jsonObject.put("createDate_datetime",
 					DateUtils.getDateTime(model.getCreateDate()));
 		}
+		jsonObject.put("lastModified", model.getLastModified());
 		return jsonObject;
 	}
 
@@ -236,20 +251,22 @@ public class WxFollowerJsonFactory {
 		if (model.getRemark() != null) {
 			jsonObject.put("remark", model.getRemark());
 		}
+		jsonObject.put("subscribeYear", model.getSubscribeYear());
+		jsonObject.put("subscribeMonth", model.getSubscribeMonth());
+		jsonObject.put("subscribeDay", model.getSubscribeDay());
 		if (model.getSubscribeTime() != null) {
 			jsonObject.put("subscribeTime", model.getSubscribeTime());
-			jsonObject.put("subscribeTime_date",
-					DateUtils.getDate(new Date(model.getSubscribeTime())));
-			jsonObject.put("subscribeTime_datetime",
-					DateUtils.getDateTime(new Date(model.getSubscribeTime())));
+			jsonObject.put("subscribeTime_date", DateUtils.getDate(new Date(
+					model.getSubscribeTime() * 1000)));
+			jsonObject.put("subscribeTime_datetime", DateUtils
+					.getDateTime(new Date(model.getSubscribeTime() * 1000)));
 		}
 		if (model.getUnsubscribeTime() != null) {
 			jsonObject.put("unsubscribeTime", model.getUnsubscribeTime());
-			jsonObject.put("unsubscribeTime_date",
-					DateUtils.getDate(new Date(model.getUnsubscribeTime())));
-			jsonObject
-					.put("unsubscribeTime_datetime", DateUtils
-							.getDateTime(new Date(model.getUnsubscribeTime())));
+			jsonObject.put("unsubscribeTime_date", DateUtils.getDate(new Date(
+					model.getUnsubscribeTime() * 1000)));
+			jsonObject.put("unsubscribeTime_datetime", DateUtils
+					.getDateTime(new Date(model.getUnsubscribeTime() * 1000)));
 		}
 		if (model.getCreateDate() != null) {
 			jsonObject.put("createDate",
@@ -259,6 +276,7 @@ public class WxFollowerJsonFactory {
 			jsonObject.put("createDate_datetime",
 					DateUtils.getDateTime(model.getCreateDate()));
 		}
+		jsonObject.put("lastModified", model.getLastModified());
 		return jsonObject;
 	}
 

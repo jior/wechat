@@ -19,7 +19,9 @@
 package com.glaf.wechat.domain;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -153,8 +155,28 @@ public class WxUser implements Serializable, JSONable, User {
 	@Column(name = "ENDDATE")
 	protected Date endDate;
 
+	@javax.persistence.Transient
+	private Collection<String> rowKeys = new HashSet<String>();
+
+	@javax.persistence.Transient
+	private Collection<Object> objectIds = new HashSet<Object>();
+
 	public WxUser() {
 
+	}
+
+	public void addObjectId(Object rowId) {
+		if (objectIds == null) {
+			objectIds = new HashSet<Object>();
+		}
+		objectIds.add(rowId);
+	}
+
+	public void addRowKey(String rowKey) {
+		if (rowKeys == null) {
+			rowKeys = new HashSet<String>();
+		}
+		rowKeys.add(rowKey);
 	}
 
 	public int getAccountType() {
@@ -229,6 +251,10 @@ public class WxUser implements Serializable, JSONable, User {
 		return name;
 	}
 
+	public Collection<Object> getObjectIds() {
+		return objectIds;
+	}
+
 	public String getPassword() {
 		return null;
 	}
@@ -239,6 +265,11 @@ public class WxUser implements Serializable, JSONable, User {
 
 	public String getRemark() {
 		return remark;
+	}
+
+	@Override
+	public Collection<String> getRowKeys() {
+		return rowKeys;
 	}
 
 	public String getTelephone() {
@@ -379,6 +410,10 @@ public class WxUser implements Serializable, JSONable, User {
 		this.name = name;
 	}
 
+	public void setObjectIds(Collection<Object> objectIds) {
+		this.objectIds = objectIds;
+	}
+
 	public void setPassword(String pwd) {
 	}
 
@@ -388,6 +423,10 @@ public class WxUser implements Serializable, JSONable, User {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+	public void setRowKeys(Collection<String> rowKeys) {
+		this.rowKeys = rowKeys;
 	}
 
 	public void setTelephone(String telephone) {

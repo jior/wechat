@@ -110,31 +110,35 @@ public class WechatCodeProperties {
 
 	public synchronized static void reload() {
 		try {
-			String config = SystemProperties.getConfigRootPath() + "/conf/props/wechat/code";
+			String config = SystemProperties.getConfigRootPath()
+					+ "/conf/props/wechat/code";
 			File directory = new File(config);
 			if (directory.exists() && directory.isDirectory()) {
 				String[] filelist = directory.list();
-				for (int i = 0; i < filelist.length; i++) {
-					String filename = config + "/" + filelist[i];
-					File file = new File(filename);
-					if (file.isFile() && file.getName().endsWith(".properties")) {
-						InputStream inputStream = new FileInputStream(file);
-						Properties p = PropertiesUtils
-								.loadProperties(inputStream);
-						if (p != null) {
-							Enumeration<?> e = p.keys();
-							while (e.hasMoreElements()) {
-								String key = (String) e.nextElement();
-								String value = p.getProperty(key);
-								properties.setProperty(key, value);
-								properties
-										.setProperty(key.toLowerCase(), value);
-								properties
-										.setProperty(key.toUpperCase(), value);
+				if (filelist != null) {
+					for (int i = 0, len = filelist.length; i < len; i++) {
+						String filename = config + "/" + filelist[i];
+						File file = new File(filename);
+						if (file.isFile()
+								&& file.getName().endsWith(".properties")) {
+							InputStream inputStream = new FileInputStream(file);
+							Properties p = PropertiesUtils
+									.loadProperties(inputStream);
+							if (p != null) {
+								Enumeration<?> e = p.keys();
+								while (e.hasMoreElements()) {
+									String key = (String) e.nextElement();
+									String value = p.getProperty(key);
+									properties.setProperty(key, value);
+									properties.setProperty(key.toLowerCase(),
+											value);
+									properties.setProperty(key.toUpperCase(),
+											value);
+								}
 							}
+							inputStream.close();
+							inputStream = null;
 						}
-						inputStream.close();
-						inputStream = null;
 					}
 				}
 			}

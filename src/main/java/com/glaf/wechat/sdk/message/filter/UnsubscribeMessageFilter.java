@@ -51,7 +51,7 @@ public class UnsubscribeMessageFilter extends AbstractMessageFilter implements
 		query.createBy(message.getCustomer());
 		query.type("F");
 		query.locked(0);
-		
+
 		List<WxContent> rows = wxContentService.list(query);
 		if (rows != null && !rows.isEmpty()) {
 			ResponseNewsMessage newsMessage = new ResponseNewsMessage();
@@ -111,7 +111,8 @@ public class UnsubscribeMessageFilter extends AbstractMessageFilter implements
 			WxFollowerService wxFollowerService = ContextFactory
 					.getBean("wxFollowerService");
 			WxFollower follower = wxFollowerService.getWxFollower(
-					message.getToUserName(), message.getFromUserName());
+					message.getAccountId(), message.getToUserName(),
+					message.getFromUserName());
 			if (follower == null) {
 				Date date = new Date();
 				follower = new WxFollower();
