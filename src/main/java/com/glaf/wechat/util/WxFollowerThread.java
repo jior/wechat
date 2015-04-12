@@ -20,12 +20,15 @@ package com.glaf.wechat.util;
 import java.util.Date;
 import java.util.concurrent.CountDownLatch;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.alibaba.fastjson.JSONObject;
+import com.glaf.core.config.Configuration;
 import com.glaf.core.context.ContextFactory;
 import com.glaf.core.util.DateUtils;
+import com.glaf.wechat.config.WechatConfiguration;
 import com.glaf.wechat.domain.WxFollower;
 import com.glaf.wechat.service.WxFollowerService;
 import com.glaf.wechat.service.WxUserService;
@@ -33,6 +36,8 @@ import com.glaf.wechat.service.WxUserService;
 public class WxFollowerThread extends Thread {
 	protected static final Log logger = LogFactory
 			.getLog(WxFollowerThread.class);
+	protected static Configuration conf = WechatConfiguration.create();
+
 	protected CountDownLatch latch;
 	protected WxUserService wxUserService;
 	protected WxFollowerService wxFollowerService;
@@ -91,7 +96,14 @@ public class WxFollowerThread extends Thread {
 					bean.setCountry(jsonObject.getString("country"));
 					bean.setHeadimgurl(jsonObject.getString("headimgurl"));
 					bean.setLanguage(jsonObject.getString("language"));
-					bean.setNickName(jsonObject.getString("nickname"));
+					String nickname = jsonObject.getString("nickname");
+					if (conf.getBoolean("wx_follower_nickname_enc", false)) {
+						nickname = Base64.encodeBase64String(nickname
+								.getBytes());
+						bean.setNickNameEncode("Y");
+						logger.debug("nickname:"+nickname);
+					}
+					bean.setNickName(nickname);
 					bean.setProvince(jsonObject.getString("province"));
 					bean.setSex(jsonObject.getString("sex"));
 					bean.setSubscribeTime(jsonObject.getLong("subscribe_time"));

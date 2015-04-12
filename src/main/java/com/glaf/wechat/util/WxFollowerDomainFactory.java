@@ -28,6 +28,7 @@ public class WxFollowerDomainFactory {
 		columnMap.put("sourceId", "SOURCEID_");
 		columnMap.put("openId", "OPENID_");
 		columnMap.put("nickName", "NICKNAME_");
+		columnMap.put("nickNameEncode", "NICKNAMEENCODE_");
 		columnMap.put("sex", "SEX_");
 		columnMap.put("mobile", "MOBILE_");
 		columnMap.put("mail", "MAIL_");
@@ -52,6 +53,7 @@ public class WxFollowerDomainFactory {
 		javaTypeMap.put("sourceId", "String");
 		javaTypeMap.put("openId", "String");
 		javaTypeMap.put("nickName", "String");
+		javaTypeMap.put("nickNameEncode", "String");
 		javaTypeMap.put("sex", "String");
 		javaTypeMap.put("mobile", "String");
 		javaTypeMap.put("mail", "String");
@@ -119,6 +121,13 @@ public class WxFollowerDomainFactory {
 		nickName.setJavaType("String");
 		nickName.setLength(500);
 		tableDefinition.addColumn(nickName);
+
+		ColumnDefinition nickNameEncode = new ColumnDefinition();
+		nickNameEncode.setName("nickNameEncode");
+		nickNameEncode.setColumnName("NICKNAMEENCODE_");
+		nickNameEncode.setJavaType("String");
+		nickNameEncode.setLength(1);
+		tableDefinition.addColumn(nickNameEncode);
 
 		ColumnDefinition sex = new ColumnDefinition();
 		sex.setName("sex");

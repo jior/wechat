@@ -197,7 +197,11 @@ public class WxFollowerServiceImpl implements WxFollowerService {
 				WxFollower follower = null;
 				while (!wxFollowers.isEmpty()) {
 					follower = wxFollowers.poll();
-					this.saveInner(follower);
+					try {
+						this.saveInner(follower);
+					} catch (Exception ex) {
+						logger.error("save follower error", ex);
+					}
 				}
 				lastUpdate = System.currentTimeMillis();
 				logger.debug("followers.size:" + wxFollowers.size());

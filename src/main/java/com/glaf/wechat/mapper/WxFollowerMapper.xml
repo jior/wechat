@@ -10,6 +10,8 @@
 		<result property="actorId" column="ACTORID_" jdbcType="VARCHAR" />
 		<result property="sourceId" column="SOURCEID_" jdbcType="VARCHAR" />
 		<result property="nickName" column="NICKNAME_" jdbcType="VARCHAR" />
+		<result property="nickNameEncode" column="NICKNAMEENCODE_"
+			jdbcType="VARCHAR" />
 		<result property="sex" column="SEX_" jdbcType="VARCHAR" />
 		<result property="mobile" column="MOBILE_" jdbcType="VARCHAR" />
 		<result property="mail" column="MAIL_" jdbcType="VARCHAR" />
@@ -52,6 +54,9 @@
 			</if>
 			<if test="nickName != null">
 				,NICKNAME_
+			</if>
+			<if test="nickNameEncode != null">
+				,NICKNAMEENCODE_
 			</if>
 			<if test="sex != null">
 				,SEX_
@@ -124,6 +129,9 @@
 			<if test="nickName != null">
 				,#{nickName, jdbcType=VARCHAR}
 			</if>
+			<if test="nickNameEncode != null">
+				,#{nickNameEncode, jdbcType=VARCHAR}
+			</if>
 			<if test="sex != null">
 				,#{sex, jdbcType=VARCHAR}
 			</if>
@@ -188,6 +196,9 @@
 		<trim prefix="" suffix="" suffixOverrides=",">
 			<if test="nickName != null">
 				NICKNAME_ = #{nickName, jdbcType=VARCHAR},
+			</if>
+			<if test="nickNameEncode != null">
+				NICKNAMEENCODE_ = #{nickNameEncode, jdbcType=VARCHAR},
 			</if>
 			<if test="sex != null">
 				SEX_ = #{sex, jdbcType=VARCHAR},

@@ -20,6 +20,7 @@ package com.glaf.wechat.domain;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -40,6 +41,8 @@ public class WxFollower implements Serializable, JSONable {
 	protected String sourceId;
 
 	protected String nickName;
+
+	protected String nickNameEncode;
 
 	protected String sex;
 
@@ -145,7 +148,14 @@ public class WxFollower implements Serializable, JSONable {
 	}
 
 	public String getNickName() {
+		if (nickName != null && "Y".equals(nickNameEncode)) {
+			return new String(Base64.decodeBase64(nickName));
+		}
 		return this.nickName;
+	}
+
+	public String getNickNameEncode() {
+		return nickNameEncode;
 	}
 
 	public String getOpenId() {
@@ -254,6 +264,10 @@ public class WxFollower implements Serializable, JSONable {
 
 	public void setNickName(String nickName) {
 		this.nickName = nickName;
+	}
+
+	public void setNickNameEncode(String nickNameEncode) {
+		this.nickNameEncode = nickNameEncode;
 	}
 
 	public void setOpenId(String openId) {

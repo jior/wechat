@@ -58,6 +58,9 @@ public class WxFollowerJsonFactory {
 		if (jsonObject.containsKey("nickName")) {
 			model.setNickName(jsonObject.getString("nickName"));
 		}
+		if (jsonObject.containsKey("nickNameEncode")) {
+			model.setNickNameEncode(jsonObject.getString("nickNameEncode"));
+		}
 		if (jsonObject.containsKey("sex")) {
 			model.setSex(jsonObject.getString("sex"));
 		}
@@ -142,6 +145,9 @@ public class WxFollowerJsonFactory {
 		if (model.getNickName() != null) {
 			jsonObject.put("nickName", model.getNickName());
 		}
+		if (model.getNickNameEncode() != null) {
+			jsonObject.put("nickNameEncode", model.getNickNameEncode());
+		}
 		if (model.getSex() != null) {
 			jsonObject.put("sex", model.getSex());
 		}
@@ -219,6 +225,9 @@ public class WxFollowerJsonFactory {
 		}
 		if (model.getNickName() != null) {
 			jsonObject.put("nickName", model.getNickName());
+		}
+		if (model.getNickNameEncode() != null) {
+			jsonObject.put("nickNameEncode", model.getNickNameEncode());
 		}
 		if (model.getSex() != null) {
 			jsonObject.put("sex", model.getSex());

@@ -101,9 +101,13 @@ public class WxLogServiceImpl implements WxLogService {
 			WxLog bean = null;
 			while (!wxLogs.isEmpty()) {
 				bean = wxLogs.poll();
-				sysLogMapper.insertWxLog(bean);// 写历史表
-				bean.setSuffix("");
-				sysLogMapper.insertWxLog(bean);// 写当前表
+				try {
+					sysLogMapper.insertWxLog(bean);// 写历史表
+					bean.setSuffix("");
+					sysLogMapper.insertWxLog(bean);// 写当前表
+				} catch (Exception ex) {
+					logger.error("save log error", ex);
+				}
 			}
 			lastUpdate = System.currentTimeMillis();
 			logger.debug("wxLogs.size:" + wxLogs.size());
@@ -117,10 +121,14 @@ public class WxLogServiceImpl implements WxLogService {
 			WxLog bean = null;
 			while (!wxLogs.isEmpty()) {
 				bean = wxLogs.poll();
-				sysLogMapper.insertWxLog(bean);// 写历史表
+				try {
+					sysLogMapper.insertWxLog(bean);// 写历史表
 
-				bean.setSuffix("");
-				sysLogMapper.insertWxLog(bean);// 写当前表
+					bean.setSuffix("");
+					sysLogMapper.insertWxLog(bean);// 写当前表
+				} catch (Exception ex) {
+					logger.error("save log error", ex);
+				}
 			}
 			lastUpdate = System.currentTimeMillis();
 			logger.debug("wxLogs.size:" + wxLogs.size());
