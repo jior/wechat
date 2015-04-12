@@ -266,12 +266,6 @@
 	</delete>
 
 
-	<select id="getWxFollowerById" parameterType="com.glaf.wechat.query.WxFollowerQuery"
-		resultMap="wxFollowerResultMap">
-		select * from ${tableName} where OPENID_ = #{openId}
-	</select>
-
-
 	<select id="getWxFollowerByOpenId" parameterType="com.glaf.wechat.query.WxFollowerQuery"
 		resultMap="wxFollowerResultMap">
 		select * from ${tableName} where OPENID_ = #{openid}

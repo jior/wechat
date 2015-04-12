@@ -30,13 +30,11 @@ public interface WxFollowerMapper {
 	void deleteWxFollowers(WxFollowerQuery query);
 
 	List<WxFollower> getEmptyWxFollowers(WxFollowerQuery query);
-	
+
 	List<String> getExistsWxFollowerIds(WxFollowerQuery query);
 
-	WxFollower getWxFollowerById(WxFollowerQuery query);
-	
 	WxFollower getWxFollowerByOpenId(WxFollowerQuery query);
-	
+
 	int getWxFollowerCount(WxFollowerQuery query);
 
 	List<WxFollower> getWxFollowers(WxFollowerQuery query);

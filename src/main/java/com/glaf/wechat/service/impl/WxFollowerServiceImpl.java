@@ -103,18 +103,6 @@ public class WxFollowerServiceImpl implements WxFollowerService {
 		return (date.getTime());
 	}
 
-	public WxFollower getWxFollower(Long accountId, Long id) {
-		if (id == null) {
-			return null;
-		}
-		WxFollowerQuery query = new WxFollowerQuery();
-		query.setId(id);
-		query.setAccountId(accountId);
-		query.setTableName(WxFollowerDomainFactory.TABLENAME_PREFIX + accountId);
-		WxFollower wxFollower = wxFollowerMapper.getWxFollowerById(query);
-		return wxFollower;
-	}
-
 	public WxFollower getWxFollowerByOpenId(Long accountId, String openId) {
 		WxFollowerQuery query = new WxFollowerQuery();
 		query.openId(openId);

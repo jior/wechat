@@ -118,7 +118,7 @@ public class WxFollowerController {
 					CountDownLatch latch = new CountDownLatch(len);
 					for (int i = 0; i < len; i++) {
 						String openid = notExists.get(i);
-						// logger.debug("openid:" + openid);
+						logger.debug("openid:" + openid);
 						WxFollowerThread thread = new WxFollowerThread(
 								accountId, actorId, subscribe_get_url, token,
 								openid, latch);
@@ -129,7 +129,7 @@ public class WxFollowerController {
 							thread.start();
 						}
 					}
-					
+
 					long start = System.currentTimeMillis();
 					boolean wait = true;
 					while (wait) {
@@ -609,7 +609,7 @@ public class WxFollowerController {
 	@RequestMapping("/saveWxFollower")
 	public byte[] saveWxFollower(HttpServletRequest request) {
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		logger.debug("params->"+params);
+		logger.debug("params->" + params);
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		Long accountId = RequestUtils.getLong(request, "accountId");
 		WxUser user = WxIdentityFactory.getUserByAccountId(accountId);

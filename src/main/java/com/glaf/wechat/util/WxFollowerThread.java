@@ -73,10 +73,11 @@ public class WxFollowerThread extends Thread {
 
 	public void run() {
 		try {
+			ThreadCounter.add(accountId);
 			WxFollower follower = getWxFollowerService().getWxFollowerByOpenId(
 					accountId, openId);
 			if (follower == null
-					|| (System.currentTimeMillis() - follower.getLastModified() > DateUtils.DAY * 2)) {
+					|| (System.currentTimeMillis() - follower.getLastModified() > DateUtils.DAY * 30)) {
 				logger.debug("get openId from server: " + openId);
 				JSONObject jsonObject = WechatUtils.getFollower(
 						subscribe_get_url, token, openId);
@@ -102,7 +103,6 @@ public class WxFollowerThread extends Thread {
 			logger.error(ex);
 		} finally {
 			latch.countDown();
-			ThreadCounter.add(accountId);
 		}
 	}
 
