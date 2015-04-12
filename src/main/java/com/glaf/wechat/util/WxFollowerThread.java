@@ -95,21 +95,15 @@ public class WxFollowerThread extends Thread {
 					bean.setSex(jsonObject.getString("sex"));
 					bean.setSubscribeTime(jsonObject.getLong("subscribe_time"));
 					getWxFollowerService().save(bean);
-				} else {
-					WxFollower bean = new WxFollower();
-					bean.setAccountId(accountId);
-					bean.setActorId(actorId);
-					bean.setOpenId(openId);
-					bean.setSourceId(String.valueOf(accountId));
-					getWxFollowerService().save(bean);
 				}
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			logger.error(ex);
+		} finally {
+			latch.countDown();
+			ThreadCounter.add(accountId);
 		}
-		ThreadCounter.add(accountId);
-		latch.countDown();
 	}
 
 	public static void main(String[] args) {

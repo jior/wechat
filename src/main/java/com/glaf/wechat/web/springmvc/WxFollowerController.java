@@ -95,8 +95,6 @@ public class WxFollowerController {
 		if (data.containsKey("openid")) {
 			JSONArray array = data.getJSONArray("openid");
 			if (array != null && array.size() > 0) {
-
-				long start = System.currentTimeMillis();
 				ThreadCounter.remove(accountId);
 				int len = array.size();
 				Collection<String> openIds = new HashSet<String>();
@@ -107,19 +105,20 @@ public class WxFollowerController {
 				List<String> notExists = new ArrayList<String>();
 				List<String> exists = wxFollowerService.getExistsWxFollowers(
 						accountId, openIds);
-				if (exists != null && !exists.isEmpty()) {
-					for (int i = 0; i < len; i++) {
-						if (!exists.contains(array.getString(i))) {
-							notExists.add(array.getString(i));
-						}
+
+				for (int i = 0; i < len; i++) {
+					if (exists != null && !exists.contains(array.getString(i))) {
+						notExists.add(array.getString(i));
 					}
 				}
+
 				len = notExists.size();
 				if (len > 0) {
+					logger.debug("total :" + len);
 					CountDownLatch latch = new CountDownLatch(len);
 					for (int i = 0; i < len; i++) {
 						String openid = notExists.get(i);
-						logger.debug("openid:" + openid);
+						// logger.debug("openid:" + openid);
 						WxFollowerThread thread = new WxFollowerThread(
 								accountId, actorId, subscribe_get_url, token,
 								openid, latch);
@@ -130,6 +129,7 @@ public class WxFollowerController {
 							thread.start();
 						}
 					}
+					long start = System.currentTimeMillis();
 					boolean wait = true;
 					while (wait) {
 						try {
@@ -141,11 +141,14 @@ public class WxFollowerController {
 								wait = false;
 								break;
 							}
-							latch.await();
 							logger.debug("wait.....");
 							Thread.sleep(2000);
 						} catch (InterruptedException ex) {
 						}
+					}
+					try {
+						latch.await();
+					} catch (InterruptedException ex) {
 					}
 				}
 			}
@@ -178,7 +181,7 @@ public class WxFollowerController {
 	public void delete(HttpServletRequest request, ModelMap modelMap) {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		Long accountId = RequestUtils.getLong(request, "accountId");
-		Long id = RequestUtils.getLong(request, "id");
+		String id = RequestUtils.getString(request, "id");
 		String ids = request.getParameter("ids");
 		if (StringUtils.isNotEmpty(ids)) {
 			StringTokenizer token = new StringTokenizer(ids, ",");
@@ -192,7 +195,7 @@ public class WxFollowerController {
 									loginContext.getActorId()) || loginContext
 									.isSystemAdministrator())) {
 						wxFollowerService.deleteById(accountId,
-								wxFollower.getId());
+								wxFollower.getOpenId());
 					}
 				}
 			}
@@ -203,7 +206,7 @@ public class WxFollowerController {
 					&& (StringUtils.equals(wxFollower.getActorId(),
 							loginContext.getActorId()) || loginContext
 							.isSystemAdministrator())) {
-				wxFollowerService.deleteById(accountId, wxFollower.getId());
+				wxFollowerService.deleteById(accountId, wxFollower.getOpenId());
 			}
 		}
 	}
@@ -420,7 +423,7 @@ public class WxFollowerController {
 		if (count == null) {
 			count = 0;
 		}
-		if (count > conf.getInt("client.threads", 1)) {
+		if (count > conf.getInt("client.threads", 5)) {
 			throw new RuntimeException("client threads so much");
 		}
 		count = count + 1;
@@ -511,8 +514,6 @@ public class WxFollowerController {
 
 				for (WxFollower wxFollower : list) {
 					JSONObject rowJSON = wxFollower.toJsonObject();
-					rowJSON.put("id", wxFollower.getId());
-					rowJSON.put("followerId", wxFollower.getId());
 					rowJSON.put("startIndex", ++start);
 					rowsJSON.add(rowJSON);
 				}

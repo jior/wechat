@@ -33,7 +33,7 @@ public interface WxFollowerService {
 	 * @return
 	 */
 	@Transactional
-	void deleteById(Long accountId, Long id);
+	void deleteById(Long accountId, String openId);
 
 	/**
 	 * 根据主键删除多条记录
@@ -41,7 +41,7 @@ public interface WxFollowerService {
 	 * @return
 	 */
 	@Transactional
-	void deleteByIds(Long accountId, List<Long> ids);
+	void deleteByIds(Long accountId, List<String> openIds);
 
 	/**
 	 * 根据查询参数获取记录列表

@@ -41,7 +41,7 @@ public class WxFollowerJsonFactory {
 	public static WxFollower jsonToObject(JSONObject jsonObject) {
 		WxFollower model = new WxFollower();
 		if (jsonObject.containsKey("id")) {
-			model.setId(jsonObject.getLong("id"));
+			model.setOpenId(jsonObject.getString("id"));
 		}
 		if (jsonObject.containsKey("accountId")) {
 			model.setAccountId(jsonObject.getLong("accountId"));
@@ -126,9 +126,9 @@ public class WxFollowerJsonFactory {
 
 	public static JSONObject toJsonObject(WxFollower model) {
 		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("id", model.getId());
-		jsonObject.put("_id_", model.getId());
-		jsonObject.put("_oid_", model.getId());
+		jsonObject.put("id", model.getOpenId());
+		jsonObject.put("_id_", model.getOpenId());
+		jsonObject.put("_oid_", model.getOpenId());
 		jsonObject.put("accountId", model.getAccountId());
 		if (model.getActorId() != null) {
 			jsonObject.put("actorId", model.getActorId());
@@ -204,9 +204,9 @@ public class WxFollowerJsonFactory {
 
 	public static ObjectNode toObjectNode(WxFollower model) {
 		ObjectNode jsonObject = new ObjectMapper().createObjectNode();
-		jsonObject.put("id", model.getId());
-		jsonObject.put("_id_", model.getId());
-		jsonObject.put("_oid_", model.getId());
+		jsonObject.put("id", model.getOpenId());
+		jsonObject.put("_id_", model.getOpenId());
+		jsonObject.put("_oid_", model.getOpenId());
 		jsonObject.put("accountId", model.getAccountId());
 		if (model.getActorId() != null) {
 			jsonObject.put("actorId", model.getActorId());

@@ -73,10 +73,10 @@ public class WxFollowerServiceImpl implements WxFollowerService {
 	}
 
 	@Transactional
-	public void deleteById(Long accountId, Long id) {
+	public void deleteById(Long accountId, String id) {
 		if (id != null) {
 			WxFollowerQuery query = new WxFollowerQuery();
-			query.setId(id);
+			query.setOpenId(id);
 			query.setAccountId(accountId);
 			query.setTableName(WxFollowerDomainFactory.TABLENAME_PREFIX
 					+ accountId);
@@ -85,11 +85,11 @@ public class WxFollowerServiceImpl implements WxFollowerService {
 	}
 
 	@Transactional
-	public void deleteByIds(Long accountId, List<Long> ids) {
-		if (ids != null && !ids.isEmpty()) {
-			for (Long id : ids) {
+	public void deleteByIds(Long accountId, List<String> openIds) {
+		if (openIds != null && !openIds.isEmpty()) {
+			for (String id : openIds) {
 				WxFollowerQuery query = new WxFollowerQuery();
-				query.setId(id);
+				query.setOpenId(id);
 				query.setAccountId(accountId);
 				query.setTableName(WxFollowerDomainFactory.TABLENAME_PREFIX
 						+ accountId);
@@ -236,8 +236,8 @@ public class WxFollowerServiceImpl implements WxFollowerService {
 
 	@Transactional
 	protected void saveInner(WxFollower follower) {
-		WxFollower bean = this.getWxFollower(follower.getAccountId(),
-				follower.getSourceId(), follower.getOpenId());
+		WxFollower bean = this.getWxFollowerByOpenId(follower.getAccountId(),
+				follower.getOpenId());
 		if (bean != null) {
 			follower.setTableName(WxFollowerDomainFactory.TABLENAME_PREFIX
 					+ follower.getAccountId());
@@ -259,10 +259,6 @@ public class WxFollowerServiceImpl implements WxFollowerService {
 
 			wxFollowerMapper.updateWxFollower(follower);
 		} else {
-			if (follower.getId() == null) {
-				follower.setId(idGenerator.nextId());
-				follower.setCreateDate(new Date());
-			}
 			if (follower.getSubscribeTime() == null
 					|| follower.getSubscribeTime() == 0) {
 				follower.setSubscribeTime(getCurrentUnixTimestamp());

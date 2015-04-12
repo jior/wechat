@@ -23,7 +23,6 @@ public class WxFollowerDomainFactory {
 	public static final ConcurrentMap<String, String> javaTypeMap = new ConcurrentHashMap<String, String>();
 
 	static {
-		columnMap.put("id", "ID_");
 		columnMap.put("accountId", "ACCOUNTID_");
 		columnMap.put("actorId", "ACTORID_");
 		columnMap.put("sourceId", "SOURCEID_");
@@ -48,7 +47,6 @@ public class WxFollowerDomainFactory {
 		columnMap.put("createDate", "CREATEDATE_");
 		columnMap.put("lastModified", "LASTMODIFIED_");
 
-		javaTypeMap.put("id", "Long");
 		javaTypeMap.put("accountId", "Long");
 		javaTypeMap.put("actorId", "String");
 		javaTypeMap.put("sourceId", "String");
@@ -89,9 +87,10 @@ public class WxFollowerDomainFactory {
 		tableDefinition.setName("WxFollower");
 
 		ColumnDefinition idColumn = new ColumnDefinition();
-		idColumn.setName("id");
-		idColumn.setColumnName("ID_");
-		idColumn.setJavaType("Long");
+		idColumn.setName("openId");
+		idColumn.setColumnName("OPENID_");
+		idColumn.setJavaType("String");
+		idColumn.setLength(200);
 		tableDefinition.setIdColumn(idColumn);
 
 		ColumnDefinition accountId = new ColumnDefinition();
@@ -113,13 +112,6 @@ public class WxFollowerDomainFactory {
 		sourceId.setJavaType("String");
 		sourceId.setLength(100);
 		tableDefinition.addColumn(sourceId);
-
-		ColumnDefinition openId = new ColumnDefinition();
-		openId.setName("openId");
-		openId.setColumnName("OPENID_");
-		openId.setJavaType("String");
-		openId.setLength(200);
-		tableDefinition.addColumn(openId);
 
 		ColumnDefinition nickName = new ColumnDefinition();
 		nickName.setName("nickName");

@@ -5,11 +5,10 @@
 <mapper namespace="com.glaf.wechat.mapper.WxFollowerMapper">
 
 	<resultMap id="wxFollowerResultMap" type="com.glaf.wechat.domain.WxFollower">
-		<id property="id" column="ID_" jdbcType="BIGINT" />
+		<id property="openId" column="OPENID_" jdbcType="VARCHAR" />
 		<result property="accountId" column="ACCOUNTID_" jdbcType="BIGINT" />
 		<result property="actorId" column="ACTORID_" jdbcType="VARCHAR" />
 		<result property="sourceId" column="SOURCEID_" jdbcType="VARCHAR" />
-		<result property="openId" column="OPENID_" jdbcType="VARCHAR" />
 		<result property="nickName" column="NICKNAME_" jdbcType="VARCHAR" />
 		<result property="sex" column="SEX_" jdbcType="VARCHAR" />
 		<result property="mobile" column="MOBILE_" jdbcType="VARCHAR" />
@@ -41,7 +40,7 @@
 	<insert id="insertWxFollower" parameterType="com.glaf.wechat.domain.WxFollower">
 		insert into ${tableName}
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-			ID_
+			OPENID_
 			<if test="accountId != null">
 				,ACCOUNTID_
 			</if>
@@ -50,9 +49,6 @@
 			</if>
 			<if test="sourceId != null">
 				,SOURCEID_
-			</if>
-			<if test="openId != null">
-				,OPENID_
 			</if>
 			<if test="nickName != null">
 				,NICKNAME_
@@ -114,7 +110,7 @@
 		</trim>
 
 		<trim prefix=" values (" suffix=")" suffixOverrides=",">
-			#{id, jdbcType=BIGINT}
+			#{openId, jdbcType=VARCHAR}
 
 			<if test="accountId != null">
 				,#{accountId, jdbcType=BIGINT}
@@ -124,9 +120,6 @@
 			</if>
 			<if test="sourceId != null">
 				,#{sourceId, jdbcType=VARCHAR}
-			</if>
-			<if test="openId != null">
-				,#{openId, jdbcType=VARCHAR}
 			</if>
 			<if test="nickName != null">
 				,#{nickName, jdbcType=VARCHAR}
@@ -249,7 +242,7 @@
 			</if>
 		</trim>
 		where
-		ID_ = #{id, jdbcType=BIGINT}
+		OPENID_ = #{openId, jdbcType=VARCHAR}
 
 	</update>
 
@@ -257,15 +250,15 @@
 	<delete id="deleteWxFollowerById" parameterType="com.glaf.wechat.query.WxFollowerQuery">
 		delete from
 		${tableName}
-		where ID_ = #{id}
+		where OPENID_ = #{openId}
 	</delete>
 
 
 	<delete id="deleteWxFollowers" parameterType="com.glaf.wechat.query.WxFollowerQuery">
 		delete from ${tableName}
 		where (
-		ID_ IN
-		<foreach item="x_id" index="index" collection="ids" open="("
+		OPENID_ IN
+		<foreach item="x_id" index="index" collection="openIds" open="("
 			separator="," close=")">
 			#{x_id}
 		</foreach>
@@ -275,7 +268,7 @@
 
 	<select id="getWxFollowerById" parameterType="com.glaf.wechat.query.WxFollowerQuery"
 		resultMap="wxFollowerResultMap">
-		select * from ${tableName} where ID_ = #{id}
+		select * from ${tableName} where OPENID_ = #{openId}
 	</select>
 
 
@@ -283,30 +276,30 @@
 		resultMap="wxFollowerResultMap">
 		select * from ${tableName} where OPENID_ = #{openid}
 	</select>
-	
-	
+
+
 	<select id="getEmptyWxFollowers" parameterType="com.glaf.wechat.query.WxFollowerQuery"
 		resultMap="wxFollowerResultMap">
-		
-		select * from ${tableName} 
+
+		select * from ${tableName}
 		where SUBSCRIBETIME_ IS NULL
-		
+
 	</select>
-	
-	
+
+
 	<select id="getExistsWxFollowerIds" parameterType="com.glaf.wechat.query.WxFollowerQuery"
 		resultType="string">
-		
-		select OPENID_ from ${tableName} 
-		where SUBSCRIBETIME_  IS NOT NULL
+
+		select OPENID_ from ${tableName}
+		where SUBSCRIBETIME_ IS NOT NULL
 		<if test="openIds != null and openIds.size !=0">
 			and OPENID_ IN
 			<foreach item="x_openId" index="index" collection="openIds"
-					open="(" separator="," close=")">
-					#{x_openId}
+				open="(" separator="," close=")">
+				#{x_openId}
 			</foreach>
 		</if>
-		
+
 	</select>
 
 

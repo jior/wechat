@@ -31,15 +31,13 @@ import com.glaf.wechat.util.WxFollowerJsonFactory;
 public class WxFollower implements Serializable, JSONable {
 	private static final long serialVersionUID = 1L;
 
-	protected Long id;
+	protected String openId;
 
 	protected Long accountId;
 
 	protected String actorId;
 
 	protected String sourceId;
-
-	protected String openId;
 
 	protected String nickName;
 
@@ -94,10 +92,10 @@ public class WxFollower implements Serializable, JSONable {
 		if (getClass() != obj.getClass())
 			return false;
 		WxFollower other = (WxFollower) obj;
-		if (id == null) {
-			if (other.id != null)
+		if (openId == null) {
+			if (other.openId != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!openId.equals(other.openId))
 			return false;
 		return true;
 	}
@@ -124,10 +122,6 @@ public class WxFollower implements Serializable, JSONable {
 
 	public String getHeadimgurl() {
 		return this.headimgurl;
-	}
-
-	public Long getId() {
-		return this.id;
 	}
 
 	public String getLanguage() {
@@ -206,7 +200,7 @@ public class WxFollower implements Serializable, JSONable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((openId == null) ? 0 : openId.hashCode());
 		return result;
 	}
 
@@ -236,10 +230,6 @@ public class WxFollower implements Serializable, JSONable {
 
 	public void setHeadimgurl(String headimgurl) {
 		this.headimgurl = headimgurl;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public void setLanguage(String language) {
