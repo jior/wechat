@@ -35,7 +35,7 @@
 					   } else if (window.parent) {
 						window.parent.location.reload();
 					   }**/
-					   location.href='<%=com.glaf.core.util.RequestUtils.decodeURL(request.getParameter("fromUrl"))%>';
+					  // location.href='<%=com.glaf.core.util.RequestUtils.decodeURL(request.getParameter("fromUrl"))%>';
 				   }
 			 });
 	}
@@ -58,7 +58,7 @@
 					   } else {
 						   alert('操作成功完成！');
 					   }
-					   location.href='<%=com.glaf.core.util.RequestUtils.decodeURL(request.getParameter("fromUrl"))%>';
+					   //location.href='<%=com.glaf.core.util.RequestUtils.decodeURL(request.getParameter("fromUrl"))%>';
 				   }
 			 });
 	}
@@ -75,8 +75,8 @@
 	<span class="x_content_title">编辑关注用户</span>
 	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-save'" 
 	   onclick="javascript:saveData();" >保存</a> 
-	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-back'" 
-	   onclick="javascript:history.back();">返回</a>
+	<!-- <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-back'" 
+	   onclick="javascript:history.back();">返回</a> -->
     </div> 
   </div>
 
@@ -85,13 +85,53 @@
   <input type="hidden" id="accountId" name="accountId" value="${accountId}"/>
   <input type="hidden" id="sourceId" name="sourceId" value="${wxFollower.sourceId}"/>
   <input type="hidden" id="openId" name="openId" value="${wxFollower.openId}"/>
-  <input type="hidden" id="id" name="id" value="${wxFollower.id}"/>
+  <input type="hidden" id="id" name="id" value="${wxFollower.openId}"/>
   <table class="easyui-form" style="width:600px;" align="center">
     <tbody>
 	<tr>
+		<td width="20%" align="left">昵称</td>
+		<td align="left">
+            <input id="nickName" name="nickName" type="text"  readonly size="50"
+			       class="easyui-validatebox  x-text readonly"  
+				   value="${wxFollower.nickName}"/>
+		</td>
+	</tr>
+	<tr>
+		<td width="20%" align="left">省份</td>
+		<td align="left">
+            <input id="province" name="province" type="text"  readonly size="50"
+			       class="easyui-validatebox  x-text readonly"  
+				   value="${wxFollower.province}"/>
+		</td>
+	</tr>
+	<tr>
+		<td width="20%" align="left">城市</td>
+		<td align="left">
+            <input id="city" name="city" type="text" readonly size="50"
+			       class="easyui-validatebox  x-text readonly"  
+				   value="${wxFollower.city}"/>
+		</td>
+	</tr>
+	<tr>
+		<td width="20%" align="left">国家</td>
+		<td align="left">
+            <input id="country" name="country" type="text" readonly size="50"
+			       class="easyui-validatebox  x-text readonly"  
+				   value="${wxFollower.country}"/>
+		</td>
+	</tr>
+	<tr>
+		<td width="20%" align="left">语言</td>
+		<td align="left">
+            <input id="language" name="language" type="text" readonly size="50"
+			       class="easyui-validatebox  x-text readonly"  
+				   value="${wxFollower.language}"/>
+		</td>
+	</tr>
+	<tr>
 		<td width="20%" align="left">手机</td>
 		<td align="left">
-            <input id="mobile" name="mobile" type="text" 
+            <input id="mobile" name="mobile" type="text" size="50"
 			       class="easyui-validatebox  x-text"  
 				   value="${wxFollower.mobile}"/>
 		</td>
@@ -99,7 +139,7 @@
 	<tr>
 		<td width="20%" align="left">邮件</td>
 		<td align="left">
-            <input id="mail" name="mail" type="text" 
+            <input id="mail" name="mail" type="text" size="50"
 			       class="easyui-validatebox  x-text"  
 				   value="${wxFollower.mail}"/>
 		</td>
@@ -107,47 +147,16 @@
 	<tr>
 		<td width="20%" align="left">电话</td>
 		<td align="left">
-            <input id="telephone" name="telephone" type="text" 
+            <input id="telephone" name="telephone" type="text"  size="50"
 			       class="easyui-validatebox  x-text"  
 				   value="${wxFollower.telephone}"/>
 		</td>
 	</tr>
-	<tr>
-		<td width="20%" align="left">省份</td>
-		<td align="left">
-            <input id="province" name="province" type="text" 
-			       class="easyui-validatebox  x-text"  
-				   value="${wxFollower.province}"/>
-		</td>
-	</tr>
-	<tr>
-		<td width="20%" align="left">城市</td>
-		<td align="left">
-            <input id="city" name="city" type="text" 
-			       class="easyui-validatebox  x-text"  
-				   value="${wxFollower.city}"/>
-		</td>
-	</tr>
-	<tr>
-		<td width="20%" align="left">国家</td>
-		<td align="left">
-            <input id="country" name="country" type="text" 
-			       class="easyui-validatebox  x-text"  
-				   value="${wxFollower.country}"/>
-		</td>
-	</tr>
-	<tr>
-		<td width="20%" align="left">语言</td>
-		<td align="left">
-            <input id="language" name="language" type="text" 
-			       class="easyui-validatebox  x-text"  
-				   value="${wxFollower.language}"/>
-		</td>
-	</tr>
+
 	<tr>
 		<td width="20%" align="left">备注</td>
 		<td align="left">
-            <input id="remark" name="remark" type="text" 
+            <input id="remark" name="remark" type="text" size="50"
 			       class="easyui-validatebox  x-text"  
 				   value="${wxFollower.remark}"/>
 		</td>

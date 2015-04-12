@@ -110,9 +110,8 @@ public class UnsubscribeMessageFilter extends AbstractMessageFilter implements
 		try {
 			WxFollowerService wxFollowerService = ContextFactory
 					.getBean("wxFollowerService");
-			WxFollower follower = wxFollowerService.getWxFollower(
-					message.getAccountId(), message.getToUserName(),
-					message.getFromUserName());
+			WxFollower follower = wxFollowerService.getWxFollowerByOpenId(
+					message.getAccountId(), message.getFromUserName());
 			if (follower == null) {
 				Date date = new Date();
 				follower = new WxFollower();

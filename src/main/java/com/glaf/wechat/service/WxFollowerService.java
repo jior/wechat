@@ -43,16 +43,16 @@ public interface WxFollowerService {
 	@Transactional
 	void deleteByIds(Long accountId, List<String> openIds);
 
-	/**
-	 * 根据查询参数获取记录列表
-	 * 
-	 * @return
-	 */
-	List<WxFollower> list(WxFollowerQuery query);
-
 	List<WxFollower> getEmptyWxFollowers(WxFollowerQuery query);
 
 	List<String> getExistsWxFollowers(Long accountId, Collection<String> openIds);
+
+	/**
+	 * 根据OpenId获取一条记录
+	 * 
+	 * @return
+	 */
+	WxFollower getWxFollowerByOpenId(Long accountId, String openId);
 
 	/**
 	 * 根据查询参数获取记录总数
@@ -69,26 +69,15 @@ public interface WxFollowerService {
 	List<WxFollower> getWxFollowersByQueryCriteria(int start, int pageSize,
 			WxFollowerQuery query);
 
-	/**
-	 * 根据OpenId获取一条记录
-	 * 
-	 * @return
-	 */
-	WxFollower getWxFollowerByOpenId(Long accountId, String openId);
-
-	/**
-	 * 获取一条关注者信息
-	 * 
-	 * @param sourceId
-	 *            原始微信ID
-	 * @param openId
-	 *            关注者OPENID
-	 * @return
-	 */
-	WxFollower getWxFollower(Long accountId, String sourceId, String openId);
-
 	@Transactional
 	void insertAll(List<WxFollower> followers);
+
+	/**
+	 * 根据查询参数获取记录列表
+	 * 
+	 * @return
+	 */
+	List<WxFollower> list(WxFollowerQuery query);
 
 	/**
 	 * 保存一条记录

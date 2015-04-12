@@ -608,6 +608,7 @@ public class WxFollowerController {
 	@RequestMapping("/saveWxFollower")
 	public byte[] saveWxFollower(HttpServletRequest request) {
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		logger.debug("params->"+params);
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		Long accountId = RequestUtils.getLong(request, "accountId");
 		WxUser user = WxIdentityFactory.getUserByAccountId(accountId);
@@ -615,13 +616,11 @@ public class WxFollowerController {
 			WxFollower wxFollower = new WxFollower();
 			try {
 				Tools.populate(wxFollower, params);
-				wxFollower.setAccountId(RequestUtils.getLong(request,
-						"accountId"));
-
+				wxFollower.setAccountId(accountId);
+				wxFollower.setOpenId(request.getParameter("openId"));
 				wxFollower.setMobile(request.getParameter("mobile"));
 				wxFollower.setMail(request.getParameter("mail"));
 				wxFollower.setTelephone(request.getParameter("telephone"));
-
 				wxFollower.setLocked(RequestUtils.getInt(request, "locked"));
 				wxFollower.setRemark(request.getParameter("remark"));
 

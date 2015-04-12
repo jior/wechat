@@ -109,9 +109,8 @@ public class SubscribeMessageFilter extends AbstractMessageFilter implements
 		try {
 			WxFollowerService wxFollowerService = ContextFactory
 					.getBean("wxFollowerService");
-			WxFollower follower = wxFollowerService.getWxFollower(
-					message.getAccountId(), message.getToUserName(),
-					message.getFromUserName());
+			WxFollower follower = wxFollowerService.getWxFollowerByOpenId(
+					message.getAccountId(), message.getFromUserName());
 			if (follower == null) {
 				follower = new WxFollower();
 				follower.setAccountId(message.getAccountId());

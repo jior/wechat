@@ -115,21 +115,6 @@ public class WxFollowerServiceImpl implements WxFollowerService {
 		return wxFollower;
 	}
 
-	public WxFollower getWxFollower(Long accountId, String sourceId,
-			String openId) {
-		WxFollowerQuery query = new WxFollowerQuery();
-		if (sourceId != null) {
-			query.sourceId(sourceId);
-		}
-		query.openId(openId);
-		query.setTableName(WxFollowerDomainFactory.TABLENAME_PREFIX + accountId);
-		List<WxFollower> list = wxFollowerMapper.getWxFollowers(query);
-		if (list != null && !list.isEmpty()) {
-			return list.get(0);
-		}
-		return null;
-	}
-
 	public WxFollower getWxFollowerByOpenId(Long accountId, String openId) {
 		WxFollowerQuery query = new WxFollowerQuery();
 		query.openId(openId);
@@ -241,21 +226,18 @@ public class WxFollowerServiceImpl implements WxFollowerService {
 		if (bean != null) {
 			follower.setTableName(WxFollowerDomainFactory.TABLENAME_PREFIX
 					+ follower.getAccountId());
-			follower.setMail(bean.getMail());
-			follower.setMobile(bean.getMobile());
-			follower.setRemark(bean.getRemark());
-			follower.setTelephone(bean.getTelephone());
 			follower.setLastModified(System.currentTimeMillis());
 
-			Calendar calendar = Calendar.getInstance();
-			calendar.setTimeInMillis(follower.getSubscribeTime() * 1000);
-			int year = calendar.get(Calendar.YEAR);
-			int month = calendar.get(Calendar.MONTH) + 1;
-
-			follower.setSubscribeYear(year);
-			follower.setSubscribeMonth(month);
-			follower.setSubscribeDay(DateUtils.getYearMonthDay(calendar
-					.getTime()));
+			if (follower.getSubscribeTime() != null) {
+				Calendar calendar = Calendar.getInstance();
+				calendar.setTimeInMillis(follower.getSubscribeTime() * 1000);
+				int year = calendar.get(Calendar.YEAR);
+				int month = calendar.get(Calendar.MONTH) + 1;
+				follower.setSubscribeYear(year);
+				follower.setSubscribeMonth(month);
+				follower.setSubscribeDay(DateUtils.getYearMonthDay(calendar
+						.getTime()));
+			}
 
 			wxFollowerMapper.updateWxFollower(follower);
 		} else {
@@ -267,15 +249,16 @@ public class WxFollowerServiceImpl implements WxFollowerService {
 					+ follower.getAccountId());
 			follower.setLastModified(System.currentTimeMillis());
 
-			Calendar calendar = Calendar.getInstance();
-			calendar.setTimeInMillis(follower.getSubscribeTime() * 1000);
-			int year = calendar.get(Calendar.YEAR);
-			int month = calendar.get(Calendar.MONTH) + 1;
-
-			follower.setSubscribeYear(year);
-			follower.setSubscribeMonth(month);
-			follower.setSubscribeDay(DateUtils.getYearMonthDay(calendar
-					.getTime()));
+			if (follower.getSubscribeTime() != null) {
+				Calendar calendar = Calendar.getInstance();
+				calendar.setTimeInMillis(follower.getSubscribeTime() * 1000);
+				int year = calendar.get(Calendar.YEAR);
+				int month = calendar.get(Calendar.MONTH) + 1;
+				follower.setSubscribeYear(year);
+				follower.setSubscribeMonth(month);
+				follower.setSubscribeDay(DateUtils.getYearMonthDay(calendar
+						.getTime()));
+			}
 
 			wxFollowerMapper.insertWxFollower(follower);
 		}

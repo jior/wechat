@@ -10,6 +10,8 @@
 <title>关注用户</title>
 <%@ include file="/WEB-INF/views/wx/inc/wx_styles.jsp"%>
 <%@ include file="/WEB-INF/views/wx/inc/wx_scripts.jsp"%>
+<link href="<%=request.getContextPath()%>/scripts/layer/skin/layer.css"  />
+<script rel="stylesheet" type="text/javascript" src="<%=request.getContextPath()%>/scripts/layer/layer.min.js"></script>
 <script type="text/javascript">
    var contextPath="<%=request.getContextPath()%>";
 
@@ -53,17 +55,34 @@
 		    });
 	});
 
-		 
+	function editRow(link){
+		jQuery.layer({
+					type: 2,
+					maxmin: true,
+					shadeClose: true,
+					title: "编辑信息",
+					closeBtn: [0, true],
+					shade: [0.8, '#000'],
+					border: [10, 0.3, '#000'],
+					offset: ['20px',''],
+					fadeIn: 100,
+					area: ['680px', (jQuery(window).height() - 150) +'px'],
+					iframe: {src: link}
+				});
+		}
+		
 	function addNew(){
 	    var link="<%=request.getContextPath()%>/mx/wx/wxFollower/edit?fromUrl=${fromUrl}&accountId=${accountId}";
 	    //art.dialog.open(link, { height: 420, width: 680, title: "添加记录", lock: true, scrollbars:"no" }, false);
-		location.href=link;
+		//location.href=link;
+		editRow(link);
 	}
 
 	function onRowClick(rowIndex, row){
 	    var link = '<%=request.getContextPath()%>/mx/wx/wxFollower/edit?id='+row.id+'&fromUrl=${fromUrl}&accountId=${accountId}';
 	    //art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"no" }, false);
-		location.href=link;
+		//location.href=link;
+		editRow(link);
 	}
 
 	function formatterSex(val, row){
@@ -98,7 +117,8 @@
 	    if (selected ){
 		  var link = '<%=request.getContextPath()%>/mx/wx/wxFollower/edit?id='+selected.id+'&fromUrl=${fromUrl}&accountId=${accountId}';
 		  //art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"no" }, false);
-		  location.href=link;
+		  //location.href=link;
+		  editRow(link);
 	    }
 	}
 
