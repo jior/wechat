@@ -20,13 +20,6 @@ package com.glaf.wechat.domain;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -35,86 +28,57 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.core.base.JSONable;
 import com.glaf.wechat.util.WxFollowerJsonFactory;
 
-@Entity
-@Table(name = "WX_FOLLOWER")
 public class WxFollower implements Serializable, JSONable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@Column(name = "ID_", nullable = false)
 	protected Long id;
 
-	@Column(name = "ACCOUNTID_")
 	protected Long accountId;
 
-	@Column(name = "ACTORID_", length = 50)
 	protected String actorId;
 
-	@Column(name = "SOURCEID_", length = 200)
 	protected String sourceId;
 
-	@Column(name = "OPENID_", length = 200)
 	protected String openId;
 
-	@Column(name = "NICKNAME_", length = 200)
 	protected String nickName;
 
-	@Column(name = "SEX_", length = 1)
 	protected String sex;
 
-	@Column(name = "MOBILE_", length = 20)
 	protected String mobile;
 
-	@Column(name = "MAIL_", length = 100)
 	protected String mail;
 
-	@Column(name = "TELEPHONE_", length = 50)
 	protected String telephone;
 
-	@Column(name = "HEADIMGURL_", length = 500)
 	protected String headimgurl;
 
-	@Column(name = "PROVINCE_", length = 100)
 	protected String province;
 
-	@Column(name = "CITY_", length = 100)
 	protected String city;
 
-	@Column(name = "COUNTRY_", length = 100)
 	protected String country;
 
-	@Column(name = "LANGUAGE_", length = 50)
 	protected String language;
 
-	@Column(name = "LOCKED_")
 	protected Integer locked;
 
-	@Column(name = "REMARK", length = 250)
 	protected String remark;
 
-	@Column(name = "SUBSCRIBETIME_")
 	protected Long subscribeTime;
 
-	@Column(name = "SUBSCRIBEYEAR_")
 	protected Integer subscribeYear;
 
-	@Column(name = "SUBSCRIBEMONTH_")
 	protected Integer subscribeMonth;
 
-	@Column(name = "SUBSCRIBEDAY_")
 	protected Integer subscribeDay;
 
-	@Column(name = "UNSUBSCRIBETIME_")
 	protected Long unsubscribeTime;
 
-	@Column(name = "LASTMODIFIED_")
 	protected Long lastModified;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "CREATEDATE_")
 	protected Date createDate;
 
-	@javax.persistence.Transient
 	protected String tableName;
 
 	public WxFollower() {

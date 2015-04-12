@@ -111,7 +111,7 @@ public class WxFollowerDomainFactory {
 		sourceId.setName("sourceId");
 		sourceId.setColumnName("SOURCEID_");
 		sourceId.setJavaType("String");
-		sourceId.setLength(200);
+		sourceId.setLength(100);
 		tableDefinition.addColumn(sourceId);
 
 		ColumnDefinition openId = new ColumnDefinition();
@@ -125,7 +125,7 @@ public class WxFollowerDomainFactory {
 		nickName.setName("nickName");
 		nickName.setColumnName("NICKNAME_");
 		nickName.setJavaType("String");
-		nickName.setLength(200);
+		nickName.setLength(500);
 		tableDefinition.addColumn(nickName);
 
 		ColumnDefinition sex = new ColumnDefinition();
@@ -139,7 +139,7 @@ public class WxFollowerDomainFactory {
 		mobile.setName("mobile");
 		mobile.setColumnName("MOBILE_");
 		mobile.setJavaType("String");
-		mobile.setLength(20);
+		mobile.setLength(50);
 		tableDefinition.addColumn(mobile);
 
 		ColumnDefinition mail = new ColumnDefinition();
@@ -201,7 +201,7 @@ public class WxFollowerDomainFactory {
 		remark.setName("remark");
 		remark.setColumnName("REMARK");
 		remark.setJavaType("String");
-		remark.setLength(250);
+		remark.setLength(500);
 		tableDefinition.addColumn(remark);
 
 		ColumnDefinition subscribeTime = new ColumnDefinition();
