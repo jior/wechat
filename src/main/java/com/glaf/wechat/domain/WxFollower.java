@@ -18,6 +18,7 @@
 package com.glaf.wechat.domain;
 
 import java.io.Serializable;
+import java.io.IOException;
 import java.util.Date;
 
 import org.apache.commons.codec.binary.Base64;
@@ -149,7 +150,11 @@ public class WxFollower implements Serializable, JSONable {
 
 	public String getNickName() {
 		if (nickName != null && "Y".equals(nickNameEncode)) {
-			return new String(Base64.decodeBase64(nickName));
+			try {
+				return new String(Base64.decodeBase64(nickName), "UTF-8");
+			} catch (IOException e) {
+				return new String(Base64.decodeBase64(nickName));
+			}
 		}
 		return this.nickName;
 	}

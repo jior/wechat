@@ -216,15 +216,19 @@ public class WxFollowerServiceImpl implements WxFollowerService {
 	protected void saveInner(WxFollower follower) {
 		WxFollower bean = this.getWxFollowerByOpenId(follower.getAccountId(),
 				follower.getOpenId());
+		logger.debug("wx_follower_nickname_enc:"
+				+ conf.getBoolean("wx_follower_nickname_enc", false));
 		String nickName = follower.getNickName();
 		if (nickName != null
 				&& conf.getBoolean("wx_follower_nickname_enc", false)) {
 			try {
-				nickName = Base64.encodeBase64String(nickName.getBytes());
-				bean.setNickName(nickName);
-				bean.setNickNameEncode("Y");
+				nickName = Base64
+						.encodeBase64String(nickName.getBytes("UTF-8"));
+				follower.setNickName(nickName);
+				follower.setNickNameEncode("Y");
 				logger.debug("nickName:" + nickName);
 			} catch (Exception ex) {
+				ex.printStackTrace();
 			}
 		}
 
