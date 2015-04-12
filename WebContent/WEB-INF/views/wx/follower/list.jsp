@@ -40,7 +40,7 @@
 				rownumbers: false,
 				pagination: true,
 				pageSize: <%=com.glaf.core.util.Paging.DEFAULT_PAGE_SIZE%>,
-				pageList: [10,15,20,25,30,40,50,100],
+				pageList: [10,15,20,25,30,40,50,100,200,500,1000],
 				pagePosition: 'both',
 				onClickRow: onRowClick 
 			});
@@ -252,8 +252,8 @@
 	&nbsp;<span class="x_content_title">关注用户列表</span>
     <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-add'" 
 	   onclick="javascript:fetchFollower('weixin');">从微信服务器同步</a> 
-	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-add'" 
-	   onclick="javascript:fetchSingleFollower('weixin');">从服务器获取不完整用户列表</a> 
+	<!-- <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-add'" 
+	   onclick="javascript:fetchSingleFollower('weixin');">从服务器获取不完整用户列表</a> --> 
     <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-edit'"
 	   onclick="javascript:editSelected();">修改</a>  
 	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-remove'"
