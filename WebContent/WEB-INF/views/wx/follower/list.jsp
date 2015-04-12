@@ -300,7 +300,8 @@
 	  <td>性别</td>
 	  <td>
          <select name="sex">
-			<option value="1" selected>男</option>
+			<option value="" selected>----不限----</option>
+			<option value="1">男</option>
 			<option value="2">女</option>
 			<option value="0">未知</option>
          </select>
