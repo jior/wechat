@@ -267,35 +267,41 @@
   </div>  
 </div>
  
-<div id="dlg" class="easyui-dialog" style="width:400px;height:280px;padding:10px 20px"
+<div id="dlg" class="easyui-dialog" style="width:420px;height:380px;padding:10px 20px"
 	closed="true" buttons="#dlg-buttons">
   <form id="searchForm" name="searchForm" method="post">
   <table class="easyui-form" >
     <tbody>
     <tr>
-	<td>省份</td>
-	<td>
-        <input id="province" name="province" class="easyui-validatebox" type="text"></input>
-       </td>
-     </tr>
-    <tr>
-	<td>城市</td>
-	<td>
-        <input id="city" name="city" class="easyui-validatebox" type="text"></input>
-       </td>
-     </tr>
-    <tr>
-	<td>国家</td>
-	<td>
-        <input id="country" name="country" class="easyui-validatebox" type="text"></input>
-       </td>
-     </tr>
-    <tr>
-	  <td>语言</td>
+	  <td>省份</td>
 	  <td>
-        <input id="language" name="language" class="easyui-validatebox" type="text"></input>
-       </td>
+        <input id="province" name="province" class="easyui-validatebox" type="text"></input>
+      </td>
+     </tr>
+    <tr>
+	  <td>城市</td>
+	  <td>
+        <input id="city" name="city" class="easyui-validatebox" type="text"></input>
+      </td>
+     </tr>
+    <tr>
+	  <td>国家</td>
+	  <td>
+        <input id="country" name="country" class="easyui-validatebox" type="text"></input>
+      </td>
+     </tr>
+    <tr>
+	    <td>语言</td>
+	    <td>
+          <input id="language" name="language" class="easyui-validatebox" type="text"></input>
+         </td>
     </tr>
+	<tr>
+	<td>昵称</td>
+	  <td>
+        <input id="nickNameLike" name="nickNameLike" class="easyui-validatebox" type="text"></input>
+      </td>
+     </tr>
 	 <tr>
 	  <td>性别</td>
 	  <td>
@@ -305,6 +311,60 @@
 			<option value="2">女</option>
 			<option value="0">未知</option>
          </select>
+      </td>
+    </tr>
+	<tr>
+	  <td>关注年度</td>
+	  <td>
+         <select id="subscribeYear" name="subscribeYear">
+			<option value="" selected>----请选择----</option>
+			<option value="2013">2013</option>
+			<option value="2014">2014</option>
+			<option value="2015">2015</option>
+         </select>&nbsp;
+		 <select id="subscribeMonth" name="subscribeMonth">
+			<option value="" selected>----请选择----</option>
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+			<option value="5">5</option>
+			<option value="6">6</option>
+			<option value="7">7</option>
+			<option value="8">8</option>
+			<option value="9">9</option>
+			<option value="10">10</option>
+			<option value="11">11</option>
+			<option value="12">12</option>
+         </select>&nbsp; 
+		 （仅某年）
+      </td>
+    </tr>
+	<tr>
+	  <td>关注年度</td>
+	  <td>
+         <select id="subscribeYearGreaterThanOrEqual" name="subscribeYearGreaterThanOrEqual">
+			<option value="" selected>----请选择----</option>
+			<option value="2013">2013</option>
+			<option value="2014">2014</option>
+			<option value="2015">2015</option>
+         </select>&nbsp;
+		 <select id="subscribeMonthGreaterThanOrEqual" name="subscribeMonthGreaterThanOrEqual">
+			<option value="" selected>----请选择----</option>
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+			<option value="5">5</option>
+			<option value="6">6</option>
+			<option value="7">7</option>
+			<option value="8">8</option>
+			<option value="9">9</option>
+			<option value="10">10</option>
+			<option value="11">11</option>
+			<option value="12">12</option>
+         </select>
+		 &nbsp;（大于某年）
       </td>
     </tr>
     <tr>
