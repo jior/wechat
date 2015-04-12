@@ -97,11 +97,16 @@ public class WxFollowerThread extends Thread {
 					bean.setHeadimgurl(jsonObject.getString("headimgurl"));
 					bean.setLanguage(jsonObject.getString("language"));
 					String nickname = jsonObject.getString("nickname");
-					if (conf.getBoolean("wx_follower_nickname_enc", false)) {
-						nickname = Base64.encodeBase64String(nickname
-								.getBytes());
-						bean.setNickNameEncode("Y");
-						logger.debug("nickname:"+nickname);
+					if (nickname != null
+							&& conf.getBoolean("wx_follower_nickname_enc",
+									false)) {
+						try {
+							nickname = Base64.encodeBase64String(nickname
+									.getBytes());
+							bean.setNickNameEncode("Y");
+							logger.debug("nickname:" + nickname);
+						} catch (Exception ex) {
+						}
 					}
 					bean.setNickName(nickname);
 					bean.setProvince(jsonObject.getString("province"));
