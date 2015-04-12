@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
@@ -215,6 +216,18 @@ public class WxFollowerServiceImpl implements WxFollowerService {
 	protected void saveInner(WxFollower follower) {
 		WxFollower bean = this.getWxFollowerByOpenId(follower.getAccountId(),
 				follower.getOpenId());
+		String nickName = follower.getNickName();
+		if (nickName != null
+				&& conf.getBoolean("wx_follower_nickname_enc", false)) {
+			try {
+				nickName = Base64.encodeBase64String(nickName.getBytes());
+				bean.setNickName(nickName);
+				bean.setNickNameEncode("Y");
+				logger.debug("nickName:" + nickName);
+			} catch (Exception ex) {
+			}
+		}
+
 		if (bean != null) {
 			follower.setTableName(WxFollowerDomainFactory.TABLENAME_PREFIX
 					+ follower.getAccountId());
