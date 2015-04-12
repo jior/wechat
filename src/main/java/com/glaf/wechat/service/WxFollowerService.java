@@ -70,13 +70,6 @@ public interface WxFollowerService {
 			WxFollowerQuery query);
 
 	/**
-	 * 根据主键获取一条记录
-	 * 
-	 * @return
-	 */
-	WxFollower getWxFollower(Long accountId, Long id);
-
-	/**
 	 * 根据OpenId获取一条记录
 	 * 
 	 * @return

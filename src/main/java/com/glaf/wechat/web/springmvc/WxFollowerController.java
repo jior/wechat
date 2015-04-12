@@ -188,8 +188,8 @@ public class WxFollowerController {
 			while (token.hasMoreTokens()) {
 				String x = token.nextToken();
 				if (StringUtils.isNotEmpty(x)) {
-					WxFollower wxFollower = wxFollowerService.getWxFollower(
-							accountId, Long.valueOf(x));
+					WxFollower wxFollower = wxFollowerService
+							.getWxFollowerByOpenId(accountId, x);
 					if (wxFollower != null
 							&& (StringUtils.equals(wxFollower.getActorId(),
 									loginContext.getActorId()) || loginContext
@@ -200,8 +200,8 @@ public class WxFollowerController {
 				}
 			}
 		} else if (id != null) {
-			WxFollower wxFollower = wxFollowerService.getWxFollower(accountId,
-					Long.valueOf(id));
+			WxFollower wxFollower = wxFollowerService.getWxFollowerByOpenId(
+					accountId, id);
 			if (wxFollower != null
 					&& (StringUtils.equals(wxFollower.getActorId(),
 							loginContext.getActorId()) || loginContext
@@ -218,8 +218,8 @@ public class WxFollowerController {
 		Long accountId = RequestUtils.getLong(request, "accountId");
 		WxUser user = WxIdentityFactory.getUserByAccountId(accountId);
 		if (StringUtils.equals(loginContext.getActorId(), user.getActorId())) {
-			WxFollower wxFollower = wxFollowerService.getWxFollower(accountId,
-					RequestUtils.getLong(request, "id"));
+			WxFollower wxFollower = wxFollowerService.getWxFollowerByOpenId(
+					accountId, RequestUtils.getString(request, "id"));
 			if (wxFollower != null) {
 				request.setAttribute("wxFollower", wxFollower);
 			}
@@ -652,8 +652,8 @@ public class WxFollowerController {
 		Long accountId = RequestUtils.getLong(request, "accountId");
 		WxUser user = WxIdentityFactory.getUserByAccountId(accountId);
 		if (StringUtils.equals(loginContext.getActorId(), user.getActorId())) {
-			WxFollower wxFollower = wxFollowerService.getWxFollower(accountId,
-					RequestUtils.getLong(request, "id"));
+			WxFollower wxFollower = wxFollowerService.getWxFollowerByOpenId(
+					accountId, RequestUtils.getString(request, "id"));
 
 			wxFollower.setMobile(request.getParameter("mobile"));
 			wxFollower.setMail(request.getParameter("mail"));
@@ -674,8 +674,8 @@ public class WxFollowerController {
 		Long accountId = RequestUtils.getLong(request, "accountId");
 		WxUser user = WxIdentityFactory.getUserByAccountId(accountId);
 		if (StringUtils.equals(loginContext.getActorId(), user.getActorId())) {
-			WxFollower wxFollower = wxFollowerService.getWxFollower(accountId,
-					RequestUtils.getLong(request, "id"));
+			WxFollower wxFollower = wxFollowerService.getWxFollowerByOpenId(
+					accountId, RequestUtils.getString(request, "id"));
 			if (wxFollower != null) {
 				request.setAttribute("wxFollower", wxFollower);
 			}
