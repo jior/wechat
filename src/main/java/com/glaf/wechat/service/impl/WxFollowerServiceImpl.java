@@ -17,8 +17,11 @@
  */
 package com.glaf.wechat.service.impl;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
@@ -148,6 +151,47 @@ public class WxFollowerServiceImpl implements WxFollowerService {
 		List<WxFollower> rows = sqlSessionTemplate.selectList("getWxFollowers",
 				query, rowBounds);
 		return rows;
+	}
+
+	public List<WxFollower> getEmptyWxFollowers(WxFollowerQuery query) {
+		RowBounds rowBounds = new RowBounds(0, 10000);
+		List<WxFollower> rows = sqlSessionTemplate.selectList(
+				"getEmptyWxFollowers", query, rowBounds);
+		return rows;
+	}
+
+	public List<String> getExistsWxFollowers(Long accountId,
+			Collection<String> openIds) {
+		List<String> list = new ArrayList<String>();
+		if (openIds != null && !openIds.isEmpty()) {
+			WxFollowerQuery query = new WxFollowerQuery();
+			query.setTableName(WxFollowerDomainFactory.TABLENAME_PREFIX
+					+ accountId);
+			List<String> openIds2 = new ArrayList<String>();
+			Iterator<String> iterator = openIds.iterator();
+			while (iterator.hasNext()) {
+				openIds2.add(iterator.next());
+				if (openIds2.size() % 500 == 0) {
+					query.setOpenIds(openIds2);
+					List<String> exists = wxFollowerMapper
+							.getExistsWxFollowerIds(query);
+					if (exists != null && !exists.isEmpty()) {
+						list.addAll(exists);
+					}
+					openIds2.clear();
+				}
+			}
+			if (openIds2.size() > 0) {
+				query.setOpenIds(openIds2);
+				List<String> exists = wxFollowerMapper
+						.getExistsWxFollowerIds(query);
+				if (exists != null && !exists.isEmpty()) {
+					list.addAll(exists);
+				}
+				openIds2.clear();
+			}
+		}
+		return list;
 	}
 
 	@Transactional

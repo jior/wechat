@@ -149,5 +149,6 @@
 	<classpathentry kind="lib" path="lib/glaf-test.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/glaf-template.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-data-mongodb.RELEASE.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-httpclient.jar"/>
 	<classpathentry kind="output" path="WebContent/WEB-INF/classes"/>
 </classpath>

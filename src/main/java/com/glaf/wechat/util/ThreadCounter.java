@@ -15,34 +15,40 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.glaf.wechat.mapper;
 
-import java.util.*;
-import org.springframework.stereotype.Component;
-import com.glaf.wechat.domain.*;
-import com.glaf.wechat.query.*;
+package com.glaf.wechat.util;
 
-@Component
-public interface WxFollowerMapper {
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
-	void deleteWxFollowerById(WxFollowerQuery query);
+public class ThreadCounter {
 
-	void deleteWxFollowers(WxFollowerQuery query);
+	protected static final ConcurrentMap<Long, AtomicInteger> counter = new ConcurrentHashMap<Long, AtomicInteger>();
 
-	List<WxFollower> getEmptyWxFollowers(WxFollowerQuery query);
-	
-	List<String> getExistsWxFollowerIds(WxFollowerQuery query);
+	public static void add(Long accountId) {
+		AtomicInteger count = counter.get(accountId);
+		if (count == null) {
+			count = new AtomicInteger(1);
+		}
+		count.incrementAndGet();
+		counter.put(accountId, count);
+	}
 
-	WxFollower getWxFollowerById(WxFollowerQuery query);
-	
-	WxFollower getWxFollowerByOpenId(WxFollowerQuery query);
-	
-	int getWxFollowerCount(WxFollowerQuery query);
+	public static int get(Long accountId) {
+		AtomicInteger count = counter.get(accountId);
+		if (count != null) {
+			return count.get();
+		}
+		return 0;
+	}
 
-	List<WxFollower> getWxFollowers(WxFollowerQuery query);
+	public static void remove(Long accountId) {
+		counter.remove(accountId);
+	}
 
-	void insertWxFollower(WxFollower model);
+	private ThreadCounter() {
 
-	void updateWxFollower(WxFollower model);
+	}
 
 }

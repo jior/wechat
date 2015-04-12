@@ -50,6 +50,10 @@ public interface WxFollowerService {
 	 */
 	List<WxFollower> list(WxFollowerQuery query);
 
+	List<WxFollower> getEmptyWxFollowers(WxFollowerQuery query);
+
+	List<String> getExistsWxFollowers(Long accountId, Collection<String> openIds);
+
 	/**
 	 * 根据查询参数获取记录总数
 	 * 
@@ -71,7 +75,7 @@ public interface WxFollowerService {
 	 * @return
 	 */
 	WxFollower getWxFollower(Long accountId, Long id);
-	
+
 	/**
 	 * 根据OpenId获取一条记录
 	 * 

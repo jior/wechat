@@ -219,6 +219,27 @@
 			 });
 		}
 	}
+
+	function fetchSingleFollower(type){
+		if(confirm("确定从服务器获取关注者列表吗？")){
+            jQuery.ajax({
+				   type: "POST",
+				   url: '<%=request.getContextPath()%>/mx/wx/wxFollower/fetchSingleFollower?accountId=${accountId}&type='+type,
+				   dataType:  'json',
+				   error: function(data){
+					   alert('服务器处理错误！');
+				   },
+				   success: function(data){
+					   if(data != null && data.message != null){
+						   alert(data.message);
+					   } else {
+						   alert('操作成功完成！');
+					   }
+					   window.location.reload();
+				   }
+			 });
+		}
+	}
 		 
 </script>
 </head>
@@ -230,7 +251,9 @@
 	<img src="<%=request.getContextPath()%>/images/window.png">
 	&nbsp;<span class="x_content_title">关注用户列表</span>
     <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-add'" 
-	   onclick="javascript:fetchFollower('weixin');">从微信服务器同步</a>  
+	   onclick="javascript:fetchFollower('weixin');">从微信服务器同步</a> 
+	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-add'" 
+	   onclick="javascript:fetchSingleFollower('weixin');">从服务器获取不完整用户列表</a> 
     <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-edit'"
 	   onclick="javascript:editSelected();">修改</a>  
 	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-remove'"

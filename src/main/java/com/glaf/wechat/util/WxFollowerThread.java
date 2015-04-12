@@ -72,47 +72,43 @@ public class WxFollowerThread extends Thread {
 	}
 
 	public void run() {
-		boolean success = false;
-		int retry = 0;
-		while (retry < 3 && !success) {
-			retry++;
-			try {
-				WxFollower follower = getWxFollowerService()
-						.getWxFollowerByOpenId(accountId, openId);
-				if (follower == null
-						|| (System.currentTimeMillis()
-								- follower.getLastModified() > DateUtils.DAY * 2)) {
-					logger.debug("get openId from server: " + openId);
-					JSONObject jsonObject = WechatUtils.getFollower(
-							subscribe_get_url, token, openId);
-					if (jsonObject != null) {
-						WxFollower bean = new WxFollower();
-						bean.setAccountId(accountId);
-						bean.setActorId(actorId);
-						bean.setCity(jsonObject.getString("city"));
-						bean.setCountry(jsonObject.getString("country"));
-						bean.setHeadimgurl(jsonObject.getString("headimgurl"));
-						bean.setLanguage(jsonObject.getString("language"));
-						bean.setNickName(jsonObject.getString("nickname"));
-						bean.setOpenId(openId);
-						bean.setSourceId(String.valueOf(accountId));
-						bean.setProvince(jsonObject.getString("province"));
-						bean.setSex(jsonObject.getString("sex"));
-						bean.setSubscribeTime(jsonObject
-								.getLong("subscribe_time"));
-						getWxFollowerService().save(bean);
-						retry = 5;
-						success = true;
-					}
+		try {
+			WxFollower follower = getWxFollowerService().getWxFollowerByOpenId(
+					accountId, openId);
+			if (follower == null
+					|| (System.currentTimeMillis() - follower.getLastModified() > DateUtils.DAY * 2)) {
+				logger.debug("get openId from server: " + openId);
+				JSONObject jsonObject = WechatUtils.getFollower(
+						subscribe_get_url, token, openId);
+				if (jsonObject != null) {
+					WxFollower bean = new WxFollower();
+					bean.setAccountId(accountId);
+					bean.setActorId(actorId);
+					bean.setOpenId(openId);
+					bean.setSourceId(String.valueOf(accountId));
+					bean.setCity(jsonObject.getString("city"));
+					bean.setCountry(jsonObject.getString("country"));
+					bean.setHeadimgurl(jsonObject.getString("headimgurl"));
+					bean.setLanguage(jsonObject.getString("language"));
+					bean.setNickName(jsonObject.getString("nickname"));
+					bean.setProvince(jsonObject.getString("province"));
+					bean.setSex(jsonObject.getString("sex"));
+					bean.setSubscribeTime(jsonObject.getLong("subscribe_time"));
+					getWxFollowerService().save(bean);
 				} else {
-					retry = 5;
-					success = true;
+					WxFollower bean = new WxFollower();
+					bean.setAccountId(accountId);
+					bean.setActorId(actorId);
+					bean.setOpenId(openId);
+					bean.setSourceId(String.valueOf(accountId));
+					getWxFollowerService().save(bean);
 				}
-			} catch (Exception ex) {
-				ex.printStackTrace();
-				logger.error(ex);
 			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			logger.error(ex);
 		}
+		ThreadCounter.add(accountId);
 		latch.countDown();
 	}
 

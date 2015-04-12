@@ -18,6 +18,9 @@
 package com.glaf.wechat.web.springmvc;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
@@ -39,7 +42,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.config.Configuration;
@@ -58,6 +60,7 @@ import com.glaf.wechat.model.AccessToken;
 import com.glaf.wechat.query.WxFollowerQuery;
 import com.glaf.wechat.service.WxFollowerService;
 import com.glaf.wechat.service.WxUserService;
+import com.glaf.wechat.util.ThreadCounter;
 import com.glaf.wechat.util.WechatUtils;
 import com.glaf.wechat.util.WxFollowerDomainFactory;
 import com.glaf.wechat.util.WxFollowerThread;
@@ -71,7 +74,7 @@ public class WxFollowerController {
 
 	protected static Cache<Long, Integer> accessCounter = CacheBuilder
 			.newBuilder().maximumSize(1000)
-			.expireAfterAccess(30, TimeUnit.MINUTES).build();
+			.expireAfterAccess(60, TimeUnit.MINUTES).build();
 
 	protected static ExecutorService pool = Executors.newFixedThreadPool(4);
 
@@ -92,22 +95,58 @@ public class WxFollowerController {
 		if (data.containsKey("openid")) {
 			JSONArray array = data.getJSONArray("openid");
 			if (array != null && array.size() > 0) {
-				final CountDownLatch latch = new CountDownLatch(array.size());
-				for (int i = 0, len = array.size(); i < len; i++) {
-					String openid = array.getString(i);
-					logger.debug("openid:" + openid);
-					WxFollowerThread thread = new WxFollowerThread(accountId,
-							actorId, subscribe_get_url, token, openid, latch);
-					if (conf.getBoolean("wx_follower_fetch_pool", true)) {
-						// pool.execute(thread);
-						com.glaf.core.util.ThreadFactory.run(thread);
-					} else {
-						thread.start();
+
+				long start = System.currentTimeMillis();
+				ThreadCounter.remove(accountId);
+				int len = array.size();
+				Collection<String> openIds = new HashSet<String>();
+				for (int i = 0; i < len; i++) {
+					openIds.add(array.getString(i));
+				}
+
+				List<String> notExists = new ArrayList<String>();
+				List<String> exists = wxFollowerService.getExistsWxFollowers(
+						accountId, openIds);
+				if (exists != null && !exists.isEmpty()) {
+					for (int i = 0; i < len; i++) {
+						if (!exists.contains(array.getString(i))) {
+							notExists.add(array.getString(i));
+						}
 					}
 				}
-				try {
-					latch.await();
-				} catch (InterruptedException e) {
+				len = notExists.size();
+				if (len > 0) {
+					CountDownLatch latch = new CountDownLatch(len);
+					for (int i = 0; i < len; i++) {
+						String openid = notExists.get(i);
+						logger.debug("openid:" + openid);
+						WxFollowerThread thread = new WxFollowerThread(
+								accountId, actorId, subscribe_get_url, token,
+								openid, latch);
+						if (conf.getBoolean("wx_follower_fetch_pool", true)) {
+							// pool.execute(thread);
+							com.glaf.core.util.ThreadFactory.run(thread);
+						} else {
+							thread.start();
+						}
+					}
+					boolean wait = true;
+					while (wait) {
+						try {
+							if (len == ThreadCounter.get(accountId)) {
+								wait = false;
+								break;
+							}
+							if (System.currentTimeMillis() - start > 30 * 1000) {
+								wait = false;
+								break;
+							}
+							latch.await();
+							logger.debug("wait.....");
+							Thread.sleep(2000);
+						} catch (InterruptedException ex) {
+						}
+					}
 				}
 			}
 		}
@@ -197,6 +236,114 @@ public class WxFollowerController {
 	}
 
 	@ResponseBody
+	@RequestMapping("/fetchSingleFollower")
+	public byte[] fetchSingleFollower(HttpServletRequest request) {
+		LoginContext loginContext = RequestUtils.getLoginContext(request);
+		String actorId = loginContext.getActorId();
+		Long accountId = RequestUtils.getLong(request, "accountId");
+		WxUser user = WxIdentityFactory.getUserByAccountId(accountId);
+		if (StringUtils.equals(loginContext.getActorId(), user.getActorId())) {
+			try {
+				this.increaseCounter(accountId);
+				WxFollowerQuery query = new WxFollowerQuery();
+				query.setTableName(WxFollowerDomainFactory.TABLENAME_PREFIX
+						+ accountId);
+				List<WxFollower> follwers = wxFollowerService
+						.getEmptyWxFollowers(query);
+				if (follwers != null && !follwers.isEmpty()) {
+					String type = request.getParameter("type");
+					String access_token_url = null;
+					String subscribe_list_get_url = null;
+					String subscribe_get_url = null;
+					if (StringUtils.equals("weixin", type)) {
+						access_token_url = conf.get("weixin_access_token_url");
+						subscribe_list_get_url = conf
+								.get("weixin_subscribe_list_get_url");
+						subscribe_get_url = conf
+								.get("weixin_subscribe_get_url");
+					} else if (StringUtils.equals("yixin", type)) {
+						access_token_url = conf.get("yixin_access_token_url");
+						subscribe_list_get_url = conf
+								.get("yixin_subscribe_list_get_url");
+						subscribe_get_url = conf.get("yixin_subscribe_get_url");
+					}
+					logger.debug(subscribe_list_get_url);
+					logger.debug(subscribe_get_url);
+					WxUser wxUser = wxUserService.getWxUser(accountId);
+					if (wxUser != null) {
+						String appId = null;
+						String appSecret = null;
+						if (StringUtils.equals("weixin", type)) {
+							appId = wxUser.getWxAppId();
+							appSecret = wxUser.getWxAppSecret();
+						} else if (StringUtils.equals("yixin", type)) {
+							appId = wxUser.getYxAppId();
+							appSecret = wxUser.getYxAppSecret();
+						}
+						logger.debug("appId:" + appId);
+						if (StringUtils.isNotEmpty(appId)
+								&& StringUtils.isNotEmpty(appSecret)) {
+							AccessToken accessToken = WechatUtils
+									.getAccessToken(access_token_url, appId,
+											appSecret);
+							if (accessToken != null
+									&& accessToken.getToken() != null) {
+								logger.debug("access token:"
+										+ accessToken.getToken());
+								int len = follwers.size();
+								long start = System.currentTimeMillis();
+								CountDownLatch latch = new CountDownLatch(len);
+								for (int i = 0; i < len; i++) {
+									String openid = follwers.get(i).getOpenId();
+									logger.debug("openid:" + openid);
+									WxFollowerThread thread = new WxFollowerThread(
+											accountId, actorId,
+											subscribe_get_url,
+											accessToken.getToken(), openid,
+											latch);
+									if (conf.getBoolean(
+											"wx_follower_fetch_pool", true)) {
+										// pool.execute(thread);
+										com.glaf.core.util.ThreadFactory
+												.run(thread);
+									} else {
+										thread.start();
+									}
+								}
+								boolean wait = true;
+								while (wait) {
+									try {
+										if (len == ThreadCounter.get(accountId)) {
+											wait = false;
+											break;
+										}
+										if (System.currentTimeMillis() - start > 30 * 1000) {
+											wait = false;
+											break;
+										}
+										latch.await();
+										logger.debug("wait.....");
+										Thread.sleep(2000);
+									} catch (InterruptedException ex) {
+									}
+								}
+							}
+						}
+					}
+				}
+				return ResponseUtils.responseJsonResult(true);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				logger.error(ex);
+				return ResponseUtils.responseJsonResult(false, ex.getMessage());
+			} finally {
+				this.decreaseCounter(accountId);
+			}
+		}
+		return ResponseUtils.responseJsonResult(false);
+	}
+
+	@ResponseBody
 	@RequestMapping("/fetchFollower")
 	public byte[] fetchFollower(HttpServletRequest request) {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
@@ -204,8 +351,8 @@ public class WxFollowerController {
 		Long accountId = RequestUtils.getLong(request, "accountId");
 		WxUser user = WxIdentityFactory.getUserByAccountId(accountId);
 		if (StringUtils.equals(loginContext.getActorId(), user.getActorId())) {
-			this.increaseCounter(accountId);
 			try {
+				this.increaseCounter(accountId);
 				String type = request.getParameter("type");
 				String access_token_url = null;
 				String subscribe_list_get_url = null;
@@ -256,11 +403,11 @@ public class WxFollowerController {
 						}
 					}
 				}
-
 				return ResponseUtils.responseJsonResult(true);
 			} catch (Exception ex) {
 				ex.printStackTrace();
 				logger.error(ex);
+				return ResponseUtils.responseJsonResult(false, ex.getMessage());
 			} finally {
 				this.decreaseCounter(accountId);
 			}
@@ -273,7 +420,7 @@ public class WxFollowerController {
 		if (count == null) {
 			count = 0;
 		}
-		if (count > conf.getInt("client.threads", 5)) {
+		if (count > conf.getInt("client.threads", 1)) {
 			throw new RuntimeException("client threads so much");
 		}
 		count = count + 1;

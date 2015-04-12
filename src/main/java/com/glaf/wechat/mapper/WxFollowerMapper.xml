@@ -283,6 +283,31 @@
 		resultMap="wxFollowerResultMap">
 		select * from ${tableName} where OPENID_ = #{openid}
 	</select>
+	
+	
+	<select id="getEmptyWxFollowers" parameterType="com.glaf.wechat.query.WxFollowerQuery"
+		resultMap="wxFollowerResultMap">
+		
+		select * from ${tableName} 
+		where SUBSCRIBETIME_ IS NULL
+		
+	</select>
+	
+	
+	<select id="getExistsWxFollowerIds" parameterType="com.glaf.wechat.query.WxFollowerQuery"
+		resultType="string">
+		
+		select OPENID_ from ${tableName} 
+		where SUBSCRIBETIME_  IS NOT NULL
+		<if test="openIds != null and openIds.size !=0">
+			and OPENID_ IN
+			<foreach item="x_openId" index="index" collection="openIds"
+					open="(" separator="," close=")">
+					#{x_openId}
+			</foreach>
+		</if>
+		
+	</select>
 
 
 	<select id="getWxFollowers" parameterType="com.glaf.wechat.query.WxFollowerQuery"
@@ -294,7 +319,7 @@
 				order by ${orderBy}
 			</when>
 			<otherwise>
-				order by E.CREATEDATE_ desc
+				order by E.SUBSCRIBETIME_ desc
 			</otherwise>
 		</choose>
 	</select>

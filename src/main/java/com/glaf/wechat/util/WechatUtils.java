@@ -140,9 +140,9 @@ public class WechatUtils {
 			String openid) {
 		String url = orgi_url.replace("ACCESS_TOKEN", accessToken);
 		url = url.replace("OPENID", openid);
-		//String text = HttpClientUtils.doGet(url);
-		//JSONObject jsonObject = JSON.parseObject(text);
-		JSONObject jsonObject = HttpUtils.executeRequest(url, "GET", null);
+		String text = CommonsHttpClientUtils.doGet(url);
+		JSONObject jsonObject = JSON.parseObject(text);
+		//JSONObject jsonObject = HttpUtils.executeRequest(url, "GET", null);
 		return jsonObject;
 	}
 
@@ -161,9 +161,9 @@ public class WechatUtils {
 		} else {
 			url = StringTools.replace(url, "&next_openid=NEXT_OPENID", "");
 		}
-		JSONObject jsonObject = HttpUtils.executeRequest(url, "GET", null);
-		//String text = HttpClientUtils.doGet(url);
-		//JSONObject jsonObject = JSON.parseObject(text);
+		//JSONObject jsonObject = HttpUtils.executeRequest(url, "GET", null);
+		String text = CommonsHttpClientUtils.doGet(url);
+		JSONObject jsonObject = JSON.parseObject(text);
 		return jsonObject;
 	}
 
