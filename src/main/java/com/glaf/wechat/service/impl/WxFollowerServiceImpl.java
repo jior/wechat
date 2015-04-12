@@ -222,11 +222,11 @@ public class WxFollowerServiceImpl implements WxFollowerService {
 		if (nickName != null
 				&& conf.getBoolean("wx_follower_nickname_enc", false)) {
 			try {
-				nickName = Base64
-						.encodeBase64String(nickName.getBytes("UTF-8"));
-				follower.setNickName(nickName);
+				String text = Base64.encodeBase64String(nickName
+						.getBytes("UTF-8"));
+				follower.setNickName(text);
 				follower.setNickNameEncode("Y");
-				logger.debug("nickName:" + nickName);
+				logger.debug("nickName:" + text);
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
