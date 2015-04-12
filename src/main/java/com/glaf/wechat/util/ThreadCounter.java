@@ -29,7 +29,7 @@ public class ThreadCounter {
 	public static void add(Long accountId) {
 		AtomicInteger count = counter.get(accountId);
 		if (count == null) {
-			count = new AtomicInteger(1);
+			count = new AtomicInteger(0);
 		}
 		count.incrementAndGet();
 		counter.put(accountId, count);

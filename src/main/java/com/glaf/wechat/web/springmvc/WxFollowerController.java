@@ -114,7 +114,7 @@ public class WxFollowerController {
 
 				len = notExists.size();
 				if (len > 0) {
-					logger.debug("total :" + len);
+					logger.debug("total fetch size:" + len);
 					CountDownLatch latch = new CountDownLatch(len);
 					for (int i = 0; i < len; i++) {
 						String openid = notExists.get(i);
@@ -129,6 +129,7 @@ public class WxFollowerController {
 							thread.start();
 						}
 					}
+					
 					long start = System.currentTimeMillis();
 					boolean wait = true;
 					while (wait) {
